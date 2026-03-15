@@ -472,3 +472,15 @@ Planned features:
 
 Tomasz Maciejczuk\
 Konji Shop
+
+------------------------------------------------------------------------
+
+## Start
+
+cp .env.example .env
+
+docker compose build
+docker compose up -d
+
+docker exec -it konji_shop_app php artisan key:generate
+docker exec -it konji_shop_app php artisan migrate
