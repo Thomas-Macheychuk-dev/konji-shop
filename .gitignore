@@ -21,7 +21,6 @@ storage/*.key
 .env
 .env.backup
 .env.production
-.env.example
 Homestead.yaml
 Homestead.json
 /.vagrant
