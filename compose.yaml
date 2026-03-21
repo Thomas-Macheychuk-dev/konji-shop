@@ -80,6 +80,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
       MYSQL_USER: ${DB_USERNAME:-konji}
       MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+    ports:
+        - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
