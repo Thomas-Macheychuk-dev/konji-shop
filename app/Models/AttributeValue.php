@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AttributeValue extends Model
 {
@@ -35,5 +36,12 @@ class AttributeValue extends Model
             ProductVariant::class,
             'product_variant_attribute_value'
         )->withTimestamps();
+    }
+
+    public function productImages(): HasMany
+    {
+        return $this->hasMany(ProductAttributeValueImage::class)
+            ->orderBy('sort_order')
+            ->orderBy('id');
     }
 }

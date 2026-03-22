@@ -11,6 +11,7 @@ use App\Enums\VatRate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductVariant extends Model
@@ -26,6 +27,7 @@ class ProductVariant extends Model
         'vat_rate',
         'stock_status',
         'is_default',
+        'external_variant_id',
     ];
 
     protected function casts(): array

@@ -9,6 +9,7 @@ enum AttributeDisplayType: string
     case SELECT = 'select';
     case RADIO = 'radio';
     case COLOR_SWATCH = 'color_swatch';
+    case TEXT = 'text';
 
     public function translationKey(): string
     {
@@ -33,6 +34,11 @@ enum AttributeDisplayType: string
     public function isColorSwatch(): bool
     {
         return $this === self::COLOR_SWATCH;
+    }
+
+    public function isText(): bool
+    {
+        return $this === self::TEXT;
     }
 
     public static function options(): array

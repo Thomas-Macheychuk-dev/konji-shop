@@ -24,6 +24,9 @@ class Product extends Model
         'seo_title',
         'seo_description',
         'published_at',
+        'external_source',
+        'external_id',
+        'external_parent_sku',
     ];
 
     protected function casts(): array
@@ -58,6 +61,13 @@ class Product extends Model
     {
         return $this->hasOne(ProductImage::class)
             ->where('is_main', true)
+            ->orderBy('id');
+    }
+
+    public function attributeValueImages(): HasMany
+    {
+        return $this->hasMany(ProductAttributeValueImage::class)
+            ->orderBy('sort_order')
             ->orderBy('id');
     }
 }

@@ -41,9 +41,19 @@ enum VatRate: int
         return (int) round($netAmount * $this->multiplier());
     }
 
+    public function netFromGross(int $grossAmount): int
+    {
+        return (int) round($grossAmount / $this->multiplier());
+    }
+
     public function vatAmountFromNet(int $netAmount): int
     {
         return $this->grossFromNet($netAmount) - $netAmount;
+    }
+
+    public function vatAmountFromGross(int $grossAmount): int
+    {
+        return $grossAmount - $this->netFromGross($grossAmount);
     }
 
     public static function options(): array
