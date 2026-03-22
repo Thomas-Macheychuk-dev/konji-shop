@@ -13,7 +13,9 @@
                 </aside>
 
                 <main>
-                    @yield('content')
+                    <div id="app">
+                        @yield('content')
+                    </div>
                 </main>
             </div>
         </div>

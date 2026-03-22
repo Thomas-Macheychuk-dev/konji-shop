@@ -252,7 +252,7 @@ class EldanProductImporter
                 if ($id) {
                     $attributeValueIds[] = $id;
 
-                    if ($attributeCode === 'color') {
+                    if (is_string($attributeCode) && str_contains($attributeCode, 'color')) {
                         $colourValueId = $id;
                     }
                 }

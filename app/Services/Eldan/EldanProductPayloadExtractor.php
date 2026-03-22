@@ -21,7 +21,6 @@ class EldanProductPayloadExtractor
     {
         $decoded = html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
-        // Limit search to the size-table modal area
         $buttonPos = mb_stripos($decoded, 'Tabela rozmiarów');
 
         if ($buttonPos === false) {
@@ -30,18 +29,13 @@ class EldanProductPayloadExtractor
 
         $window = mb_substr($decoded, $buttonPos, 12000);
 
-        if (! preg_match('/<table\b[^>]*>.*?<\/table>/is', $window, $tableMatch)) {
+        if (! preg_match('/<div class="editor-content[^"]*">(.*?)<\/div>/isu', $window, $matches)) {
             return null;
         }
 
-        $result = $tableMatch[0];
+        $content = trim($matches[1] ?? '');
 
-        // Optional note under the table
-        if (preg_match('/<\/table>\s*(<p\b[^>]*>.*?<\/p>)/is', $window, $noteMatch)) {
-            $result .= $noteMatch[1];
-        }
-
-        return trim($result);
+        return $content !== '' ? $content : null;
     }
 
     private function extractProductPayload(string $html): ?array

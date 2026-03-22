@@ -63,7 +63,7 @@ class EldanProductNormalizer
     {
         $cleaned = $this->cleaner->cleanHtml($rawHtml);
 
-        if ($cleaned === null || $cleaned === '') {
+        if (! $this->hasMeaningfulSection($cleaned)) {
             return null;
         }
 
@@ -72,7 +72,25 @@ class EldanProductNormalizer
 
     private function joinHtmlBlocks(array $blocks): ?string
     {
-        $blocks = array_values(array_filter($blocks, fn ($block) => $block !== null && trim($block) !== ''));
+        $blocks = array_values(array_filter($blocks, function ($block) {
+            if ($block === null) {
+                return false;
+            }
+
+            $html = trim($block);
+
+            if ($html === '') {
+                return false;
+            }
+
+            $text = trim(strip_tags(html_entity_decode($html)));
+
+            if ($text === '') {
+                return false;
+            }
+
+            return mb_strlen($text) > 1;
+        }));
 
         if ($blocks === []) {
             return null;
@@ -365,5 +383,24 @@ class EldanProductNormalizer
         $path = $parsed['path'] ?? $url;
 
         return is_string($path) ? $path : $url;
+    }
+
+    private function hasMeaningfulSection(?string $html): bool
+    {
+        if ($html === null) {
+            return false;
+        }
+
+        $plainText = trim(strip_tags(html_entity_decode($html)));
+
+        if ($plainText === '') {
+            return false;
+        }
+
+        if (mb_strlen($plainText) <= 1) {
+            return false;
+        }
+
+        return !in_array($plainText, ['0', '-', '.'], true);
     }
 }
