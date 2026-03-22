@@ -89,30 +89,41 @@ class EldanProductImporter
 
         foreach (($normalized['attributes'] ?? []) as $attributeData) {
             $displayType = $this->mapDisplayType($attributeData['swatch_type'] ?? null);
+            $externalAttributeId = isset($attributeData['external_attribute_id'])
+                ? (string) $attributeData['external_attribute_id']
+                : null;
 
-            $attribute = Attribute::firstOrCreate(
+            $attribute = Attribute::updateOrCreate(
                 [
-                    'slug' => Str::slug($attributeData['name']),
+                    'external_attribute_id' => $externalAttributeId,
                 ],
                 [
                     'name' => $attributeData['name'],
+                    'slug' => Str::slug($attributeData['name']),
                     'display_type' => $displayType,
                 ]
             );
 
             foreach (($attributeData['options'] ?? []) as $sortOrder => $optionData) {
-                $value = AttributeValue::firstOrCreate(
+                $externalOptionId = isset($optionData['external_option_id'])
+                    ? (string) $optionData['external_option_id']
+                    : null;
+
+                $value = AttributeValue::updateOrCreate(
                     [
                         'attribute_id' => $attribute->id,
-                        'slug' => Str::slug($optionData['label']),
+                        'external_option_id' => $externalOptionId,
                     ],
                     [
                         'value' => $optionData['label'],
+                        'slug' => Str::slug($optionData['label']),
+                        'swatch_value' => $optionData['swatch_value'] ?? null,
                         'sort_order' => $sortOrder,
                     ]
                 );
 
                 $map[$attributeData['name']][$optionData['label']] = $value->id;
+                $map['by_attribute_id'][$externalAttributeId][$externalOptionId] = $value->id;
             }
         }
 
@@ -155,17 +166,28 @@ class EldanProductImporter
             foreach (($variantData['attributes'] ?? []) as $resolvedAttribute) {
                 $attributeName = $resolvedAttribute['name'] ?? null;
                 $attributeValue = $resolvedAttribute['value'] ?? null;
+                $attributeCode = $resolvedAttribute['code'] ?? null;
+                $externalAttributeId = isset($resolvedAttribute['external_attribute_id'])
+                    ? (string) $resolvedAttribute['external_attribute_id']
+                    : null;
+                $externalOptionId = isset($resolvedAttribute['external_option_id'])
+                    ? (string) $resolvedAttribute['external_option_id']
+                    : null;
 
-                if ($attributeName === null || $attributeValue === null) {
-                    continue;
+                $id = null;
+
+                if ($externalAttributeId !== null && $externalOptionId !== null) {
+                    $id = $attributeValueMap['by_attribute_id'][$externalAttributeId][$externalOptionId] ?? null;
                 }
 
-                $id = $attributeValueMap[$attributeName][$attributeValue] ?? null;
+                if ($id === null && $attributeName !== null && $attributeValue !== null) {
+                    $id = $attributeValueMap[$attributeName][$attributeValue] ?? null;
+                }
 
                 if ($id) {
                     $attributeValueIds[] = $id;
 
-                    if ($attributeName === 'Kolor') {
+                    if ($attributeCode === 'color') {
                         $colourValueId = $id;
                     }
                 }
@@ -174,7 +196,7 @@ class EldanProductImporter
             $variant->attributeValues()->sync($attributeValueIds);
 
             if ($colourValueId !== null && ! isset($syncedColourValueIds[$colourValueId])) {
-                $this->syncColourImages(
+                $this->syncColourGalleryImages(
                     $product,
                     $colourValueId,
                     $variantData['images'] ?? [],
@@ -199,7 +221,7 @@ class EldanProductImporter
         };
     }
 
-    private function syncColourImages(Product $product, int $attributeValueId, array $images, string $productName): void
+    private function syncColourGalleryImages(Product $product, int $attributeValueId, array $images, string $productName): void
     {
         $images = array_values(array_unique(array_filter(
             $images,
