@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('external_attribute_id')->nullable()->unique();
             $table->string('display_type')->default(AttributeDisplayType::SELECT->value);
 
             $table->timestamps();

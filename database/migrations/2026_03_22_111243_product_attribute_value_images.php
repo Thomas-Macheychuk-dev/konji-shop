@@ -21,7 +21,13 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->string('disk')->default('public');
             $table->string('path');
+            $table->text('source_url')->nullable();
+            $table->string('mime_type')->nullable();
+            $table->unsignedBigInteger('file_size')->nullable();
+            $table->string('sha256', 64)->nullable();
+
             $table->string('alt_text')->nullable();
             $table->string('title')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
@@ -31,6 +37,7 @@ return new class extends Migration
 
             $table->unique(['product_id', 'attribute_value_id', 'path'], 'paiv_unique');
             $table->index(['product_id', 'attribute_value_id'], 'paiv_product_value_idx');
+            $table->index('sha256');
         });
     }
 

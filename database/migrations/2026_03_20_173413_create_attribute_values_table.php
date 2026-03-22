@@ -20,7 +20,11 @@ return new class extends Migration
             $table->string('value');
             $table->string('slug');
             $table->string('external_option_id')->nullable();
+            $table->string('swatch_type')->nullable();
             $table->text('swatch_value')->nullable();
+            $table->string('swatch_image_disk')->nullable();
+            $table->string('swatch_image_path')->nullable();
+            $table->text('swatch_source_url')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();

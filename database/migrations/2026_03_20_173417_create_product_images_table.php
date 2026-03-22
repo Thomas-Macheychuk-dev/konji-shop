@@ -17,7 +17,13 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->string('disk')->default('public');
             $table->string('path');
+            $table->text('source_url')->nullable();
+            $table->string('mime_type')->nullable();
+            $table->unsignedBigInteger('file_size')->nullable();
+            $table->string('sha256', 64)->nullable();
+
             $table->string('alt_text')->nullable();
             $table->string('title')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
@@ -29,6 +35,8 @@ return new class extends Migration
             $table->index('sort_order');
             $table->index('is_main');
             $table->index(['product_id', 'is_main']);
+            $table->index('sha256');
+            $table->index(['product_id', 'path']);
         });
     }
 
