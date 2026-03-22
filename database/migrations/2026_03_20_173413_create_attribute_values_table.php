@@ -19,13 +19,17 @@ return new class extends Migration
 
             $table->string('value');
             $table->string('slug');
+            $table->string('external_option_id')->nullable();
+            $table->text('swatch_value')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
 
             $table->timestamps();
 
             $table->unique(['attribute_id', 'slug']);
+            $table->unique(['attribute_id', 'external_option_id']);
             $table->index('attribute_id');
             $table->index('value');
+            $table->index('external_option_id');
             $table->index('sort_order');
         });
     }
