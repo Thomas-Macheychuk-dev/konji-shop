@@ -11,14 +11,20 @@ use App\Enums\VatRate;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
-use App\Models\ProductAttributeValueImage;
+use App\Services\Images\RemoteImageImporter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class EldanProductImporter
 {
+    public function __construct(
+        private readonly RemoteImageImporter $remoteImageImporter,
+    ) {
+    }
+
     public function import(array $normalized): Product
     {
         return DB::transaction(function () use ($normalized) {
@@ -53,31 +59,57 @@ class EldanProductImporter
 
     private function syncImages(Product $product, array $normalized): void
     {
-        $images = array_values(array_unique($normalized['images'] ?? []));
+        $imageRows = [];
+
+        foreach (array_values(array_unique($normalized['images'] ?? [])) as $index => $url) {
+            if (! is_string($url) || $url === '') {
+                continue;
+            }
+
+            $imported = $this->remoteImageImporter->import(
+                $url,
+                'products/eldan/'.$product->external_id.'/gallery'
+            );
+
+            $imageRows[] = [
+                'disk' => $imported['disk'],
+                'path' => $imported['path'],
+                'source_url' => $imported['source_url'],
+                'mime_type' => $imported['mime_type'],
+                'file_size' => $imported['file_size'],
+                'sha256' => $imported['sha256'],
+                'sort_order' => $index,
+                'is_main' => $index === 0,
+            ];
+        }
+
+        $paths = array_column($imageRows, 'path');
 
         ProductImage::query()
             ->where('product_id', $product->id)
             ->when(
-                $images !== [],
-                fn ($query) => $query->whereNotIn('path', $images)
-            )
-            ->when(
-                $images === [],
+                $paths !== [],
+                fn ($query) => $query->whereNotIn('path', $paths),
                 fn ($query) => $query
             )
             ->delete();
 
-        foreach ($images as $index => $url) {
+        foreach ($imageRows as $row) {
             ProductImage::updateOrCreate(
                 [
                     'product_id' => $product->id,
-                    'path' => $url,
+                    'path' => $row['path'],
                 ],
                 [
+                    'disk' => $row['disk'],
+                    'source_url' => $row['source_url'],
+                    'mime_type' => $row['mime_type'],
+                    'file_size' => $row['file_size'],
+                    'sha256' => $row['sha256'],
                     'alt_text' => $product->name,
                     'title' => $product->name,
-                    'is_main' => $index === 0,
-                    'sort_order' => $index,
+                    'is_main' => $row['is_main'],
+                    'sort_order' => $row['sort_order'],
                 ]
             );
         }
@@ -109,6 +141,35 @@ class EldanProductImporter
                     ? (string) $optionData['external_option_id']
                     : null;
 
+                $declaredSwatchType = $attributeData['swatch_type'] ?? null;
+                $rawSwatchValue = $optionData['swatch_value'] ?? null;
+
+                $swatchType = null;
+                $swatchValue = null;
+                $swatchImageDisk = null;
+                $swatchImagePath = null;
+                $swatchSourceUrl = null;
+
+                if (is_string($rawSwatchValue) && $rawSwatchValue !== '') {
+                    if ($this->isHexColour($rawSwatchValue)) {
+                        $swatchType = 'color';
+                        $swatchValue = $rawSwatchValue;
+                    } elseif (filter_var($rawSwatchValue, FILTER_VALIDATE_URL)) {
+                        $swatchType = 'image';
+
+                        $importedSwatch = $this->remoteImageImporter->import(
+                            $rawSwatchValue,
+                            'swatches/eldan/attribute-'.$externalAttributeId.'/option-'.$externalOptionId
+                        );
+
+                        $swatchImageDisk = $importedSwatch['disk'];
+                        $swatchImagePath = $importedSwatch['path'];
+                        $swatchSourceUrl = $importedSwatch['source_url'];
+                    } else {
+                        $swatchType = $declaredSwatchType;
+                    }
+                }
+
                 $value = AttributeValue::updateOrCreate(
                     [
                         'attribute_id' => $attribute->id,
@@ -117,7 +178,11 @@ class EldanProductImporter
                     [
                         'value' => $optionData['label'],
                         'slug' => Str::slug($optionData['label']),
-                        'swatch_value' => $optionData['swatch_value'] ?? null,
+                        'swatch_type' => $swatchType,
+                        'swatch_value' => $swatchValue,
+                        'swatch_image_disk' => $swatchImageDisk,
+                        'swatch_image_path' => $swatchImagePath,
+                        'swatch_source_url' => $swatchSourceUrl,
                         'sort_order' => $sortOrder,
                     ]
                 );
@@ -150,7 +215,7 @@ class EldanProductImporter
                 ],
                 [
                     'sku' => $variantData['sku']
-                        ?: $normalized['external_parent_sku'] . '-' . $variantData['external_variant_id'],
+                        ?: $normalized['external_parent_sku'].'-'.$variantData['external_variant_id'],
                     'status' => ProductVariantStatus::ACTIVE,
                     'price_net_amount' => $netMinor,
                     'currency' => Currency::PLN,
@@ -223,34 +288,66 @@ class EldanProductImporter
 
     private function syncColourGalleryImages(Product $product, int $attributeValueId, array $images, string $productName): void
     {
-        $images = array_values(array_unique(array_filter(
-            $images,
-            fn ($url) => is_string($url) && $url !== ''
-        )));
+        $imageRows = [];
+
+        foreach (array_values(array_unique($images)) as $index => $url) {
+            if (! is_string($url) || $url === '') {
+                continue;
+            }
+
+            $imported = $this->remoteImageImporter->import(
+                $url,
+                'products/eldan/'.$product->external_id.'/attribute-values/'.$attributeValueId
+            );
+
+            $imageRows[] = [
+                'disk' => $imported['disk'],
+                'path' => $imported['path'],
+                'source_url' => $imported['source_url'],
+                'mime_type' => $imported['mime_type'],
+                'file_size' => $imported['file_size'],
+                'sha256' => $imported['sha256'],
+                'sort_order' => $index,
+                'is_main' => $index === 0,
+            ];
+        }
+
+        $paths = array_column($imageRows, 'path');
 
         ProductAttributeValueImage::query()
             ->where('product_id', $product->id)
             ->where('attribute_value_id', $attributeValueId)
             ->when(
-                $images !== [],
-                fn ($query) => $query->whereNotIn('path', $images)
+                $paths !== [],
+                fn ($query) => $query->whereNotIn('path', $paths),
+                fn ($query) => $query
             )
             ->delete();
 
-        foreach ($images as $index => $url) {
+        foreach ($imageRows as $row) {
             ProductAttributeValueImage::updateOrCreate(
                 [
                     'product_id' => $product->id,
                     'attribute_value_id' => $attributeValueId,
-                    'path' => $url,
+                    'path' => $row['path'],
                 ],
                 [
+                    'disk' => $row['disk'],
+                    'source_url' => $row['source_url'],
+                    'mime_type' => $row['mime_type'],
+                    'file_size' => $row['file_size'],
+                    'sha256' => $row['sha256'],
                     'alt_text' => $productName,
                     'title' => $productName,
-                    'is_main' => $index === 0,
-                    'sort_order' => $index,
+                    'is_main' => $row['is_main'],
+                    'sort_order' => $row['sort_order'],
                 ]
             );
         }
+    }
+
+    private function isHexColour(string $value): bool
+    {
+        return (bool) preg_match('/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/', $value);
     }
 }
