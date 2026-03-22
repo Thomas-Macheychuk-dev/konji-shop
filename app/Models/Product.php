@@ -70,4 +70,11 @@ class Product extends Model
             ->orderBy('sort_order')
             ->orderBy('id');
     }
+
+    public function defaultVariant(): HasOne
+    {
+        return $this->hasOne(ProductVariant::class)
+            ->where('is_default', true)
+            ->orderByDesc('id');
+    }
 }
