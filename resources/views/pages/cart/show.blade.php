@@ -37,7 +37,10 @@
                             $variant = $item->variant;
                             $imageUrl = $item->meta['image_url'] ?? $product?->mainImage?->url;
                             $lineTotal = $item->unit_price * $item->quantity;
-                            $initialQuantity = min(max($item->quantity, 1), 50);
+                            $initialQuantity = min(
+                                max($item->quantity, \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE),
+                                \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE
+                            );
                         @endphp
 
                         <article class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
@@ -114,21 +117,23 @@
                                                     @input="
                                                         quantity = Number(quantity);
                                                         if (!Number.isFinite(quantity) || quantity < 1) quantity = 1;
-                                                        if (quantity > 50) quantity = 50;
+                                                        if (quantity > {{ \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE }}) {
+                                                            quantity = {{ \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE }};
+                                                        }
                                                         quantity = Math.floor(quantity);
                                                     "
                                                     type="number"
                                                     name="quantity"
-                                                    min="1"
-                                                    max="50"
+                                                    min="{{ \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE }}"
+                                                    max="{{ \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE }}"
                                                     class="h-11 w-16 border-x border-zinc-300 bg-transparent text-center text-sm font-medium text-zinc-900 focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                                 >
 
                                                 <button
                                                     type="button"
                                                     class="inline-flex h-11 w-11 items-center justify-center text-lg font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
-                                                    :disabled="quantity >= 50"
-                                                    @click="quantity = Math.min(50, quantity + 1)"
+                                                    :disabled="quantity >= {{ \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE }}"
+                                                    @click="quantity = Math.min({{ \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE }}, quantity + 1)"
                                                 >
                                                     +
                                                 </button>
