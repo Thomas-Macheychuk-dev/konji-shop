@@ -15,6 +15,12 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                {{ session('error') }}
+            </div>
+        @endif
+
         @if (! $cart || $cart->items->isEmpty())
             <div class="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
                 <p class="text-zinc-700">Your cart is empty.</p>
@@ -36,7 +42,16 @@
                             $product = $item->product;
                             $variant = $item->variant;
                             $imageUrl = $item->meta['image_url'] ?? $product?->mainImage?->url;
-                            $lineTotal = $item->unit_price * $item->quantity;
+                            $currentUnitPrice = $item->currentUnitPriceAmount();
+                            $currentLineTotal = $item->currentLineTotalAmount();
+                            $priceChanged = $currentUnitPrice !== null && (int) $item->unit_price !== $currentUnitPrice;
+                            $variantName =
+                                $item->meta['variant_name']
+                                ?? (
+                                    $variant && $variant->relationLoaded('attributeValues') && $variant->attributeValues->isNotEmpty()
+                                        ? $variant->attributeValues->pluck('value')->filter()->implode(' / ')
+                                        : null
+                                );
                             $initialQuantity = min(
                                 max($item->quantity, \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE),
                                 \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE
@@ -66,21 +81,41 @@
                                                 {{ $item->meta['product_name'] ?? $product?->name ?? 'Product' }}
                                             </h2>
 
-                                            @if (!empty($item->meta['variant_name']))
+                                            @if ($variantName)
                                                 <p class="mt-1 text-sm text-zinc-600">
-                                                    Variant: {{ $item->meta['variant_name'] }}
+                                                    Variant: {{ $variantName }}
+                                                </p>
+                                            @endif
+
+                                            @if (! $variant)
+                                                <p class="mt-2 text-sm font-medium text-red-600">
+                                                    This variant is no longer available.
+                                                </p>
+                                            @elseif ($currentUnitPrice === null)
+                                                <p class="mt-2 text-sm font-medium text-red-600">
+                                                    Current price is unavailable for this item.
+                                                </p>
+                                            @elseif ($priceChanged)
+                                                <p class="mt-2 text-sm font-medium text-amber-600">
+                                                    Price updated since this item was added to your cart.
                                                 </p>
                                             @endif
                                         </div>
 
                                         <div class="text-right">
-                                            <p class="text-sm text-zinc-500">
-                                                {{ number_format($item->unit_price / 100, 2, ',', ' ') }} {{ $item->currency }}
-                                                each
-                                            </p>
-                                            <p class="mt-1 text-lg font-semibold text-zinc-900">
-                                                {{ number_format($lineTotal / 100, 2, ',', ' ') }} {{ $item->currency }}
-                                            </p>
+                                            @if ($currentUnitPrice !== null)
+                                                <p class="text-sm text-zinc-500">
+                                                    {{ number_format($currentUnitPrice / 100, 2, ',', ' ') }} {{ $variant?->currency?->value ?? $item->currency }}
+                                                    each
+                                                </p>
+                                                <p class="mt-1 text-lg font-semibold text-zinc-900">
+                                                    {{ number_format(($currentLineTotal ?? 0) / 100, 2, ',', ' ') }} {{ $variant?->currency?->value ?? $item->currency }}
+                                                </p>
+                                            @else
+                                                <p class="text-sm font-medium text-red-600">
+                                                    Price unavailable
+                                                </p>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -105,8 +140,8 @@
                                                 <button
                                                     type="button"
                                                     class="inline-flex h-11 w-11 items-center justify-center text-lg font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
-                                                    :disabled="quantity <= 1"
-                                                    @click="quantity = Math.max(1, quantity - 1)"
+                                                    :disabled="quantity <= {{ \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE }}"
+                                                    @click="quantity = Math.max({{ \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE }}, quantity - 1)"
                                                 >
                                                     −
                                                 </button>
@@ -116,7 +151,9 @@
                                                     x-model.number="quantity"
                                                     @input="
                                                         quantity = Number(quantity);
-                                                        if (!Number.isFinite(quantity) || quantity < 1) quantity = 1;
+                                                        if (!Number.isFinite(quantity) || quantity < {{ \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE }}) {
+                                                            quantity = {{ \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE }};
+                                                        }
                                                         if (quantity > {{ \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE }}) {
                                                             quantity = {{ \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE }};
                                                         }
@@ -184,16 +221,44 @@
                                     {{ number_format($subtotal / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                 </dd>
                             </div>
+
+                            <div class="flex items-center justify-between">
+                                <dt>Shipping</dt>
+                                <dd class="font-medium text-zinc-900">
+                                    {{ number_format(($shipping ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                </dd>
+                            </div>
+
+                            @if (($discount ?? 0) > 0)
+                                <div class="flex items-center justify-between">
+                                    <dt>Discount</dt>
+                                    <dd class="font-medium text-zinc-900">
+                                        -{{ number_format($discount / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                    </dd>
+                                </div>
+                            @endif
+
+                            <div class="border-t border-zinc-200 pt-3">
+                                <div class="flex items-center justify-between">
+                                    <dt class="text-base font-semibold text-zinc-900">Total</dt>
+                                    <dd class="text-base font-semibold text-zinc-900">
+                                        {{ number_format(($total ?? $subtotal) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                    </dd>
+                                </div>
+                            </div>
                         </dl>
 
+                        <p class="mt-4 text-xs text-zinc-500">
+                            Prices in cart reflect current product variant prices.
+                        </p>
+
                         <div class="mt-6 space-y-3">
-                            <button
-                                type="button"
-                                disabled
-                                class="inline-flex w-full cursor-not-allowed items-center justify-center rounded-xl bg-zinc-200 px-5 py-3 text-sm font-semibold text-zinc-500"
+                            <a
+                                href="{{ route('checkout.show') }}"
+                                class="inline-flex w-full items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                             >
-                                Checkout coming soon
-                            </button>
+                                Proceed to checkout
+                            </a>
 
                             <a
                                 href="{{ route('home') }}"

@@ -43,6 +43,32 @@ return [
         'preorder' => 'Przedsprzedaż',
     ],
 
+    'order_status' => [
+        'draft' => 'Szkic',
+        'pending_payment' => 'Oczekuje na płatność',
+        'paid' => 'Opłacone',
+        'processing' => 'W realizacji',
+        'shipped' => 'Wysłane',
+        'completed' => 'Zrealizowane',
+        'cancelled' => 'Anulowane',
+    ],
+
+    'payment_status' => [
+        'unpaid' => 'Nieopłacone',
+        'pending' => 'Oczekujące',
+        'paid' => 'Opłacone',
+        'failed' => 'Nieudane',
+        'refunded' => 'Zwrócone',
+    ],
+
+    'fulfilment_status' => [
+        'unfulfilled' => 'Nieprzygotowane do realizacji',
+        'processing' => 'W realizacji',
+        'shipped' => 'Wysłane',
+        'delivered' => 'Dostarczone',
+        'returned' => 'Zwrócone',
+    ],
+
     'company_data_key' => [
         'name' => 'Nazwa firmy',
         'legal_name' => 'Pełna nazwa firmy',

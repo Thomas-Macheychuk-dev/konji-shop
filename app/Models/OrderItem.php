@@ -7,30 +7,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CartItem extends Model
+class OrderItem extends Model
 {
     protected $fillable = [
-        'cart_id',
+        'order_id',
         'product_id',
         'product_variant_id',
+        'product_name_snapshot',
+        'variant_name_snapshot',
+        'sku_snapshot',
+        'unit_price_amount',
         'quantity',
-        'unit_price',
-        'currency',
+        'line_total_amount',
+        'vat_rate_snapshot',
         'meta',
     ];
 
     protected function casts(): array
     {
         return [
+            'unit_price_amount' => 'integer',
             'quantity' => 'integer',
-            'unit_price' => 'integer',
+            'line_total_amount' => 'integer',
+            'vat_rate_snapshot' => 'integer',
             'meta' => 'array',
         ];
     }
 
-    public function cart(): BelongsTo
+    public function order(): BelongsTo
     {
-        return $this->belongsTo(Cart::class);
+        return $this->belongsTo(Order::class);
     }
 
     public function product(): BelongsTo
@@ -43,19 +49,13 @@ class CartItem extends Model
         return $this->belongsTo(ProductVariant::class, 'product_variant_id');
     }
 
-    public function currentUnitPriceAmount(): ?int
+    public function unitPriceDecimal(): string
     {
-        return $this->variant?->grossPriceAmount();
+        return number_format($this->unit_price_amount / 100, 2, '.', '');
     }
 
-    public function currentLineTotalAmount(): ?int
+    public function lineTotalDecimal(): string
     {
-        $unitPrice = $this->currentUnitPriceAmount();
-
-        if ($unitPrice === null) {
-            return null;
-        }
-
-        return $unitPrice * $this->quantity;
+        return number_format($this->line_total_amount / 100, 2, '.', '');
     }
 }

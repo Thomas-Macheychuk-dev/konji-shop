@@ -43,6 +43,32 @@ return [
         'preorder' => 'Pre-order',
     ],
 
+    'order_status' => [
+        'draft' => 'Draft',
+        'pending_payment' => 'Pending payment',
+        'paid' => 'Paid',
+        'processing' => 'Processing',
+        'shipped' => 'Shipped',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+    ],
+
+    'payment_status' => [
+        'unpaid' => 'Unpaid',
+        'pending' => 'Pending',
+        'paid' => 'Paid',
+        'failed' => 'Failed',
+        'refunded' => 'Refunded',
+    ],
+
+    'fulfilment_status' => [
+        'unfulfilled' => 'Unfulfilled',
+        'processing' => 'Processing',
+        'shipped' => 'Shipped',
+        'delivered' => 'Delivered',
+        'returned' => 'Returned',
+    ],
+
     'company_data_key' => [
         'name' => 'Company name',
         'legal_name' => 'Legal company name',
