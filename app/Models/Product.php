@@ -77,4 +77,9 @@ class Product extends Model
             ->where('is_default', true)
             ->orderByDesc('id');
     }
+
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
