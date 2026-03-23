@@ -8,6 +8,8 @@ const props = defineProps({
     },
 });
 
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
+
 const optionGroups = computed(() => {
     const groups = (props.product.option_groups ?? []).map((group) => ({
         ...group,
@@ -19,10 +21,9 @@ const optionGroups = computed(() => {
         }),
     }));
 
-    console.log('SORTED GROUPS', groups);
-
     return groups;
 });
+
 const variants = computed(() => props.product.variants ?? []);
 const baseImages = computed(() => props.product.base_images ?? []);
 
@@ -41,6 +42,23 @@ const defaultVariant = computed(() => {
 });
 
 const lastSelectedValueId = ref(null);
+const quantity = ref(1);
+
+watch(quantity, (value) => {
+    const numeric = Number(value);
+
+    if (!Number.isFinite(numeric) || numeric < 1) {
+        quantity.value = 1;
+        return;
+    }
+
+    if (numeric > 50) {
+        quantity.value = 50;
+        return;
+    }
+
+    quantity.value = Math.floor(numeric);
+});
 
 function initializeSelection() {
     const nextSelection = {};
@@ -236,6 +254,14 @@ function isImageSelected(index) {
     return currentImage.value === index;
 }
 
+const canAddToCart = computed(() => {
+    if (!selectedVariant.value?.id) {
+        return false;
+    }
+
+    return selectedVariant.value.stock_status !== 'out_of_stock';
+});
+
 initializeSelection();
 
 watch(
@@ -304,16 +330,74 @@ watch(selectedVariant, () => {
                 </div>
 
                 <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                    <div class="text-3xl font-semibold text-zinc-900">
-                        {{ formatPrice(selectedVariant?.price, selectedVariant?.currency || 'PLN') }}
-                    </div>
-
-                    <div
-                        v-if="selectedVariant?.stock_status"
-                        class="mt-3 inline-flex rounded-full bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700"
+                    <form
+                        method="POST"
+                        action="/cart/items"
+                        class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
                     >
-                        {{ formatStockStatus(selectedVariant.stock_status) }}
-                    </div>
+                        <input type="hidden" name="_token" :value="csrfToken">
+                        <input
+                            type="hidden"
+                            name="product_variant_id"
+                            :value="selectedVariant?.id ?? ''"
+                        >
+
+                        <div class="min-w-0">
+                            <div class="text-3xl font-semibold text-zinc-900">
+                                {{ formatPrice(selectedVariant?.price, selectedVariant?.currency || 'PLN') }}
+                            </div>
+
+                            <div
+                                v-if="selectedVariant?.stock_status"
+                                class="mt-3 inline-flex rounded-full bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700"
+                            >
+                                {{ formatStockStatus(selectedVariant.stock_status) }}
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-end">
+                            <div class="flex items-center rounded-xl border border-zinc-300 bg-white shadow-sm">
+                                <button
+                                    type="button"
+                                    class="inline-flex h-11 w-11 items-center justify-center text-lg font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
+                                    :disabled="quantity <= 1"
+                                    @click="quantity = Math.max(1, quantity - 1)"
+                                >
+                                    −
+                                </button>
+
+                                <input
+                                    id="quantity"
+                                    v-model.number="quantity"
+                                    type="number"
+                                    name="quantity"
+                                    min="1"
+                                    max="50"
+                                    class="h-11 w-16 border-x border-zinc-300 bg-transparent text-center text-sm font-medium text-zinc-900 focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="inline-flex h-11 w-11 items-center justify-center text-lg font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
+                                    :disabled="quantity >= 50"
+                                    @click="quantity = Math.min(50, quantity + 1)"
+                                >
+                                    +
+                                </button>
+                            </div>
+
+                            <button
+                                type="submit"
+                                :disabled="!canAddToCart"
+                                class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition"
+                                :class="canAddToCart
+                    ? 'bg-zinc-900 text-white hover:bg-zinc-800'
+                    : 'cursor-not-allowed bg-zinc-200 text-zinc-500'"
+                            >
+                                Add to cart
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <div

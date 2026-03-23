@@ -1,6 +1,10 @@
 import { createApp, h } from 'vue';
 import ProductConfigurator from './components/ProductConfigurator.vue';
+import Alpine from 'alpinejs';
 
+window.Alpine = Alpine;
+
+Alpine.start();
 const el = document.getElementById('product-configurator');
 
 if (el) {
@@ -10,3 +14,4 @@ if (el) {
         render: () => h(ProductConfigurator, { product }),
     }).mount(el);
 }
+

@@ -72,4 +72,9 @@ class ProductVariant extends Model
 
         return $this->vat_rate->vatAmountFromNet($this->price_net_amount);
     }
+
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class, 'product_variant_id');
+    }
 }
