@@ -43,6 +43,7 @@ const defaultVariant = computed(() => {
 
 const lastSelectedValueId = ref(null);
 const quantity = ref(1);
+const selectionError = ref('');
 
 watch(quantity, (value) => {
     const numeric = Number(value);
@@ -58,6 +59,12 @@ watch(quantity, (value) => {
     }
 
     quantity.value = Math.floor(numeric);
+});
+
+const missingOptionGroups = computed(() => {
+    return optionGroups.value.filter((group) => {
+        return !selectedOptionValueIds.value[group.code];
+    });
 });
 
 function initializeSelection() {
@@ -127,6 +134,21 @@ const selectedVariant = computed(() => {
     }
 
     return matchingVariants[0];
+});
+
+const exactSelectedVariant = computed(() => {
+    if (!variants.value.length) {
+        return null;
+    }
+
+    if (missingOptionGroups.value.length > 0) {
+        return null;
+    }
+
+    return variants.value.find((variant) => {
+        return variant.option_value_ids.length === selectedIds.value.length
+            && selectedIds.value.every((id) => variant.option_value_ids.includes(id));
+    }) ?? null;
 });
 
 function canSelectValue(groupCode, valueId) {
@@ -200,7 +222,27 @@ function selectOption(groupCode, valueId) {
     };
 
     selectedOptionValueIds.value = normalizeSelection(nextSelection, groupCode);
+    selectionError.value = '';
     lastSelectedValueId.value = nextValueId;
+}
+
+function handleAddToCartSubmit(event) {
+    if (missingOptionGroups.value.length > 0) {
+        selectionError.value = `Please select: ${missingOptionGroups.value.map((group) => group.label).join(', ')}`;
+        event.preventDefault();
+        return;
+    }
+
+    if (!exactSelectedVariant.value?.id) {
+        selectionError.value = 'Please select a valid product variant.';
+        event.preventDefault();
+        return;
+    }
+
+    if (exactSelectedVariant.value.stock_status === 'out_of_stock') {
+        selectionError.value = 'This variant is out of stock.';
+        event.preventDefault();
+    }
 }
 
 const galleryImages = computed(() => {
@@ -255,11 +297,7 @@ function isImageSelected(index) {
 }
 
 const canAddToCart = computed(() => {
-    if (!selectedVariant.value?.id) {
-        return false;
-    }
-
-    return selectedVariant.value.stock_status !== 'out_of_stock';
+    return exactSelectedVariant.value?.stock_status !== 'out_of_stock';
 });
 
 initializeSelection();
@@ -269,6 +307,7 @@ watch(
     () => {
         initializeSelection();
         currentImage.value = 0;
+        selectionError.value = '';
     },
     { deep: true }
 );
@@ -276,6 +315,10 @@ watch(
 watch(selectedVariant, () => {
     currentImage.value = 0;
 });
+
+window.dispatchEvent(new CustomEvent('cart:updated', {
+    detail: { open: true },
+}));
 </script>
 
 <template>
@@ -334,12 +377,13 @@ watch(selectedVariant, () => {
                         method="POST"
                         action="/cart/items"
                         class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+                        @submit="handleAddToCartSubmit"
                     >
                         <input type="hidden" name="_token" :value="csrfToken">
                         <input
                             type="hidden"
                             name="product_variant_id"
-                            :value="selectedVariant?.id ?? ''"
+                            :value="exactSelectedVariant?.id ?? ''"
                         >
 
                         <div class="min-w-0">
@@ -388,16 +432,19 @@ watch(selectedVariant, () => {
 
                             <button
                                 type="submit"
-                                :disabled="!canAddToCart"
-                                class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition"
-                                :class="canAddToCart
-                    ? 'bg-zinc-900 text-white hover:bg-zinc-800'
-                    : 'cursor-not-allowed bg-zinc-200 text-zinc-500'"
+                                class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                             >
                                 Add to cart
                             </button>
                         </div>
                     </form>
+
+                    <p
+                        v-if="selectionError"
+                        class="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                    >
+                        {{ selectionError }}
+                    </p>
                 </div>
 
                 <div

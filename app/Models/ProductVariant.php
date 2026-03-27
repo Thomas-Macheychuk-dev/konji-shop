@@ -55,6 +55,11 @@ class ProductVariant extends Model
         )->withTimestamps();
     }
 
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class, 'product_variant_id');
+    }
+
     public function grossPriceAmount(): ?int
     {
         if ($this->price_net_amount === null || $this->vat_rate === null) {
@@ -73,8 +78,27 @@ class ProductVariant extends Model
         return $this->vat_rate->vatAmountFromNet($this->price_net_amount);
     }
 
-    public function cartItems(): HasMany
+    public function getMainImageAttribute(): ?ProductAttributeValueImage
     {
-        return $this->hasMany(CartItem::class, 'product_variant_id');
+        $attributeValueIds = $this->relationLoaded('attributeValues')
+            ? $this->attributeValues->pluck('id')->all()
+            : $this->attributeValues()->pluck('attribute_values.id')->all();
+
+        if ($attributeValueIds === []) {
+            return null;
+        }
+
+        return ProductAttributeValueImage::query()
+            ->where('product_id', $this->product_id)
+            ->whereIn('attribute_value_id', $attributeValueIds)
+            ->orderByDesc('is_main')
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->first();
+    }
+
+    public function getMainImageUrlAttribute(): ?string
+    {
+        return $this->main_image?->url;
     }
 }

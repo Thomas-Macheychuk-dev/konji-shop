@@ -33,8 +33,8 @@ class CheckoutShowController extends Controller
         }
 
         $cart->load([
-            'items.product.mainImage',
             'items.variant.attributeValues.attribute',
+            'items.variant.attributeValues.productImage',
         ]);
 
         $totals = $cartPricingService->calculate($cart);

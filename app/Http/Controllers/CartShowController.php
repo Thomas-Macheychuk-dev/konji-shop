@@ -27,8 +27,9 @@ class CartShowController extends Controller
 
         if ($cart) {
             $cart->load([
-                'items.product.mainImage',
-                'items.variant',
+                'items.product',
+                'items.variant.attributeValues.attribute',
+                'items.variant.attributeValues.productImage',
             ]);
         }
 

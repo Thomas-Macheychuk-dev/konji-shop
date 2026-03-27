@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 
 class AttributeValue extends Model
@@ -52,6 +53,14 @@ class AttributeValue extends Model
             ->orderBy('id');
     }
 
+    public function productImage(): HasOne
+    {
+        return $this->hasOne(ProductAttributeValueImage::class)
+            ->orderByDesc('is_main')
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
     public function hasSwatch(): bool
     {
         return filled($this->swatch_value) || filled($this->swatch_image_path);
@@ -77,5 +86,10 @@ class AttributeValue extends Model
         }
 
         return Storage::disk($this->swatch_image_disk)->url($this->swatch_image_path);
+    }
+
+    public function getProductImageUrlAttribute(): ?string
+    {
+        return $this->productImage?->url;
     }
 }

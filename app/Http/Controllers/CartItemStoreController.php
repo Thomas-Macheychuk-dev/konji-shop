@@ -9,6 +9,9 @@ use App\Models\ProductVariant;
 use App\Services\Cart\CartGuestTokenResolver;
 use App\Services\Cart\CartService;
 use Illuminate\Http\RedirectResponse;
+use App\Enums\ProductStatus;
+use App\Enums\ProductVariantStatus;
+use App\Enums\StockStatus;
 
 class CartItemStoreController extends Controller
 {
@@ -20,6 +23,30 @@ class CartItemStoreController extends Controller
         $variant = ProductVariant::query()
             ->with('product.mainImage')
             ->findOrFail($request->integer('product_variant_id'));
+
+        if ($variant->status !== ProductVariantStatus::ACTIVE) {
+            return back()
+                ->withErrors([
+                    'product_variant_id' => 'This product variant is not available.',
+                ])
+                ->withInput();
+        }
+
+        if (! $variant->product || $variant->product->status !== ProductStatus::ACTIVE) {
+            return back()
+                ->withErrors([
+                    'product_variant_id' => 'This product is not available.',
+                ])
+                ->withInput();
+        }
+
+        if ($variant->stock_status === StockStatus::OUT_OF_STOCK) {
+            return back()
+                ->withErrors([
+                    'product_variant_id' => 'This product variant is out of stock.',
+                ])
+                ->withInput();
+        }
 
         $guestToken = $request->user()
             ? null
