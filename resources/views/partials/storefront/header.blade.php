@@ -48,6 +48,10 @@
                     Register
                 </a>
             @endauth
+            <div
+                id="cart-widget"
+                data-summary-url="{{ route('cart.summary') }}"
+            ></div>
         </nav>
     </div>
 </header>

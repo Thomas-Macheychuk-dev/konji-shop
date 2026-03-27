@@ -405,7 +405,7 @@
                                 @php
                                     $product = $item->product;
                                     $variant = $item->variant;
-                                    $imageUrl = $item->meta['image_url'] ?? $product?->mainImage?->url;
+                                    $imageUrl = $variant?->main_image_url ?? ($item->meta['image_url'] ?? null);
                                     $unitPrice = $item->currentUnitPriceAmount();
                                     $lineTotal = $item->currentLineTotalAmount();
                                     $variantName =

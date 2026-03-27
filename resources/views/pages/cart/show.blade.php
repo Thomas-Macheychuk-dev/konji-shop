@@ -41,17 +41,24 @@
                         @php
                             $product = $item->product;
                             $variant = $item->variant;
-                            $imageUrl = $item->meta['image_url'] ?? $product?->mainImage?->url;
+                            $productUrl = $product?->slug ? route('products.show', $product->slug) : null;
+                            $imageUrl = $variant?->main_image_url ?? ($item->meta['image_url'] ?? null);
                             $currentUnitPrice = $item->currentUnitPriceAmount();
                             $currentLineTotal = $item->currentLineTotalAmount();
                             $priceChanged = $currentUnitPrice !== null && (int) $item->unit_price !== $currentUnitPrice;
-                            $variantName =
-                                $item->meta['variant_name']
-                                ?? (
-                                    $variant && $variant->relationLoaded('attributeValues') && $variant->attributeValues->isNotEmpty()
-                                        ? $variant->attributeValues->pluck('value')->filter()->implode(' / ')
-                                        : null
-                                );
+                            $variantName = $variant?->attributeValues
+                                ?->map(function ($attributeValue) {
+                                    $attributeName = $attributeValue->attribute?->name;
+                                    $value = $attributeValue->value;
+
+                                    if (! $attributeName || ! $value) {
+                                        return null;
+                                    }
+
+                                    return "{$attributeName}: {$value}";
+                                })
+                                ->filter()
+                                ->implode(', ');
                             $initialQuantity = min(
                                 max($item->quantity, \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE),
                                 \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE
@@ -61,29 +68,59 @@
                         <article class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
                             <div class="flex flex-col gap-5 sm:flex-row">
                                 <div class="w-full shrink-0 sm:w-28">
-                                    @if ($imageUrl)
-                                        <img
-                                            src="{{ $imageUrl }}"
-                                            alt="{{ $item->meta['product_name'] ?? $product?->name ?? 'Product image' }}"
-                                            class="aspect-square w-full rounded-xl border border-zinc-200 object-cover"
+                                    @if ($productUrl)
+                                        <a
+                                            href="{{ $productUrl }}"
+                                            class="block focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2 rounded-xl"
                                         >
+                                            @if ($imageUrl)
+                                                <img
+                                                    src="{{ $imageUrl }}"
+                                                    alt="{{ $item->meta['product_name'] ?? $product?->name ?? 'Product image' }}"
+                                                    class="aspect-square w-full rounded-xl border border-zinc-200 object-cover transition hover:opacity-90"
+                                                >
+                                            @else
+                                                <div class="flex aspect-square w-full items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500 transition hover:bg-zinc-200">
+                                                    No image
+                                                </div>
+                                            @endif
+                                        </a>
                                     @else
-                                        <div class="flex aspect-square w-full items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500">
-                                            No image
-                                        </div>
+                                        @if ($imageUrl)
+                                            <img
+                                                src="{{ $imageUrl }}"
+                                                alt="{{ $item->meta['product_name'] ?? $product?->name ?? 'Product image' }}"
+                                                class="aspect-square w-full rounded-xl border border-zinc-200 object-cover"
+                                            >
+                                        @else
+                                            <div class="flex aspect-square w-full items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500">
+                                                No image
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
 
                                 <div class="flex-1">
                                     <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                                         <div>
-                                            <h2 class="text-lg font-semibold text-zinc-900">
-                                                {{ $item->meta['product_name'] ?? $product?->name ?? 'Product' }}
-                                            </h2>
+                                            @if ($productUrl)
+                                                <h2 class="text-lg font-semibold text-zinc-900">
+                                                    <a
+                                                        href="{{ $productUrl }}"
+                                                        class="transition hover:text-zinc-700 hover:underline"
+                                                    >
+                                                        {{ $item->meta['product_name'] ?? $product?->name ?? 'Product' }}
+                                                    </a>
+                                                </h2>
+                                            @else
+                                                <h2 class="text-lg font-semibold text-zinc-900">
+                                                    {{ $item->meta['product_name'] ?? $product?->name ?? 'Product' }}
+                                                </h2>
+                                            @endif
 
                                             @if ($variantName)
                                                 <p class="mt-1 text-sm text-zinc-600">
-                                                    Variant: {{ $variantName }}
+                                                    {{ $variantName }}
                                                 </p>
                                             @endif
 
