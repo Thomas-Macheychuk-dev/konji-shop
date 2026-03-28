@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Account\OrderCancelController;
 use App\Http\Controllers\Account\OrderIndexController;
 use App\Http\Controllers\Account\OrderShowController;
 use App\Http\Controllers\CartItemDestroyController;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestOrderTrackLookupController;
 use App\Http\Controllers\GuestOrderTrackShowController;
 use App\Http\Controllers\GuestOrderShowController;
+use App\Http\Controllers\GuestOrderCancelController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -36,11 +38,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
 
     Route::prefix('account')->name('account.')->group(function () {
-        Route::get('/orders', OrderIndexController::class)
-            ->name('orders.index');
-
-        Route::get('/orders/{orderId}', OrderShowController::class)
-            ->name('orders.show');
+        Route::get('/orders', OrderIndexController::class)->name('orders.index');
+        Route::get('/orders/{orderId}', OrderShowController::class)->name('orders.show');
+        Route::post('/orders/{orderId}/cancel', OrderCancelController::class)->name('orders.cancel');
     });
 });
 
@@ -48,6 +48,7 @@ Route::prefix('guest/orders')->name('guest.orders.')->group(function () {
     Route::get('/track', GuestOrderTrackShowController::class)->name('track.show');
     Route::post('/track', GuestOrderTrackLookupController::class)->name('track.lookup');
     Route::get('/status/{order}', GuestOrderShowController::class)->name('show');
+    Route::post('/status/{order}/cancel', GuestOrderCancelController::class)->name('cancel');
 });
 
 require __DIR__.'/settings.php';
