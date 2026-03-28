@@ -29,9 +29,9 @@ class OrderNumberGenerator
     private function makeCandidate(): string
     {
         return sprintf(
-            'ORDER-%s-%04d',
+            '%s-%04d',
             now()->format('Ymd'),
-            random_int(1, 99999)
+            random_int(1, 9999)
         );
     }
 }

@@ -22,6 +22,17 @@ enum FulfilmentStatus: string
         return __($this->translationKey());
     }
 
+    public function badgeColorClasses(): string
+    {
+        return match ($this) {
+            self::UNFULFILLED => 'bg-zinc-100 text-zinc-800',
+            self::PROCESSING => 'bg-amber-100 text-amber-800',
+            self::SHIPPED => 'bg-blue-100 text-blue-800',
+            self::DELIVERED => 'bg-green-100 text-green-800',
+            self::RETURNED => 'bg-purple-100 text-purple-800',
+        };
+    }
+
     public function isUnfulfilled(): bool
     {
         return $this === self::UNFULFILLED;

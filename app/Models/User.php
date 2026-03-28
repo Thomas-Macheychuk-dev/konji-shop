@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -75,5 +76,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Cart::class)
             ->where('status', CartStatus::Active->value);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class)->latest('placed_at')->latest('id');
     }
 }
