@@ -470,24 +470,26 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                             :disabled="!canSelectValue(group.code, value.id)"
                             @click="selectOption(group.code, value.id)"
                         >
-                            <span class="inline-flex items-center gap-2">
-                                <template v-if="value.swatch?.type === 'color' && value.swatch?.value">
-                                    <span
-                                        class="inline-block h-4 w-4 rounded-full border border-zinc-300"
-                                        :style="{ backgroundColor: value.swatch.value }"
-                                    />
-                                </template>
+                        <span class="inline-flex items-center gap-2">
+                            <template v-if="value.swatch?.type === 'color' && value.swatch?.value">
+                                <span
+                                    class="inline-block h-5 w-5 rounded-full border border-zinc-300"
+                                    :style="{ backgroundColor: value.swatch.value }"
+                                />
+                            </template>
 
-                                <template v-else-if="value.swatch?.type === 'image' && value.swatch?.image_url">
+                            <template v-else-if="value.swatch?.type === 'image' && value.swatch?.image_url">
+                                <span class="inline-block h-5 w-5 overflow-hidden rounded-full border border-zinc-300">
                                     <img
                                         :src="value.swatch.image_url"
                                         :alt="value.label"
-                                        class="h-5 w-5 rounded border border-zinc-300 object-cover"
+                                        class="h-full w-full object-cover"
                                     />
-                                </template>
+                                </span>
+                            </template>
 
-                                <span>{{ value.label }}</span>
-                            </span>
+                            <span>{{ value.label }}</span>
+                        </span>
                         </button>
                     </div>
                 </div>
