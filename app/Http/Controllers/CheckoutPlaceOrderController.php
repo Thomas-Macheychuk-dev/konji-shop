@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderPlaced;
 use App\Http\Requests\PlaceOrderRequest;
 use App\Services\Cart\CartGuestTokenResolver;
 use App\Services\Cart\CartService;
@@ -51,6 +52,8 @@ class CheckoutPlaceOrderController extends Controller
                 ->withInput()
                 ->with('error', 'We could not place your order. Please try again.');
         }
+
+        OrderPlaced::dispatch($order);
 
         $request->session()->put('checkout.last_order_id', $order->id);
 
