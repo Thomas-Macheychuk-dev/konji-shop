@@ -12,11 +12,14 @@
                 Home
             </a>
 
-            <a
-                href="#categories"
-                class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
-            >
-                Categories
+            @auth
+                <a href="{{ route('account.orders.index') }}">
+                    My orders
+                </a>
+            @endauth
+
+            <a href="{{ route('guest.orders.track.show') }}">
+                Order tracking
             </a>
 
             <a

@@ -22,6 +22,17 @@ enum PaymentStatus: string
         return __($this->translationKey());
     }
 
+    public function badgeColorClasses(): string
+    {
+        return match ($this) {
+            self::UNPAID => 'bg-zinc-100 text-zinc-800',
+            self::PENDING => 'bg-amber-100 text-amber-800',
+            self::PAID => 'bg-emerald-100 text-emerald-800',
+            self::FAILED => 'bg-red-100 text-red-800',
+            self::REFUNDED => 'bg-purple-100 text-purple-800',
+        };
+    }
+
     public function isUnpaid(): bool
     {
         return $this === self::UNPAID;
