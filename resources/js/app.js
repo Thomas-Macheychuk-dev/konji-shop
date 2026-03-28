@@ -2,6 +2,7 @@ import { createApp, h } from 'vue';
 import Alpine from 'alpinejs';
 import ProductConfigurator from './components/ProductConfigurator.vue';
 import CartWidget from './components/CartWidget.vue';
+import './order-cancel-confirmation';
 
 window.Alpine = Alpine;
 Alpine.start();

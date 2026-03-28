@@ -3,7 +3,7 @@
 @section('content')
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div>
+            <div class="w-full">
                 <a
                     href="{{ route('account.orders.index') }}"
                     class="inline-flex items-center text-sm font-medium text-zinc-600 transition hover:text-zinc-900"
@@ -11,22 +11,46 @@
                     ← Back to orders
                 </a>
 
-                <h1 class="mt-3 text-3xl font-bold tracking-tight text-zinc-900">
-                    Order {{ $order->number }}
-                </h1>
+                <div class="mt-3 flex items-center justify-between gap-4">
+                    <h1 class="text-3xl font-bold tracking-tight text-zinc-900">
+                        Order {{ $order->number }}
+                    </h1>
+
+                    @if ($order->canBeCancelledByCustomer())
+                        <form
+                            method="POST"
+                            action="{{ route('account.orders.cancel', $order->id) }}"
+                            data-order-cancel-form
+                        >
+                            @csrf
+
+                            <button
+                                type="submit"
+                                class="inline-flex items-center rounded-xl border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                            >
+                                Cancel order
+                            </button>
+                        </form>
+                    @endif
+                </div>
 
                 <p class="mt-2 text-sm text-zinc-600">
                     Placed on {{ $order->placed_at?->format('Y-m-d H:i') }}
                 </p>
             </div>
-
-            <div class="rounded-2xl border border-zinc-200 bg-white px-5 py-4 shadow-sm">
-                <p class="text-sm text-zinc-500">Order total</p>
-                <p class="mt-1 text-2xl font-bold text-zinc-900">
-                    {{ number_format($order->total_amount / 100, 2, '.', ' ') }} {{ $order->currency }}
-                </p>
-            </div>
         </div>
+
+        @if (session('success'))
+            <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <div class="mb-8 grid gap-4 lg:grid-cols-3">
             <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">

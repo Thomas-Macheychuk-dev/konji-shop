@@ -83,4 +83,23 @@ class Order extends Model
     {
         return $this->placed_at !== null;
     }
+
+    public function canBeCancelled(): bool
+    {
+        return $this->isPlaced()
+            && ! $this->status->isCancelled()
+            && $this->status->isPendingPayment()
+            && $this->payment_status->isUnpaid()
+            && $this->fulfilment_status->isUnfulfilled();
+    }
+
+    public function canBeCancelledByCustomer(): bool
+    {
+        return $this->canBeCancelled();
+    }
+
+    public function isGuestOrder(): bool
+    {
+        return $this->user_id === null && $this->guest_email !== null;
+    }
 }
