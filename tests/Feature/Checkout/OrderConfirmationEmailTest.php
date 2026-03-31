@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 uses(RefreshDatabase::class);
 
 test('guest checkout sends an order confirmation email', function () {
+    config()->set('queue.default', 'sync');
+
     Mail::fake();
 
     $product = Product::query()->create([
@@ -122,6 +124,8 @@ test('guest checkout sends an order confirmation email', function () {
 });
 
 test('authenticated checkout sends the order confirmation email to the user email', function () {
+    config()->set('queue.default', 'sync');
+
     Mail::fake();
 
     $user = User::factory()->create([
