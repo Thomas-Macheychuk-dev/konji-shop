@@ -30,12 +30,12 @@
             </a>
 
             @auth
-                <a
-                    href="{{ route('dashboard') }}"
-                    class="inline-flex items-center rounded-lg bg-zinc-900 px-4 py-2 font-medium text-white transition hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
-                >
-                    Dashboard
-                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <flux:button variant="ghost" type="submit" class="text-sm cursor-pointer" data-test="logout-button">
+                        {{ __('Log out') }}
+                    </flux:button>
+                </form>
             @else
                 <a
                     href="{{ route('login') }}"
