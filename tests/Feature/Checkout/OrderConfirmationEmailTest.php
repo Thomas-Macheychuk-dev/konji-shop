@@ -130,6 +130,7 @@ test('authenticated checkout sends the order confirmation email to the user emai
 
     $user = User::factory()->create([
         'email' => 'owner@gmail.com',
+        'phone_number' => '987654321',
     ]);
 
     $product = Product::query()->create([
