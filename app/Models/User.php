@@ -3,16 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Enums\CartStatus;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -28,6 +27,24 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'last_name',
+        'first_name',
+        'house_number',
+        'street',
+        'apartment_number',
+        'city',
+        'postcode',
+        'country',
+        'phone_number',
+        'wants_company_invoice',
+        'company_name',
+        'company_tax_id',
+        'company_street',
+        'company_house_number',
+        'company_apartment_number',
+        'company_city',
+        'company_postcode',
+        'company_country',
     ];
 
     /**
@@ -52,6 +69,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'wants_company_invoice' => 'boolean',
         ];
     }
 
@@ -60,10 +78,11 @@ class User extends Authenticatable
      */
     public function initials(): string
     {
-        return Str::of($this->name)
+        return Str::of(trim(($this->first_name ?? '').' '.($this->last_name ?? '')))
             ->explode(' ')
+            ->filter()
             ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->map(fn (string $word) => Str::upper(Str::substr($word, 0, 1)))
             ->implode('');
     }
 

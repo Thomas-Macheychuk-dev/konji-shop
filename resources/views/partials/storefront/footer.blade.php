@@ -69,14 +69,14 @@
                     <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Terms & conditions
                     </a>
+                    <a href="{{ route('legal.cookie-policy') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                        {{ __('Cookie policy') }}
+                    </a>
                     <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Privacy policy
                     </a>
                     <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Electronic services terms
-                    </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        GDPR information
                     </a>
                     <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Accessibility
