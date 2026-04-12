@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table): void {
+            $table->string('first_name')->after('id');
+            $table->string('last_name')->after('first_name');
+            $table->string('street')->nullable()->after('email');
+            $table->string('house_number', 50)->nullable()->after('street');
+            $table->string('apartment_number', 50)->nullable()->after('house_number');
+            $table->string('city')->nullable()->after('apartment_number');
+            $table->string('postcode', 32)->nullable()->after('city');
+            $table->string('country', 2)->nullable()->after('postcode');
+            $table->string('phone_number', 32)->nullable()->after('country');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table): void {
+            $table->dropColumn([
+                'first_name',
+                'last_name',
+                'street',
+                'house_number',
+                'apartment_number',
+                'city',
+                'postcode',
+                'country',
+                'phone_number',
+            ]);
+        });
+    }
+};
