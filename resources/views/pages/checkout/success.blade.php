@@ -1,7 +1,7 @@
 @extends('layouts.storefront')
 
 @section('content')
-    <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="rounded-2xl border border-green-200 bg-green-50 p-6 shadow-sm">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -28,37 +28,89 @@
 
                     <div class="mt-5 space-y-4">
                         @foreach ($order->items as $item)
-                            <article class="flex items-start justify-between gap-4 border-b border-zinc-100 pb-4 last:border-b-0 last:pb-0">
-                                <div class="min-w-0 flex-1">
-                                    <h3 class="text-sm font-medium text-zinc-900">
-                                        {{ $item->product_name_snapshot }}
-                                    </h3>
+                            @php
+                                $product = $item->product;
+                                $variant = $item->productVariant ?? $item->variant ?? null;
+                                $productUrl = $product?->slug ? route('products.show', $product->slug) : null;
 
-                                    @if ($item->variant_name_snapshot)
-                                        <p class="mt-1 text-sm text-zinc-500">
-                                            Variant: {{ $item->variant_name_snapshot }}
-                                        </p>
-                                    @endif
+                                $imageUrl = $variant?->main_image_url
+                                    ?? $product?->main_image_url
+                                    ?? null;
+                            @endphp
 
-                                    @if ($item->sku_snapshot)
-                                        <p class="mt-1 text-xs text-zinc-400">
-                                            SKU: {{ $item->sku_snapshot }}
-                                        </p>
-                                    @endif
+                            <article class="border-b border-zinc-100 pb-4 last:border-b-0 last:pb-0">
+                                <div class="flex gap-4">
+                                    <div class="w-20 shrink-0">
+                                        @if ($productUrl)
+                                            <a
+                                                href="{{ $productUrl }}"
+                                                class="block rounded-xl focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2"
+                                            >
+                                                @if ($imageUrl)
+                                                    <img
+                                                        src="{{ $imageUrl }}"
+                                                        alt="{{ $item->product_name_snapshot }}"
+                                                        class="aspect-square w-full rounded-xl border border-zinc-200 object-cover transition hover:opacity-90"
+                                                    >
+                                                @else
+                                                    <div class="flex aspect-square w-full items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500 transition hover:bg-zinc-200">
+                                                        No image
+                                                    </div>
+                                                @endif
+                                            </a>
+                                        @else
+                                            @if ($imageUrl)
+                                                <img
+                                                    src="{{ $imageUrl }}"
+                                                    alt="{{ $item->product_name_snapshot }}"
+                                                    class="aspect-square w-full rounded-xl border border-zinc-200 object-cover"
+                                                >
+                                            @else
+                                                <div class="flex aspect-square w-full items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500">
+                                                    No image
+                                                </div>
+                                            @endif
+                                        @endif
+                                    </div>
 
-                                    <p class="mt-2 text-xs text-zinc-500">
-                                        Quantity: {{ $item->quantity }}
-                                    </p>
-                                </div>
+                                    <div class="flex min-w-0 flex-1 items-start justify-between gap-4">
+                                        <div class="min-w-0 flex-1">
+                                            @if ($productUrl)
+                                                <h3 class="text-sm font-medium text-zinc-900">
+                                                    <a
+                                                        href="{{ $productUrl }}"
+                                                        class="transition hover:text-zinc-700 hover:underline"
+                                                    >
+                                                        {{ $item->product_name_snapshot }}
+                                                    </a>
+                                                </h3>
+                                            @else
+                                                <h3 class="text-sm font-medium text-zinc-900">
+                                                    {{ $item->product_name_snapshot }}
+                                                </h3>
+                                            @endif
 
-                                <div class="text-right">
-                                    <p class="text-sm text-zinc-500">
-                                        {{ number_format($item->unit_price_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
-                                        each
-                                    </p>
-                                    <p class="mt-1 text-sm font-semibold text-zinc-900">
-                                        {{ number_format($item->line_total_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
-                                    </p>
+                                            @if ($item->variant_name_snapshot)
+                                                <p class="mt-1 text-sm text-zinc-500">
+                                                    {{ $item->variant_name_snapshot }}
+                                                </p>
+                                            @endif
+
+                                            <p class="mt-2 text-xs text-zinc-500">
+                                                Quantity: {{ $item->quantity }}
+                                            </p>
+                                        </div>
+
+                                        <div class="text-right">
+                                            <p class="text-sm text-zinc-500">
+                                                {{ number_format($item->unit_price_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
+                                                each
+                                            </p>
+                                            <p class="mt-1 text-sm font-semibold text-zinc-900">
+                                                {{ number_format($item->line_total_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </article>
                         @endforeach
@@ -145,18 +197,18 @@
                                 <p>{{ $order->shippingAddress->company }}</p>
                             @endif
 
-                            <p>{{ $order->shippingAddress->address_line_1 }}</p>
+                            <p>{{ $order->shippingAddress->address_line_1 }}
 
                             @if ($order->shippingAddress->address_line_2)
-                                <p>{{ $order->shippingAddress->address_line_2 }}</p>
-                            @endif
+                                / {{ $order->shippingAddress->address_line_2 }}
+                            @endif</p>
 
                             <p>
                                 {{ $order->shippingAddress->postcode }}
                                 {{ $order->shippingAddress->city }}
                             </p>
 
-                            <p>{{ $order->shippingAddress->country_code }}</p>
+                            <p>{{ $order->shippingAddress->countryName() }}</p>
 
                             <div class="pt-2 text-zinc-500">
                                 <p>{{ $order->shippingAddress->email }}</p>
@@ -177,18 +229,18 @@
                                 <p>{{ $order->billingAddress->company }}</p>
                             @endif
 
-                            <p>{{ $order->billingAddress->address_line_1 }}</p>
+                            <p>{{ $order->billingAddress->address_line_1 }}
 
                             @if ($order->billingAddress->address_line_2)
-                                <p>{{ $order->billingAddress->address_line_2 }}</p>
-                            @endif
+                                / {{ $order->billingAddress->address_line_2 }}
+                            @endif</p>
 
                             <p>
                                 {{ $order->billingAddress->postcode }}
                                 {{ $order->billingAddress->city }}
                             </p>
 
-                            <p>{{ $order->billingAddress->country_code }}</p>
+                            <p>{{ $order->billingAddress->countryName() }}</p>
 
                             <div class="pt-2 text-zinc-500">
                                 <p>{{ $order->billingAddress->email }}</p>

@@ -24,7 +24,7 @@ class CheckoutService
     ) {}
 
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      */
     public function placeOrder(Cart $cart, array $data, ?User $user = null): Order
     {
@@ -91,49 +91,11 @@ class CheckoutService
                 ]);
             }
 
-            $order->addresses()->create([
-                'type' => 'shipping',
-                'first_name' => (string) $data['shipping_first_name'],
-                'last_name' => (string) $data['shipping_last_name'],
-                'company' => $data['shipping_company'] ?? null,
-                'phone' => (string) $data['phone'],
-                'email' => (string) $data['email'],
-                'address_line_1' => (string) $data['shipping_address_line_1'],
-                'address_line_2' => $data['shipping_address_line_2'] ?? null,
-                'city' => (string) $data['shipping_city'],
-                'postcode' => (string) $data['shipping_postcode'],
-                'country_code' => strtoupper((string) $data['shipping_country_code']),
-            ]);
+            $shippingAddressData = $this->buildShippingAddressData($data, $user);
+            $billingAddressData = $this->buildBillingAddressData($data, $user, $shippingAddressData);
 
-            if (! empty($data['billing_same_as_shipping'])) {
-                $order->addresses()->create([
-                    'type' => 'billing',
-                    'first_name' => (string) $data['shipping_first_name'],
-                    'last_name' => (string) $data['shipping_last_name'],
-                    'company' => $data['shipping_company'] ?? null,
-                    'phone' => (string) $data['phone'],
-                    'email' => (string) $data['email'],
-                    'address_line_1' => (string) $data['shipping_address_line_1'],
-                    'address_line_2' => $data['shipping_address_line_2'] ?? null,
-                    'city' => (string) $data['shipping_city'],
-                    'postcode' => (string) $data['shipping_postcode'],
-                    'country_code' => strtoupper((string) $data['shipping_country_code']),
-                ]);
-            } else {
-                $order->addresses()->create([
-                    'type' => 'billing',
-                    'first_name' => (string) $data['billing_first_name'],
-                    'last_name' => (string) $data['billing_last_name'],
-                    'company' => $data['billing_company'] ?? null,
-                    'phone' => (string) $data['phone'],
-                    'email' => (string) $data['email'],
-                    'address_line_1' => (string) $data['billing_address_line_1'],
-                    'address_line_2' => $data['billing_address_line_2'] ?? null,
-                    'city' => (string) $data['billing_city'],
-                    'postcode' => (string) $data['billing_postcode'],
-                    'country_code' => strtoupper((string) $data['billing_country_code']),
-                ]);
-            }
+            $order->addresses()->create($shippingAddressData);
+            $order->addresses()->create($billingAddressData);
 
             $order->payments()->create([
                 'provider' => null,
@@ -156,6 +118,90 @@ class CheckoutService
                 'payments',
             ]);
         });
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildShippingAddressData(array $data, ?User $user): array
+    {
+        if ($user !== null && $user->hasPersonalAddress()) {
+            $address = $user->toPersonalOrderAddressSnapshot('shipping');
+            $address['phone'] = (string) $data['phone'];
+            $address['email'] = (string) $data['email'];
+
+            return $address;
+        }
+
+        return [
+            'type' => 'shipping',
+            'first_name' => (string) $data['shipping_first_name'],
+            'last_name' => (string) $data['shipping_last_name'],
+            'company' => $this->nullableString($data['shipping_company'] ?? null),
+            'phone' => (string) $data['phone'],
+            'email' => (string) $data['email'],
+            'address_line_1' => (string) $data['shipping_address_line_1'],
+            'address_line_2' => $this->nullableString($data['shipping_address_line_2'] ?? null),
+            'city' => (string) $data['shipping_city'],
+            'postcode' => (string) $data['shipping_postcode'],
+            'country_code' => $this->normalizeCountryCode($data['shipping_country_code'] ?? null),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $shippingAddressData
+     * @return array<string, mixed>
+     */
+    private function buildBillingAddressData(array $data, ?User $user, array $shippingAddressData): array
+    {
+        $billingAddressSource = (string) ($data['billing_address_source'] ?? '');
+
+        if (! empty($data['billing_same_as_shipping']) || $billingAddressSource === 'same_as_shipping') {
+            return [
+                ...$shippingAddressData,
+                'type' => 'billing',
+            ];
+        }
+
+        if ($billingAddressSource === 'company_address') {
+            if (! $user || ! $user->hasCompanyAddress()) {
+                throw new RuntimeException('Company billing address is not available.');
+            }
+
+            $address = $user->toCompanyOrderAddressSnapshot('billing');
+            $address['phone'] = (string) $data['phone'];
+            $address['email'] = (string) $data['email'];
+
+            return $address;
+        }
+
+        return [
+            'type' => 'billing',
+            'first_name' => (string) $data['billing_first_name'],
+            'last_name' => (string) $data['billing_last_name'],
+            'company' => $this->nullableString($data['billing_company'] ?? null),
+            'phone' => (string) $data['phone'],
+            'email' => (string) $data['email'],
+            'address_line_1' => (string) $data['billing_address_line_1'],
+            'address_line_2' => $this->nullableString($data['billing_address_line_2'] ?? null),
+            'city' => (string) $data['billing_city'],
+            'postcode' => (string) $data['billing_postcode'],
+            'country_code' => $this->normalizeCountryCode($data['billing_country_code'] ?? null),
+        ];
+    }
+
+    private function nullableString(mixed $value): ?string
+    {
+        $value = trim((string) $value);
+
+        return $value !== '' ? $value : null;
+    }
+
+    private function normalizeCountryCode(mixed $value): string
+    {
+        $value = strtoupper(trim((string) $value));
+
+        return $value !== '' ? $value : 'PL';
     }
 
     /**

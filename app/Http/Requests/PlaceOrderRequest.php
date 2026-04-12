@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class PlaceOrderRequest extends FormRequest
 {
@@ -14,15 +15,37 @@ class PlaceOrderRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Prepare input for validation.
-     */
     protected function prepareForValidation(): void
     {
+        $billingAddressSource = $this->input('billing_address_source', 'same_as_shipping');
+
         $this->merge([
-            'billing_same_as_shipping' => $this->boolean('billing_same_as_shipping'),
+            'billing_address_source' => $billingAddressSource,
+            'billing_same_as_shipping' => $billingAddressSource === 'same_as_shipping',
             'terms_accepted' => $this->boolean('terms_accepted'),
         ]);
+
+        if ($billingAddressSource === 'company_address' && $this->user()) {
+            $companyAddress = $this->user()->checkoutCompanyBillingAddressDefaults();
+
+            $this->merge([
+                'billing_first_name' => $companyAddress['first_name'] ?? null,
+                'billing_last_name' => $companyAddress['last_name'] ?? null,
+                'billing_company' => $companyAddress['company'] ?? null,
+                'billing_address_line_1' => $companyAddress['address_line_1'] ?? null,
+                'billing_address_line_2' => $companyAddress['address_line_2'] ?? null,
+                'billing_city' => $companyAddress['city'] ?? null,
+                'billing_postcode' => $companyAddress['postcode'] ?? null,
+                'billing_country_code' => $companyAddress['country_code'] ?? null,
+            ]);
+        }
+
+        if ($this->user()) {
+            $this->merge([
+                'email' => (string) $this->user()->email,
+                'phone' => (string) ($this->user()->phone_number ?? ''),
+            ]);
+        }
     }
 
     public function rules(): array
@@ -38,53 +61,80 @@ class PlaceOrderRequest extends FormRequest
             'shipping_address_line_2' => ['nullable', 'string', 'max:255'],
             'shipping_city' => ['required', 'string', 'max:150'],
             'shipping_postcode' => ['required', 'string', 'max:30'],
-            'shipping_country_code' => ['required', 'string', 'size:2'],
+            'shipping_country_code' => ['required', 'string', 'size:2', Rule::in(array_keys(config('countries', [])))],
 
+            'billing_address_source' => ['required', Rule::in(['same_as_shipping', 'company_address', 'other'])],
             'billing_same_as_shipping' => ['required', 'boolean'],
 
             'billing_first_name' => [
-                Rule::requiredIf(fn (): bool => ! $this->boolean('billing_same_as_shipping')),
+                Rule::requiredIf(fn (): bool => $this->input('billing_address_source') === 'other'),
                 'nullable',
                 'string',
                 'max:100',
             ],
             'billing_last_name' => [
-                Rule::requiredIf(fn (): bool => ! $this->boolean('billing_same_as_shipping')),
+                Rule::requiredIf(fn (): bool => $this->input('billing_address_source') === 'other'),
                 'nullable',
                 'string',
                 'max:100',
             ],
             'billing_company' => ['nullable', 'string', 'max:150'],
             'billing_address_line_1' => [
-                Rule::requiredIf(fn (): bool => ! $this->boolean('billing_same_as_shipping')),
+                Rule::requiredIf(fn (): bool => $this->input('billing_address_source') === 'other'),
                 'nullable',
                 'string',
                 'max:255',
             ],
             'billing_address_line_2' => ['nullable', 'string', 'max:255'],
             'billing_city' => [
-                Rule::requiredIf(fn (): bool => ! $this->boolean('billing_same_as_shipping')),
+                Rule::requiredIf(fn (): bool => $this->input('billing_address_source') === 'other'),
                 'nullable',
                 'string',
                 'max:150',
             ],
             'billing_postcode' => [
-                Rule::requiredIf(fn (): bool => ! $this->boolean('billing_same_as_shipping')),
+                Rule::requiredIf(fn (): bool => $this->input('billing_address_source') === 'other'),
                 'nullable',
                 'string',
                 'max:30',
             ],
             'billing_country_code' => [
-                Rule::requiredIf(fn (): bool => ! $this->boolean('billing_same_as_shipping')),
+                Rule::requiredIf(fn (): bool => $this->input('billing_address_source') === 'other'),
                 'nullable',
                 'string',
                 'size:2',
+                Rule::in(array_keys(config('countries', []))),
             ],
 
             'notes' => ['nullable', 'string', 'max:2000'],
 
             'terms_accepted' => ['accepted'],
         ];
+    }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator): void {
+            if ($this->input('billing_address_source') !== 'company_address') {
+                return;
+            }
+
+            if (! $this->user()) {
+                $validator->errors()->add(
+                    'billing_address_source',
+                    __('Guests cannot use a company billing address.')
+                );
+
+                return;
+            }
+
+            if (! $this->user()->hasCompanyAddress()) {
+                $validator->errors()->add(
+                    'billing_address_source',
+                    __('Your company address is incomplete.')
+                );
+            }
+        });
     }
 
     public function attributes(): array
@@ -102,6 +152,7 @@ class PlaceOrderRequest extends FormRequest
             'shipping_postcode' => __('Shipping postcode'),
             'shipping_country_code' => __('Shipping country'),
 
+            'billing_address_source' => __('Billing address option'),
             'billing_first_name' => __('Billing first name'),
             'billing_last_name' => __('Billing last name'),
             'billing_company' => __('Billing company'),

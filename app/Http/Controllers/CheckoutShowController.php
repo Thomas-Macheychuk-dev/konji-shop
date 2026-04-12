@@ -39,12 +39,18 @@ class CheckoutShowController extends Controller
 
         $totals = $cartPricingService->calculate($cart);
 
+        $user = $request->user();
+
         return view('pages.checkout.show', [
             'cart' => $cart,
             'subtotal' => $totals->subtotal,
             'shipping' => $totals->shipping,
             'discount' => $totals->discount,
             'total' => $totals->total,
+            'shippingAddressDefaults' => $user?->checkoutShippingAddressDefaults() ?? [],
+            'companyBillingAddressDefaults' => $user?->checkoutCompanyBillingAddressDefaults() ?? [],
+            'hasCompanyBillingAddress' => $user?->hasCompanyAddress() ?? false,
+            'countries' => config('countries', []),
         ]);
     }
 }

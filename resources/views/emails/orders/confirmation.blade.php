@@ -114,20 +114,63 @@
 
                     <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #3f3f46;">
                         {{ $order->shippingAddress->first_name }} {{ $order->shippingAddress->last_name }}<br>
-                        {{ $order->shippingAddress->address_line_1 }}<br>
+
+                        @if ($order->shippingAddress->company)
+                            {{ $order->shippingAddress->company }}<br>
+                        @endif
+
+                        {{ $order->shippingAddress->address_line_1 }}
 
                         @if ($order->shippingAddress->address_line_2)
-                            {{ $order->shippingAddress->address_line_2 }}<br>
-                        @endif
+                            / {{ $order->shippingAddress->address_line_2 }}
+                        @endif<br>
+
+
 
                         {{ $order->shippingAddress->postcode }} {{ $order->shippingAddress->city }}<br>
 
                         @if ($order->shippingAddress->country_code)
-                            {{ $order->shippingAddress->country_code }}<br>
+                            {{ $order->shippingAddress->countryName() }}<br>
                         @endif
 
                         @if ($order->shippingAddress->phone)
                             {{ $order->shippingAddress->phone }}
+                        @endif
+                    </p>
+                </div>
+            @endif
+
+            @if ($order->billingAddress)
+                <div style="margin-bottom: 24px;">
+                    <h2 style="margin: 0 0 12px; font-size: 20px; line-height: 1.3;">
+                        Billing address
+                    </h2>
+
+                    <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #3f3f46;">
+                        {{ $order->billingAddress->first_name }} {{ $order->billingAddress->last_name }}<br>
+
+                        @if ($order->billingAddress->company)
+                            {{ $order->billingAddress->company }}<br>
+                        @endif
+
+                        {{ $order->billingAddress->address_line_1 }}
+
+                        @if ($order->billingAddress->address_line_2)
+                            / {{ $order->billingAddress->address_line_2 }}<br>
+                        @endif
+
+                        {{ $order->billingAddress->postcode }} {{ $order->billingAddress->city }}<br>
+
+                        @if ($order->billingAddress->country_code)
+                            {{ $order->billingAddress->countryName() }}<br>
+                        @endif
+
+                        @if ($order->billingAddress->phone)
+                            {{ $order->billingAddress->phone }}<br>
+                        @endif
+
+                        @if ($order->billingAddress->email)
+                            {{ $order->billingAddress->email }}
                         @endif
                     </p>
                 </div>
