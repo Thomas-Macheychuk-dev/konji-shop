@@ -28,7 +28,9 @@ class CheckoutSuccessController extends Controller
         }
 
         $order->load([
-            'items',
+            'items.product',
+            'items.variant.attributeValues.attribute',
+            'items.variant.attributeValues.productImage',
             'shippingAddress',
             'billingAddress',
             'payments',

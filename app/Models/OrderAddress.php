@@ -49,7 +49,7 @@ class OrderAddress extends Model
             $this->address_line_1,
             $this->address_line_2,
             trim($this->postcode . ' ' . $this->city),
-            $this->country_code,
+            $this->countryName(),
         ]));
     }
 
@@ -61,5 +61,13 @@ class OrderAddress extends Model
     public function isBilling(): bool
     {
         return $this->type === 'billing';
+    }
+
+    public function countryName(): string
+    {
+        $countries = config('countries', []);
+        $code = strtoupper((string) $this->country_code);
+
+        return $countries[$code] ?? $code;
     }
 }

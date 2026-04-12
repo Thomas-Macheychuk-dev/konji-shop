@@ -16,7 +16,19 @@
         @endif
 
         @php
-            $customerEmail = old('email', auth()->user()?->email ?? '');
+            $user = auth()->user();
+            $isAuthenticated = $user !== null;
+
+            $customerEmail = old('email', $user?->email ?? '');
+            $customerPhone = old('phone', $shippingAddressDefaults['phone'] ?? '');
+
+            $billingAddressSource = old(
+                'billing_address_source',
+                $user?->prefersCompanyInvoice() ? 'company_address' : 'same_as_shipping'
+            );
+
+            $countryName = static fn (?string $code): string => $countries[strtoupper((string) $code)] ?? strtoupper((string) $code);
+
         @endphp
 
         <form method="POST" action="{{ route('checkout.place') }}">
@@ -32,14 +44,33 @@
                                 <label for="email" class="mb-2 block text-sm font-medium text-zinc-700">
                                     E-mail
                                 </label>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    value="{{ $customerEmail }}"
-                                    autocomplete="email"
-                                    class="@error('email') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                >
+
+                                @if($isAuthenticated)
+                                    <input type="hidden" name="email" value="{{ $customerEmail }}">
+
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        value="{{ $customerEmail }}"
+                                        autocomplete="email"
+                                        disabled
+                                        class="block w-full cursor-not-allowed rounded-xl border border-zinc-300 bg-zinc-100 px-4 py-3 text-sm text-zinc-500 opacity-70 shadow-sm outline-none"
+                                    >
+
+                                    <p class="mt-2 text-xs text-zinc-500">
+                                        E-mail comes from your account.
+                                    </p>
+                                @else
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        name="email"
+                                        value="{{ $customerEmail }}"
+                                        autocomplete="email"
+                                        class="@error('email') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                    >
+                                @endif
+
                                 @error('email')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -49,14 +80,33 @@
                                 <label for="phone" class="mb-2 block text-sm font-medium text-zinc-700">
                                     Phone
                                 </label>
-                                <input
-                                    id="phone"
-                                    type="text"
-                                    name="phone"
-                                    value="{{ old('phone') }}"
-                                    autocomplete="tel"
-                                    class="@error('phone') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                >
+
+                                @if($isAuthenticated)
+                                    <input type="hidden" name="phone" value="{{ $customerPhone }}">
+
+                                    <input
+                                        id="phone"
+                                        type="text"
+                                        value="{{ $customerPhone }}"
+                                        autocomplete="tel"
+                                        disabled
+                                        class="block w-full cursor-not-allowed rounded-xl border border-zinc-300 bg-zinc-100 px-4 py-3 text-sm text-zinc-500 opacity-70 shadow-sm outline-none"
+                                    >
+
+                                    <p class="mt-2 text-xs text-zinc-500">
+                                        Phone comes from your account.
+                                    </p>
+                                @else
+                                    <input
+                                        id="phone"
+                                        type="text"
+                                        name="phone"
+                                        value="{{ $customerPhone }}"
+                                        autocomplete="tel"
+                                        class="@error('phone') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                    >
+                                @endif
+
                                 @error('phone')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -76,7 +126,7 @@
                                     id="shipping_first_name"
                                     type="text"
                                     name="shipping_first_name"
-                                    value="{{ old('shipping_first_name') }}"
+                                    value="{{ old('shipping_first_name', $shippingAddressDefaults['first_name'] ?? '') }}"
                                     autocomplete="given-name"
                                     class="@error('shipping_first_name') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
@@ -93,7 +143,7 @@
                                     id="shipping_last_name"
                                     type="text"
                                     name="shipping_last_name"
-                                    value="{{ old('shipping_last_name') }}"
+                                    value="{{ old('shipping_last_name', $shippingAddressDefaults['last_name'] ?? '') }}"
                                     autocomplete="family-name"
                                     class="@error('shipping_last_name') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
@@ -111,7 +161,7 @@
                                     id="shipping_company"
                                     type="text"
                                     name="shipping_company"
-                                    value="{{ old('shipping_company') }}"
+                                    value="{{ old('shipping_company', $shippingAddressDefaults['company'] ?? '') }}"
                                     autocomplete="organization"
                                     class="@error('shipping_company') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
@@ -128,7 +178,7 @@
                                     id="shipping_address_line_1"
                                     type="text"
                                     name="shipping_address_line_1"
-                                    value="{{ old('shipping_address_line_1') }}"
+                                    value="{{ old('shipping_address_line_1', $shippingAddressDefaults['address_line_1'] ?? '') }}"
                                     autocomplete="address-line1"
                                     class="@error('shipping_address_line_1') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
@@ -146,7 +196,7 @@
                                     id="shipping_address_line_2"
                                     type="text"
                                     name="shipping_address_line_2"
-                                    value="{{ old('shipping_address_line_2') }}"
+                                    value="{{ old('shipping_address_line_2', $shippingAddressDefaults['address_line_2'] ?? '') }}"
                                     autocomplete="address-line2"
                                     class="@error('shipping_address_line_2') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
@@ -163,7 +213,7 @@
                                     id="shipping_city"
                                     type="text"
                                     name="shipping_city"
-                                    value="{{ old('shipping_city') }}"
+                                    value="{{ old('shipping_city', $shippingAddressDefaults['city'] ?? '') }}"
                                     autocomplete="address-level2"
                                     class="@error('shipping_city') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
@@ -180,7 +230,7 @@
                                     id="shipping_postcode"
                                     type="text"
                                     name="shipping_postcode"
-                                    value="{{ old('shipping_postcode') }}"
+                                    value="{{ old('shipping_postcode', $shippingAddressDefaults['postcode'] ?? '') }}"
                                     autocomplete="postal-code"
                                     class="@error('shipping_postcode') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
@@ -191,17 +241,23 @@
 
                             <div class="sm:col-span-2">
                                 <label for="shipping_country_code" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Country code
+                                    Country
                                 </label>
-                                <input
+                                <select
                                     id="shipping_country_code"
-                                    type="text"
                                     name="shipping_country_code"
-                                    value="{{ old('shipping_country_code', 'PL') }}"
-                                    maxlength="2"
                                     autocomplete="country"
-                                    class="@error('shipping_country_code') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 uppercase text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                    class="@error('shipping_country_code') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
+                                    @foreach ($countries as $code => $name)
+                                        <option
+                                            value="{{ $code }}"
+                                            @selected(old('shipping_country_code', $shippingAddressDefaults['country_code'] ?? 'PL') === $code)
+                                        >
+                                            {{ $name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('shipping_country_code')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -211,29 +267,95 @@
 
                     <div
                         class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
-                        x-data="{ billingSame: {{ old('billing_same_as_shipping', '1') ? 'true' : 'false' }} }"
+                        x-data="{ billingAddressSource: '{{ $billingAddressSource }}' }"
                     >
-                        <div class="flex items-center justify-between gap-4">
+                        <div class="flex flex-col gap-4">
                             <h2 class="text-lg font-semibold text-zinc-900">Billing address</h2>
 
-                            <label class="inline-flex items-center gap-3 text-sm text-zinc-700">
-                                <input
-                                    type="hidden"
-                                    name="billing_same_as_shipping"
-                                    :value="billingSame ? 1 : 0"
-                                >
+                            <input
+                                type="hidden"
+                                name="billing_same_as_shipping"
+                                :value="billingAddressSource === 'same_as_shipping' ? 1 : 0"
+                            >
 
-                                <input
-                                    type="checkbox"
-                                    x-model="billingSame"
-                                    class="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
-                                >
+                            <div class="space-y-3">
+                                <label class="flex items-start gap-3 text-sm text-zinc-700">
+                                    <input
+                                        type="radio"
+                                        name="billing_address_source"
+                                        value="same_as_shipping"
+                                        x-model="billingAddressSource"
+                                        class="mt-1 h-4 w-4 border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                    >
+                                    <span>Same as shipping</span>
+                                </label>
 
-                                <span>Same as shipping</span>
-                            </label>
+                                @if ($hasCompanyBillingAddress)
+                                    <label class="flex items-start gap-3 text-sm text-zinc-700">
+                                        <input
+                                            type="radio"
+                                            name="billing_address_source"
+                                            value="company_address"
+                                            x-model="billingAddressSource"
+                                            class="mt-1 h-4 w-4 border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                        >
+                                        <span>Use company details</span>
+                                    </label>
+                                @endif
+
+                                <label class="flex items-start gap-3 text-sm text-zinc-700">
+                                    <input
+                                        type="radio"
+                                        name="billing_address_source"
+                                        value="other"
+                                        x-model="billingAddressSource"
+                                        class="mt-1 h-4 w-4 border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                    >
+                                    <span>Use a different billing address</span>
+                                </label>
+                            </div>
+
+                            @error('billing_address_source')
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
-                        <div x-show="!billingSame" x-cloak class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        @if ($hasCompanyBillingAddress)
+                            <div
+                                x-show="billingAddressSource === 'company_address'"
+                                x-cloak
+                                class="mt-5 rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-700"
+                            >
+                                @if (!empty($companyBillingAddressDefaults['company']))
+                                    <p class="font-medium text-zinc-900">{{ $companyBillingAddressDefaults['company'] }}</p>
+                                @endif
+
+                                <p>
+                                    {{ trim(($companyBillingAddressDefaults['first_name'] ?? '') . ' ' . ($companyBillingAddressDefaults['last_name'] ?? '')) }}
+                                </p>
+
+                                <p>{{ $companyBillingAddressDefaults['address_line_1'] ?? '' }}
+                                    @if (! empty($companyBillingAddressDefaults['address_line_2']))
+                                        {{ ' / ' . $companyBillingAddressDefaults['address_line_2'] }}
+                                    @endif
+                                </p>
+
+
+
+                                <p>
+                                    {{ $companyBillingAddressDefaults['postcode'] ?? '' }}
+                                    {{ $companyBillingAddressDefaults['city'] ?? '' }}
+                                </p>
+
+                                <p>{{ $countryName($companyBillingAddressDefaults['country_code'] ?? '') }}</p>
+                            </div>
+                        @endif
+
+                        <div
+                            x-show="billingAddressSource === 'other'"
+                            x-cloak
+                            class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2"
+                        >
                             <div>
                                 <label for="billing_first_name" class="mb-2 block text-sm font-medium text-zinc-700">
                                     First name
@@ -357,17 +479,23 @@
 
                             <div class="sm:col-span-2">
                                 <label for="billing_country_code" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Country code
+                                    Country
                                 </label>
-                                <input
+                                <select
                                     id="billing_country_code"
-                                    type="text"
                                     name="billing_country_code"
-                                    value="{{ old('billing_country_code', 'PL') }}"
-                                    maxlength="2"
                                     autocomplete="country"
-                                    class="@error('billing_country_code') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 uppercase text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                    class="@error('billing_country_code') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
+                                    @foreach ($countries as $code => $name)
+                                        <option
+                                            value="{{ $code }}"
+                                            @selected(old('billing_country_code', 'PL') === $code)
+                                        >
+                                            {{ $name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('billing_country_code')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
