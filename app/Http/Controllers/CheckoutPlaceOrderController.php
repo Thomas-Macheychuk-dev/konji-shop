@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\PaymentProvider;
 use App\Events\OrderPlaced;
 use App\Http\Requests\PlaceOrderRequest;
 use App\Services\Cart\CartGuestTokenResolver;
 use App\Services\Cart\CartService;
 use App\Services\Checkout\CheckoutService;
+use App\Services\Payments\StartPaymentService;
 use Illuminate\Http\RedirectResponse;
 use RuntimeException;
 use Throwable;
@@ -19,7 +21,8 @@ class CheckoutPlaceOrderController extends Controller
         PlaceOrderRequest $request,
         CartService $cartService,
         CartGuestTokenResolver $guestTokenResolver,
-        CheckoutService $checkoutService
+        CheckoutService $checkoutService,
+        StartPaymentService $startPaymentService,
     ): RedirectResponse {
         $guestToken = $request->user() ? null : $request->cookie(CartGuestTokenResolver::COOKIE_NAME);
 
@@ -40,6 +43,18 @@ class CheckoutPlaceOrderController extends Controller
                 $request->validated(),
                 $request->user()
             );
+
+            $payment = $order->payments()->oldest('id')->first();
+
+            if (! $payment) {
+                throw new RuntimeException('Order payment record was not created.');
+            }
+
+            $paymentInitialization = $startPaymentService->start(
+                $order,
+                $payment,
+                PaymentProvider::PRZELEWY24->value,
+            );
         } catch (RuntimeException $exception) {
             return redirect()
                 ->route('cart.show')
@@ -57,6 +72,6 @@ class CheckoutPlaceOrderController extends Controller
 
         $request->session()->put('checkout.last_order_id', $order->id);
 
-        return redirect()->route('checkout.success', $order);
+        return redirect()->away($paymentInitialization->redirectUrl);
     }
 }
