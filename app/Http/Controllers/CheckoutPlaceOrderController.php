@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\PaymentProvider;
 use App\Events\OrderPlaced;
 use App\Http\Requests\PlaceOrderRequest;
 use App\Services\Cart\CartGuestTokenResolver;
@@ -12,8 +11,8 @@ use App\Services\Cart\CartService;
 use App\Services\Checkout\CheckoutService;
 use App\Services\Payments\StartPaymentService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
-use Throwable;
 
 class CheckoutPlaceOrderController extends Controller
 {
@@ -24,17 +23,12 @@ class CheckoutPlaceOrderController extends Controller
         CheckoutService $checkoutService,
         StartPaymentService $startPaymentService,
     ): RedirectResponse {
-        $guestToken = $request->user() ? null : $request->cookie(CartGuestTokenResolver::COOKIE_NAME);
+        $guestToken = $request->user() ? null : $guestTokenResolver->resolve($request);
 
-        $cart = $cartService->findActiveCart(
-            $request->user(),
-            $guestToken
-        );
+        $cart = $cartService->findActiveCart($request->user(), $guestToken);
 
         if (! $cart || $cart->items()->count() === 0) {
-            return redirect()
-                ->route('cart.show')
-                ->with('error', 'Your cart is empty.');
+            return redirect()->route('cart.show')->with('error', 'Your cart is empty.');
         }
 
         try {
@@ -50,26 +44,43 @@ class CheckoutPlaceOrderController extends Controller
                 throw new RuntimeException('Order payment record was not created.');
             }
 
+            $providerKey = config('payments.default');
+
             $paymentInitialization = $startPaymentService->start(
                 $order,
                 $payment,
-                PaymentProvider::PRZELEWY24->value,
+                $providerKey
             );
+
+            Log::info('Payment initialization result', [
+                'provider' => $paymentInitialization->provider,
+                'provider_reference' => $paymentInitialization->providerReference,
+                'redirect_url' => $paymentInitialization->redirectUrl,
+                'payload' => $paymentInitialization->payload,
+            ]);
+
         } catch (RuntimeException $exception) {
-            return redirect()
-                ->route('cart.show')
-                ->with('error', $exception->getMessage());
-        } catch (Throwable $exception) {
-            report($exception);
+            Log::error('Payment initialization failed', [
+                'order_id' => $order->id ?? null,
+                'provider' => $providerKey ?? null,
+                'error' => $exception->getMessage(),
+            ]);
+
+            if (isset($order)) {
+                $request->session()->put('checkout.last_order_id', $order->id);
+
+                return redirect()
+                    ->route('checkout.success')
+                    ->with('error', 'Order was created, but payment could not be started: '.$exception->getMessage());
+            }
 
             return redirect()
                 ->route('checkout.show')
                 ->withInput()
-                ->with('error', 'We could not place your order. Please try again.');
+                ->with('error', 'BŁĄD PAYNOW: '.$exception->getMessage());
         }
 
         OrderPlaced::dispatch($order);
-
         $request->session()->put('checkout.last_order_id', $order->id);
 
         return redirect()->away($paymentInitialization->redirectUrl);

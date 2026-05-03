@@ -10,7 +10,7 @@ use InvalidArgumentException;
 final class PaymentGatewayRegistry
 {
     /**
-     * @param iterable<PaymentGateway> $gateways
+     * @param  iterable<PaymentGateway>  $gateways
      */
     public function __construct(
         private readonly iterable $gateways,

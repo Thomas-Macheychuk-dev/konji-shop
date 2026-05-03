@@ -12,13 +12,15 @@ use App\Http\Controllers\CartShowController;
 use App\Http\Controllers\CartSummaryController;
 use App\Http\Controllers\CheckoutPlaceOrderController;
 use App\Http\Controllers\CheckoutShowController;
-use App\Http\Controllers\CheckoutSuccessController;
 use App\Http\Controllers\GuestOrderCancelController;
 use App\Http\Controllers\GuestOrderShowController;
 use App\Http\Controllers\GuestOrderTrackLookupController;
 use App\Http\Controllers\GuestOrderTrackShowController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Payments\PaymentReturnController;
+use App\Http\Controllers\Payments\PaynowNotificationController;
 use App\Http\Controllers\ProductShowController;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -34,7 +36,8 @@ Route::get('/cart/summary', CartSummaryController::class)->name('cart.summary');
 
 Route::get('/checkout', CheckoutShowController::class)->name('checkout.show');
 Route::post('/checkout', CheckoutPlaceOrderController::class)->name('checkout.place');
-Route::get('/checkout/success/{order}', CheckoutSuccessController::class)->name('checkout.success');
+Route::get('/checkout/success', PaymentReturnController::class)
+    ->name('checkout.success');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -58,6 +61,12 @@ Route::prefix('guest/orders')->name('guest.orders.')->group(function () {
     Route::get('/status/{order}', GuestOrderShowController::class)->name('show');
     Route::post('/status/{order}/cancel', GuestOrderCancelController::class)->name('cancel');
 });
+
+Route::post('/payments/paynow/notifications', PaynowNotificationController::class)
+    ->withoutMiddleware([
+        PreventRequestForgery::class,
+    ])
+    ->name('payments.paynow.notifications');
 
 Route::view('/cookie-policy', 'pages.legal.cookie-policy')->name('legal.cookie-policy');
 

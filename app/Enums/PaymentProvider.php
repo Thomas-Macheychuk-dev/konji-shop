@@ -7,6 +7,7 @@ namespace App\Enums;
 enum PaymentProvider: string
 {
     case PRZELEWY24 = 'przelewy24';
+    case PAYNOW = 'paynow';
 
     public function label(): string
     {

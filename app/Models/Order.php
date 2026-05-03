@@ -105,4 +105,12 @@ class Order extends Model
     {
         return $this->user_id === null && $this->guest_email !== null;
     }
+
+    public function markAsPaid(): void
+    {
+        $this->update([
+            'status' => OrderStatus::PAID,
+            'payment_status' => PaymentStatus::PAID,
+        ]);
+    }
 }

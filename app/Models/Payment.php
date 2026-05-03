@@ -54,6 +54,21 @@ class Payment extends Model
         return $this->status === PaymentStatus::UNPAID;
     }
 
+    public function markAsPaid(): void
+    {
+        $this->update([
+            'status' => PaymentStatus::PAID,
+            'paid_at' => now(),
+        ]);
+    }
+
+    public function markAsFailed(): void
+    {
+        $this->update([
+            'status' => PaymentStatus::FAILED,
+        ]);
+    }
+
     public function amountDecimal(): string
     {
         return number_format($this->amount / 100, 2, '.', '');

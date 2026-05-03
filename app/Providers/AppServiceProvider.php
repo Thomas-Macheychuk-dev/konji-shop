@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Payments\PaymentGatewayRegistry;
 use App\Services\Payments\Przelewy24\Przelewy24Gateway;
+use App\Services\Payments\Paynow\PaynowGateway;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +18,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Rejestrujemy obie bramki jako singletons
         $this->app->singleton(Przelewy24Gateway::class);
+        $this->app->singleton(PaynowGateway::class);
 
         $this->app->singleton(PaymentGatewayRegistry::class, function ($app): PaymentGatewayRegistry {
             return new PaymentGatewayRegistry([
                 $app->make(Przelewy24Gateway::class),
+                $app->make(PaynowGateway::class),
             ]);
         });
     }
