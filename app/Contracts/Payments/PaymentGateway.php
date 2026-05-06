@@ -16,12 +16,12 @@ interface PaymentGateway
     public function initialize(Order $order, Payment $payment): PaymentInitializationResult;
 
     /**
-     * @param array<string, mixed> $payload
+     * @param  array<string, mixed>  $payload
      */
     public function parseNotification(array $payload): PaymentNotificationData;
 
     /**
-     * @param array<string, mixed> $payload
+     * @param  array<string, mixed>  $payload
      */
-    public function verifyNotification(Payment $payment, array $payload): bool;
+    public function verifyNotification(Payment $payment, array $payload, ?string $rawBody = null): bool;
 }

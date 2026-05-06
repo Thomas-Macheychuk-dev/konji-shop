@@ -47,7 +47,7 @@ class PaymentReturnController
         }
 
         $message = $isSuccess
-            ? 'Dziękujemy za zakupy! Twoje zamówienie zostało przyjęte. Status płatności zostanie zaktualizowany po potwierdzeniu operatora płatności.'
+            ? 'Dziękujemy za zakupy! Status płatności zostanie zaktualizowany po potwierdzeniu operatora płatności.'
             : 'Płatność nie została zakończona pomyślnie. Spróbuj ponownie lub skontaktuj się z nami.';
 
         return view('pages.checkout.return', [

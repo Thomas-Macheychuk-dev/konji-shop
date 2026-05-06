@@ -5,7 +5,7 @@
 
         @if($isSuccess)
             <div class="text-green-600">
-                <h1 class="text-4xl font-bold">Płatność zakończona pomyślnie!</h1>
+                <h1 class="text-4xl font-bold">Zamówienie przyjęte!</h1>
                 <p class="mt-6 text-xl">{{ $message }}</p>
             </div>
         @else
@@ -17,7 +17,7 @@
 
         @if($order)
             <div class="mt-10 bg-gray-100 rounded-2xl p-8">
-                <p class="text-lg">Numer zamówienia: <strong>#{{ $order->number }}</strong></p>
+                <p class="text-lg">Numer zamówienia: <strong>{{ $order->number }}</strong></p>
                 @if($payment)
                     <p class="mt-2">Status płatności:
                         <span class="font-semibold">{{ $payment->status }}</span>
