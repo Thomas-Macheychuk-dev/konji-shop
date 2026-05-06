@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'number',
@@ -101,5 +104,13 @@ class Order extends Model
     public function isGuestOrder(): bool
     {
         return $this->user_id === null && $this->guest_email !== null;
+    }
+
+    public function markAsPaid(): void
+    {
+        $this->update([
+            'status' => OrderStatus::PAID,
+            'payment_status' => PaymentStatus::PAID,
+        ]);
     }
 }

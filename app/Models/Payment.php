@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'order_id',
         'provider',
@@ -49,6 +52,21 @@ class Payment extends Model
     public function isUnpaid(): bool
     {
         return $this->status === PaymentStatus::UNPAID;
+    }
+
+    public function markAsPaid(): void
+    {
+        $this->update([
+            'status' => PaymentStatus::PAID,
+            'paid_at' => now(),
+        ]);
+    }
+
+    public function markAsFailed(): void
+    {
+        $this->update([
+            'status' => PaymentStatus::FAILED,
+        ]);
     }
 
     public function amountDecimal(): string
