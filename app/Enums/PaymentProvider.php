@@ -13,6 +13,7 @@ enum PaymentProvider: string
     {
         return match ($this) {
             self::PRZELEWY24 => 'Przelewy24',
+            self::PAYNOW => 'Paynow',
         };
     }
 
