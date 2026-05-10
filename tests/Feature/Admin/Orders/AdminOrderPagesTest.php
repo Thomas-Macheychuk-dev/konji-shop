@@ -189,3 +189,30 @@ it('does not allow a normal user to add an internal order note', function (): vo
 
     expect($order->refresh()->notes)->toBeNull();
 });
+
+it('allows an admin to cancel an order at any time', function (): void {
+    $user = User::factory()->create([
+        'is_admin' => true,
+        'email' => 'admin@example.test',
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::COMPLETED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::DELIVERED,
+    ]);
+
+    $this->actingAs($user)
+        ->from(route('admin.orders.show', $order))
+        ->patch(route('admin.orders.cancel', $order), [
+            'note' => 'Manual admin cancellation.',
+        ])
+        ->assertRedirect(route('admin.orders.show', $order))
+        ->assertSessionHas('success');
+
+    expect($order->refresh())
+        ->status->toBe(OrderStatus::CANCELLED)
+        ->notes->toContain('admin@example.test: Manual admin cancellation.');
+
+    expect($order->events()->where('type', 'order_cancelled_by_admin')->exists())->toBeTrue();
+});
