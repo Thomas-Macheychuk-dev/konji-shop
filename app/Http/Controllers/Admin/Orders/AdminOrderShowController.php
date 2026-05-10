@@ -18,6 +18,7 @@ final class AdminOrderShowController extends Controller
             'addresses',
             'payments',
             'events',
+            'shipments',
         ]);
 
         return view('admin.orders.show', [

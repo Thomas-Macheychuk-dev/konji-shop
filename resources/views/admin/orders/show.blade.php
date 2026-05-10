@@ -152,6 +152,31 @@
             </div>
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+                <h2 class="text-lg font-semibold text-zinc-900">Delivery choice</h2>
+
+                <dl class="mt-4 space-y-3 text-sm">
+                    <div>
+                        <dt class="text-zinc-500">Provider</dt>
+                        <dd class="font-medium text-zinc-900">
+                            {{ $order->delivery_provider?->label() ?? '—' }}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-zinc-500">Service</dt>
+                        <dd class="font-medium text-zinc-900">
+                            {{ $order->delivery_service ?: '—' }}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-zinc-500">Locker code</dt>
+                        <dd class="font-medium text-zinc-900">
+                            {{ $order->delivery_locker_code ?: '—' }}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">Internal notes</h2>
 
                 <div class="mt-4 whitespace-pre-line rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">
@@ -251,6 +276,59 @@
                         <tr>
                             <td colspan="5" class="px-4 py-8 text-center text-sm text-zinc-500">
                                 No items found.
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <h2 class="text-lg font-semibold text-zinc-900">Shipments</h2>
+
+            <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
+                <table class="min-w-full divide-y divide-zinc-200">
+                    <thead class="bg-zinc-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Provider</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Service</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Tracking</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Locker</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-200 bg-white">
+                    @forelse ($order->shipments as $shipment)
+                        <tr>
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                {{ $shipment->provider->label() }}
+                            </td>
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                {{ $shipment->service ?: '—' }}
+                            </td>
+                            <td class="px-4 py-4 text-sm">
+                        <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $shipment->status->badgeColorClasses() }}">
+                            {{ $shipment->status->label() }}
+                        </span>
+                            </td>
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                @if ($shipment->tracking_url)
+                                    <a href="{{ $shipment->tracking_url }}" target="_blank" rel="noopener noreferrer" class="font-medium text-zinc-900 hover:text-zinc-700">
+                                        {{ $shipment->tracking_number ?: 'Track shipment' }}
+                                    </a>
+                                @else
+                                    {{ $shipment->tracking_number ?: '—' }}
+                                @endif
+                            </td>
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                {{ $shipment->locker_code ?: '—' }}
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-4 py-8 text-center text-sm text-zinc-500">
+                                No shipments found.
                             </td>
                         </tr>
                     @endforelse

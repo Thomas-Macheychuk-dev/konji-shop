@@ -115,6 +115,78 @@
                     </div>
 
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-lg font-semibold text-zinc-900">Delivery method</h2>
+
+                        <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                            <div>
+                                <label for="delivery_provider" class="mb-2 block text-sm font-medium text-zinc-700">
+                                    Provider
+                                </label>
+
+                                <select
+                                    id="delivery_provider"
+                                    name="delivery_provider"
+                                    class="@error('delivery_provider') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                >
+                                    <option value="inpost" @selected(old('delivery_provider', 'inpost') === 'inpost')>
+                                        InPost
+                                    </option>
+                                </select>
+
+                                @error('delivery_provider')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="delivery_service" class="mb-2 block text-sm font-medium text-zinc-700">
+                                    Service
+                                </label>
+
+                                <select
+                                    id="delivery_service"
+                                    name="delivery_service"
+                                    class="@error('delivery_service') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                >
+                                    <option value="parcel_locker" @selected(old('delivery_service', 'parcel_locker') === 'parcel_locker')>
+                                        InPost parcel locker
+                                    </option>
+                                    <option value="courier" @selected(old('delivery_service') === 'courier')>
+                                        Courier
+                                    </option>
+                                    <option value="pickup" @selected(old('delivery_service') === 'pickup')>
+                                        Pickup
+                                    </option>
+                                </select>
+
+                                @error('delivery_service')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="delivery_locker_code" class="mb-2 block text-sm font-medium text-zinc-700">
+                                    Parcel locker code
+                                    <span class="text-zinc-400">(required for parcel locker)</span>
+                                </label>
+
+                                <input
+                                    id="delivery_locker_code"
+                                    type="text"
+                                    name="delivery_locker_code"
+                                    value="{{ old('delivery_locker_code') }}"
+                                    placeholder="e.g. WAW01A"
+                                    class="@error('delivery_locker_code') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                >
+
+                                @error('delivery_locker_code')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                         <h2 class="text-lg font-semibold text-zinc-900">Shipping address</h2>
 
                         <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">

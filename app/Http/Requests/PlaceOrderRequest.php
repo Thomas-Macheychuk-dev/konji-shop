@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Enums\DeliveryProvider;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
@@ -23,6 +24,8 @@ class PlaceOrderRequest extends FormRequest
             'billing_address_source' => $billingAddressSource,
             'billing_same_as_shipping' => $billingAddressSource === 'same_as_shipping',
             'terms_accepted' => $this->boolean('terms_accepted'),
+            'delivery_provider' => $this->input('delivery_provider', DeliveryProvider::INPOST->value),
+            'delivery_service' => $this->input('delivery_service', 'parcel_locker'),
         ]);
 
         if ($billingAddressSource === 'company_address' && $this->user()) {
@@ -62,6 +65,15 @@ class PlaceOrderRequest extends FormRequest
             'shipping_city' => ['required', 'string', 'max:150'],
             'shipping_postcode' => ['required', 'string', 'max:30'],
             'shipping_country_code' => ['required', 'string', 'size:2', Rule::in(array_keys(config('countries', [])))],
+
+            'delivery_provider' => ['required', 'string', Rule::in(DeliveryProvider::options())],
+            'delivery_service' => ['required', 'string', Rule::in(['parcel_locker', 'courier', 'pickup'])],
+            'delivery_locker_code' => [
+                Rule::requiredIf(fn (): bool => $this->input('delivery_service') === 'parcel_locker'),
+                'nullable',
+                'string',
+                'max:255',
+            ],
 
             'billing_address_source' => ['required', Rule::in(['same_as_shipping', 'company_address', 'other'])],
             'billing_same_as_shipping' => ['required', 'boolean'],
@@ -115,23 +127,31 @@ class PlaceOrderRequest extends FormRequest
     public function withValidator(Validator $validator): void
     {
         $validator->after(function (Validator $validator): void {
-            if ($this->input('billing_address_source') !== 'company_address') {
-                return;
+            if ($this->input('billing_address_source') === 'company_address') {
+                if (! $this->user()) {
+                    $validator->errors()->add(
+                        'billing_address_source',
+                        __('Guests cannot use a company billing address.')
+                    );
+
+                    return;
+                }
+
+                if (! $this->user()->hasCompanyAddress()) {
+                    $validator->errors()->add(
+                        'billing_address_source',
+                        __('Your company address is incomplete.')
+                    );
+                }
             }
 
-            if (! $this->user()) {
+            if (
+                $this->input('delivery_provider') !== DeliveryProvider::INPOST->value
+                && $this->input('delivery_service') === 'parcel_locker'
+            ) {
                 $validator->errors()->add(
-                    'billing_address_source',
-                    __('Guests cannot use a company billing address.')
-                );
-
-                return;
-            }
-
-            if (! $this->user()->hasCompanyAddress()) {
-                $validator->errors()->add(
-                    'billing_address_source',
-                    __('Your company address is incomplete.')
+                    'delivery_service',
+                    __('Parcel locker delivery is only available through InPost.')
                 );
             }
         });
@@ -151,6 +171,10 @@ class PlaceOrderRequest extends FormRequest
             'shipping_city' => __('Shipping city'),
             'shipping_postcode' => __('Shipping postcode'),
             'shipping_country_code' => __('Shipping country'),
+
+            'delivery_provider' => __('Delivery provider'),
+            'delivery_service' => __('Delivery service'),
+            'delivery_locker_code' => __('Parcel locker code'),
 
             'billing_address_source' => __('Billing address option'),
             'billing_first_name' => __('Billing first name'),
