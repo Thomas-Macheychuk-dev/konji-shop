@@ -101,6 +101,33 @@
                         </form>
                     @endif
                 </div>
+                @if (! $order->status->isCancelled())
+                    <form
+                        method="POST"
+                        action="{{ route('admin.orders.cancel', $order) }}"
+                        class="mt-6 space-y-3 border-t border-zinc-200 pt-6"
+                    >
+                        @csrf
+                        @method('PATCH')
+
+                        <label for="cancel_note" class="block text-sm font-medium text-zinc-700">
+                            Cancel order
+                        </label>
+
+                        <textarea
+                            id="cancel_note"
+                            name="note"
+                            rows="3"
+                            required
+                            class="w-full rounded-xl border border-zinc-300 px-3 py-2 text-sm"
+                            placeholder="Reason for cancellation..."
+                        ></textarea>
+
+                        <button class="rounded-xl bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600">
+                            Cancel order
+                        </button>
+                    </form>
+                @endif
             </div>
         </div>
 

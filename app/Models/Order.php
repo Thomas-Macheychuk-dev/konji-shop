@@ -290,4 +290,22 @@ class Order extends Model
             'Internal note added.'
         );
     }
+
+    public function cancelByAdmin(string $note): void
+    {
+        if ($this->status->isCancelled()) {
+            throw new DomainException('This order is already cancelled.');
+        }
+
+        $this->update([
+            'status' => OrderStatus::CANCELLED,
+        ]);
+
+        $this->appendNote($note);
+
+        $this->recordEvent(
+            'order_cancelled_by_admin',
+            'Order cancelled by admin.'
+        );
+    }
 }
