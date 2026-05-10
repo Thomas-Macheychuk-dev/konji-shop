@@ -1,9 +1,12 @@
 <?php
 
+use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Enums\ShipmentStatus;
 use App\Models\Order;
+use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -35,6 +38,9 @@ it('shows the admin order detail page', function (): void {
         'status' => OrderStatus::CONFIRMED,
         'payment_status' => PaymentStatus::PAID,
         'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
+        'delivery_provider' => DeliveryProvider::INPOST,
+        'delivery_service' => 'parcel_locker',
+        'delivery_locker_code' => 'WAW01A',
     ]);
 
     $this->actingAs($user)
@@ -43,6 +49,10 @@ it('shows the admin order detail page', function (): void {
         ->assertSee('Order '.$order->number)
         ->assertSee('Start processing')
         ->assertSee('Customer')
+        ->assertSee('Delivery choice')
+        ->assertSee('InPost')
+        ->assertSee('parcel_locker')
+        ->assertSee('WAW01A')
         ->assertSee('Items')
         ->assertSee('Payments')
         ->assertSee('Internal notes');
@@ -215,4 +225,32 @@ it('allows an admin to cancel an order at any time', function (): void {
         ->notes->toContain('admin@example.test: Manual admin cancellation.');
 
     expect($order->events()->where('type', 'order_cancelled_by_admin')->exists())->toBeTrue();
+});
+
+it('shows shipments on the admin order detail page', function (): void {
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create();
+
+    Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::INPOST,
+        'status' => ShipmentStatus::CREATED,
+        'service' => 'parcel_locker',
+        'locker_code' => 'WAW01A',
+        'tracking_number' => 'TRACK123',
+        'tracking_url' => 'https://example.test/track/TRACK123',
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('admin.orders.show', $order))
+        ->assertOk()
+        ->assertSee('Shipments')
+        ->assertSee('InPost')
+        ->assertSee('Created')
+        ->assertSee('parcel_locker')
+        ->assertSee('WAW01A')
+        ->assertSee('TRACK123');
 });

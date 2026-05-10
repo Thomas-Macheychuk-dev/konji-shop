@@ -5,6 +5,7 @@ use App\Data\Payments\PaymentInitializationResult;
 use App\Data\Payments\PaymentNotificationData;
 use App\Enums\CartStatus;
 use App\Enums\Currency;
+use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
@@ -111,6 +112,10 @@ function validCheckoutPayload(string $email = 'guest@gmail.com'): array
         'shipping_postcode' => '80-001',
         'shipping_country_code' => 'PL',
 
+        'delivery_provider' => DeliveryProvider::INPOST->value,
+        'delivery_service' => 'parcel_locker',
+        'delivery_locker_code' => 'WAW01A',
+
         'billing_same_as_shipping' => true,
 
         'notes' => 'Please leave at the door.',
@@ -155,6 +160,11 @@ test('guest checkout creates a pending payment and redirects through the payment
     expect($order->payment_status)->toBe(PaymentStatus::PENDING);
     expect($order->fulfilment_status)->toBe(FulfilmentStatus::UNFULFILLED);
 
+    expect($order)
+        ->delivery_provider->toBe(DeliveryProvider::INPOST)
+        ->delivery_service->toBe('parcel_locker')
+        ->delivery_locker_code->toBe('WAW01A');
+
     $payment = $order->payments->first();
 
     expect($payment)->not->toBeNull();
@@ -178,6 +188,9 @@ test('guest checkout creates a pending payment and redirects through the payment
         'status' => OrderStatus::PENDING_PAYMENT->value,
         'payment_status' => PaymentStatus::PENDING->value,
         'fulfilment_status' => FulfilmentStatus::UNFULFILLED->value,
+        'delivery_provider' => DeliveryProvider::INPOST->value,
+        'delivery_service' => 'parcel_locker',
+        'delivery_locker_code' => 'WAW01A',
     ]);
 
     $this->assertDatabaseHas('payments', [

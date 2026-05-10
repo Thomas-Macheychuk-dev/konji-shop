@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Orders\OrderFulfilmentController;
 use App\Http\Controllers\Admin\Orders\AdminOrderIndexController;
 use App\Http\Controllers\Admin\Orders\AdminOrderShowController;
 use App\Http\Controllers\Admin\Orders\AdminOrderCancelController;
+use App\Http\Controllers\Admin\Orders\AdminOrderShipmentController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -62,6 +63,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::patch('/orders/{order}/cancel', AdminOrderCancelController::class)
             ->name('orders.cancel');
+
+        Route::post('/orders/{order}/shipments', AdminOrderShipmentController::class)
+            ->name('orders.shipments.store');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
@@ -35,6 +36,9 @@ class Order extends Model
         'description',
         'meta',
         'type',
+        'delivery_provider',
+        'delivery_service',
+        'delivery_locker_code',
     ];
 
     protected function casts(): array
@@ -48,6 +52,7 @@ class Order extends Model
             'shipping_amount' => 'integer',
             'discount_amount' => 'integer',
             'total_amount' => 'integer',
+            'delivery_provider' => DeliveryProvider::class,
         ];
     }
 
@@ -84,6 +89,11 @@ class Order extends Model
     public function billingAddress(): HasOne
     {
         return $this->hasOne(OrderAddress::class)->where('type', 'billing');
+    }
+
+    public function shipments(): HasMany
+    {
+        return $this->hasMany(Shipment::class);
     }
 
     public function isDraft(): bool
@@ -306,6 +316,28 @@ class Order extends Model
         $this->recordEvent(
             'order_cancelled_by_admin',
             'Order cancelled by admin.'
+        );
+    }
+
+    public function chooseDelivery(
+        DeliveryProvider $provider,
+        string $service,
+        ?string $lockerCode = null,
+    ): void {
+        $this->update([
+            'delivery_provider' => $provider,
+            'delivery_service' => $service,
+            'delivery_locker_code' => $lockerCode,
+        ]);
+
+        $this->recordEvent(
+            'delivery_choice_selected',
+            'Delivery method selected.',
+            [
+                'provider' => $provider->value,
+                'service' => $service,
+                'locker_code' => $lockerCode,
+            ],
         );
     }
 }

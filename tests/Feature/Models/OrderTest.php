@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
@@ -194,4 +195,21 @@ it('records events for fulfilment transitions', function (): void {
         'order_delivered',
         'order_completed',
     );
+});
+
+it('stores the selected delivery choice', function (): void {
+    $order = Order::factory()->create();
+
+    $order->chooseDelivery(
+        provider: DeliveryProvider::INPOST,
+        service: 'parcel_locker',
+        lockerCode: 'WAW01A',
+    );
+
+    expect($order->refresh())
+        ->delivery_provider->toBe(DeliveryProvider::INPOST)
+        ->delivery_service->toBe('parcel_locker')
+        ->delivery_locker_code->toBe('WAW01A');
+
+    expect($order->events()->where('type', 'delivery_choice_selected')->exists())->toBeTrue();
 });

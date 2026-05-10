@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Checkout;
 
 use App\Enums\CartStatus;
+use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
@@ -60,6 +61,13 @@ class CheckoutService
             $total = max(0, $subtotal + $shipping - $discount);
             $placedAt = Carbon::now();
 
+            $deliveryProvider = DeliveryProvider::from(
+                (string) ($data['delivery_provider'] ?? DeliveryProvider::INPOST->value)
+            );
+
+            $deliveryService = (string) ($data['delivery_service'] ?? 'parcel_locker');
+            $deliveryLockerCode = $this->nullableString($data['delivery_locker_code'] ?? null);
+
             $order = Order::query()->create([
                 'user_id' => $user?->id,
                 'number' => $this->orderNumberGenerator->generate(),
@@ -72,8 +80,21 @@ class CheckoutService
                 'total_amount' => $total,
                 'payment_status' => PaymentStatus::UNPAID,
                 'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
+                'delivery_provider' => $deliveryProvider,
+                'delivery_service' => $deliveryService,
+                'delivery_locker_code' => $deliveryLockerCode,
                 'notes' => $data['notes'] ?? null,
                 'placed_at' => $placedAt,
+            ]);
+
+            $order->events()->create([
+                'type' => 'delivery_choice_selected',
+                'description' => 'Delivery method selected.',
+                'meta' => [
+                    'provider' => $deliveryProvider->value,
+                    'service' => $deliveryService,
+                    'locker_code' => $deliveryLockerCode,
+                ],
             ]);
 
             foreach ($preparedItems as $preparedItem) {
@@ -116,6 +137,7 @@ class CheckoutService
                 'shippingAddress',
                 'billingAddress',
                 'payments',
+                'events',
             ]);
         });
     }
