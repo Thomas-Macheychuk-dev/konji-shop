@@ -34,6 +34,12 @@
                     Account
                 </a>
 
+                @if(auth()->user()->is_admin)
+                    <a href="{{ route('admin.orders.index') }}">
+                        Admin
+                    </a>
+                @endif
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <flux:button variant="ghost" type="submit" class="text-sm cursor-pointer" data-test="logout-button">

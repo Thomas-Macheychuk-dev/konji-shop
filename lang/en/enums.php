@@ -46,9 +46,7 @@ return [
     'order_status' => [
         'draft' => 'Draft',
         'pending_payment' => 'Pending payment',
-        'paid' => 'Paid',
-        'processing' => 'Processing',
-        'shipped' => 'Shipped',
+        'confirmed' => 'Confirmed',
         'completed' => 'Completed',
         'cancelled' => 'Cancelled',
     ],

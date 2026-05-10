@@ -20,7 +20,7 @@ final class HandlePaymentNotificationService
      */
     public function handle(string $providerKey, array $payload, string $rawBody): void
     {
-        DB::transaction(function () use ($providerKey, $payload, $rawBody) {
+        DB::transaction(function () use ($providerKey, $payload, $rawBody): void {
             $gateway = $this->registry->for($providerKey);
 
             $payment = Payment::query()
@@ -34,14 +34,7 @@ final class HandlePaymentNotificationService
 
             $notificationData = $gateway->parseNotification($payload);
 
-            if (
-                $notificationData->providerReference !== ''
-                && $payment->provider_reference !== $notificationData->providerReference
-            ) {
-                $payment->update([
-                    'provider_reference' => $notificationData->providerReference,
-                ]);
-            }
+            $payment->recordProviderReference($notificationData->providerReference);
 
             if ($notificationData->externalStatus === 'CONFIRMED') {
                 $payment->markAsPaid();
@@ -50,10 +43,10 @@ final class HandlePaymentNotificationService
                 $payment->markAsFailed();
             }
 
-            $payment->update([
-                'external_status' => $notificationData->externalStatus,
-                'payload' => $notificationData->payload,
-            ]);
+            $payment->recordNotification(
+                $notificationData->externalStatus,
+                $notificationData->payload,
+            );
         });
     }
 }

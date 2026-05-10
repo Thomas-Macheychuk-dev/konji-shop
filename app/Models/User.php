@@ -70,6 +70,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'wants_company_invoice' => 'boolean',
+            'is_admin' => 'boolean',
         ];
     }
 

@@ -46,9 +46,7 @@ return [
     'order_status' => [
         'draft' => 'Szkic',
         'pending_payment' => 'Oczekuje na płatność',
-        'paid' => 'Opłacone',
-        'processing' => 'W realizacji',
-        'shipped' => 'Wysłane',
+        'confirmed' => 'Potwierdzone',
         'completed' => 'Zrealizowane',
         'cancelled' => 'Anulowane',
     ],

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Account;
 
-use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,16 +25,9 @@ class OrderCancelController extends Controller
         }
 
         DB::transaction(function () use ($order): void {
-            $existingNotes = trim((string) $order->notes);
-
-            $systemNote = 'Cancelled by customer on '.now()->format('Y-m-d H:i:s');
-
-            $order->update([
-                'status' => OrderStatus::CANCELLED,
-                'notes' => $existingNotes !== ''
-                    ? $existingNotes.PHP_EOL.$systemNote
-                    : $systemNote,
-            ]);
+            $order->cancel(
+                'Cancelled by customer on '.now()->format('Y-m-d H:i:s')
+            );
         });
 
         return redirect()

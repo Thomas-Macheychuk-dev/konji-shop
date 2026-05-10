@@ -12,7 +12,9 @@ test('profile page is displayed', function () {
 });
 
 test('profile information can be updated', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+    'is_admin' => true,
+]);
 
     $this->actingAs($user);
 
@@ -31,7 +33,9 @@ test('profile information can be updated', function () {
 });
 
 test('email verification status is unchanged when email address is unchanged', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+    'is_admin' => true,
+]);
 
     $this->actingAs($user);
 
@@ -46,7 +50,9 @@ test('email verification status is unchanged when email address is unchanged', f
 });
 
 test('user can delete their account', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+    'is_admin' => true,
+]);
 
     $this->actingAs($user);
 
@@ -63,7 +69,9 @@ test('user can delete their account', function () {
 });
 
 test('correct password must be provided to delete account', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+    'is_admin' => true,
+]);
 
     $this->actingAs($user);
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Payments;
 
 use App\Data\Payments\PaymentInitializationResult;
-use App\Enums\PaymentStatus;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
@@ -31,13 +30,11 @@ final class StartPaymentService
             $payment->update([
                 'provider' => $result->provider,
                 'provider_reference' => $result->providerReference,
-                'status' => PaymentStatus::PENDING,
                 'payload' => $result->payload,
             ]);
 
-            $order->update([
-                'payment_status' => PaymentStatus::PENDING,
-            ]);
+            $payment->markAsPending();
+            $order->markPaymentAsPending();
 
             return $result;
         });

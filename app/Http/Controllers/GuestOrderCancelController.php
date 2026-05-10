@@ -31,17 +31,9 @@ class GuestOrderCancelController extends Controller
                 ->with('error', 'This order can no longer be cancelled.');
         }
 
-        DB::transaction(function () use ($order): void {
-            $existingNotes = trim((string) $order->notes);
-            $systemNote = 'Cancelled by guest customer on '.now()->format('Y-m-d H:i:s');
-
-            $order->update([
-                'status' => OrderStatus::CANCELLED,
-                'notes' => $existingNotes !== ''
-                    ? $existingNotes.PHP_EOL.$systemNote
-                    : $systemNote,
-            ]);
-        });
+        $order->cancel(
+            'Cancelled by guest customer on '.now()->format('Y-m-d H:i:s')
+        );
 
         return redirect()
             ->route('guest.orders.show', $order)

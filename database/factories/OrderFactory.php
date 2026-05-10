@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
+use Random\RandomException;
 
 /**
  * @extends Factory<Order>
@@ -19,12 +20,15 @@ class OrderFactory extends Factory
 {
     protected $model = Order::class;
 
+    /**
+     * @throws RandomException
+     */
     public function definition(): array
     {
         return [
             'user_id' => null,
-            'number' => 'ORD-' . strtoupper($this->faker->bothify('########')),
-            'guest_email' => $this->faker->safeEmail(),
+            'number' => 'ORD-'.now()->format('YmdHis').'-'.random_int(1000, 9999),
+            'guest_email' => $this->guestEmail(),
             'status' => OrderStatus::PENDING_PAYMENT,
             'currency' => 'PLN',
             'subtotal_amount' => 10000,
@@ -50,7 +54,7 @@ class OrderFactory extends Factory
     {
         return $this->state(fn (): array => [
             'user_id' => null,
-            'guest_email' => $email ?? $this->faker->safeEmail(),
+            'guest_email' => $email ?? $this->guestEmail(),
         ]);
     }
 
@@ -73,7 +77,7 @@ class OrderFactory extends Factory
     public function paid(): static
     {
         return $this->state(fn (): array => [
-            'status' => OrderStatus::PAID,
+            'status' => OrderStatus::CONFIRMED,
             'payment_status' => PaymentStatus::PAID,
         ]);
     }
@@ -83,5 +87,13 @@ class OrderFactory extends Factory
         return $this->state(fn (): array => [
             'status' => OrderStatus::CANCELLED,
         ]);
+    }
+
+    /**
+     * @throws RandomException
+     */
+    private function guestEmail(): string
+    {
+        return 'guest+'.random_int(100000, 999999).'@example.test';
     }
 }
