@@ -58,7 +58,7 @@ class PaymentFactory extends Factory
     {
         return $this->state(fn (): array => [
             'provider' => 'przelewy24',
-            'provider_reference' => $reference ?? 'fake-p24-' . fake()->numerify('######'),
+            'provider_reference' => $reference ?? 'fake-p24-'.random_int(100000, 999999),
         ]);
     }
 }

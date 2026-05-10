@@ -22,6 +22,7 @@ class Payment extends Model
         'currency',
         'paid_at',
         'payload',
+        'external_status',
     ];
 
     protected function casts(): array
@@ -60,6 +61,11 @@ class Payment extends Model
             'status' => PaymentStatus::PAID,
             'paid_at' => now(),
         ]);
+
+        $this->order->events()->create([
+            'type' => 'payment_paid',
+            'description' => 'Payment marked as paid.',
+        ]);
     }
 
     public function markAsFailed(): void
@@ -67,10 +73,54 @@ class Payment extends Model
         $this->update([
             'status' => PaymentStatus::FAILED,
         ]);
+
+        $this->order->events()->create([
+            'type' => 'payment_failed',
+            'description' => 'Payment failed.',
+        ]);
     }
 
     public function amountDecimal(): string
     {
         return number_format($this->amount / 100, 2, '.', '');
+    }
+
+    public function markAsPending(): void
+    {
+        $this->update([
+            'status' => PaymentStatus::PENDING,
+        ]);
+
+        $this->order->events()->create([
+            'type' => 'payment_pending',
+            'description' => 'Payment moved to pending.',
+        ]);
+    }
+
+    public function recordProviderReference(string $providerReference): void
+    {
+        if ($providerReference === '' || $this->provider_reference === $providerReference) {
+            return;
+        }
+
+        $this->update([
+            'provider_reference' => $providerReference,
+        ]);
+    }
+
+    public function recordNotification(?string $externalStatus, array $payload): void
+    {
+        $this->update([
+            'external_status' => $externalStatus,
+            'payload' => $payload,
+        ]);
+
+        $this->order->events()->create([
+            'type' => 'payment_notification_received',
+            'description' => 'Payment notification received from provider.',
+            'meta' => [
+                'external_status' => $externalStatus,
+            ],
+        ]);
     }
 }

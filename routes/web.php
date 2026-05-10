@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\AccountDetailsUpdateController;
 use App\Http\Controllers\Account\OrderCancelController;
 use App\Http\Controllers\Account\OrderIndexController;
 use App\Http\Controllers\Account\OrderShowController;
+use App\Http\Controllers\Admin\Orders\AdminOrderNoteController;
 use App\Http\Controllers\CartItemDestroyController;
 use App\Http\Controllers\CartItemStoreController;
 use App\Http\Controllers\CartItemUpdateController;
@@ -22,6 +23,9 @@ use App\Http\Controllers\Payments\PaynowNotificationController;
 use App\Http\Controllers\ProductShowController;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Orders\OrderFulfilmentController;
+use App\Http\Controllers\Admin\Orders\AdminOrderIndexController;
+use App\Http\Controllers\Admin\Orders\AdminOrderShowController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -67,6 +71,23 @@ Route::post('/payments/paynow/notifications', PaynowNotificationController::clas
         PreventRequestForgery::class,
     ])
     ->name('payments.paynow.notifications');
+
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function (): void {
+        Route::get('/orders', AdminOrderIndexController::class)
+            ->name('orders.index');
+
+        Route::get('/orders/{order}', AdminOrderShowController::class)
+            ->name('orders.show');
+
+        Route::patch('/orders/{order}/fulfilment/{action}', OrderFulfilmentController::class)
+            ->name('orders.fulfilment.update');
+
+        Route::patch('/orders/{order}/notes', AdminOrderNoteController::class)
+            ->name('orders.notes.update');
+    });
 
 Route::view('/cookie-policy', 'pages.legal.cookie-policy')->name('legal.cookie-policy');
 

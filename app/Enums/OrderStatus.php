@@ -8,15 +8,13 @@ enum OrderStatus: string
 {
     case DRAFT = 'draft';
     case PENDING_PAYMENT = 'pending_payment';
-    case PAID = 'paid';
-    case PROCESSING = 'processing';
-    case SHIPPED = 'shipped';
+    case CONFIRMED = 'confirmed';
     case COMPLETED = 'completed';
     case CANCELLED = 'cancelled';
 
     public function translationKey(): string
     {
-        return 'enums.order_status.' . $this->value;
+        return 'enums.order_status.'.$this->value;
     }
 
     public function label(): string
@@ -29,9 +27,7 @@ enum OrderStatus: string
         return match ($this) {
             self::DRAFT => 'bg-zinc-100 text-zinc-800',
             self::PENDING_PAYMENT => 'bg-amber-100 text-amber-800',
-            self::PAID => 'bg-emerald-100 text-emerald-800',
-            self::PROCESSING => 'bg-blue-100 text-blue-800',
-            self::SHIPPED => 'bg-sky-100 text-sky-800',
+            self::CONFIRMED => 'bg-emerald-100 text-emerald-800',
             self::COMPLETED => 'bg-green-100 text-green-800',
             self::CANCELLED => 'bg-red-100 text-red-800',
         };
@@ -47,19 +43,9 @@ enum OrderStatus: string
         return $this === self::PENDING_PAYMENT;
     }
 
-    public function isPaid(): bool
+    public function isConfirmed(): bool
     {
-        return $this === self::PAID;
-    }
-
-    public function isProcessing(): bool
-    {
-        return $this === self::PROCESSING;
-    }
-
-    public function isShipped(): bool
-    {
-        return $this === self::SHIPPED;
+        return $this === self::CONFIRMED;
     }
 
     public function isCompleted(): bool
