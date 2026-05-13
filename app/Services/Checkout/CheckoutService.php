@@ -17,6 +17,7 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
+use App\Enums\DeliveryCarrier;
 
 class CheckoutService
 {
@@ -62,7 +63,11 @@ class CheckoutService
             $placedAt = Carbon::now();
 
             $deliveryProvider = DeliveryProvider::from(
-                (string) ($data['delivery_provider'] ?? DeliveryProvider::INPOST->value)
+                (string) ($data['delivery_provider'] ?? DeliveryProvider::POLKURIER->value)
+            );
+
+            $deliveryCarrier = DeliveryCarrier::from(
+                (string) ($data['delivery_carrier'] ?? DeliveryCarrier::INPOST->value)
             );
 
             $deliveryService = (string) ($data['delivery_service'] ?? 'parcel_locker');
@@ -82,6 +87,7 @@ class CheckoutService
                 'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
                 'delivery_provider' => $deliveryProvider,
                 'delivery_service' => $deliveryService,
+                'delivery_carrier' => $deliveryCarrier,
                 'delivery_locker_code' => $deliveryLockerCode,
                 'notes' => $data['notes'] ?? null,
                 'placed_at' => $placedAt,
@@ -92,6 +98,7 @@ class CheckoutService
                 'description' => 'Delivery method selected.',
                 'meta' => [
                     'provider' => $deliveryProvider->value,
+                    'carrier' => $deliveryCarrier->value,
                     'service' => $deliveryService,
                     'locker_code' => $deliveryLockerCode,
                 ],

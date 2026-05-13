@@ -20,13 +20,13 @@ function fakeDeliveryGateway(): DeliveryGateway
     return new class implements DeliveryGateway {
         public function providerKey(): string
         {
-            return DeliveryProvider::INPOST->value;
+            return DeliveryProvider::POLKURIER->value;
         }
 
         public function createShipment(Order $order, Shipment $shipment): ShipmentCreationResult
         {
             return new ShipmentCreationResult(
-                provider: DeliveryProvider::INPOST->value,
+                provider: DeliveryProvider::POLKURIER->value,
                 providerReference: 'inpost-shipment-123',
                 trackingNumber: 'TRACK123',
                 trackingUrl: 'https://example.test/track/TRACK123',
@@ -53,13 +53,13 @@ it('creates a shipment through a delivery gateway', function (): void {
 
     $shipment = $service->create(
         order: $order,
-        provider: DeliveryProvider::INPOST->value,
+        provider: DeliveryProvider::POLKURIER->value,
         service: 'parcel_locker',
         lockerCode: 'WAW01A',
     );
 
     expect($shipment)
-        ->provider->toBe(DeliveryProvider::INPOST)
+        ->provider->toBe(DeliveryProvider::POLKURIER)
         ->status->toBe(ShipmentStatus::CREATED)
         ->provider_reference->toBe('inpost-shipment-123')
         ->tracking_number->toBe('TRACK123')
@@ -90,6 +90,6 @@ it('does not create a shipment for an order that is not confirmed', function ():
 
     $service->create(
         order: $order,
-        provider: DeliveryProvider::INPOST->value,
+        provider: DeliveryProvider::POLKURIER->value,
     );
 })->throws(RuntimeException::class, 'Only confirmed orders can have shipments created.');

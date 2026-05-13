@@ -128,12 +128,38 @@
                                     name="delivery_provider"
                                     class="@error('delivery_provider') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
                                 >
-                                    <option value="inpost" @selected(old('delivery_provider', 'inpost') === 'inpost')>
-                                        InPost
+                                    <option value="polkurier" @selected(old('delivery_provider', 'polkurier') === 'polkurier')>
+                                        Polkurier
                                     </option>
                                 </select>
 
                                 @error('delivery_provider')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="delivery_carrier" class="mb-2 block text-sm font-medium text-zinc-700">
+                                    Carrier
+                                </label>
+
+                                <select
+                                    id="delivery_carrier"
+                                    name="delivery_carrier"
+                                    class="@error('delivery_carrier') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                >
+                                    <option value="inpost" @selected(old('delivery_carrier', 'inpost') === 'inpost')>
+                                        InPost
+                                    </option>
+                                    <option value="ups" @selected(old('delivery_carrier') === 'ups')>
+                                        UPS
+                                    </option>
+                                    <option value="dpd" @selected(old('delivery_carrier') === 'dpd')>
+                                        DPD
+                                    </option>
+                                </select>
+
+                                @error('delivery_carrier')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>

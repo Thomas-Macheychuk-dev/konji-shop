@@ -8,6 +8,7 @@ use App\Enums\DeliveryProvider;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
+use App\Enums\DeliveryCarrier;
 
 class PlaceOrderRequest extends FormRequest
 {
@@ -24,8 +25,10 @@ class PlaceOrderRequest extends FormRequest
             'billing_address_source' => $billingAddressSource,
             'billing_same_as_shipping' => $billingAddressSource === 'same_as_shipping',
             'terms_accepted' => $this->boolean('terms_accepted'),
-            'delivery_provider' => $this->input('delivery_provider', DeliveryProvider::INPOST->value),
+            'delivery_provider' => $this->input('delivery_provider', DeliveryProvider::POLKURIER->value),
+            'delivery_carrier' => $this->input('delivery_carrier', DeliveryCarrier::INPOST->value),
             'delivery_service' => $this->input('delivery_service', 'parcel_locker'),
+
         ]);
 
         if ($billingAddressSource === 'company_address' && $this->user()) {
@@ -67,6 +70,7 @@ class PlaceOrderRequest extends FormRequest
             'shipping_country_code' => ['required', 'string', 'size:2', Rule::in(array_keys(config('countries', [])))],
 
             'delivery_provider' => ['required', 'string', Rule::in(DeliveryProvider::options())],
+            'delivery_carrier' => ['required', 'string', Rule::in(DeliveryCarrier::options())],
             'delivery_service' => ['required', 'string', Rule::in(['parcel_locker', 'courier', 'pickup'])],
             'delivery_locker_code' => [
                 Rule::requiredIf(fn (): bool => $this->input('delivery_service') === 'parcel_locker'),
@@ -146,7 +150,7 @@ class PlaceOrderRequest extends FormRequest
             }
 
             if (
-                $this->input('delivery_provider') !== DeliveryProvider::INPOST->value
+                $this->input('delivery_provider') !== DeliveryProvider::POLKURIER->value
                 && $this->input('delivery_service') === 'parcel_locker'
             ) {
                 $validator->errors()->add(
@@ -173,6 +177,7 @@ class PlaceOrderRequest extends FormRequest
             'shipping_country_code' => __('Shipping country'),
 
             'delivery_provider' => __('Delivery provider'),
+            'delivery_carrier' => __('Delivery carrier'),
             'delivery_service' => __('Delivery service'),
             'delivery_locker_code' => __('Parcel locker code'),
 

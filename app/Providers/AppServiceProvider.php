@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Delivery\DeliveryGatewayRegistry;
-use App\Services\Delivery\InPost\InPostDeliveryGateway;
+use App\Services\Delivery\Polkurier\PolkurierDeliveryGateway;
 use App\Services\Payments\PaymentGatewayRegistry;
 use App\Services\Payments\Paynow\PaynowGateway;
 use App\Services\Payments\Przelewy24\Przelewy24Gateway;
@@ -30,11 +30,11 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        $this->app->singleton(InPostDeliveryGateway::class);
+        $this->app->singleton(PolkurierDeliveryGateway::class);
 
         $this->app->singleton(DeliveryGatewayRegistry::class, function ($app): DeliveryGatewayRegistry {
             return new DeliveryGatewayRegistry([
-                $app->make(InPostDeliveryGateway::class),
+                $app->make(PolkurierDeliveryGateway::class),
             ]);
         });
     }

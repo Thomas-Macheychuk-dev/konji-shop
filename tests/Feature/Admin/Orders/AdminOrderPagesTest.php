@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
@@ -38,7 +39,8 @@ it('shows the admin order detail page', function (): void {
         'status' => OrderStatus::CONFIRMED,
         'payment_status' => PaymentStatus::PAID,
         'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
-        'delivery_provider' => DeliveryProvider::INPOST,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::INPOST,
         'delivery_service' => 'parcel_locker',
         'delivery_locker_code' => 'WAW01A',
     ]);
@@ -236,7 +238,7 @@ it('shows shipments on the admin order detail page', function (): void {
 
     Shipment::query()->create([
         'order_id' => $order->id,
-        'provider' => DeliveryProvider::INPOST,
+        'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::CREATED,
         'service' => 'parcel_locker',
         'locker_code' => 'WAW01A',
@@ -248,7 +250,7 @@ it('shows shipments on the admin order detail page', function (): void {
         ->get(route('admin.orders.show', $order))
         ->assertOk()
         ->assertSee('Shipments')
-        ->assertSee('InPost')
+        ->assertSee('Polkurier')
         ->assertSee('Created')
         ->assertSee('parcel_locker')
         ->assertSee('WAW01A')
