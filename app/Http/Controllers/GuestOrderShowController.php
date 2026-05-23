@@ -29,6 +29,7 @@ class GuestOrderShowController extends Controller
             'shippingAddress',
             'billingAddress',
             'payments',
+            'shipments',
         ]);
 
         return view('pages.guest-orders.show', [

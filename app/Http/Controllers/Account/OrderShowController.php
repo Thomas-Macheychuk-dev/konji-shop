@@ -21,6 +21,7 @@ class OrderShowController extends Controller
                 'shippingAddress',
                 'billingAddress',
                 'payments',
+                'shipments',
             ])
             ->findOrFail($orderId);
 

@@ -306,8 +306,8 @@ class Order extends Model
 
     public function cancelByAdmin(string $note): void
     {
-        if ($this->status->isCancelled()) {
-            throw new DomainException('This order is already cancelled.');
+        if (! $this->canBeCancelledByAdmin()) {
+            throw new DomainException('This order can no longer be cancelled.');
         }
 
         $this->update([
@@ -344,6 +344,109 @@ class Order extends Model
                 'service' => $service,
                 'locker_code' => $lockerCode,
             ],
+        );
+    }
+
+    public function markAsReadyForPickup(): void
+    {
+        if (! $this->payment_status->isPaid()) {
+            throw new DomainException('Only paid orders can be marked as ready for pickup.');
+        }
+
+        if (! $this->status->isConfirmed()) {
+            throw new DomainException('Only confirmed orders can be marked as ready for pickup.');
+        }
+
+        if ($this->fulfilment_status === FulfilmentStatus::READY_FOR_PICKUP) {
+            return;
+        }
+
+        if (! in_array($this->fulfilment_status, [
+            FulfilmentStatus::UNFULFILLED,
+            FulfilmentStatus::PROCESSING,
+        ], true)) {
+            throw new DomainException('Only unfulfilled or processing orders can be marked as ready for pickup.');
+        }
+
+        $this->update([
+            'fulfilment_status' => FulfilmentStatus::READY_FOR_PICKUP,
+        ]);
+
+        $this->recordEvent(
+            'order_ready_for_pickup',
+            'Order marked as ready for pickup.'
+        );
+    }
+
+    public function canBeCancelledByAdmin(): bool
+    {
+        if ($this->status === OrderStatus::CANCELLED) {
+            return false;
+        }
+
+        if ($this->status === OrderStatus::COMPLETED) {
+            return false;
+        }
+
+        if (in_array($this->fulfilment_status, [
+            FulfilmentStatus::SHIPPED,
+            FulfilmentStatus::DELIVERED,
+            FulfilmentStatus::RETURNED,
+        ], true)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function markAsPickedUp(): void
+    {
+        if (! $this->payment_status->isPaid()) {
+            throw new DomainException('Only paid orders can be marked as picked up.');
+        }
+
+        if (! $this->status->isConfirmed()) {
+            throw new DomainException('Only confirmed orders can be marked as picked up.');
+        }
+
+        if ($this->delivery_service !== 'pickup') {
+            throw new DomainException('Only pickup orders can be marked as picked up.');
+        }
+
+        if ($this->fulfilment_status !== FulfilmentStatus::READY_FOR_PICKUP) {
+            throw new DomainException('Only ready-for-pickup orders can be marked as picked up.');
+        }
+
+        $this->update([
+            'fulfilment_status' => FulfilmentStatus::DELIVERED,
+        ]);
+
+        $this->recordEvent(
+            'order_picked_up',
+            'Order picked up by customer.'
+        );
+    }
+
+    public function markAsReturnedToSender(?string $note = null): void
+    {
+        if (! $this->status->isConfirmed()) {
+            throw new DomainException('Only confirmed orders can be marked as returned to sender.');
+        }
+
+        if (! $this->fulfilment_status->isShipped()) {
+            throw new DomainException('Only shipped orders can be marked as returned to sender.');
+        }
+
+        $this->update([
+            'fulfilment_status' => FulfilmentStatus::RETURNED,
+        ]);
+
+        $this->recordEvent(
+            'order_returned_to_sender',
+            'Order returned to sender.',
+            $note !== null && trim($note) !== ''
+                ? ['note' => trim($note)]
+                : []
         );
     }
 }

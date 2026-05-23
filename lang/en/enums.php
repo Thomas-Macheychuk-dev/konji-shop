@@ -65,6 +65,7 @@ return [
         'shipped' => 'Shipped',
         'delivered' => 'Delivered',
         'returned' => 'Returned',
+        'ready_for_pickup' => 'Ready For Pickup',
     ],
 
     'company_data_key' => [
@@ -80,5 +81,16 @@ return [
         'city' => 'City',
         'country' => 'Country',
         'bank_account' => 'Bank account',
+    ],
+
+    'shipment_status' => [
+        'pending' => 'Pending',
+        'created' => 'Created',
+        'dispatched' => 'Dispatched',
+        'in_transit' => 'In transit',
+        'delivered' => 'Delivered',
+        'failed' => 'Failed',
+        'cancelled' => 'Cancelled',
+        'returned' => 'Returned to sender',
     ],
 ];

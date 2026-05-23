@@ -65,6 +65,7 @@ return [
         'shipped' => 'Wysłane',
         'delivered' => 'Dostarczone',
         'returned' => 'Zwrócone',
+        'ready_for_pickup' => 'Gotowe do odbioru',
     ],
 
     'company_data_key' => [
@@ -80,5 +81,16 @@ return [
         'city' => 'Miasto',
         'country' => 'Kraj',
         'bank_account' => 'Numer konta bankowego',
+    ],
+
+    'shipment_status' => [
+        'pending' => 'Oczekuje',
+        'created' => 'Utworzona',
+        'dispatched' => 'Wysłana',
+        'in_transit' => 'W transporcie',
+        'delivered' => 'Dostarczona',
+        'failed' => 'Nieudana',
+        'cancelled' => 'Anulowana',
+        'returned' => 'Zwrócona do nadawcy',
     ],
 ];

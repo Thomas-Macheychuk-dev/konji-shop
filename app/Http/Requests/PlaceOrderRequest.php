@@ -73,10 +73,10 @@ class PlaceOrderRequest extends FormRequest
             'delivery_carrier' => ['required', 'string', Rule::in(DeliveryCarrier::options())],
             'delivery_service' => ['required', 'string', Rule::in(['parcel_locker', 'courier', 'pickup'])],
             'delivery_locker_code' => [
-                Rule::requiredIf(fn (): bool => $this->input('delivery_service') === 'parcel_locker'),
                 'nullable',
                 'string',
-                'max:255',
+                'max:20',
+                'required_if:delivery_service,parcel_locker',
             ],
 
             'billing_address_source' => ['required', Rule::in(['same_as_shipping', 'company_address', 'other'])],

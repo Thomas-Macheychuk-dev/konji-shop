@@ -28,7 +28,6 @@
             );
 
             $countryName = static fn (?string $code): string => $countries[strtoupper((string) $code)] ?? strtoupper((string) $code);
-
         @endphp
 
         <form method="POST" action="{{ route('checkout.place') }}">
@@ -117,99 +116,24 @@
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                         <h2 class="text-lg font-semibold text-zinc-900">Delivery method</h2>
 
-                        <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
-                            <div>
-                                <label for="delivery_provider" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Provider
-                                </label>
+                        <div
+                            id="checkout-delivery-method"
+                            data-initial-carrier="{{ old('delivery_carrier', 'inpost') }}"
+                            data-initial-service="{{ old('delivery_service', 'parcel_locker') }}"
+                            data-initial-locker-code="{{ old('delivery_locker_code', '') }}"
+                        ></div>
 
-                                <select
-                                    id="delivery_provider"
-                                    name="delivery_provider"
-                                    class="@error('delivery_provider') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                >
-                                    <option value="polkurier" @selected(old('delivery_provider', 'polkurier') === 'polkurier')>
-                                        Polkurier
-                                    </option>
-                                </select>
+                        @error('delivery_carrier')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
 
-                                @error('delivery_provider')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+                        @error('delivery_service')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
 
-                            <div>
-                                <label for="delivery_carrier" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Carrier
-                                </label>
-
-                                <select
-                                    id="delivery_carrier"
-                                    name="delivery_carrier"
-                                    class="@error('delivery_carrier') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                >
-                                    <option value="inpost" @selected(old('delivery_carrier', 'inpost') === 'inpost')>
-                                        InPost
-                                    </option>
-                                    <option value="ups" @selected(old('delivery_carrier') === 'ups')>
-                                        UPS
-                                    </option>
-                                    <option value="dpd" @selected(old('delivery_carrier') === 'dpd')>
-                                        DPD
-                                    </option>
-                                </select>
-
-                                @error('delivery_carrier')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div>
-                                <label for="delivery_service" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Service
-                                </label>
-
-                                <select
-                                    id="delivery_service"
-                                    name="delivery_service"
-                                    class="@error('delivery_service') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                >
-                                    <option value="parcel_locker" @selected(old('delivery_service', 'parcel_locker') === 'parcel_locker')>
-                                        InPost parcel locker
-                                    </option>
-                                    <option value="courier" @selected(old('delivery_service') === 'courier')>
-                                        Courier
-                                    </option>
-                                    <option value="pickup" @selected(old('delivery_service') === 'pickup')>
-                                        Pickup
-                                    </option>
-                                </select>
-
-                                @error('delivery_service')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="sm:col-span-2">
-                                <label for="delivery_locker_code" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Parcel locker code
-                                    <span class="text-zinc-400">(required for parcel locker)</span>
-                                </label>
-
-                                <input
-                                    id="delivery_locker_code"
-                                    type="text"
-                                    name="delivery_locker_code"
-                                    value="{{ old('delivery_locker_code') }}"
-                                    placeholder="e.g. WAW01A"
-                                    class="@error('delivery_locker_code') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                >
-
-                                @error('delivery_locker_code')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
+                        @error('delivery_locker_code')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
@@ -437,8 +361,6 @@
                                         {{ ' / ' . $companyBillingAddressDefaults['address_line_2'] }}
                                     @endif
                                 </p>
-
-
 
                                 <p>
                                     {{ $companyBillingAddressDefaults['postcode'] ?? '' }}
