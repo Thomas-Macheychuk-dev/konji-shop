@@ -11,6 +11,7 @@ enum FulfilmentStatus: string
     case SHIPPED = 'shipped';
     case DELIVERED = 'delivered';
     case RETURNED = 'returned';
+    case READY_FOR_PICKUP = 'ready_for_pickup';
 
     public function translationKey(): string
     {
@@ -30,6 +31,7 @@ enum FulfilmentStatus: string
             self::SHIPPED => 'bg-blue-100 text-blue-800',
             self::DELIVERED => 'bg-green-100 text-green-800',
             self::RETURNED => 'bg-purple-100 text-purple-800',
+            self::READY_FOR_PICKUP => 'bg-indigo-100 text-indigo-800',
         };
     }
 
@@ -56,6 +58,11 @@ enum FulfilmentStatus: string
     public function isReturned(): bool
     {
         return $this === self::RETURNED;
+    }
+
+    public function isReadyForPickup(): bool
+    {
+        return $this === self::READY_FOR_PICKUP;
     }
 
     public static function options(): array

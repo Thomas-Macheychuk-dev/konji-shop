@@ -201,6 +201,88 @@
                         </div>
                     </div>
                 @endif
+
+                <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+                    <div class="border-b border-zinc-200 px-6 py-4">
+                        <h2 class="text-lg font-semibold text-zinc-900">Delivery</h2>
+                    </div>
+
+                    <div class="divide-y divide-zinc-200">
+                        @forelse ($order->shipments as $shipment)
+                            <div class="px-6 py-4">
+                                <dl class="grid gap-4 text-sm sm:grid-cols-2">
+                                    <div>
+                                        <dt class="text-zinc-500">Carrier</dt>
+                                        <dd class="mt-1 text-zinc-900">
+                                            {{ $shipment->carrier()?->label() ?? '—' }}
+                                        </dd>
+                                    </div>
+
+                                    <div>
+                                        <dt class="text-zinc-500">Status</dt>
+                                        <dd class="mt-1 text-zinc-900">
+                                            {{ $shipment->status?->value ?? '—' }}
+                                        </dd>
+                                    </div>
+
+                                    <div>
+                                        <dt class="text-zinc-500">Service</dt>
+                                        <dd class="mt-1 text-zinc-900">
+                                            {{ $shipment->service ?? '—' }}
+                                        </dd>
+                                    </div>
+
+                                    <div>
+                                        <dt class="text-zinc-500">Tracking number</dt>
+                                        <dd class="mt-1 break-all text-zinc-900">
+                                            {{ $shipment->tracking_number ?? '—' }}
+                                        </dd>
+                                    </div>
+
+                                    @if ($shipment->provider_reference)
+                                        <div>
+                                            <dt class="text-zinc-500">Provider reference</dt>
+                                            <dd class="mt-1 break-all text-zinc-900">
+                                                {{ $shipment->provider_reference }}
+                                            </dd>
+                                        </div>
+                                    @endif
+
+                                    @if ($shipment->tracking_url)
+                                        <div>
+                                            <dt class="text-zinc-500">Tracking</dt>
+                                            <dd class="mt-1">
+                                                <a
+                                                    href="{{ $shipment->tracking_url }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition hover:text-zinc-600"
+                                                >
+                                                    Track shipment
+                                                </a>
+                                            </dd>
+                                        </div>
+                                    @endif
+
+                                    @if ($shipment->shipped_at)
+                                        <div>
+                                            <dt class="text-zinc-500">Shipped at</dt>
+                                            <dd class="mt-1 text-zinc-900">
+                                                {{ $shipment->shipped_at->format('Y-m-d H:i') }}
+                                            </dd>
+                                        </div>
+                                    @endif
+                                </dl>
+                            </div>
+                        @empty
+                            <div class="px-6 py-4">
+                                <p class="text-sm text-zinc-500">
+                                    No shipment has been created for this order yet.
+                                </p>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
             </div>
 
             <div class="space-y-8">

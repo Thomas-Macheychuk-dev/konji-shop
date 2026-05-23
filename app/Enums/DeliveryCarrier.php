@@ -9,6 +9,7 @@ enum DeliveryCarrier: string
     case INPOST = 'inpost';
     case UPS = 'ups';
     case DPD = 'dpd';
+    case LOCAL_PICKUP = 'local_pickup';
 
     public function label(): string
     {
@@ -16,6 +17,7 @@ enum DeliveryCarrier: string
             self::INPOST => 'InPost',
             self::UPS => 'UPS',
             self::DPD => 'DPD',
+            self::LOCAL_PICKUP => 'Local pickup',
         };
     }
 

@@ -13,18 +13,16 @@ enum ShipmentStatus: string
     case DELIVERED = 'delivered';
     case FAILED = 'failed';
     case CANCELLED = 'cancelled';
+    case RETURNED = 'returned';
+
+    public function translationKey(): string
+    {
+        return 'enums.shipment_status.' . $this->value;
+    }
 
     public function label(): string
     {
-        return match ($this) {
-            self::PENDING => 'Pending',
-            self::CREATED => 'Created',
-            self::DISPATCHED => 'Dispatched',
-            self::IN_TRANSIT => 'In transit',
-            self::DELIVERED => 'Delivered',
-            self::FAILED => 'Failed',
-            self::CANCELLED => 'Cancelled',
-        };
+        return __($this->translationKey());
     }
 
     public function badgeColorClasses(): string
@@ -35,6 +33,7 @@ enum ShipmentStatus: string
             self::DISPATCHED, self::IN_TRANSIT => 'bg-amber-100 text-amber-800',
             self::DELIVERED => 'bg-emerald-100 text-emerald-800',
             self::FAILED, self::CANCELLED => 'bg-red-100 text-red-800',
+            self::RETURNED => 'bg-orange-100 text-orange-800',
         };
     }
 

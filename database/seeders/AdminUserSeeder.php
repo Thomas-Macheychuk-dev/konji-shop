@@ -10,14 +10,14 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::where('email', env('ADMIN_EMAIL', 'admin@konji-shop.test'))
+        User::where('email', env('ADMIN_EMAIL', 'tomek.maciejczuk@gmail.com'))
             ->delete();
 
         User::create([
             'name' => env('ADMIN_NAME', 'Admin'),
             'first_name' => env('ADMIN_FIRST_NAME', 'Admin'),
             'last_name' => env('ADMIN_LAST_NAME', 'User'),
-            'email' => env('ADMIN_EMAIL', 'admin@konji-shop.test'),
+            'email' => env('ADMIN_EMAIL', 'tomek.maciejczuk@gmail.com'),
             'password' => Hash::make(env('ADMIN_PASSWORD', 'password')),
             'email_verified_at' => now(),
             'is_admin' => true,

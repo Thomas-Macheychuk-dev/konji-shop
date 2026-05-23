@@ -49,7 +49,7 @@ it('shows the admin order detail page', function (): void {
         ->get(route('admin.orders.show', $order))
         ->assertOk()
         ->assertSee('Order '.$order->number)
-        ->assertSee('Start processing')
+        ->assertSee('Fulfilment actions')
         ->assertSee('Customer')
         ->assertSee('Delivery choice')
         ->assertSee('InPost')
@@ -202,16 +202,16 @@ it('does not allow a normal user to add an internal order note', function (): vo
     expect($order->refresh()->notes)->toBeNull();
 });
 
-it('allows an admin to cancel an order at any time', function (): void {
+it('allows an admin to cancel a cancellable order', function (): void {
     $user = User::factory()->create([
         'is_admin' => true,
         'email' => 'admin@example.test',
     ]);
 
     $order = Order::factory()->create([
-        'status' => OrderStatus::COMPLETED,
+        'status' => OrderStatus::CONFIRMED,
         'payment_status' => PaymentStatus::PAID,
-        'fulfilment_status' => FulfilmentStatus::DELIVERED,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
     ]);
 
     $this->actingAs($user)
@@ -229,12 +229,41 @@ it('allows an admin to cancel an order at any time', function (): void {
     expect($order->events()->where('type', 'order_cancelled_by_admin')->exists())->toBeTrue();
 });
 
+it('does not allow an admin to cancel a completed order', function (): void {
+    $user = User::factory()->create([
+        'is_admin' => true,
+        'email' => 'admin@example.test',
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::COMPLETED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::DELIVERED,
+    ]);
+
+    $this->actingAs($user)
+        ->from(route('admin.orders.show', $order))
+        ->patch(route('admin.orders.cancel', $order), [
+            'note' => 'Manual admin cancellation.',
+        ])
+        ->assertRedirect(route('admin.orders.show', $order))
+        ->assertSessionHas('error');
+
+    expect($order->refresh()->status)->toBe(OrderStatus::COMPLETED);
+    expect((string) $order->notes)->not->toContain('Manual admin cancellation.');
+});
+
 it('shows shipments on the admin order detail page', function (): void {
     $user = User::factory()->create([
         'is_admin' => true,
     ]);
 
-    $order = Order::factory()->create();
+    $order = Order::factory()->create([
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::INPOST,
+        'delivery_service' => 'parcel_locker',
+        'delivery_locker_code' => 'WAW01A',
+    ]);
 
     Shipment::query()->create([
         'order_id' => $order->id,
@@ -250,7 +279,7 @@ it('shows shipments on the admin order detail page', function (): void {
         ->get(route('admin.orders.show', $order))
         ->assertOk()
         ->assertSee('Shipments')
-        ->assertSee('Polkurier')
+        ->assertSee('InPost')
         ->assertSee('Created')
         ->assertSee('parcel_locker')
         ->assertSee('WAW01A')

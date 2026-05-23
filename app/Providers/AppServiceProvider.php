@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use App\Contracts\Delivery\CreatesShipments;
+use App\Services\Delivery\CreateShipmentService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(PolkurierDeliveryGateway::class),
             ]);
         });
+
+        $this->app->bind(CreatesShipments::class, CreateShipmentService::class);
     }
 
     /**

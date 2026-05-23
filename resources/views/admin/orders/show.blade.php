@@ -46,10 +46,12 @@
                         <dt class="text-zinc-500">Order</dt>
                         <dd class="font-medium text-zinc-900">{{ $order->status->label() }}</dd>
                     </div>
+
                     <div>
                         <dt class="text-zinc-500">Payment</dt>
                         <dd class="font-medium text-zinc-900">{{ $order->payment_status->label() }}</dd>
                     </div>
+
                     <div>
                         <dt class="text-zinc-500">Fulfilment</dt>
                         <dd class="font-medium text-zinc-900">{{ $order->fulfilment_status->label() }}</dd>
@@ -61,72 +63,120 @@
                 <h2 class="text-lg font-semibold text-zinc-900">Fulfilment actions</h2>
 
                 <div class="mt-4 flex flex-wrap gap-3">
-                    @if ($order->status->isConfirmed() && $order->fulfilment_status->isUnfulfilled())
+                    @if (
+                        $order->status === \App\Enums\OrderStatus::CONFIRMED
+                        && $order->fulfilment_status === \App\Enums\FulfilmentStatus::UNFULFILLED
+                    )
                         <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'processing']) }}">
                             @csrf
                             @method('PATCH')
+
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
                                 Start processing
                             </button>
                         </form>
                     @endif
 
-                    @if ($order->status->isConfirmed() && $order->fulfilment_status->isProcessing())
+                    @if (
+                        $order->status === \App\Enums\OrderStatus::CONFIRMED
+                        && $order->fulfilment_status === \App\Enums\FulfilmentStatus::PROCESSING
+                    )
                         <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'shipped']) }}">
                             @csrf
                             @method('PATCH')
+
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                                Mark as shipped
+                                {{ $order->delivery_service === 'pickup' ? 'Mark as ready for pickup' : 'Create shipment & mark as shipped' }}
                             </button>
                         </form>
                     @endif
 
-                    @if ($order->status->isConfirmed() && $order->fulfilment_status->isShipped())
+                    @if (
+                        $order->status === \App\Enums\OrderStatus::CONFIRMED
+                        && $order->delivery_service === 'pickup'
+                        && $order->fulfilment_status === \App\Enums\FulfilmentStatus::READY_FOR_PICKUP
+                    )
                         <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'delivered']) }}">
                             @csrf
                             @method('PATCH')
+
+                            <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
+                                Mark as picked up & complete
+                            </button>
+                        </form>
+                    @endif
+
+                    @if (
+                        $order->status === \App\Enums\OrderStatus::CONFIRMED
+                        && $order->delivery_service !== 'pickup'
+                        && $order->fulfilment_status === \App\Enums\FulfilmentStatus::SHIPPED
+                    )
+                        <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'delivered']) }}">
+                            @csrf
+                            @method('PATCH')
+
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
                                 Mark as delivered
                             </button>
                         </form>
+
+                        <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'returned']) }}">
+                            @csrf
+                            @method('PATCH')
+
+                            <button class="rounded-xl bg-orange-700 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
+                                Mark as returned to sender
+                            </button>
+                        </form>
                     @endif
 
-                    @if ($order->status->isConfirmed() && $order->fulfilment_status->isDelivered())
+                    @if (
+                        $order->status === \App\Enums\OrderStatus::CONFIRMED
+                        && $order->fulfilment_status === \App\Enums\FulfilmentStatus::DELIVERED
+                    )
                         <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'completed']) }}">
                             @csrf
                             @method('PATCH')
+
                             <button class="rounded-xl bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600">
                                 Complete order
                             </button>
                         </form>
                     @endif
                 </div>
+
                 @if (! $order->status->isCancelled())
-                    <form
-                        method="POST"
-                        action="{{ route('admin.orders.cancel', $order) }}"
-                        class="mt-6 space-y-3 border-t border-zinc-200 pt-6"
-                    >
-                        @csrf
-                        @method('PATCH')
+                    @if ($order->canBeCancelledByAdmin())
+                        <form
+                            method="POST"
+                            action="{{ route('admin.orders.cancel', $order) }}"
+                            class="mt-6 space-y-3 border-t border-zinc-200 pt-6"
+                        >
+                            @csrf
+                            @method('PATCH')
 
-                        <label for="cancel_note" class="block text-sm font-medium text-zinc-700">
-                            Cancel order
-                        </label>
+                            <label for="cancel_note" class="block text-sm font-medium text-zinc-700">
+                                Cancel order
+                            </label>
 
-                        <textarea
-                            id="cancel_note"
-                            name="note"
-                            rows="3"
-                            required
-                            class="w-full rounded-xl border border-zinc-300 px-3 py-2 text-sm"
-                            placeholder="Reason for cancellation..."
-                        ></textarea>
+                            <textarea
+                                id="cancel_note"
+                                name="note"
+                                rows="3"
+                                required
+                                class="w-full rounded-xl border border-zinc-300 px-3 py-2 text-sm"
+                                placeholder="Reason for cancellation..."
+                            ></textarea>
 
-                        <button class="rounded-xl bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600">
-                            Cancel order
-                        </button>
-                    </form>
+                            <button class="rounded-xl bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600">
+                                Cancel order
+                            </button>
+                        </form>
+                    @else
+                        <p class="mt-6 border-t border-zinc-200 pt-6 text-sm text-zinc-500">
+                            This order can no longer be cancelled.
+                        </p>
+                    @endif
                 @endif
             </div>
         </div>
@@ -142,6 +192,7 @@
                             {{ $order->user?->email ?? $order->guest_email ?? 'Unknown' }}
                         </dd>
                     </div>
+
                     <div>
                         <dt class="text-zinc-500">Type</dt>
                         <dd class="font-medium text-zinc-900">
@@ -156,12 +207,6 @@
 
                 <dl class="mt-4 space-y-3 text-sm">
                     <div>
-                        <dt class="text-zinc-500">Provider</dt>
-                        <dd class="font-medium text-zinc-900">
-                            {{ $order->delivery_provider?->label() ?? '—' }}
-                        </dd>
-                    </div>
-                    <div>
                         <dt class="text-zinc-500">Carrier</dt>
                         <dd class="font-medium text-zinc-900">
                             {{ $order->delivery_carrier?->label() ?? '—' }}
@@ -174,6 +219,7 @@
                             {{ $order->delivery_service ?: '—' }}
                         </dd>
                     </div>
+
                     <div>
                         <dt class="text-zinc-500">Locker code</dt>
                         <dd class="font-medium text-zinc-900">
@@ -182,7 +228,82 @@
                     </div>
                 </dl>
             </div>
+        </div>
 
+        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <h2 class="text-lg font-semibold text-zinc-900">Shipments</h2>
+
+            <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
+                <table class="min-w-full divide-y divide-zinc-200">
+                    <thead class="bg-zinc-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Carrier</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Reference</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Service</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Tracking</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Locker</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Shipped</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-zinc-200 bg-white">
+                    @forelse ($order->shipments as $shipment)
+                        <tr>
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                {{ $shipment->carrier()?->label() ?? '—' }}
+                            </td>
+
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                {{ $shipment->provider_reference ?: '—' }}
+                            </td>
+
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                {{ $shipment->service ?: '—' }}
+                            </td>
+
+                            <td class="px-4 py-4 text-sm">
+                                <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $shipment->status->badgeColorClasses() }}">
+                                    {{ $shipment->status->label() }}
+                                </span>
+                            </td>
+
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                @if ($shipment->tracking_url)
+                                    <a
+                                        href="{{ $shipment->tracking_url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                    >
+                                        {{ $shipment->tracking_number ?: 'Track shipment' }}
+                                    </a>
+                                @else
+                                    {{ $shipment->tracking_number ?: '—' }}
+                                @endif
+                            </td>
+
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                {{ $shipment->locker_code ?: '—' }}
+                            </td>
+
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                {{ $shipment->shipped_at?->format('Y-m-d H:i') ?? '—' }}
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="px-4 py-8 text-center text-sm text-zinc-500">
+                                No shipments found.
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">Internal notes</h2>
 
@@ -257,24 +378,30 @@
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Total</th>
                     </tr>
                     </thead>
+
                     <tbody class="divide-y divide-zinc-200 bg-white">
                     @forelse ($order->items as $item)
                         <tr>
                             <td class="px-4 py-4 text-sm">
                                 <p class="font-medium text-zinc-900">{{ $item->product_name_snapshot }}</p>
+
                                 @if ($item->variant_name_snapshot)
                                     <p class="mt-1 text-xs text-zinc-500">{{ $item->variant_name_snapshot }}</p>
                                 @endif
                             </td>
+
                             <td class="px-4 py-4 text-sm text-zinc-700">
                                 {{ $item->sku_snapshot ?: '—' }}
                             </td>
+
                             <td class="px-4 py-4 text-right text-sm text-zinc-700">
                                 {{ $item->unitPriceDecimal() }} {{ $order->currency }}
                             </td>
+
                             <td class="px-4 py-4 text-right text-sm text-zinc-700">
                                 {{ $item->quantity }}
                             </td>
+
                             <td class="px-4 py-4 text-right text-sm font-semibold text-zinc-900">
                                 {{ $item->lineTotalDecimal() }} {{ $order->currency }}
                             </td>
@@ -283,59 +410,6 @@
                         <tr>
                             <td colspan="5" class="px-4 py-8 text-center text-sm text-zinc-500">
                                 No items found.
-                            </td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-            <h2 class="text-lg font-semibold text-zinc-900">Shipments</h2>
-
-            <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
-                <table class="min-w-full divide-y divide-zinc-200">
-                    <thead class="bg-zinc-50">
-                    <tr>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Provider</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Service</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Tracking</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Locker</th>
-                    </tr>
-                    </thead>
-                    <tbody class="divide-y divide-zinc-200 bg-white">
-                    @forelse ($order->shipments as $shipment)
-                        <tr>
-                            <td class="px-4 py-4 text-sm text-zinc-700">
-                                {{ $shipment->provider->label() }}
-                            </td>
-                            <td class="px-4 py-4 text-sm text-zinc-700">
-                                {{ $shipment->service ?: '—' }}
-                            </td>
-                            <td class="px-4 py-4 text-sm">
-                        <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $shipment->status->badgeColorClasses() }}">
-                            {{ $shipment->status->label() }}
-                        </span>
-                            </td>
-                            <td class="px-4 py-4 text-sm text-zinc-700">
-                                @if ($shipment->tracking_url)
-                                    <a href="{{ $shipment->tracking_url }}" target="_blank" rel="noopener noreferrer" class="font-medium text-zinc-900 hover:text-zinc-700">
-                                        {{ $shipment->tracking_number ?: 'Track shipment' }}
-                                    </a>
-                                @else
-                                    {{ $shipment->tracking_number ?: '—' }}
-                                @endif
-                            </td>
-                            <td class="px-4 py-4 text-sm text-zinc-700">
-                                {{ $shipment->locker_code ?: '—' }}
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="px-4 py-8 text-center text-sm text-zinc-500">
-                                No shipments found.
                             </td>
                         </tr>
                     @endforelse
@@ -386,21 +460,26 @@
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Amount</th>
                     </tr>
                     </thead>
+
                     <tbody class="divide-y divide-zinc-200 bg-white">
                     @forelse ($order->payments as $payment)
                         <tr>
                             <td class="px-4 py-4 text-sm text-zinc-700">
                                 {{ $payment->provider ?: '—' }}
                             </td>
+
                             <td class="px-4 py-4 text-sm text-zinc-700">
                                 {{ $payment->provider_reference ?: '—' }}
                             </td>
+
                             <td class="px-4 py-4 text-sm text-zinc-700">
                                 {{ $payment->status->label() }}
                             </td>
+
                             <td class="px-4 py-4 text-sm text-zinc-700">
                                 {{ $payment->external_status ?: '—' }}
                             </td>
+
                             <td class="px-4 py-4 text-right text-sm font-semibold text-zinc-900">
                                 {{ $payment->amountDecimal() }} {{ $payment->currency }}
                             </td>

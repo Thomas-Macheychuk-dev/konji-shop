@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\Orders\AdminOrderIndexController;
 use App\Http\Controllers\Admin\Orders\AdminOrderShowController;
 use App\Http\Controllers\Admin\Orders\AdminOrderCancelController;
 use App\Http\Controllers\Admin\Orders\AdminOrderShipmentController;
+use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -96,6 +97,9 @@ Route::post('/payments/paynow/notifications', PaynowNotificationController::clas
         PreventRequestForgery::class,
     ])
     ->name('payments.paynow.notifications');
+
+Route::get('/checkout/inpost-parcel-lockers', InPostParcelLockerSearchController::class)
+    ->name('checkout.inpost-parcel-lockers');
 
 Route::view('/cookie-policy', 'pages.legal.cookie-policy')->name('legal.cookie-policy');
 

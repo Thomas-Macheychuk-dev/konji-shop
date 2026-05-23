@@ -10,8 +10,9 @@ use App\Models\Order;
 use App\Models\Shipment;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
+use App\Contracts\Delivery\CreatesShipments;
 
-final class CreateShipmentService
+final class CreateShipmentService implements CreatesShipments
 {
     public function __construct(
         private readonly DeliveryGatewayRegistry $registry,

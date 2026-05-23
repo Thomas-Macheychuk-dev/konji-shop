@@ -6,8 +6,10 @@ namespace App\Models;
 
 use App\Enums\DeliveryProvider;
 use App\Enums\ShipmentStatus;
+use DomainException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Enums\DeliveryCarrier;
 
 class Shipment extends Model
 {
@@ -39,6 +41,11 @@ class Shipment extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function carrier(): ?DeliveryCarrier
+    {
+        return $this->order?->delivery_carrier;
     }
 
     public function markAsCreated(?string $providerReference = null, array $payload = []): void
@@ -116,6 +123,31 @@ class Shipment extends Model
         $this->order->events()->create([
             'type' => 'shipment_cancelled',
             'description' => 'Shipment cancelled.',
+        ]);
+    }
+
+    public function markAsReturnedToSender(array $payload = []): void
+    {
+        if (! in_array($this->status, [
+            ShipmentStatus::CREATED,
+            ShipmentStatus::DISPATCHED,
+        ], true)) {
+            throw new DomainException('Only created or dispatched shipments can be marked as returned to sender.');
+        }
+
+        $this->update([
+            'status' => ShipmentStatus::RETURNED,
+            'payload' => $payload === [] ? $this->payload : $payload,
+        ]);
+
+        $this->order->events()->create([
+            'type' => 'shipment_returned_to_sender',
+            'description' => 'Shipment returned to sender.',
+            'meta' => [
+                'provider' => $this->provider?->value,
+                'provider_reference' => $this->provider_reference,
+                'tracking_number' => $this->tracking_number,
+            ],
         ]);
     }
 }
