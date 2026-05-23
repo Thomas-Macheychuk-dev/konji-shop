@@ -29,7 +29,9 @@ final class PaynowGateway implements PaymentGateway
             ? 'https://api.sandbox.paynow.pl'
             : 'https://api.paynow.pl';
 
-        $amountInGrosze = (int) round($payment->amount * 100);
+        // Payment amount is already stored in minor units.
+        // Example: 180.00 PLN = 18000 groszy.
+        $amountInGrosze = (int) $payment->amount;
 
         $body = [
             'amount' => $amountInGrosze,
@@ -37,7 +39,7 @@ final class PaynowGateway implements PaymentGateway
             'externalId' => (string) $order->id,
             'description' => "Zamówienie #{$order->number}",
             'buyer' => [
-                'email' => $order->user?->email ?? 'test@example.com',
+                'email' => $order->user?->email ?? $order->guest_email ?? 'test@example.com',
             ],
             'continueUrl' => url($config['return_path']),
         ];
