@@ -90,37 +90,91 @@
 
                     <div class="divide-y divide-zinc-200">
                         @foreach ($order->items as $item)
+                            @php
+                                $product = $item->product;
+                                $variant = $item->variant;
+
+                                $productUrl = $product
+                                    ? route('products.show', $product)
+                                    : null;
+
+                                $thumbnailUrl = $variant?->main_image_url
+                                    ?? $product?->main_image_url
+                                    ?? ($item->meta['image_url'] ?? null);
+                            @endphp
+
                             <div class="px-6 py-5">
                                 <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                                    <div class="min-w-0">
-                                        <h3 class="text-base font-semibold text-zinc-900">
-                                            {{ $item->product_name_snapshot }}
-                                        </h3>
-
-                                        @if ($item->variant_name_snapshot)
-                                            <p class="mt-1 text-sm text-zinc-600">
-                                                {{ $item->variant_name_snapshot }}
-                                            </p>
-                                        @endif
-
-                                        @if ($item->sku_snapshot)
-                                            <p class="mt-2 text-sm text-zinc-500">
-                                                SKU: {{ $item->sku_snapshot }}
-                                            </p>
-                                        @endif
-
-                                        @if ($item->variant?->attributeValues?->isNotEmpty())
-                                            <dl class="mt-3 space-y-1 text-sm text-zinc-600">
-                                                @foreach ($item->variant->attributeValues as $attributeValue)
-                                                    <div class="flex gap-2">
-                                                        <dt class="font-medium text-zinc-700">
-                                                            {{ $attributeValue->attribute?->name ?? 'Option' }}:
-                                                        </dt>
-                                                        <dd>{{ $attributeValue->value }}</dd>
+                                    <div class="flex min-w-0 gap-4">
+                                        <div class="shrink-0">
+                                            @if ($productUrl)
+                                                <a href="{{ $productUrl }}" class="block">
+                                                    @if ($thumbnailUrl)
+                                                        <img
+                                                            src="{{ $thumbnailUrl }}"
+                                                            alt="{{ $item->product_name_snapshot }}"
+                                                            class="h-20 w-20 rounded-xl border border-zinc-200 object-cover transition hover:opacity-80"
+                                                        >
+                                                    @else
+                                                        <div class="flex h-20 w-20 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500 transition hover:bg-zinc-200">
+                                                            No image
+                                                        </div>
+                                                    @endif
+                                                </a>
+                                            @else
+                                                @if ($thumbnailUrl)
+                                                    <img
+                                                        src="{{ $thumbnailUrl }}"
+                                                        alt="{{ $item->product_name_snapshot }}"
+                                                        class="h-20 w-20 rounded-xl border border-zinc-200 object-cover"
+                                                    >
+                                                @else
+                                                    <div class="flex h-20 w-20 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500">
+                                                        No image
                                                     </div>
-                                                @endforeach
-                                            </dl>
-                                        @endif
+                                                @endif
+                                            @endif
+                                        </div>
+
+                                        <div class="min-w-0">
+                                            <h3 class="text-base font-semibold text-zinc-900">
+                                                @if ($productUrl)
+                                                    <a
+                                                        href="{{ $productUrl }}"
+                                                        class="transition hover:text-zinc-600 hover:underline"
+                                                    >
+                                                        {{ $item->product_name_snapshot }}
+                                                    </a>
+                                                @else
+                                                    {{ $item->product_name_snapshot }}
+                                                @endif
+                                            </h3>
+
+                                            @if ($item->variant_name_snapshot)
+                                                <p class="mt-1 text-sm text-zinc-600">
+                                                    {{ $item->variant_name_snapshot }}
+                                                </p>
+                                            @endif
+
+                                            @if ($item->sku_snapshot)
+                                                <p class="mt-2 text-sm text-zinc-500">
+                                                    SKU: {{ $item->sku_snapshot }}
+                                                </p>
+                                            @endif
+
+                                            @if ($item->variant?->attributeValues?->isNotEmpty())
+                                                <dl class="mt-3 space-y-1 text-sm text-zinc-600">
+                                                    @foreach ($item->variant->attributeValues as $attributeValue)
+                                                        <div class="flex gap-2">
+                                                            <dt class="font-medium text-zinc-700">
+                                                                {{ $attributeValue->attribute?->name ?? 'Option' }}:
+                                                            </dt>
+                                                            <dd>{{ $attributeValue->value }}</dd>
+                                                        </div>
+                                                    @endforeach
+                                                </dl>
+                                            @endif
+                                        </div>
                                     </div>
 
                                     <div class="shrink-0 text-sm sm:text-right">
@@ -133,15 +187,15 @@
                                     <div class="text-zinc-600">
                                         Unit price:
                                         <span class="font-medium text-zinc-900">
-                                            {{ $item->unitPriceDecimal() }} {{ $order->currency }}
-                                        </span>
+                    {{ $item->unitPriceDecimal() }} {{ $order->currency }}
+                </span>
                                     </div>
 
                                     <div class="text-zinc-600">
                                         Line total:
                                         <span class="font-semibold text-zinc-900">
-                                            {{ $item->lineTotalDecimal() }} {{ $order->currency }}
-                                        </span>
+                    {{ $item->lineTotalDecimal() }} {{ $order->currency }}
+                </span>
                                     </div>
                                 </div>
                             </div>
