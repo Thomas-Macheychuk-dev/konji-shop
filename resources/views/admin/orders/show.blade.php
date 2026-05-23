@@ -162,6 +162,13 @@
                         </dd>
                     </div>
                     <div>
+                        <dt class="text-zinc-500">Carrier</dt>
+                        <dd class="font-medium text-zinc-900">
+                            {{ $order->delivery_carrier?->label() ?? '—' }}
+                        </dd>
+                    </div>
+
+                    <div>
                         <dt class="text-zinc-500">Service</dt>
                         <dd class="font-medium text-zinc-900">
                             {{ $order->delivery_service ?: '—' }}

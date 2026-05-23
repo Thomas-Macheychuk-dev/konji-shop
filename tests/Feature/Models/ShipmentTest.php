@@ -13,7 +13,7 @@ it('belongs to an order', function (): void {
 
     $shipment = Shipment::query()->create([
         'order_id' => $order->id,
-        'provider' => DeliveryProvider::INPOST,
+        'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::PENDING,
     ]);
 
@@ -23,12 +23,12 @@ it('belongs to an order', function (): void {
 it('casts provider and status to enums', function (): void {
     $shipment = Shipment::query()->create([
         'order_id' => Order::factory()->create()->id,
-        'provider' => DeliveryProvider::INPOST,
+        'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::PENDING,
     ]);
 
     expect($shipment->refresh())
-        ->provider->toBe(DeliveryProvider::INPOST)
+        ->provider->toBe(DeliveryProvider::POLKURIER)
         ->status->toBe(ShipmentStatus::PENDING);
 });
 
@@ -37,7 +37,7 @@ it('marks a shipment as created', function (): void {
 
     $shipment = Shipment::query()->create([
         'order_id' => $order->id,
-        'provider' => DeliveryProvider::INPOST,
+        'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::PENDING,
     ]);
 
@@ -60,7 +60,7 @@ it('marks a shipment as dispatched', function (): void {
 
     $shipment = Shipment::query()->create([
         'order_id' => $order->id,
-        'provider' => DeliveryProvider::INPOST,
+        'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::CREATED,
     ]);
 
@@ -83,7 +83,7 @@ it('marks a shipment as delivered', function (): void {
 
     $shipment = Shipment::query()->create([
         'order_id' => $order->id,
-        'provider' => DeliveryProvider::INPOST,
+        'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::DISPATCHED,
     ]);
 
@@ -101,7 +101,7 @@ it('marks a shipment as failed', function (): void {
 
     $shipment = Shipment::query()->create([
         'order_id' => $order->id,
-        'provider' => DeliveryProvider::INPOST,
+        'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::PENDING,
     ]);
 
@@ -123,7 +123,7 @@ it('marks a shipment as cancelled', function (): void {
 
     $shipment = Shipment::query()->create([
         'order_id' => $order->id,
-        'provider' => DeliveryProvider::INPOST,
+        'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::CREATED,
     ]);
 

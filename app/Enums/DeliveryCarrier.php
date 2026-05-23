@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum DeliveryProvider: string
+enum DeliveryCarrier: string
 {
-    case POLKURIER = 'polkurier';
+    case INPOST = 'inpost';
+    case UPS = 'ups';
+    case DPD = 'dpd';
 
     public function label(): string
     {
         return match ($this) {
-            self::POLKURIER => 'Polkurier',
+            self::INPOST => 'InPost',
+            self::UPS => 'UPS',
+            self::DPD => 'DPD',
         };
     }
 

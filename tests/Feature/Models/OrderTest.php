@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
@@ -201,13 +202,15 @@ it('stores the selected delivery choice', function (): void {
     $order = Order::factory()->create();
 
     $order->chooseDelivery(
-        provider: DeliveryProvider::INPOST,
+        provider: DeliveryProvider::POLKURIER,
+        carrier: DeliveryCarrier::INPOST,
         service: 'parcel_locker',
         lockerCode: 'WAW01A',
     );
 
     expect($order->refresh())
-        ->delivery_provider->toBe(DeliveryProvider::INPOST)
+        ->delivery_provider->toBe(DeliveryProvider::POLKURIER)
+        ->delivery_carrier->toBe(DeliveryCarrier::INPOST)
         ->delivery_service->toBe('parcel_locker')
         ->delivery_locker_code->toBe('WAW01A');
 

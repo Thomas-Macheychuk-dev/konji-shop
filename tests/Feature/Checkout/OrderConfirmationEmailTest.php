@@ -5,6 +5,7 @@ use App\Data\Payments\PaymentInitializationResult;
 use App\Data\Payments\PaymentNotificationData;
 use App\Enums\CartStatus;
 use App\Enums\Currency;
+use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
@@ -112,7 +113,8 @@ function validCheckoutPayload(string $email = 'guest@gmail.com'): array
         'shipping_postcode' => '80-001',
         'shipping_country_code' => 'PL',
 
-        'delivery_provider' => DeliveryProvider::INPOST->value,
+        'delivery_provider' => DeliveryProvider::POLKURIER->value,
+        'delivery_carrier' => DeliveryCarrier::INPOST->value,
         'delivery_service' => 'parcel_locker',
         'delivery_locker_code' => 'WAW01A',
 
@@ -123,7 +125,7 @@ function validCheckoutPayload(string $email = 'guest@gmail.com'): array
     ];
 }
 
-test('guest checkout creates a pending payment and redirects through the payment layer', function () {
+test('guest checkout creates a pending payment and redirects through the payment layer', function (): void {
     [$product, $variant] = createTestProductAndVariant();
 
     $guestToken = (string) str()->uuid();
@@ -161,7 +163,8 @@ test('guest checkout creates a pending payment and redirects through the payment
     expect($order->fulfilment_status)->toBe(FulfilmentStatus::UNFULFILLED);
 
     expect($order)
-        ->delivery_provider->toBe(DeliveryProvider::INPOST)
+        ->delivery_provider->toBe(DeliveryProvider::POLKURIER)
+        ->delivery_carrier->toBe(DeliveryCarrier::INPOST)
         ->delivery_service->toBe('parcel_locker')
         ->delivery_locker_code->toBe('WAW01A');
 
@@ -177,7 +180,7 @@ test('guest checkout creates a pending payment and redirects through the payment
 
     $response->assertRedirect(route('checkout.success'));
 
-    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($order) {
+    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($order): bool {
         return $mail->hasTo('guest@gmail.com')
             && $mail->order->is($order);
     });
@@ -188,7 +191,8 @@ test('guest checkout creates a pending payment and redirects through the payment
         'status' => OrderStatus::PENDING_PAYMENT->value,
         'payment_status' => PaymentStatus::PENDING->value,
         'fulfilment_status' => FulfilmentStatus::UNFULFILLED->value,
-        'delivery_provider' => DeliveryProvider::INPOST->value,
+        'delivery_provider' => DeliveryProvider::POLKURIER->value,
+        'delivery_carrier' => DeliveryCarrier::INPOST->value,
         'delivery_service' => 'parcel_locker',
         'delivery_locker_code' => 'WAW01A',
     ]);
@@ -224,7 +228,7 @@ test('guest checkout creates a pending payment and redirects through the payment
     ]);
 });
 
-test('guest checkout sends an order confirmation email', function () {
+test('guest checkout sends an order confirmation email', function (): void {
     [$product, $variant] = createTestProductAndVariant();
 
     $guestToken = (string) str()->uuid();
@@ -258,7 +262,7 @@ test('guest checkout sends an order confirmation email', function () {
 
     $response->assertRedirect(route('checkout.success'));
 
-    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($order) {
+    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($order): bool {
         return $mail->hasTo('guest@gmail.com')
             && $mail->order->is($order);
     });
@@ -290,7 +294,7 @@ test('guest checkout sends an order confirmation email', function () {
     ]);
 });
 
-test('authenticated checkout creates a pending payment and sends the order confirmation email to the user email', function () {
+test('authenticated checkout creates a pending payment and sends the order confirmation email to the user email', function (): void {
     $user = User::factory()->create([
         'email' => 'owner@gmail.com',
         'phone_number' => '987654321',
@@ -332,6 +336,12 @@ test('authenticated checkout creates a pending payment and sends the order confi
     expect($order->payment_status)->toBe(PaymentStatus::PENDING);
     expect($order->fulfilment_status)->toBe(FulfilmentStatus::UNFULFILLED);
 
+    expect($order)
+        ->delivery_provider->toBe(DeliveryProvider::POLKURIER)
+        ->delivery_carrier->toBe(DeliveryCarrier::INPOST)
+        ->delivery_service->toBe('parcel_locker')
+        ->delivery_locker_code->toBe('WAW01A');
+
     $payment = $order->payments->first();
 
     expect($payment)->not->toBeNull();
@@ -341,7 +351,7 @@ test('authenticated checkout creates a pending payment and sends the order confi
 
     $response->assertRedirect(route('checkout.success'));
 
-    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($user, $order) {
+    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($user, $order): bool {
         return $mail->hasTo($user->email)
             && ! $mail->hasTo('customer@gmail.com')
             && $mail->order->is($order);
@@ -355,7 +365,7 @@ test('authenticated checkout creates a pending payment and sends the order confi
     ]);
 });
 
-test('authenticated checkout sends the order confirmation email to the user email', function () {
+test('authenticated checkout sends the order confirmation email to the user email', function (): void {
     $user = User::factory()->create([
         'email' => 'owner@gmail.com',
         'phone_number' => '987654321',
@@ -393,7 +403,7 @@ test('authenticated checkout sends the order confirmation email to the user emai
 
     $response->assertRedirect(route('checkout.success'));
 
-    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($user, $order) {
+    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($user, $order): bool {
         return $mail->hasTo($user->email)
             && ! $mail->hasTo('customer@gmail.com')
             && $mail->order->is($order);

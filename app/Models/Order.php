@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Enums\DeliveryCarrier;
 
 class Order extends Model
 {
@@ -39,6 +40,7 @@ class Order extends Model
         'delivery_provider',
         'delivery_service',
         'delivery_locker_code',
+        'delivery_carrier',
     ];
 
     protected function casts(): array
@@ -53,6 +55,7 @@ class Order extends Model
             'discount_amount' => 'integer',
             'total_amount' => 'integer',
             'delivery_provider' => DeliveryProvider::class,
+            'delivery_carrier' => DeliveryCarrier::class,
         ];
     }
 
@@ -321,11 +324,13 @@ class Order extends Model
 
     public function chooseDelivery(
         DeliveryProvider $provider,
+        DeliveryCarrier $carrier,
         string $service,
         ?string $lockerCode = null,
     ): void {
         $this->update([
             'delivery_provider' => $provider,
+            'delivery_carrier' => $carrier,
             'delivery_service' => $service,
             'delivery_locker_code' => $lockerCode,
         ]);
@@ -335,6 +340,7 @@ class Order extends Model
             'Delivery method selected.',
             [
                 'provider' => $provider->value,
+                'carrier' => $carrier->value,
                 'service' => $service,
                 'locker_code' => $lockerCode,
             ],
