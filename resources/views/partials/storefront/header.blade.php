@@ -63,7 +63,7 @@
             @endauth
             <div
                 id="cart-widget"
-                data-summary-url="{{ route('cart.summary') }}"
+                data-summary-url="{{ route('cart.summary', absolute: false) }}"
             ></div>
         </nav>
     </div>
