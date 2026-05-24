@@ -17,6 +17,7 @@ final class PolkurierShippingQuoteService
 
     /**
      * @param array<string, mixed> $shippingAddress
+     * @param array<int, array<string, int|float|string>> $packs
      */
     public function quote(
         DeliveryProvider $provider,
@@ -24,6 +25,7 @@ final class PolkurierShippingQuoteService
         string $service,
         array $shippingAddress,
         string $currency = 'PLN',
+        array $packs = [],
     ): ShippingQuoteResult {
         if ($provider !== DeliveryProvider::POLKURIER) {
             throw new RuntimeException('Unsupported delivery provider for shipping quote.');
@@ -49,7 +51,7 @@ final class PolkurierShippingQuoteService
         }
 
         $courierCode = $this->courierCode($carrier, $service);
-        $valuationRequest = $this->valuationRequest($courierCode, $shippingAddress);
+        $valuationRequest = $this->valuationRequest($courierCode, $shippingAddress, $packs);
 
         $valuations = $this->client->orderValuationV2($valuationRequest);
         $selected = $this->selectValuation($valuations, $courierCode);
@@ -103,9 +105,10 @@ final class PolkurierShippingQuoteService
 
     /**
      * @param array<string, mixed> $shippingAddress
+     * @param array<int, array<string, int|float|string>> $packs
      * @return array<string, mixed>
      */
-    private function valuationRequest(string $courierCode, array $shippingAddress): array
+    private function valuationRequest(string $courierCode, array $shippingAddress, array $packs = []): array
     {
         $sender = config('delivery.providers.polkurier.sender');
 
@@ -122,16 +125,7 @@ final class PolkurierShippingQuoteService
         return [
             'returnvaluations' => $courierCode,
             'shipmenttype' => (string) ($pack['shipmenttype'] ?? 'box'),
-            'packs' => [
-                [
-                    'length' => (int) ($pack['length'] ?? 30),
-                    'width' => (int) ($pack['width'] ?? 20),
-                    'height' => (int) ($pack['height'] ?? 10),
-                    'weight' => (float) ($pack['weight'] ?? 1),
-                    'amount' => (int) ($pack['amount'] ?? 1),
-                    'type' => (string) ($pack['type'] ?? 'ST'),
-                ],
-            ],
+            'packs' => $this->normalizePacks($packs),
             'sender' => [
                 'postcode' => (string) ($sender['postcode'] ?? ''),
                 'country' => (string) ($sender['country'] ?? 'PL'),
@@ -140,6 +134,52 @@ final class PolkurierShippingQuoteService
                 'postcode' => (string) ($shippingAddress['postcode'] ?? ''),
                 'country' => (string) ($shippingAddress['country_code'] ?? 'PL'),
             ],
+        ];
+    }
+
+    /**
+     * @param array<int, array<string, int|float|string>> $packs
+     * @return array<int, array<string, int|float|string>>
+     */
+    private function normalizePacks(array $packs): array
+    {
+        if ($packs === []) {
+            return [
+                $this->defaultPack(),
+            ];
+        }
+
+        return array_values(array_map(
+            fn (array $pack): array => [
+                'length' => max(1, (int) ($pack['length'] ?? 30)),
+                'width' => max(1, (int) ($pack['width'] ?? 20)),
+                'height' => max(1, (int) ($pack['height'] ?? 10)),
+                'weight' => max(0.001, (float) ($pack['weight'] ?? 1)),
+                'amount' => max(1, (int) ($pack['amount'] ?? 1)),
+                'type' => (string) ($pack['type'] ?? 'ST'),
+            ],
+            $packs,
+        ));
+    }
+
+    /**
+     * @return array<string, int|float|string>
+     */
+    private function defaultPack(): array
+    {
+        $pack = config('delivery.providers.polkurier.default_pack');
+
+        if (! is_array($pack)) {
+            throw new RuntimeException('Polkurier default pack configuration is missing.');
+        }
+
+        return [
+            'length' => (int) ($pack['length'] ?? 30),
+            'width' => (int) ($pack['width'] ?? 20),
+            'height' => (int) ($pack['height'] ?? 10),
+            'weight' => (float) ($pack['weight'] ?? 1),
+            'amount' => (int) ($pack['amount'] ?? 1),
+            'type' => (string) ($pack['type'] ?? 'ST'),
         ];
     }
 

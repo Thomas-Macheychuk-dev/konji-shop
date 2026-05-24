@@ -28,6 +28,10 @@ class ProductVariant extends Model
         'stock_status',
         'is_default',
         'external_variant_id',
+        'package_weight_grams',
+        'package_length_mm',
+        'package_width_mm',
+        'package_height_mm',
     ];
 
     protected function casts(): array
@@ -39,6 +43,10 @@ class ProductVariant extends Model
             'stock_status' => StockStatus::class,
             'is_default' => 'boolean',
             'deleted_at' => 'datetime',
+            'package_weight_grams' => 'integer',
+            'package_length_mm' => 'integer',
+            'package_width_mm' => 'integer',
+            'package_height_mm' => 'integer',
         ];
     }
 
@@ -100,5 +108,41 @@ class ProductVariant extends Model
     public function getMainImageUrlAttribute(): ?string
     {
         return $this->main_image?->url;
+    }
+
+    public function hasCompletePackageDimensions(): bool
+    {
+        return $this->package_weight_grams !== null
+            && $this->package_length_mm !== null
+            && $this->package_width_mm !== null
+            && $this->package_height_mm !== null;
+    }
+
+    public function packageWeightKg(): ?float
+    {
+        return $this->package_weight_grams === null
+            ? null
+            : round($this->package_weight_grams / 1000, 3);
+    }
+
+    public function packageLengthCm(): ?int
+    {
+        return $this->package_length_mm === null
+            ? null
+            : (int) ceil($this->package_length_mm / 10);
+    }
+
+    public function packageWidthCm(): ?int
+    {
+        return $this->package_width_mm === null
+            ? null
+            : (int) ceil($this->package_width_mm / 10);
+    }
+
+    public function packageHeightCm(): ?int
+    {
+        return $this->package_height_mm === null
+            ? null
+            : (int) ceil($this->package_height_mm / 10);
     }
 }

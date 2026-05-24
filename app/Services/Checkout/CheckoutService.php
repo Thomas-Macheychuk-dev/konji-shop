@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Checkout;
 
 use App\Enums\CartStatus;
+use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
@@ -14,17 +15,18 @@ use App\Enums\StockStatus;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\User;
+use App\Services\Delivery\Polkurier\PolkurierPackBuilder;
+use App\Services\Delivery\Polkurier\PolkurierShippingQuoteService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
-use App\Enums\DeliveryCarrier;
-use App\Services\Delivery\Polkurier\PolkurierShippingQuoteService;
 
 class CheckoutService
 {
     public function __construct(
         private readonly OrderNumberGenerator $orderNumberGenerator,
         private readonly PolkurierShippingQuoteService $shippingQuoteService,
+        private readonly PolkurierPackBuilder $packBuilder,
     ) {}
 
     /**
@@ -74,6 +76,7 @@ class CheckoutService
             $deliveryLockerCode = $this->nullableString($data['delivery_locker_code'] ?? null);
 
             $shippingAddressData = $this->buildShippingAddressData($data, $user);
+            $packs = $this->packBuilder->fromCart($lockedCart);
 
             $shippingQuote = $this->shippingQuoteService->quote(
                 provider: $deliveryProvider,
@@ -81,6 +84,7 @@ class CheckoutService
                 service: $deliveryService,
                 shippingAddress: $shippingAddressData,
                 currency: $lockedCart->currency,
+                packs: $packs,
             );
 
             $shipping = $shippingQuote->amount;
@@ -115,6 +119,7 @@ class CheckoutService
                     'service' => $deliveryService,
                     'locker_code' => $deliveryLockerCode,
                     'shipping_quote' => $shippingQuote->payload,
+                    'packs' => $packs,
                 ],
             ]);
 
@@ -305,6 +310,12 @@ class CheckoutService
                     'cart_item_id' => $item->id,
                     'cart_unit_price_snapshot' => (int) $item->unit_price,
                     'cart_meta' => $item->meta,
+                    'package' => [
+                        'weight_grams' => $variant->package_weight_grams,
+                        'length_mm' => $variant->package_length_mm,
+                        'width_mm' => $variant->package_width_mm,
+                        'height_mm' => $variant->package_height_mm,
+                    ],
                     'attribute_values' => $variant->attributeValues->map(function ($attributeValue): array {
                         return [
                             'attribute_id' => $attributeValue->attribute_id,
