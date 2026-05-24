@@ -52,4 +52,25 @@ final class PolkurierApiClient
 
         return $payload['response'] ?? [];
     }
+
+    public function labelPdf(array $orderNumbers): string
+    {
+        $payload = $this->request('get_label', [
+            'orderno' => array_values($orderNumbers),
+        ]);
+
+        $file = $payload['response']['file'] ?? null;
+
+        if (! is_string($file) || $file === '') {
+            throw new RuntimeException('Polkurier did not return a label file.');
+        }
+
+        $decoded = base64_decode($file, true);
+
+        if ($decoded === false) {
+            throw new RuntimeException('Polkurier returned an invalid label file.');
+        }
+
+        return $decoded;
+    }
 }

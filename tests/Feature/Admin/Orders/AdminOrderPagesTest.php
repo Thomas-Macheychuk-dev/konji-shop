@@ -53,7 +53,7 @@ it('shows the admin order detail page', function (): void {
         ->assertSee('Customer')
         ->assertSee('Delivery choice')
         ->assertSee('InPost')
-        ->assertSee('parcel_locker')
+        ->assertSee('Parcel locker')
         ->assertSee('WAW01A')
         ->assertSee('Items')
         ->assertSee('Payments')
@@ -281,7 +281,7 @@ it('shows shipments on the admin order detail page', function (): void {
         ->assertSee('Shipments')
         ->assertSee('InPost')
         ->assertSee('Created')
-        ->assertSee('parcel_locker')
+        ->assertSee('Parcel locker')
         ->assertSee('WAW01A')
         ->assertSee('TRACK123');
 });
