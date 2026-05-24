@@ -25,20 +25,13 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
     public function createShipment(Order $order, Shipment $shipment, array $options = []): ShipmentCreationResult
     {
         $payload = $this->client->request('create_order', [
-            'shipmenttype' => 'box',
+            'shipmenttype' => (string) config('delivery.providers.polkurier.default_pack.shipmenttype', 'box'),
             'courier' => $this->courierCode($order),
             'description' => mb_substr('Konji Shop order '.$order->number, 0, 30),
             'sender' => $this->sender(),
             'recipient' => $this->recipient($order, $shipment),
             'packs' => [
-                [
-                    'length' => 10,
-                    'width' => 10,
-                    'height' => 10,
-                    'weight' => 1,
-                    'amount' => 1,
-                    'type' => 'ST',
-                ],
+                $this->defaultPack(),
             ],
             'pickup' => $this->pickup($options),
         ]);
@@ -161,6 +154,24 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
             'pickuptimefrom' => $pickupTimeFrom,
             'pickuptimeto' => $pickupTimeTo,
             'nocourierorder' => false,
+        ];
+    }
+
+    private function defaultPack(): array
+    {
+        $pack = config('delivery.providers.polkurier.default_pack');
+
+        if (! is_array($pack)) {
+            throw new RuntimeException('Polkurier default pack configuration is missing.');
+        }
+
+        return [
+            'length' => (int) ($pack['length'] ?? 30),
+            'width' => (int) ($pack['width'] ?? 20),
+            'height' => (int) ($pack['height'] ?? 10),
+            'weight' => (float) ($pack['weight'] ?? 1),
+            'amount' => (int) ($pack['amount'] ?? 1),
+            'type' => (string) ($pack['type'] ?? 'ST'),
         ];
     }
 }

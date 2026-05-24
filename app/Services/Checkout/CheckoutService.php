@@ -18,11 +18,13 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 use App\Enums\DeliveryCarrier;
+use App\Services\Delivery\Polkurier\PolkurierShippingQuoteService;
 
 class CheckoutService
 {
     public function __construct(
         private readonly OrderNumberGenerator $orderNumberGenerator,
+        private readonly PolkurierShippingQuoteService $shippingQuoteService,
     ) {}
 
     /**
@@ -57,9 +59,7 @@ class CheckoutService
             $preparedItems = $this->prepareCheckoutItems($lockedCart);
 
             $subtotal = array_sum(array_column($preparedItems, 'line_total_amount'));
-            $shipping = 0;
             $discount = 0;
-            $total = max(0, $subtotal + $shipping - $discount);
             $placedAt = Carbon::now();
 
             $deliveryProvider = DeliveryProvider::from(
@@ -72,6 +72,19 @@ class CheckoutService
 
             $deliveryService = (string) ($data['delivery_service'] ?? 'parcel_locker');
             $deliveryLockerCode = $this->nullableString($data['delivery_locker_code'] ?? null);
+
+            $shippingAddressData = $this->buildShippingAddressData($data, $user);
+
+            $shippingQuote = $this->shippingQuoteService->quote(
+                provider: $deliveryProvider,
+                carrier: $deliveryCarrier,
+                service: $deliveryService,
+                shippingAddress: $shippingAddressData,
+                currency: $lockedCart->currency,
+            );
+
+            $shipping = $shippingQuote->amount;
+            $total = max(0, $subtotal + $shipping - $discount);
 
             $order = Order::query()->create([
                 'user_id' => $user?->id,
@@ -101,6 +114,7 @@ class CheckoutService
                     'carrier' => $deliveryCarrier->value,
                     'service' => $deliveryService,
                     'locker_code' => $deliveryLockerCode,
+                    'shipping_quote' => $shippingQuote->payload,
                 ],
             ]);
 
@@ -119,7 +133,6 @@ class CheckoutService
                 ]);
             }
 
-            $shippingAddressData = $this->buildShippingAddressData($data, $user);
             $billingAddressData = $this->buildBillingAddressData($data, $user, $shippingAddressData);
 
             $order->addresses()->create($shippingAddressData);

@@ -107,4 +107,17 @@ final class PolkurierApiClient
 
         return $payload;
     }
+
+    public function orderValuationV2(array $data): array
+    {
+        $payload = $this->request('order_valuation_v2', $data);
+
+        $response = $payload['response'] ?? null;
+
+        if (! is_array($response)) {
+            throw new RuntimeException('Polkurier did not return valuation data.');
+        }
+
+        return $response;
+    }
 }
