@@ -23,7 +23,7 @@ function fakeDeliveryGateway(): DeliveryGateway
             return DeliveryProvider::POLKURIER->value;
         }
 
-        public function createShipment(Order $order, Shipment $shipment): ShipmentCreationResult
+        public function createShipment(Order $order, Shipment $shipment, array $options = []): ShipmentCreationResult
         {
             return new ShipmentCreationResult(
                 provider: DeliveryProvider::POLKURIER->value,

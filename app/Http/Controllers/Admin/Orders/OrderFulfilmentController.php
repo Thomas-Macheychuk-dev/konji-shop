@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use DomainException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 final class OrderFulfilmentController extends Controller
 {
@@ -17,13 +18,13 @@ final class OrderFulfilmentController extends Controller
         private readonly CreatesShipments $createShipmentService,
     ) {}
 
-    public function __invoke(Order $order, string $action): RedirectResponse
+    public function __invoke(Request $request, Order $order, string $action): RedirectResponse
     {
         try {
             match ($action) {
                 'processing' => $order->markFulfilmentAsProcessing(),
 
-                'shipped' => $this->shipOrder($order),
+                'shipped' => $this->shipOrder($request, $order),
 
                 'delivered' => $this->deliverOrder($order),
 
@@ -42,9 +43,9 @@ final class OrderFulfilmentController extends Controller
         return back()->with('success', 'Order fulfilment status updated.');
     }
 
-    private function shipOrder(Order $order): void
+    private function shipOrder(Request $request, Order $order): void
     {
-        if ($order->delivery_service === 'pickup') {
+        if ($order->delivery_service === 'local_pickup') {
             $order->markAsReadyForPickup();
 
             return;
@@ -56,11 +57,14 @@ final class OrderFulfilmentController extends Controller
             );
         }
 
+        $pickup = $this->polkurierPickupData($request);
+
         $shipment = $this->createShipmentService->create(
             order: $order,
             provider: $order->delivery_provider->value,
             service: $order->delivery_service,
             lockerCode: $order->delivery_locker_code,
+            pickup: $pickup,
         );
 
         $shipment->markAsDispatched();
@@ -71,7 +75,7 @@ final class OrderFulfilmentController extends Controller
     private function deliverOrder(Order $order): void
     {
         if (
-            $order->delivery_service === 'pickup'
+            $order->delivery_service === 'local_pickup'
             && $order->fulfilment_status === FulfilmentStatus::READY_FOR_PICKUP
         ) {
             $order->markAsPickedUp();
@@ -100,5 +104,30 @@ final class OrderFulfilmentController extends Controller
         $shipment->markAsReturnedToSender();
 
         $order->markAsReturnedToSender();
+    }
+
+    private function polkurierPickupData(Request $request): array
+    {
+        $noCourierOrder = ! $request->has('polkurier_no_courier_order')
+            || $request->boolean('polkurier_no_courier_order');
+
+        if ($noCourierOrder) {
+            return [
+                'nocourierorder' => true,
+            ];
+        }
+
+        $validated = $request->validate([
+            'polkurier_pickup_date' => ['required', 'date', 'after_or_equal:today'],
+            'polkurier_pickup_time_from' => ['required', 'date_format:H:i'],
+            'polkurier_pickup_time_to' => ['required', 'date_format:H:i', 'after:polkurier_pickup_time_from'],
+        ]);
+
+        return [
+            'pickupdate' => $validated['polkurier_pickup_date'],
+            'pickuptimefrom' => $validated['polkurier_pickup_time_from'],
+            'pickuptimeto' => $validated['polkurier_pickup_time_to'],
+            'nocourierorder' => false,
+        ];
     }
 }

@@ -5,39 +5,25 @@
         <input type="hidden" name="delivery_service" :value="service">
         <input type="hidden" name="delivery_locker_code" :value="lockerCode">
 
-        <div>
+        <div class="sm:col-span-2">
             <label class="mb-2 block text-sm font-medium text-zinc-700">
-                Carrier
+                Delivery method
             </label>
 
             <select
-                v-model="carrier"
-                :disabled="service === 'pickup'"
-                class="block w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 disabled:cursor-not-allowed disabled:bg-zinc-100 disabled:text-zinc-500"
-            >
-                <option value="inpost">InPost</option>
-                <option value="ups">UPS</option>
-                <option value="dpd">DPD</option>
-            </select>
-
-            <p v-if="service === 'pickup'" class="mt-2 text-xs text-zinc-500">
-                Carrier is not needed for shop pickup.
-            </p>
-        </div>
-
-        <div>
-            <label class="mb-2 block text-sm font-medium text-zinc-700">
-                Service
-            </label>
-
-            <select
-                v-model="service"
+                v-model="deliveryMethod"
                 class="block w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
             >
-                <option value="parcel_locker">InPost parcel locker</option>
-                <option value="courier">Courier delivery</option>
-                <option value="pickup">Pickup from shop — Prusa 20, Poznań</option>
+                <option value="inpost_parcel_locker">InPost parcel locker</option>
+                <option value="inpost_courier">InPost courier</option>
+                <option value="ups_courier">UPS courier</option>
+                <option value="dpd_courier">DPD courier</option>
+                <option value="local_pickup">Pickup from shop — Prusa 20, Poznań</option>
             </select>
+
+            <p class="mt-2 text-xs text-zinc-500">
+                Choose how you want to receive your order.
+            </p>
         </div>
 
         <div
@@ -115,7 +101,7 @@
         </div>
 
         <div
-            v-if="service === 'pickup'"
+            v-if="service === 'local_pickup'"
             class="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-700 sm:col-span-2"
         >
             <p class="font-medium text-zinc-900">
@@ -138,7 +124,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const props = defineProps({
     initialCarrier: {
@@ -155,8 +141,30 @@ const props = defineProps({
     },
 });
 
-const carrier = ref(props.initialCarrier || 'inpost');
-const service = ref(props.initialService || 'parcel_locker');
+const deliveryOptions = {
+    inpost_parcel_locker: {
+        carrier: 'inpost',
+        service: 'parcel_locker',
+    },
+    inpost_courier: {
+        carrier: 'inpost',
+        service: 'courier',
+    },
+    ups_courier: {
+        carrier: 'ups',
+        service: 'courier',
+    },
+    dpd_courier: {
+        carrier: 'dpd',
+        service: 'courier',
+    },
+    local_pickup: {
+        carrier: 'local_pickup',
+        service: 'local_pickup',
+    },
+};
+
+const deliveryMethod = ref(resolveInitialDeliveryMethod());
 const lockerCode = ref(props.initialLockerCode || '');
 const query = ref(props.initialLockerCode || '');
 const lockers = ref([]);
@@ -165,24 +173,49 @@ const showResults = ref(false);
 
 let timeout = null;
 
-watch(service, (value) => {
-    if (value === 'pickup') {
-        carrier.value = 'local_pickup';
-        clearLocker();
-        return;
-    }
-
-    if (value === 'parcel_locker') {
-        carrier.value = 'inpost';
-        return;
-    }
-
-    if (carrier.value === 'local_pickup') {
-        carrier.value = 'inpost';
-    }
-
-    clearLocker();
+const selectedOption = computed(() => {
+    return deliveryOptions[deliveryMethod.value] ?? deliveryOptions.inpost_parcel_locker;
 });
+
+const carrier = computed(() => selectedOption.value.carrier);
+const service = computed(() => selectedOption.value.service);
+
+watch(
+    deliveryMethod,
+    () => {
+        if (service.value !== 'parcel_locker') {
+            clearLocker();
+        }
+    },
+    { immediate: true }
+);
+
+function resolveInitialDeliveryMethod() {
+    const initialCarrier = props.initialCarrier || 'inpost';
+    const initialService = props.initialService || 'parcel_locker';
+
+    if (initialCarrier === 'local_pickup' || initialService === 'local_pickup') {
+        return 'local_pickup';
+    }
+
+    if (initialService === 'parcel_locker') {
+        return 'inpost_parcel_locker';
+    }
+
+    if (initialService === 'courier') {
+        if (initialCarrier === 'ups') {
+            return 'ups_courier';
+        }
+
+        if (initialCarrier === 'dpd') {
+            return 'dpd_courier';
+        }
+
+        return 'inpost_courier';
+    }
+
+    return 'inpost_parcel_locker';
+}
 
 function search() {
     clearTimeout(timeout);
@@ -194,6 +227,7 @@ function search() {
     if (value.length < 2) {
         lockers.value = [];
         showResults.value = false;
+
         return;
     }
 

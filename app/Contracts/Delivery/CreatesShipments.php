@@ -14,5 +14,6 @@ interface CreatesShipments
         string $provider,
         ?string $service = null,
         ?string $lockerCode = null,
+        ?array $pickup = null,
     ): Shipment;
 }

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
-use App\Enums\DeliveryCarrier;
+use App\Enums\DeliveryService;
 
 class PlaceOrderRequest extends FormRequest
 {
@@ -28,7 +29,6 @@ class PlaceOrderRequest extends FormRequest
             'delivery_provider' => $this->input('delivery_provider', DeliveryProvider::POLKURIER->value),
             'delivery_carrier' => $this->input('delivery_carrier', DeliveryCarrier::INPOST->value),
             'delivery_service' => $this->input('delivery_service', 'parcel_locker'),
-
         ]);
 
         if ($billingAddressSource === 'company_address' && $this->user()) {
@@ -71,7 +71,7 @@ class PlaceOrderRequest extends FormRequest
 
             'delivery_provider' => ['required', 'string', Rule::in(DeliveryProvider::options())],
             'delivery_carrier' => ['required', 'string', Rule::in(DeliveryCarrier::options())],
-            'delivery_service' => ['required', 'string', Rule::in(['parcel_locker', 'courier', 'pickup'])],
+            'delivery_service' => ['required', 'string', Rule::in(DeliveryService::options())],
             'delivery_locker_code' => [
                 'nullable',
                 'string',
@@ -149,14 +149,55 @@ class PlaceOrderRequest extends FormRequest
                 }
             }
 
-            if (
-                $this->input('delivery_provider') !== DeliveryProvider::POLKURIER->value
-                && $this->input('delivery_service') === 'parcel_locker'
-            ) {
+            $provider = (string) $this->input('delivery_provider');
+            $carrier = (string) $this->input('delivery_carrier');
+            $service = (string) $this->input('delivery_service');
+
+            if ($provider !== DeliveryProvider::POLKURIER->value) {
                 $validator->errors()->add(
-                    'delivery_service',
-                    __('Parcel locker delivery is only available through InPost.')
+                    'delivery_provider',
+                    __('Unsupported delivery provider.')
                 );
+
+                return;
+            }
+
+            if ($service === 'parcel_locker') {
+                if ($carrier !== DeliveryCarrier::INPOST->value) {
+                    $validator->errors()->add(
+                        'delivery_carrier',
+                        __('Parcel locker delivery is only available through InPost.')
+                    );
+                }
+
+                return;
+            }
+
+            if ($service === 'courier') {
+                if ($carrier === DeliveryCarrier::LOCAL_PICKUP->value) {
+                    $validator->errors()->add(
+                        'delivery_carrier',
+                        __('Local pickup cannot be used as a courier carrier.')
+                    );
+                }
+
+                return;
+            }
+
+            if ($service === 'local_pickup') {
+                if ($carrier !== DeliveryCarrier::LOCAL_PICKUP->value) {
+                    $validator->errors()->add(
+                        'delivery_carrier',
+                        __('Local pickup must use the local pickup carrier.')
+                    );
+                }
+
+                if ($this->filled('delivery_locker_code')) {
+                    $validator->errors()->add(
+                        'delivery_locker_code',
+                        __('Parcel locker code is not used for local pickup.')
+                    );
+                }
             }
         });
     }

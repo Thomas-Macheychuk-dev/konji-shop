@@ -81,19 +81,90 @@
                         $order->status === \App\Enums\OrderStatus::CONFIRMED
                         && $order->fulfilment_status === \App\Enums\FulfilmentStatus::PROCESSING
                     )
-                        <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'shipped']) }}">
+                        <form
+                            method="POST"
+                            action="{{ route('admin.orders.fulfilment.update', [$order, 'shipped']) }}"
+                            class="w-full"
+                        >
                             @csrf
                             @method('PATCH')
 
+                            @if ($order->delivery_service !== 'local_pickup')
+                                <div class="mb-4 grid gap-3 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 sm:grid-cols-3">
+                                    <div class="sm:col-span-3">
+                                        <label class="flex items-center gap-2 text-sm text-zinc-700">
+                                            <input
+                                                type="hidden"
+                                                name="polkurier_no_courier_order"
+                                                value="0"
+                                            >
+
+                                            <input
+                                                type="checkbox"
+                                                name="polkurier_no_courier_order"
+                                                value="1"
+                                                checked
+                                                class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                            >
+
+                                            I will arrange courier pickup myself
+                                        </label>
+
+                                        <p class="mt-1 text-xs text-zinc-500">
+                                            Uncheck this if Polkurier should order the courier pickup.
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <label class="mb-1 block text-xs font-medium text-zinc-600">
+                                            Pickup date
+                                        </label>
+
+                                        <input
+                                            type="date"
+                                            name="polkurier_pickup_date"
+                                            value="{{ now()->addDay()->format('Y-m-d') }}"
+                                            class="block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                        >
+                                    </div>
+
+                                    <div>
+                                        <label class="mb-1 block text-xs font-medium text-zinc-600">
+                                            Time from
+                                        </label>
+
+                                        <input
+                                            type="time"
+                                            name="polkurier_pickup_time_from"
+                                            value="10:00"
+                                            class="block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                        >
+                                    </div>
+
+                                    <div>
+                                        <label class="mb-1 block text-xs font-medium text-zinc-600">
+                                            Time to
+                                        </label>
+
+                                        <input
+                                            type="time"
+                                            name="polkurier_pickup_time_to"
+                                            value="14:00"
+                                            class="block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                        >
+                                    </div>
+                                </div>
+                            @endif
+
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                                {{ $order->delivery_service === 'pickup' ? 'Mark as ready for pickup' : 'Create shipment & mark as shipped' }}
+                                {{ $order->delivery_service === 'local_pickup' ? 'Mark as ready for pickup' : 'Create shipment & mark as shipped' }}
                             </button>
                         </form>
                     @endif
 
                     @if (
                         $order->status === \App\Enums\OrderStatus::CONFIRMED
-                        && $order->delivery_service === 'pickup'
+                        && $order->delivery_service === 'local_pickup'
                         && $order->fulfilment_status === \App\Enums\FulfilmentStatus::READY_FOR_PICKUP
                     )
                         <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'delivered']) }}">
@@ -108,7 +179,7 @@
 
                     @if (
                         $order->status === \App\Enums\OrderStatus::CONFIRMED
-                        && $order->delivery_service !== 'pickup'
+                        && $order->delivery_service !== 'local_pickup'
                         && $order->fulfilment_status === \App\Enums\FulfilmentStatus::SHIPPED
                     )
                         <form method="POST" action="{{ route('admin.orders.fulfilment.update', [$order, 'delivered']) }}">
@@ -216,7 +287,7 @@
                     <div>
                         <dt class="text-zinc-500">Service</dt>
                         <dd class="font-medium text-zinc-900">
-                            {{ $order->delivery_service ?: '—' }}
+                            {{ \App\Enums\DeliveryService::tryFrom((string) $order->delivery_service)?->label() ?? '—' }}
                         </dd>
                     </div>
 
@@ -259,7 +330,7 @@
                             </td>
 
                             <td class="px-4 py-4 text-sm text-zinc-700">
-                                {{ $shipment->service ?: '—' }}
+                                {{ \App\Enums\DeliveryService::tryFrom((string) $shipment->service)?->label() ?? ($shipment->service ?: '—') }}
                             </td>
 
                             <td class="px-4 py-4 text-sm">
@@ -381,13 +452,78 @@
 
                     <tbody class="divide-y divide-zinc-200 bg-white">
                     @forelse ($order->items as $item)
+                        @php
+                            $product = $item->product;
+                            $variant = $item->variant;
+                            $productUrl = $product ? route('products.show', $product) : null;
+                            $thumbnailUrl = $variant?->thumbnail_url
+                                ?? $product?->thumbnail_url
+                                ?? $variant?->image_url
+                                ?? $product?->image_url
+                                ?? $variant?->main_image_url
+                                ?? $product?->main_image_url
+                                ?? data_get($item->meta, 'image_url');
+                        @endphp
+
                         <tr>
                             <td class="px-4 py-4 text-sm">
-                                <p class="font-medium text-zinc-900">{{ $item->product_name_snapshot }}</p>
+                                <div class="flex items-center gap-4">
+                                    @if ($productUrl)
+                                        <a
+                                            href="{{ $productUrl }}"
+                                            class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50"
+                                        >
+                                            @if ($thumbnailUrl)
+                                                <img
+                                                    src="{{ $thumbnailUrl }}"
+                                                    alt="{{ $item->product_name_snapshot }}"
+                                                    class="h-full w-full object-cover"
+                                                    loading="lazy"
+                                                >
+                                            @else
+                                                <span class="px-2 text-center text-xs text-zinc-400">
+                                                    No image
+                                                </span>
+                                            @endif
+                                        </a>
+                                    @else
+                                        <div class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
+                                            @if ($thumbnailUrl)
+                                                <img
+                                                    src="{{ $thumbnailUrl }}"
+                                                    alt="{{ $item->product_name_snapshot }}"
+                                                    class="h-full w-full object-cover"
+                                                    loading="lazy"
+                                                >
+                                            @else
+                                                <span class="px-2 text-center text-xs text-zinc-400">
+                                                    No image
+                                                </span>
+                                            @endif
+                                        </div>
+                                    @endif
 
-                                @if ($item->variant_name_snapshot)
-                                    <p class="mt-1 text-xs text-zinc-500">{{ $item->variant_name_snapshot }}</p>
-                                @endif
+                                    <div class="min-w-0">
+                                        <p class="font-medium text-zinc-900">
+                                            @if ($productUrl)
+                                                <a
+                                                    href="{{ $productUrl }}"
+                                                    class="underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                                >
+                                                    {{ $item->product_name_snapshot }}
+                                                </a>
+                                            @else
+                                                {{ $item->product_name_snapshot }}
+                                            @endif
+                                        </p>
+
+                                        @if ($item->variant_name_snapshot)
+                                            <p class="mt-1 text-xs text-zinc-500">
+                                                {{ $item->variant_name_snapshot }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
                             </td>
 
                             <td class="px-4 py-4 text-sm text-zinc-700">
