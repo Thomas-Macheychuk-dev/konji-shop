@@ -15,6 +15,7 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
 {
     public function __construct(
         private readonly PolkurierApiClient $client,
+        private readonly PolkurierPackBuilder $packBuilder,
     ) {}
 
     public function providerKey(): string
@@ -30,9 +31,7 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
             'description' => mb_substr('Konji Shop order '.$order->number, 0, 30),
             'sender' => $this->sender(),
             'recipient' => $this->recipient($order, $shipment),
-            'packs' => [
-                $this->defaultPack(),
-            ],
+            'packs' => $this->packBuilder->fromOrder($order),
             'pickup' => $this->pickup($options),
         ]);
 
@@ -131,47 +130,12 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
             $pickup = [];
         }
 
-        $noCourierOrder = (bool) ($pickup['nocourierorder'] ?? true);
-
-        if ($noCourierOrder) {
-            return [
-                'nocourierorder' => true,
-            ];
-        }
-
-        $pickupDate = (string) ($pickup['pickupdate'] ?? '');
-        $pickupTimeFrom = (string) ($pickup['pickuptimefrom'] ?? '');
-        $pickupTimeTo = (string) ($pickup['pickuptimeto'] ?? '');
-
-        if ($pickupDate === '' || $pickupTimeFrom === '' || $pickupTimeTo === '') {
-            throw new RuntimeException(
-                'Polkurier courier pickup date and time are required when courier pickup is ordered.'
-            );
+        if ($pickup !== []) {
+            return $pickup;
         }
 
         return [
-            'pickupdate' => $pickupDate,
-            'pickuptimefrom' => $pickupTimeFrom,
-            'pickuptimeto' => $pickupTimeTo,
-            'nocourierorder' => false,
-        ];
-    }
-
-    private function defaultPack(): array
-    {
-        $pack = config('delivery.providers.polkurier.default_pack');
-
-        if (! is_array($pack)) {
-            throw new RuntimeException('Polkurier default pack configuration is missing.');
-        }
-
-        return [
-            'length' => (int) ($pack['length'] ?? 30),
-            'width' => (int) ($pack['width'] ?? 20),
-            'height' => (int) ($pack['height'] ?? 10),
-            'weight' => (float) ($pack['weight'] ?? 1),
-            'amount' => (int) ($pack['amount'] ?? 1),
-            'type' => (string) ($pack['type'] ?? 'ST'),
+            'nocourierorder' => true,
         ];
     }
 }
