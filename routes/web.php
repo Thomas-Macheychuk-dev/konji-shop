@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\Orders\AdminOrderCancelController;
 use App\Http\Controllers\Admin\Orders\AdminOrderShipmentController;
 use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentLabelController;
+use App\Http\Controllers\Admin\Orders\AdminShipmentStatusRefreshController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -71,6 +72,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/shipments/{shipment}/label', AdminShipmentLabelController::class)
             ->name('shipments.label');
+
+        Route::patch('/shipments/{shipment}/status', AdminShipmentStatusRefreshController::class)
+            ->name('shipments.status.refresh');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -73,4 +73,19 @@ final class PolkurierApiClient
 
         return $decoded;
     }
+
+    public function shipmentStatus(string $orderNumber): array
+    {
+        $payload = $this->request('get_status', [
+            'orderno' => $orderNumber,
+        ]);
+
+        $response = $payload['response'] ?? null;
+
+        if (! is_array($response)) {
+            throw new RuntimeException('Polkurier did not return shipment status data.');
+        }
+
+        return $response;
+    }
 }
