@@ -88,4 +88,23 @@ final class PolkurierApiClient
 
         return $response;
     }
+
+    public function cancelOrder(string $orderNumber): array
+    {
+        $payload = $this->request('cancel_order', [
+            'orderno' => $orderNumber,
+        ]);
+
+        $response = $payload['response'] ?? null;
+
+        if (! is_array($response)) {
+            throw new RuntimeException('Polkurier did not return cancellation data.');
+        }
+
+        if (($response['cancellation'] ?? false) !== true) {
+            throw new RuntimeException('Polkurier did not confirm shipment cancellation.');
+        }
+
+        return $payload;
+    }
 }

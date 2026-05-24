@@ -381,18 +381,44 @@
                             </td>
 
                             <td class="px-4 py-4 text-sm text-zinc-700">
-                                @if (
-                                    $shipment->provider === \App\Enums\DeliveryProvider::POLKURIER
-                                    && $shipment->provider_reference
-                                )
-                                    <form method="POST" action="{{ route('admin.shipments.status.refresh', $shipment) }}">
-                                        @csrf
-                                        @method('PATCH')
+                                @php
+                                    $isPolkurierShipment = $shipment->provider === \App\Enums\DeliveryProvider::POLKURIER
+                                        && filled($shipment->provider_reference);
 
-                                        <button class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700">
-                                            Refresh status
-                                        </button>
-                                    </form>
+                                    $canCancelShipment = $isPolkurierShipment
+                                        && in_array($shipment->status, [
+                                            \App\Enums\ShipmentStatus::PENDING,
+                                            \App\Enums\ShipmentStatus::CREATED,
+                                            \App\Enums\ShipmentStatus::DISPATCHED,
+                                        ], true);
+                                @endphp
+
+                                @if ($isPolkurierShipment)
+                                    <div class="flex flex-col items-start gap-2">
+                                        <form method="POST" action="{{ route('admin.shipments.status.refresh', $shipment) }}">
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <button class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700">
+                                                Refresh status
+                                            </button>
+                                        </form>
+
+                                        @if ($canCancelShipment)
+                                            <form
+                                                method="POST"
+                                                action="{{ route('admin.shipments.cancel', $shipment) }}"
+                                                onsubmit="return confirm('Cancel this Polkurier shipment?')"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+
+                                                <button class="font-medium text-red-700 underline decoration-red-300 underline-offset-4 hover:text-red-600">
+                                                    Cancel shipment
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 @else
                                     —
                                 @endif

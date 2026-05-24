@@ -125,6 +125,11 @@ class Shipment extends Model
         $this->order->events()->create([
             'type' => 'shipment_cancelled',
             'description' => 'Shipment cancelled.',
+            'meta' => [
+                'provider' => $this->provider?->value,
+                'provider_reference' => $this->provider_reference,
+                'tracking_number' => $this->tracking_number,
+            ],
         ]);
     }
 
