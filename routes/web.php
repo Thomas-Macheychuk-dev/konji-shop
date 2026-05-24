@@ -32,6 +32,7 @@ use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentLabelController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentStatusRefreshController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentCancelController;
+use App\Http\Controllers\Checkout\CheckoutShippingQuoteController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -48,6 +49,10 @@ Route::get('/checkout', CheckoutShowController::class)->name('checkout.show');
 Route::post('/checkout', CheckoutPlaceOrderController::class)->name('checkout.place');
 Route::get('/checkout/success', PaymentReturnController::class)
     ->name('checkout.success');
+Route::get('/checkout/inpost-parcel-lockers', InPostParcelLockerSearchController::class)
+    ->name('checkout.inpost-parcel-lockers');
+Route::post('/checkout/shipping-quote', CheckoutShippingQuoteController::class)
+    ->name('checkout.shipping-quote');
 
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')
@@ -109,9 +114,6 @@ Route::post('/payments/paynow/notifications', PaynowNotificationController::clas
         PreventRequestForgery::class,
     ])
     ->name('payments.paynow.notifications');
-
-Route::get('/checkout/inpost-parcel-lockers', InPostParcelLockerSearchController::class)
-    ->name('checkout.inpost-parcel-lockers');
 
 Route::view('/cookie-policy', 'pages.legal.cookie-policy')->name('legal.cookie-policy');
 

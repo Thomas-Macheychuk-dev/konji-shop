@@ -24,6 +24,36 @@
             <p class="mt-2 text-xs text-zinc-500">
                 Choose how you want to receive your order.
             </p>
+
+            <div class="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm sm:col-span-2">
+                <div class="flex items-center justify-between gap-4">
+                    <span class="font-medium text-zinc-700">
+                        Delivery price
+                    </span>
+
+                    <span class="font-semibold text-zinc-900">
+                        <template v-if="quoteLoading">
+                            Calculating...
+                        </template>
+
+                        <template v-else-if="quote">
+                            {{ quote.formatted }}
+                        </template>
+
+                        <template v-else>
+                            —
+                        </template>
+                    </span>
+                </div>
+
+                <p v-if="quoteError" class="mt-2 text-xs text-red-600">
+                    {{ quoteError }}
+                </p>
+
+                <p v-else-if="quote?.source === 'fallback'" class="mt-2 text-xs text-zinc-500">
+                    Estimated delivery price.
+                </p>
+            </div>
         </div>
 
         <div
@@ -124,7 +154,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
     initialCarrier: {
@@ -138,6 +168,14 @@ const props = defineProps({
     initialLockerCode: {
         type: String,
         default: '',
+    },
+    shippingQuoteUrl: {
+        type: String,
+        default: '',
+    },
+    currency: {
+        type: String,
+        default: 'PLN',
     },
 });
 
@@ -171,7 +209,13 @@ const lockers = ref([]);
 const loading = ref(false);
 const showResults = ref(false);
 
+const quote = ref(null);
+const quoteLoading = ref(false);
+const quoteError = ref('');
+
 let timeout = null;
+let quoteTimeout = null;
+let quoteRequestId = 0;
 
 const selectedOption = computed(() => {
     return deliveryOptions[deliveryMethod.value] ?? deliveryOptions.inpost_parcel_locker;
@@ -184,11 +228,28 @@ watch(
     deliveryMethod,
     () => {
         if (service.value !== 'parcel_locker') {
-            clearLocker();
+            clearLocker(false);
         }
+
+        scheduleQuote();
     },
     { immediate: true }
 );
+
+onMounted(() => {
+    document.addEventListener('input', handleCheckoutInput);
+    document.addEventListener('change', handleCheckoutInput);
+
+    scheduleQuote();
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('input', handleCheckoutInput);
+    document.removeEventListener('change', handleCheckoutInput);
+
+    clearTimeout(timeout);
+    clearTimeout(quoteTimeout);
+});
 
 function resolveInitialDeliveryMethod() {
     const initialCarrier = props.initialCarrier || 'inpost';
@@ -255,13 +316,146 @@ function selectLocker(locker) {
     lockerCode.value = locker.code;
     query.value = locker.label;
     showResults.value = false;
+
+    scheduleQuote();
 }
 
-function clearLocker() {
+function clearLocker(refreshQuote = true) {
+    if (typeof refreshQuote !== 'boolean') {
+        refreshQuote = true;
+    }
+
     lockerCode.value = '';
     query.value = '';
     lockers.value = [];
     showResults.value = false;
+
+    if (refreshQuote) {
+        scheduleQuote();
+    }
+}
+
+function handleCheckoutInput(event) {
+    const fieldName = event.target?.name;
+
+    if (![
+        'shipping_postcode',
+        'shipping_country_code',
+    ].includes(fieldName)) {
+        return;
+    }
+
+    scheduleQuote();
+}
+
+function scheduleQuote() {
+    clearTimeout(quoteTimeout);
+    quoteRequestId++;
+
+    if (!props.shippingQuoteUrl) {
+        return;
+    }
+
+    if (service.value === 'local_pickup') {
+        quote.value = {
+            amount: 0,
+            formatted: 'Free',
+            currency: props.currency,
+            source: 'local_pickup',
+        };
+        quoteError.value = '';
+        quoteLoading.value = false;
+
+        return;
+    }
+
+    const postcode = fieldValue('shipping_postcode');
+
+    if (!postcode || postcode.trim().length < 2) {
+        quote.value = null;
+        quoteError.value = 'Enter postcode to calculate delivery price.';
+        quoteLoading.value = false;
+
+        return;
+    }
+
+    quoteTimeout = setTimeout(fetchQuote, 350);
+}
+
+async function fetchQuote() {
+    const requestId = ++quoteRequestId;
+
+    quoteLoading.value = true;
+    quoteError.value = '';
+
+    try {
+        const response = await fetch(props.shippingQuoteUrl, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken(),
+            },
+            body: JSON.stringify({
+                delivery_provider: 'polkurier',
+                delivery_carrier: carrier.value,
+                delivery_service: service.value,
+                delivery_locker_code: lockerCode.value,
+                shipping_postcode: fieldValue('shipping_postcode'),
+                shipping_country_code: fieldValue('shipping_country_code') || 'PL',
+                currency: props.currency,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (requestId !== quoteRequestId) {
+            return;
+        }
+
+        if (!response.ok) {
+            quote.value = null;
+            quoteError.value = firstValidationMessage(data) || 'Could not calculate delivery price.';
+
+            return;
+        }
+
+        quote.value = data;
+        quoteError.value = '';
+    } catch (error) {
+        if (requestId !== quoteRequestId) {
+            return;
+        }
+
+        quote.value = null;
+        quoteError.value = 'Could not calculate delivery price.';
+    } finally {
+        if (requestId === quoteRequestId) {
+            quoteLoading.value = false;
+        }
+    }
+}
+
+function fieldValue(name) {
+    return document.querySelector(`[name="${name}"]`)?.value ?? '';
+}
+
+function csrfToken() {
+    return document.querySelector('meta[name="csrf-token"]')?.content
+        ?? document.querySelector('input[name="_token"]')?.value
+        ?? '';
+}
+
+function firstValidationMessage(data) {
+    const errors = data?.errors ?? {};
+
+    for (const messages of Object.values(errors)) {
+        if (Array.isArray(messages) && messages.length > 0) {
+            return messages[0];
+        }
+    }
+
+    return data?.message ?? '';
 }
 
 function lockerAddress(locker) {
