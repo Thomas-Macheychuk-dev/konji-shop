@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Services\Delivery;
 
+use App\Contracts\Delivery\CreatesShipments;
 use App\Enums\DeliveryProvider;
 use App\Enums\ShipmentStatus;
 use App\Models\Order;
 use App\Models\Shipment;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
-use App\Contracts\Delivery\CreatesShipments;
 
 final class CreateShipmentService implements CreatesShipments
 {
@@ -18,9 +18,14 @@ final class CreateShipmentService implements CreatesShipments
         private readonly DeliveryGatewayRegistry $registry,
     ) {}
 
-    public function create(Order $order, string $provider, ?string $service = null, ?string $lockerCode = null): Shipment
-    {
-        return DB::transaction(function () use ($order, $provider, $service, $lockerCode): Shipment {
+    public function create(
+        Order $order,
+        string $provider,
+        ?string $service = null,
+        ?string $lockerCode = null,
+        ?array $pickup = null,
+    ): Shipment {
+        return DB::transaction(function () use ($order, $provider, $service, $lockerCode, $pickup): Shipment {
             if (! $order->status->isConfirmed()) {
                 throw new RuntimeException('Only confirmed orders can have shipments created.');
             }
@@ -35,7 +40,11 @@ final class CreateShipmentService implements CreatesShipments
 
             $gateway = $this->registry->for($provider);
 
-            $result = $gateway->createShipment($order, $shipment);
+            $result = $gateway->createShipment($order, $shipment, [
+                'pickup' => $pickup ?? [
+                    'nocourierorder' => true,
+                ],
+            ]);
 
             $shipment->update([
                 'provider_reference' => $result->providerReference,

@@ -22,7 +22,7 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
         return DeliveryProvider::POLKURIER->value;
     }
 
-    public function createShipment(Order $order, Shipment $shipment): ShipmentCreationResult
+    public function createShipment(Order $order, Shipment $shipment, array $options = []): ShipmentCreationResult
     {
         $payload = $this->client->request('create_order', [
             'shipmenttype' => 'box',
@@ -40,9 +40,7 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
                     'type' => 'ST',
                 ],
             ],
-            'pickup' => [
-                'nocourierorder' => true,
-            ],
+            'pickup' => $this->pickup($options),
         ]);
 
         $response = $payload['response'];
@@ -58,12 +56,18 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
 
     private function courierCode(Order $order): string
     {
+        if (
+            $order->delivery_service === 'parcel_locker'
+            && $order->delivery_carrier?->value === 'inpost'
+        ) {
+            return 'INPOST_PACZKOMAT';
+        }
+
         return match ($order->delivery_carrier?->value) {
             'ups' => 'UPS',
             'dpd' => 'DPD',
             'dhl' => 'DHL',
             'inpost' => 'INPOST',
-            'inpost_parcel_locker' => 'INPOST_PACZKOMAT',
             default => strtoupper((string) $order->delivery_carrier?->value),
         };
     }
@@ -124,5 +128,39 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
         }
 
         return mb_substr($normalized, 0, 15);
+    }
+
+    private function pickup(array $options): array
+    {
+        $pickup = $options['pickup'] ?? [];
+
+        if (! is_array($pickup)) {
+            $pickup = [];
+        }
+
+        $noCourierOrder = (bool) ($pickup['nocourierorder'] ?? true);
+
+        if ($noCourierOrder) {
+            return [
+                'nocourierorder' => true,
+            ];
+        }
+
+        $pickupDate = (string) ($pickup['pickupdate'] ?? '');
+        $pickupTimeFrom = (string) ($pickup['pickuptimefrom'] ?? '');
+        $pickupTimeTo = (string) ($pickup['pickuptimeto'] ?? '');
+
+        if ($pickupDate === '' || $pickupTimeFrom === '' || $pickupTimeTo === '') {
+            throw new RuntimeException(
+                'Polkurier courier pickup date and time are required when courier pickup is ordered.'
+            );
+        }
+
+        return [
+            'pickupdate' => $pickupDate,
+            'pickuptimefrom' => $pickupTimeFrom,
+            'pickuptimeto' => $pickupTimeTo,
+            'nocourierorder' => false,
+        ];
     }
 }

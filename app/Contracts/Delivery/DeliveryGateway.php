@@ -12,5 +12,9 @@ interface DeliveryGateway
 {
     public function providerKey(): string;
 
-    public function createShipment(Order $order, Shipment $shipment): ShipmentCreationResult;
+    public function createShipment(
+        Order $order,
+        Shipment $shipment,
+        array $options = [],
+    ): ShipmentCreationResult;
 }

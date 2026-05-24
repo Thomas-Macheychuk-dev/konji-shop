@@ -409,7 +409,7 @@ class Order extends Model
             throw new DomainException('Only confirmed orders can be marked as picked up.');
         }
 
-        if ($this->delivery_service !== 'pickup') {
+        if ($this->delivery_service !== 'local_pickup') {
             throw new DomainException('Only pickup orders can be marked as picked up.');
         }
 

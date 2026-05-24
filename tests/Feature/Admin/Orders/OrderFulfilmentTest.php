@@ -111,7 +111,7 @@ it('allows an authenticated user to ship an order through the admin route', func
         'fulfilment_status' => FulfilmentStatus::PROCESSING,
         'delivery_provider' => DeliveryProvider::POLKURIER,
         'delivery_carrier' => DeliveryCarrier::UPS,
-        'delivery_service' => 'UPS',
+        'delivery_service' => 'courier',
         'delivery_locker_code' => null,
     ]);
 
@@ -121,14 +121,18 @@ it('allows an authenticated user to ship an order through the admin route', func
             ->with(
                 \Mockery::on(fn (Order $givenOrder): bool => $givenOrder->is($order)),
                 DeliveryProvider::POLKURIER->value,
-                'UPS',
+                'courier',
                 null,
+                [
+                    'nocourierorder' => true,
+                ],
             )
             ->andReturnUsing(function (
                 Order $order,
                 string $provider,
                 ?string $service = null,
                 ?string $lockerCode = null,
+                ?array $pickup = null,
             ): Shipment {
                 return Shipment::query()->create([
                     'order_id' => $order->id,
@@ -164,7 +168,7 @@ it('marks a pickup order as ready for pickup instead of creating a shipment', fu
         'payment_status' => PaymentStatus::PAID,
         'fulfilment_status' => FulfilmentStatus::PROCESSING,
         'delivery_carrier' => 'local_pickup',
-        'delivery_service' => 'pickup',
+        'delivery_service' => 'local_pickup',
         'shipping_amount' => 0,
     ]);
 
@@ -216,6 +220,75 @@ it('allows an authenticated user to complete an order through the admin route', 
         ->assertRedirect();
 
     expect($order->refresh()->status)->toBe(OrderStatus::COMPLETED);
+});
+
+it('passes explicit Polkurier courier pickup data when creating a shipment through the admin route', function (): void {
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::UPS,
+        'delivery_service' => 'courier',
+        'delivery_locker_code' => null,
+    ]);
+
+    $expectedPickup = [
+        'pickupdate' => now()->addDay()->format('Y-m-d'),
+        'pickuptimefrom' => '10:00',
+        'pickuptimeto' => '14:00',
+        'nocourierorder' => false,
+    ];
+
+    $this->mock(CreatesShipments::class, function ($mock) use ($order, $expectedPickup): void {
+        $mock->shouldReceive('create')
+            ->once()
+            ->with(
+                \Mockery::on(fn (Order $givenOrder): bool => $givenOrder->is($order)),
+                DeliveryProvider::POLKURIER->value,
+                'courier',
+                null,
+                $expectedPickup,
+            )
+            ->andReturnUsing(function (
+                Order $order,
+                string $provider,
+                ?string $service = null,
+                ?string $lockerCode = null,
+                ?array $pickup = null,
+            ): Shipment {
+                return Shipment::query()->create([
+                    'order_id' => $order->id,
+                    'provider' => DeliveryProvider::from($provider),
+                    'status' => ShipmentStatus::CREATED,
+                    'provider_reference' => 'test-polkurier-order-123',
+                    'tracking_number' => 'test-tracking-123',
+                    'tracking_url' => 'https://example.com/track/test-tracking-123',
+                    'service' => $service,
+                    'locker_code' => $lockerCode,
+                    'payload' => [
+                        'test' => true,
+                        'pickup' => $pickup,
+                    ],
+                ]);
+            });
+    });
+
+    $this->actingAs($user)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']), [
+            'polkurier_no_courier_order' => '0',
+            'polkurier_pickup_date' => $expectedPickup['pickupdate'],
+            'polkurier_pickup_time_from' => $expectedPickup['pickuptimefrom'],
+            'polkurier_pickup_time_to' => $expectedPickup['pickuptimeto'],
+        ])
+        ->assertRedirect();
+
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::SHIPPED);
+    expect($order->shipments()->count())->toBe(1);
 });
 
 it('marks a shipped order as returned to sender through the admin route', function (): void {

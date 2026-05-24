@@ -22,7 +22,7 @@ final class DeliveryGatewayRegistryTest extends TestCase
                 return 'inpost';
             }
 
-            public function createShipment(Order $order, Shipment $shipment): ShipmentCreationResult
+            public function createShipment(Order $order, Shipment $shipment, array $options = []): ShipmentCreationResult
             {
                 return new ShipmentCreationResult(
                     provider: 'inpost',
