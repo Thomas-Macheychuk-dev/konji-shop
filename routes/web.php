@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\Orders\AdminOrderShowController;
 use App\Http\Controllers\Admin\Orders\AdminOrderCancelController;
 use App\Http\Controllers\Admin\Orders\AdminOrderShipmentController;
 use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
+use App\Http\Controllers\Admin\Orders\AdminShipmentLabelController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -67,6 +68,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::post('/orders/{order}/shipments', AdminOrderShipmentController::class)
             ->name('orders.shipments.store');
+
+        Route::get('/shipments/{shipment}/label', AdminShipmentLabelController::class)
+            ->name('shipments.label');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {

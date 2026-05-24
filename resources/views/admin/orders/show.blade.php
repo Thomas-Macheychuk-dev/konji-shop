@@ -315,6 +315,7 @@
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Tracking</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Locker</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Shipped</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Label</th>
                     </tr>
                     </thead>
 
@@ -361,10 +362,26 @@
                             <td class="px-4 py-4 text-sm text-zinc-700">
                                 {{ $shipment->shipped_at?->format('Y-m-d H:i') ?? '—' }}
                             </td>
+
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                @if (
+                                    $shipment->provider === \App\Enums\DeliveryProvider::POLKURIER
+                                    && $shipment->provider_reference
+                                )
+                                    <a
+                                        href="{{ route('admin.shipments.label', $shipment) }}"
+                                        class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                    >
+                                        Download label
+                                    </a>
+                                @else
+                                    —
+                                @endif
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="px-4 py-8 text-center text-sm text-zinc-500">
+                            <td colspan="8" class="px-4 py-8 text-center text-sm text-zinc-500">
                                 No shipments found.
                             </td>
                         </tr>
