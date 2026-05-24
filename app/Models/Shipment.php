@@ -85,10 +85,11 @@ class Shipment extends Model
         ]);
     }
 
-    public function markAsDelivered(): void
+    public function markAsDelivered(array $payload = []): void
     {
         $this->update([
             'status' => ShipmentStatus::DELIVERED,
+            'payload' => $payload === [] ? $this->payload : $payload,
             'delivered_at' => now(),
         ]);
 
@@ -114,10 +115,11 @@ class Shipment extends Model
         ]);
     }
 
-    public function markAsCancelled(): void
+    public function markAsCancelled(array $payload = []): void
     {
         $this->update([
             'status' => ShipmentStatus::CANCELLED,
+            'payload' => $payload === [] ? $this->payload : $payload,
         ]);
 
         $this->order->events()->create([
@@ -131,6 +133,7 @@ class Shipment extends Model
         if (! in_array($this->status, [
             ShipmentStatus::CREATED,
             ShipmentStatus::DISPATCHED,
+            ShipmentStatus::IN_TRANSIT,
         ], true)) {
             throw new DomainException('Only created or dispatched shipments can be marked as returned to sender.');
         }
@@ -147,6 +150,40 @@ class Shipment extends Model
                 'provider' => $this->provider?->value,
                 'provider_reference' => $this->provider_reference,
                 'tracking_number' => $this->tracking_number,
+            ],
+        ]);
+    }
+
+    public function markAsInTransit(array $payload = []): void
+    {
+        $this->update([
+            'status' => ShipmentStatus::IN_TRANSIT,
+            'payload' => $payload === [] ? $this->payload : $payload,
+        ]);
+
+        $this->order->events()->create([
+            'type' => 'shipment_in_transit',
+            'description' => 'Shipment is in transit.',
+            'meta' => [
+                'provider' => $this->provider?->value,
+                'provider_reference' => $this->provider_reference,
+                'tracking_number' => $this->tracking_number,
+            ],
+        ]);
+    }
+
+    public function syncProviderPayload(array $payload): void
+    {
+        $this->update([
+            'payload' => $payload,
+        ]);
+
+        $this->order->events()->create([
+            'type' => 'shipment_status_synced',
+            'description' => 'Shipment status synced.',
+            'meta' => [
+                'provider' => $this->provider?->value,
+                'provider_reference' => $this->provider_reference,
             ],
         ]);
     }

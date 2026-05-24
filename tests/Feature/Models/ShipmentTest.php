@@ -78,6 +78,28 @@ it('marks a shipment as dispatched', function (): void {
     expect($order->events()->where('type', 'shipment_dispatched')->exists())->toBeTrue();
 });
 
+it('marks a shipment as in transit', function (): void {
+    $order = Order::factory()->create();
+
+    $shipment = Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'status' => ShipmentStatus::DISPATCHED,
+    ]);
+
+    $shipment->markAsInTransit([
+        'status_code' => 'WP',
+    ]);
+
+    expect($shipment->refresh())
+        ->status->toBe(ShipmentStatus::IN_TRANSIT)
+        ->payload->toBe([
+            'status_code' => 'WP',
+        ]);
+
+    expect($order->events()->where('type', 'shipment_in_transit')->exists())->toBeTrue();
+});
+
 it('marks a shipment as delivered', function (): void {
     $order = Order::factory()->create();
 

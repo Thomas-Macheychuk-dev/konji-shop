@@ -316,6 +316,7 @@
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Locker</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Shipped</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Label</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Actions</th>
                     </tr>
                     </thead>
 
@@ -378,10 +379,28 @@
                                     —
                                 @endif
                             </td>
+
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                @if (
+                                    $shipment->provider === \App\Enums\DeliveryProvider::POLKURIER
+                                    && $shipment->provider_reference
+                                )
+                                    <form method="POST" action="{{ route('admin.shipments.status.refresh', $shipment) }}">
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <button class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700">
+                                            Refresh status
+                                        </button>
+                                    </form>
+                                @else
+                                    —
+                                @endif
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="px-4 py-8 text-center text-sm text-zinc-500">
+                            <td colspan="9" class="px-4 py-8 text-center text-sm text-zinc-500">
                                 No shipments found.
                             </td>
                         </tr>
