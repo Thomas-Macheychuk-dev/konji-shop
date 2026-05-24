@@ -26,12 +26,14 @@ if (cartWidgetEl) {
     }).mount(cartWidgetEl);
 }
 
-const checkoutDeliveryMethodElement = document.getElementById('checkout-delivery-method');
+const checkoutDeliveryMethod = document.getElementById('checkout-delivery-method');
 
-if (checkoutDeliveryMethodElement) {
+if (checkoutDeliveryMethod) {
     createApp(CheckoutDeliveryMethod, {
-        initialCarrier: checkoutDeliveryMethodElement.dataset.initialCarrier,
-        initialService: checkoutDeliveryMethodElement.dataset.initialService,
-        initialLockerCode: checkoutDeliveryMethodElement.dataset.initialLockerCode,
-    }).mount(checkoutDeliveryMethodElement);
+        initialCarrier: checkoutDeliveryMethod.dataset.initialCarrier,
+        initialService: checkoutDeliveryMethod.dataset.initialService,
+        initialLockerCode: checkoutDeliveryMethod.dataset.initialLockerCode,
+        shippingQuoteUrl: checkoutDeliveryMethod.dataset.shippingQuoteUrl,
+        currency: checkoutDeliveryMethod.dataset.currency || 'PLN',
+    }).mount(checkoutDeliveryMethod);
 }
