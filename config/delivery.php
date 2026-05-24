@@ -9,6 +9,36 @@ return [
             'login' => env('POLKURIER_LOGIN'),
             'token' => env('POLKURIER_TOKEN'),
 
+            'valuation' => [
+                'enabled' => env('POLKURIER_VALUATION_ENABLED', false),
+
+                'fallback_prices' => [
+                    'inpost' => [
+                        'parcel_locker' => (int) env('POLKURIER_FALLBACK_INPOST_PARCEL_LOCKER_AMOUNT', 0),
+                        'courier' => (int) env('POLKURIER_FALLBACK_INPOST_COURIER_AMOUNT', 0),
+                    ],
+                    'ups' => [
+                        'courier' => (int) env('POLKURIER_FALLBACK_UPS_COURIER_AMOUNT', 0),
+                    ],
+                    'dpd' => [
+                        'courier' => (int) env('POLKURIER_FALLBACK_DPD_COURIER_AMOUNT', 0),
+                    ],
+                    'local_pickup' => [
+                        'local_pickup' => 0,
+                    ],
+                ],
+            ],
+
+            'default_pack' => [
+                'shipmenttype' => env('POLKURIER_DEFAULT_SHIPMENT_TYPE', 'box'),
+                'length' => (int) env('POLKURIER_DEFAULT_PACK_LENGTH', 30),
+                'width' => (int) env('POLKURIER_DEFAULT_PACK_WIDTH', 20),
+                'height' => (int) env('POLKURIER_DEFAULT_PACK_HEIGHT', 10),
+                'weight' => (float) env('POLKURIER_DEFAULT_PACK_WEIGHT', 1),
+                'amount' => (int) env('POLKURIER_DEFAULT_PACK_AMOUNT', 1),
+                'type' => env('POLKURIER_DEFAULT_PACK_TYPE', 'ST'),
+            ],
+
             'sender' => [
                 'company' => env('POLKURIER_SENDER_COMPANY'),
                 'person' => env('POLKURIER_SENDER_PERSON'),
