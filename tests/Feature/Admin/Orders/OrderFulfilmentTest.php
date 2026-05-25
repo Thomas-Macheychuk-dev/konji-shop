@@ -26,6 +26,36 @@ it('moves a confirmed paid order into fulfilment processing', function (): void 
     expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
 });
 
+it('redirects back with an error and stores failed shipment when shipment creation fails', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => 'ups',
+        'delivery_service' => 'courier',
+    ]);
+
+    $this->mock(\App\Contracts\Delivery\CreatesShipments::class, function ($mock): void {
+        $mock
+            ->shouldReceive('create')
+            ->once()
+            ->andThrow(new RuntimeException('Shipment creation failed: Polkurier rejected create_order.'));
+    });
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']))
+        ->assertRedirect()
+        ->assertSessionHas('error', 'Shipment creation failed: Polkurier rejected create_order.');
+
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
+});
+
 it('ships a confirmed paid order', function (): void {
     $order = Order::factory()->create([
         'status' => OrderStatus::CONFIRMED,

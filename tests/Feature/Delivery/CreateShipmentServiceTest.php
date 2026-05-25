@@ -38,6 +38,59 @@ function fakeDeliveryGateway(): DeliveryGateway
     };
 }
 
+function failingDeliveryGateway(): DeliveryGateway
+{
+    return new class implements DeliveryGateway {
+        public function providerKey(): string
+        {
+            return DeliveryProvider::POLKURIER->value;
+        }
+
+        public function createShipment(Order $order, Shipment $shipment, array $options = []): ShipmentCreationResult
+        {
+            throw new RuntimeException('Polkurier rejected create_order.');
+        }
+    };
+}
+
+it('keeps a failed shipment when the delivery gateway fails', function (): void {
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
+    ]);
+
+    $service = new CreateShipmentService(
+        new DeliveryGatewayRegistry([
+            failingDeliveryGateway(),
+        ]),
+    );
+
+    try {
+        $service->create(
+            order: $order,
+            provider: DeliveryProvider::POLKURIER->value,
+            service: 'courier',
+        );
+
+        $this->fail('Expected shipment creation to fail.');
+    } catch (RuntimeException $exception) {
+        expect($exception->getMessage())->toContain('Shipment creation failed');
+    }
+
+    $shipment = $order->shipments()->first();
+
+    expect($shipment)
+        ->not->toBeNull()
+        ->status->toBe(ShipmentStatus::FAILED)
+        ->service->toBe('courier')
+        ->payload->toHaveKey('error');
+
+    expect($shipment->payload['error']['message'])->toBe('Polkurier rejected create_order.');
+
+    expect($order->events()->where('type', 'shipment_failed')->exists())->toBeTrue();
+});
+
 it('creates a shipment through a delivery gateway', function (): void {
     $order = Order::factory()->create([
         'status' => OrderStatus::CONFIRMED,
