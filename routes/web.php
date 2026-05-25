@@ -33,6 +33,11 @@ use App\Http\Controllers\Admin\Orders\AdminShipmentLabelController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentStatusRefreshController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentCancelController;
 use App\Http\Controllers\Checkout\CheckoutShippingQuoteController;
+use App\Http\Controllers\Admin\Products\AdminProductEditController;
+use App\Http\Controllers\Admin\Products\AdminProductIndexController;
+use App\Http\Controllers\Admin\Products\AdminProductPackageDimensionsUpdateController;
+use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpdateController;
+use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -84,6 +89,21 @@ Route::middleware(['auth', 'admin'])
 
         Route::patch('/shipments/{shipment}/cancel', AdminShipmentCancelController::class)
             ->name('shipments.cancel');
+
+        Route::get('/products', AdminProductIndexController::class)
+            ->name('products.index');
+
+        Route::get('/products/{product}/edit', AdminProductEditController::class)
+            ->name('products.edit');
+
+        Route::patch('/products/{product}', AdminProductUpdateController::class)
+            ->name('products.update');
+
+        Route::patch('/products/{product}/package-dimensions', AdminProductPackageDimensionsUpdateController::class)
+            ->name('products.package-dimensions.update');
+
+        Route::patch('/products/{product}/variants/package-dimensions', AdminProductVariantPackageDimensionsUpdateController::class)
+            ->name('products.variants.package-dimensions.update');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {
