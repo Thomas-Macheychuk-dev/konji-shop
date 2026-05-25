@@ -6,11 +6,13 @@ namespace App\Http\Controllers\Admin\Orders;
 
 use App\Contracts\Delivery\CreatesShipments;
 use App\Enums\FulfilmentStatus;
+use App\Enums\ShipmentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use DomainException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use RuntimeException;
 
 final class OrderFulfilmentController extends Controller
 {
@@ -36,7 +38,7 @@ final class OrderFulfilmentController extends Controller
                     'Unsupported fulfilment action.'
                 ),
             };
-        } catch (DomainException $exception) {
+        } catch (DomainException|RuntimeException $exception) {
             return back()->with('error', $exception->getMessage());
         }
 
@@ -51,7 +53,13 @@ final class OrderFulfilmentController extends Controller
             return;
         }
 
-        if ($order->shipments()->exists()) {
+        if ($order->shipments()
+            ->whereNotIn('status', [
+                ShipmentStatus::FAILED,
+                ShipmentStatus::CANCELLED,
+            ])
+            ->exists()
+        ) {
             throw new DomainException(
                 'Shipment already exists for this order.'
             );

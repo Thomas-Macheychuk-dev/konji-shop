@@ -339,6 +339,18 @@
                                 <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $shipment->status->badgeColorClasses() }}">
                                     {{ $shipment->status->label() }}
                                 </span>
+
+                                @if ($shipment->status === \App\Enums\ShipmentStatus::FAILED)
+                                    @php
+                                        $failureMessage = data_get($shipment->payload, 'error.message');
+                                    @endphp
+
+                                    @if ($failureMessage)
+                                        <p class="mt-2 max-w-xs text-xs text-red-700">
+                                            {{ $failureMessage }}
+                                        </p>
+                                    @endif
+                                @endif
                             </td>
 
                             <td class="px-4 py-4 text-sm text-zinc-700">
