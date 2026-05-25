@@ -25,6 +25,9 @@ class Shipment extends Model
         'payload',
         'shipped_at',
         'delivered_at',
+        'label_disk',
+        'label_path',
+        'label_downloaded_at',
     ];
 
     protected function casts(): array
@@ -35,6 +38,7 @@ class Shipment extends Model
             'payload' => 'array',
             'shipped_at' => 'datetime',
             'delivered_at' => 'datetime',
+            'label_downloaded_at' => 'datetime',
         ];
     }
 
@@ -189,6 +193,31 @@ class Shipment extends Model
             'meta' => [
                 'provider' => $this->provider?->value,
                 'provider_reference' => $this->provider_reference,
+            ],
+        ]);
+    }
+
+    public function hasStoredLabel(): bool
+    {
+        return filled($this->label_disk) && filled($this->label_path);
+    }
+
+    public function markLabelStored(string $disk, string $path): void
+    {
+        $this->update([
+            'label_disk' => $disk,
+            'label_path' => $path,
+            'label_downloaded_at' => now(),
+        ]);
+
+        $this->order->events()->create([
+            'type' => 'shipment_label_stored',
+            'description' => 'Shipment label stored.',
+            'meta' => [
+                'provider' => $this->provider?->value,
+                'provider_reference' => $this->provider_reference,
+                'disk' => $disk,
+                'path' => $path,
             ],
         ]);
     }
