@@ -38,6 +38,10 @@
                     <a href="{{ route('admin.orders.index') }}">
                         Admin
                     </a>
+
+                    <a href="{{ route('admin.products.index') }}" class="text-sm font-medium text-zinc-600 hover:text-zinc-900">
+                        Products
+                    </a>
                 @endif
 
                 <form method="POST" action="{{ route('logout') }}">
