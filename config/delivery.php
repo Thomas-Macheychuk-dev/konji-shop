@@ -9,6 +9,11 @@ return [
             'login' => env('POLKURIER_LOGIN'),
             'token' => env('POLKURIER_TOKEN'),
 
+            'labels' => [
+                'disk' => env('POLKURIER_LABEL_DISK', 'local'),
+                'path' => env('POLKURIER_LABEL_PATH', 'polkurier/labels'),
+            ],
+
             'valuation' => [
                 'enabled' => env('POLKURIER_VALUATION_ENABLED', false),
 
