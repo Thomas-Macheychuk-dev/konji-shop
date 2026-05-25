@@ -38,6 +38,8 @@ use App\Http\Controllers\Admin\Products\AdminProductIndexController;
 use App\Http\Controllers\Admin\Products\AdminProductPackageDimensionsUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
+use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
+use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -104,6 +106,12 @@ Route::middleware(['auth', 'admin'])
 
         Route::patch('/products/{product}/variants/package-dimensions', AdminProductVariantPackageDimensionsUpdateController::class)
             ->name('products.variants.package-dimensions.update');
+
+        Route::get('/polkurier', AdminPolkurierDiagnosticsController::class)
+            ->name('polkurier.index');
+
+        Route::post('/polkurier/valuation-test', AdminPolkurierValuationTestController::class)
+            ->name('polkurier.valuation-test');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {
