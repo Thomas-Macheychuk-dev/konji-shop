@@ -92,7 +92,6 @@
                         $order->status === \App\Enums\OrderStatus::CONFIRMED
                         && $order->fulfilment_status === \App\Enums\FulfilmentStatus::PROCESSING
                     )
-
                         @if ($latestFailedShipment)
                             <div class="mb-4 w-full rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
                                 <p class="font-semibold">
@@ -108,6 +107,38 @@
                                 <p class="mt-2 text-xs text-red-700">
                                     You can retry shipment creation after correcting the problem.
                                 </p>
+                            </div>
+                        @endif
+
+                        @if (
+                            isset($polkurierCarrierAvailabilityCheck)
+                            && $order->delivery_provider === \App\Enums\DeliveryProvider::POLKURIER
+                            && $order->delivery_service !== 'local_pickup'
+                            && $polkurierCarrierAvailabilityCheck['message']
+                        )
+                            @php
+                                $carrierAvailabilityClasses = match ($polkurierCarrierAvailabilityCheck['severity']) {
+                                    'success' => 'border-green-200 bg-green-50 text-green-800',
+                                    'warning' => 'border-amber-200 bg-amber-50 text-amber-800',
+                                    'error' => 'border-red-200 bg-red-50 text-red-800',
+                                    default => 'border-zinc-200 bg-zinc-50 text-zinc-700',
+                                };
+                            @endphp
+
+                            <div class="mb-4 w-full rounded-2xl border p-4 text-sm {{ $carrierAvailabilityClasses }}">
+                                <p class="font-semibold">
+                                    Polkurier carrier availability
+                                </p>
+
+                                <p class="mt-1">
+                                    {{ $polkurierCarrierAvailabilityCheck['message'] }}
+                                </p>
+
+                                @if ($polkurierCarrierAvailabilityCheck['blocking'])
+                                    <p class="mt-2 text-xs">
+                                        Shipment creation is blocked until this is resolved.
+                                    </p>
+                                @endif
                             </div>
                         @endif
 
@@ -127,7 +158,10 @@
                                 ></div>
                             @endif
 
-                            <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
+                            <button
+                                class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60"
+                                @disabled(($polkurierCarrierAvailabilityCheck['blocking'] ?? false) === true)
+                            >
                                 @if ($order->delivery_service === 'local_pickup')
                                     Mark as ready for pickup
                                 @elseif ($latestFailedShipment)
