@@ -44,11 +44,16 @@ use App\Http\Controllers\Payments\PaynowNotificationController;
 use App\Http\Controllers\ProductShowController;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\RobotsTxtController;
 
 Route::get('/', HomeController::class)->name('home');
 
 Route::get('/products/{product:slug}', ProductShowController::class)
     ->name('products.show');
+
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/robots.txt', RobotsTxtController::class)->name('robots');
 
 Route::get('/cart', CartShowController::class)->name('cart.show');
 Route::post('/cart/items', CartItemStoreController::class)->name('cart.items.store');
