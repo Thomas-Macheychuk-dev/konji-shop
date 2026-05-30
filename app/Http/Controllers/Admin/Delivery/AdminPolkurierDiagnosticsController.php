@@ -7,21 +7,27 @@ namespace App\Http\Controllers\Admin\Delivery;
 use App\Http\Controllers\Controller;
 use App\Services\Delivery\Polkurier\PolkurierReadinessCheck;
 use Illuminate\Contracts\View\View;
+use App\Services\Delivery\Polkurier\PolkurierAvailableCarriersService;
 
 final class AdminPolkurierDiagnosticsController extends Controller
 {
     public function __construct(
         private readonly PolkurierReadinessCheck $readinessCheck,
+        private readonly PolkurierAvailableCarriersService $availableCarriersService,
     ) {}
 
     public function __invoke(): View
     {
+        $cachedAvailableCarriers = $this->availableCarriersService->cached();
+
         return view('admin.delivery.polkurier-diagnostics', [
             'configuration' => $this->configuration(),
             'senderFields' => $this->senderFields(),
             'defaultPackFields' => $this->defaultPackFields(),
             'readinessItems' => $this->readinessCheck->items(),
             'polkurierReady' => $this->readinessCheck->isReady(),
+            'availableCarriersCount' => count($cachedAvailableCarriers),
+            'availableCarrierSummaries' => $this->availableCarriersService->configuredCarrierSummaries(),
         ]);
     }
 

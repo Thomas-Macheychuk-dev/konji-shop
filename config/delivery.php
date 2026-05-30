@@ -9,6 +9,29 @@ return [
             'login' => env('POLKURIER_LOGIN'),
             'token' => env('POLKURIER_TOKEN'),
 
+            'available_carriers' => [
+                'cache_ttl' => (int) env('POLKURIER_AVAILABLE_CARRIERS_CACHE_TTL', 43200),
+            ],
+
+            'configured_carriers' => [
+                'inpost_parcel_locker' => [
+                    'label' => 'InPost parcel locker',
+                    'code' => 'INPOST_PACZKOMAT',
+                ],
+                'inpost_courier' => [
+                    'label' => 'InPost courier',
+                    'code' => 'INPOST',
+                ],
+                'ups_courier' => [
+                    'label' => 'UPS courier',
+                    'code' => 'UPS',
+                ],
+                'dpd_courier' => [
+                    'label' => 'DPD courier',
+                    'code' => 'DPD',
+                ],
+            ],
+
             'labels' => [
                 'disk' => env('POLKURIER_LABEL_DISK', 'local'),
                 'path' => env('POLKURIER_LABEL_PATH', 'polkurier/labels'),
