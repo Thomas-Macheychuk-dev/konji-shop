@@ -155,6 +155,25 @@ Route::post('/payments/paynow/notifications', PaynowNotificationController::clas
     ])
     ->name('payments.paynow.notifications');
 
-Route::view('/cookie-policy', 'pages.legal.cookie-policy')->name('legal.cookie-policy');
+Route::view('/terms-and-conditions', 'pages.legal.terms-and-conditions')
+    ->name('legal.terms');
+
+Route::view('/privacy-policy', 'pages.legal.privacy-policy')
+    ->name('legal.privacy');
+
+Route::view('/returns-and-withdrawal', 'pages.legal.returns-and-withdrawal')
+    ->name('legal.returns');
+
+Route::view('/complaints-and-warranty', 'pages.legal.complaints-and-warranty')
+    ->name('legal.complaints');
+
+Route::view('/delivery-and-payments', 'pages.legal.delivery-and-payments')
+    ->name('legal.delivery-payments');
+
+Route::view('/contact', 'pages.legal.contact')
+    ->name('legal.contact');
+
+Route::view('/cookie-policy', 'pages.legal.cookie-policy')
+    ->name('legal.cookie-policy');
 
 require __DIR__.'/settings.php';

@@ -1,33 +1,70 @@
 <footer class="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+    @php
+        $seller = config('legal.seller', []);
+        $returns = config('legal.returns', []);
+
+        $shopName = $seller['shop_name'] ?? 'Konji Shop';
+        $companyName = $seller['company_name'] ?? $shopName;
+        $street = $seller['street'] ?? '';
+        $postcode = $seller['postcode'] ?? '';
+        $city = $seller['city'] ?? '';
+        $country = $seller['country'] ?? '';
+        $email = $seller['email'] ?? '';
+        $phone = $seller['phone'] ?? '';
+        $taxId = $seller['tax_id'] ?? '';
+        $registryNumber = $seller['business_registry_number'] ?? '';
+
+        $returnAddress = $returns['return_address'] ?? '';
+        $phoneHref = filled($phone)
+            ? 'tel:'.preg_replace('/[^0-9+]/', '', (string) $phone)
+            : null;
+    @endphp
+
     <div class="mx-auto max-w-[1600px] px-4 py-12 sm:px-6 lg:px-8 xl:px-10">
         <div class="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4">
             <div>
                 <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">
-                    Konji Shop Sp. z o.o.
+                    {{ $companyName }}
                 </h3>
 
                 <div class="mt-4 space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
-                    <p>ul. Example Street 12</p>
-                    <p>00-000 Poznań</p>
+                    @if (filled($street))
+                        <p>{{ $street }}</p>
+                    @endif
+
+                    @if (filled($postcode) || filled($city))
+                        <p>{{ trim($postcode.' '.$city) }}</p>
+                    @endif
+
+                    @if (filled($country))
+                        <p>{{ $country }}</p>
+                    @endif
                 </div>
 
-                <div class="mt-6 space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
-                    <p>NIP: 000-000-00-00</p>
-                    <p>REGON: 000000000</p>
-                    <p>KRS: 0000000000</p>
-                </div>
+                @if (filled($taxId) || filled($registryNumber))
+                    <div class="mt-6 space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
+                        @if (filled($taxId))
+                            <p>NIP: {{ $taxId }}</p>
+                        @endif
 
-                <div class="mt-6">
-                    <h4 class="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-white">
-                        Returns address
-                    </h4>
-
-                    <div class="mt-2 space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
-                        <p>Konji Shop Sp. z o.o.</p>
-                        <p>ul. Returns 5</p>
-                        <p>00-000 Poznań</p>
+                        @if (filled($registryNumber))
+                            <p>Registry number: {{ $registryNumber }}</p>
+                        @endif
                     </div>
-                </div>
+                @endif
+
+                @if (filled($returnAddress))
+                    <div class="mt-6">
+                        <h4 class="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-white">
+                            Returns address
+                        </h4>
+
+                        <div class="mt-2 space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
+                            <p>{{ $companyName }}</p>
+                            <p>{{ $returnAddress }}</p>
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <div>
@@ -36,26 +73,24 @@
                 </h3>
 
                 <nav class="mt-4 flex flex-col gap-3 text-sm">
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                    <a href="{{ route('legal.delivery-payments') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Delivery & payments
                     </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+
+                    <a href="{{ route('guest.orders.track.show') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Guest order tracking
                     </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Cart reminders
+
+                    <a href="{{ route('legal.returns') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                        Returns & withdrawal
                     </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Returns & refunds
+
+                    <a href="{{ route('legal.complaints') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                        Complaints & warranty
                     </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Complaints
-                    </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+
+                    <a href="{{ route('legal.contact') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Contact
-                    </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        About us
                     </a>
                 </nav>
             </div>
@@ -66,26 +101,28 @@
                 </h3>
 
                 <nav class="mt-4 flex flex-col gap-3 text-sm">
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                    <a href="{{ route('legal.terms') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Terms & conditions
                     </a>
-                    <a href="{{ route('legal.cookie-policy') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        {{ __('Cookie policy') }}
-                    </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+
+                    <a href="{{ route('legal.privacy') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                         Privacy policy
                     </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Electronic services terms
+
+                    <a href="{{ route('legal.returns') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                        Returns & withdrawal
                     </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Accessibility
+
+                    <a href="{{ route('legal.complaints') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                        Complaints & warranty
                     </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        MDR
+
+                    <a href="{{ route('legal.delivery-payments') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                        Delivery & payments
                     </a>
-                    <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Sitemap
+
+                    <a href="{{ route('legal.cookie-policy') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
+                        Cookie policy
                     </a>
                 </nav>
             </div>
@@ -96,15 +133,25 @@
                 </h3>
 
                 <div class="mt-4 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
-                    <p>
-                        <a href="tel:+48123456789" class="transition hover:text-zinc-900 dark:hover:text-white">
-                            +48 123 456 789
-                        </a>
-                    </p>
+                    @if (filled($phone))
+                        <p>
+                            <a href="{{ $phoneHref }}" class="transition hover:text-zinc-900 dark:hover:text-white">
+                                {{ $phone }}
+                            </a>
+                        </p>
+                    @endif
+
+                    @if (filled($email))
+                        <p>
+                            <a href="mailto:{{ $email }}" class="transition hover:text-zinc-900 dark:hover:text-white">
+                                {{ $email }}
+                            </a>
+                        </p>
+                    @endif
 
                     <p>
-                        <a href="mailto:kontakt@konjishop.pl" class="transition hover:text-zinc-900 dark:hover:text-white">
-                            kontakt@konjishop.pl
+                        <a href="{{ route('legal.contact') }}" class="font-medium text-zinc-700 underline decoration-zinc-300 underline-offset-4 transition hover:text-zinc-900 dark:text-zinc-200 dark:hover:text-white">
+                            Full seller details
                         </a>
                     </p>
                 </div>
@@ -118,9 +165,11 @@
                         <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                             Facebook
                         </a>
+
                         <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                             Instagram
                         </a>
+
                         <a href="#" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
                             YouTube
                         </a>
@@ -130,7 +179,7 @@
         </div>
 
         <div class="mt-10 border-t border-zinc-200 pt-6 text-sm text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
-            © {{ now()->year }} Konji Shop. All rights reserved.
+            © {{ now()->year }} {{ $shopName }}. All rights reserved.
         </div>
     </div>
 </footer>

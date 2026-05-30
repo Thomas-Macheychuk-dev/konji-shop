@@ -119,6 +119,13 @@ it('shows the admin order detail page', function (): void {
         'delivery_carrier' => DeliveryCarrier::INPOST,
         'delivery_service' => 'parcel_locker',
         'delivery_locker_code' => 'WAW01A',
+
+        'terms_accepted_at' => now(),
+        'terms_version' => 'terms-admin-test-v1',
+        'privacy_version' => 'privacy-admin-test-v1',
+        'returns_policy_version' => 'returns-admin-test-v1',
+        'legal_acceptance_ip' => '203.0.113.20',
+        'legal_acceptance_user_agent' => 'KonjiAdminTestBrowser/1.0',
     ]);
 
     $this->actingAs($user)
@@ -131,6 +138,18 @@ it('shows the admin order detail page', function (): void {
         ->assertSee('InPost')
         ->assertSee('Parcel locker')
         ->assertSee('WAW01A')
+        ->assertSee('Legal acceptance')
+        ->assertSee('Terms accepted at')
+        ->assertSee('Terms version')
+        ->assertSee('terms-admin-test-v1')
+        ->assertSee('Privacy policy version')
+        ->assertSee('privacy-admin-test-v1')
+        ->assertSee('Returns policy version')
+        ->assertSee('returns-admin-test-v1')
+        ->assertSee('Acceptance IP')
+        ->assertSee('203.0.113.20')
+        ->assertSee('User agent')
+        ->assertSee('KonjiAdminTestBrowser/1.0')
         ->assertSee('Items')
         ->assertSee('Payments')
         ->assertSee('Internal notes');

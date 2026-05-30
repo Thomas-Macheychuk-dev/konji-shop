@@ -402,6 +402,60 @@
         </div>
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <h2 class="text-lg font-semibold text-zinc-900">Legal acceptance</h2>
+
+            @if ($order->terms_accepted_at)
+                <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2">
+                    <div>
+                        <dt class="text-zinc-500">Terms accepted at</dt>
+                        <dd class="mt-1 font-medium text-zinc-900">
+                            {{ $order->terms_accepted_at->format('Y-m-d H:i') }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt class="text-zinc-500">Terms version</dt>
+                        <dd class="mt-1 font-medium text-zinc-900">
+                            {{ $order->terms_version ?: '—' }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt class="text-zinc-500">Privacy policy version</dt>
+                        <dd class="mt-1 font-medium text-zinc-900">
+                            {{ $order->privacy_version ?: '—' }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt class="text-zinc-500">Returns policy version</dt>
+                        <dd class="mt-1 font-medium text-zinc-900">
+                            {{ $order->returns_policy_version ?: '—' }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt class="text-zinc-500">Acceptance IP</dt>
+                        <dd class="mt-1 font-medium text-zinc-900">
+                            {{ $order->legal_acceptance_ip ?: '—' }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt class="text-zinc-500">User agent</dt>
+                        <dd class="mt-1 break-words font-medium text-zinc-900">
+                            {{ $order->legal_acceptance_user_agent ?: '—' }}
+                        </dd>
+                    </div>
+                </dl>
+            @else
+                <p class="mt-4 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-500">
+                    This order does not have stored legal acceptance metadata.
+                </p>
+            @endif
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <h2 class="text-lg font-semibold text-zinc-900">Financial summary</h2>
 
             <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">

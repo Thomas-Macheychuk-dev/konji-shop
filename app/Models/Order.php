@@ -45,6 +45,14 @@ class Order extends Model
         'fulfilment_status',
         'notes',
         'placed_at',
+
+        'terms_accepted_at',
+        'terms_version',
+        'privacy_version',
+        'returns_policy_version',
+        'legal_acceptance_ip',
+        'legal_acceptance_user_agent',
+
         'description',
         'meta',
         'type',
@@ -61,6 +69,7 @@ class Order extends Model
             'payment_status' => PaymentStatus::class,
             'fulfilment_status' => FulfilmentStatus::class,
             'placed_at' => 'datetime',
+            'terms_accepted_at' => 'datetime',
 
             'subtotal_amount' => 'integer',
             'items_net_amount' => 'integer',

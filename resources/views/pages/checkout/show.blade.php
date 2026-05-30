@@ -727,10 +727,42 @@
                                     {{ old('terms_accepted') ? 'checked' : '' }}
                                     class="mt-1 h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                                 >
+
                                 <span>
-                                    I accept the terms and conditions and confirm that the entered order details are correct.
+                                    I accept the
+                                    <a
+                                        href="{{ route('legal.terms') }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                    >
+                                        Terms and Conditions
+                                    </a>
+                                    and confirm that I have read the
+                                    <a
+                                        href="{{ route('legal.privacy') }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                    >
+                                        Privacy Policy
+                                    </a>
+                                    and
+                                    <a
+                                        href="{{ route('legal.returns') }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                    >
+                                        Returns and Withdrawal information
+                                    </a>.
                                 </span>
                             </label>
+
+                            <p class="mt-2 text-xs text-zinc-500">
+                                Links open in a new tab so you can review them without losing your checkout progress.
+                            </p>
+
                             @error('terms_accepted')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror

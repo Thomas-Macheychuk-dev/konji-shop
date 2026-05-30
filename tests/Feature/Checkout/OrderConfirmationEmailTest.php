@@ -523,3 +523,67 @@ test('guest checkout stores VAT breakdown for order totals and line items', func
         'vat_rate_snapshot' => VatRate::VAT_23->value,
     ]);
 });
+
+test('guest checkout stores accepted legal policy versions', function (): void {
+    config()->set('legal.versions.terms', 'terms-test-v1');
+    config()->set('legal.versions.privacy', 'privacy-test-v1');
+    config()->set('legal.versions.returns', 'returns-test-v1');
+
+    config()->set('delivery.providers.polkurier.valuation.enabled', false);
+    config()->set('delivery.providers.polkurier.valuation.fallback_prices.inpost.parcel_locker', 1499);
+
+    [$product, $variant] = createTestProductAndVariant();
+
+    $guestToken = (string) str()->uuid();
+
+    $cart = Cart::query()->create([
+        'guest_token' => $guestToken,
+        'status' => CartStatus::Active,
+        'currency' => Currency::PLN->value,
+    ]);
+
+    $cart->items()->create([
+        'product_id' => $product->id,
+        'product_variant_id' => $variant->id,
+        'quantity' => 1,
+        'unit_price' => $variant->grossPriceAmount(),
+        'currency' => Currency::PLN->value,
+        'meta' => null,
+    ]);
+
+    $this
+        ->withSession(['_token' => 'test-csrf-token'])
+        ->withCookie(CartGuestTokenResolver::COOKIE_NAME, $guestToken)
+        ->withServerVariables([
+            'REMOTE_ADDR' => '203.0.113.10',
+            'HTTP_USER_AGENT' => 'KonjiTestBrowser/1.0',
+        ])
+        ->post(route('checkout.place'), validCheckoutPayload())
+        ->assertSessionHasNoErrors();
+
+    $order = Order::query()->first();
+
+    expect($order)
+        ->not->toBeNull()
+        ->and($order->terms_accepted_at)->not->toBeNull()
+        ->and($order->terms_version)->toBe('terms-test-v1')
+        ->and($order->privacy_version)->toBe('privacy-test-v1')
+        ->and($order->returns_policy_version)->toBe('returns-test-v1')
+        ->and($order->legal_acceptance_ip)->toBe('203.0.113.10')
+        ->and($order->legal_acceptance_user_agent)->toBe('KonjiTestBrowser/1.0');
+
+    $this->assertDatabaseHas('orders', [
+        'id' => $order->id,
+        'terms_version' => 'terms-test-v1',
+        'privacy_version' => 'privacy-test-v1',
+        'returns_policy_version' => 'returns-test-v1',
+        'legal_acceptance_ip' => '203.0.113.10',
+        'legal_acceptance_user_agent' => 'KonjiTestBrowser/1.0',
+    ]);
+
+    $this->assertDatabaseHas('order_events', [
+        'order_id' => $order->id,
+        'type' => 'legal_terms_accepted',
+        'description' => 'Checkout legal terms accepted.',
+    ]);
+});

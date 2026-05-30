@@ -6,10 +6,10 @@ namespace App\Http\Requests;
 
 use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
+use App\Enums\DeliveryService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
-use App\Enums\DeliveryService;
 
 class PlaceOrderRequest extends FormRequest
 {
@@ -28,7 +28,16 @@ class PlaceOrderRequest extends FormRequest
             'terms_accepted' => $this->boolean('terms_accepted'),
             'delivery_provider' => $this->input('delivery_provider', DeliveryProvider::POLKURIER->value),
             'delivery_carrier' => $this->input('delivery_carrier', DeliveryCarrier::INPOST->value),
-            'delivery_service' => $this->input('delivery_service', 'parcel_locker'),
+            'delivery_service' => $this->input('delivery_service', DeliveryService::PARCEL_LOCKER->value),
+
+            /*
+             * These values are server-derived for audit purposes.
+             * Do not trust client-submitted values for legal acceptance metadata.
+             */
+            'legal_acceptance_ip' => $this->ip(),
+            'legal_acceptance_user_agent' => $this->userAgent()
+                ? mb_substr((string) $this->userAgent(), 0, 1000)
+                : null,
         ]);
 
         if ($billingAddressSource === 'company_address' && $this->user()) {
@@ -125,6 +134,9 @@ class PlaceOrderRequest extends FormRequest
             'notes' => ['nullable', 'string', 'max:2000'],
 
             'terms_accepted' => ['accepted'],
+
+            'legal_acceptance_ip' => ['nullable', 'ip'],
+            'legal_acceptance_user_agent' => ['nullable', 'string', 'max:1000'],
         ];
     }
 
@@ -162,7 +174,7 @@ class PlaceOrderRequest extends FormRequest
                 return;
             }
 
-            if ($service === 'parcel_locker') {
+            if ($service === DeliveryService::PARCEL_LOCKER->value) {
                 if ($carrier !== DeliveryCarrier::INPOST->value) {
                     $validator->errors()->add(
                         'delivery_carrier',
@@ -173,7 +185,7 @@ class PlaceOrderRequest extends FormRequest
                 return;
             }
 
-            if ($service === 'courier') {
+            if ($service === DeliveryService::COURIER->value) {
                 if ($carrier === DeliveryCarrier::LOCAL_PICKUP->value) {
                     $validator->errors()->add(
                         'delivery_carrier',
@@ -184,7 +196,7 @@ class PlaceOrderRequest extends FormRequest
                 return;
             }
 
-            if ($service === 'local_pickup') {
+            if ($service === DeliveryService::LOCAL_PICKUP->value) {
                 if ($carrier !== DeliveryCarrier::LOCAL_PICKUP->value) {
                     $validator->errors()->add(
                         'delivery_carrier',
@@ -234,6 +246,9 @@ class PlaceOrderRequest extends FormRequest
 
             'notes' => __('Order notes'),
             'terms_accepted' => __('Terms and conditions'),
+
+            'legal_acceptance_ip' => __('Legal acceptance IP address'),
+            'legal_acceptance_user_agent' => __('Legal acceptance user agent'),
         ];
     }
 
