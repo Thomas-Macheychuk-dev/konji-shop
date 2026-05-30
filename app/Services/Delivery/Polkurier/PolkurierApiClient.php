@@ -211,4 +211,30 @@ final class PolkurierApiClient
 
         return $response;
     }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function availableCarriers(bool $additionalData = false, ?string $returnCarrier = null): array
+    {
+        $data = [];
+
+        if ($additionalData) {
+            $data['additional_data'] = true;
+        }
+
+        if ($returnCarrier !== null && trim($returnCarrier) !== '') {
+            $data['returncarrier'] = trim($returnCarrier);
+        }
+
+        $payload = $this->request('available_carriers', $data);
+
+        $response = $payload['response'] ?? null;
+
+        if (! is_array($response)) {
+            throw new RuntimeException('Polkurier did not return available carrier data.');
+        }
+
+        return $response;
+    }
 }

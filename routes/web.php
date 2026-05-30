@@ -42,6 +42,7 @@ use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
 use App\Http\Controllers\Admin\Orders\AdminPolkurierPickupTimesController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentProtocolController;
+use App\Http\Controllers\Admin\Delivery\AdminPolkurierAvailableCarriersRefreshController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -117,6 +118,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/polkurier', AdminPolkurierDiagnosticsController::class)
             ->name('polkurier.index');
+
+        Route::post('/polkurier/available-carriers/refresh', AdminPolkurierAvailableCarriersRefreshController::class)
+            ->name('polkurier.available-carriers.refresh');
 
         Route::post('/polkurier/valuation-test', AdminPolkurierValuationTestController::class)
             ->name('polkurier.valuation-test');

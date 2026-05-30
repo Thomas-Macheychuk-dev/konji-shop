@@ -95,6 +95,109 @@
             </div>
         </div>
 
+        <div class="mb-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <h2 class="text-lg font-semibold text-zinc-900">
+                        Available carriers
+                    </h2>
+
+                    <p class="mt-2 text-sm text-zinc-500">
+                        Cached Polkurier carrier data: {{ $availableCarriersCount }} carrier(s).
+                        Refreshing calls Polkurier <code>available_carriers</code> with <code>additional_data=true</code>.
+                    </p>
+                </div>
+
+                <form method="POST" action="{{ route('admin.polkurier.available-carriers.refresh') }}">
+                    @csrf
+
+                    <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
+                        Refresh carriers from Polkurier
+                    </button>
+                </form>
+            </div>
+
+            @if ($availableCarriersCount === 0)
+                <div class="mt-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                    No Polkurier carrier data cached yet. Use “Refresh carriers from Polkurier” to check the currently available API carriers.
+                </div>
+            @endif
+
+            <div class="mt-5 overflow-hidden rounded-xl border border-zinc-200">
+                <table class="min-w-full divide-y divide-zinc-200">
+                    <thead class="bg-zinc-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Configured option</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Polkurier code</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">API status</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Shipment types</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Services</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Required fields</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-zinc-200 bg-white">
+                    @forelse ($availableCarrierSummaries as $carrier)
+                        <tr>
+                            <td class="px-4 py-3 text-sm">
+                                <p class="font-medium text-zinc-900">
+                                    {{ $carrier['label'] }}
+                                </p>
+
+                                @if ($carrier['name'])
+                                    <p class="mt-1 text-xs text-zinc-500">
+                                        {{ $carrier['name'] }}
+                                    </p>
+                                @endif
+                            </td>
+
+                            <td class="px-4 py-3 text-sm font-mono text-zinc-700">
+                                {{ $carrier['code'] ?: '—' }}
+                            </td>
+
+                            <td class="px-4 py-3 text-sm">
+                                @if ($carrier['available'])
+                                    <span class="inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700">
+                                Available
+                            </span>
+                                @else
+                                    <span class="inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
+                                Not returned
+                            </span>
+                                @endif
+
+                                @if ($carrier['foreign_shipments'] !== null)
+                                    <p class="mt-1 text-xs text-zinc-500">
+                                        Foreign shipments:
+                                        {{ $carrier['foreign_shipments'] ? 'yes' : 'no' }}
+                                    </p>
+                                @endif
+                            </td>
+
+                            <td class="px-4 py-3 text-sm text-zinc-700">
+                                {{ $carrier['shipment_types'] ? implode(', ', $carrier['shipment_types']) : '—' }}
+                            </td>
+
+                            <td class="px-4 py-3 text-sm text-zinc-700">
+                                {{ $carrier['courier_services'] ? implode(', ', $carrier['courier_services']) : '—' }}
+                            </td>
+
+                            <td class="px-4 py-3 text-sm text-zinc-700">
+                                {{ $carrier['required_additional_fields'] ? implode(', ', $carrier['required_additional_fields']) : '—' }}
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-4 py-8 text-center text-sm text-zinc-500">
+                                No Polkurier carrier data cached yet. Use “Refresh carriers from Polkurier”.
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="grid gap-6 lg:grid-cols-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">
