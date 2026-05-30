@@ -10,12 +10,14 @@ use App\Enums\DeliveryProvider;
 use App\Models\Order;
 use App\Models\Shipment;
 use RuntimeException;
+use App\Services\Delivery\Polkurier\PolkurierCarrierAvailabilityGuard;
 
 final class PolkurierDeliveryGateway implements DeliveryGateway
 {
     public function __construct(
         private readonly PolkurierApiClient $client,
         private readonly PolkurierPackBuilder $packBuilder,
+        private readonly PolkurierCarrierAvailabilityGuard $carrierAvailabilityGuard,
     ) {}
 
     public function providerKey(): string
@@ -25,6 +27,8 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
 
     public function createShipment(Order $order, Shipment $shipment, array $options = []): ShipmentCreationResult
     {
+        $this->carrierAvailabilityGuard->ensureCanCreateShipment($order);
+
         $payload = $this->client->request('create_order', [
             'shipmenttype' => (string) config('delivery.providers.polkurier.default_pack.shipmenttype', 'box'),
             'courier' => $this->courierCode($order),

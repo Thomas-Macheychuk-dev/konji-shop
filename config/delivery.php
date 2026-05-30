@@ -11,6 +11,12 @@ return [
 
             'available_carriers' => [
                 'cache_ttl' => (int) env('POLKURIER_AVAILABLE_CARRIERS_CACHE_TTL', 43200),
+
+                'guards' => [
+                    'enabled' => (bool) env('POLKURIER_AVAILABLE_CARRIERS_GUARDS_ENABLED', true),
+                    'fail_when_cache_empty' => (bool) env('POLKURIER_AVAILABLE_CARRIERS_FAIL_WHEN_CACHE_EMPTY', false),
+                    'block_required_additional_fields' => (bool) env('POLKURIER_AVAILABLE_CARRIERS_BLOCK_REQUIRED_ADDITIONAL_FIELDS', true),
+                ],
             ],
 
             'configured_carriers' => [

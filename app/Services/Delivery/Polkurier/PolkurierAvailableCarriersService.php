@@ -24,6 +24,11 @@ final class PolkurierAvailableCarriersService
         return is_array($cached) ? $cached : [];
     }
 
+    public function hasCachedData(): bool
+    {
+        return Cache::has(self::CACHE_KEY);
+    }
+
     /**
      * @return array<int, array<string, mixed>>
      */

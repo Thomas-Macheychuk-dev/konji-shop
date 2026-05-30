@@ -11,8 +11,63 @@ use App\Models\Order;
 use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\Delivery\Polkurier\PolkurierAvailableCarriersService;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 uses(RefreshDatabase::class);
+
+it('blocks Polkurier shipment creation when the selected carrier is not available', function (): void {
+    Cache::put(PolkurierAvailableCarriersService::CACHE_KEY, [
+        [
+            'servicecode' => 'UPS',
+            'name' => 'UPS - Standard',
+            'additional_data' => [
+                'shipmenttype' => [
+                    'box' => [
+                        'available' => true,
+                    ],
+                ],
+            ],
+        ],
+    ], now()->addHour());
+
+    Http::fake();
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => 'courier',
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->from(route('admin.orders.show', $order))
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']), [
+            'polkurier_no_courier_order' => '1',
+        ])
+        ->assertRedirect(route('admin.orders.show', $order))
+        ->assertSessionHas('error');
+
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
+    expect($order->shipments()->count())->toBe(1);
+
+    $shipment = $order->shipments()->latest('id')->first();
+
+    expect($shipment)
+        ->status->toBe(ShipmentStatus::FAILED)
+        ->and(data_get($shipment->payload, 'error.message'))
+        ->toContain('Polkurier did not return the selected courier code DPD');
+
+    Http::assertNothingSent();
+});
 
 it('moves a confirmed paid order into fulfilment processing', function (): void {
     $order = Order::factory()->create([

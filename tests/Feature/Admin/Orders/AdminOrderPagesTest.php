@@ -10,8 +10,48 @@ use App\Models\Order;
 use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\Delivery\Polkurier\PolkurierAvailableCarriersService;
+use Illuminate\Support\Facades\Cache;
 
 uses(RefreshDatabase::class);
+
+it('shows a blocking Polkurier carrier availability warning on the shipment form', function (): void {
+    Cache::put(PolkurierAvailableCarriersService::CACHE_KEY, [
+        [
+            'servicecode' => 'UPS',
+            'name' => 'UPS - Standard',
+            'additional_data' => [
+                'shipmenttype' => [
+                    'box' => [
+                        'available' => true,
+                    ],
+                ],
+            ],
+        ],
+    ], now()->addHour());
+
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'number' => 'ORD-CARRIER-GUARD',
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => 'courier',
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('admin.orders.show', $order))
+        ->assertOk()
+        ->assertSee('Polkurier carrier availability')
+        ->assertSee('Polkurier did not return the selected courier code DPD in available carriers.')
+        ->assertSee('Shipment creation is blocked until this is resolved.')
+        ->assertSee('disabled', false);
+});
 
 it('shows failed shipment retry information on the admin order detail page', function (): void {
     $admin = User::factory()->create([
