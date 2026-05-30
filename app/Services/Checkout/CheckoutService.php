@@ -122,12 +122,21 @@ class CheckoutService
 
                 'payment_status' => PaymentStatus::UNPAID,
                 'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
+
                 'delivery_provider' => $deliveryProvider,
                 'delivery_service' => $deliveryService,
                 'delivery_carrier' => $deliveryCarrier,
                 'delivery_locker_code' => $deliveryLockerCode,
+
                 'notes' => $data['notes'] ?? null,
                 'placed_at' => $placedAt,
+
+                'terms_accepted_at' => $placedAt,
+                'terms_version' => (string) config('legal.versions.terms'),
+                'privacy_version' => (string) config('legal.versions.privacy'),
+                'returns_policy_version' => (string) config('legal.versions.returns'),
+                'legal_acceptance_ip' => $this->nullableString($data['legal_acceptance_ip'] ?? null),
+                'legal_acceptance_user_agent' => $this->nullableString($data['legal_acceptance_user_agent'] ?? null),
             ]);
 
             $order->events()->create([
@@ -140,6 +149,18 @@ class CheckoutService
                     'locker_code' => $deliveryLockerCode,
                     'shipping_quote' => $shippingQuote->payload,
                     'packs' => $packs,
+                ],
+            ]);
+
+            $order->events()->create([
+                'type' => 'legal_terms_accepted',
+                'description' => 'Checkout legal terms accepted.',
+                'meta' => [
+                    'terms_version' => (string) config('legal.versions.terms'),
+                    'privacy_version' => (string) config('legal.versions.privacy'),
+                    'returns_policy_version' => (string) config('legal.versions.returns'),
+                    'ip' => $this->nullableString($data['legal_acceptance_ip'] ?? null),
+                    'user_agent' => $this->nullableString($data['legal_acceptance_user_agent'] ?? null),
                 ],
             ]);
 
