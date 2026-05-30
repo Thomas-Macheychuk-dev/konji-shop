@@ -9,7 +9,7 @@ use App\Listeners\MergeGuestCartAfterLogin;
 use App\Listeners\SendOrderConfirmationEmail;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use App\Events\ShipmentDispatched;
+use App\Events\ShipmentTrackingAvailable;
 use App\Listeners\SendShipmentTrackingEmail;
 
 class EventServiceProvider extends ServiceProvider
@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
         OrderPlaced::class => [
             SendOrderConfirmationEmail::class,
         ],
-        ShipmentDispatched::class => [
+        ShipmentTrackingAvailable::class => [
             SendShipmentTrackingEmail::class,
         ],
     ];

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your order has been shipped</title>
+    <title>Your shipment tracking is ready</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f5; font-family: Arial, Helvetica, sans-serif; color: #18181b;">
 @php
@@ -16,11 +16,11 @@
     <div style="max-width: 640px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e4e4e7; border-radius: 16px; overflow: hidden;">
         <div style="padding: 32px; border-bottom: 1px solid #e4e4e7;">
             <h1 style="margin: 0 0 12px; font-size: 28px; line-height: 1.2;">
-                Your order has been shipped
+                Your shipment tracking is ready
             </h1>
 
             <p style="margin: 0 0 8px; font-size: 16px; line-height: 1.6;">
-                Good news — your Konji Shop order is now on its way.
+                Good news — your Konji Shop shipment has been prepared and the tracking details are now available.
             </p>
 
             <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #52525b;">
@@ -78,7 +78,7 @@
             @endif
 
             <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #52525b;">
-                Tracking data can take a little time to appear on the carrier website after the label is created.
+                Tracking data can take a little time to appear on the carrier website. The parcel may show movement after the courier collects it.
             </p>
         </div>
     </div>

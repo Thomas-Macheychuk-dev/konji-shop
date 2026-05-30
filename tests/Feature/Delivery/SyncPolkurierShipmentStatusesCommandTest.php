@@ -151,3 +151,44 @@ it('returns success when no Polkurier shipments need syncing', function (): void
         ->expectsOutput('No Polkurier shipments found for status sync.')
         ->assertSuccessful();
 });
+
+it('marks an order as shipped when Polkurier reports the shipment in transport', function (): void {
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+    ]);
+
+    $shipment = Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'status' => ShipmentStatus::CREATED,
+        'provider_reference' => '1234-1',
+        'tracking_number' => 'TRACK123',
+        'tracking_url' => 'https://example.com/track/TRACK123',
+        'service' => 'courier',
+        'locker_code' => null,
+        'payload' => [],
+    ]);
+
+    Http::fake([
+        '*' => Http::response([
+            'status' => 'success',
+            'response' => [
+                'url' => 'https://example.com/track/TRACK123',
+                'status_date' => now()->format('Y-m-d H:i'),
+                'status' => 'W przewozie',
+                'status_code' => 'WP',
+                'delivered_date' => null,
+            ],
+        ]),
+    ]);
+
+    $this
+        ->artisan('polkurier:sync-shipments --shipment='.$shipment->id)
+        ->expectsOutputToContain('Shipment #'.$shipment->id.' synced')
+        ->assertSuccessful();
+
+    expect($shipment->refresh()->status)->toBe(ShipmentStatus::IN_TRANSIT);
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::SHIPPED);
+});

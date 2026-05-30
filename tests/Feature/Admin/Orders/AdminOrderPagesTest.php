@@ -117,7 +117,8 @@ it('shows the Polkurier pickup selector when creating a courier shipment', funct
         ->assertSee('Fulfilment actions')
         ->assertSee('admin-polkurier-pickup-selector', false)
         ->assertSee(route('admin.orders.polkurier-pickup-times', $order), false)
-        ->assertSeeText('Create shipment & mark as shipped');
+        ->assertSeeText('Create shipment')
+        ->assertDontSeeText('Create shipment & mark as shipped');
 });
 
 it('redirects guests away from admin orders', function (): void {

@@ -10,7 +10,7 @@ use DomainException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\DeliveryCarrier;
-use App\Events\ShipmentDispatched;
+use App\Events\ShipmentTrackingAvailable;
 
 class Shipment extends Model
 {
@@ -71,6 +71,10 @@ class Shipment extends Model
                 'provider_reference' => $this->provider_reference,
             ],
         ]);
+
+        if (filled($this->tracking_number) || filled($this->tracking_url)) {
+            ShipmentTrackingAvailable::dispatch($this->refresh());
+        }
     }
 
     public function markAsDispatched(?string $trackingNumber = null, ?string $trackingUrl = null): void
@@ -90,8 +94,6 @@ class Shipment extends Model
                 'tracking_url' => $this->tracking_url,
             ],
         ]);
-
-        ShipmentDispatched::dispatch($this->refresh());
     }
 
     public function markAsDelivered(array $payload = []): void
