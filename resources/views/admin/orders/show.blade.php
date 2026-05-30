@@ -120,70 +120,11 @@
                             @method('PATCH')
 
                             @if ($order->delivery_service !== 'local_pickup')
-                                <div class="mb-4 grid gap-3 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 sm:grid-cols-3">
-                                    <div class="sm:col-span-3">
-                                        <label class="flex items-center gap-2 text-sm text-zinc-700">
-                                            <input
-                                                type="hidden"
-                                                name="polkurier_no_courier_order"
-                                                value="0"
-                                            >
-
-                                            <input
-                                                type="checkbox"
-                                                name="polkurier_no_courier_order"
-                                                value="1"
-                                                checked
-                                                class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
-                                            >
-
-                                            I will arrange courier pickup myself
-                                        </label>
-
-                                        <p class="mt-1 text-xs text-zinc-500">
-                                            Uncheck this if Polkurier should order the courier pickup.
-                                        </p>
-                                    </div>
-
-                                    <div>
-                                        <label class="mb-1 block text-xs font-medium text-zinc-600">
-                                            Pickup date
-                                        </label>
-
-                                        <input
-                                            type="date"
-                                            name="polkurier_pickup_date"
-                                            value="{{ now()->addDay()->format('Y-m-d') }}"
-                                            class="block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                        >
-                                    </div>
-
-                                    <div>
-                                        <label class="mb-1 block text-xs font-medium text-zinc-600">
-                                            Time from
-                                        </label>
-
-                                        <input
-                                            type="time"
-                                            name="polkurier_pickup_time_from"
-                                            value="10:00"
-                                            class="block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                        >
-                                    </div>
-
-                                    <div>
-                                        <label class="mb-1 block text-xs font-medium text-zinc-600">
-                                            Time to
-                                        </label>
-
-                                        <input
-                                            type="time"
-                                            name="polkurier_pickup_time_to"
-                                            value="14:00"
-                                            class="block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                                        >
-                                    </div>
-                                </div>
+                                <div
+                                    id="admin-polkurier-pickup-selector"
+                                    data-pickup-times-url="{{ route('admin.orders.polkurier-pickup-times', $order) }}"
+                                    data-initial-no-courier-order="1"
+                                ></div>
                             @endif
 
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">

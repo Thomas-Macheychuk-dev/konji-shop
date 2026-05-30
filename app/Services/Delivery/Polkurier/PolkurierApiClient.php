@@ -93,6 +93,36 @@ final class PolkurierApiClient
         return $response;
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function courierPickupTimes(
+        string $courier,
+        string $senderPostcode,
+        string $shipmentType = 'box',
+        ?string $recipientPostcode = null,
+    ): array {
+        $data = [
+            'courier' => $courier,
+            'shipfrom' => $senderPostcode,
+            'shipmenttype' => $shipmentType,
+        ];
+
+        if ($recipientPostcode !== null && trim($recipientPostcode) !== '') {
+            $data['shipto'] = trim($recipientPostcode);
+        }
+
+        $payload = $this->request('get_courier_pickup_time', $data);
+
+        $response = $payload['response'] ?? null;
+
+        if (! is_array($response)) {
+            throw new RuntimeException('Polkurier did not return pickup time data.');
+        }
+
+        return $response;
+    }
+
     public function labelPdf(array $orderNumbers): string
     {
         $payload = $this->request('get_label', [

@@ -127,15 +127,23 @@ final class OrderFulfilmentController extends Controller
 
         $validated = $request->validate([
             'polkurier_pickup_date' => ['required', 'date', 'after_or_equal:today'],
-            'polkurier_pickup_time_from' => ['required', 'date_format:H:i'],
-            'polkurier_pickup_time_to' => ['required', 'date_format:H:i', 'after:polkurier_pickup_time_from'],
+            'polkurier_pickup_time_from' => ['nullable', 'date_format:H:i'],
+            'polkurier_pickup_time_to' => ['nullable', 'required_with:polkurier_pickup_time_from', 'date_format:H:i', 'after:polkurier_pickup_time_from'],
         ]);
 
-        return [
+        $pickup = [
             'pickupdate' => $validated['polkurier_pickup_date'],
-            'pickuptimefrom' => $validated['polkurier_pickup_time_from'],
-            'pickuptimeto' => $validated['polkurier_pickup_time_to'],
             'nocourierorder' => false,
         ];
+
+        if (filled($validated['polkurier_pickup_time_from'] ?? null)) {
+            $pickup['pickuptimefrom'] = $validated['polkurier_pickup_time_from'];
+        }
+
+        if (filled($validated['polkurier_pickup_time_to'] ?? null)) {
+            $pickup['pickuptimeto'] = $validated['polkurier_pickup_time_to'];
+        }
+
+        return $pickup;
     }
 }
