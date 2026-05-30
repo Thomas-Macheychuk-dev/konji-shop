@@ -33,6 +33,68 @@
             </div>
         @endif
 
+        <div class="mb-6 rounded-2xl border {{ $polkurierReady ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50' }} p-6 shadow-sm">
+            <div class="flex items-start justify-between gap-4">
+                <div>
+                    <h2 class="text-lg font-semibold {{ $polkurierReady ? 'text-green-900' : 'text-red-900' }}">
+                        {{ $polkurierReady ? 'Polkurier is ready for production.' : 'Polkurier is NOT ready for production.' }}
+                    </h2>
+
+                    <p class="mt-2 text-sm {{ $polkurierReady ? 'text-green-800' : 'text-red-800' }}">
+                        This summary is also available from the command line with
+                        <code class="rounded bg-white/70 px-1 py-0.5">php artisan polkurier:check</code>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-5 overflow-hidden rounded-xl border border-white/70 bg-white">
+                <table class="min-w-full divide-y divide-zinc-200">
+                    <thead class="bg-zinc-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Category</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Check</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Message</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-zinc-200 bg-white">
+                    @foreach ($readinessItems as $item)
+                        <tr>
+                            <td class="px-4 py-3 text-sm text-zinc-700">
+                                {{ $item['category'] }}
+                            </td>
+
+                            <td class="px-4 py-3 text-sm font-medium text-zinc-900">
+                                {{ $item['name'] }}
+                            </td>
+
+                            <td class="px-4 py-3 text-sm">
+                                @if ($item['status'] === 'OK')
+                                    <span class="inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700">
+                                OK
+                            </span>
+                                @elseif ($item['status'] === 'WARNING')
+                                    <span class="inline-flex rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">
+                                Warning
+                            </span>
+                                @else
+                                    <span class="inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
+                                Missing
+                            </span>
+                                @endif
+                            </td>
+
+                            <td class="px-4 py-3 text-sm text-zinc-600">
+                                {{ $item['message'] }}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="grid gap-6 lg:grid-cols-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">
