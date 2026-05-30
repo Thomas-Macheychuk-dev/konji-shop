@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\Orders;
 
 use App\Contracts\Delivery\CreatesShipments;
+use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\ShipmentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Services\Delivery\Polkurier\PolkurierCarrierAvailabilityGuard;
 use DomainException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use RuntimeException;
 
 final class OrderFulfilmentController extends Controller
 {
     public function __construct(
         private readonly CreatesShipments $createShipmentService,
+        private readonly PolkurierCarrierAvailabilityGuard $polkurierCarrierAvailabilityGuard,
     ) {}
 
     public function __invoke(Request $request, Order $order, string $action): RedirectResponse
@@ -66,6 +70,7 @@ final class OrderFulfilmentController extends Controller
         }
 
         $pickup = $this->polkurierPickupData($request);
+        $additionalFields = $this->polkurierAdditionalFields($request, $order);
 
         $this->createShipmentService->create(
             order: $order,
@@ -73,6 +78,7 @@ final class OrderFulfilmentController extends Controller
             service: $order->delivery_service,
             lockerCode: $order->delivery_locker_code,
             pickup: $pickup,
+            additionalFields: $additionalFields,
         );
     }
 
@@ -110,6 +116,9 @@ final class OrderFulfilmentController extends Controller
         $order->markAsReturnedToSender();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function polkurierPickupData(Request $request): array
     {
         $noCourierOrder = ! $request->has('polkurier_no_courier_order')
@@ -141,5 +150,112 @@ final class OrderFulfilmentController extends Controller
         }
 
         return $pickup;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function polkurierAdditionalFields(Request $request, Order $order): array
+    {
+        if ($order->delivery_provider !== DeliveryProvider::POLKURIER) {
+            return [];
+        }
+
+        if ($order->delivery_service === 'local_pickup') {
+            return [];
+        }
+
+        $fieldDefinitions = $this->polkurierCarrierAvailabilityGuard
+            ->additionalFieldDefinitions($order);
+
+        if ($fieldDefinitions === []) {
+            return [];
+        }
+
+        $rules = [
+            'polkurier_additional_fields' => ['nullable', 'array'],
+        ];
+
+        foreach ($fieldDefinitions as $fieldDefinition) {
+            $fieldName = $fieldDefinition['name'] ?? null;
+
+            if (! is_string($fieldName) || trim($fieldName) === '') {
+                continue;
+            }
+
+            $fieldName = trim($fieldName);
+            $fieldRules = [
+                ($fieldDefinition['required'] ?? false) === true ? 'required' : 'nullable',
+                'string',
+                'max:255',
+            ];
+
+            $optionValues = $this->additionalFieldOptionValues($fieldDefinition);
+
+            if ($optionValues !== []) {
+                $fieldRules[] = Rule::in($optionValues);
+            }
+
+            $rules['polkurier_additional_fields.'.$fieldName] = $fieldRules;
+        }
+
+        $validated = $request->validate($rules);
+        $submittedFields = $validated['polkurier_additional_fields'] ?? [];
+
+        if (! is_array($submittedFields)) {
+            return [];
+        }
+
+        $additionalFields = [];
+
+        foreach ($fieldDefinitions as $fieldDefinition) {
+            $fieldName = $fieldDefinition['name'] ?? null;
+
+            if (! is_string($fieldName) || trim($fieldName) === '') {
+                continue;
+            }
+
+            $fieldName = trim($fieldName);
+            $value = $submittedFields[$fieldName] ?? null;
+
+            if (! is_scalar($value) || trim((string) $value) === '') {
+                continue;
+            }
+
+            $additionalFields[$fieldName] = trim((string) $value);
+        }
+
+        return $additionalFields;
+    }
+
+    /**
+     * @param array<string, mixed> $fieldDefinition
+     * @return array<int, string>
+     */
+    private function additionalFieldOptionValues(array $fieldDefinition): array
+    {
+        $options = $fieldDefinition['options'] ?? null;
+
+        if (! is_array($options)) {
+            return [];
+        }
+
+        $values = [];
+
+        foreach ($options as $option) {
+            if (! is_array($option)) {
+                continue;
+            }
+
+            $value = $option['value'] ?? null;
+
+            if (! is_scalar($value) || trim((string) $value) === '') {
+                continue;
+            }
+
+            $values[] = trim((string) $value);
+        }
+
+        return array_values(array_unique($values));
     }
 }

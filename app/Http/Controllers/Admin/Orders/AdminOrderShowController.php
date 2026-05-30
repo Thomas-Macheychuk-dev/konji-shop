@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Admin\Orders;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Illuminate\Contracts\View\View;
 use App\Services\Delivery\Polkurier\PolkurierCarrierAvailabilityGuard;
+use Illuminate\Contracts\View\View;
 
 final class AdminOrderShowController extends Controller
 {
@@ -18,12 +18,19 @@ final class AdminOrderShowController extends Controller
     public function __invoke(Order $order): View
     {
         $order->load([
-            // keep your existing relations here
+            'user',
+            'addresses',
+            'items.product',
+            'items.variant',
+            'payments',
+            'shipments',
+            'events',
         ]);
 
         return view('admin.orders.show', [
             'order' => $order,
             'polkurierCarrierAvailabilityCheck' => $this->carrierAvailabilityGuard->check($order),
+            'polkurierAdditionalFieldDefinitions' => $this->carrierAvailabilityGuard->additionalFieldDefinitions($order),
         ]);
     }
 }

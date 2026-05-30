@@ -273,6 +273,7 @@ it('allows an authenticated user to create a shipment through the admin route', 
                 [
                     'nocourierorder' => true,
                 ],
+                [],
             )
             ->andReturnUsing(function (
                 Order $order,
@@ -280,6 +281,7 @@ it('allows an authenticated user to create a shipment through the admin route', 
                 ?string $service = null,
                 ?string $lockerCode = null,
                 ?array $pickup = null,
+                array $additionalFields = [],
             ): Shipment {
                 return Shipment::query()->create([
                     'order_id' => $order->id,
@@ -406,6 +408,7 @@ it('passes explicit Polkurier courier pickup data when creating a shipment throu
                 'courier',
                 null,
                 $expectedPickup,
+                [],
             )
             ->andReturnUsing(function (
                 Order $order,
@@ -413,6 +416,7 @@ it('passes explicit Polkurier courier pickup data when creating a shipment throu
                 ?string $service = null,
                 ?string $lockerCode = null,
                 ?array $pickup = null,
+                array $additionalFields = [],
             ): Shipment {
                 return Shipment::query()->create([
                     'order_id' => $order->id,
@@ -448,6 +452,247 @@ it('passes explicit Polkurier courier pickup data when creating a shipment throu
     expect($shipment)
         ->not->toBeNull()
         ->status->toBe(ShipmentStatus::CREATED);
+});
+
+it('passes Polkurier additional fields when creating a shipment through the admin route', function (): void {
+    Cache::put(PolkurierAvailableCarriersService::CACHE_KEY, [
+        [
+            'servicecode' => 'DPD',
+            'name' => 'DPD Classic',
+            'additional_data' => [
+                'shipmenttype' => [
+                    'box' => [
+                        'available' => true,
+                    ],
+                ],
+                'additional_fields' => [
+                    [
+                        'name' => 'external_transport_security',
+                        'label' => 'Transport security',
+                        'type' => 'SELECT',
+                        'required' => true,
+                        'options' => [
+                            [
+                                'value' => 'stretch_wrap',
+                                'label' => 'Stretch wrap',
+                            ],
+                            [
+                                'value' => 'cardboard',
+                                'label' => 'Cardboard',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ], now()->addHour());
+
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => 'courier',
+        'delivery_locker_code' => null,
+    ]);
+
+    $expectedAdditionalFields = [
+        'external_transport_security' => 'stretch_wrap',
+    ];
+
+    $this->mock(CreatesShipments::class, function ($mock) use ($order, $expectedAdditionalFields): void {
+        $mock->shouldReceive('create')
+            ->once()
+            ->with(
+                Mockery::on(fn (Order $givenOrder): bool => $givenOrder->is($order)),
+                DeliveryProvider::POLKURIER->value,
+                'courier',
+                null,
+                [
+                    'nocourierorder' => true,
+                ],
+                $expectedAdditionalFields,
+            )
+            ->andReturnUsing(function (
+                Order $order,
+                string $provider,
+                ?string $service = null,
+                ?string $lockerCode = null,
+                ?array $pickup = null,
+                array $additionalFields = [],
+            ): Shipment {
+                return Shipment::query()->create([
+                    'order_id' => $order->id,
+                    'provider' => DeliveryProvider::from($provider),
+                    'status' => ShipmentStatus::CREATED,
+                    'provider_reference' => 'test-polkurier-order-123',
+                    'tracking_number' => 'test-tracking-123',
+                    'tracking_url' => 'https://example.com/track/test-tracking-123',
+                    'service' => $service,
+                    'locker_code' => $lockerCode,
+                    'payload' => [
+                        'test' => true,
+                        'additional_fields' => $additionalFields,
+                    ],
+                ]);
+            });
+    });
+
+    $this->actingAs($user)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']), [
+            'polkurier_no_courier_order' => '1',
+            'polkurier_additional_fields' => $expectedAdditionalFields,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
+    expect($order->shipments()->count())->toBe(1);
+
+    $shipment = $order->shipments()->latest('id')->first();
+
+    expect($shipment)
+        ->not->toBeNull()
+        ->status->toBe(ShipmentStatus::CREATED);
+
+    expect($shipment->payload['additional_fields'])->toBe($expectedAdditionalFields);
+});
+
+it('validates required Polkurier additional fields when creating a shipment through the admin route', function (): void {
+    Cache::put(PolkurierAvailableCarriersService::CACHE_KEY, [
+        [
+            'servicecode' => 'DPD',
+            'name' => 'DPD Classic',
+            'additional_data' => [
+                'shipmenttype' => [
+                    'box' => [
+                        'available' => true,
+                    ],
+                ],
+                'additional_fields' => [
+                    [
+                        'name' => 'external_transport_security',
+                        'label' => 'Transport security',
+                        'type' => 'SELECT',
+                        'required' => true,
+                        'options' => [
+                            [
+                                'value' => 'stretch_wrap',
+                                'label' => 'Stretch wrap',
+                            ],
+                            [
+                                'value' => 'cardboard',
+                                'label' => 'Cardboard',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ], now()->addHour());
+
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => 'courier',
+        'delivery_locker_code' => null,
+    ]);
+
+    $this->mock(CreatesShipments::class, function ($mock): void {
+        $mock->shouldNotReceive('create');
+    });
+
+    $this->actingAs($user)
+        ->from(route('admin.orders.show', $order))
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']), [
+            'polkurier_no_courier_order' => '1',
+            'polkurier_additional_fields' => [
+                'external_transport_security' => '',
+            ],
+        ])
+        ->assertRedirect(route('admin.orders.show', $order))
+        ->assertSessionHasErrors('polkurier_additional_fields.external_transport_security');
+
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
+    expect($order->shipments()->count())->toBe(0);
+});
+
+it('validates Polkurier additional field select options when creating a shipment through the admin route', function (): void {
+    Cache::put(PolkurierAvailableCarriersService::CACHE_KEY, [
+        [
+            'servicecode' => 'DPD',
+            'name' => 'DPD Classic',
+            'additional_data' => [
+                'shipmenttype' => [
+                    'box' => [
+                        'available' => true,
+                    ],
+                ],
+                'additional_fields' => [
+                    [
+                        'name' => 'external_transport_security',
+                        'label' => 'Transport security',
+                        'type' => 'SELECT',
+                        'required' => true,
+                        'options' => [
+                            [
+                                'value' => 'stretch_wrap',
+                                'label' => 'Stretch wrap',
+                            ],
+                            [
+                                'value' => 'cardboard',
+                                'label' => 'Cardboard',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ], now()->addHour());
+
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => 'courier',
+        'delivery_locker_code' => null,
+    ]);
+
+    $this->mock(CreatesShipments::class, function ($mock): void {
+        $mock->shouldNotReceive('create');
+    });
+
+    $this->actingAs($user)
+        ->from(route('admin.orders.show', $order))
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']), [
+            'polkurier_no_courier_order' => '1',
+            'polkurier_additional_fields' => [
+                'external_transport_security' => 'invalid-option',
+            ],
+        ])
+        ->assertRedirect(route('admin.orders.show', $order))
+        ->assertSessionHasErrors('polkurier_additional_fields.external_transport_security');
+
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
+    expect($order->shipments()->count())->toBe(0);
 });
 
 it('marks a shipped order as returned to sender through the admin route', function (): void {

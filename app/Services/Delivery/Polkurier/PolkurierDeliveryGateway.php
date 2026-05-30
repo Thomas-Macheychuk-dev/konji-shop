@@ -10,7 +10,6 @@ use App\Enums\DeliveryProvider;
 use App\Models\Order;
 use App\Models\Shipment;
 use RuntimeException;
-use App\Services\Delivery\Polkurier\PolkurierCarrierAvailabilityGuard;
 
 final class PolkurierDeliveryGateway implements DeliveryGateway
 {
@@ -27,9 +26,11 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
 
     public function createShipment(Order $order, Shipment $shipment, array $options = []): ShipmentCreationResult
     {
-        $this->carrierAvailabilityGuard->ensureCanCreateShipment($order);
+        $additionalFields = $this->additionalFields($options);
 
-        $payload = $this->client->request('create_order', [
+        $this->carrierAvailabilityGuard->ensureCanCreateShipment($order, $additionalFields);
+
+        $data = [
             'shipmenttype' => (string) config('delivery.providers.polkurier.default_pack.shipmenttype', 'box'),
             'courier' => $this->courierCode($order),
             'description' => mb_substr('Konji Shop order '.$order->number, 0, 30),
@@ -37,7 +38,13 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
             'recipient' => $this->recipient($order, $shipment),
             'packs' => $this->packBuilder->fromOrder($order),
             'pickup' => $this->pickup($options),
-        ]);
+        ];
+
+        if ($additionalFields !== []) {
+            $data['additional_fields'] = $additionalFields;
+        }
+
+        $payload = $this->client->request('create_order', $data);
 
         $response = $payload['response'];
 
@@ -141,5 +148,33 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
         return [
             'nocourierorder' => true,
         ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function additionalFields(array $options): array
+    {
+        $additionalFields = $options['additional_fields'] ?? [];
+
+        if (! is_array($additionalFields)) {
+            return [];
+        }
+
+        $normalized = [];
+
+        foreach ($additionalFields as $key => $value) {
+            if (! is_string($key) || trim($key) === '') {
+                continue;
+            }
+
+            if (! is_scalar($value) || trim((string) $value) === '') {
+                continue;
+            }
+
+            $normalized[trim($key)] = trim((string) $value);
+        }
+
+        return $normalized;
     }
 }
