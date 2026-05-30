@@ -83,7 +83,7 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
             'email' => (string) ($sender['email'] ?? ''),
             'phone' => $this->normalizePhone((string) ($sender['phone'] ?? '')),
             'country' => (string) ($sender['country'] ?? 'PL'),
-            'machinename' => (string) ($sender['machinename'] ?? ''),
+            'point_id' => (string) ($sender['point_id'] ?? $sender['machinename'] ?? ''),
         ];
     }
 
@@ -107,7 +107,7 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
             'email' => (string) ($shippingAddress->email ?? $order->guest_email ?? $order->user?->email ?? ''),
             'phone' => $this->normalizePhone((string) ($shippingAddress->phone ?? '123123123')),
             'country' => (string) ($shippingAddress->country_code ?: 'PL'),
-            'machinename' => (string) ($shipment->locker_code ?? ''),
+            'point_id' => (string) ($shipment->locker_code ?? ''),
         ];
     }
 
