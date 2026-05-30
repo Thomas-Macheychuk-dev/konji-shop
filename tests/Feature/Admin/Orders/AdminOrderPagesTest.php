@@ -334,6 +334,9 @@ it('shows shipments on the admin order detail page', function (): void {
         'locker_code' => 'WAW01A',
         'tracking_number' => 'TRACK123',
         'tracking_url' => 'https://example.test/track/TRACK123',
+        'provider_status_code' => 'WP',
+        'provider_status_label' => 'W przewozie',
+        'provider_status_updated_at' => now(),
     ]);
 
     $this->actingAs($user)
@@ -344,5 +347,8 @@ it('shows shipments on the admin order detail page', function (): void {
         ->assertSee('Created')
         ->assertSee('Parcel locker')
         ->assertSee('WAW01A')
-        ->assertSee('TRACK123');
+        ->assertSee('TRACK123')
+        ->assertSee('Polkurier:')
+        ->assertSee('W przewozie')
+        ->assertSee('WP');
 });

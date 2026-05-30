@@ -54,6 +54,14 @@ it('syncs active Polkurier shipment statuses through the command', function (): 
         ->status->toBe(ShipmentStatus::DELIVERED)
         ->delivered_at->not->toBeNull();
 
+    expect($shipment->refresh())
+        ->provider_status_code->toBe('D')
+        ->provider_status_label->toBe('Dostarczone')
+        ->provider_status_updated_at->not->toBeNull()
+        ->provider_delivered_at->not->toBeNull()
+        ->status_synced_at->not->toBeNull()
+        ->tracking_url->toBe('https://example.com/track/TRACK123');
+
     expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::DELIVERED);
 });
 
@@ -191,4 +199,62 @@ it('marks an order as shipped when Polkurier reports the shipment in transport',
 
     expect($shipment->refresh()->status)->toBe(ShipmentStatus::IN_TRANSIT);
     expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::SHIPPED);
+
+    expect($shipment->refresh())
+        ->provider_status_code->toBe('WP')
+        ->provider_status_label->toBe('W przewozie')
+        ->provider_status_updated_at->not->toBeNull()
+        ->provider_delivered_at->toBeNull()
+        ->status_synced_at->not->toBeNull()
+        ->tracking_url->toBe('https://example.com/track/TRACK123')
+        ->shipped_at->not->toBeNull();
+});
+
+it('stores Polkurier provider status data when shipment is confirmed but not yet in transport', function (): void {
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+    ]);
+
+    $shipment = Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'status' => ShipmentStatus::CREATED,
+        'provider_reference' => '1234-1',
+        'tracking_number' => 'TRACK123',
+        'tracking_url' => 'https://example.com/old-track/TRACK123',
+        'service' => 'courier',
+        'locker_code' => null,
+        'payload' => [],
+    ]);
+
+    Http::fake([
+        '*' => Http::response([
+            'status' => 'success',
+            'response' => [
+                'url' => 'https://example.com/track/TRACK123',
+                'status_date' => now()->toIso8601String(),
+                'status' => 'Potwierdzone',
+                'status_code' => 'P',
+                'delivered_date' => null,
+            ],
+        ]),
+    ]);
+
+    $this
+        ->artisan('polkurier:sync-shipments --shipment='.$shipment->id)
+        ->expectsOutputToContain('Shipment #'.$shipment->id.' synced')
+        ->assertSuccessful();
+
+    expect($shipment->refresh())
+        ->status->toBe(ShipmentStatus::CREATED)
+        ->provider_status_code->toBe('P')
+        ->provider_status_label->toBe('Potwierdzone')
+        ->provider_status_updated_at->not->toBeNull()
+        ->provider_delivered_at->toBeNull()
+        ->status_synced_at->not->toBeNull()
+        ->tracking_url->toBe('https://example.com/track/TRACK123');
+
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
 });
