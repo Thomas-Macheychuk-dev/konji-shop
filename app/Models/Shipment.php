@@ -30,6 +30,9 @@ class Shipment extends Model
         'label_disk',
         'label_path',
         'label_downloaded_at',
+        'protocol_disk',
+        'protocol_path',
+        'protocol_downloaded_at',
         'tracking_email_sent_at',
         'provider_status_code',
         'provider_status_label',
@@ -47,6 +50,7 @@ class Shipment extends Model
             'shipped_at' => 'datetime',
             'delivered_at' => 'datetime',
             'label_downloaded_at' => 'datetime',
+            'protocol_downloaded_at' => 'datetime',
             'tracking_email_sent_at' => 'datetime',
             'provider_status_updated_at' => 'datetime',
             'provider_delivered_at' => 'datetime',
@@ -319,5 +323,30 @@ class Shipment extends Model
         } catch (\Throwable) {
             return null;
         }
+    }
+
+    public function hasStoredProtocol(): bool
+    {
+        return filled($this->protocol_disk) && filled($this->protocol_path);
+    }
+
+    public function markProtocolStored(string $disk, string $path): void
+    {
+        $this->update([
+            'protocol_disk' => $disk,
+            'protocol_path' => $path,
+            'protocol_downloaded_at' => now(),
+        ]);
+
+        $this->order->events()->create([
+            'type' => 'shipment_protocol_stored',
+            'description' => 'Shipment handover protocol stored.',
+            'meta' => [
+                'provider' => $this->provider?->value,
+                'provider_reference' => $this->provider_reference,
+                'disk' => $disk,
+                'path' => $path,
+            ],
+        ]);
     }
 }

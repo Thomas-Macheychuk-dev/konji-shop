@@ -292,7 +292,7 @@
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Tracking</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Locker</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Shipped</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Label</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Documents</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Actions</th>
                     </tr>
                     </thead>
@@ -379,12 +379,21 @@
                                     $shipment->provider === \App\Enums\DeliveryProvider::POLKURIER
                                     && $shipment->provider_reference
                                 )
-                                    <a
-                                        href="{{ route('admin.shipments.label', $shipment) }}"
-                                        class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
-                                    >
-                                        Download label
-                                    </a>
+                                    <div class="flex flex-col items-start gap-2">
+                                        <a
+                                            href="{{ route('admin.shipments.label', $shipment) }}"
+                                            class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                        >
+                                            Download label
+                                        </a>
+
+                                        <a
+                                            href="{{ route('admin.shipments.protocol', $shipment) }}"
+                                            class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                        >
+                                            Download protocol
+                                        </a>
+                                    </div>
                                 @else
                                     —
                                 @endif
