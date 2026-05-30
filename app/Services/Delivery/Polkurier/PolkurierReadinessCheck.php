@@ -9,6 +9,10 @@ use Throwable;
 
 final class PolkurierReadinessCheck
 {
+    public function __construct(
+        private readonly PolkurierAvailableCarriersService $availableCarriersService,
+    ) {}
+
     /**
      * @return array<int, array{
      *     category: string,
@@ -25,7 +29,10 @@ final class PolkurierReadinessCheck
             ...$this->senderItems(),
             ...$this->defaultPackItems(),
             ...$this->labelStorageItems(),
+            ...$this->protocolStorageItems(),
+            ...$this->carrierAvailabilityItems(),
             ...$this->valuationItems(),
+            ...$this->operationalItems(),
         ];
     }
 
@@ -184,6 +191,116 @@ final class PolkurierReadinessCheck
     /**
      * @return array<int, array<string, mixed>>
      */
+    private function protocolStorageItems(): array
+    {
+        $disk = (string) config('delivery.providers.polkurier.protocols.disk', '');
+        $path = (string) config('delivery.providers.polkurier.protocols.path', '');
+
+        return [
+            $this->item(
+                category: 'Protocols',
+                name: 'Protocol disk',
+                ok: filled($disk) && $this->diskExists($disk),
+                required: true,
+                message: filled($disk)
+                    ? sprintf('Configured disk: %s', $disk)
+                    : 'POLKURIER_PROTOCOL_DISK is missing.',
+            ),
+            $this->item(
+                category: 'Protocols',
+                name: 'Protocol path',
+                ok: filled($path),
+                required: true,
+                message: filled($path)
+                    ? $path
+                    : 'POLKURIER_PROTOCOL_PATH is missing.',
+            ),
+        ];
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function carrierAvailabilityItems(): array
+    {
+        $items = [
+            $this->item(
+                category: 'Carrier availability',
+                name: 'Available carriers cache',
+                ok: $this->availableCarriersService->hasCachedData(),
+                required: false,
+                message: $this->availableCarriersService->hasCachedData()
+                    ? sprintf('Cached carrier records: %d.', count($this->availableCarriersService->cached()))
+                    : 'Available carriers have not been refreshed yet. Refresh them in Polkurier diagnostics before production use.',
+            ),
+        ];
+
+        foreach ($this->availableCarriersService->configuredCarrierSummaries() as $summary) {
+            $items[] = $this->item(
+                category: 'Carrier availability',
+                name: $summary['label'].' / '.$summary['code'],
+                ok: (bool) $summary['available'],
+                required: false,
+                message: $summary['available']
+                    ? $this->carrierSummaryMessage($summary)
+                    : 'This configured carrier was not returned by Polkurier available_carriers.',
+            );
+
+            if ($summary['required_additional_fields'] !== []) {
+                $items[] = $this->item(
+                    category: 'Carrier availability',
+                    name: $summary['label'].' required fields',
+                    ok: false,
+                    required: false,
+                    message: 'Required additional fields: '.implode(', ', $summary['required_additional_fields']).'. These should be rendered on the admin shipment form.',
+                );
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param array{
+     *     key: string,
+     *     label: string,
+     *     code: string,
+     *     available: bool,
+     *     name: string|null,
+     *     foreign_shipments: bool|null,
+     *     shipment_types: array<int, string>,
+     *     courier_services: array<int, string>,
+     *     required_additional_fields: array<int, string>
+     * } $summary
+     */
+    private function carrierSummaryMessage(array $summary): string
+    {
+        $parts = [];
+
+        if ($summary['name']) {
+            $parts[] = $summary['name'];
+        }
+
+        if ($summary['shipment_types'] !== []) {
+            $parts[] = 'shipment types: '.implode(', ', $summary['shipment_types']);
+        }
+
+        if ($summary['courier_services'] !== []) {
+            $parts[] = 'services: '.implode(', ', $summary['courier_services']);
+        }
+
+        if ($summary['foreign_shipments'] !== null) {
+            $parts[] = 'foreign shipments: '.($summary['foreign_shipments'] ? 'yes' : 'no');
+        }
+
+        return $parts !== []
+            ? implode('; ', $parts).'.'
+            : 'Returned by Polkurier available_carriers.';
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     private function valuationItems(): array
     {
         $enabled = (bool) config('delivery.providers.polkurier.valuation.enabled', false);
@@ -197,6 +314,36 @@ final class PolkurierReadinessCheck
                 message: $enabled
                     ? 'Live Polkurier valuation is enabled.'
                     : 'Live valuation is disabled. Fallback prices will be used.',
+            ),
+        ];
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function operationalItems(): array
+    {
+        return [
+            $this->item(
+                category: 'Operations',
+                name: 'Status sync scheduler',
+                ok: true,
+                required: false,
+                message: 'Ensure the Laravel scheduler is running in production so polkurier:sync-shipments executes regularly.',
+            ),
+            $this->item(
+                category: 'Operations',
+                name: 'Queue worker',
+                ok: true,
+                required: false,
+                message: 'Ensure a queue worker is running in production if queued tracking emails are not using the sync queue.',
+            ),
+            $this->item(
+                category: 'Operations',
+                name: 'Mail delivery',
+                ok: true,
+                required: false,
+                message: 'Ensure production mail configuration is working so customers receive shipment tracking emails.',
             ),
         ];
     }
