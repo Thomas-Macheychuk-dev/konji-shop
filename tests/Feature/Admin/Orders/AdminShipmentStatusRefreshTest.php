@@ -63,5 +63,14 @@ it('allows an admin to refresh a Polkurier shipment status as delivered', functi
         ->toHaveKey('polkurier_status')
         ->and($shipment->payload['polkurier_status']['status_code'])->toBe('D');
 
+    expect($shipment->refresh())
+        ->provider_status_code->toBe('D')
+        ->provider_status_label->toBe('Dostarczone')
+        ->provider_status_updated_at->not->toBeNull()
+        ->provider_delivered_at->not->toBeNull()
+        ->status_synced_at->not->toBeNull();
+
+    expect($shipment->tracking_url)->toBe('https://example.com/track/TRACK123');
+
     expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::DELIVERED);
 });

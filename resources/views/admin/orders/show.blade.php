@@ -317,6 +317,27 @@
                                     {{ $shipment->status->label() }}
                                 </span>
 
+                                @if ($shipment->provider_status_code || $shipment->provider_status_label)
+                                    <p class="mt-2 text-xs text-zinc-500">
+                                        Polkurier:
+                                        <span class="font-medium text-zinc-700">
+                                            {{ $shipment->provider_status_label ?: $shipment->provider_status_code }}
+                                        </span>
+
+                                        @if ($shipment->provider_status_code && $shipment->provider_status_label)
+                                            <span class="text-zinc-400">
+                                                ({{ $shipment->provider_status_code }})
+                                            </span>
+                                        @endif
+                                    </p>
+                                @endif
+
+                                @if ($shipment->provider_status_updated_at)
+                                    <p class="mt-1 text-xs text-zinc-400">
+                                        Updated {{ $shipment->provider_status_updated_at->format('Y-m-d H:i') }}
+                                    </p>
+                                @endif
+
                                 @if ($shipment->status === \App\Enums\ShipmentStatus::FAILED)
                                     @php
                                         $failureMessage = data_get($shipment->payload, 'error.message');

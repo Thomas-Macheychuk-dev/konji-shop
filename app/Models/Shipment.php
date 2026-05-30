@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
 use App\Enums\ShipmentStatus;
+use App\Events\ShipmentTrackingAvailable;
 use DomainException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Enums\DeliveryCarrier;
-use App\Events\ShipmentTrackingAvailable;
+use Illuminate\Support\Carbon;
 
 class Shipment extends Model
 {
@@ -30,6 +31,11 @@ class Shipment extends Model
         'label_path',
         'label_downloaded_at',
         'tracking_email_sent_at',
+        'provider_status_code',
+        'provider_status_label',
+        'provider_status_updated_at',
+        'provider_delivered_at',
+        'status_synced_at',
     ];
 
     protected function casts(): array
@@ -42,6 +48,9 @@ class Shipment extends Model
             'delivered_at' => 'datetime',
             'label_downloaded_at' => 'datetime',
             'tracking_email_sent_at' => 'datetime',
+            'provider_status_updated_at' => 'datetime',
+            'provider_delivered_at' => 'datetime',
+            'status_synced_at' => 'datetime',
         ];
     }
 
@@ -57,11 +66,11 @@ class Shipment extends Model
 
     public function markAsCreated(?string $providerReference = null, array $payload = []): void
     {
-        $this->update([
+        $this->update(array_merge([
             'status' => ShipmentStatus::CREATED,
             'provider_reference' => $providerReference ?? $this->provider_reference,
             'payload' => $payload === [] ? $this->payload : $payload,
-        ]);
+        ], $this->providerStatusAttributes($payload)));
 
         $this->order->events()->create([
             'type' => 'shipment_created',
@@ -98,11 +107,13 @@ class Shipment extends Model
 
     public function markAsDelivered(array $payload = []): void
     {
-        $this->update([
+        $providerStatusAttributes = $this->providerStatusAttributes($payload);
+
+        $this->update(array_merge([
             'status' => ShipmentStatus::DELIVERED,
             'payload' => $payload === [] ? $this->payload : $payload,
-            'delivered_at' => now(),
-        ]);
+            'delivered_at' => $providerStatusAttributes['provider_delivered_at'] ?? now(),
+        ], $providerStatusAttributes));
 
         $this->order->events()->create([
             'type' => 'shipment_delivered',
@@ -112,10 +123,10 @@ class Shipment extends Model
 
     public function markAsFailed(array $payload = []): void
     {
-        $this->update([
+        $this->update(array_merge([
             'status' => ShipmentStatus::FAILED,
             'payload' => $payload === [] ? $this->payload : $payload,
-        ]);
+        ], $this->providerStatusAttributes($payload)));
 
         $this->order->events()->create([
             'type' => 'shipment_failed',
@@ -128,10 +139,10 @@ class Shipment extends Model
 
     public function markAsCancelled(array $payload = []): void
     {
-        $this->update([
+        $this->update(array_merge([
             'status' => ShipmentStatus::CANCELLED,
             'payload' => $payload === [] ? $this->payload : $payload,
-        ]);
+        ], $this->providerStatusAttributes($payload)));
 
         $this->order->events()->create([
             'type' => 'shipment_cancelled',
@@ -154,10 +165,10 @@ class Shipment extends Model
             throw new DomainException('Only created or dispatched shipments can be marked as returned to sender.');
         }
 
-        $this->update([
+        $this->update(array_merge([
             'status' => ShipmentStatus::RETURNED,
             'payload' => $payload === [] ? $this->payload : $payload,
-        ]);
+        ], $this->providerStatusAttributes($payload)));
 
         $this->order->events()->create([
             'type' => 'shipment_returned_to_sender',
@@ -172,10 +183,15 @@ class Shipment extends Model
 
     public function markAsInTransit(array $payload = []): void
     {
-        $this->update([
+        $providerStatusAttributes = $this->providerStatusAttributes($payload);
+
+        $this->update(array_merge([
             'status' => ShipmentStatus::IN_TRANSIT,
             'payload' => $payload === [] ? $this->payload : $payload,
-        ]);
+            'shipped_at' => $this->shipped_at
+                ?? $providerStatusAttributes['provider_status_updated_at']
+                    ?? now(),
+        ], $providerStatusAttributes));
 
         $this->order->events()->create([
             'type' => 'shipment_in_transit',
@@ -190,9 +206,9 @@ class Shipment extends Model
 
     public function syncProviderPayload(array $payload): void
     {
-        $this->update([
+        $this->update(array_merge([
             'payload' => $payload,
-        ]);
+        ], $this->providerStatusAttributes($payload)));
 
         $this->order->events()->create([
             'type' => 'shipment_status_synced',
@@ -227,5 +243,81 @@ class Shipment extends Model
                 'path' => $path,
             ],
         ]);
+    }
+
+    /**
+     * @param  array<string, mixed>  $payload
+     * @return array<string, mixed>
+     */
+    private function providerStatusAttributes(array $payload): array
+    {
+        $statusData = data_get($payload, 'polkurier_status');
+
+        if (! is_array($statusData)) {
+            return [];
+        }
+
+        $attributes = [
+            'status_synced_at' => now(),
+        ];
+
+        $statusCode = $statusData['status_code'] ?? null;
+
+        if (is_scalar($statusCode) && trim((string) $statusCode) !== '') {
+            $attributes['provider_status_code'] = trim((string) $statusCode);
+        }
+
+        $statusLabel = $statusData['status'] ?? null;
+
+        if (is_scalar($statusLabel) && trim((string) $statusLabel) !== '') {
+            $attributes['provider_status_label'] = trim((string) $statusLabel);
+        }
+
+        $trackingUrl = $statusData['url'] ?? null;
+
+        if (is_scalar($trackingUrl) && trim((string) $trackingUrl) !== '') {
+            $attributes['tracking_url'] = trim((string) $trackingUrl);
+        }
+
+        $statusUpdatedAt = $this->parseProviderDateTime($statusData['status_date'] ?? null);
+
+        if ($statusUpdatedAt !== null) {
+            $attributes['provider_status_updated_at'] = $statusUpdatedAt;
+        }
+
+        $providerDeliveredAt = $this->parseProviderDateTime($statusData['delivered_date'] ?? null);
+
+        if ($providerDeliveredAt !== null) {
+            $attributes['provider_delivered_at'] = $providerDeliveredAt;
+        }
+
+        return $attributes;
+    }
+
+    private function parseProviderDateTime(mixed $value): ?Carbon
+    {
+        if ($value instanceof Carbon) {
+            return $value;
+        }
+
+        if ($value instanceof \DateTimeInterface) {
+            return Carbon::instance($value);
+        }
+
+        if (! is_scalar($value)) {
+            return null;
+        }
+
+        $value = trim((string) $value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        try {
+            return Carbon::parse($value);
+        } catch (\Throwable) {
+            return null;
+        }
     }
 }
