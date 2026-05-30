@@ -7,7 +7,9 @@ namespace App\Services\Delivery\Polkurier;
 use App\Data\Delivery\ShippingQuoteResult;
 use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
+use Throwable;
 
 final class PolkurierShippingQuoteService
 {
@@ -47,42 +49,82 @@ final class PolkurierShippingQuoteService
         }
 
         if (! (bool) config('delivery.providers.polkurier.valuation.enabled', false)) {
-            return $this->fallbackQuote($provider, $carrier, $service, $currency);
+            return $this->fallbackQuote(
+                provider: $provider,
+                carrier: $carrier,
+                service: $service,
+                currency: $currency,
+                reason: 'valuation_disabled',
+            );
         }
 
         $courierCode = $this->courierCode($carrier, $service);
-        $valuationRequest = $this->valuationRequest($courierCode, $shippingAddress, $packs);
+        $valuationRequest = null;
 
-        $valuations = $this->client->orderValuationV2($valuationRequest);
-        $selected = $this->selectValuation($valuations, $courierCode);
+        try {
+            $valuationRequest = $this->valuationRequest($courierCode, $shippingAddress, $packs);
 
-        $grossPrice = (float) ($selected['grossprice'] ?? 0);
+            $valuations = $this->client->orderValuationV2($valuationRequest);
+            $selected = $this->selectValuation($valuations, $courierCode);
 
-        if ($grossPrice <= 0) {
-            throw new RuntimeException('Polkurier returned an invalid gross shipping price.');
-        }
+            $grossPrice = (float) ($selected['grossprice'] ?? 0);
 
-        return new ShippingQuoteResult(
-            amount: (int) round($grossPrice * 100),
-            currency: $currency,
-            provider: $provider->value,
-            carrier: $carrier->value,
-            service: $service,
-            providerServiceCode: (string) ($selected['servicecode'] ?? $courierCode),
-            providerServiceName: (string) ($selected['servicename'] ?? $selected['serviceName'] ?? $courierCode),
-            payload: [
-                'source' => 'polkurier_order_valuation_v2',
+            if ($grossPrice <= 0) {
+                throw new RuntimeException('Polkurier returned an invalid gross shipping price.');
+            }
+
+            return new ShippingQuoteResult(
+                amount: (int) round($grossPrice * 100),
+                currency: $currency,
+                provider: $provider->value,
+                carrier: $carrier->value,
+                service: $service,
+                providerServiceCode: (string) ($selected['servicecode'] ?? $courierCode),
+                providerServiceName: (string) ($selected['servicename'] ?? $selected['serviceName'] ?? $courierCode),
+                payload: [
+                    'source' => 'polkurier_order_valuation_v2',
+                    'request' => $valuationRequest,
+                    'response' => $selected,
+                ],
+            );
+        } catch (Throwable $exception) {
+            Log::warning('Polkurier live shipping valuation failed; using fallback price.', [
+                'carrier' => $carrier->value,
+                'service' => $service,
+                'courier_code' => $courierCode,
+                'exception' => $exception::class,
+                'message' => $exception->getMessage(),
                 'request' => $valuationRequest,
-                'response' => $selected,
-            ],
-        );
+            ]);
+
+            return $this->fallbackQuote(
+                provider: $provider,
+                carrier: $carrier,
+                service: $service,
+                currency: $currency,
+                reason: 'live_valuation_failed',
+                context: [
+                    'courier_code' => $courierCode,
+                    'error' => [
+                        'message' => $exception->getMessage(),
+                        'class' => $exception::class,
+                    ],
+                    'request' => $valuationRequest,
+                ],
+            );
+        }
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     private function fallbackQuote(
         DeliveryProvider $provider,
         DeliveryCarrier $carrier,
         string $service,
         string $currency,
+        string $reason,
+        array $context = [],
     ): ShippingQuoteResult {
         $amount = (int) config(
             sprintf('delivery.providers.polkurier.valuation.fallback_prices.%s.%s', $carrier->value, $service),
@@ -97,9 +139,10 @@ final class PolkurierShippingQuoteService
             service: $service,
             providerServiceCode: $this->courierCode($carrier, $service),
             providerServiceName: null,
-            payload: [
+            payload: array_merge([
                 'source' => 'fallback',
-            ],
+                'reason' => $reason,
+            ], $context),
         );
     }
 
