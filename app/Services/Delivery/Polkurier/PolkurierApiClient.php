@@ -144,6 +144,27 @@ final class PolkurierApiClient
         return $decoded;
     }
 
+    public function protocolPdf(array $orderNumbers): string
+    {
+        $payload = $this->request('get_protocol', [
+            'orderno' => array_values($orderNumbers),
+        ]);
+
+        $file = $payload['response']['file'] ?? null;
+
+        if (! is_string($file) || $file === '') {
+            throw new RuntimeException('Polkurier did not return a protocol file.');
+        }
+
+        $decoded = base64_decode($file, true);
+
+        if ($decoded === false) {
+            throw new RuntimeException('Polkurier returned an invalid protocol file.');
+        }
+
+        return $decoded;
+    }
+
     public function shipmentStatus(string $orderNumber): array
     {
         $payload = $this->request('get_status', [

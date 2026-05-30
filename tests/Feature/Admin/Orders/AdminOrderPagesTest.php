@@ -328,6 +328,7 @@ it('shows shipments on the admin order detail page', function (): void {
 
     Shipment::query()->create([
         'order_id' => $order->id,
+        'provider_reference' => '1234-1',
         'provider' => DeliveryProvider::POLKURIER,
         'status' => ShipmentStatus::CREATED,
         'service' => 'parcel_locker',
@@ -348,6 +349,9 @@ it('shows shipments on the admin order detail page', function (): void {
         ->assertSee('Parcel locker')
         ->assertSee('WAW01A')
         ->assertSee('TRACK123')
+        ->assertSee('Documents')
+        ->assertSee('Download label')
+        ->assertSee('Download protocol')
         ->assertSee('Polkurier:')
         ->assertSee('W przewozie')
         ->assertSee('WP');

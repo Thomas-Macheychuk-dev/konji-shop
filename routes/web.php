@@ -41,6 +41,7 @@ use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
 use App\Http\Controllers\Admin\Orders\AdminPolkurierPickupTimesController;
+use App\Http\Controllers\Admin\Orders\AdminShipmentProtocolController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -89,6 +90,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/shipments/{shipment}/label', AdminShipmentLabelController::class)
             ->name('shipments.label');
+
+        Route::get('/shipments/{shipment}/protocol', AdminShipmentProtocolController::class)
+            ->name('shipments.protocol');
 
         Route::patch('/shipments/{shipment}/status', AdminShipmentStatusRefreshController::class)
             ->name('shipments.status.refresh');

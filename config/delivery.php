@@ -14,6 +14,11 @@ return [
                 'path' => env('POLKURIER_LABEL_PATH', 'polkurier/labels'),
             ],
 
+            'protocols' => [
+                'disk' => env('POLKURIER_PROTOCOL_DISK', env('POLKURIER_LABEL_DISK', 'local')),
+                'path' => env('POLKURIER_PROTOCOL_PATH', 'polkurier/protocols'),
+            ],
+
             'valuation' => [
                 'enabled' => env('POLKURIER_VALUATION_ENABLED', false),
 
