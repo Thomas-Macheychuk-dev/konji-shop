@@ -4,6 +4,7 @@ import ProductConfigurator from './components/ProductConfigurator.vue';
 import CartWidget from './components/CartWidget.vue';
 import './order-cancel-confirmation';
 import CheckoutDeliveryMethod from './components/CheckoutDeliveryMethod.vue';
+import AdminPolkurierPickupSelector from './components/AdminPolkurierPickupSelector.vue';
 
 window.Alpine = Alpine;
 Alpine.start();
@@ -36,4 +37,13 @@ if (checkoutDeliveryMethod) {
         shippingQuoteUrl: checkoutDeliveryMethod.dataset.shippingQuoteUrl,
         currency: checkoutDeliveryMethod.dataset.currency || 'PLN',
     }).mount(checkoutDeliveryMethod);
+}
+
+const adminPolkurierPickupSelector = document.getElementById('admin-polkurier-pickup-selector');
+
+if (adminPolkurierPickupSelector) {
+    createApp(AdminPolkurierPickupSelector, {
+        pickupTimesUrl: adminPolkurierPickupSelector.dataset.pickupTimesUrl,
+        initialNoCourierOrder: adminPolkurierPickupSelector.dataset.initialNoCourierOrder !== '0',
+    }).mount(adminPolkurierPickupSelector);
 }

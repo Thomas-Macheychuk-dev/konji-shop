@@ -96,6 +96,30 @@ it('shows the admin order detail page', function (): void {
         ->assertSee('Internal notes');
 });
 
+it('shows the Polkurier pickup selector when creating a courier shipment', function (): void {
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'number' => 'ORD-PICKUP-SELECTOR',
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => 'courier',
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('admin.orders.show', $order))
+        ->assertOk()
+        ->assertSee('Fulfilment actions')
+        ->assertSee('admin-polkurier-pickup-selector', false)
+        ->assertSee(route('admin.orders.polkurier-pickup-times', $order), false)
+        ->assertSeeText('Create shipment & mark as shipped');
+});
+
 it('redirects guests away from admin orders', function (): void {
     $this->get(route('admin.orders.index'))
         ->assertRedirect(route('login'));

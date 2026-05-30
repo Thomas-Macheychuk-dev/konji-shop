@@ -40,6 +40,7 @@ use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpda
 use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
+use App\Http\Controllers\Admin\Orders\AdminPolkurierPickupTimesController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -70,6 +71,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/orders/{order}', AdminOrderShowController::class)
             ->name('orders.show');
+
+        Route::get('/orders/{order}/polkurier-pickup-times', AdminPolkurierPickupTimesController::class)
+            ->name('orders.polkurier-pickup-times');
 
         Route::patch('/orders/{order}/fulfilment/{action}', OrderFulfilmentController::class)
             ->name('orders.fulfilment.update');
