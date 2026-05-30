@@ -13,6 +13,42 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+it('shows failed shipment retry information on the admin order detail page', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => 'ups',
+        'delivery_service' => 'courier',
+    ]);
+
+    Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'status' => ShipmentStatus::FAILED,
+        'service' => 'courier',
+        'payload' => [
+            'error' => [
+                'message' => 'Polkurier rejected create_order.',
+                'class' => RuntimeException::class,
+            ],
+        ],
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.orders.show', $order))
+        ->assertOk()
+        ->assertSee('Latest shipment creation failed.')
+        ->assertSee('Polkurier rejected create_order.')
+        ->assertSee('Retry create shipment');
+});
+
 it('shows the admin order index page', function (): void {
     $user = User::factory()->create([
         'is_admin' => true,

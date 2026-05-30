@@ -26,6 +26,68 @@ it('moves a confirmed paid order into fulfilment processing', function (): void 
     expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
 });
 
+it('allows retrying shipment creation after a failed shipment', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => 'ups',
+        'delivery_service' => 'courier',
+    ]);
+
+    Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'status' => ShipmentStatus::FAILED,
+        'service' => 'courier',
+        'payload' => [
+            'error' => [
+                'message' => 'Previous create_order failed.',
+            ],
+        ],
+    ]);
+
+    $this->mock(\App\Contracts\Delivery\CreatesShipments::class, function ($mock) use ($order): void {
+        $mock
+            ->shouldReceive('create')
+            ->once()
+            ->andReturnUsing(function () use ($order): Shipment {
+                return Shipment::query()->create([
+                    'order_id' => $order->id,
+                    'provider' => DeliveryProvider::POLKURIER,
+                    'status' => ShipmentStatus::CREATED,
+                    'provider_reference' => 'retry-polkurier-order-123',
+                    'tracking_number' => 'retry-tracking-123',
+                    'tracking_url' => 'https://example.com/track/retry-tracking-123',
+                    'service' => 'courier',
+                    'payload' => [
+                        'retry' => true,
+                    ],
+                ]);
+            });
+    });
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']))
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::SHIPPED);
+    expect($order->shipments()->count())->toBe(2);
+
+    $latestShipment = $order->shipments()->latest('id')->first();
+
+    expect($latestShipment)
+        ->provider_reference->toBe('retry-polkurier-order-123')
+        ->status->toBe(ShipmentStatus::DISPATCHED);
+});
+
 it('redirects back with an error and stores failed shipment when shipment creation fails', function (): void {
     $admin = User::factory()->create([
         'is_admin' => true,
