@@ -19,9 +19,9 @@
 
             <div class="text-right text-sm">
                 <p class="font-semibold text-zinc-900">
-                    {{ number_format($order->total_amount / 100, 2) }} {{ $order->currency }}
+                    {{ $order->totalDecimal() }} {{ $order->currency }}
                 </p>
-                <p class="mt-1 text-zinc-500">Total</p>
+                <p class="mt-1 text-zinc-500">Total gross</p>
             </div>
         </div>
 
@@ -402,6 +402,123 @@
         </div>
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <h2 class="text-lg font-semibold text-zinc-900">Financial summary</h2>
+
+            <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
+                <div class="rounded-xl bg-zinc-50 p-4">
+                    <dt class="text-zinc-500">Items gross</dt>
+                    <dd class="mt-1 font-semibold text-zinc-900">
+                        {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
+                    </dd>
+                </div>
+
+                <div class="rounded-xl bg-zinc-50 p-4">
+                    <dt class="text-zinc-500">Shipping gross</dt>
+                    <dd class="mt-1 font-semibold text-zinc-900">
+                        {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
+                    </dd>
+                </div>
+
+                <div class="rounded-xl bg-zinc-50 p-4">
+                    <dt class="text-zinc-500">Total VAT</dt>
+                    <dd class="mt-1 font-semibold text-zinc-900">
+                        {{ $order->taxDecimal() }} {{ $order->currency }}
+                    </dd>
+                </div>
+
+                <div class="rounded-xl bg-zinc-900 p-4 text-white">
+                    <dt class="text-zinc-300">Total gross</dt>
+                    <dd class="mt-1 font-semibold">
+                        {{ $order->totalDecimal() }} {{ $order->currency }}
+                    </dd>
+                </div>
+            </dl>
+
+            @if ($order->hasTaxBreakdown())
+                <div class="mt-5 overflow-hidden rounded-xl border border-zinc-200">
+                    <table class="min-w-full divide-y divide-zinc-200">
+                        <thead class="bg-zinc-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Component</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Net</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">VAT</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Gross</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="divide-y divide-zinc-200 bg-white">
+                        <tr>
+                            <td class="px-4 py-4 text-sm font-medium text-zinc-900">
+                                Items
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                {{ $order->itemsNetDecimal() }} {{ $order->currency }}
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                {{ $order->itemsTaxDecimal() }} {{ $order->currency }}
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm font-semibold text-zinc-900">
+                                {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-4 py-4 text-sm font-medium text-zinc-900">
+                                Shipping
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                {{ $order->shippingNetDecimal() }} {{ $order->currency }}
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                {{ $order->shippingTaxDecimal() }} {{ $order->currency }}
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm font-semibold text-zinc-900">
+                                {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
+                            </td>
+                        </tr>
+
+                        @if ($order->discount_amount > 0)
+                            <tr>
+                                <td class="px-4 py-4 text-sm font-medium text-zinc-900">
+                                    Discount
+                                </td>
+                                <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                    —
+                                </td>
+                                <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                    —
+                                </td>
+                                <td class="px-4 py-4 text-right text-sm font-semibold text-zinc-900">
+                                    -{{ $order->discountDecimal() }} {{ $order->currency }}
+                                </td>
+                            </tr>
+                        @endif
+
+                        <tr>
+                            <td class="px-4 py-4 text-sm font-bold text-zinc-900">
+                                Total
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                —
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm font-semibold text-zinc-900">
+                                {{ $order->taxDecimal() }} {{ $order->currency }}
+                            </td>
+                            <td class="px-4 py-4 text-right text-sm font-bold text-zinc-900">
+                                {{ $order->totalDecimal() }} {{ $order->currency }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <p class="mt-4 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-500">
+                    This order does not have a stored VAT breakdown.
+                </p>
+            @endif
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <h2 class="text-lg font-semibold text-zinc-900">Shipments</h2>
 
             <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
@@ -648,9 +765,11 @@
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Product</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">SKU</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Unit price</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Unit gross</th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Qty</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Total</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Line net</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">VAT</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Line gross</th>
                     </tr>
                     </thead>
 
@@ -735,20 +854,37 @@
                             </td>
 
                             <td class="px-4 py-4 text-right text-sm text-zinc-700">
-                                {{ $item->unitPriceDecimal() }} {{ $order->currency }}
+                                {{ $item->unitGrossDecimal() }} {{ $order->currency }}
                             </td>
 
                             <td class="px-4 py-4 text-right text-sm text-zinc-700">
                                 {{ $item->quantity }}
                             </td>
 
+                            <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                @if ($item->hasTaxBreakdown())
+                                    {{ $item->lineNetDecimal() }} {{ $order->currency }}
+                                @else
+                                    —
+                                @endif
+                            </td>
+
+                            <td class="px-4 py-4 text-right text-sm text-zinc-700">
+                                @if ($item->hasTaxBreakdown())
+                                    <div>{{ $item->lineTaxDecimal() }} {{ $order->currency }}</div>
+                                    <div class="mt-1 text-xs text-zinc-500">{{ $item->vatRateLabel() }}</div>
+                                @else
+                                    —
+                                @endif
+                            </td>
+
                             <td class="px-4 py-4 text-right text-sm font-semibold text-zinc-900">
-                                {{ $item->lineTotalDecimal() }} {{ $order->currency }}
+                                {{ $item->lineGrossDecimal() }} {{ $order->currency }}
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-8 text-center text-sm text-zinc-500">
+                            <td colspan="7" class="px-4 py-8 text-center text-sm text-zinc-500">
                                 No items found.
                             </td>
                         </tr>

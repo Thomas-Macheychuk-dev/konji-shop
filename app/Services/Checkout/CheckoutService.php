@@ -12,6 +12,7 @@ use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
+use App\Enums\VatRate;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\User;
@@ -60,7 +61,11 @@ class CheckoutService
 
             $preparedItems = $this->prepareCheckoutItems($lockedCart);
 
-            $subtotal = array_sum(array_column($preparedItems, 'line_total_amount'));
+            $itemsNet = array_sum(array_column($preparedItems, 'line_net_amount'));
+            $itemsTax = array_sum(array_column($preparedItems, 'line_tax_amount'));
+            $itemsGross = array_sum(array_column($preparedItems, 'line_gross_amount'));
+
+            $subtotal = $itemsGross;
             $discount = 0;
             $placedAt = Carbon::now();
 
@@ -87,8 +92,12 @@ class CheckoutService
                 packs: $packs,
             );
 
-            $shipping = $shippingQuote->amount;
-            $total = max(0, $subtotal + $shipping - $discount);
+            $shippingGross = $shippingQuote->amount;
+            $shippingNet = $this->shippingNetFromGross($shippingGross);
+            $shippingTax = max(0, $shippingGross - $shippingNet);
+
+            $tax = $itemsTax + $shippingTax;
+            $total = max(0, $itemsGross + $shippingGross - $discount);
 
             $order = Order::query()->create([
                 'user_id' => $user?->id,
@@ -96,10 +105,21 @@ class CheckoutService
                 'guest_email' => $user ? null : (string) $data['email'],
                 'status' => OrderStatus::PENDING_PAYMENT,
                 'currency' => $lockedCart->currency,
+
                 'subtotal_amount' => $subtotal,
-                'shipping_amount' => $shipping,
+                'items_net_amount' => $itemsNet,
+                'items_tax_amount' => $itemsTax,
+                'items_gross_amount' => $itemsGross,
+
+                'shipping_amount' => $shippingGross,
+                'shipping_net_amount' => $shippingNet,
+                'shipping_tax_amount' => $shippingTax,
+                'shipping_gross_amount' => $shippingGross,
+
                 'discount_amount' => $discount,
+                'tax_amount' => $tax,
                 'total_amount' => $total,
+
                 'payment_status' => PaymentStatus::UNPAID,
                 'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
                 'delivery_provider' => $deliveryProvider,
@@ -130,9 +150,19 @@ class CheckoutService
                     'product_name_snapshot' => $preparedItem['product_name_snapshot'],
                     'variant_name_snapshot' => $preparedItem['variant_name_snapshot'],
                     'sku_snapshot' => $preparedItem['sku_snapshot'],
+
                     'unit_price_amount' => $preparedItem['unit_price_amount'],
+                    'unit_net_amount' => $preparedItem['unit_net_amount'],
+                    'unit_tax_amount' => $preparedItem['unit_tax_amount'],
+                    'unit_gross_amount' => $preparedItem['unit_gross_amount'],
+
                     'quantity' => $preparedItem['quantity'],
+
                     'line_total_amount' => $preparedItem['line_total_amount'],
+                    'line_net_amount' => $preparedItem['line_net_amount'],
+                    'line_tax_amount' => $preparedItem['line_tax_amount'],
+                    'line_gross_amount' => $preparedItem['line_gross_amount'],
+
                     'vat_rate_snapshot' => $preparedItem['vat_rate_snapshot'],
                     'meta' => $preparedItem['meta'],
                 ]);
@@ -282,10 +312,14 @@ class CheckoutService
                 throw new RuntimeException('A cart item has an invalid quantity.');
             }
 
-            $unitPriceAmount = $variant->grossPriceAmount();
+            $unitGrossAmount = $variant->grossPriceAmount();
 
-            if ($unitPriceAmount === null || $unitPriceAmount < 0) {
+            if ($unitGrossAmount === null || $unitGrossAmount < 0) {
                 throw new RuntimeException("Variant {$variant->id} has an invalid price.");
+            }
+
+            if (! $variant->vat_rate instanceof VatRate) {
+                throw new RuntimeException("Variant {$variant->id} has no VAT rate.");
             }
 
             if ($variant->currency === null) {
@@ -296,16 +330,36 @@ class CheckoutService
                 throw new RuntimeException("Variant {$variant->id} currency does not match the cart currency.");
             }
 
+            $quantity = (int) $item->quantity;
+            $vatRate = $variant->vat_rate;
+
+            $unitNetAmount = $vatRate->netFromGross($unitGrossAmount);
+            $unitTaxAmount = max(0, $unitGrossAmount - $unitNetAmount);
+
+            $lineGrossAmount = $unitGrossAmount * $quantity;
+            $lineNetAmount = $vatRate->netFromGross($lineGrossAmount);
+            $lineTaxAmount = max(0, $lineGrossAmount - $lineNetAmount);
+
             $preparedItems[] = [
                 'product_id' => $product->id,
                 'product_variant_id' => $variant->id,
                 'product_name_snapshot' => (string) $product->name,
                 'variant_name_snapshot' => $this->resolveVariantSnapshotName($variant),
                 'sku_snapshot' => $variant->sku,
-                'unit_price_amount' => $unitPriceAmount,
-                'quantity' => (int) $item->quantity,
-                'line_total_amount' => $unitPriceAmount * (int) $item->quantity,
-                'vat_rate_snapshot' => $variant->vat_rate?->value,
+
+                'unit_price_amount' => $unitGrossAmount,
+                'unit_net_amount' => $unitNetAmount,
+                'unit_tax_amount' => $unitTaxAmount,
+                'unit_gross_amount' => $unitGrossAmount,
+
+                'quantity' => $quantity,
+
+                'line_total_amount' => $lineGrossAmount,
+                'line_net_amount' => $lineNetAmount,
+                'line_tax_amount' => $lineTaxAmount,
+                'line_gross_amount' => $lineGrossAmount,
+
+                'vat_rate_snapshot' => $vatRate->value,
                 'meta' => [
                     'cart_item_id' => $item->id,
                     'cart_unit_price_snapshot' => (int) $item->unit_price,
@@ -330,6 +384,20 @@ class CheckoutService
         }
 
         return $preparedItems;
+    }
+
+    private function shippingNetFromGross(int $shippingGross): int
+    {
+        if ($shippingGross <= 0) {
+            return 0;
+        }
+
+        return $this->shippingVatRate()->netFromGross($shippingGross);
+    }
+
+    private function shippingVatRate(): VatRate
+    {
+        return VatRate::VAT_23;
     }
 
     private function resolveVariantSnapshotName($variant): ?string

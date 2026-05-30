@@ -16,9 +16,19 @@ class OrderItem extends Model
         'product_name_snapshot',
         'variant_name_snapshot',
         'sku_snapshot',
+
         'unit_price_amount',
+        'unit_net_amount',
+        'unit_tax_amount',
+        'unit_gross_amount',
+
         'quantity',
+
         'line_total_amount',
+        'line_net_amount',
+        'line_tax_amount',
+        'line_gross_amount',
+
         'vat_rate_snapshot',
         'meta',
     ];
@@ -27,8 +37,17 @@ class OrderItem extends Model
     {
         return [
             'unit_price_amount' => 'integer',
+            'unit_net_amount' => 'integer',
+            'unit_tax_amount' => 'integer',
+            'unit_gross_amount' => 'integer',
+
             'quantity' => 'integer',
+
             'line_total_amount' => 'integer',
+            'line_net_amount' => 'integer',
+            'line_tax_amount' => 'integer',
+            'line_gross_amount' => 'integer',
+
             'vat_rate_snapshot' => 'integer',
             'meta' => 'array',
         ];
@@ -51,11 +70,61 @@ class OrderItem extends Model
 
     public function unitPriceDecimal(): string
     {
-        return number_format($this->unit_price_amount / 100, 2, '.', '');
+        return $this->formatAmount($this->unit_price_amount);
+    }
+
+    public function unitNetDecimal(): string
+    {
+        return $this->formatAmount($this->unit_net_amount);
+    }
+
+    public function unitTaxDecimal(): string
+    {
+        return $this->formatAmount($this->unit_tax_amount);
+    }
+
+    public function unitGrossDecimal(): string
+    {
+        return $this->formatAmount($this->unit_gross_amount ?: $this->unit_price_amount);
     }
 
     public function lineTotalDecimal(): string
     {
-        return number_format($this->line_total_amount / 100, 2, '.', '');
+        return $this->formatAmount($this->line_total_amount);
+    }
+
+    public function lineNetDecimal(): string
+    {
+        return $this->formatAmount($this->line_net_amount);
+    }
+
+    public function lineTaxDecimal(): string
+    {
+        return $this->formatAmount($this->line_tax_amount);
+    }
+
+    public function lineGrossDecimal(): string
+    {
+        return $this->formatAmount($this->line_gross_amount ?: $this->line_total_amount);
+    }
+
+    public function vatRateLabel(): string
+    {
+        return $this->vat_rate_snapshot !== null
+            ? $this->vat_rate_snapshot.'%'
+            : '—';
+    }
+
+    public function hasTaxBreakdown(): bool
+    {
+        return $this->unit_net_amount > 0
+            || $this->unit_tax_amount > 0
+            || $this->line_net_amount > 0
+            || $this->line_tax_amount > 0;
+    }
+
+    private function formatAmount(?int $amount): string
+    {
+        return number_format(((int) $amount) / 100, 2, '.', '');
     }
 }

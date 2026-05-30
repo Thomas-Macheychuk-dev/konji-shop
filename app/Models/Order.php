@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
@@ -14,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Enums\DeliveryCarrier;
 
 class Order extends Model
 {
@@ -26,10 +26,21 @@ class Order extends Model
         'guest_email',
         'status',
         'currency',
+
         'subtotal_amount',
+        'items_net_amount',
+        'items_tax_amount',
+        'items_gross_amount',
+
         'shipping_amount',
+        'shipping_net_amount',
+        'shipping_tax_amount',
+        'shipping_gross_amount',
+
         'discount_amount',
+        'tax_amount',
         'total_amount',
+
         'payment_status',
         'fulfilment_status',
         'notes',
@@ -50,10 +61,22 @@ class Order extends Model
             'payment_status' => PaymentStatus::class,
             'fulfilment_status' => FulfilmentStatus::class,
             'placed_at' => 'datetime',
+
             'subtotal_amount' => 'integer',
+            'items_net_amount' => 'integer',
+            'items_tax_amount' => 'integer',
+            'items_gross_amount' => 'integer',
+
             'shipping_amount' => 'integer',
+            'shipping_net_amount' => 'integer',
+            'shipping_tax_amount' => 'integer',
+            'shipping_gross_amount' => 'integer',
+
             'discount_amount' => 'integer',
+            'tax_amount' => 'integer',
             'total_amount' => 'integer',
+
+            'meta' => 'array',
             'delivery_provider' => DeliveryProvider::class,
             'delivery_carrier' => DeliveryCarrier::class,
         ];
@@ -97,6 +120,70 @@ class Order extends Model
     public function shipments(): HasMany
     {
         return $this->hasMany(Shipment::class);
+    }
+
+    public function subtotalDecimal(): string
+    {
+        return $this->formatAmount($this->subtotal_amount);
+    }
+
+    public function itemsNetDecimal(): string
+    {
+        return $this->formatAmount($this->items_net_amount);
+    }
+
+    public function itemsTaxDecimal(): string
+    {
+        return $this->formatAmount($this->items_tax_amount);
+    }
+
+    public function itemsGrossDecimal(): string
+    {
+        return $this->formatAmount($this->items_gross_amount ?: $this->subtotal_amount);
+    }
+
+    public function shippingDecimal(): string
+    {
+        return $this->formatAmount($this->shipping_amount);
+    }
+
+    public function shippingNetDecimal(): string
+    {
+        return $this->formatAmount($this->shipping_net_amount);
+    }
+
+    public function shippingTaxDecimal(): string
+    {
+        return $this->formatAmount($this->shipping_tax_amount);
+    }
+
+    public function shippingGrossDecimal(): string
+    {
+        return $this->formatAmount($this->shipping_gross_amount ?: $this->shipping_amount);
+    }
+
+    public function discountDecimal(): string
+    {
+        return $this->formatAmount($this->discount_amount);
+    }
+
+    public function taxDecimal(): string
+    {
+        return $this->formatAmount($this->tax_amount);
+    }
+
+    public function totalDecimal(): string
+    {
+        return $this->formatAmount($this->total_amount);
+    }
+
+    public function hasTaxBreakdown(): bool
+    {
+        return $this->items_net_amount > 0
+            || $this->items_tax_amount > 0
+            || $this->shipping_net_amount > 0
+            || $this->shipping_tax_amount > 0
+            || $this->tax_amount > 0;
     }
 
     public function isDraft(): bool
@@ -278,15 +365,6 @@ class Order extends Model
         ]);
     }
 
-    private function recordEvent(string $type, string $description, array $meta = []): void
-    {
-        $this->events()->create([
-            'type' => $type,
-            'description' => $description,
-            'meta' => $meta === [] ? null : $meta,
-        ]);
-    }
-
     public function appendNote(string $note): void
     {
         $existingNotes = trim((string) $this->notes);
@@ -448,5 +526,19 @@ class Order extends Model
                 ? ['note' => trim($note)]
                 : []
         );
+    }
+
+    private function recordEvent(string $type, string $description, array $meta = []): void
+    {
+        $this->events()->create([
+            'type' => $type,
+            'description' => $description,
+            'meta' => $meta === [] ? null : $meta,
+        ]);
+    }
+
+    private function formatAmount(?int $amount): string
+    {
+        return number_format(((int) $amount) / 100, 2, '.', '');
     }
 }

@@ -112,34 +112,83 @@
                                 </div>
                             @endif
 
-                            <div class="flex items-center justify-between gap-4">
-                                <dt>Suma produktów</dt>
-                                <dd class="font-medium text-zinc-900">
-                                    {{ number_format($order->subtotal_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
-                                </dd>
+                            <div class="border-t border-zinc-100 pt-3">
+                                <div class="flex items-center justify-between gap-4">
+                                    <dt>Suma produktów brutto</dt>
+                                    <dd class="font-medium text-zinc-900">
+                                        {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
+                                    </dd>
+                                </div>
+
+                                @if ($order->hasTaxBreakdown())
+                                    <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                        <div class="flex items-center justify-between gap-4">
+                                            <dt class="text-zinc-500">Produkty netto</dt>
+                                            <dd class="font-medium text-zinc-800">
+                                                {{ $order->itemsNetDecimal() }} {{ $order->currency }}
+                                            </dd>
+                                        </div>
+
+                                        <div class="flex items-center justify-between gap-4">
+                                            <dt class="text-zinc-500">VAT od produktów</dt>
+                                            <dd class="font-medium text-zinc-800">
+                                                {{ $order->itemsTaxDecimal() }} {{ $order->currency }}
+                                            </dd>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
 
-                            <div class="flex items-center justify-between gap-4">
-                                <dt>Dostawa</dt>
-                                <dd class="font-medium text-zinc-900">
-                                    {{ number_format($order->shipping_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
-                                </dd>
+                            <div>
+                                <div class="flex items-center justify-between gap-4">
+                                    <dt>Dostawa brutto</dt>
+                                    <dd class="font-medium text-zinc-900">
+                                        {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
+                                    </dd>
+                                </div>
+
+                                @if ($order->hasTaxBreakdown() && ($order->shipping_gross_amount > 0 || $order->shipping_amount > 0))
+                                    <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                        <div class="flex items-center justify-between gap-4">
+                                            <dt class="text-zinc-500">Dostawa netto</dt>
+                                            <dd class="font-medium text-zinc-800">
+                                                {{ $order->shippingNetDecimal() }} {{ $order->currency }}
+                                            </dd>
+                                        </div>
+
+                                        <div class="flex items-center justify-between gap-4">
+                                            <dt class="text-zinc-500">VAT od dostawy</dt>
+                                            <dd class="font-medium text-zinc-800">
+                                                {{ $order->shippingTaxDecimal() }} {{ $order->currency }}
+                                            </dd>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
 
                             @if ($order->discount_amount > 0)
                                 <div class="flex items-center justify-between gap-4">
                                     <dt>Rabat</dt>
                                     <dd class="font-medium text-zinc-900">
-                                        -{{ number_format($order->discount_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
+                                        -{{ $order->discountDecimal() }} {{ $order->currency }}
+                                    </dd>
+                                </div>
+                            @endif
+
+                            @if ($order->hasTaxBreakdown())
+                                <div class="flex items-center justify-between gap-4">
+                                    <dt>VAT razem</dt>
+                                    <dd class="font-medium text-zinc-900">
+                                        {{ $order->taxDecimal() }} {{ $order->currency }}
                                     </dd>
                                 </div>
                             @endif
 
                             <div class="border-t border-zinc-200 pt-3">
                                 <div class="flex items-center justify-between gap-4">
-                                    <dt class="text-base font-semibold text-zinc-900">Razem</dt>
+                                    <dt class="text-base font-semibold text-zinc-900">Razem brutto</dt>
                                     <dd class="text-base font-semibold text-zinc-900">
-                                        {{ number_format($order->total_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
+                                        {{ $order->totalDecimal() }} {{ $order->currency }}
                                     </dd>
                                 </div>
                             </div>
