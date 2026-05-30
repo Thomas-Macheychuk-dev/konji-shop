@@ -116,19 +116,55 @@
                                     </div>
                                 </div>
 
-                                <div class="mt-4 flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:justify-between">
-                                    <div class="text-zinc-600">
-                                        Unit price:
-                                        <span class="font-medium text-zinc-900">
-                                            {{ $item->unitPriceDecimal() }} {{ $order->currency }}
-                                        </span>
+                                <div class="mt-4 grid gap-4 rounded-xl bg-zinc-50 p-4 text-sm sm:grid-cols-2">
+                                    <div>
+                                        <p class="text-zinc-500">Unit price gross</p>
+                                        <p class="mt-1 font-medium text-zinc-900">
+                                            {{ $item->unitGrossDecimal() }} {{ $order->currency }}
+                                        </p>
+
+                                        @if ($item->hasTaxBreakdown())
+                                            <dl class="mt-2 space-y-1 text-xs text-zinc-600">
+                                                <div class="flex justify-between gap-3">
+                                                    <dt>Net</dt>
+                                                    <dd class="font-medium text-zinc-800">
+                                                        {{ $item->unitNetDecimal() }} {{ $order->currency }}
+                                                    </dd>
+                                                </div>
+
+                                                <div class="flex justify-between gap-3">
+                                                    <dt>VAT {{ $item->vatRateLabel() }}</dt>
+                                                    <dd class="font-medium text-zinc-800">
+                                                        {{ $item->unitTaxDecimal() }} {{ $order->currency }}
+                                                    </dd>
+                                                </div>
+                                            </dl>
+                                        @endif
                                     </div>
 
-                                    <div class="text-zinc-600">
-                                        Line total:
-                                        <span class="font-semibold text-zinc-900">
-                                            {{ $item->lineTotalDecimal() }} {{ $order->currency }}
-                                        </span>
+                                    <div>
+                                        <p class="text-zinc-500">Line total gross</p>
+                                        <p class="mt-1 font-semibold text-zinc-900">
+                                            {{ $item->lineGrossDecimal() }} {{ $order->currency }}
+                                        </p>
+
+                                        @if ($item->hasTaxBreakdown())
+                                            <dl class="mt-2 space-y-1 text-xs text-zinc-600">
+                                                <div class="flex justify-between gap-3">
+                                                    <dt>Net</dt>
+                                                    <dd class="font-medium text-zinc-800">
+                                                        {{ $item->lineNetDecimal() }} {{ $order->currency }}
+                                                    </dd>
+                                                </div>
+
+                                                <div class="flex justify-between gap-3">
+                                                    <dt>VAT {{ $item->vatRateLabel() }}</dt>
+                                                    <dd class="font-medium text-zinc-800">
+                                                        {{ $item->lineTaxDecimal() }} {{ $order->currency }}
+                                                    </dd>
+                                                </div>
+                                            </dl>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -209,34 +245,83 @@
                             </dd>
                         </div>
 
-                        <div class="flex items-center justify-between gap-4">
-                            <dt class="text-zinc-600">Subtotal</dt>
-                            <dd class="font-medium text-zinc-900">
-                                {{ number_format($order->subtotal_amount / 100, 2, '.', ' ') }} {{ $order->currency }}
-                            </dd>
+                        <div class="border-t border-zinc-100 pt-3">
+                            <div class="flex items-center justify-between gap-4">
+                                <dt class="text-zinc-600">Items gross</dt>
+                                <dd class="font-medium text-zinc-900">
+                                    {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
+                                </dd>
+                            </div>
+
+                            @if ($order->hasTaxBreakdown())
+                                <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                    <div class="flex items-center justify-between gap-4">
+                                        <dt class="text-zinc-500">Items net</dt>
+                                        <dd class="font-medium text-zinc-800">
+                                            {{ $order->itemsNetDecimal() }} {{ $order->currency }}
+                                        </dd>
+                                    </div>
+
+                                    <div class="flex items-center justify-between gap-4">
+                                        <dt class="text-zinc-500">Items VAT</dt>
+                                        <dd class="font-medium text-zinc-800">
+                                            {{ $order->itemsTaxDecimal() }} {{ $order->currency }}
+                                        </dd>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
-                        <div class="flex items-center justify-between gap-4">
-                            <dt class="text-zinc-600">Shipping</dt>
-                            <dd class="font-medium text-zinc-900">
-                                {{ number_format($order->shipping_amount / 100, 2, '.', ' ') }} {{ $order->currency }}
-                            </dd>
+                        <div>
+                            <div class="flex items-center justify-between gap-4">
+                                <dt class="text-zinc-600">Shipping gross</dt>
+                                <dd class="font-medium text-zinc-900">
+                                    {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
+                                </dd>
+                            </div>
+
+                            @if ($order->hasTaxBreakdown() && ($order->shipping_gross_amount > 0 || $order->shipping_amount > 0))
+                                <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                    <div class="flex items-center justify-between gap-4">
+                                        <dt class="text-zinc-500">Shipping net</dt>
+                                        <dd class="font-medium text-zinc-800">
+                                            {{ $order->shippingNetDecimal() }} {{ $order->currency }}
+                                        </dd>
+                                    </div>
+
+                                    <div class="flex items-center justify-between gap-4">
+                                        <dt class="text-zinc-500">Shipping VAT</dt>
+                                        <dd class="font-medium text-zinc-800">
+                                            {{ $order->shippingTaxDecimal() }} {{ $order->currency }}
+                                        </dd>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                         @if ($order->discount_amount > 0)
                             <div class="flex items-center justify-between gap-4">
                                 <dt class="text-zinc-600">Discount</dt>
                                 <dd class="font-medium text-zinc-900">
-                                    -{{ number_format($order->discount_amount / 100, 2, '.', ' ') }} {{ $order->currency }}
+                                    -{{ $order->discountDecimal() }} {{ $order->currency }}
+                                </dd>
+                            </div>
+                        @endif
+
+                        @if ($order->hasTaxBreakdown())
+                            <div class="flex items-center justify-between gap-4">
+                                <dt class="text-zinc-600">Total VAT</dt>
+                                <dd class="font-medium text-zinc-900">
+                                    {{ $order->taxDecimal() }} {{ $order->currency }}
                                 </dd>
                             </div>
                         @endif
 
                         <div class="border-t border-zinc-200 pt-3">
                             <div class="flex items-center justify-between gap-4">
-                                <dt class="text-base font-semibold text-zinc-900">Total</dt>
+                                <dt class="text-base font-semibold text-zinc-900">Total gross</dt>
                                 <dd class="text-base font-bold text-zinc-900">
-                                    {{ number_format($order->total_amount / 100, 2, '.', ' ') }} {{ $order->currency }}
+                                    {{ $order->totalDecimal() }} {{ $order->currency }}
                                 </dd>
                             </div>
                         </div>

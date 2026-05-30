@@ -409,3 +409,117 @@ test('authenticated checkout sends the order confirmation email to the user emai
             && $mail->order->is($order);
     });
 });
+
+test('guest checkout stores VAT breakdown for order totals and line items', function (): void {
+    config()->set('delivery.providers.polkurier.valuation.enabled', false);
+    config()->set('delivery.providers.polkurier.valuation.fallback_prices.inpost.parcel_locker', 1499);
+
+    [$product, $variant] = createTestProductAndVariant();
+
+    $guestToken = (string) str()->uuid();
+
+    $cart = Cart::query()->create([
+        'guest_token' => $guestToken,
+        'status' => CartStatus::Active,
+        'currency' => Currency::PLN->value,
+    ]);
+
+    $cart->items()->create([
+        'product_id' => $product->id,
+        'product_variant_id' => $variant->id,
+        'quantity' => 2,
+        'unit_price' => $variant->grossPriceAmount(),
+        'currency' => Currency::PLN->value,
+        'meta' => null,
+    ]);
+
+    $response = $this
+        ->withSession(['_token' => 'test-csrf-token'])
+        ->withCookie(CartGuestTokenResolver::COOKIE_NAME, $guestToken)
+        ->post(route('checkout.place'), validCheckoutPayload());
+
+    $response->assertSessionHasNoErrors();
+
+    $order = Order::query()
+        ->with(['items', 'payments'])
+        ->first();
+
+    expect($order)->not->toBeNull();
+
+    $orderItem = $order->items->first();
+
+    expect($orderItem)->not->toBeNull();
+
+    $unitGross = $variant->grossPriceAmount();
+    $unitNet = VatRate::VAT_23->netFromGross($unitGross);
+    $unitTax = $unitGross - $unitNet;
+
+    $lineGross = $unitGross * 2;
+    $lineNet = VatRate::VAT_23->netFromGross($lineGross);
+    $lineTax = $lineGross - $lineNet;
+
+    $shippingGross = 1499;
+    $shippingNet = VatRate::VAT_23->netFromGross($shippingGross);
+    $shippingTax = $shippingGross - $shippingNet;
+
+    expect($order)
+        ->subtotal_amount->toBe($lineGross)
+        ->items_net_amount->toBe($lineNet)
+        ->items_tax_amount->toBe($lineTax)
+        ->items_gross_amount->toBe($lineGross)
+        ->shipping_amount->toBe($shippingGross)
+        ->shipping_net_amount->toBe($shippingNet)
+        ->shipping_tax_amount->toBe($shippingTax)
+        ->shipping_gross_amount->toBe($shippingGross)
+        ->discount_amount->toBe(0)
+        ->tax_amount->toBe($lineTax + $shippingTax)
+        ->total_amount->toBe($lineGross + $shippingGross);
+
+    expect($orderItem)
+        ->unit_price_amount->toBe($unitGross)
+        ->unit_net_amount->toBe($unitNet)
+        ->unit_tax_amount->toBe($unitTax)
+        ->unit_gross_amount->toBe($unitGross)
+        ->quantity->toBe(2)
+        ->line_total_amount->toBe($lineGross)
+        ->line_net_amount->toBe($lineNet)
+        ->line_tax_amount->toBe($lineTax)
+        ->line_gross_amount->toBe($lineGross)
+        ->vat_rate_snapshot->toBe(VatRate::VAT_23->value);
+
+    $payment = $order->payments->first();
+
+    expect($payment)
+        ->not->toBeNull()
+        ->amount->toBe($order->total_amount);
+
+    $this->assertDatabaseHas('orders', [
+        'id' => $order->id,
+        'subtotal_amount' => $lineGross,
+        'items_net_amount' => $lineNet,
+        'items_tax_amount' => $lineTax,
+        'items_gross_amount' => $lineGross,
+        'shipping_amount' => $shippingGross,
+        'shipping_net_amount' => $shippingNet,
+        'shipping_tax_amount' => $shippingTax,
+        'shipping_gross_amount' => $shippingGross,
+        'tax_amount' => $lineTax + $shippingTax,
+        'total_amount' => $lineGross + $shippingGross,
+    ]);
+
+    $this->assertDatabaseHas('order_items', [
+        'order_id' => $order->id,
+        'product_id' => $product->id,
+        'product_variant_id' => $variant->id,
+        'unit_price_amount' => $unitGross,
+        'unit_net_amount' => $unitNet,
+        'unit_tax_amount' => $unitTax,
+        'unit_gross_amount' => $unitGross,
+        'quantity' => 2,
+        'line_total_amount' => $lineGross,
+        'line_net_amount' => $lineNet,
+        'line_tax_amount' => $lineTax,
+        'line_gross_amount' => $lineGross,
+        'vat_rate_snapshot' => VatRate::VAT_23->value,
+    ]);
+});

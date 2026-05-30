@@ -555,13 +555,21 @@
                                 @php
                                     $product = $item->product;
                                     $variant = $item->variant;
-                                    $imageUrl = $variant?->main_image_url ?? ($item->meta['image_url'] ?? null);
+                                    $imageUrl = $variant?->main_image_url ?? data_get($item->meta, 'image_url');
                                     $unitPrice = $item->currentUnitPriceAmount();
                                     $lineTotal = $item->currentLineTotalAmount();
                                     $variantName =
                                         $variant && $variant->relationLoaded('attributeValues') && $variant->attributeValues->isNotEmpty()
                                             ? $variant->attributeValues->pluck('value')->filter()->implode(' / ')
-                                            : ($item->meta['variant_name'] ?? null);
+                                            : data_get($item->meta, 'variant_name');
+
+                                    $vatRate = $variant?->vat_rate;
+                                    $lineNet = $vatRate instanceof \App\Enums\VatRate && $lineTotal !== null
+                                        ? $vatRate->netFromGross((int) $lineTotal)
+                                        : null;
+                                    $lineTax = $lineNet !== null && $lineTotal !== null
+                                        ? max(0, (int) $lineTotal - $lineNet)
+                                        : null;
                                 @endphp
 
                                 <div class="flex gap-3 border-b border-zinc-100 pb-4 last:border-b-0 last:pb-0">
@@ -589,6 +597,19 @@
                                         <p class="mt-1 text-xs text-zinc-500">
                                             Quantity: {{ $item->quantity }}
                                         </p>
+
+                                        @if ($lineNet !== null && $lineTax !== null)
+                                            <p class="mt-2 text-xs text-zinc-500">
+                                                Net:
+                                                <span class="font-medium text-zinc-700">
+                                                    {{ number_format($lineNet / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                                </span>
+                                                · VAT:
+                                                <span class="font-medium text-zinc-700">
+                                                    {{ number_format($lineTax / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                                </span>
+                                            </p>
+                                        @endif
                                     </div>
 
                                     <div class="text-right">
@@ -597,7 +618,7 @@
                                                 {{ number_format($lineTotal / 100, 2, ',', ' ') }} {{ $variant?->currency?->value ?? $cart->currency }}
                                             </p>
                                             <p class="mt-1 text-xs text-zinc-500">
-                                                {{ number_format(($unitPrice ?? 0) / 100, 2, ',', ' ') }} each
+                                                {{ number_format(($unitPrice ?? 0) / 100, 2, ',', ' ') }} each gross
                                             </p>
                                         @else
                                             <p class="text-sm font-medium text-red-600">
@@ -615,18 +636,58 @@
                                 <dd>{{ $cart->items->sum('quantity') }}</dd>
                             </div>
 
-                            <div class="flex items-center justify-between">
-                                <dt>Subtotal</dt>
-                                <dd class="font-medium text-zinc-900">
-                                    {{ number_format($subtotal / 100, 2, ',', ' ') }} {{ $cart->currency }}
-                                </dd>
+                            <div class="border-t border-zinc-100 pt-3">
+                                <div class="flex items-center justify-between">
+                                    <dt>Items gross</dt>
+                                    <dd class="font-medium text-zinc-900">
+                                        {{ number_format(($itemsGross ?? $subtotal) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                    </dd>
+                                </div>
+
+                                @if ($hasTaxBreakdown ?? false)
+                                    <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                        <div class="flex items-center justify-between gap-4">
+                                            <dt class="text-zinc-500">Items net</dt>
+                                            <dd class="font-medium text-zinc-800">
+                                                {{ number_format(($itemsNet ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                            </dd>
+                                        </div>
+
+                                        <div class="flex items-center justify-between gap-4">
+                                            <dt class="text-zinc-500">Items VAT</dt>
+                                            <dd class="font-medium text-zinc-800">
+                                                {{ number_format(($itemsTax ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                            </dd>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
 
-                            <div class="flex items-center justify-between">
-                                <dt>Shipping</dt>
-                                <dd class="font-medium text-zinc-900">
-                                    {{ number_format($shipping / 100, 2, ',', ' ') }} {{ $cart->currency }}
-                                </dd>
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <dt>Shipping gross</dt>
+                                    <dd class="font-medium text-zinc-900">
+                                        {{ number_format(($shippingGross ?? $shipping) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                    </dd>
+                                </div>
+
+                                @if (($hasTaxBreakdown ?? false) && (($shippingGross ?? $shipping) > 0))
+                                    <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                        <div class="flex items-center justify-between gap-4">
+                                            <dt class="text-zinc-500">Shipping net</dt>
+                                            <dd class="font-medium text-zinc-800">
+                                                {{ number_format(($shippingNet ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                            </dd>
+                                        </div>
+
+                                        <div class="flex items-center justify-between gap-4">
+                                            <dt class="text-zinc-500">Shipping VAT</dt>
+                                            <dd class="font-medium text-zinc-800">
+                                                {{ number_format(($shippingTax ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                            </dd>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
 
                             @if ($discount > 0)
@@ -638,11 +699,20 @@
                                 </div>
                             @endif
 
+                            @if ($hasTaxBreakdown ?? false)
+                                <div class="flex items-center justify-between">
+                                    <dt>Total VAT</dt>
+                                    <dd class="font-medium text-zinc-900">
+                                        {{ number_format(($taxAmount ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                    </dd>
+                                </div>
+                            @endif
+
                             <div class="border-t border-zinc-200 pt-3">
                                 <div class="flex items-center justify-between">
-                                    <dt class="text-base font-semibold text-zinc-900">Total</dt>
+                                    <dt class="text-base font-semibold text-zinc-900">Total gross</dt>
                                     <dd class="text-base font-semibold text-zinc-900">
-                                        {{ number_format($total / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                        {{ number_format(($totalGross ?? $total) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>
                                 </div>
                             </div>
@@ -683,7 +753,7 @@
                         </div>
 
                         <p class="mt-4 text-xs text-zinc-500">
-                            Prices shown here reflect current product variant prices at the time of checkout.
+                            Prices shown here reflect current product variant prices at the time of checkout. Shipping may update after selecting a delivery method.
                         </p>
                     </div>
                 </aside>

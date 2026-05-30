@@ -38,7 +38,7 @@
                         Qty
                     </th>
                     <th align="right" style="padding: 12px 8px; border-bottom: 1px solid #e4e4e7; font-size: 14px;">
-                        Total
+                        Total gross
                     </th>
                 </tr>
                 </thead>
@@ -55,12 +55,31 @@
                                     {{ $item->variant_name_snapshot }}
                                 </div>
                             @endif
+
+                            @if ($item->hasTaxBreakdown())
+                                <div style="margin-top: 8px; color: #71717a; font-size: 12px; line-height: 1.5;">
+                                    Unit net: {{ $item->unitNetDecimal() }} {{ $order->currency }}<br>
+                                    Unit VAT {{ $item->vatRateLabel() }}: {{ $item->unitTaxDecimal() }} {{ $order->currency }}<br>
+                                    Unit gross: {{ $item->unitGrossDecimal() }} {{ $order->currency }}
+                                </div>
+                            @endif
                         </td>
+
                         <td align="center" style="padding: 12px 8px; border-bottom: 1px solid #f0f0f0; font-size: 14px; vertical-align: top;">
                             {{ $item->quantity }}
                         </td>
+
                         <td align="right" style="padding: 12px 8px; border-bottom: 1px solid #f0f0f0; font-size: 14px; vertical-align: top;">
-                            {{ number_format(($item->line_total_amount ?? 0) / 100, 2, '.', ' ') }} {{ $order->currency }}
+                            <div style="font-weight: 600;">
+                                {{ $item->lineGrossDecimal() }} {{ $order->currency }}
+                            </div>
+
+                            @if ($item->hasTaxBreakdown())
+                                <div style="margin-top: 8px; color: #71717a; font-size: 12px; line-height: 1.5;">
+                                    Net: {{ $item->lineNetDecimal() }} {{ $order->currency }}<br>
+                                    VAT {{ $item->vatRateLabel() }}: {{ $item->lineTaxDecimal() }} {{ $order->currency }}
+                                </div>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -71,36 +90,90 @@
                 <tbody>
                 <tr>
                     <td style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                        Subtotal
+                        Items gross
                     </td>
                     <td align="right" style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                        {{ number_format(($order->subtotal_amount ?? 0) / 100, 2, '.', ' ') }} {{ $order->currency }}
+                        {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
                     </td>
                 </tr>
+
+                @if ($order->hasTaxBreakdown())
+                    <tr>
+                        <td style="padding: 6px 0; font-size: 13px; color: #71717a;">
+                            Items net
+                        </td>
+                        <td align="right" style="padding: 6px 0; font-size: 13px; color: #71717a;">
+                            {{ $order->itemsNetDecimal() }} {{ $order->currency }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 6px 0 12px; font-size: 13px; color: #71717a;">
+                            Items VAT
+                        </td>
+                        <td align="right" style="padding: 6px 0 12px; font-size: 13px; color: #71717a;">
+                            {{ $order->itemsTaxDecimal() }} {{ $order->currency }}
+                        </td>
+                    </tr>
+                @endif
+
                 <tr>
                     <td style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                        Shipping
+                        Shipping gross
                     </td>
                     <td align="right" style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                        {{ number_format(($order->shipping_amount ?? 0) / 100, 2, '.', ' ') }} {{ $order->currency }}
+                        {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
                     </td>
                 </tr>
+
+                @if ($order->hasTaxBreakdown() && (($order->shipping_gross_amount ?? 0) > 0 || ($order->shipping_amount ?? 0) > 0))
+                    <tr>
+                        <td style="padding: 6px 0; font-size: 13px; color: #71717a;">
+                            Shipping net
+                        </td>
+                        <td align="right" style="padding: 6px 0; font-size: 13px; color: #71717a;">
+                            {{ $order->shippingNetDecimal() }} {{ $order->currency }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 6px 0 12px; font-size: 13px; color: #71717a;">
+                            Shipping VAT
+                        </td>
+                        <td align="right" style="padding: 6px 0 12px; font-size: 13px; color: #71717a;">
+                            {{ $order->shippingTaxDecimal() }} {{ $order->currency }}
+                        </td>
+                    </tr>
+                @endif
+
                 @if (($order->discount_amount ?? 0) > 0)
                     <tr>
                         <td style="padding: 6px 0; font-size: 14px; color: #52525b;">
                             Discount
                         </td>
                         <td align="right" style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                            -{{ number_format(($order->discount_amount ?? 0) / 100, 2, '.', ' ') }} {{ $order->currency }}
+                            -{{ $order->discountDecimal() }} {{ $order->currency }}
                         </td>
                     </tr>
                 @endif
+
+                @if ($order->hasTaxBreakdown())
+                    <tr>
+                        <td style="padding: 6px 0; font-size: 14px; color: #52525b;">
+                            Total VAT
+                        </td>
+                        <td align="right" style="padding: 6px 0; font-size: 14px; color: #52525b;">
+                            {{ $order->taxDecimal() }} {{ $order->currency }}
+                        </td>
+                    </tr>
+                @endif
+
                 <tr>
                     <td style="padding: 12px 0 0; border-top: 1px solid #e4e4e7; font-size: 16px; font-weight: 700;">
-                        Total
+                        Total gross
                     </td>
                     <td align="right" style="padding: 12px 0 0; border-top: 1px solid #e4e4e7; font-size: 16px; font-weight: 700;">
-                        {{ number_format(($order->total_amount ?? 0) / 100, 2, '.', ' ') }} {{ $order->currency }}
+                        {{ $order->totalDecimal() }} {{ $order->currency }}
                     </td>
                 </tr>
                 </tbody>
@@ -124,8 +197,6 @@
                         @if ($order->shippingAddress->address_line_2)
                             / {{ $order->shippingAddress->address_line_2 }}
                         @endif<br>
-
-
 
                         {{ $order->shippingAddress->postcode }} {{ $order->shippingAddress->city }}<br>
 

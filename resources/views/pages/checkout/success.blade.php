@@ -35,7 +35,7 @@
 
                                 $imageUrl = $variant?->main_image_url
                                     ?? $product?->main_image_url
-                                    ?? null;
+                                    ?? data_get($item->meta, 'image_url');
                             @endphp
 
                             <article class="border-b border-zinc-100 pb-4 last:border-b-0 last:pb-0">
@@ -73,43 +73,80 @@
                                         @endif
                                     </div>
 
-                                    <div class="flex min-w-0 flex-1 items-start justify-between gap-4">
-                                        <div class="min-w-0 flex-1">
-                                            @if ($productUrl)
-                                                <h3 class="text-sm font-medium text-zinc-900">
-                                                    <a
-                                                        href="{{ $productUrl }}"
-                                                        class="transition hover:text-zinc-700 hover:underline"
-                                                    >
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex min-w-0 items-start justify-between gap-4">
+                                            <div class="min-w-0 flex-1">
+                                                @if ($productUrl)
+                                                    <h3 class="text-sm font-medium text-zinc-900">
+                                                        <a
+                                                            href="{{ $productUrl }}"
+                                                            class="transition hover:text-zinc-700 hover:underline"
+                                                        >
+                                                            {{ $item->product_name_snapshot }}
+                                                        </a>
+                                                    </h3>
+                                                @else
+                                                    <h3 class="text-sm font-medium text-zinc-900">
                                                         {{ $item->product_name_snapshot }}
-                                                    </a>
-                                                </h3>
-                                            @else
-                                                <h3 class="text-sm font-medium text-zinc-900">
-                                                    {{ $item->product_name_snapshot }}
-                                                </h3>
-                                            @endif
+                                                    </h3>
+                                                @endif
 
-                                            @if ($item->variant_name_snapshot)
-                                                <p class="mt-1 text-sm text-zinc-500">
-                                                    {{ $item->variant_name_snapshot }}
+                                                @if ($item->variant_name_snapshot)
+                                                    <p class="mt-1 text-sm text-zinc-500">
+                                                        {{ $item->variant_name_snapshot }}
+                                                    </p>
+                                                @endif
+
+                                                <p class="mt-2 text-xs text-zinc-500">
+                                                    Quantity: {{ $item->quantity }}
                                                 </p>
-                                            @endif
+                                            </div>
 
-                                            <p class="mt-2 text-xs text-zinc-500">
-                                                Quantity: {{ $item->quantity }}
-                                            </p>
+                                            <div class="shrink-0 text-right">
+                                                <p class="text-sm text-zinc-500">
+                                                    {{ $item->unitGrossDecimal() }} {{ $order->currency }} each
+                                                </p>
+                                                <p class="mt-1 text-sm font-semibold text-zinc-900">
+                                                    {{ $item->lineGrossDecimal() }} {{ $order->currency }}
+                                                </p>
+                                            </div>
                                         </div>
 
-                                        <div class="text-right">
-                                            <p class="text-sm text-zinc-500">
-                                                {{ number_format($item->unit_price_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
-                                                each
-                                            </p>
-                                            <p class="mt-1 text-sm font-semibold text-zinc-900">
-                                                {{ number_format($item->line_total_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
-                                            </p>
-                                        </div>
+                                        @if ($item->hasTaxBreakdown())
+                                            <div class="mt-4 grid gap-3 rounded-xl bg-zinc-50 p-3 text-xs sm:grid-cols-2">
+                                                <dl class="space-y-1">
+                                                    <div class="flex justify-between gap-3">
+                                                        <dt class="text-zinc-500">Unit net</dt>
+                                                        <dd class="font-medium text-zinc-800">
+                                                            {{ $item->unitNetDecimal() }} {{ $order->currency }}
+                                                        </dd>
+                                                    </div>
+
+                                                    <div class="flex justify-between gap-3">
+                                                        <dt class="text-zinc-500">Unit VAT {{ $item->vatRateLabel() }}</dt>
+                                                        <dd class="font-medium text-zinc-800">
+                                                            {{ $item->unitTaxDecimal() }} {{ $order->currency }}
+                                                        </dd>
+                                                    </div>
+                                                </dl>
+
+                                                <dl class="space-y-1">
+                                                    <div class="flex justify-between gap-3">
+                                                        <dt class="text-zinc-500">Line net</dt>
+                                                        <dd class="font-medium text-zinc-800">
+                                                            {{ $item->lineNetDecimal() }} {{ $order->currency }}
+                                                        </dd>
+                                                    </div>
+
+                                                    <div class="flex justify-between gap-3">
+                                                        <dt class="text-zinc-500">Line VAT {{ $item->vatRateLabel() }}</dt>
+                                                        <dd class="font-medium text-zinc-800">
+                                                            {{ $item->lineTaxDecimal() }} {{ $order->currency }}
+                                                        </dd>
+                                                    </div>
+                                                </dl>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </article>
@@ -154,34 +191,83 @@
                             </div>
                         @endif
 
-                        <div class="flex items-center justify-between">
-                            <dt>Subtotal</dt>
-                            <dd class="font-medium text-zinc-900">
-                                {{ number_format($order->subtotal_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
-                            </dd>
+                        <div class="border-t border-zinc-100 pt-3">
+                            <div class="flex items-center justify-between">
+                                <dt>Items gross</dt>
+                                <dd class="font-medium text-zinc-900">
+                                    {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
+                                </dd>
+                            </div>
+
+                            @if ($order->hasTaxBreakdown())
+                                <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                    <div class="flex items-center justify-between gap-4">
+                                        <dt class="text-zinc-500">Items net</dt>
+                                        <dd class="font-medium text-zinc-800">
+                                            {{ $order->itemsNetDecimal() }} {{ $order->currency }}
+                                        </dd>
+                                    </div>
+
+                                    <div class="flex items-center justify-between gap-4">
+                                        <dt class="text-zinc-500">Items VAT</dt>
+                                        <dd class="font-medium text-zinc-800">
+                                            {{ $order->itemsTaxDecimal() }} {{ $order->currency }}
+                                        </dd>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
-                        <div class="flex items-center justify-between">
-                            <dt>Shipping</dt>
-                            <dd class="font-medium text-zinc-900">
-                                {{ number_format($order->shipping_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
-                            </dd>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <dt>Shipping gross</dt>
+                                <dd class="font-medium text-zinc-900">
+                                    {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
+                                </dd>
+                            </div>
+
+                            @if ($order->hasTaxBreakdown() && ($order->shipping_gross_amount > 0 || $order->shipping_amount > 0))
+                                <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                    <div class="flex items-center justify-between gap-4">
+                                        <dt class="text-zinc-500">Shipping net</dt>
+                                        <dd class="font-medium text-zinc-800">
+                                            {{ $order->shippingNetDecimal() }} {{ $order->currency }}
+                                        </dd>
+                                    </div>
+
+                                    <div class="flex items-center justify-between gap-4">
+                                        <dt class="text-zinc-500">Shipping VAT</dt>
+                                        <dd class="font-medium text-zinc-800">
+                                            {{ $order->shippingTaxDecimal() }} {{ $order->currency }}
+                                        </dd>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                         @if ($order->discount_amount > 0)
                             <div class="flex items-center justify-between">
                                 <dt>Discount</dt>
                                 <dd class="font-medium text-zinc-900">
-                                    -{{ number_format($order->discount_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
+                                    -{{ $order->discountDecimal() }} {{ $order->currency }}
+                                </dd>
+                            </div>
+                        @endif
+
+                        @if ($order->hasTaxBreakdown())
+                            <div class="flex items-center justify-between">
+                                <dt>Total VAT</dt>
+                                <dd class="font-medium text-zinc-900">
+                                    {{ $order->taxDecimal() }} {{ $order->currency }}
                                 </dd>
                             </div>
                         @endif
 
                         <div class="border-t border-zinc-200 pt-3">
                             <div class="flex items-center justify-between">
-                                <dt class="text-base font-semibold text-zinc-900">Total</dt>
+                                <dt class="text-base font-semibold text-zinc-900">Total gross</dt>
                                 <dd class="text-base font-semibold text-zinc-900">
-                                    {{ number_format($order->total_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
+                                    {{ $order->totalDecimal() }} {{ $order->currency }}
                                 </dd>
                             </div>
                         </div>
