@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\StockStatus;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Services\Shop\ShopSettings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class ProductShowController extends Controller
 {
+    public function __construct(
+        private readonly ShopSettings $shopSettings,
+    ) {}
+
     public function __invoke(Product $product): View
     {
         $product->load([
@@ -46,10 +52,198 @@ class ProductShowController extends Controller
             'default_variant_id' => $defaultVariant?->id,
         ];
 
+        $seoTitle = $this->seoTitle($product);
+        $seoDescription = $this->seoDescription($product);
+        $canonicalUrl = route('products.show', $product->slug);
+        $openGraphImage = $this->openGraphImage($product, $defaultVariant);
+        $structuredData = $this->structuredData($product, $defaultVariant, $seoDescription, $canonicalUrl);
+
         return view('pages.products.show', [
             'product' => $product,
             'productPayload' => $productPayload,
+
+            'seoTitle' => $seoTitle,
+            'seoDescription' => $seoDescription,
+            'canonicalUrl' => $canonicalUrl,
+            'openGraphTitle' => $seoTitle,
+            'openGraphDescription' => $seoDescription,
+            'openGraphImage' => $openGraphImage,
+            'openGraphType' => 'product',
+            'structuredData' => $structuredData,
         ]);
+    }
+
+    private function seoTitle(Product $product): string
+    {
+        return $this->limitText(
+            $product->seo_title ?: $product->name,
+            70
+        );
+    }
+
+    private function seoDescription(Product $product): string
+    {
+        $description = $product->seo_description
+            ?: $product->short_description
+                ?: $product->description
+                    ?: $product->name;
+
+        return $this->limitText($description, 160);
+    }
+
+    private function openGraphImage(Product $product, ?ProductVariant $defaultVariant): ?string
+    {
+        $imageUrl = $defaultVariant?->main_image_url
+            ?? $product->mainImage?->url
+            ?? $product->images->first()?->url;
+
+        return $this->absoluteUrl($imageUrl);
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function structuredData(
+        Product $product,
+        ?ProductVariant $defaultVariant,
+        string $seoDescription,
+        string $canonicalUrl,
+    ): array {
+        return [
+            $this->productStructuredData($product, $defaultVariant, $seoDescription, $canonicalUrl),
+            $this->breadcrumbStructuredData($product, $canonicalUrl),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function productStructuredData(
+        Product $product,
+        ?ProductVariant $defaultVariant,
+        string $seoDescription,
+        string $canonicalUrl,
+    ): array {
+        $images = $this->structuredDataImages($product, $defaultVariant);
+
+        $data = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            'name' => $product->name,
+            'description' => $seoDescription,
+            'url' => $canonicalUrl,
+            'brand' => [
+                '@type' => 'Brand',
+                'name' => $this->shopSettings->shopName(),
+            ],
+        ];
+
+        if ($images !== []) {
+            $data['image'] = $images;
+        }
+
+        if ($defaultVariant?->sku) {
+            $data['sku'] = $defaultVariant->sku;
+        }
+
+        if ($defaultVariant !== null && $defaultVariant->grossPriceAmount() !== null) {
+            $data['offers'] = [
+                '@type' => 'Offer',
+                'url' => $canonicalUrl,
+                'priceCurrency' => $defaultVariant->currency?->value ?? 'PLN',
+                'price' => number_format($defaultVariant->grossPriceAmount() / 100, 2, '.', ''),
+                'availability' => $this->schemaAvailability($defaultVariant),
+                'itemCondition' => 'https://schema.org/NewCondition',
+                'seller' => [
+                    '@type' => 'Organization',
+                    'name' => $this->shopSettings->companyName(),
+                ],
+            ];
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function breadcrumbStructuredData(Product $product, string $canonicalUrl): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Home',
+                    'item' => route('home'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => $product->name,
+                    'item' => $canonicalUrl,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function structuredDataImages(Product $product, ?ProductVariant $defaultVariant): array
+    {
+        $urls = collect();
+
+        if ($defaultVariant?->main_image_url) {
+            $urls->push($defaultVariant->main_image_url);
+        }
+
+        $urls = $urls
+            ->merge($product->images->pluck('url'))
+            ->filter()
+            ->map(fn (string $url): ?string => $this->absoluteUrl($url))
+            ->filter()
+            ->unique()
+            ->values();
+
+        return $urls->all();
+    }
+
+    private function schemaAvailability(ProductVariant $variant): string
+    {
+        return match ($variant->stock_status) {
+            StockStatus::IN_STOCK => 'https://schema.org/InStock',
+            StockStatus::OUT_OF_STOCK => 'https://schema.org/OutOfStock',
+            default => 'https://schema.org/LimitedAvailability',
+        };
+    }
+
+    private function absoluteUrl(?string $url): ?string
+    {
+        if (! filled($url)) {
+            return null;
+        }
+
+        $url = trim((string) $url);
+
+        if (Str::startsWith($url, ['http://', 'https://'])) {
+            return $url;
+        }
+
+        return url($url);
+    }
+
+    private function limitText(?string $value, int $limit): string
+    {
+        $value = trim(preg_replace('/\s+/', ' ', strip_tags((string) $value)) ?? '');
+
+        if ($value === '') {
+            return '';
+        }
+
+        return Str::limit($value, $limit, '');
     }
 
     private function buildOptionGroups(Product $product): array
