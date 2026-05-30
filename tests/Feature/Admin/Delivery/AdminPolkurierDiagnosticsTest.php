@@ -1,11 +1,17 @@
 <?php
 
 use App\Models\User;
+use App\Services\Delivery\Polkurier\PolkurierAvailableCarriersService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function (): void {
+    Cache::forget(PolkurierAvailableCarriersService::CACHE_KEY);
+});
 
 it('shows the Polkurier diagnostics page to admins', function (): void {
     $admin = User::factory()->create([
@@ -22,9 +28,68 @@ it('shows the Polkurier diagnostics page to admins', function (): void {
         ->assertOk()
         ->assertSee('Polkurier diagnostics')
         ->assertSee('API configuration')
+        ->assertSee('Available carriers')
+        ->assertSee('Cached Polkurier carrier data: 0 carrier(s).')
+        ->assertSee('No Polkurier carrier data cached yet.')
         ->assertSee('Test valuation')
         ->assertSee('php artisan polkurier:check')
+        ->assertSee('Protocols')
+        ->assertSee('Carrier availability')
+        ->assertSee('Operations')
         ->assertDontSee('secret-token');
+});
+
+it('shows cached available carrier readiness on the diagnostics page', function (): void {
+    Cache::put(PolkurierAvailableCarriersService::CACHE_KEY, [
+        [
+            'servicecode' => 'UPS',
+            'name' => 'UPS - Standard',
+            'foreign_shipments' => false,
+            'additional_data' => [
+                'shipmenttype' => [
+                    'box' => [
+                        'available' => true,
+                        'description' => 'Paczka',
+                    ],
+                ],
+                'courierservice' => [
+                    'ROD' => [
+                        'available' => true,
+                        'description' => 'Zwrot dokumentów',
+                    ],
+                ],
+                'additional_fields' => [
+                    [
+                        'name' => 'external_transport_security',
+                        'label' => 'Sposób zabezpieczenia towaru',
+                        'type' => 'TEXT',
+                        'required' => true,
+                    ],
+                ],
+            ],
+        ],
+    ], now()->addHour());
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    Config::set('delivery.providers.polkurier.base_url', 'https://example.com');
+    Config::set('delivery.providers.polkurier.login', 'test-login');
+    Config::set('delivery.providers.polkurier.token', 'secret-token');
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.polkurier.index'))
+        ->assertOk()
+        ->assertSee('Available carriers')
+        ->assertSee('Cached Polkurier carrier data: 1 carrier(s).')
+        ->assertSee('UPS courier')
+        ->assertSee('UPS - Standard')
+        ->assertSee('box')
+        ->assertSee('ROD')
+        ->assertSee('external_transport_security')
+        ->assertDontSee('No Polkurier carrier data cached yet.');
 });
 
 it('does not allow guests to view Polkurier diagnostics', function (): void {
