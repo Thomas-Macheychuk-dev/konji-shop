@@ -5,12 +5,33 @@ use App\Http\Controllers\Account\AccountDetailsUpdateController;
 use App\Http\Controllers\Account\OrderCancelController;
 use App\Http\Controllers\Account\OrderIndexController;
 use App\Http\Controllers\Account\OrderShowController;
+use App\Http\Controllers\Admin\Delivery\AdminPolkurierAvailableCarriersRefreshController;
+use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
+use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
+use App\Http\Controllers\Admin\Orders\AdminOrderCancelController;
+use App\Http\Controllers\Admin\Orders\AdminOrderIndexController;
 use App\Http\Controllers\Admin\Orders\AdminOrderNoteController;
+use App\Http\Controllers\Admin\Orders\AdminOrderShipmentController;
+use App\Http\Controllers\Admin\Orders\AdminOrderShowController;
+use App\Http\Controllers\Admin\Orders\AdminPolkurierPickupTimesController;
+use App\Http\Controllers\Admin\Orders\AdminShipmentCancelController;
+use App\Http\Controllers\Admin\Orders\AdminShipmentLabelController;
+use App\Http\Controllers\Admin\Orders\AdminShipmentProtocolController;
+use App\Http\Controllers\Admin\Orders\AdminShipmentStatusRefreshController;
+use App\Http\Controllers\Admin\Orders\OrderFulfilmentController;
+use App\Http\Controllers\Admin\Products\AdminProductEditController;
+use App\Http\Controllers\Admin\Products\AdminProductIndexController;
+use App\Http\Controllers\Admin\Products\AdminProductPackageDimensionsUpdateController;
+use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
+use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpdateController;
+use App\Http\Controllers\Admin\Shop\AdminShopReadinessController;
 use App\Http\Controllers\CartItemDestroyController;
 use App\Http\Controllers\CartItemStoreController;
 use App\Http\Controllers\CartItemUpdateController;
 use App\Http\Controllers\CartShowController;
 use App\Http\Controllers\CartSummaryController;
+use App\Http\Controllers\Checkout\CheckoutShippingQuoteController;
+use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
 use App\Http\Controllers\CheckoutPlaceOrderController;
 use App\Http\Controllers\CheckoutShowController;
 use App\Http\Controllers\GuestOrderCancelController;
@@ -23,26 +44,6 @@ use App\Http\Controllers\Payments\PaynowNotificationController;
 use App\Http\Controllers\ProductShowController;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\Orders\OrderFulfilmentController;
-use App\Http\Controllers\Admin\Orders\AdminOrderIndexController;
-use App\Http\Controllers\Admin\Orders\AdminOrderShowController;
-use App\Http\Controllers\Admin\Orders\AdminOrderCancelController;
-use App\Http\Controllers\Admin\Orders\AdminOrderShipmentController;
-use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
-use App\Http\Controllers\Admin\Orders\AdminShipmentLabelController;
-use App\Http\Controllers\Admin\Orders\AdminShipmentStatusRefreshController;
-use App\Http\Controllers\Admin\Orders\AdminShipmentCancelController;
-use App\Http\Controllers\Checkout\CheckoutShippingQuoteController;
-use App\Http\Controllers\Admin\Products\AdminProductEditController;
-use App\Http\Controllers\Admin\Products\AdminProductIndexController;
-use App\Http\Controllers\Admin\Products\AdminProductPackageDimensionsUpdateController;
-use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpdateController;
-use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
-use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
-use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
-use App\Http\Controllers\Admin\Orders\AdminPolkurierPickupTimesController;
-use App\Http\Controllers\Admin\Orders\AdminShipmentProtocolController;
-use App\Http\Controllers\Admin\Delivery\AdminPolkurierAvailableCarriersRefreshController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -124,6 +125,11 @@ Route::middleware(['auth', 'admin'])
 
         Route::post('/polkurier/valuation-test', AdminPolkurierValuationTestController::class)
             ->name('polkurier.valuation-test');
+
+        Route::get(
+            '/production-readiness',
+            AdminShopReadinessController::class
+        )->name('shop.readiness');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {

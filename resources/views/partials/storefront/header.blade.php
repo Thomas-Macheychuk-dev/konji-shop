@@ -13,12 +13,18 @@
             </a>
 
             @auth
-                <a href="{{ route('account.orders.index') }}">
+                <a
+                    href="{{ route('account.orders.index') }}"
+                    class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+                >
                     My orders
                 </a>
             @endauth
 
-            <a href="{{ route('guest.orders.track.show') }}">
+            <a
+                href="{{ route('guest.orders.track.show') }}"
+                class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+            >
                 Order tracking
             </a>
 
@@ -30,22 +36,39 @@
             </a>
 
             @auth
-                <a href="{{ route('account.details.show') }}">
+                <a
+                    href="{{ route('account.details.show') }}"
+                    class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+                >
                     Account
                 </a>
 
                 @if(auth()->user()->is_admin)
-                    <a href="{{ route('admin.orders.index') }}">
+                    <a
+                        href="{{ route('admin.orders.index') }}"
+                        class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+                    >
                         Admin
                     </a>
 
-                    <a href="{{ route('admin.products.index') }}" class="text-sm font-medium text-zinc-600 hover:text-zinc-900">
+                    <a
+                        href="{{ route('admin.products.index') }}"
+                        class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+                    >
                         Products
+                    </a>
+
+                    <a
+                        href="{{ route('admin.shop.readiness') }}"
+                        class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+                    >
+                        Readiness
                     </a>
                 @endif
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
+
                     <flux:button variant="ghost" type="submit" class="text-sm cursor-pointer" data-test="logout-button">
                         {{ __('Log out') }}
                     </flux:button>
@@ -65,6 +88,7 @@
                     Register
                 </a>
             @endauth
+
             <div
                 id="cart-widget"
                 data-summary-url="{{ route('cart.summary', absolute: false) }}"
