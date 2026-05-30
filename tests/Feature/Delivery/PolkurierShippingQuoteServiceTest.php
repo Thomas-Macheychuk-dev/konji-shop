@@ -97,3 +97,51 @@ it('returns Polkurier valuation gross price in grosze when valuation is enabled'
         && $request['data']['packs'][0]['length'] === 30
         && $request['data']['recipient']['postcode'] === '87-100');
 });
+
+it('returns fallback shipping amount when live Polkurier valuation returns no available shipment', function (): void {
+    Config::set('delivery.providers.polkurier.valuation.enabled', true);
+    Config::set('delivery.providers.polkurier.sender.postcode', '60-406');
+    Config::set('delivery.providers.polkurier.sender.country', 'PL');
+    Config::set('delivery.providers.polkurier.valuation.fallback_prices.inpost.parcel_locker', 1499);
+
+    Http::fake([
+        '*' => Http::response([
+            'status' => 'success',
+            'response' => [
+                [
+                    'servicecode' => 'INPOST_PACZKOMAT',
+                    'servicename' => 'InPost Paczkomat',
+                    'netprice' => 0,
+                    'grossprice' => 0,
+                    'shipment' => false,
+                    'available' => false,
+                    'unavailable_message' => 'Service unavailable for selected parameters.',
+                ],
+            ],
+        ]),
+    ]);
+
+    $quote = app(PolkurierShippingQuoteService::class)->quote(
+        provider: DeliveryProvider::POLKURIER,
+        carrier: DeliveryCarrier::INPOST,
+        service: 'parcel_locker',
+        shippingAddress: [
+            'postcode' => '87-100',
+            'country_code' => 'PL',
+        ],
+        currency: 'PLN',
+    );
+
+    expect($quote->amount)->toBe(1499)
+        ->and($quote->provider)->toBe('polkurier')
+        ->and($quote->carrier)->toBe('inpost')
+        ->and($quote->service)->toBe('parcel_locker')
+        ->and($quote->providerServiceCode)->toBe('INPOST_PACZKOMAT')
+        ->and($quote->payload['source'])->toBe('fallback')
+        ->and($quote->payload['reason'])->toBe('live_valuation_failed')
+        ->and($quote->payload['error']['message'])->toBe('Polkurier did not return an available valuation.');
+
+    Http::assertSent(fn ($request): bool => $request['apimethod'] === 'order_valuation_v2'
+        && $request['data']['returnvaluations'] === 'INPOST_PACZKOMAT'
+        && $request['data']['recipient']['postcode'] === '87-100');
+});

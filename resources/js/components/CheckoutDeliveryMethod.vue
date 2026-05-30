@@ -53,6 +53,10 @@
                 <p v-else-if="quote?.source === 'fallback'" class="mt-2 text-xs text-zinc-500">
                     Estimated delivery price.
                 </p>
+
+                <p v-else-if="quote?.source === 'polkurier_order_valuation_v2'" class="mt-2 text-xs text-zinc-500">
+                    Live Polkurier delivery price.
+                </p>
             </div>
         </div>
 
@@ -125,7 +129,11 @@
                 </div>
             </div>
 
-            <p class="mt-2 text-xs text-zinc-500">
+            <p v-if="lockerCode" class="mt-2 text-xs text-green-700">
+                Selected locker will be used for delivery.
+            </p>
+
+            <p v-else class="mt-2 text-xs text-zinc-500">
                 Select one result before placing the order.
             </p>
         </div>
@@ -204,6 +212,7 @@ const deliveryOptions = {
 
 const deliveryMethod = ref(resolveInitialDeliveryMethod());
 const lockerCode = ref(props.initialLockerCode || '');
+const selectedLocker = ref(null);
 const query = ref(props.initialLockerCode || '');
 const lockers = ref([]);
 const loading = ref(false);
@@ -282,12 +291,14 @@ function search() {
     clearTimeout(timeout);
 
     lockerCode.value = '';
+    selectedLocker.value = null;
 
     const value = query.value.trim();
 
     if (value.length < 2) {
         lockers.value = [];
         showResults.value = false;
+        scheduleQuote();
 
         return;
     }
@@ -301,7 +312,14 @@ async function fetchLockers() {
 
     try {
         const response = await fetch(
-            `/checkout/inpost-parcel-lockers?query=${encodeURIComponent(query.value.trim())}`
+            `/checkout/inpost-parcel-lockers?query=${encodeURIComponent(query.value.trim())}`,
+            {
+                headers: {
+                    Accept: 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                credentials: 'same-origin',
+            },
         );
 
         lockers.value = await response.json();
@@ -313,6 +331,7 @@ async function fetchLockers() {
 }
 
 function selectLocker(locker) {
+    selectedLocker.value = locker;
     lockerCode.value = locker.code;
     query.value = locker.label;
     showResults.value = false;
@@ -326,6 +345,7 @@ function clearLocker(refreshQuote = true) {
     }
 
     lockerCode.value = '';
+    selectedLocker.value = null;
     query.value = '';
     lockers.value = [];
     showResults.value = false;
@@ -369,11 +389,13 @@ function scheduleQuote() {
         return;
     }
 
-    const postcode = fieldValue('shipping_postcode');
+    const postcode = quotePostcode();
 
     if (!postcode || postcode.trim().length < 2) {
         quote.value = null;
-        quoteError.value = 'Enter postcode to calculate delivery price.';
+        quoteError.value = service.value === 'parcel_locker'
+            ? 'Select a parcel locker to calculate delivery price.'
+            : 'Enter postcode to calculate delivery price.';
         quoteLoading.value = false;
 
         return;
@@ -395,14 +417,16 @@ async function fetchQuote() {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken(),
+                'X-Requested-With': 'XMLHttpRequest',
             },
+            credentials: 'same-origin',
             body: JSON.stringify({
                 delivery_provider: 'polkurier',
                 delivery_carrier: carrier.value,
                 delivery_service: service.value,
                 delivery_locker_code: lockerCode.value,
-                shipping_postcode: fieldValue('shipping_postcode'),
-                shipping_country_code: fieldValue('shipping_country_code') || 'PL',
+                shipping_postcode: quotePostcode(),
+                shipping_country_code: quoteCountryCode(),
                 currency: props.currency,
             }),
         });
@@ -436,6 +460,28 @@ async function fetchQuote() {
     }
 }
 
+function quotePostcode() {
+    if (service.value === 'parcel_locker') {
+        return selectedLocker.value?.postcode
+            || extractPostcode(selectedLocker.value?.label)
+            || extractPostcode(query.value)
+            || fieldValue('shipping_postcode');
+    }
+
+    return fieldValue('shipping_postcode');
+}
+
+function quoteCountryCode() {
+    if (service.value === 'parcel_locker') {
+        return selectedLocker.value?.country_code
+            || selectedLocker.value?.country
+            || fieldValue('shipping_country_code')
+            || 'PL';
+    }
+
+    return fieldValue('shipping_country_code') || 'PL';
+}
+
 function fieldValue(name) {
     return document.querySelector(`[name="${name}"]`)?.value ?? '';
 }
@@ -460,5 +506,11 @@ function firstValidationMessage(data) {
 
 function lockerAddress(locker) {
     return String(locker.label || '').replace(`${locker.code} — `, '');
+}
+
+function extractPostcode(value) {
+    const match = String(value || '').match(/\b\d{2}-\d{3}\b/);
+
+    return match?.[0] ?? '';
 }
 </script>
