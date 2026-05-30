@@ -23,6 +23,7 @@ it('shows the Polkurier diagnostics page to admins', function (): void {
         ->assertSee('Polkurier diagnostics')
         ->assertSee('API configuration')
         ->assertSee('Test valuation')
+        ->assertSee('php artisan polkurier:check')
         ->assertDontSee('secret-token');
 });
 

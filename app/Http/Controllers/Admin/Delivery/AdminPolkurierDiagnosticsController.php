@@ -5,16 +5,23 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\Delivery;
 
 use App\Http\Controllers\Controller;
+use App\Services\Delivery\Polkurier\PolkurierReadinessCheck;
 use Illuminate\Contracts\View\View;
 
 final class AdminPolkurierDiagnosticsController extends Controller
 {
+    public function __construct(
+        private readonly PolkurierReadinessCheck $readinessCheck,
+    ) {}
+
     public function __invoke(): View
     {
         return view('admin.delivery.polkurier-diagnostics', [
             'configuration' => $this->configuration(),
             'senderFields' => $this->senderFields(),
             'defaultPackFields' => $this->defaultPackFields(),
+            'readinessItems' => $this->readinessCheck->items(),
+            'polkurierReady' => $this->readinessCheck->isReady(),
         ]);
     }
 
