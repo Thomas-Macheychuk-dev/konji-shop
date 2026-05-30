@@ -20,29 +20,87 @@ final class InPostParcelLockerSearchController extends Controller
             return response()->json([]);
         }
 
-        $lockers = collect($client->inpostPointsMachines())
-            ->filter(function (array $locker) use ($query): bool {
-                if (! in_array($locker['status'] ?? null, ['Operating', 'Overloaded'], true)) {
-                    return false;
-                }
-
-                if (($locker['parcel_collect'] ?? false) !== true) {
-                    return false;
-                }
-
-                $haystack = Str::lower(
-                    ($locker['name'] ?? '').' '.($locker['adres'] ?? '')
-                );
-
-                return str_contains($haystack, $query);
-            })
+        $lockers = collect($client->courierPoints(
+            couriers: ['INPOST_PACZKOMAT'],
+            searchQuery: $query,
+            functions: ['collect'],
+            limit: 20,
+            page: 1,
+        ))
+            ->filter(fn (array $locker): bool => $this->isSelectableParcelLocker($locker))
             ->take(20)
-            ->map(fn (array $locker): array => [
-                'code' => $locker['name'],
-                'label' => $locker['name'].' — '.$locker['adres'],
-            ])
+            ->map(fn (array $locker): array => $this->toSearchResult($locker))
             ->values();
 
         return response()->json($lockers);
+    }
+
+    /**
+     * @param array<string, mixed> $locker
+     */
+    private function isSelectableParcelLocker(array $locker): bool
+    {
+        if (! isset($locker['id']) || ! is_string($locker['id']) || trim($locker['id']) === '') {
+            return false;
+        }
+
+        if (($locker['provider'] ?? null) !== 'INPOST_PACZKOMAT') {
+            return false;
+        }
+
+        if (($locker['available'] ?? false) !== true) {
+            return false;
+        }
+
+        if (($locker['collect'] ?? false) !== true) {
+            return false;
+        }
+
+        if (($locker['visible'] ?? true) !== true) {
+            return false;
+        }
+
+        $status = $locker['status'] ?? null;
+
+        return $status === null || in_array($status, ['Operating', 'Overloaded'], true);
+    }
+
+    /**
+     * @param array<string, mixed> $locker
+     * @return array{code: string, label: string}
+     */
+    private function toSearchResult(array $locker): array
+    {
+        $code = (string) ($locker['id'] ?? '');
+        $address = $this->formatAddress($locker);
+
+        return [
+            'code' => $code,
+            'label' => $address !== '' ? $code.' — '.$address : $code,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $locker
+     */
+    private function formatAddress(array $locker): string
+    {
+        if (isset($locker['address']) && is_string($locker['address']) && trim($locker['address']) !== '') {
+            return trim($locker['address']);
+        }
+
+        $cityLine = trim(implode(' ', array_filter([
+            $locker['zip'] ?? null,
+            $locker['city'] ?? null,
+        ], fn (mixed $value): bool => is_string($value) && trim($value) !== '')));
+
+        $street = isset($locker['street']) && is_string($locker['street']) ? trim($locker['street']) : '';
+        $description = isset($locker['description']) && is_string($locker['description']) ? trim($locker['description']) : '';
+
+        return trim(implode(', ', array_filter([
+            $cityLine,
+            $street,
+            $description,
+        ], fn (string $value): bool => $value !== '')));
     }
 }

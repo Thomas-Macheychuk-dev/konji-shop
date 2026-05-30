@@ -46,11 +46,51 @@ final class PolkurierApiClient
             ->timeout(30);
     }
 
-    public function inpostPointsMachines(): array
-    {
-        $payload = $this->request('inpost_points_machines');
+    /**
+     * @param array<int, string> $couriers
+     * @param array<int, string> $functions
+     * @return array<int, array<string, mixed>>
+     */
+    public function courierPoints(
+        array $couriers,
+        ?string $searchQuery = null,
+        array $functions = [],
+        int $limit = 20,
+        int $page = 1,
+        ?string $id = null,
+    ): array {
+        $data = [
+            'couriers' => array_values($couriers),
+        ];
 
-        return $payload['response'] ?? [];
+        if ($id !== null && trim($id) !== '') {
+            $data['id'] = trim($id);
+        }
+
+        if ($searchQuery !== null && trim($searchQuery) !== '') {
+            $data['searchquery'] = trim($searchQuery);
+        }
+
+        if ($functions !== []) {
+            $data['functions'] = array_values($functions);
+        }
+
+        if ($limit > 0) {
+            $data['limit'] = $limit;
+        }
+
+        if ($page > 0) {
+            $data['page'] = $page;
+        }
+
+        $payload = $this->request('get_courier_point', $data);
+        $response = $payload['response'] ?? null;
+
+        if (! is_array($response)) {
+            throw new RuntimeException('Polkurier did not return courier point data.');
+        }
+
+        return $response;
     }
 
     public function labelPdf(array $orderNumbers): string
