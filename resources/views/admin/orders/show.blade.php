@@ -37,6 +37,17 @@
             </div>
         @endif
 
+        @php
+            $latestFailedShipment = $order->shipments
+                ->where('status', \App\Enums\ShipmentStatus::FAILED)
+                ->sortByDesc('created_at')
+                ->first();
+
+            $latestFailedShipmentMessage = $latestFailedShipment
+                ? data_get($latestFailedShipment->payload, 'error.message')
+                : null;
+        @endphp
+
         <div class="grid gap-6 lg:grid-cols-3">
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">Status</h2>
@@ -81,6 +92,25 @@
                         $order->status === \App\Enums\OrderStatus::CONFIRMED
                         && $order->fulfilment_status === \App\Enums\FulfilmentStatus::PROCESSING
                     )
+
+                        @if ($latestFailedShipment)
+                            <div class="mb-4 w-full rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                                <p class="font-semibold">
+                                    Latest shipment creation failed.
+                                </p>
+
+                                @if ($latestFailedShipmentMessage)
+                                    <p class="mt-1">
+                                        {{ $latestFailedShipmentMessage }}
+                                    </p>
+                                @endif
+
+                                <p class="mt-2 text-xs text-red-700">
+                                    You can retry shipment creation after correcting the problem.
+                                </p>
+                            </div>
+                        @endif
+
                         <form
                             method="POST"
                             action="{{ route('admin.orders.fulfilment.update', [$order, 'shipped']) }}"
@@ -157,7 +187,13 @@
                             @endif
 
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                                {{ $order->delivery_service === 'local_pickup' ? 'Mark as ready for pickup' : 'Create shipment & mark as shipped' }}
+                                @if ($order->delivery_service === 'local_pickup')
+                                    Mark as ready for pickup
+                                @elseif ($latestFailedShipment)
+                                    Retry create shipment
+                                @else
+                                    Create shipment & mark as shipped
+                                @endif
                             </button>
                         </form>
                     @endif
