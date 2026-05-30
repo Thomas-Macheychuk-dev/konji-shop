@@ -23,7 +23,8 @@ final class PolkurierCarrierAvailabilityGuard
      *     severity: string,
      *     courier_code: string|null,
      *     message: string|null,
-     *     missing_required_fields: array<int, string>
+     *     missing_required_fields: array<int, string>,
+     *     additional_fields: array<int, array<string, mixed>>
      * }
      */
     public function check(Order $order): array
@@ -106,18 +107,8 @@ final class PolkurierCarrierAvailabilityGuard
             );
         }
 
-        $requiredFields = $this->requiredAdditionalFields($carrier);
-
-        if ($requiredFields !== [] && $this->blockRequiredAdditionalFields()) {
-            return $this->result(
-                enabled: true,
-                blocking: true,
-                severity: 'error',
-                courierCode: $courierCode,
-                message: 'Polkurier carrier '.$courierCode.' requires additional fields that Konji Shop does not collect yet: '.implode(', ', $requiredFields).'.',
-                missingRequiredFields: $requiredFields,
-            );
-        }
+        $additionalFields = $this->additionalFieldDefinitionsForCarrier($carrier);
+        $requiredFields = $this->requiredAdditionalFieldNames($additionalFields);
 
         if ($requiredFields !== []) {
             return $this->result(
@@ -125,8 +116,9 @@ final class PolkurierCarrierAvailabilityGuard
                 blocking: false,
                 severity: 'warning',
                 courierCode: $courierCode,
-                message: 'Polkurier carrier '.$courierCode.' reports required additional fields: '.implode(', ', $requiredFields).'.',
+                message: 'Polkurier carrier '.$courierCode.' requires additional fields. Fill them in before creating the shipment.',
                 missingRequiredFields: $requiredFields,
+                additionalFields: $additionalFields,
             );
         }
 
@@ -136,16 +128,58 @@ final class PolkurierCarrierAvailabilityGuard
             severity: 'success',
             courierCode: $courierCode,
             message: 'Polkurier carrier '.$courierCode.' is available.',
+            additionalFields: $additionalFields,
         );
     }
 
-    public function ensureCanCreateShipment(Order $order): void
+    /**
+     * @param array<string, mixed> $additionalFields
+     */
+    public function ensureCanCreateShipment(Order $order, array $additionalFields = []): void
     {
         $check = $this->check($order);
 
         if ($check['blocking']) {
             throw new PolkurierCarrierAvailabilityException((string) $check['message']);
         }
+
+        if (! $this->blockRequiredAdditionalFields()) {
+            return;
+        }
+
+        $missingRequiredFields = $this->missingRequiredAdditionalFields(
+            $check['additional_fields'],
+            $additionalFields,
+        );
+
+        if ($missingRequiredFields === []) {
+            return;
+        }
+
+        throw new PolkurierCarrierAvailabilityException(
+            'Polkurier carrier '.$check['courier_code'].' requires additional fields that are missing: '
+            .implode(', ', $missingRequiredFields).'.'
+        );
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function additionalFieldDefinitions(Order $order): array
+    {
+        $courierCode = $this->courierCode($order);
+
+        if ($courierCode === null || ! $this->availableCarriersService->hasCachedData()) {
+            return [];
+        }
+
+        $carrier = $this->findCarrier($courierCode);
+
+        if ($carrier === null) {
+            return [];
+        }
+
+        return $this->additionalFieldDefinitionsForCarrier($carrier);
     }
 
     /**
@@ -207,9 +241,9 @@ final class PolkurierCarrierAvailabilityGuard
 
     /**
      * @param array<string, mixed> $carrier
-     * @return array<int, string>
+     * @return array<int, array<string, mixed>>
      */
-    private function requiredAdditionalFields(array $carrier): array
+    private function additionalFieldDefinitionsForCarrier(array $carrier): array
     {
         $fields = data_get($carrier, 'additional_data.additional_fields');
 
@@ -221,13 +255,74 @@ final class PolkurierCarrierAvailabilityGuard
             return [];
         }
 
-        $required = [];
+        $definitions = [];
 
         foreach ($fields as $field) {
             if (! is_array($field)) {
                 continue;
             }
 
+            $name = $field['name'] ?? null;
+
+            if (! is_string($name) || trim($name) === '') {
+                continue;
+            }
+
+            $type = strtoupper((string) ($field['type'] ?? 'TEXT'));
+
+            if (! in_array($type, ['TEXT', 'SELECT'], true)) {
+                $type = 'TEXT';
+            }
+
+            $options = [];
+
+            if (isset($field['options']) && is_array($field['options'])) {
+                foreach ($field['options'] as $option) {
+                    if (! is_array($option)) {
+                        continue;
+                    }
+
+                    $value = $option['value'] ?? null;
+
+                    if (! is_scalar($value) || trim((string) $value) === '') {
+                        continue;
+                    }
+
+                    $options[] = [
+                        'value' => trim((string) $value),
+                        'label' => is_scalar($option['label'] ?? null)
+                            ? trim((string) $option['label'])
+                            : trim((string) $value),
+                    ];
+                }
+            }
+
+            $definitions[] = [
+                'name' => trim($name),
+                'label' => is_scalar($field['label'] ?? null) && trim((string) $field['label']) !== ''
+                    ? trim((string) $field['label'])
+                    : trim($name),
+                'description' => is_scalar($field['description'] ?? null)
+                    ? trim((string) $field['description'])
+                    : '',
+                'type' => $type,
+                'required' => ($field['required'] ?? false) === true,
+                'options' => $options,
+            ];
+        }
+
+        return $definitions;
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $additionalFieldDefinitions
+     * @return array<int, string>
+     */
+    private function requiredAdditionalFieldNames(array $additionalFieldDefinitions): array
+    {
+        $required = [];
+
+        foreach ($additionalFieldDefinitions as $field) {
             if (($field['required'] ?? false) !== true) {
                 continue;
             }
@@ -243,13 +338,34 @@ final class PolkurierCarrierAvailabilityGuard
     }
 
     /**
+     * @param array<int, array<string, mixed>> $additionalFieldDefinitions
+     * @param array<string, mixed> $additionalFields
+     * @return array<int, string>
+     */
+    private function missingRequiredAdditionalFields(array $additionalFieldDefinitions, array $additionalFields): array
+    {
+        $missing = [];
+
+        foreach ($this->requiredAdditionalFieldNames($additionalFieldDefinitions) as $fieldName) {
+            $value = $additionalFields[$fieldName] ?? null;
+
+            if (! is_scalar($value) || trim((string) $value) === '') {
+                $missing[] = $fieldName;
+            }
+        }
+
+        return $missing;
+    }
+
+    /**
      * @return array{
      *     enabled: bool,
      *     blocking: bool,
      *     severity: string,
      *     courier_code: string|null,
      *     message: string|null,
-     *     missing_required_fields: array<int, string>
+     *     missing_required_fields: array<int, string>,
+     *     additional_fields: array<int, array<string, mixed>>
      * }
      */
     private function result(
@@ -259,6 +375,7 @@ final class PolkurierCarrierAvailabilityGuard
         ?string $courierCode,
         ?string $message,
         array $missingRequiredFields = [],
+        array $additionalFields = [],
     ): array {
         return [
             'enabled' => $enabled,
@@ -267,6 +384,7 @@ final class PolkurierCarrierAvailabilityGuard
             'courier_code' => $courierCode,
             'message' => $message,
             'missing_required_fields' => $missingRequiredFields,
+            'additional_fields' => $additionalFields,
         ];
     }
 

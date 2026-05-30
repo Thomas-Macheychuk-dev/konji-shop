@@ -354,6 +354,68 @@ it('does not allow an admin to cancel a completed order', function (): void {
     expect((string) $order->notes)->not->toContain('Manual admin cancellation.');
 });
 
+it('shows required Polkurier additional fields on the shipment form', function (): void {
+    Cache::put(PolkurierAvailableCarriersService::CACHE_KEY, [
+        [
+            'servicecode' => 'DPD',
+            'name' => 'DPD Classic',
+            'additional_data' => [
+                'shipmenttype' => [
+                    'box' => [
+                        'available' => true,
+                    ],
+                ],
+                'additional_fields' => [
+                    [
+                        'name' => 'external_transport_security',
+                        'label' => 'Transport security',
+                        'description' => 'Describe how the parcel is secured.',
+                        'type' => 'SELECT',
+                        'required' => true,
+                        'options' => [
+                            [
+                                'value' => 'stretch_wrap',
+                                'label' => 'Stretch wrap',
+                            ],
+                            [
+                                'value' => 'cardboard',
+                                'label' => 'Cardboard',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ], now()->addHour());
+
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create([
+        'number' => 'ORD-ADDITIONAL-FIELDS',
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => 'courier',
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('admin.orders.show', $order))
+        ->assertOk()
+        ->assertSee('Polkurier carrier availability')
+        ->assertSee('Polkurier carrier DPD requires additional fields. Fill them in before creating the shipment.')
+        ->assertSee('Polkurier additional fields')
+        ->assertSee('Transport security')
+        ->assertSee('Describe how the parcel is secured.')
+        ->assertSee('polkurier_additional_fields[external_transport_security]', false)
+        ->assertSee('Stretch wrap')
+        ->assertSee('Cardboard')
+        ->assertDontSee('Shipment creation is blocked until this is resolved.');
+});
+
 it('shows shipments on the admin order detail page', function (): void {
     $user = User::factory()->create([
         'is_admin' => true,

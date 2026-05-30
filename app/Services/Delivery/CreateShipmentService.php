@@ -19,12 +19,17 @@ final class CreateShipmentService implements CreatesShipments
         private readonly DeliveryGatewayRegistry $registry,
     ) {}
 
+    /**
+     * @param array<string, mixed>|null $pickup
+     * @param array<string, string> $additionalFields
+     */
     public function create(
         Order $order,
         string $provider,
         ?string $service = null,
         ?string $lockerCode = null,
         ?array $pickup = null,
+        array $additionalFields = [],
     ): Shipment {
         if (! $order->status->isConfirmed()) {
             throw new RuntimeException('Only confirmed orders can have shipments created.');
@@ -47,6 +52,7 @@ final class CreateShipmentService implements CreatesShipments
                 'pickup' => $pickup ?? [
                         'nocourierorder' => true,
                     ],
+                'additional_fields' => $additionalFields,
             ]);
 
             DB::transaction(function () use ($shipment, $result): void {

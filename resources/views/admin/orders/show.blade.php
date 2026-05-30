@@ -158,6 +158,95 @@
                                 ></div>
                             @endif
 
+                            @if (
+                                $order->delivery_provider === \App\Enums\DeliveryProvider::POLKURIER
+                                && $order->delivery_service !== 'local_pickup'
+                                && ! empty($polkurierAdditionalFieldDefinitions ?? [])
+                            )
+                                <div class="mb-4 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                                    <h3 class="text-sm font-semibold text-amber-900">
+                                        Polkurier additional fields
+                                    </h3>
+
+                                    <p class="mt-1 text-xs text-amber-800">
+                                        This carrier requires extra information before the shipment can be created.
+                                    </p>
+
+                                    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                                        @foreach ($polkurierAdditionalFieldDefinitions as $field)
+                                            @php
+                                                $fieldName = (string) ($field['name'] ?? '');
+                                                $fieldLabel = (string) ($field['label'] ?? $fieldName);
+                                                $fieldDescription = (string) ($field['description'] ?? '');
+                                                $fieldType = (string) ($field['type'] ?? 'TEXT');
+                                                $fieldRequired = (bool) ($field['required'] ?? false);
+                                                $fieldOptions = is_array($field['options'] ?? null) ? $field['options'] : [];
+                                                $inputId = 'polkurier_additional_field_'.$fieldName;
+                                                $inputName = 'polkurier_additional_fields['.$fieldName.']';
+                                                $oldValue = old('polkurier_additional_fields.'.$fieldName);
+                                            @endphp
+
+                                            @continue($fieldName === '')
+
+                                            <div>
+                                                <label for="{{ $inputId }}" class="block text-xs font-medium text-amber-900">
+                                                    {{ $fieldLabel }}
+
+                                                    @if ($fieldRequired)
+                                                        <span class="text-red-700">*</span>
+                                                    @endif
+                                                </label>
+
+                                                @if ($fieldDescription !== '')
+                                                    <p class="mt-1 text-xs text-amber-700">
+                                                        {{ $fieldDescription }}
+                                                    </p>
+                                                @endif
+
+                                                @if ($fieldType === 'SELECT' && $fieldOptions !== [])
+                                                    <select
+                                                        id="{{ $inputId }}"
+                                                        name="{{ $inputName }}"
+                                                        @required($fieldRequired)
+                                                        class="mt-2 block w-full rounded-xl border border-amber-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-amber-700 focus:ring-4 focus:ring-amber-100"
+                                                    >
+                                                        <option value="">
+                                                            Select option
+                                                        </option>
+
+                                                        @foreach ($fieldOptions as $option)
+                                                            @php
+                                                                $optionValue = (string) ($option['value'] ?? '');
+                                                                $optionLabel = (string) ($option['label'] ?? $optionValue);
+                                                            @endphp
+
+                                                            <option value="{{ $optionValue }}" @selected((string) $oldValue === $optionValue)>
+                                                                {{ $optionLabel }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                @else
+                                                    <input
+                                                        id="{{ $inputId }}"
+                                                        type="text"
+                                                        name="{{ $inputName }}"
+                                                        value="{{ $oldValue }}"
+                                                        @required($fieldRequired)
+                                                        class="mt-2 block w-full rounded-xl border border-amber-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-amber-700 focus:ring-4 focus:ring-amber-100"
+                                                    >
+                                                @endif
+
+                                                @error('polkurier_additional_fields.'.$fieldName)
+                                                <p class="mt-1 text-xs text-red-700">
+                                                    {{ $message }}
+                                                </p>
+                                                @enderror
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+
                             <button
                                 class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60"
                                 @disabled(($polkurierCarrierAvailabilityCheck['blocking'] ?? false) === true)
