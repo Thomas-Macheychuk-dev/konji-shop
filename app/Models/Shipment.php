@@ -10,6 +10,7 @@ use DomainException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\DeliveryCarrier;
+use App\Events\ShipmentDispatched;
 
 class Shipment extends Model
 {
@@ -28,6 +29,7 @@ class Shipment extends Model
         'label_disk',
         'label_path',
         'label_downloaded_at',
+        'tracking_email_sent_at',
     ];
 
     protected function casts(): array
@@ -39,6 +41,7 @@ class Shipment extends Model
             'shipped_at' => 'datetime',
             'delivered_at' => 'datetime',
             'label_downloaded_at' => 'datetime',
+            'tracking_email_sent_at' => 'datetime',
         ];
     }
 
@@ -87,6 +90,8 @@ class Shipment extends Model
                 'tracking_url' => $this->tracking_url,
             ],
         ]);
+
+        ShipmentDispatched::dispatch($this->refresh());
     }
 
     public function markAsDelivered(array $payload = []): void

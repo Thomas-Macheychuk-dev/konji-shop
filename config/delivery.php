@@ -55,7 +55,7 @@ return [
                 'email' => env('POLKURIER_SENDER_EMAIL'),
                 'phone' => env('POLKURIER_SENDER_PHONE'),
                 'country' => env('POLKURIER_SENDER_COUNTRY', 'PL'),
-                'machinename' => env('POLKURIER_SENDER_MACHINE_NAME'),
+                'point_id' => env('POLKURIER_SENDER_POINT_ID', env('POLKURIER_SENDER_MACHINE_NAME')),
             ],
         ],
     ],
