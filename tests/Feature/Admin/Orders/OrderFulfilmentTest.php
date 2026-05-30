@@ -1,16 +1,16 @@
 <?php
 
+use App\Contracts\Delivery\CreatesShipments;
 use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Enums\ShipmentStatus;
 use App\Models\Order;
+use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\Shipment;
-use App\Contracts\Delivery\CreatesShipments;
-use App\Enums\ShipmentStatus;
 
 uses(RefreshDatabase::class);
 
@@ -52,7 +52,7 @@ it('allows retrying shipment creation after a failed shipment', function (): voi
         ],
     ]);
 
-    $this->mock(\App\Contracts\Delivery\CreatesShipments::class, function ($mock) use ($order): void {
+    $this->mock(CreatesShipments::class, function ($mock) use ($order): void {
         $mock
             ->shouldReceive('create')
             ->once()
@@ -78,14 +78,14 @@ it('allows retrying shipment creation after a failed shipment', function (): voi
         ->assertRedirect()
         ->assertSessionHas('success');
 
-    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::SHIPPED);
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
     expect($order->shipments()->count())->toBe(2);
 
     $latestShipment = $order->shipments()->latest('id')->first();
 
     expect($latestShipment)
         ->provider_reference->toBe('retry-polkurier-order-123')
-        ->status->toBe(ShipmentStatus::DISPATCHED);
+        ->status->toBe(ShipmentStatus::CREATED);
 });
 
 it('redirects back with an error and stores failed shipment when shipment creation fails', function (): void {
@@ -102,7 +102,7 @@ it('redirects back with an error and stores failed shipment when shipment creati
         'delivery_service' => 'courier',
     ]);
 
-    $this->mock(\App\Contracts\Delivery\CreatesShipments::class, function ($mock): void {
+    $this->mock(CreatesShipments::class, function ($mock): void {
         $mock
             ->shouldReceive('create')
             ->once()
@@ -192,7 +192,7 @@ it('redirects back with error for an invalid fulfilment action', function (): vo
     expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::UNFULFILLED);
 });
 
-it('allows an authenticated user to ship an order through the admin route', function (): void {
+it('allows an authenticated user to create a shipment through the admin route', function (): void {
     $user = User::factory()->create([
         'is_admin' => true,
     ]);
@@ -211,7 +211,7 @@ it('allows an authenticated user to ship an order through the admin route', func
         $mock->shouldReceive('create')
             ->once()
             ->with(
-                \Mockery::on(fn (Order $givenOrder): bool => $givenOrder->is($order)),
+                Mockery::on(fn (Order $givenOrder): bool => $givenOrder->is($order)),
                 DeliveryProvider::POLKURIER->value,
                 'courier',
                 null,
@@ -246,8 +246,14 @@ it('allows an authenticated user to ship an order through the admin route', func
         ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']))
         ->assertRedirect();
 
-    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::SHIPPED);
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
     expect($order->shipments()->count())->toBe(1);
+
+    $shipment = $order->shipments()->latest('id')->first();
+
+    expect($shipment)
+        ->not->toBeNull()
+        ->status->toBe(ShipmentStatus::CREATED);
 });
 
 it('marks a pickup order as ready for pickup instead of creating a shipment', function (): void {
@@ -340,7 +346,7 @@ it('passes explicit Polkurier courier pickup data when creating a shipment throu
         $mock->shouldReceive('create')
             ->once()
             ->with(
-                \Mockery::on(fn (Order $givenOrder): bool => $givenOrder->is($order)),
+                Mockery::on(fn (Order $givenOrder): bool => $givenOrder->is($order)),
                 DeliveryProvider::POLKURIER->value,
                 'courier',
                 null,
@@ -379,8 +385,14 @@ it('passes explicit Polkurier courier pickup data when creating a shipment throu
         ])
         ->assertRedirect();
 
-    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::SHIPPED);
+    expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
     expect($order->shipments()->count())->toBe(1);
+
+    $shipment = $order->shipments()->latest('id')->first();
+
+    expect($shipment)
+        ->not->toBeNull()
+        ->status->toBe(ShipmentStatus::CREATED);
 });
 
 it('marks a shipped order as returned to sender through the admin route', function (): void {

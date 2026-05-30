@@ -67,17 +67,13 @@ final class OrderFulfilmentController extends Controller
 
         $pickup = $this->polkurierPickupData($request);
 
-        $shipment = $this->createShipmentService->create(
+        $this->createShipmentService->create(
             order: $order,
             provider: $order->delivery_provider->value,
             service: $order->delivery_service,
             lockerCode: $order->delivery_locker_code,
             pickup: $pickup,
         );
-
-        $shipment->markAsDispatched();
-
-        $order->markAsShipped();
     }
 
     private function deliverOrder(Order $order): void

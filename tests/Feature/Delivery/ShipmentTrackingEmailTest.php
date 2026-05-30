@@ -18,7 +18,7 @@ beforeEach(function (): void {
     Mail::fake();
 });
 
-it('sends a tracking email when a shipment is dispatched', function (): void {
+it('sends a tracking email when shipment tracking becomes available', function (): void {
     $order = Order::factory()->guest('guest@example.test')->paid()->create([
         'delivery_provider' => DeliveryProvider::POLKURIER,
         'delivery_carrier' => DeliveryCarrier::INPOST,
@@ -51,7 +51,7 @@ it('sends a tracking email when a shipment is dispatched', function (): void {
         'locker_code' => 'WAW01A',
     ]);
 
-    $shipment->markAsDispatched();
+    $shipment->markAsCreated('1234-10');
 
     Mail::assertSent(ShipmentTrackingMail::class, function (ShipmentTrackingMail $mail) use ($shipment): bool {
         return $mail->hasTo('guest@example.test')
@@ -80,8 +80,28 @@ it('does not send the tracking email twice for the same shipment', function (): 
         'service' => DeliveryService::COURIER->value,
     ]);
 
-    $shipment->markAsDispatched();
-    $shipment->markAsDispatched();
+    $shipment->markAsCreated('1234-11');
+    $shipment->markAsCreated('1234-11');
 
     Mail::assertSent(ShipmentTrackingMail::class, 1);
+});
+
+it('does not send a tracking email when tracking details are missing', function (): void {
+    $order = Order::factory()->guest('guest@example.test')->paid()->create([
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => DeliveryService::COURIER->value,
+    ]);
+
+    $shipment = Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'provider_reference' => '1234-12',
+        'status' => ShipmentStatus::PENDING,
+        'service' => DeliveryService::COURIER->value,
+    ]);
+
+    $shipment->markAsCreated('1234-12');
+
+    Mail::assertNothingSent();
 });

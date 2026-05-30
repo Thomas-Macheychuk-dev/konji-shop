@@ -8,7 +8,7 @@ use App\Models\Shipment;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ShipmentDispatched
+class ShipmentTrackingAvailable
 {
     use Dispatchable;
     use SerializesModels;

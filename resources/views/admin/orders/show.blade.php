@@ -133,7 +133,7 @@
                                 @elseif ($latestFailedShipment)
                                     Retry create shipment
                                 @else
-                                    Create shipment & mark as shipped
+                                    Create shipment
                                 @endif
                             </button>
                         </form>

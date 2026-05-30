@@ -36,7 +36,7 @@ final class SyncPolkurierShipmentStatusService
 
         match ($statusCode) {
             'O', 'P' => $this->syncCreated($shipment, $payload),
-            'WP' => $shipment->markAsInTransit($payload),
+            'WP' => $this->syncInTransit($shipment, $payload),
             'D' => $this->syncDelivered($shipment, $payload),
             'A' => $shipment->markAsCancelled($payload),
             'Z' => $this->syncReturned($shipment, $payload),
@@ -58,13 +58,34 @@ final class SyncPolkurierShipmentStatusService
         $shipment->syncProviderPayload($payload);
     }
 
+    private function syncInTransit(Shipment $shipment, array $payload): void
+    {
+        if ($shipment->status !== ShipmentStatus::IN_TRANSIT) {
+            $shipment->markAsInTransit($payload);
+        } else {
+            $shipment->syncProviderPayload($payload);
+        }
+
+        $order = $shipment->order;
+
+        if ($order->fulfilment_status === FulfilmentStatus::PROCESSING) {
+            $order->markAsShipped();
+        }
+    }
+
     private function syncDelivered(Shipment $shipment, array $payload): void
     {
         if ($shipment->status !== ShipmentStatus::DELIVERED) {
             $shipment->markAsDelivered($payload);
+        } else {
+            $shipment->syncProviderPayload($payload);
         }
 
         $order = $shipment->order;
+
+        if ($order->fulfilment_status === FulfilmentStatus::PROCESSING) {
+            $order->markAsShipped();
+        }
 
         if ($order->fulfilment_status === FulfilmentStatus::SHIPPED) {
             $order->markAsDelivered();
