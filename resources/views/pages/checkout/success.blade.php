@@ -117,6 +117,8 @@
                     </div>
                 </div>
 
+                @include('partials.orders.shipment-tracking', ['order' => $order])
+
                 @if ($order->notes)
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                         <h2 class="text-lg font-semibold text-zinc-900">Order notes</h2>
@@ -197,11 +199,13 @@
                                 <p>{{ $order->shippingAddress->company }}</p>
                             @endif
 
-                            <p>{{ $order->shippingAddress->address_line_1 }}
+                            <p>
+                                {{ $order->shippingAddress->address_line_1 }}
 
-                            @if ($order->shippingAddress->address_line_2)
-                                / {{ $order->shippingAddress->address_line_2 }}
-                            @endif</p>
+                                @if ($order->shippingAddress->address_line_2)
+                                    / {{ $order->shippingAddress->address_line_2 }}
+                                @endif
+                            </p>
 
                             <p>
                                 {{ $order->shippingAddress->postcode }}
@@ -229,11 +233,13 @@
                                 <p>{{ $order->billingAddress->company }}</p>
                             @endif
 
-                            <p>{{ $order->billingAddress->address_line_1 }}
+                            <p>
+                                {{ $order->billingAddress->address_line_1 }}
 
-                            @if ($order->billingAddress->address_line_2)
-                                / {{ $order->billingAddress->address_line_2 }}
-                            @endif</p>
+                                @if ($order->billingAddress->address_line_2)
+                                    / {{ $order->billingAddress->address_line_2 }}
+                                @endif
+                            </p>
 
                             <p>
                                 {{ $order->billingAddress->postcode }}

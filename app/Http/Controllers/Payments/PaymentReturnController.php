@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Payments;
 
 use App\Models\Order;
 use App\Models\Payment;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -14,31 +15,44 @@ class PaymentReturnController
     public function __invoke(Request $request): View
     {
         $paymentId = $request->query('paymentId');
-        $statusFromPaynow = $request->query('status'); // PAID / ERROR / REJECTED itp.
+        $statusFromPaynow = $request->query('status'); // PAID / ERROR / REJECTED / CANCELED etc.
 
         $payment = null;
         $order = null;
         $isSuccess = false;
 
         if ($paymentId) {
-            $payment = Payment::where('provider_reference', $paymentId)
-                ->with('order')
+            $payment = Payment::query()
+                ->where('provider_reference', $paymentId)
+                ->with([
+                    'order' => fn (Builder $query): Builder => $query->with($this->orderRelations()),
+                ])
                 ->first();
+
+            $order = $payment?->order;
         }
 
         if (! $payment) {
             $lastOrderId = $request->session()->get('checkout.last_order_id');
+
             if ($lastOrderId) {
-                $order = Order::with('payments')->find($lastOrderId);
+                $order = Order::query()
+                    ->with($this->orderRelations())
+                    ->find($lastOrderId);
+
                 if ($order) {
-                    $payment = $order->payments()->latest('id')->first();
+                    $payment = $order->payments()
+                        ->latest('id')
+                        ->first();
                 }
             }
         }
 
-        if ($payment) {
-            $order = $payment->order ?? $order;
+        if ($order) {
+            $order->loadMissing($this->orderRelations());
+        }
 
+        if ($payment) {
             $isFailure = in_array($statusFromPaynow, ['ERROR', 'REJECTED', 'CANCELED'], true);
 
             $isSuccess = ! $isFailure;
@@ -57,5 +71,20 @@ class PaymentReturnController
             'status' => $statusFromPaynow,
             'message' => $message,
         ]);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function orderRelations(): array
+    {
+        return [
+            'items.product',
+            'items.variant.attributeValues.attribute',
+            'shippingAddress',
+            'billingAddress',
+            'payments',
+            'shipments',
+        ];
     }
 }
