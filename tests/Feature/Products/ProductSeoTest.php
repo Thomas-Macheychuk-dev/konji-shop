@@ -62,6 +62,8 @@ it('renders product SEO metadata and structured data', function (): void {
         ->assertSee('"priceCurrency": "PLN"', false)
         ->assertSee('"price": "123.00"', false)
         ->assertSee('"availability": "https://schema.org/InStock"', false)
+        ->assertSee('"@type": "MerchantReturnPolicy"', false)
+        ->assertSee('"merchantReturnDays": 14', false)
         ->assertSee('"@type": "BreadcrumbList"', false);
 
     expect($response->getContent())
@@ -155,4 +157,58 @@ it('renders product Open Graph and Twitter image metadata when a main image exis
         ->assertSee('<meta name="twitter:image" content="'.$imageUrl.'">', false)
         ->assertSee('"image": [', false)
         ->assertSee('"'.$imageUrl.'"', false);
+});
+
+
+it('does not render inactive products publicly', function (): void {
+    $product = Product::query()->create([
+        'name' => 'Draft SEO Product',
+        'slug' => 'draft-seo-product',
+        'short_description' => 'Draft product should not be indexable.',
+        'status' => ProductStatus::DRAFT,
+    ]);
+
+    $this
+        ->get(route('products.show', $product->slug))
+        ->assertNotFound();
+});
+
+it('uses only active variants for product SEO and page payload', function (): void {
+    Config::set('app.name', 'Konji Shop');
+
+    $product = Product::query()->create([
+        'name' => 'Variant SEO Product',
+        'slug' => 'variant-seo-product',
+        'short_description' => 'Product with active and inactive variants.',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'INACTIVE-DEFAULT-SKU',
+        'status' => ProductVariantStatus::ARCHIVED,
+        'price_net_amount' => 1000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+
+    ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'ACTIVE-SKU',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => 2000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => false,
+    ]);
+
+    $this
+        ->get(route('products.show', $product->slug))
+        ->assertOk()
+        ->assertSee('"sku": "ACTIVE-SKU"', false)
+        ->assertSee('"price": "24.60"', false)
+        ->assertDontSee('INACTIVE-DEFAULT-SKU');
 });

@@ -14,6 +14,26 @@
     $ogImage = $openGraphImage ?? null;
     $ogType = $openGraphType ?? 'website';
 
+    $defaultNoindexRoutes = [
+        'admin.*',
+        'cart.*',
+        'checkout.*',
+        'account.*',
+        'dashboard',
+        'guest.orders.*',
+        'login',
+        'register',
+        'password.*',
+        'verification.*',
+        'two-factor.*',
+        'settings.*',
+        'withdrawals.*',
+        'payments.*',
+    ];
+
+    $robotsContent = $robots
+        ?? (request()->routeIs(...$defaultNoindexRoutes) ? 'noindex, follow' : null);
+
     $structuredDataItems = collect($structuredData ?? [])
         ->filter(fn ($item) => is_array($item) && $item !== [])
         ->values();
@@ -27,6 +47,10 @@
 
 @if (filled($description))
     <meta name="description" content="{{ $description }}">
+@endif
+
+@if (filled($robotsContent))
+    <meta name="robots" content="{{ $robotsContent }}">
 @endif
 
 <link rel="canonical" href="{{ $canonical }}">

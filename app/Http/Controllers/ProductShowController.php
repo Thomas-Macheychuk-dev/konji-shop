@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Models\AttributeValue;
 use App\Models\Product;
@@ -23,10 +24,14 @@ class ProductShowController extends Controller
 
     public function __invoke(Product $product): View
     {
+        abort_unless($product->status?->isActive() === true, 404);
+
         $product->load([
             'mainImage',
             'images',
-            'variants.attributeValues.attribute',
+            'variants' => fn ($query) => $query
+                ->where('status', ProductVariantStatus::ACTIVE->value)
+                ->with('attributeValues.attribute'),
             'attributeValueImages.attributeValue.attribute',
         ]);
 
@@ -56,6 +61,7 @@ class ProductShowController extends Controller
         return view('pages.products.show', [
             'product' => $product,
             'productPayload' => $productPayload,
+            'defaultVariant' => $defaultVariant,
 
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
@@ -153,10 +159,26 @@ class ProductShowController extends Controller
                     '@type' => 'Organization',
                     'name' => $this->shopSettings->companyName(),
                 ],
+                'hasMerchantReturnPolicy' => $this->merchantReturnPolicyStructuredData(),
             ];
         }
 
         return $data;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function merchantReturnPolicyStructuredData(): array
+    {
+        return [
+            '@type' => 'MerchantReturnPolicy',
+            'applicableCountry' => 'PL',
+            'returnPolicyCategory' => 'https://schema.org/MerchantReturnFiniteReturnWindow',
+            'merchantReturnDays' => $this->shopSettings->withdrawalDays(),
+            'returnMethod' => 'https://schema.org/ReturnByMail',
+            'returnFees' => 'https://schema.org/ReturnShippingFees',
+        ];
     }
 
     /**

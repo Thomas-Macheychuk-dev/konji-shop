@@ -1,14 +1,28 @@
 <?php
 
+use App\Enums\CategoryStatus;
 use App\Enums\ProductStatus;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 
 uses(RefreshDatabase::class);
 
-it('renders an XML sitemap with public pages and active products', function (): void {
+it('renders an XML sitemap with public pages, active categories and active products', function (): void {
     Config::set('app.url', 'https://konji-shop.example.test');
+
+    $activeCategory = Category::query()->create([
+        'name' => 'Sitemap Active Category',
+        'slug' => 'sitemap-active-category',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    $inactiveCategory = Category::query()->create([
+        'name' => 'Sitemap Archived Category',
+        'slug' => 'sitemap-archived-category',
+        'status' => CategoryStatus::ARCHIVED,
+    ]);
 
     $activeProduct = Product::query()->create([
         'name' => 'Sitemap Active Product',
@@ -32,6 +46,8 @@ it('renders an XML sitemap with public pages and active products', function (): 
         ->assertSee(route('legal.terms'), false)
         ->assertSee(route('legal.privacy'), false)
         ->assertSee(route('legal.returns'), false)
+        ->assertSee(route('categories.show', $activeCategory->slug), false)
         ->assertSee(route('products.show', $activeProduct->slug), false)
+        ->assertDontSee(route('categories.show', $inactiveCategory->slug), false)
         ->assertDontSee(route('products.show', $inactiveProduct->slug), false);
 });
