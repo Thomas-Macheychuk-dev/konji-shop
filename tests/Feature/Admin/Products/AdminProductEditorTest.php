@@ -5,7 +5,11 @@ use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Enums\VatRate;
+use App\Models\Attribute;
+use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\ProductAttributeValueImage;
+use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -51,6 +55,63 @@ function createProductForAdminProductEditorTest(): Product
     return $product;
 }
 
+/**
+ * @return array{product_image: ProductImage, second_product_image: ProductImage, attribute_value_image: ProductAttributeValueImage}
+ */
+function createImagesForAdminProductEditorTest(Product $product): array
+{
+    $productImage = ProductImage::query()->create([
+        'product_id' => $product->id,
+        'disk' => 'public',
+        'path' => 'products/editable/base-product-image.jpg',
+        'alt_text' => 'Base product image',
+        'title' => 'Base product image',
+        'sort_order' => 1,
+        'is_main' => true,
+    ]);
+
+    $secondProductImage = ProductImage::query()->create([
+        'product_id' => $product->id,
+        'disk' => 'public',
+        'path' => 'products/editable/second-product-image.jpg',
+        'alt_text' => 'Second product image',
+        'title' => 'Second product image',
+        'sort_order' => 2,
+        'is_main' => false,
+    ]);
+
+    $attribute = Attribute::query()->create([
+        'name' => 'Colour',
+        'slug' => 'colour',
+    ]);
+
+    $attributeValue = AttributeValue::query()->create([
+        'attribute_id' => $attribute->id,
+        'value' => 'Navy',
+        'slug' => 'navy',
+        'sort_order' => 1,
+    ]);
+
+    $product->variants()->firstOrFail()->attributeValues()->attach($attributeValue);
+
+    $attributeValueImage = ProductAttributeValueImage::query()->create([
+        'product_id' => $product->id,
+        'attribute_value_id' => $attributeValue->id,
+        'disk' => 'public',
+        'path' => 'products/editable/navy-variant-image.jpg',
+        'alt_text' => 'Navy variant image',
+        'title' => 'Navy variant image',
+        'sort_order' => 1,
+        'is_main' => true,
+    ]);
+
+    return [
+        'product_image' => $productImage,
+        'second_product_image' => $secondProductImage,
+        'attribute_value_image' => $attributeValueImage,
+    ];
+}
+
 it('shows the admin product index', function (): void {
     $admin = User::factory()->create([
         'is_admin' => true,
@@ -81,6 +142,7 @@ it('shows the admin product edit page with variants', function (): void {
         ->assertSee('Editable Product')
         ->assertSee('Product name')
         ->assertSee('Save product')
+        ->assertSee('Default product picture')
         ->assertSee('Apply package data to all variants')
         ->assertSee('EDIT-MISSING')
         ->assertSee('EDIT-COMPLETE')
@@ -88,6 +150,111 @@ it('shows the admin product edit page with variants', function (): void {
         ->assertSee(ProductStatus::DRAFT->label())
         ->assertSee(ProductStatus::ACTIVE->label())
         ->assertSee(ProductStatus::ARCHIVED->label());
+});
+
+
+it('shows selectable product and variant images on the admin product edit page', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    createImagesForAdminProductEditorTest($product);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.edit', $product))
+        ->assertOk()
+        ->assertSee('Default product picture')
+        ->assertSee('Product images')
+        ->assertSee('Variant images')
+        ->assertSee('Base product image')
+        ->assertSee('Colour: Navy')
+        ->assertSee('Save default picture');
+});
+
+it('allows an admin to choose a product gallery image as the default product image', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $images = createImagesForAdminProductEditorTest($product);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.default-image.update', $product), [
+            'default_image' => Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE.':'.$images['second_product_image']->id,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    expect($product->refresh())
+        ->default_image_type->toBe(Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE)
+        ->default_image_id->toBe($images['second_product_image']->id)
+        ->default_image_url->toBe($images['second_product_image']->refresh()->url);
+
+    expect($images['product_image']->refresh()->is_main)->toBeFalse();
+    expect($images['second_product_image']->refresh()->is_main)->toBeTrue();
+});
+
+it('allows an admin to choose a variant image as the default product image', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $images = createImagesForAdminProductEditorTest($product);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.default-image.update', $product), [
+            'default_image' => Product::DEFAULT_IMAGE_TYPE_ATTRIBUTE_VALUE_IMAGE.':'.$images['attribute_value_image']->id,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    expect($product->refresh())
+        ->default_image_type->toBe(Product::DEFAULT_IMAGE_TYPE_ATTRIBUTE_VALUE_IMAGE)
+        ->default_image_id->toBe($images['attribute_value_image']->id)
+        ->default_image_url->toBe($images['attribute_value_image']->refresh()->url);
+
+    expect($images['product_image']->refresh()->is_main)->toBeTrue();
+});
+
+it('does not allow an admin to choose an image from another product as the default product image', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    createImagesForAdminProductEditorTest($product);
+
+    $otherProduct = Product::query()->create([
+        'name' => 'Other Product',
+        'slug' => 'other-default-image-product',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    $otherImage = ProductImage::query()->create([
+        'product_id' => $otherProduct->id,
+        'disk' => 'public',
+        'path' => 'products/other/image.jpg',
+        'alt_text' => 'Other image',
+        'sort_order' => 1,
+        'is_main' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.default-image.update', $product), [
+            'default_image' => Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE.':'.$otherImage->id,
+        ])
+        ->assertSessionHasErrors(['default_image']);
+
+    expect($product->refresh())
+        ->default_image_type->toBeNull()
+        ->default_image_id->toBeNull();
 });
 
 it('allows an admin to apply package data to all product variants', function (): void {

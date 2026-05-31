@@ -42,7 +42,9 @@
                             $product = $item->product;
                             $variant = $item->variant;
                             $productUrl = $product?->slug ? route('products.show', $product->slug) : null;
-                            $imageUrl = $variant?->main_image_url ?? ($item->meta['image_url'] ?? null);
+                            $imageUrl = $variant?->main_image_url
+                                ?? $product?->default_image_url
+                                ?? ($item->meta['image_url'] ?? null);
                             $currentUnitPrice = $item->currentUnitPriceAmount();
                             $currentLineTotal = $item->currentLineTotalAmount();
                             $priceChanged = $currentUnitPrice !== null && (int) $item->unit_price !== $currentUnitPrice;

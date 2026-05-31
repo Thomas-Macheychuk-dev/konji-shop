@@ -13,6 +13,9 @@ final class AdminProductEditController extends Controller
     public function __invoke(Product $product): View
     {
         $product->load([
+            'mainImage',
+            'images',
+            'attributeValueImages.attributeValue.attribute',
             'variants.attributeValues.attribute',
         ]);
 

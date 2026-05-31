@@ -110,6 +110,16 @@ class ProductVariant extends Model
         return $this->main_image?->url;
     }
 
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        return $this->main_image_url;
+    }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->main_image_url;
+    }
+
     public function hasCompletePackageDimensions(): bool
     {
         return $this->package_weight_grams !== null

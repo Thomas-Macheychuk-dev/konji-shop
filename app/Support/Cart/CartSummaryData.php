@@ -103,6 +103,8 @@ class CartSummaryData
     protected static function resolveVariantImageUrl(CartItem $item): ?string
     {
         $variant = $item->variant;
-        return $variant?->main_image_url ?? ($item->meta['image_url'] ?? null);
+        return $variant?->main_image_url
+            ?? $item->product?->default_image_url
+            ?? ($item->meta['image_url'] ?? null);
     }
 }

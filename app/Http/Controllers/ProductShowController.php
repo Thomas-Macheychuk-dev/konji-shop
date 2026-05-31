@@ -7,6 +7,8 @@ namespace App\Http\Controllers;
 use App\Enums\StockStatus;
 use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\ProductAttributeValueImage;
+use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Shop\ShopSettings;
 use Illuminate\Contracts\View\View;
@@ -37,15 +39,8 @@ class ProductShowController extends Controller
             'name' => $product->name,
             'slug' => $product->slug,
             'description' => $product->description,
-            'base_images' => $product->images
-                ->map(fn ($image) => [
-                    'id' => $image->id,
-                    'url' => $image->url,
-                    'alt' => $image->alt_text ?: $product->name,
-                    'is_main' => (bool) $image->is_main,
-                    'sort_order' => $image->sort_order,
-                ])
-                ->values(),
+            'default_image' => $this->imagePayload($product->selectedDefaultImage(), $product->name),
+            'base_images' => $this->baseImages($product),
 
             'option_groups' => $this->buildOptionGroups($product),
             'variants' => $this->buildVariants($product),
@@ -93,8 +88,8 @@ class ProductShowController extends Controller
 
     private function openGraphImage(Product $product, ?ProductVariant $defaultVariant): ?string
     {
-        $imageUrl = $defaultVariant?->main_image_url
-            ?? $product->mainImage?->url
+        $imageUrl = $product->default_image_url
+            ?? $defaultVariant?->main_image_url
             ?? $product->images->first()?->url;
 
         return $this->absoluteUrl($imageUrl);
@@ -196,6 +191,10 @@ class ProductShowController extends Controller
     {
         $urls = collect();
 
+        if ($product->default_image_url) {
+            $urls->push($product->default_image_url);
+        }
+
         if ($defaultVariant?->main_image_url) {
             $urls->push($defaultVariant->main_image_url);
         }
@@ -244,6 +243,39 @@ class ProductShowController extends Controller
         }
 
         return Str::limit($value, $limit, '');
+    }
+
+    private function baseImages(Product $product): array
+    {
+        $defaultImage = $product->selectedDefaultImage();
+        $defaultProductImageId = $defaultImage instanceof ProductImage ? $defaultImage->id : null;
+
+        return $product->images
+            ->sortBy(fn (ProductImage $image): array => [
+                $defaultProductImageId === $image->id ? 0 : 1,
+                $image->sort_order,
+                $image->id,
+            ])
+            ->map(fn (ProductImage $image): array => $this->imagePayload($image, $product->name))
+            ->values()
+            ->all();
+    }
+
+    private function imagePayload(ProductImage|ProductAttributeValueImage|null $image, string $fallbackAlt): ?array
+    {
+        if ($image === null) {
+            return null;
+        }
+
+        return [
+            'id' => $image instanceof ProductAttributeValueImage
+                ? 'attribute-value-image-'.$image->id
+                : $image->id,
+            'url' => $image->url,
+            'alt' => $image->alt_text ?: $fallbackAlt,
+            'is_main' => (bool) $image->is_main,
+            'sort_order' => $image->sort_order,
+        ];
     }
 
     private function buildOptionGroups(Product $product): array
@@ -323,30 +355,24 @@ class ProductShowController extends Controller
     {
         $variantValueIds = $variant->attributeValues->pluck('id')->all();
 
+        $defaultImage = $product->selectedDefaultImage();
+        $defaultAttributeValueImageId = $defaultImage instanceof ProductAttributeValueImage ? $defaultImage->id : null;
+
         $matchedImages = $product->attributeValueImages
             ->filter(fn ($item) => in_array($item->attribute_value_id, $variantValueIds, true))
-            ->map(fn ($item) => [
-                'id' => 'attribute-value-image-'.$item->id,
-                'url' => $item->url,
-                'alt' => $variant->sku ?: $product->name,
-                'sort_order' => $item->sort_order,
+            ->sortBy(fn (ProductAttributeValueImage $image): array => [
+                $defaultAttributeValueImageId === $image->id ? 0 : 1,
+                $image->sort_order,
+                $image->id,
             ])
-            ->sortBy('sort_order')
+            ->map(fn (ProductAttributeValueImage $image): array => $this->imagePayload($image, $variant->sku ?: $product->name))
             ->values();
 
         if ($matchedImages->isNotEmpty()) {
             return $matchedImages->all();
         }
 
-        return $product->images
-            ->map(fn ($image) => [
-                'id' => $image->id,
-                'url' => $image->url,
-                'alt' => $image->alt_text ?: $product->name,
-                'sort_order' => $image->sort_order,
-            ])
-            ->values()
-            ->all();
+        return $this->baseImages($product);
     }
 
     private function normalizeAttributeCode(string $name): string

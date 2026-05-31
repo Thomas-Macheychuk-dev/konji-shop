@@ -33,6 +33,21 @@
             </div>
         @endif
 
+        @php
+            $currentDefaultImage = $product->selectedDefaultImage();
+            $currentDefaultImageSelection = old('default_image');
+
+            if (! $currentDefaultImageSelection && $currentDefaultImage instanceof \App\Models\ProductImage) {
+                $currentDefaultImageSelection = \App\Models\Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE . ':' . $currentDefaultImage->id;
+            }
+
+            if (! $currentDefaultImageSelection && $currentDefaultImage instanceof \App\Models\ProductAttributeValueImage) {
+                $currentDefaultImageSelection = \App\Models\Product::DEFAULT_IMAGE_TYPE_ATTRIBUTE_VALUE_IMAGE . ':' . $currentDefaultImage->id;
+            }
+
+            $hasSelectableImages = $product->images->isNotEmpty() || $product->attributeValueImages->isNotEmpty();
+        @endphp
+
         <div class="grid gap-6 lg:grid-cols-3">
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">Product details</h2>
@@ -117,6 +132,141 @@
             </div>
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm lg:col-span-2">
+                <div class="flex flex-col gap-5 lg:flex-row lg:items-start">
+                    <div class="w-full lg:w-64">
+                        <h2 class="text-lg font-semibold text-zinc-900">Default product picture</h2>
+
+                        <p class="mt-2 text-sm text-zinc-500">
+                            This image is used as the product fallback/default image before a customer chooses a variant.
+                        </p>
+
+                        <div class="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50">
+                            @if ($currentDefaultImage)
+                                <img
+                                    src="{{ $currentDefaultImage->url }}"
+                                    alt="{{ $currentDefaultImage->alt_text ?: $product->name }}"
+                                    class="aspect-square w-full object-cover"
+                                >
+                            @else
+                                <div class="flex aspect-square w-full items-center justify-center text-sm text-zinc-500">
+                                    No image selected
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="flex-1">
+                        <form
+                            method="POST"
+                            action="{{ route('admin.products.default-image.update', $product) }}"
+                            class="space-y-5"
+                        >
+                            @csrf
+                            @method('PATCH')
+
+                            @if ($hasSelectableImages)
+                                @if ($product->images->isNotEmpty())
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-zinc-900">Product images</h3>
+
+                                        <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+                                            @foreach ($product->images as $image)
+                                                @php
+                                                    $selectionValue = \App\Models\Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE . ':' . $image->id;
+                                                    $isSelected = $currentDefaultImageSelection === $selectionValue;
+                                                @endphp
+
+                                                <label
+                                                    for="default-product-image-{{ $image->id }}"
+                                                    class="block cursor-pointer overflow-hidden rounded-xl border bg-white transition hover:border-zinc-400 {{ $isSelected ? 'border-zinc-900 ring-2 ring-zinc-900/10' : 'border-zinc-200' }}"
+                                                >
+                                                    <input
+                                                        id="default-product-image-{{ $image->id }}"
+                                                        type="radio"
+                                                        name="default_image"
+                                                        value="{{ $selectionValue }}"
+                                                        class="sr-only"
+                                                        @checked($isSelected)
+                                                    >
+
+                                                    <img
+                                                        src="{{ $image->url }}"
+                                                        alt="{{ $image->alt_text ?: $product->name }}"
+                                                        class="aspect-square w-full object-cover"
+                                                    >
+
+                                                    <span class="block truncate px-3 py-2 text-xs font-medium text-zinc-700">
+                                                        {{ $image->title ?: $image->alt_text ?: 'Product image #' . $image->id }}
+                                                    </span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @if ($product->attributeValueImages->isNotEmpty())
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-zinc-900">Variant images</h3>
+
+                                        <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+                                            @foreach ($product->attributeValueImages as $image)
+                                                @php
+                                                    $selectionValue = \App\Models\Product::DEFAULT_IMAGE_TYPE_ATTRIBUTE_VALUE_IMAGE . ':' . $image->id;
+                                                    $isSelected = $currentDefaultImageSelection === $selectionValue;
+                                                    $attributeValue = $image->attributeValue;
+                                                    $variantImageLabel = $attributeValue?->attribute?->name && $attributeValue?->value
+                                                        ? $attributeValue->attribute->name . ': ' . $attributeValue->value
+                                                        : 'Variant image #' . $image->id;
+                                                @endphp
+
+                                                <label
+                                                    for="default-attribute-value-image-{{ $image->id }}"
+                                                    class="block cursor-pointer overflow-hidden rounded-xl border bg-white transition hover:border-zinc-400 {{ $isSelected ? 'border-zinc-900 ring-2 ring-zinc-900/10' : 'border-zinc-200' }}"
+                                                >
+                                                    <input
+                                                        id="default-attribute-value-image-{{ $image->id }}"
+                                                        type="radio"
+                                                        name="default_image"
+                                                        value="{{ $selectionValue }}"
+                                                        class="sr-only"
+                                                        @checked($isSelected)
+                                                    >
+
+                                                    <img
+                                                        src="{{ $image->url }}"
+                                                        alt="{{ $image->alt_text ?: $variantImageLabel }}"
+                                                        class="aspect-square w-full object-cover"
+                                                    >
+
+                                                    <span class="block truncate px-3 py-2 text-xs font-medium text-zinc-700">
+                                                        {{ $variantImageLabel }}
+                                                    </span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @error('default_image')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+
+                                <div class="flex justify-end border-t border-zinc-200 pt-5">
+                                    <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
+                                        Save default picture
+                                    </button>
+                                </div>
+                            @else
+                                <div class="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-6 text-sm text-zinc-500">
+                                    This product does not have any product or variant images yet.
+                                </div>
+                            @endif
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm lg:col-span-3">
                 <h2 class="text-lg font-semibold text-zinc-900">
                     Apply package data to all variants
                 </h2>
