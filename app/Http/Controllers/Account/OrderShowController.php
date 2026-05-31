@@ -22,6 +22,7 @@ class OrderShowController extends Controller
                 'billingAddress',
                 'payments',
                 'shipments',
+                'withdrawalRequests.items',
             ])
             ->findOrFail($orderId);
 

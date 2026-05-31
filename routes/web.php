@@ -46,6 +46,12 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\RobotsTxtController;
+use App\Http\Controllers\Account\OrderWithdrawalCreateController;
+use App\Http\Controllers\Account\OrderWithdrawalStoreController;
+use App\Http\Controllers\GuestOrderWithdrawalCreateController;
+use App\Http\Controllers\GuestOrderWithdrawalStoreController;
+use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalIndexController;
+use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalShowController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -92,6 +98,12 @@ Route::middleware(['auth', 'admin'])
         Route::patch('/orders/{order}/cancel', AdminOrderCancelController::class)
             ->name('orders.cancel');
 
+        Route::get('/orders/{orderId}/withdrawal', OrderWithdrawalCreateController::class)
+            ->name('orders.withdrawals.create');
+
+        Route::post('/orders/{orderId}/withdrawal', OrderWithdrawalStoreController::class)
+            ->name('orders.withdrawals.store');
+
         Route::post('/orders/{order}/shipments', AdminOrderShipmentController::class)
             ->name('orders.shipments.store');
 
@@ -135,6 +147,12 @@ Route::middleware(['auth', 'admin'])
             '/production-readiness',
             AdminShopReadinessController::class
         )->name('shop.readiness');
+
+        Route::get('/withdrawals', AdminWithdrawalIndexController::class)
+            ->name('withdrawals.index');
+
+        Route::get('/withdrawals/{withdrawalRequest}', AdminWithdrawalShowController::class)
+            ->name('withdrawals.show');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -148,16 +166,39 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('details.update');
 
         Route::get('/orders', OrderIndexController::class)->name('orders.index');
-        Route::get('/orders/{orderId}', OrderShowController::class)->name('orders.show');
-        Route::post('/orders/{orderId}/cancel', OrderCancelController::class)->name('orders.cancel');
+
+        Route::get('/orders/{orderId}', OrderShowController::class)
+            ->name('orders.show');
+
+        Route::post('/orders/{orderId}/cancel', OrderCancelController::class)
+            ->name('orders.cancel');
+
+        Route::get('/orders/{orderId}/withdrawal', OrderWithdrawalCreateController::class)
+            ->name('orders.withdrawals.create');
+
+        Route::post('/orders/{orderId}/withdrawal', OrderWithdrawalStoreController::class)
+            ->name('orders.withdrawals.store');
     });
 });
 
 Route::prefix('guest/orders')->name('guest.orders.')->group(function () {
-    Route::get('/track', GuestOrderTrackShowController::class)->name('track.show');
-    Route::post('/track', GuestOrderTrackLookupController::class)->name('track.lookup');
-    Route::get('/status/{order}', GuestOrderShowController::class)->name('show');
-    Route::post('/status/{order}/cancel', GuestOrderCancelController::class)->name('cancel');
+    Route::get('/track', GuestOrderTrackShowController::class)
+        ->name('track.show');
+
+    Route::post('/track', GuestOrderTrackLookupController::class)
+        ->name('track.lookup');
+
+    Route::get('/status/{order}', GuestOrderShowController::class)
+        ->name('show');
+
+    Route::post('/status/{order}/cancel', GuestOrderCancelController::class)
+        ->name('cancel');
+
+    Route::get('/status/{order}/withdrawal', GuestOrderWithdrawalCreateController::class)
+        ->name('withdrawals.create');
+
+    Route::post('/status/{order}/withdrawal', GuestOrderWithdrawalStoreController::class)
+        ->name('withdrawals.store');
 });
 
 Route::post('/payments/paynow/notifications', PaynowNotificationController::class)
@@ -186,5 +227,8 @@ Route::view('/contact', 'pages.legal.contact')
 
 Route::view('/cookie-policy', 'pages.legal.cookie-policy')
     ->name('legal.cookie-policy');
+
+Route::view('/withdraw-from-contract', 'pages.withdrawals.start')
+    ->name('withdrawals.start');
 
 require __DIR__.'/settings.php';

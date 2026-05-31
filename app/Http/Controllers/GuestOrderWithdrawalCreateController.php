@@ -8,7 +8,7 @@ use App\Models\Order;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class GuestOrderShowController extends Controller
+final class GuestOrderWithdrawalCreateController extends Controller
 {
     public function __invoke(Request $request, Order $order): View
     {
@@ -24,17 +24,17 @@ class GuestOrderShowController extends Controller
         abort_if($order->placed_at === null, 404);
 
         $order->load([
-            'items.product',
-            'items.variant.attributeValues.attribute',
+            'items.withdrawalRequestItems.withdrawalRequest',
             'shippingAddress',
-            'billingAddress',
-            'payments',
-            'shipments',
-            'withdrawalRequests.items',
         ]);
 
-        return view('pages.guest-orders.show', [
+        return view('pages.withdrawals.create', [
             'order' => $order,
+            'mode' => 'guest',
+            'customerName' => trim((string) optional($order->shippingAddress)->first_name.' '.optional($order->shippingAddress)->last_name),
+            'customerEmail' => (string) ($order->guest_email ?: optional($order->shippingAddress)->email),
+            'backUrl' => route('guest.orders.show', $order),
+            'storeUrl' => route('guest.orders.withdrawals.store', $order),
         ]);
     }
 }
