@@ -15,7 +15,19 @@ final class AdminProductUpdateController extends Controller
         UpdateProductDetailsRequest $request,
         Product $product,
     ): RedirectResponse {
-        $product->update($request->validated());
+        $validated = $request->validated();
+        $shouldUpdateCategory = array_key_exists('category_id', $validated);
+        $categoryId = $validated['category_id'] ?? null;
+
+        unset($validated['category_id']);
+
+        $product->update($validated);
+
+        if ($shouldUpdateCategory) {
+            $product->categories()->sync($categoryId === null ? [] : [
+                (int) $categoryId => ['is_primary' => true],
+            ]);
+        }
 
         return back()->with('success', 'Product updated.');
     }
