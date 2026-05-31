@@ -148,6 +148,20 @@
                         </div>
 
                         <div>
+                            <dt class="text-zinc-500">Refunded at</dt>
+                            <dd class="mt-1 font-medium text-zinc-900">
+                                {{ $withdrawalRequest->refunded_at?->format('Y-m-d H:i') ?? '—' }}
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-zinc-500">Refund amount</dt>
+                            <dd class="mt-1 font-medium text-zinc-900">
+                                {{ $withdrawalRequest->refundAmountDecimal() }} {{ $withdrawalRequest->order?->currency ?? 'PLN' }}
+                            </dd>
+                        </div>
+
+                        <div>
                             <dt class="text-zinc-500">Submission IP</dt>
                             <dd class="mt-1 font-medium text-zinc-900">
                                 {{ $withdrawalRequest->submission_ip ?: '—' }}

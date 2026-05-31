@@ -80,6 +80,36 @@ class Payment extends Model
         ]);
     }
 
+
+    public function markAsRefunded(int $refundAmount, bool $fullyRefunded): void
+    {
+        $payload = $this->payload ?? [];
+        $payload['refunds'][] = [
+            'amount' => $refundAmount,
+            'fully_refunded' => $fullyRefunded,
+            'processed_at' => now()->toISOString(),
+            'source' => 'admin_withdrawal_refund',
+        ];
+
+        $this->update([
+            'status' => $fullyRefunded
+                ? PaymentStatus::REFUNDED
+                : PaymentStatus::PARTIALLY_REFUNDED,
+            'payload' => $payload,
+        ]);
+
+        $this->order->events()->create([
+            'type' => $fullyRefunded ? 'payment_refunded' : 'payment_partially_refunded',
+            'description' => $fullyRefunded
+                ? 'Payment marked as refunded.'
+                : 'Payment marked as partially refunded.',
+            'meta' => [
+                'payment_id' => $this->id,
+                'refund_amount' => $refundAmount,
+            ],
+        ]);
+    }
+
     public function amountDecimal(): string
     {
         return number_format($this->amount / 100, 2, '.', '');

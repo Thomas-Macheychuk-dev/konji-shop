@@ -542,6 +542,33 @@ class Order extends Model
         );
     }
 
+
+    public function markPaymentAsRefunded(int $refundAmount, bool $fullyRefunded): void
+    {
+        if (! in_array($this->payment_status, [
+            PaymentStatus::PAID,
+            PaymentStatus::PARTIALLY_REFUNDED,
+        ], true)) {
+            throw new DomainException('Only paid orders can be refunded.');
+        }
+
+        $this->update([
+            'payment_status' => $fullyRefunded
+                ? PaymentStatus::REFUNDED
+                : PaymentStatus::PARTIALLY_REFUNDED,
+        ]);
+
+        $this->recordEvent(
+            $fullyRefunded ? 'order_refunded' : 'order_partially_refunded',
+            $fullyRefunded
+                ? 'Order marked as refunded after withdrawal.'
+                : 'Order marked as partially refunded after withdrawal.',
+            [
+                'refund_amount' => $refundAmount,
+            ],
+        );
+    }
+
     private function recordEvent(string $type, string $description, array $meta = []): void
     {
         $this->events()->create([

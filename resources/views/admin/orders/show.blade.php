@@ -54,6 +54,19 @@
             $latestFailedShipmentMessage = $latestFailedShipment
                 ? data_get($latestFailedShipment->payload, 'error.message')
                 : null;
+
+            $refundableWithdrawalRequests = $order->withdrawalRequests
+                ->filter(fn ($withdrawalRequest) => $withdrawalRequest->isRefundable())
+                ->values();
+
+            $withdrawalRefundAmount = (int) $refundableWithdrawalRequests
+                ->sum(fn ($withdrawalRequest) => $withdrawalRequest->refundAmount());
+
+            $canRefundWithdrawal = $refundableWithdrawalRequests->isNotEmpty()
+                && in_array($order->payment_status, [
+                    \App\Enums\PaymentStatus::PAID,
+                    \App\Enums\PaymentStatus::PARTIALLY_REFUNDED,
+                ], true);
         @endphp
 
         <div class="grid gap-6 lg:grid-cols-3">
@@ -82,6 +95,43 @@
                 <h2 class="text-lg font-semibold text-zinc-900">Fulfilment actions</h2>
 
                 <div class="mt-4 flex flex-wrap gap-3">
+                    @if ($refundableWithdrawalRequests->isNotEmpty())
+                        <div class="w-full rounded-2xl border border-purple-200 bg-purple-50 p-4 text-sm text-purple-900">
+                            <p class="font-semibold">
+                                Withdrawal refund requested
+                            </p>
+
+                            <p class="mt-1">
+                                Refundable withdrawal request(s):
+                                {{ $refundableWithdrawalRequests->pluck('number')->join(', ') }}.
+                            </p>
+
+                            <p class="mt-1">
+                                Estimated refund amount from selected withdrawal item(s):
+                                <strong>{{ number_format($withdrawalRefundAmount / 100, 2, '.', '') }} {{ $order->currency }}</strong>.
+                            </p>
+                        </div>
+
+                        @if ($canRefundWithdrawal)
+                            <form
+                                method="POST"
+                                action="{{ route('admin.orders.fulfilment.update', [$order, 'refund']) }}"
+                                onsubmit="return confirm('Mark this withdrawal as refunded and email the customer?')"
+                            >
+                                @csrf
+                                @method('PATCH')
+
+                                <button class="rounded-xl bg-purple-700 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-600">
+                                    Refund
+                                </button>
+                            </form>
+                        @else
+                            <p class="w-full text-sm text-zinc-500">
+                                Refund is available only while the order payment status is paid or partially refunded.
+                            </p>
+                        @endif
+                    @endif
+
                     @if (
                         $order->status === \App\Enums\OrderStatus::CONFIRMED
                         && $order->fulfilment_status === \App\Enums\FulfilmentStatus::UNFULFILLED

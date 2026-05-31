@@ -24,6 +24,7 @@ class WithdrawalRequest extends Model
         'refund_note',
         'submitted_at',
         'acknowledged_at',
+        'refunded_at',
         'submission_ip',
         'submission_user_agent',
         'meta',
@@ -35,6 +36,7 @@ class WithdrawalRequest extends Model
             'status' => WithdrawalStatus::class,
             'submitted_at' => 'datetime',
             'acknowledged_at' => 'datetime',
+            'refunded_at' => 'datetime',
             'meta' => 'array',
         ];
     }
@@ -59,11 +61,42 @@ class WithdrawalRequest extends Model
         return $this->status->isFinal();
     }
 
+    public function isRefundable(): bool
+    {
+        return ! $this->status->isFinal();
+    }
+
+    public function refundAmount(): int
+    {
+        return (int) $this->items->sum('line_gross_amount');
+    }
+
+    public function refundAmountDecimal(): string
+    {
+        return number_format($this->refundAmount() / 100, 2, '.', '');
+    }
+
     public function acknowledge(): void
     {
         $this->update([
             'status' => WithdrawalStatus::ACKNOWLEDGED,
             'acknowledged_at' => now(),
+        ]);
+    }
+
+    public function markAsRefunded(): void
+    {
+        $meta = $this->meta ?? [];
+
+        $meta['refund'] = [
+            'amount' => $this->refundAmount(),
+            'processed_at' => now()->toISOString(),
+        ];
+
+        $this->update([
+            'status' => WithdrawalStatus::REFUNDED,
+            'refunded_at' => now(),
+            'meta' => $meta,
         ]);
     }
 }

@@ -11,6 +11,7 @@ enum PaymentStatus: string
     case PAID = 'paid';
     case FAILED = 'failed';
     case REFUNDED = 'refunded';
+    case PARTIALLY_REFUNDED = 'partially_refunded';
 
     public function translationKey(): string
     {
@@ -30,6 +31,7 @@ enum PaymentStatus: string
             self::PAID => 'bg-emerald-100 text-emerald-800',
             self::FAILED => 'bg-red-100 text-red-800',
             self::REFUNDED => 'bg-purple-100 text-purple-800',
+            self::PARTIALLY_REFUNDED => 'bg-cyan-100 text-cyan-800',
         };
     }
 
@@ -56,6 +58,11 @@ enum PaymentStatus: string
     public function isRefunded(): bool
     {
         return $this === self::REFUNDED;
+    }
+
+    public function isPartiallyRefunded(): bool
+    {
+        return $this === self::PARTIALLY_REFUNDED;
     }
 
     public static function options(): array

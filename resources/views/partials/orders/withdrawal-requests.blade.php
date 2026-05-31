@@ -28,6 +28,12 @@
                                     Acknowledged at {{ $withdrawalRequest->acknowledged_at->format('Y-m-d H:i') }}
                                 </p>
                             @endif
+
+                            @if ($withdrawalRequest->refunded_at)
+                                <p class="mt-1 text-sm text-zinc-600">
+                                    Refunded at {{ $withdrawalRequest->refunded_at->format('Y-m-d H:i') }}
+                                </p>
+                            @endif
                         </div>
 
                         <div class="sm:text-right">
@@ -65,6 +71,12 @@
 
                                     <div class="text-zinc-700 sm:text-right">
                                         Qty {{ $item->quantity_requested }} / {{ $item->quantity_ordered }}
+
+                                        @if ($loop->last)
+                                            <div class="mt-2 font-medium text-zinc-900">
+                                                Refund amount: {{ $withdrawalRequest->refundAmountDecimal() }} {{ $order->currency }}
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
