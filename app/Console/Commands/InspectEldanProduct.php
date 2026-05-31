@@ -11,7 +11,11 @@ use App\Services\Eldan\EldanProductImporter;
 
 class InspectEldanProduct extends Command
 {
-    protected $signature = 'eldan:inspect {url} {--save-html : Save fetched HTML to storage/app/eldan-inspect.html}';
+    protected $signature = 'eldan:inspect
+        {url}
+        {--save-html : Save fetched HTML to storage/app/eldan-inspect.html}
+        {--import : Import product without asking for confirmation}
+        {--no-dump : Do not print the full extracted JSON payload}';
     protected $description = 'Inspect a single Eldan product page and dump extracted fields';
 
     public function handle(): int
@@ -99,11 +103,16 @@ class InspectEldanProduct extends Command
             'normalized' => $normalized,
         ];
 
-        $this->newLine();
-        $this->info('=== EXTRACTED DATA ===');
-        $this->line(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        if (! $this->option('no-dump')) {
+            $this->newLine();
+            $this->info('=== EXTRACTED DATA ===');
+            $this->line(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        }
 
-        if ($this->confirm('Import this product into database?', false)) {
+        $shouldImport = (bool) $this->option('import')
+            || $this->confirm('Import this product into database?', false);
+
+        if ($shouldImport) {
             $importer = app(EldanProductImporter::class);
             $product = $importer->import($normalized);
 
