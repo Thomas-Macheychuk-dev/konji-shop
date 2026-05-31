@@ -1,10 +1,12 @@
 <?php
 
+use App\Enums\CategoryStatus;
 use App\Enums\Currency;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Enums\VatRate;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -68,6 +70,71 @@ it('renders product SEO metadata and structured data', function (): void {
 
     expect($response->getContent())
         ->toContain('"url": "'.$productUrl.'"');
+});
+
+
+it('renders category breadcrumbs above the product configurator and in structured data', function (): void {
+    Config::set('app.name', 'Konji Shop');
+    Config::set('app.url', 'https://konji-shop.example.test');
+
+    $parentCategory = Category::query()->create([
+        'name' => 'Orthopedic braces',
+        'slug' => 'orthopedic-braces',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    $category = Category::query()->create([
+        'parent_id' => $parentCategory->id,
+        'name' => 'Knee supports',
+        'slug' => 'knee-supports',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    $product = Product::query()->create([
+        'name' => 'Premium Knee Brace',
+        'slug' => 'premium-knee-brace',
+        'short_description' => 'Supportive knee brace for daily use.',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    $product->categories()->attach($category->id, ['is_primary' => true]);
+
+    ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'KNEE-BRACE-M',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => 10000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+
+    $productUrl = 'https://konji-shop.example.test/products/'.$product->slug;
+    $parentCategoryUrl = 'https://konji-shop.example.test/categories/'.$parentCategory->slug;
+    $categoryUrl = 'https://konji-shop.example.test/categories/'.$category->slug;
+
+    $this
+        ->get($productUrl)
+        ->assertOk()
+        ->assertSee('<nav class="mb-6 text-sm" aria-label="Breadcrumb">', false)
+        ->assertSee('href="'.$parentCategoryUrl.'"', false)
+        ->assertSee('Orthopedic braces', false)
+        ->assertSee('href="'.$categoryUrl.'"', false)
+        ->assertSee('Knee supports', false)
+        ->assertSee('href="'.$productUrl.'"', false)
+        ->assertSee('aria-current="page"', false)
+        ->assertSee('Premium Knee Brace', false)
+        ->assertSee('"@type": "BreadcrumbList"', false)
+        ->assertSee('"position": 2', false)
+        ->assertSee('"name": "Orthopedic braces"', false)
+        ->assertSee('"item": "'.$parentCategoryUrl.'"', false)
+        ->assertSee('"position": 3', false)
+        ->assertSee('"name": "Knee supports"', false)
+        ->assertSee('"item": "'.$categoryUrl.'"', false)
+        ->assertSee('"position": 4', false)
+        ->assertSee('"name": "Premium Knee Brace"', false)
+        ->assertSee('"item": "'.$productUrl.'"', false);
 });
 
 it('falls back to product name and description when explicit SEO fields are missing', function (): void {

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Models\AttributeValue;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
@@ -29,6 +31,11 @@ class ProductShowController extends Controller
         $product->load([
             'mainImage',
             'images',
+            'categories' => fn ($query) => $query
+                ->where('status', CategoryStatus::ACTIVE->value)
+                ->with('parent')
+                ->orderByDesc('category_product.is_primary')
+                ->orderBy('name'),
             'variants' => fn ($query) => $query
                 ->where('status', ProductVariantStatus::ACTIVE->value)
                 ->with('attributeValues.attribute'),
@@ -56,12 +63,14 @@ class ProductShowController extends Controller
         $seoDescription = $this->seoDescription($product);
         $canonicalUrl = route('products.show', $product->slug);
         $openGraphImage = $this->openGraphImage($product, $defaultVariant);
-        $structuredData = $this->structuredData($product, $defaultVariant, $seoDescription, $canonicalUrl);
+        $breadcrumbs = $this->breadcrumbItems($product, $canonicalUrl);
+        $structuredData = $this->structuredData($product, $defaultVariant, $seoDescription, $canonicalUrl, $breadcrumbs);
 
         return view('pages.products.show', [
             'product' => $product,
             'productPayload' => $productPayload,
             'defaultVariant' => $defaultVariant,
+            'breadcrumbs' => $breadcrumbs,
 
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
@@ -109,10 +118,11 @@ class ProductShowController extends Controller
         ?ProductVariant $defaultVariant,
         string $seoDescription,
         string $canonicalUrl,
+        array $breadcrumbs,
     ): array {
         return [
             $this->productStructuredData($product, $defaultVariant, $seoDescription, $canonicalUrl),
-            $this->breadcrumbStructuredData($product, $canonicalUrl),
+            $this->breadcrumbStructuredData($breadcrumbs),
         ];
     }
 
@@ -182,28 +192,86 @@ class ProductShowController extends Controller
     }
 
     /**
+     * @param  list<array{label: string, url: string}>  $breadcrumbs
      * @return array<string, mixed>
      */
-    private function breadcrumbStructuredData(Product $product, string $canonicalUrl): array
+    private function breadcrumbStructuredData(array $breadcrumbs): array
     {
         return [
             '@context' => 'https://schema.org',
             '@type' => 'BreadcrumbList',
-            'itemListElement' => [
-                [
+            'itemListElement' => collect($breadcrumbs)
+                ->map(fn (array $breadcrumb, int $index): array => [
                     '@type' => 'ListItem',
-                    'position' => 1,
-                    'name' => 'Home',
-                    'item' => route('home'),
-                ],
-                [
-                    '@type' => 'ListItem',
-                    'position' => 2,
-                    'name' => $product->name,
-                    'item' => $canonicalUrl,
-                ],
+                    'position' => $index + 1,
+                    'name' => $breadcrumb['label'],
+                    'item' => $breadcrumb['url'],
+                ])
+                ->values()
+                ->all(),
+        ];
+    }
+
+    /**
+     * @return list<array{label: string, url: string}>
+     */
+    private function breadcrumbItems(Product $product, string $canonicalUrl): array
+    {
+        $items = [
+            [
+                'label' => 'Home',
+                'url' => route('home'),
             ],
         ];
+
+        foreach ($this->categoryTrail($this->primaryCategory($product)) as $category) {
+            if (! filled($category->slug)) {
+                continue;
+            }
+
+            $items[] = [
+                'label' => $category->name,
+                'url' => route('categories.show', $category->slug),
+            ];
+        }
+
+        $items[] = [
+            'label' => $product->name,
+            'url' => $canonicalUrl,
+        ];
+
+        return $items;
+    }
+
+    private function primaryCategory(Product $product): ?Category
+    {
+        return $product->categories->first();
+    }
+
+    /**
+     * @return list<Category>
+     */
+    private function categoryTrail(?Category $category): array
+    {
+        $trail = [];
+        $seenCategoryIds = [];
+        $current = $category;
+
+        while ($current !== null && ! in_array($current->id, $seenCategoryIds, true)) {
+            $seenCategoryIds[] = $current->id;
+
+            if ($current->status?->isActive() !== true) {
+                break;
+            }
+
+            array_unshift($trail, $current);
+
+            $current = $current->relationLoaded('parent')
+                ? $current->parent
+                : $current->parent()->first();
+        }
+
+        return $trail;
     }
 
     /**

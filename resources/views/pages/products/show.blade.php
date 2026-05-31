@@ -23,6 +23,28 @@
             </div>
         @endif
 
+        @if (! empty($breadcrumbs))
+            <nav class="mb-6 text-sm" aria-label="Breadcrumb">
+                <ol class="flex flex-wrap items-center gap-2 text-zinc-500 dark:text-zinc-400">
+                    @foreach ($breadcrumbs as $breadcrumb)
+                        <li class="inline-flex items-center gap-2">
+                            @if (! $loop->first)
+                                <span aria-hidden="true" class="text-zinc-300 dark:text-zinc-600">/</span>
+                            @endif
+
+                            <a
+                                href="{{ $breadcrumb['url'] }}"
+                                @if ($loop->last) aria-current="page" @endif
+                                class="font-medium transition hover:text-zinc-900 dark:hover:text-white {{ $loop->last ? 'text-zinc-900 dark:text-white' : '' }}"
+                            >
+                                {{ $breadcrumb['label'] }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ol>
+            </nav>
+        @endif
+
         <div
             id="product-configurator"
             data-product='@json($productPayload)'
@@ -76,9 +98,11 @@
                                 </p>
                             @endif
 
-                            <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
-                                Enable JavaScript to choose variants and add this product to your cart.
-                            </p>
+                            <noscript>
+                                <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
+                                    Enable JavaScript to choose variants and add this product to your cart.
+                                </p>
+                            </noscript>
                         </div>
 
                         @if ($product->description)
