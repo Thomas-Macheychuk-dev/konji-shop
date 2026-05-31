@@ -33,6 +33,7 @@ use App\Http\Controllers\CartItemStoreController;
 use App\Http\Controllers\CartItemUpdateController;
 use App\Http\Controllers\CartShowController;
 use App\Http\Controllers\CartSummaryController;
+use App\Http\Controllers\CategoryProductIndexController;
 use App\Http\Controllers\Checkout\CheckoutShippingQuoteController;
 use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
 use App\Http\Controllers\CheckoutPlaceOrderController;
@@ -57,6 +58,9 @@ use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalIndexController;
 use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalShowController;
 
 Route::get('/', HomeController::class)->name('home');
+
+Route::get('/categories/{category:slug}', CategoryProductIndexController::class)
+    ->name('categories.show');
 
 Route::get('/products/{product:slug}', ProductShowController::class)
     ->name('products.show');

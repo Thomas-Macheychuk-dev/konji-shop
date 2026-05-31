@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Enums\CategoryStatus;
+use App\Models\Category;
 use App\Services\Delivery\DeliveryGatewayRegistry;
 use App\Services\Delivery\Polkurier\PolkurierDeliveryGateway;
 use App\Services\Payments\PaymentGatewayRegistry;
@@ -15,6 +17,7 @@ use Illuminate\Validation\Rules\Password;
 use App\Contracts\Delivery\CreatesShipments;
 use App\Services\Delivery\CreateShipmentService;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
@@ -51,10 +54,27 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->composeStorefrontCategorySidebar();
+
         if (Str::startsWith((string) config('app.url'), 'https://')) {
             URL::forceRootUrl((string) config('app.url'));
             URL::forceScheme('https');
         }
+    }
+
+
+    /**
+     * Share active top-level categories with the storefront sidebar.
+     */
+    protected function composeStorefrontCategorySidebar(): void
+    {
+        View::composer('partials.storefront.category-sidebar', function ($view): void {
+            $view->with('storefrontSidebarCategories', Category::query()
+                ->whereNull('parent_id')
+                ->where('status', CategoryStatus::ACTIVE->value)
+                ->orderBy('name')
+                ->get(['id', 'name', 'slug']));
+        });
     }
 
     /**
