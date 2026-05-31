@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Payments;
 
 use App\Models\Order;
 use App\Models\Payment;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -15,7 +14,14 @@ class PaymentReturnController
     public function __invoke(Request $request): View
     {
         $paymentId = $request->query('paymentId');
-        $statusFromPaynow = $request->query('status'); // PAID / ERROR / REJECTED / CANCELED etc.
+
+        /**
+         * Paynow return URL uses `paymentStatus`, for example:
+         * /checkout/success?paymentId=...&paymentStatus=CONFIRMED
+         *
+         * Keep `status` as a fallback in case another provider or older code uses it.
+         */
+        $statusFromPaynow = $request->query('paymentStatus', $request->query('status'));
 
         $payment = null;
         $order = null;
@@ -25,7 +31,7 @@ class PaymentReturnController
             $payment = Payment::query()
                 ->where('provider_reference', $paymentId)
                 ->with([
-                    'order' => fn (Builder $query): Builder => $query->with($this->orderRelations()),
+                    'order' => fn ($query) => $query->with($this->orderRelations()),
                 ])
                 ->first();
 
