@@ -143,6 +143,81 @@
                         @enderror
                     </div>
 
+                    <div>
+                        <label for="short_description" class="mb-2 block text-sm font-medium text-zinc-700">
+                            Short description
+                        </label>
+
+                        <textarea
+                            id="short_description"
+                            name="short_description"
+                            rows="4"
+                            class="@error('short_description') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                        >{{ old('short_description', $product->short_description) }}</textarea>
+
+                        @error('short_description')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="description" class="mb-2 block text-sm font-medium text-zinc-700">
+                            Product HTML description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="12"
+                            spellcheck="false"
+                            class="@error('description') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 font-mono text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                        >{{ old('description', $product->description) }}</textarea>
+
+                        <p class="mt-2 text-xs text-zinc-500">
+                            Raw HTML is shown here and saved as entered.
+                        </p>
+
+                        @error('description')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="seo_title" class="mb-2 block text-sm font-medium text-zinc-700">
+                            SEO title
+                        </label>
+
+                        <input
+                            id="seo_title"
+                            type="text"
+                            name="seo_title"
+                            value="{{ old('seo_title', $product->seo_title) }}"
+                            maxlength="255"
+                            class="@error('seo_title') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                        >
+
+                        @error('seo_title')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="seo_description" class="mb-2 block text-sm font-medium text-zinc-700">
+                            SEO description
+                        </label>
+
+                        <textarea
+                            id="seo_description"
+                            name="seo_description"
+                            rows="3"
+                            class="@error('seo_description') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                        >{{ old('seo_description', $product->seo_description) }}</textarea>
+
+                        @error('seo_description')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <dl class="space-y-3 text-sm">
                         <div>
                             <dt class="text-zinc-500">Slug</dt>

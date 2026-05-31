@@ -32,7 +32,11 @@ function createProductForAdminProductEditorTest(): Product
     $product = Product::query()->create([
         'name' => 'Editable Product',
         'slug' => 'editable-product',
+        'short_description' => 'Existing short description.',
+        'description' => '<p>Existing <strong>HTML</strong> description.</p>',
         'status' => ProductStatus::ACTIVE,
+        'seo_title' => 'Existing SEO title',
+        'seo_description' => 'Existing SEO description.',
         'external_source' => 'test',
         'external_id' => 'external-123',
     ]);
@@ -161,10 +165,54 @@ it('shows the admin product edit page with variants', function (): void {
         ->assertSee('EDIT-COMPLETE')
         ->assertSee('Product status')
         ->assertSee('Product category')
+        ->assertSee('Short description')
+        ->assertSee('Existing short description.')
+        ->assertSee('Product HTML description')
+        ->assertSee('&lt;p&gt;Existing &lt;strong&gt;HTML&lt;/strong&gt; description.&lt;/p&gt;', false)
+        ->assertSee('SEO title')
+        ->assertSee('Existing SEO title')
+        ->assertSee('SEO description')
+        ->assertSee('Existing SEO description.')
         ->assertSee('No category')
         ->assertSee(ProductStatus::DRAFT->label())
         ->assertSee(ProductStatus::ACTIVE->label())
         ->assertSee(ProductStatus::ARCHIVED->label());
+});
+
+it('allows an admin to update product content and SEO fields', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $description = <<<'HTML'
+<h2>Updated product description</h2>
+<p>This <strong>HTML</strong> should be saved exactly.</p>
+<ul><li>First benefit</li><li>Second benefit</li></ul>
+HTML;
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.update', $product), [
+            'name' => 'Updated Product Name',
+            'short_description' => 'Updated short product summary.',
+            'description' => $description,
+            'seo_title' => 'Updated SEO title',
+            'seo_description' => 'Updated SEO description for search results.',
+            'status' => ProductStatus::DRAFT->value,
+            'category_id' => null,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    expect($product->refresh())
+        ->name->toBe('Updated Product Name')
+        ->short_description->toBe('Updated short product summary.')
+        ->description->toBe($description)
+        ->seo_title->toBe('Updated SEO title')
+        ->seo_description->toBe('Updated SEO description for search results.')
+        ->status->toBe(ProductStatus::DRAFT);
 });
 
 it('shows selectable active categories on the admin product edit page', function (): void {
