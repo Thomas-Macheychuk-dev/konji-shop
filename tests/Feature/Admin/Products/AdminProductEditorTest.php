@@ -143,6 +143,8 @@ it('shows the admin product edit page with variants', function (): void {
         ->assertSee('Product name')
         ->assertSee('Save product')
         ->assertSee('Default product picture')
+        ->assertSee('Apply price to all variants')
+        ->assertSee('Variant price data')
         ->assertSee('Apply package data to all variants')
         ->assertSee('EDIT-MISSING')
         ->assertSee('EDIT-COMPLETE')
@@ -255,6 +257,127 @@ it('does not allow an admin to choose an image from another product as the defau
     expect($product->refresh())
         ->default_image_type->toBeNull()
         ->default_image_id->toBeNull();
+});
+
+
+it('allows an admin to apply a price to all product variants', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.prices.update', $product), [
+            'gross_price' => '123.00',
+            'currency' => Currency::PLN->value,
+            'vat_rate' => VatRate::VAT_23->value,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    foreach ($product->variants()->get() as $variant) {
+        $variant->refresh();
+
+        expect($variant)
+            ->price_net_amount->toBe(VatRate::VAT_23->netFromGross(12300))
+            ->currency->toBe(Currency::PLN)
+            ->vat_rate->toBe(VatRate::VAT_23);
+
+        expect($variant->grossPriceAmount())->toBe(12300);
+    }
+});
+
+it('allows an admin to update variant prices separately', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $variants = $product->variants()->orderBy('id')->get();
+
+    $first = $variants[0];
+    $second = $variants[1];
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.variants.prices.update', $product), [
+            'variants' => [
+                $first->id => [
+                    'gross_price' => '49.99',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                ],
+                $second->id => [
+                    'gross_price' => '59.99',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_8->value,
+                ],
+            ],
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    $first->refresh();
+    $second->refresh();
+
+    expect($first)
+        ->price_net_amount->toBe(VatRate::VAT_23->netFromGross(4999))
+        ->currency->toBe(Currency::PLN)
+        ->vat_rate->toBe(VatRate::VAT_23);
+
+    expect($first->grossPriceAmount())->toBe(4999);
+
+    expect($second)
+        ->price_net_amount->toBe(VatRate::VAT_8->netFromGross(5999))
+        ->currency->toBe(Currency::PLN)
+        ->vat_rate->toBe(VatRate::VAT_8);
+
+    expect($second->grossPriceAmount())->toBe(5999);
+});
+
+it('does not allow an admin to update prices for variants from another product', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $otherProduct = Product::query()->create([
+        'name' => 'Other Price Product',
+        'slug' => 'other-price-product',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    $otherVariant = ProductVariant::query()->create([
+        'product_id' => $otherProduct->id,
+        'sku' => 'OTHER-PRICE',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => 1000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.variants.prices.update', $product), [
+            'variants' => [
+                $otherVariant->id => [
+                    'gross_price' => '999.00',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                ],
+            ],
+        ])
+        ->assertSessionHasErrors(['variants']);
+
+    expect($otherVariant->refresh())
+        ->price_net_amount->toBe(1000)
+        ->currency->toBe(Currency::PLN)
+        ->vat_rate->toBe(VatRate::VAT_23);
 });
 
 it('allows an admin to apply package data to all product variants', function (): void {
