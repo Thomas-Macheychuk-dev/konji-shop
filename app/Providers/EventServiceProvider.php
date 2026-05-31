@@ -12,7 +12,9 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use App\Events\ShipmentTrackingAvailable;
 use App\Listeners\SendShipmentTrackingEmail;
 use App\Events\WithdrawalRequestSubmitted;
+use App\Events\WithdrawalRequestRefunded;
 use App\Listeners\SendWithdrawalAcknowledgementEmail;
+use App\Listeners\SendWithdrawalRefundedEmail;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         WithdrawalRequestSubmitted::class => [
             SendWithdrawalAcknowledgementEmail::class,
+        ],
+        WithdrawalRequestRefunded::class => [
+            SendWithdrawalRefundedEmail::class,
         ],
     ];
 

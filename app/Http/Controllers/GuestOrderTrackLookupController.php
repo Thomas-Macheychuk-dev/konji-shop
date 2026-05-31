@@ -12,14 +12,29 @@ class GuestOrderTrackLookupController extends Controller
 {
     public function __invoke(LookupGuestOrderRequest $request): RedirectResponse
     {
-        $order = Order::query()
-            ->where('number', $request->string('number')->toString())
-            ->whereRaw('LOWER(guest_email) = ?', [$request->string('email')->toString()])
+        $number = $request->string('number')->toString();
+        $email = $request->string('email')->toString();
+
+        if ($request->user() && mb_strtolower((string) $request->user()->email) === $email) {
+            $registeredOrder = $request->user()
+                ->orders()
+                ->where('number', $number)
+                ->whereNotNull('placed_at')
+                ->first();
+
+            if ($registeredOrder) {
+                return redirect()->route('account.orders.show', $registeredOrder->id);
+            }
+        }
+
+        $guestOrder = Order::query()
+            ->where('number', $number)
+            ->whereRaw('LOWER(guest_email) = ?', [$email])
             ->whereNull('user_id')
             ->whereNotNull('placed_at')
             ->first();
 
-        if (! $order) {
+        if (! $guestOrder) {
             return back()
                 ->withInput()
                 ->withErrors([
@@ -29,11 +44,11 @@ class GuestOrderTrackLookupController extends Controller
 
         session([
             'guest_order_access' => [
-                'order_id' => $order->id,
-                'email' => $request->string('email')->toString(),
+                'order_id' => $guestOrder->id,
+                'email' => $email,
             ],
         ]);
 
-        return redirect()->route('guest.orders.show', $order);
+        return redirect()->route('guest.orders.show', $guestOrder);
     }
 }

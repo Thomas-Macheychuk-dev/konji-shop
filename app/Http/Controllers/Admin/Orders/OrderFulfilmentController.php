@@ -11,6 +11,7 @@ use App\Enums\ShipmentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\Delivery\Polkurier\PolkurierCarrierAvailabilityGuard;
+use App\Services\Withdrawals\ProcessWithdrawalRefundService;
 use DomainException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ final class OrderFulfilmentController extends Controller
     public function __construct(
         private readonly CreatesShipments $createShipmentService,
         private readonly PolkurierCarrierAvailabilityGuard $polkurierCarrierAvailabilityGuard,
+        private readonly ProcessWithdrawalRefundService $processWithdrawalRefundService,
     ) {}
 
     public function __invoke(Request $request, Order $order, string $action): RedirectResponse
@@ -39,6 +41,8 @@ final class OrderFulfilmentController extends Controller
 
                 'completed' => $order->complete(),
 
+                'refund' => $this->processWithdrawalRefundService->process($order),
+
                 default => throw new DomainException(
                     'Unsupported fulfilment action.'
                 ),
@@ -47,7 +51,12 @@ final class OrderFulfilmentController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return back()->with('success', 'Order fulfilment status updated.');
+        return back()->with(
+            'success',
+            $action === 'refund'
+                ? 'Withdrawal refund processed and customer notified.'
+                : 'Order fulfilment status updated.'
+        );
     }
 
     private function shipOrder(Request $request, Order $order): void

@@ -57,6 +57,7 @@ return [
         'paid' => 'Paid',
         'failed' => 'Failed',
         'refunded' => 'Refunded',
+        'partially_refunded' => 'Partially refunded',
     ],
 
     'fulfilment_status' => [
