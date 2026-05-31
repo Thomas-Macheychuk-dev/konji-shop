@@ -20,6 +20,10 @@ final class UpdateProductDetailsRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'short_description' => ['nullable', 'string', 'max:5000'],
+            'description' => ['nullable', 'string'],
+            'seo_title' => ['nullable', 'string', 'max:255'],
+            'seo_description' => ['nullable', 'string', 'max:5000'],
             'status' => ['required', 'string', Rule::in(ProductStatus::options())],
             'category_id' => [
                 'nullable',
@@ -35,6 +39,10 @@ final class UpdateProductDetailsRequest extends FormRequest
     {
         return [
             'name' => __('Product name'),
+            'short_description' => __('Short description'),
+            'description' => __('Product HTML description'),
+            'seo_title' => __('SEO title'),
+            'seo_description' => __('SEO description'),
             'status' => __('Product status'),
             'category_id' => __('Product category'),
         ];
