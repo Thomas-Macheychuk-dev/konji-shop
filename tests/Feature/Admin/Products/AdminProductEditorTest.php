@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CategoryStatus;
 use App\Enums\Currency;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
@@ -7,6 +8,7 @@ use App\Enums\StockStatus;
 use App\Enums\VatRate;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
@@ -15,6 +17,15 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+
+function createCategoryForAdminProductEditorTest(string $name = 'Medical Clothing', string $slug = 'medical-clothing'): Category
+{
+    return Category::query()->create([
+        'name' => $name,
+        'slug' => $slug,
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+}
 
 function createProductForAdminProductEditorTest(): Product
 {
@@ -149,9 +160,101 @@ it('shows the admin product edit page with variants', function (): void {
         ->assertSee('EDIT-MISSING')
         ->assertSee('EDIT-COMPLETE')
         ->assertSee('Product status')
+        ->assertSee('Product category')
+        ->assertSee('No category')
         ->assertSee(ProductStatus::DRAFT->label())
         ->assertSee(ProductStatus::ACTIVE->label())
         ->assertSee(ProductStatus::ARCHIVED->label());
+});
+
+it('shows selectable active categories on the admin product edit page', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $currentCategory = createCategoryForAdminProductEditorTest('Medical Tunics', 'medical-tunics');
+    $newCategory = createCategoryForAdminProductEditorTest('Medical Trousers', 'medical-trousers');
+
+    $product->categories()->attach($currentCategory->id, ['is_primary' => true]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.edit', $product))
+        ->assertOk()
+        ->assertSee('Product category')
+        ->assertSee('No category')
+        ->assertSee('Medical Tunics')
+        ->assertSee('Medical Trousers');
+});
+
+it('allows an admin to change the product category', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $oldCategory = createCategoryForAdminProductEditorTest('Old Category', 'old-category');
+    $newCategory = createCategoryForAdminProductEditorTest('New Category', 'new-category');
+
+    $product->categories()->attach($oldCategory->id, ['is_primary' => true]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.update', $product), [
+            'name' => $product->name,
+            'status' => ProductStatus::ACTIVE->value,
+            'category_id' => $newCategory->id,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    expect($product->refresh()->categories()->pluck('categories.id')->all())
+        ->toBe([$newCategory->id]);
+
+    expect((bool) $product->categories()->firstOrFail()->pivot->is_primary)->toBeTrue();
+});
+
+it('allows an admin to remove the product category', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $category = createCategoryForAdminProductEditorTest();
+
+    $product->categories()->attach($category->id, ['is_primary' => true]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.update', $product), [
+            'name' => $product->name,
+            'status' => ProductStatus::ACTIVE->value,
+            'category_id' => null,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    expect($product->refresh()->categories()->count())->toBe(0);
+});
+
+it('validates the product category when updating product details', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.update', $product), [
+            'name' => $product->name,
+            'status' => ProductStatus::ACTIVE->value,
+            'category_id' => 999999,
+        ])
+        ->assertSessionHasErrors(['category_id']);
+
+    expect($product->refresh()->categories()->count())->toBe(0);
 });
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\CategoryStatus;
 use App\Enums\ProductStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -20,6 +21,13 @@ final class UpdateProductDetailsRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'status' => ['required', 'string', Rule::in(ProductStatus::options())],
+            'category_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('categories', 'id')
+                    ->where('status', CategoryStatus::ACTIVE->value)
+                    ->whereNull('deleted_at'),
+            ],
         ];
     }
 
@@ -28,6 +36,7 @@ final class UpdateProductDetailsRequest extends FormRequest
         return [
             'name' => __('Product name'),
             'status' => __('Product status'),
+            'category_id' => __('Product category'),
         ];
     }
 }

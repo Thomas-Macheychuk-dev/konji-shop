@@ -46,6 +46,8 @@
             }
 
             $hasSelectableImages = $product->images->isNotEmpty() || $product->attributeValueImages->isNotEmpty();
+            $currentPrimaryCategory = $product->categories->first(fn ($category): bool => (bool) $category->pivot->is_primary);
+            $currentCategoryId = old('category_id', $currentPrimaryCategory?->id ?? $product->categories->first()?->id);
         @endphp
 
         <div class="grid gap-6 lg:grid-cols-3">
@@ -102,6 +104,41 @@
                         </select>
 
                         @error('status')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="category_id" class="mb-2 block text-sm font-medium text-zinc-700">
+                            Product category
+                        </label>
+
+                        <select
+                            id="category_id"
+                            name="category_id"
+                            class="@error('category_id') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                        >
+                            <option value="" @selected($currentCategoryId === null || $currentCategoryId === '')>
+                                No category
+                            </option>
+
+                            @foreach ($categories as $category)
+                                <option
+                                    value="{{ $category->id }}"
+                                    @selected((string) $currentCategoryId === (string) $category->id)
+                                >
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        @if ($categories->isEmpty())
+                            <p class="mt-2 text-sm text-zinc-500">
+                                Create an active category before assigning this product to one.
+                            </p>
+                        @endif
+
+                        @error('category_id')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
