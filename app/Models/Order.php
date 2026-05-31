@@ -131,6 +131,11 @@ class Order extends Model
         return $this->hasMany(Shipment::class);
     }
 
+    public function withdrawalRequests(): HasMany
+    {
+        return $this->hasMany(WithdrawalRequest::class);
+    }
+
     public function subtotalDecimal(): string
     {
         return $this->formatAmount($this->subtotal_amount);

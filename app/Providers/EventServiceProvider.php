@@ -11,6 +11,8 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\ShipmentTrackingAvailable;
 use App\Listeners\SendShipmentTrackingEmail;
+use App\Events\WithdrawalRequestSubmitted;
+use App\Listeners\SendWithdrawalAcknowledgementEmail;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ShipmentTrackingAvailable::class => [
             SendShipmentTrackingEmail::class,
+        ],
+        WithdrawalRequestSubmitted::class => [
+            SendWithdrawalAcknowledgementEmail::class,
         ],
     ];
 

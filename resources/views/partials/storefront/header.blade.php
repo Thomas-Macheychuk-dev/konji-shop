@@ -29,10 +29,10 @@
             </a>
 
             <a
-                href="#deals"
+                href="{{ route('withdrawals.start') }}"
                 class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             >
-                Deals
+                Withdraw from contract
             </a>
 
             @auth
@@ -56,6 +56,13 @@
                         class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                     >
                         Products
+                    </a>
+
+                    <a
+                        href="{{ route('admin.withdrawals.index') }}"
+                        class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+                    >
+                        Withdrawals
                     </a>
 
                     <a

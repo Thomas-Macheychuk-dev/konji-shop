@@ -11,27 +11,36 @@
                     ← Back to orders
                 </a>
 
-                <div class="mt-3 flex items-center justify-between gap-4">
+                <div class="mt-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <h1 class="text-3xl font-bold tracking-tight text-zinc-900">
                         Order {{ $order->number }}
                     </h1>
 
-                    @if ($order->canBeCancelledByCustomer())
-                        <form
-                            method="POST"
-                            action="{{ route('account.orders.cancel', $order->id) }}"
-                            data-order-cancel-form
+                    <div class="flex flex-wrap items-center gap-3">
+                        <a
+                            href="{{ route('account.orders.withdrawals.create', $order->id) }}"
+                            class="inline-flex items-center rounded-xl border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
                         >
-                            @csrf
+                            Withdraw from contract
+                        </a>
 
-                            <button
-                                type="submit"
-                                class="inline-flex items-center rounded-xl border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                        @if ($order->canBeCancelledByCustomer())
+                            <form
+                                method="POST"
+                                action="{{ route('account.orders.cancel', $order->id) }}"
+                                data-order-cancel-form
                             >
-                                Cancel order
-                            </button>
-                        </form>
-                    @endif
+                                @csrf
+
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center rounded-xl border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                                >
+                                    Cancel order
+                                </button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
 
                 <p class="mt-2 text-sm text-zinc-600">
@@ -240,6 +249,7 @@
                 </div>
 
                 @include('partials.orders.shipment-tracking', ['order' => $order])
+                @include('partials.orders.withdrawal-requests', ['order' => $order])
 
                 @if ($order->payments->isNotEmpty())
                     <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
