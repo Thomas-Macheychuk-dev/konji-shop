@@ -16,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use RuntimeException;
+use App\Models\Shipment;
 
 final class OrderFulfilmentController extends Controller
 {
@@ -57,16 +58,12 @@ final class OrderFulfilmentController extends Controller
             return;
         }
 
-        if ($order->shipments()
-            ->whereNotIn('status', [
-                ShipmentStatus::FAILED,
-                ShipmentStatus::CANCELLED,
-            ])
-            ->exists()
-        ) {
-            throw new DomainException(
-                'Shipment already exists for this order.'
-            );
+        $activeShipment = $this->activeShipment($order);
+
+        if ($activeShipment) {
+            $this->markExistingShipmentAsShipped($order, $activeShipment);
+
+            return;
         }
 
         $pickup = $this->polkurierPickupData($request);
@@ -80,6 +77,36 @@ final class OrderFulfilmentController extends Controller
             pickup: $pickup,
             additionalFields: $additionalFields,
         );
+    }
+
+    private function activeShipment(Order $order): ?Shipment
+    {
+        return $order->shipments()
+            ->whereNotIn('status', [
+                ShipmentStatus::FAILED,
+                ShipmentStatus::CANCELLED,
+            ])
+            ->latest('id')
+            ->first();
+    }
+
+    private function markExistingShipmentAsShipped(Order $order, Shipment $shipment): void
+    {
+        if (! $order->fulfilment_status->isProcessing()) {
+            throw new DomainException('Only orders in processing can be marked as shipped.');
+        }
+
+        if (in_array($shipment->status, [
+            ShipmentStatus::PENDING,
+            ShipmentStatus::CREATED,
+        ], true)) {
+            $shipment->markAsDispatched(
+                $shipment->tracking_number,
+                $shipment->tracking_url,
+            );
+        }
+
+        $order->markAsShipped();
     }
 
     private function deliverOrder(Order $order): void
