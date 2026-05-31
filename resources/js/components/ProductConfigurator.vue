@@ -26,6 +26,7 @@ const optionGroups = computed(() => {
 
 const variants = computed(() => props.product.variants ?? []);
 const baseImages = computed(() => props.product.base_images ?? []);
+const defaultImage = computed(() => props.product.default_image ?? null);
 
 const currentImage = ref(0);
 const selectedOptionValueIds = ref({});
@@ -245,16 +246,41 @@ function handleAddToCartSubmit(event) {
     }
 }
 
+function uniqueImages(images) {
+    const seen = new Set();
+
+    return images.filter((image) => {
+        const key = image?.id ?? image?.url;
+
+        if (!key || seen.has(key)) {
+            return false;
+        }
+
+        seen.add(key);
+        return true;
+    });
+}
+
 const galleryImages = computed(() => {
-    if (selectedVariant.value?.images?.length) {
-        return selectedVariant.value.images;
+    const selectedVariantImages = selectedVariant.value?.images ?? [];
+
+    if (!selectedIds.value.length && defaultImage.value) {
+        return uniqueImages([
+            defaultImage.value,
+            ...selectedVariantImages,
+            ...baseImages.value,
+        ]);
+    }
+
+    if (selectedVariantImages.length) {
+        return selectedVariantImages;
     }
 
     if (baseImages.value?.length) {
         return baseImages.value;
     }
 
-    return [];
+    return defaultImage.value ? [defaultImage.value] : [];
 });
 
 const mainImage = computed(() => {

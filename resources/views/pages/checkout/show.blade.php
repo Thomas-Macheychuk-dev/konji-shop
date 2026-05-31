@@ -555,7 +555,9 @@
                                 @php
                                     $product = $item->product;
                                     $variant = $item->variant;
-                                    $imageUrl = $variant?->main_image_url ?? data_get($item->meta, 'image_url');
+                                    $imageUrl = $variant?->main_image_url
+                                        ?? $product?->default_image_url
+                                        ?? data_get($item->meta, 'image_url');
                                     $unitPrice = $item->currentUnitPriceAmount();
                                     $lineTotal = $item->currentLineTotalAmount();
                                     $variantName =

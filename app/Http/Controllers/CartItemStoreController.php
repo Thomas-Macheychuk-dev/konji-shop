@@ -21,7 +21,12 @@ class CartItemStoreController extends Controller
         CartGuestTokenResolver $guestTokenResolver
     ): RedirectResponse {
         $variant = ProductVariant::query()
-            ->with('product.mainImage')
+            ->with([
+                'attributeValues.productImage',
+                'product.mainImage',
+                'product.images',
+                'product.attributeValueImages',
+            ])
             ->findOrFail($request->integer('product_variant_id'));
 
         if ($variant->status !== ProductVariantStatus::ACTIVE) {

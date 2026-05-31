@@ -71,7 +71,7 @@ class CartService
                 'meta' => [
                     'product_name' => $product->name,
                     'variant_sku' => $variant->sku,
-                    'image_url' => $variant->images[0]['url'] ?? null,
+                    'image_url' => $variant->main_image_url ?? $product->default_image_url,
                 ],
             ]);
         });
