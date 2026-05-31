@@ -17,6 +17,19 @@
                 </p>
             @endif
 
+            @if ($category->children->isNotEmpty())
+                <div class="mt-6 flex flex-wrap gap-2">
+                    @foreach ($category->children as $childCategory)
+                        <a
+                            href="{{ route('categories.show', $childCategory->slug) }}"
+                            class="inline-flex rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                        >
+                            {{ $childCategory->name }}
+                        </a>
+                    @endforeach
+                </div>
+            @endif
+
             <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
                 {{ $products->total() }} {{ \Illuminate\Support\Str::plural('product', $products->total()) }} found.
             </p>

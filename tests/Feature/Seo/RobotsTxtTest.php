@@ -14,9 +14,7 @@ it('renders robots txt with sitemap location', function (): void {
         ->assertSee('User-agent: *')
         ->assertSee('Allow: /')
         ->assertSee('Disallow: /admin')
-        ->assertSee('Disallow: /checkout')
-        ->assertSee('Disallow: /cart')
-        ->assertSee('Disallow: /account')
+        ->assertSee('Disallow: /payments')
         ->assertSee('Sitemap: '.route('sitemap'));
 
     expect($response->headers->get('Content-Type'))->toContain('text/plain');

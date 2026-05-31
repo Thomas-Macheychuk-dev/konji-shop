@@ -14,9 +14,7 @@ final class RobotsTxtController extends Controller
             'User-agent: *',
             'Allow: /',
             'Disallow: /admin',
-            'Disallow: /checkout',
-            'Disallow: /cart',
-            'Disallow: /account',
+            'Disallow: /payments',
             '',
             'Sitemap: '.route('sitemap'),
         ];
