@@ -761,3 +761,59 @@ it('validates product status when updating product details', function (): void {
     expect($product->refresh()->status)->toBe(ProductStatus::ACTIVE);
 });
 
+
+it('warns admins when priced variants are still draft', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $product->variants()->update([
+        'status' => ProductVariantStatus::DRAFT,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.edit', $product))
+        ->assertOk()
+        ->assertSee('Variant publication')
+        ->assertSee('Draft variants are not visible on the storefront')
+        ->assertSee('2 priced draft variants can be activated now')
+        ->assertSee('Activate priced variants');
+});
+
+it('allows an admin to activate only priced draft variants', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $variants = $product->variants()->orderBy('id')->get();
+
+    $pricedDraftVariant = $variants[0];
+    $unpricedDraftVariant = $variants[1];
+
+    $pricedDraftVariant->update([
+        'status' => ProductVariantStatus::DRAFT,
+        'price_net_amount' => 1000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+    ]);
+
+    $unpricedDraftVariant->update([
+        'status' => ProductVariantStatus::DRAFT,
+        'price_net_amount' => null,
+        'currency' => null,
+        'vat_rate' => null,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.variants.activate-priced', $product))
+        ->assertRedirect()
+        ->assertSessionHas('success', '1 priced variant activated.');
+
+    expect($pricedDraftVariant->refresh()->status)->toBe(ProductVariantStatus::ACTIVE)
+        ->and($unpricedDraftVariant->refresh()->status)->toBe(ProductVariantStatus::DRAFT);
+});
