@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\Orders\AdminShipmentLabelController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentProtocolController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentStatusRefreshController;
 use App\Http\Controllers\Admin\Orders\OrderFulfilmentController;
+use App\Http\Controllers\Admin\Products\AdminProductActivatePricedVariantsController;
 use App\Http\Controllers\Admin\Products\AdminProductDefaultImageUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductEditController;
 use App\Http\Controllers\Admin\Products\AdminProductIndexController;
@@ -143,6 +144,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::patch('/products/{product}/variants/prices', AdminProductVariantPricesUpdateController::class)
             ->name('products.variants.prices.update');
+
+        Route::patch('/products/{product}/variants/activate-priced', AdminProductActivatePricedVariantsController::class)
+            ->name('products.variants.activate-priced');
 
         Route::patch('/products/{product}/package-dimensions', AdminProductPackageDimensionsUpdateController::class)
             ->name('products.package-dimensions.update');

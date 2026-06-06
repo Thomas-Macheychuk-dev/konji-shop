@@ -27,12 +27,14 @@ it('renders homepage SEO metadata, structured data and category links', function
         'status' => CategoryStatus::ARCHIVED,
     ]);
 
+    $homeUrl = route('home');
+
     $this
-        ->get(route('home'))
+        ->get($homeUrl)
         ->assertOk()
         ->assertSee('<title>Medical clothing, orthopedic supports and recovery products - Konji Shop</title>', false)
         ->assertSee('<meta name="description" content="Shop medical clothing, orthopedic supports, braces and recovery products with delivery across Poland.">', false)
-        ->assertSee('<link rel="canonical" href="https://konji-shop.example.test">', false)
+        ->assertSee('<link rel="canonical" href="'.$homeUrl.'">', false)
         ->assertSee('"@type": "WebSite"', false)
         ->assertSee('"@type": "Organization"', false)
         ->assertSee(route('categories.show', $category->slug), false)

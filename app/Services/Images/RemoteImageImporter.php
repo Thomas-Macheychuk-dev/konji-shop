@@ -10,7 +10,10 @@ use RuntimeException;
 
 class RemoteImageImporter
 {
-    public function import(string $url, string $directory, string $disk = 'public'): array
+    /**
+     * @param  array<int, string>|null  $allowedHosts
+     */
+    public function import(string $url, string $directory, string $disk = 'public', ?array $allowedHosts = null): array
     {
         if (! filter_var($url, FILTER_VALIDATE_URL)) {
             throw new RuntimeException("Invalid image URL [{$url}]");
@@ -18,7 +21,9 @@ class RemoteImageImporter
 
         $host = parse_url($url, PHP_URL_HOST);
 
-        if (! is_string($host) || ! str_ends_with($host, 'eldan.pl')) {
+        $allowedHosts ??= ['eldan.pl'];
+
+        if (! is_string($host) || ! $this->isAllowedHost($host, $allowedHosts)) {
             throw new RuntimeException("Disallowed image host [{$url}]");
         }
 
@@ -69,6 +74,23 @@ class RemoteImageImporter
             'file_size' => $fileSize,
             'sha256' => $sha256,
         ];
+    }
+
+    /**
+     * @param  array<int, string>  $allowedHosts
+     */
+    private function isAllowedHost(string $host, array $allowedHosts): bool
+    {
+        foreach ($allowedHosts as $allowedHost) {
+            $allowedHost = mb_strtolower(ltrim($allowedHost, '.'));
+            $host = mb_strtolower($host);
+
+            if ($host === $allowedHost || str_ends_with($host, '.'.$allowedHost)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function extensionFromMimeType(string $mimeType): string
