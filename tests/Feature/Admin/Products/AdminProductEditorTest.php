@@ -531,6 +531,113 @@ it('does not allow an admin to update prices for variants from another product',
         ->vat_rate->toBe(VatRate::VAT_23);
 });
 
+it('shows stock status controls on the admin product edit page', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.edit', $product))
+        ->assertOk()
+        ->assertSee('Variant stock status')
+        ->assertSee('Apply stock status to all variants')
+        ->assertSee('Save variant stock statuses')
+        ->assertSee(StockStatus::IN_STOCK->label())
+        ->assertSee(StockStatus::OUT_OF_STOCK->label())
+        ->assertSee(StockStatus::PREORDER->label());
+});
+
+it('allows an admin to apply stock status to all product variants', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.stock-status.update', $product), [
+            'stock_status' => StockStatus::OUT_OF_STOCK->value,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Stock status applied to all variants.');
+
+    foreach ($product->variants()->get() as $variant) {
+        expect($variant->refresh()->stock_status)->toBe(StockStatus::OUT_OF_STOCK);
+    }
+});
+
+it('allows an admin to update variant stock statuses separately', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $variants = $product->variants()->orderBy('id')->get();
+
+    $first = $variants[0];
+    $second = $variants[1];
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.variants.stock-status.update', $product), [
+            'variants' => [
+                $first->id => [
+                    'stock_status' => StockStatus::OUT_OF_STOCK->value,
+                ],
+                $second->id => [
+                    'stock_status' => StockStatus::PREORDER->value,
+                ],
+            ],
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Variant stock statuses updated.');
+
+    expect($first->refresh()->stock_status)->toBe(StockStatus::OUT_OF_STOCK)
+        ->and($second->refresh()->stock_status)->toBe(StockStatus::PREORDER);
+});
+
+it('does not allow an admin to update stock status for variants from another product', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $otherProduct = Product::query()->create([
+        'name' => 'Other Stock Product',
+        'slug' => 'other-stock-product',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    $otherVariant = ProductVariant::query()->create([
+        'product_id' => $otherProduct->id,
+        'sku' => 'OTHER-STOCK',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => 1000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.variants.stock-status.update', $product), [
+            'variants' => [
+                $otherVariant->id => [
+                    'stock_status' => StockStatus::OUT_OF_STOCK->value,
+                ],
+            ],
+        ])
+        ->assertSessionHasErrors(['variants']);
+
+    expect($otherVariant->refresh()->stock_status)->toBe(StockStatus::IN_STOCK);
+});
+
 it('allows an admin to apply package data to all product variants', function (): void {
     $admin = User::factory()->create([
         'is_admin' => true,
