@@ -25,9 +25,11 @@ use App\Http\Controllers\Admin\Products\AdminProductEditController;
 use App\Http\Controllers\Admin\Products\AdminProductIndexController;
 use App\Http\Controllers\Admin\Products\AdminProductPackageDimensionsUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductPricesUpdateController;
+use App\Http\Controllers\Admin\Products\AdminProductStockStatusUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantPricesUpdateController;
+use App\Http\Controllers\Admin\Products\AdminProductVariantStockStatusUpdateController;
 use App\Http\Controllers\Admin\Shop\AdminShopReadinessController;
 use App\Http\Controllers\CartItemDestroyController;
 use App\Http\Controllers\CartItemStoreController;
@@ -147,6 +149,12 @@ Route::middleware(['auth', 'admin'])
 
         Route::patch('/products/{product}/variants/activate-priced', AdminProductActivatePricedVariantsController::class)
             ->name('products.variants.activate-priced');
+
+        Route::patch('/products/{product}/stock-status', AdminProductStockStatusUpdateController::class)
+            ->name('products.stock-status.update');
+
+        Route::patch('/products/{product}/variants/stock-status', AdminProductVariantStockStatusUpdateController::class)
+            ->name('products.variants.stock-status.update');
 
         Route::patch('/products/{product}/package-dimensions', AdminProductPackageDimensionsUpdateController::class)
             ->name('products.package-dimensions.update');

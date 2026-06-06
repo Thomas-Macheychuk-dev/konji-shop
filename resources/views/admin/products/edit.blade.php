@@ -816,6 +816,152 @@
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <div class="mb-4">
                 <h2 class="text-lg font-semibold text-zinc-900">
+                    Variant stock status
+                </h2>
+
+                <p class="mt-2 text-sm text-zinc-500">
+                    Stock status controls whether active variants can be bought on the storefront. Imported Wojdak variants may need to be changed from out of stock to in stock after prices are confirmed.
+                </p>
+            </div>
+
+            <div class="mb-6 rounded-2xl border border-zinc-100 bg-zinc-50 p-5">
+                <h3 class="text-sm font-semibold text-zinc-900">
+                    Apply stock status to all variants
+                </h3>
+
+                <p class="mt-2 text-sm text-zinc-500">
+                    Use this when every variant of this product should have the same availability.
+                </p>
+
+                <form
+                    method="POST"
+                    action="{{ route('admin.products.stock-status.update', $product) }}"
+                    class="mt-4 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end"
+                >
+                    @csrf
+                    @method('PATCH')
+
+                    <div>
+                        <label for="stock_status" class="text-sm font-medium text-zinc-700">
+                            Stock status
+                        </label>
+
+                        <select
+                            id="stock_status"
+                            name="stock_status"
+                            required
+                            class="@error('stock_status') border-red-300 ring-red-100 @else border-zinc-300 @enderror mt-1 w-full rounded-xl border bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                        >
+                            @foreach (\App\Enums\StockStatus::cases() as $stockStatus)
+                                <option value="{{ $stockStatus->value }}">
+                                    {{ $stockStatus->label() }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        @error('stock_status')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
+                            Apply stock status
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <form
+                method="POST"
+                action="{{ route('admin.products.variants.stock-status.update', $product) }}"
+            >
+                @csrf
+                @method('PATCH')
+
+                <div class="overflow-hidden rounded-xl border border-zinc-200">
+                    <table class="min-w-full divide-y divide-zinc-200">
+                        <thead class="bg-zinc-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Variant</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Stock status</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="divide-y divide-zinc-200 bg-white">
+                        @forelse ($product->variants as $variant)
+                            @php
+                                $variantName = $variant->attributeValues
+                                    ->pluck('value')
+                                    ->filter()
+                                    ->implode(' / ');
+                            @endphp
+
+                            <tr>
+                                <td class="px-4 py-4 text-sm">
+                                    <div class="font-medium text-zinc-900">
+                                        {{ $variant->sku ?: 'Variant #' . $variant->id }}
+                                    </div>
+
+                                    @if ($variantName)
+                                        <div class="mt-1 text-xs text-zinc-500">
+                                            {{ $variantName }}
+                                        </div>
+                                    @endif
+
+                                    <div class="mt-1 text-xs text-zinc-400">
+                                        ID: {{ $variant->id }}
+                                    </div>
+                                </td>
+
+                                <td class="px-4 py-4 text-sm text-zinc-700">
+                                    {{ $variant->status->label() }}
+                                </td>
+
+                                <td class="px-4 py-4 text-sm">
+                                    <select
+                                        name="variants[{{ $variant->id }}][stock_status]"
+                                        required
+                                        class="@error("variants.{$variant->id}.stock_status") border-red-300 ring-red-100 @else border-zinc-300 @enderror w-44 rounded-xl border bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                    >
+                                        @foreach (\App\Enums\StockStatus::cases() as $stockStatus)
+                                            <option
+                                                value="{{ $stockStatus->value }}"
+                                                @selected(old("variants.{$variant->id}.stock_status", $variant->stock_status?->value ?? \App\Enums\StockStatus::OUT_OF_STOCK->value) === $stockStatus->value)
+                                            >
+                                                {{ $stockStatus->label() }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="px-4 py-10 text-center text-sm text-zinc-500">
+                                    This product has no variants.
+                                </td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                @if ($errors->has('variants'))
+                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('variants') }}</p>
+                @endif
+
+                <div class="mt-5 flex justify-end">
+                    <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
+                        Save variant stock statuses
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <div class="mb-4">
+                <h2 class="text-lg font-semibold text-zinc-900">
                     Variant package data
                 </h2>
 
