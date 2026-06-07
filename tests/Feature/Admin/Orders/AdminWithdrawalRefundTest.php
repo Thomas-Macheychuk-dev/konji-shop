@@ -33,9 +33,9 @@ it('shows a refund action on the admin order page when an order has a refundable
         ->actingAs($admin)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Withdrawal refund requested')
+        ->assertSee('Zgłoszono zwrot środków z odstąpienia')
         ->assertSee($withdrawalRequest->number)
-        ->assertSee('Refund')
+        ->assertSee('Zwrot środków')
         ->assertSee(route('admin.orders.fulfilment.update', [$order, 'refund']), false);
 });
 
@@ -52,7 +52,7 @@ it('processes a withdrawal refund and emails the customer', function (): void {
         ->actingAs($admin)
         ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
         ->assertRedirect()
-        ->assertSessionHas('success', 'Withdrawal refund processed and customer notified.');
+        ->assertSessionHas('success', 'Zwrot z odstąpienia został przetworzony, a klient powiadomiony.');
 
     expect($withdrawalRequest->refresh())
         ->status->toBe(WithdrawalStatus::REFUNDED)
@@ -78,7 +78,7 @@ it('processes a withdrawal refund and emails the customer', function (): void {
 function adminOrderWithdrawalRefundFixture(): array
 {
     $product = Product::query()->create([
-        'name' => 'Refund Product',
+        'name' => 'Zwrot środków Product',
         'slug' => 'refund-product-'.str()->lower(str()->random(8)),
         'status' => ProductStatus::ACTIVE,
     ]);
@@ -128,7 +128,7 @@ function adminOrderWithdrawalRefundFixture(): array
         'order_id' => $order->id,
         'product_id' => $product->id,
         'product_variant_id' => $variant->id,
-        'product_name_snapshot' => 'Refund Product',
+        'product_name_snapshot' => 'Zwrot środków Product',
         'variant_name_snapshot' => 'Default',
         'sku_snapshot' => $variant->sku,
         'unit_price_amount' => 12300,
@@ -149,7 +149,7 @@ function adminOrderWithdrawalRefundFixture(): array
         'user_id' => null,
         'number' => 'WD-REFUND-'.str()->upper(str()->random(8)),
         'status' => WithdrawalStatus::ACKNOWLEDGED,
-        'customer_name' => 'Refund Customer',
+        'customer_name' => 'Zwrot środków Customer',
         'customer_email' => 'refund-customer@example.test',
         'order_number_snapshot' => $order->number,
         'reason' => null,

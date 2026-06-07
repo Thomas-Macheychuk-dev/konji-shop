@@ -8,20 +8,20 @@
                     href="{{ route('admin.withdrawals.index') }}"
                     class="text-sm font-medium text-zinc-500 hover:text-zinc-700"
                 >
-                    ← Back to withdrawals
+                    ← Wróć do odstąpień
                 </a>
 
                 <h1 class="mt-3 text-3xl font-bold tracking-tight text-zinc-900">
-                    Withdrawal {{ $withdrawalRequest->number }}
+                    Odstąpienie {{ $withdrawalRequest->number }}
                 </h1>
 
                 <p class="mt-2 text-sm text-zinc-600">
-                    Submitted at {{ $withdrawalRequest->submitted_at?->format('Y-m-d H:i') ?? '—' }}
+                    Zgłoszono {{ $withdrawalRequest->submitted_at?->format('Y-m-d H:i') ?? '—' }}
                 </p>
             </div>
 
             <span class="inline-flex self-start rounded-full px-3 py-1 text-sm font-semibold {{ $withdrawalRequest->status->badgeColorClasses() }}">
-                {{ \Illuminate\Support\Str::headline($withdrawalRequest->status->value) }}
+                {{ $withdrawalRequest->status->label() }}
             </span>
         </div>
 
@@ -30,7 +30,7 @@
                 <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
                     <div class="border-b border-zinc-200 px-6 py-4">
                         <h2 class="text-lg font-semibold text-zinc-900">
-                            Selected items
+                            Wybrane pozycje
                         </h2>
                     </div>
 
@@ -57,12 +57,12 @@
                                     </div>
 
                                     <div class="text-sm sm:text-right">
-                                        <p class="text-zinc-500">Quantity requested</p>
+                                        <p class="text-zinc-500">Żądana ilość</p>
                                         <p class="font-medium text-zinc-900">
                                             {{ $item->quantity_requested }} / {{ $item->quantity_ordered }}
                                         </p>
 
-                                        <p class="mt-3 text-zinc-500">Amount gross</p>
+                                        <p class="mt-3 text-zinc-500">Kwota brutto</p>
                                         <p class="font-semibold text-zinc-900">
                                             {{ $item->lineGrossDecimal() }} {{ $withdrawalRequest->order?->currency ?? 'PLN' }}
                                         </p>
@@ -75,26 +75,26 @@
 
                 <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                     <h2 class="text-lg font-semibold text-zinc-900">
-                        Customer statement
+                        Oświadczenie klienta
                     </h2>
 
                     <dl class="mt-5 space-y-4 text-sm">
                         <div>
-                            <dt class="text-zinc-500">Reason</dt>
+                            <dt class="text-zinc-500">Powód</dt>
                             <dd class="mt-1 whitespace-pre-line text-zinc-900">
                                 {{ $withdrawalRequest->reason ?: '—' }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt class="text-zinc-500">Message</dt>
+                            <dt class="text-zinc-500">Wiadomość</dt>
                             <dd class="mt-1 whitespace-pre-line text-zinc-900">
                                 {{ $withdrawalRequest->customer_note ?: '—' }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt class="text-zinc-500">Refund note</dt>
+                            <dt class="text-zinc-500">Notatka do zwrotu</dt>
                             <dd class="mt-1 whitespace-pre-line text-zinc-900">
                                 {{ $withdrawalRequest->refund_note ?: '—' }}
                             </dd>
@@ -106,12 +106,12 @@
             <div class="space-y-8">
                 <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                     <h2 class="text-lg font-semibold text-zinc-900">
-                        Details
+                        Szczegóły
                     </h2>
 
                     <dl class="mt-5 space-y-3 text-sm">
                         <div>
-                            <dt class="text-zinc-500">Order</dt>
+                            <dt class="text-zinc-500">Zamówienie</dt>
                             <dd class="mt-1 font-medium text-zinc-900">
                                 @if ($withdrawalRequest->order)
                                     <a
@@ -127,42 +127,42 @@
                         </div>
 
                         <div>
-                            <dt class="text-zinc-500">Customer name</dt>
+                            <dt class="text-zinc-500">Imię i nazwisko klienta</dt>
                             <dd class="mt-1 font-medium text-zinc-900">
                                 {{ $withdrawalRequest->customer_name }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt class="text-zinc-500">Customer email</dt>
+                            <dt class="text-zinc-500">E-mail klienta</dt>
                             <dd class="mt-1 break-all font-medium text-zinc-900">
                                 {{ $withdrawalRequest->customer_email }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt class="text-zinc-500">Acknowledged at</dt>
+                            <dt class="text-zinc-500">Potwierdzono</dt>
                             <dd class="mt-1 font-medium text-zinc-900">
                                 {{ $withdrawalRequest->acknowledged_at?->format('Y-m-d H:i') ?? '—' }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt class="text-zinc-500">Refunded at</dt>
+                            <dt class="text-zinc-500">Zwrócono środki</dt>
                             <dd class="mt-1 font-medium text-zinc-900">
                                 {{ $withdrawalRequest->refunded_at?->format('Y-m-d H:i') ?? '—' }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt class="text-zinc-500">Refund amount</dt>
+                            <dt class="text-zinc-500">Kwota zwrotu</dt>
                             <dd class="mt-1 font-medium text-zinc-900">
                                 {{ $withdrawalRequest->refundAmountDecimal() }} {{ $withdrawalRequest->order?->currency ?? 'PLN' }}
                             </dd>
                         </div>
 
                         <div>
-                            <dt class="text-zinc-500">Submission IP</dt>
+                            <dt class="text-zinc-500">IP zgłoszenia</dt>
                             <dd class="mt-1 font-medium text-zinc-900">
                                 {{ $withdrawalRequest->submission_ip ?: '—' }}
                             </dd>

@@ -34,17 +34,17 @@ final class CheckPolkurierConfigurationCommand extends Command
             return $ready ? self::SUCCESS : self::FAILURE;
         }
 
-        $this->info('Polkurier configuration check');
+        $this->info('Sprawdzenie konfiguracji Polkurier');
         $this->newLine();
 
         $this->table(
-            ['Category', 'Check', 'Status', 'Required', 'Message'],
+            ['Kategoria', 'Sprawdzenie', 'Status', 'Wymagane', 'Komunikat'],
             array_map(
                 fn (array $item): array => [
                     $item['category'],
                     $item['name'],
                     $item['status'],
-                    $item['required'] ? 'yes' : 'no',
+                    $item['required'] ? 'tak' : 'nie',
                     $item['message'],
                 ],
                 $items,
@@ -54,12 +54,12 @@ final class CheckPolkurierConfigurationCommand extends Command
         $this->newLine();
 
         if ($ready) {
-            $this->info('Polkurier is ready for production.');
+            $this->info('Polkurier jest gotowy do produkcji.');
 
             return self::SUCCESS;
         }
 
-        $this->error('Polkurier is NOT ready for production.');
+        $this->error('Polkurier NIE jest gotowy do produkcji.');
 
         return self::FAILURE;
     }

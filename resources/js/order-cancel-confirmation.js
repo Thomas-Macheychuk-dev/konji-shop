@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
 
             const result = await Swal.fire({
-                title: 'Cancel this order?',
-                text: 'This action cannot be undone.',
+                title: 'Anulować to zamówienie?',
+                text: 'Tej akcji nie można cofnąć.',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Cancel order',
-                cancelButtonText: 'Keep order',
+                confirmButtonText: 'Anuluj zamówienie',
+                cancelButtonText: 'Zachowaj zamówienie',
                 reverseButtons: true,
                 focusCancel: true,
             });

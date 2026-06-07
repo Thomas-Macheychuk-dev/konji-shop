@@ -41,6 +41,6 @@ final class AdminOrderShipmentController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return back()->with('success', 'Shipment created.');
+        return back()->with('success', 'Przesyłka utworzona.');
     }
 }

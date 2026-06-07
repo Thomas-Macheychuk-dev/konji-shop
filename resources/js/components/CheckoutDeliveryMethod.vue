@@ -7,33 +7,33 @@
 
         <div class="sm:col-span-2">
             <label class="mb-2 block text-sm font-medium text-zinc-700">
-                Delivery method
+                Metoda dostawy
             </label>
 
             <select
                 v-model="deliveryMethod"
                 class="block w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
             >
-                <option value="inpost_parcel_locker">InPost parcel locker</option>
-                <option value="inpost_courier">InPost courier</option>
-                <option value="ups_courier">UPS courier</option>
-                <option value="dpd_courier">DPD courier</option>
-                <option value="local_pickup">Pickup from shop — Prusa 20, Poznań</option>
+                <option value="inpost_parcel_locker">Paczkomat InPost</option>
+                <option value="inpost_courier">Kurier InPost</option>
+                <option value="ups_courier">Kurier UPS</option>
+                <option value="dpd_courier">Kurier DPD</option>
+                <option value="local_pickup">Odbiór osobisty — Prusa 20, Poznań</option>
             </select>
 
             <p class="mt-2 text-xs text-zinc-500">
-                Choose how you want to receive your order.
+                Wybierz sposób odbioru zamówienia.
             </p>
 
             <div class="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm sm:col-span-2">
                 <div class="flex items-center justify-between gap-4">
                     <span class="font-medium text-zinc-700">
-                        Delivery price
+                        Cena dostawy
                     </span>
 
                     <span class="font-semibold text-zinc-900">
                         <template v-if="quoteLoading">
-                            Calculating...
+                            Obliczanie...
                         </template>
 
                         <template v-else-if="quote">
@@ -51,11 +51,11 @@
                 </p>
 
                 <p v-else-if="quote?.source === 'fallback'" class="mt-2 text-xs text-zinc-500">
-                    Estimated delivery price.
+                    Szacowana cena dostawy.
                 </p>
 
                 <p v-else-if="quote?.source === 'polkurier_order_valuation_v2'" class="mt-2 text-xs text-zinc-500">
-                    Live Polkurier delivery price.
+                    Aktualna cena dostawy z Polkurier.
                 </p>
             </div>
         </div>
@@ -66,14 +66,14 @@
         >
             <div class="flex items-center justify-between">
                 <label class="block text-sm font-medium text-zinc-700">
-                    Parcel locker
+                    Paczkomat
                 </label>
 
                 <span
                     v-if="lockerCode"
                     class="rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700"
                 >
-                    Selected
+                    Wybrano
                 </span>
             </div>
 
@@ -83,7 +83,7 @@
                     type="text"
                     autocomplete="off"
                     class="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 pr-24 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                    placeholder="Search by city, street, postcode or locker code..."
+                    placeholder="Szukaj po mieście, ulicy, kodzie pocztowym lub kodzie paczkomatu..."
                     @input="search"
                 >
 
@@ -93,12 +93,12 @@
                     class="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg px-2 py-1 text-xs font-medium text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
                     @click="clearLocker"
                 >
-                    Clear
+                    Wyczyść
                 </button>
             </div>
 
             <div v-if="loading" class="mt-2 text-sm text-zinc-500">
-                Searching parcel lockers...
+                Wyszukiwanie paczkomatów...
             </div>
 
             <div
@@ -125,16 +125,16 @@
                     v-if="!loading && lockers.length === 0"
                     class="px-4 py-6 text-center text-sm text-zinc-500"
                 >
-                    No parcel lockers found.
+                    Nie znaleziono paczkomatów.
                 </div>
             </div>
 
             <p v-if="lockerCode" class="mt-2 text-xs text-green-700">
-                Selected locker will be used for delivery.
+                Wybrany paczkomat zostanie użyty do dostawy.
             </p>
 
             <p v-else class="mt-2 text-xs text-zinc-500">
-                Select one result before placing the order.
+                Wybierz jeden wynik przed złożeniem zamówienia.
             </p>
         </div>
 
@@ -143,11 +143,11 @@
             class="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-700 sm:col-span-2"
         >
             <p class="font-medium text-zinc-900">
-                Pickup from shop
+                Odbiór osobisty
             </p>
 
             <p class="mt-1">
-                Your order will be available for collection at:
+                Zamówienie będzie gotowe do odbioru pod adresem:
             </p>
 
             <p class="mt-2 font-medium text-zinc-900">
@@ -155,7 +155,7 @@
             </p>
 
             <p class="mt-2 text-zinc-500">
-                No courier shipment will be created.
+                Przesyłka kurierska nie zostanie utworzona.
             </p>
         </div>
     </div>
@@ -379,7 +379,7 @@ function scheduleQuote() {
     if (service.value === 'local_pickup') {
         quote.value = {
             amount: 0,
-            formatted: 'Free',
+            formatted: 'Bezpłatnie',
             currency: props.currency,
             source: 'local_pickup',
         };
@@ -394,8 +394,8 @@ function scheduleQuote() {
     if (!postcode || postcode.trim().length < 2) {
         quote.value = null;
         quoteError.value = service.value === 'parcel_locker'
-            ? 'Select a parcel locker to calculate delivery price.'
-            : 'Enter postcode to calculate delivery price.';
+            ? 'Wybierz paczkomat, aby obliczyć cenę dostawy.'
+            : 'Wpisz kod pocztowy, aby obliczyć cenę dostawy.';
         quoteLoading.value = false;
 
         return;
@@ -439,7 +439,7 @@ async function fetchQuote() {
 
         if (!response.ok) {
             quote.value = null;
-            quoteError.value = firstValidationMessage(data) || 'Could not calculate delivery price.';
+            quoteError.value = firstValidationMessage(data) || 'Nie udało się obliczyć ceny dostawy.';
 
             return;
         }
@@ -452,7 +452,7 @@ async function fetchQuote() {
         }
 
         quote.value = null;
-        quoteError.value = 'Could not calculate delivery price.';
+        quoteError.value = 'Nie udało się obliczyć ceny dostawy.';
     } finally {
         if (requestId === quoteRequestId) {
             quoteLoading.value = false;

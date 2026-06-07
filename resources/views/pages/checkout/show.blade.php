@@ -3,9 +3,9 @@
 @section('content')
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8">
-            <h1 class="text-3xl font-bold tracking-tight text-zinc-900">Checkout</h1>
+            <h1 class="text-3xl font-bold tracking-tight text-zinc-900">Kasa</h1>
             <p class="mt-2 text-sm text-zinc-600">
-                Enter your details and review your order before placing it.
+                Wprowadź swoje dane i sprawdź zamówienie przed jego złożeniem.
             </p>
         </div>
 
@@ -36,7 +36,7 @@
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px]">
                 <section class="space-y-6">
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                        <h2 class="text-lg font-semibold text-zinc-900">Contact details</h2>
+                        <h2 class="text-lg font-semibold text-zinc-900">Dane kontaktowe</h2>
 
                         <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
                             <div class="sm:col-span-2">
@@ -57,7 +57,7 @@
                                     >
 
                                     <p class="mt-2 text-xs text-zinc-500">
-                                        E-mail comes from your account.
+                                        Adres e-mail pochodzi z Twojego konta.
                                     </p>
                                 @else
                                     <input
@@ -93,7 +93,7 @@
                                     >
 
                                     <p class="mt-2 text-xs text-zinc-500">
-                                        Phone comes from your account.
+                                        Numer telefonu pochodzi z Twojego konta.
                                     </p>
                                 @else
                                     <input
@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                        <h2 class="text-lg font-semibold text-zinc-900">Delivery method</h2>
+                        <h2 class="text-lg font-semibold text-zinc-900">Metoda dostawy</h2>
 
                         <div
                             id="checkout-delivery-method"
@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                        <h2 class="text-lg font-semibold text-zinc-900">Shipping address</h2>
+                        <h2 class="text-lg font-semibold text-zinc-900">Adres dostawy</h2>
 
                         <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
                             <div>
@@ -178,8 +178,8 @@
 
                             <div class="sm:col-span-2">
                                 <label for="shipping_company" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Company
-                                    <span class="text-zinc-400">(optional)</span>
+                                    Firma
+                                    <span class="text-zinc-400">(opcjonalnie)</span>
                                 </label>
                                 <input
                                     id="shipping_company"
@@ -196,7 +196,7 @@
 
                             <div class="sm:col-span-2">
                                 <label for="shipping_address_line_1" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Address line 1
+                                    Adres — linia 1
                                 </label>
                                 <input
                                     id="shipping_address_line_1"
@@ -213,8 +213,8 @@
 
                             <div class="sm:col-span-2">
                                 <label for="shipping_address_line_2" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Address line 2
-                                    <span class="text-zinc-400">(optional)</span>
+                                    Adres — linia 2
+                                    <span class="text-zinc-400">(opcjonalnie)</span>
                                 </label>
                                 <input
                                     id="shipping_address_line_2"
@@ -294,7 +294,7 @@
                         x-data="{ billingAddressSource: '{{ $billingAddressSource }}' }"
                     >
                         <div class="flex flex-col gap-4">
-                            <h2 class="text-lg font-semibold text-zinc-900">Billing address</h2>
+                            <h2 class="text-lg font-semibold text-zinc-900">Adres rozliczeniowy</h2>
 
                             <input
                                 type="hidden"
@@ -311,7 +311,7 @@
                                         x-model="billingAddressSource"
                                         class="mt-1 h-4 w-4 border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                                     >
-                                    <span>Same as shipping</span>
+                                    <span>Taki sam jak adres dostawy</span>
                                 </label>
 
                                 @if ($hasCompanyBillingAddress)
@@ -323,7 +323,7 @@
                                             x-model="billingAddressSource"
                                             class="mt-1 h-4 w-4 border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                                         >
-                                        <span>Use company details</span>
+                                        <span>Użyj danych firmy</span>
                                     </label>
                                 @endif
 
@@ -335,7 +335,7 @@
                                         x-model="billingAddressSource"
                                         class="mt-1 h-4 w-4 border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                                     >
-                                    <span>Use a different billing address</span>
+                                    <span>Użyj innego adresu rozliczeniowego</span>
                                 </label>
                             </div>
 
@@ -414,8 +414,8 @@
 
                             <div class="sm:col-span-2">
                                 <label for="billing_company" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Company
-                                    <span class="text-zinc-400">(optional)</span>
+                                    Firma
+                                    <span class="text-zinc-400">(opcjonalnie)</span>
                                 </label>
                                 <input
                                     id="billing_company"
@@ -432,7 +432,7 @@
 
                             <div class="sm:col-span-2">
                                 <label for="billing_address_line_1" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Address line 1
+                                    Adres — linia 1
                                 </label>
                                 <input
                                     id="billing_address_line_1"
@@ -449,8 +449,8 @@
 
                             <div class="sm:col-span-2">
                                 <label for="billing_address_line_2" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Address line 2
-                                    <span class="text-zinc-400">(optional)</span>
+                                    Adres — linia 2
+                                    <span class="text-zinc-400">(opcjonalnie)</span>
                                 </label>
                                 <input
                                     id="billing_address_line_2"
@@ -526,12 +526,12 @@
                     </div>
 
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                        <h2 class="text-lg font-semibold text-zinc-900">Order notes</h2>
+                        <h2 class="text-lg font-semibold text-zinc-900">Uwagi do zamówienia</h2>
 
                         <div class="mt-5">
                             <label for="notes" class="mb-2 block text-sm font-medium text-zinc-700">
                                 Notes
-                                <span class="text-zinc-400">(optional)</span>
+                                <span class="text-zinc-400">(opcjonalnie)</span>
                             </label>
                             <textarea
                                 id="notes"
@@ -548,7 +548,7 @@
 
                 <aside>
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                        <h2 class="text-lg font-semibold text-zinc-900">Order summary</h2>
+                        <h2 class="text-lg font-semibold text-zinc-900">Podsumowanie zamówienia</h2>
 
                         <div class="mt-5 space-y-4">
                             @foreach ($cart->items as $item)
@@ -579,7 +579,7 @@
                                         @if ($imageUrl)
                                             <img
                                                 src="{{ $imageUrl }}"
-                                                alt="{{ $product?->name ?? 'Product image' }}"
+                                                alt="{{ $product?->name ?? 'Zdjęcie produktu' }}"
                                                 class="h-full w-full object-cover"
                                             >
                                         @endif
@@ -587,7 +587,7 @@
 
                                     <div class="min-w-0 flex-1">
                                         <p class="truncate text-sm font-medium text-zinc-900">
-                                            {{ $product?->name ?? 'Product' }}
+                                            {{ $product?->name ?? 'Produkt' }}
                                         </p>
 
                                         @if ($variantName)
@@ -597,12 +597,12 @@
                                         @endif
 
                                         <p class="mt-1 text-xs text-zinc-500">
-                                            Quantity: {{ $item->quantity }}
+                                            Ilość: {{ $item->quantity }}
                                         </p>
 
                                         @if ($lineNet !== null && $lineTax !== null)
                                             <p class="mt-2 text-xs text-zinc-500">
-                                                Net:
+                                                Netto:
                                                 <span class="font-medium text-zinc-700">
                                                     {{ number_format($lineNet / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                                 </span>
@@ -620,11 +620,11 @@
                                                 {{ number_format($lineTotal / 100, 2, ',', ' ') }} {{ $variant?->currency?->value ?? $cart->currency }}
                                             </p>
                                             <p class="mt-1 text-xs text-zinc-500">
-                                                {{ number_format(($unitPrice ?? 0) / 100, 2, ',', ' ') }} each gross
+                                                {{ number_format(($unitPrice ?? 0) / 100, 2, ',', ' ') }} brutto za szt.
                                             </p>
                                         @else
                                             <p class="text-sm font-medium text-red-600">
-                                                Price unavailable
+                                                Cena niedostępna
                                             </p>
                                         @endif
                                     </div>
@@ -634,13 +634,13 @@
 
                         <dl class="mt-6 space-y-3 text-sm text-zinc-700">
                             <div class="flex items-center justify-between">
-                                <dt>Items</dt>
+                                <dt>Pozycje</dt>
                                 <dd>{{ $cart->items->sum('quantity') }}</dd>
                             </div>
 
                             <div class="border-t border-zinc-100 pt-3">
                                 <div class="flex items-center justify-between">
-                                    <dt>Items gross</dt>
+                                    <dt>Produkty brutto</dt>
                                     <dd class="font-medium text-zinc-900">
                                         {{ number_format(($itemsGross ?? $subtotal) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>
@@ -649,14 +649,14 @@
                                 @if ($hasTaxBreakdown ?? false)
                                     <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
                                         <div class="flex items-center justify-between gap-4">
-                                            <dt class="text-zinc-500">Items net</dt>
+                                            <dt class="text-zinc-500">Produkty netto</dt>
                                             <dd class="font-medium text-zinc-800">
                                                 {{ number_format(($itemsNet ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                             </dd>
                                         </div>
 
                                         <div class="flex items-center justify-between gap-4">
-                                            <dt class="text-zinc-500">Items VAT</dt>
+                                            <dt class="text-zinc-500">VAT od produktów</dt>
                                             <dd class="font-medium text-zinc-800">
                                                 {{ number_format(($itemsTax ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                             </dd>
@@ -667,7 +667,7 @@
 
                             <div>
                                 <div class="flex items-center justify-between">
-                                    <dt>Shipping gross</dt>
+                                    <dt>Dostawa brutto</dt>
                                     <dd class="font-medium text-zinc-900">
                                         {{ number_format(($shippingGross ?? $shipping) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>
@@ -676,14 +676,14 @@
                                 @if (($hasTaxBreakdown ?? false) && (($shippingGross ?? $shipping) > 0))
                                     <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
                                         <div class="flex items-center justify-between gap-4">
-                                            <dt class="text-zinc-500">Shipping net</dt>
+                                            <dt class="text-zinc-500">Dostawa netto</dt>
                                             <dd class="font-medium text-zinc-800">
                                                 {{ number_format(($shippingNet ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                             </dd>
                                         </div>
 
                                         <div class="flex items-center justify-between gap-4">
-                                            <dt class="text-zinc-500">Shipping VAT</dt>
+                                            <dt class="text-zinc-500">VAT od dostawy</dt>
                                             <dd class="font-medium text-zinc-800">
                                                 {{ number_format(($shippingTax ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                             </dd>
@@ -703,7 +703,7 @@
 
                             @if ($hasTaxBreakdown ?? false)
                                 <div class="flex items-center justify-between">
-                                    <dt>Total VAT</dt>
+                                    <dt>VAT razem</dt>
                                     <dd class="font-medium text-zinc-900">
                                         {{ number_format(($taxAmount ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>
@@ -712,7 +712,7 @@
 
                             <div class="border-t border-zinc-200 pt-3">
                                 <div class="flex items-center justify-between">
-                                    <dt class="text-base font-semibold text-zinc-900">Total gross</dt>
+                                    <dt class="text-base font-semibold text-zinc-900">Razem brutto</dt>
                                     <dd class="text-base font-semibold text-zinc-900">
                                         {{ number_format(($totalGross ?? $total) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>
@@ -731,38 +731,38 @@
                                 >
 
                                 <span>
-                                    I accept the
+                                    Akceptuję
                                     <a
                                         href="{{ route('legal.terms') }}"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
                                     >
-                                        Terms and Conditions
+                                        Regulamin
                                     </a>
-                                    and confirm that I have read the
+                                    oraz potwierdzam, że zapoznałem/zapoznałam się z
                                     <a
                                         href="{{ route('legal.privacy') }}"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
                                     >
-                                        Privacy Policy
+                                        Polityka prywatności
                                     </a>
-                                    and
+                                    oraz
                                     <a
                                         href="{{ route('legal.returns') }}"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
                                     >
-                                        Returns and Withdrawal information
+                                        Informacje o zwrotach i odstąpieniu od umowy
                                     </a>.
                                 </span>
                             </label>
 
                             <p class="mt-2 text-xs text-zinc-500">
-                                Links open in a new tab so you can review them without losing your checkout progress.
+                                Linki otwierają się w nowej karcie, aby można było je sprawdzić bez utraty postępu w kasie.
                             </p>
 
                             @error('terms_accepted')
@@ -775,19 +775,19 @@
                                 type="submit"
                                 class="inline-flex w-full items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                             >
-                                Place order
+                                Złóż zamówienie
                             </button>
 
                             <a
                                 href="{{ route('cart.show') }}"
                                 class="inline-flex w-full items-center justify-center rounded-xl border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
                             >
-                                Back to cart
+                                Wróć do koszyka
                             </a>
                         </div>
 
                         <p class="mt-4 text-xs text-zinc-500">
-                            Prices shown here reflect current product variant prices at the time of checkout. Shipping may update after selecting a delivery method.
+                            Ceny widoczne tutaj odzwierciedlają aktualne ceny wariantów produktów w momencie składania zamówienia. Koszt dostawy może się zmienić po wybraniu metody dostawy.
                         </p>
                     </div>
                 </aside>

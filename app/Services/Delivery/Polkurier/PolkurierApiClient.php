@@ -87,7 +87,7 @@ final class PolkurierApiClient
         $response = $payload['response'] ?? null;
 
         if (! is_array($response)) {
-            throw new RuntimeException('Polkurier did not return courier point data.');
+            throw new RuntimeException('Polkurier nie zwrócił danych punktów odbioru.');
         }
 
         return $response;
@@ -117,7 +117,7 @@ final class PolkurierApiClient
         $response = $payload['response'] ?? null;
 
         if (! is_array($response)) {
-            throw new RuntimeException('Polkurier did not return pickup time data.');
+            throw new RuntimeException('Polkurier nie zwrócił danych terminów odbioru.');
         }
 
         return $response;
@@ -132,7 +132,7 @@ final class PolkurierApiClient
         $file = $payload['response']['file'] ?? null;
 
         if (! is_string($file) || $file === '') {
-            throw new RuntimeException('Polkurier did not return a label file.');
+            throw new RuntimeException('Polkurier nie zwrócił pliku etykiety.');
         }
 
         $decoded = base64_decode($file, true);
@@ -153,7 +153,7 @@ final class PolkurierApiClient
         $file = $payload['response']['file'] ?? null;
 
         if (! is_string($file) || $file === '') {
-            throw new RuntimeException('Polkurier did not return a protocol file.');
+            throw new RuntimeException('Polkurier nie zwrócił pliku protokołu.');
         }
 
         $decoded = base64_decode($file, true);
@@ -174,7 +174,7 @@ final class PolkurierApiClient
         $response = $payload['response'] ?? null;
 
         if (! is_array($response)) {
-            throw new RuntimeException('Polkurier did not return shipment status data.');
+            throw new RuntimeException('Polkurier nie zwrócił danych statusu przesyłki.');
         }
 
         return $response;
@@ -189,7 +189,7 @@ final class PolkurierApiClient
         $response = $payload['response'] ?? null;
 
         if (! is_array($response)) {
-            throw new RuntimeException('Polkurier did not return cancellation data.');
+            throw new RuntimeException('Polkurier nie zwrócił danych anulowania.');
         }
 
         if (($response['cancellation'] ?? false) !== true) {
@@ -206,7 +206,7 @@ final class PolkurierApiClient
         $response = $payload['response'] ?? null;
 
         if (! is_array($response)) {
-            throw new RuntimeException('Polkurier did not return valuation data.');
+            throw new RuntimeException('Polkurier nie zwrócił danych wyceny.');
         }
 
         return $response;
@@ -232,7 +232,7 @@ final class PolkurierApiClient
         $response = $payload['response'] ?? null;
 
         if (! is_array($response)) {
-            throw new RuntimeException('Polkurier did not return available carrier data.');
+            throw new RuntimeException('Polkurier nie zwrócił danych dostępnych przewoźników.');
         }
 
         return $response;

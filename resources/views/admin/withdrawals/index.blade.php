@@ -8,15 +8,15 @@
                     href="{{ route('admin.orders.index') }}"
                     class="text-sm font-medium text-zinc-500 hover:text-zinc-700"
                 >
-                    ← Back to admin orders
+                    ← Wróć do zamówień administratora
                 </a>
 
                 <h1 class="mt-3 text-3xl font-bold tracking-tight text-zinc-900">
-                    Contract withdrawals
+                    Odstąpienia od umowy
                 </h1>
 
                 <p class="mt-2 text-sm text-zinc-600">
-                    Review customer withdrawal requests submitted through the one-click withdrawal flow.
+                    Przeglądaj zgłoszenia odstąpienia od umowy przesłane przez formularz online.
                 </p>
             </div>
         </div>
@@ -27,22 +27,22 @@
                     <thead class="bg-zinc-50">
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                            Reference
+                            Numer
                         </th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                            Order
+                            Zamówienie
                         </th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                            Customer
+                            Klient
                         </th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
                             Status
                         </th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                            Submitted
+                            Zgłoszono
                         </th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                            Actions
+                            Akcje
                         </th>
                     </tr>
                     </thead>
@@ -78,7 +78,7 @@
 
                             <td class="px-4 py-4 text-sm">
                                 <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $withdrawalRequest->status->badgeColorClasses() }}">
-                                    {{ \Illuminate\Support\Str::headline($withdrawalRequest->status->value) }}
+                                    {{ $withdrawalRequest->status->label() }}
                                 </span>
                             </td>
 
@@ -91,14 +91,14 @@
                                     href="{{ route('admin.withdrawals.show', $withdrawalRequest) }}"
                                     class="font-medium text-zinc-900 hover:underline"
                                 >
-                                    View
+                                    Zobacz
                                 </a>
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="6" class="px-4 py-8 text-center text-sm text-zinc-500">
-                                No contract withdrawal requests have been submitted yet.
+                                Nie przesłano jeszcze zgłoszeń odstąpienia od umowy.
                             </td>
                         </tr>
                     @endforelse

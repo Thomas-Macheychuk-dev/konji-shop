@@ -8,11 +8,11 @@
             </p>
 
             <h1 class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
-                Medical clothing, orthopedic supports and recovery products
+                Odzież medyczna, stabilizatory ortopedyczne i produkty do regeneracji
             </h1>
 
             <p class="mt-4 max-w-3xl text-base leading-7 text-zinc-600 dark:text-zinc-300">
-                Browse medical clothing, orthopedic braces, supports and recovery products selected for comfort, mobility and everyday use.
+                Przeglądaj odzież medyczną, ortezy, stabilizatory i produkty do regeneracji wybrane z myślą o komforcie, mobilności i codziennym użytkowaniu.
             </p>
 
             <div class="mt-6 flex flex-wrap gap-3">
@@ -20,14 +20,14 @@
                     href="#categories"
                     class="inline-flex items-center rounded-lg bg-zinc-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
                 >
-                    Browse categories
+                    Przeglądaj kategorie
                 </a>
 
                 <a
                     href="#deals"
                     class="inline-flex items-center rounded-lg border border-zinc-300 px-5 py-3 text-sm font-medium text-zinc-800 transition hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
                 >
-                    View deals
+                    Zobacz promocje
                 </a>
             </div>
         </div>
@@ -35,7 +35,7 @@
 
     <section id="categories" class="mb-12">
         <div class="mb-6 flex items-center justify-between">
-            <h2 class="text-2xl font-semibold text-zinc-900 dark:text-white">Shop by category</h2>
+            <h2 class="text-2xl font-semibold text-zinc-900 dark:text-white">Kupuj według kategorii</h2>
         </div>
 
         @if ($categories->isNotEmpty())
@@ -55,7 +55,7 @@
                             </p>
                         @else
                             <p class="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
-                                View products in this category.
+                                Zobacz produkty w tej kategorii.
                             </p>
                         @endif
                     </a>
@@ -63,14 +63,14 @@
             </div>
         @else
             <div class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-6 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                No categories available yet.
+                Brak dostępnych kategorii.
             </div>
         @endif
     </section>
 
     <section id="deals">
         <div class="mb-6 flex items-center justify-between">
-            <h2 class="text-2xl font-semibold text-zinc-900 dark:text-white">Deals</h2>
+            <h2 class="text-2xl font-semibold text-zinc-900 dark:text-white">Promocje</h2>
         </div>
 
         @forelse ($deals as $deal)
@@ -79,7 +79,7 @@
             </div>
         @empty
             <div class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-6 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                No deals available yet.
+                Brak dostępnych promocji.
             </div>
         @endforelse
     </section>

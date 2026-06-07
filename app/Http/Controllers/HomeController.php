@@ -24,8 +24,8 @@ class HomeController extends Controller
             ->orderBy('name')
             ->get(['id', 'name', 'slug', 'description']);
 
-        $seoTitle = 'Medical clothing, orthopedic supports and recovery products';
-        $seoDescription = 'Shop medical clothing, orthopedic supports, braces and recovery products with delivery across Poland.';
+        $seoTitle = 'Odzież medyczna, stabilizatory ortopedyczne i produkty do regeneracji';
+        $seoDescription = 'Kupuj odzież medyczną, stabilizatory, ortezy i produkty do regeneracji z dostawą na terenie Polski.';
         $canonicalUrl = route('home');
 
         return view('pages.home', [

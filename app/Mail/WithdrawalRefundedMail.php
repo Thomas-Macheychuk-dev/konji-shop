@@ -23,7 +23,7 @@ final class WithdrawalRefundedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Refund processed - '.$this->withdrawalRequest->order_number_snapshot,
+            subject: 'Zwrot środków przetworzony - '.$this->withdrawalRequest->order_number_snapshot,
         );
     }
 

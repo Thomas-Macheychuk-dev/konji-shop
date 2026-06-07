@@ -23,17 +23,17 @@ final class CreateWithdrawalRequestService
     public function create(Order $order, array $data, ?User $user = null): WithdrawalRequest
     {
         if ($order->placed_at === null) {
-            throw new DomainException('Only placed orders can have withdrawal requests.');
+            throw new DomainException('Odstąpienie można złożyć tylko dla złożonych zamówień.');
         }
 
         if ($order->status->isCancelled()) {
-            throw new DomainException('Cancelled orders cannot have withdrawal requests.');
+            throw new DomainException('Dla anulowanych zamówień nie można złożyć odstąpienia.');
         }
 
         $items = $this->normaliseRequestedItems($order, $data['items'] ?? []);
 
         if ($items === []) {
-            throw new DomainException('Select at least one order item to withdraw from.');
+            throw new DomainException('Wybierz co najmniej jedną pozycję zamówienia do odstąpienia.');
         }
 
         return DB::transaction(function () use ($order, $data, $user, $items): WithdrawalRequest {
@@ -85,7 +85,7 @@ final class CreateWithdrawalRequestService
 
             $order->events()->create([
                 'type' => 'withdrawal_request_submitted',
-                'description' => 'Customer submitted a contract withdrawal request.',
+                'description' => 'Klient złożył oświadczenie o odstąpieniu od umowy.',
                 'meta' => [
                     'withdrawal_request_id' => $withdrawalRequest->id,
                     'withdrawal_request_number' => $withdrawalRequest->number,
@@ -122,7 +122,7 @@ final class CreateWithdrawalRequestService
             $orderItem = $order->items->firstWhere('id', (int) $orderItemId);
 
             if ($orderItem === null) {
-                throw new DomainException('Selected item does not belong to this order.');
+                throw new DomainException('Wybrana pozycja nie należy do tego zamówienia.');
             }
 
             $remainingQuantity = $this->remainingWithdrawableQuantity($orderItem);

@@ -22,6 +22,6 @@ final class AdminProductStockStatusUpdateController extends Controller
             'stock_status' => $stockStatus->value,
         ]);
 
-        return back()->with('success', 'Stock status applied to all variants.');
+        return back()->with('success', 'Status dostępności zastosowano do wszystkich wariantów.');
     }
 }

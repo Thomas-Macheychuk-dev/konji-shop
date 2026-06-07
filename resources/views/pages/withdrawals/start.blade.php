@@ -4,16 +4,16 @@
     <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
             <p class="text-sm font-medium text-zinc-500">
-                Contract withdrawal
+                Odstąpienie od umowy
             </p>
 
             <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
-                Withdraw from contract here
+                Odstąp od umowy tutaj
             </h1>
 
             <p class="mt-5 text-sm leading-6 text-zinc-700">
-                You can submit an electronic withdrawal statement for an eligible online order.
-                To continue, open your order and choose the item(s) you want to include in the withdrawal request.
+                Możesz złożyć elektroniczne oświadczenie o odstąpieniu od umowy dla kwalifikującego się zamówienia internetowego.
+                Aby kontynuować, otwórz zamówienie i wybierz pozycje, które chcesz objąć zgłoszeniem odstąpienia.
             </p>
 
             <div class="mt-8 grid gap-4 sm:grid-cols-2">
@@ -23,15 +23,15 @@
                         class="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 transition hover:bg-zinc-100"
                     >
                         <h2 class="text-base font-semibold text-zinc-900">
-                            I have an account
+                            Mam konto
                         </h2>
 
                         <p class="mt-2 text-sm text-zinc-600">
-                            Go to your orders and select “Withdraw from contract” on the relevant order.
+                            Przejdź do swoich zamówień i wybierz „Odstąp od umowy” przy odpowiednim zamówieniu.
                         </p>
 
                         <span class="mt-4 inline-flex text-sm font-semibold text-zinc-900">
-                            View my orders →
+                            Zobacz moje zamówienia →
                         </span>
                     </a>
                 @else
@@ -40,15 +40,15 @@
                         class="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 transition hover:bg-zinc-100"
                     >
                         <h2 class="text-base font-semibold text-zinc-900">
-                            I have an account
+                            Mam konto
                         </h2>
 
                         <p class="mt-2 text-sm text-zinc-600">
-                            Log in, open your order, and select “Withdraw from contract”.
+                            Zaloguj się, otwórz zamówienie i wybierz „Odstąp od umowy”.
                         </p>
 
                         <span class="mt-4 inline-flex text-sm font-semibold text-zinc-900">
-                            Log in →
+                            Zaloguj się →
                         </span>
                     </a>
                 @endauth
@@ -58,21 +58,21 @@
                     class="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 transition hover:bg-zinc-100"
                 >
                     <h2 class="text-base font-semibold text-zinc-900">
-                        I ordered as a guest
+                        Zamawiałem jako gość
                     </h2>
 
                     <p class="mt-2 text-sm text-zinc-600">
-                        Find your order using your order number and email address, then select “Withdraw from contract”.
+                        Znajdź zamówienie przy użyciu numeru zamówienia i adresu e-mail, a następnie wybierz „Odstąp od umowy”.
                     </p>
 
                     <span class="mt-4 inline-flex text-sm font-semibold text-zinc-900">
-                        Find guest order →
+                        Znajdź zamówienie gościa →
                     </span>
                 </a>
             </div>
 
             <div class="mt-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-                You do not need to provide a reason for withdrawal. The reason field in the form is optional.
+                Nie musisz podawać powodu odstąpienia od umowy. Pole powodu w formularzu jest opcjonalne.
             </div>
         </div>
     </div>

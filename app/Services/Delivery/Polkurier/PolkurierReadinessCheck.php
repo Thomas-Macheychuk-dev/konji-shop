@@ -68,7 +68,7 @@ final class PolkurierReadinessCheck
                 ok: filled(config('delivery.providers.polkurier.login')),
                 required: true,
                 message: filled(config('delivery.providers.polkurier.login'))
-                    ? 'Configured.'
+                    ? 'Skonfigurowano.'
                     : 'POLKURIER_LOGIN is missing.',
             ),
             $this->item(
@@ -77,7 +77,7 @@ final class PolkurierReadinessCheck
                 ok: filled(config('delivery.providers.polkurier.token')),
                 required: true,
                 message: filled(config('delivery.providers.polkurier.token'))
-                    ? 'Configured. Token value is hidden.'
+                    ? 'Skonfigurowano. Wartość tokenu jest ukryta.'
                     : 'POLKURIER_TOKEN is missing.',
             ),
         ];
@@ -93,8 +93,8 @@ final class PolkurierReadinessCheck
         if (! is_array($sender)) {
             return [
                 $this->item(
-                    category: 'Sender',
-                    name: 'Sender config',
+                    category: 'Nadawca',
+                    name: 'Konfiguracja nadawcy',
                     ok: false,
                     required: true,
                     message: 'delivery.providers.polkurier.sender is missing.',
@@ -116,12 +116,12 @@ final class PolkurierReadinessCheck
 
         return array_map(
             fn (string $field): array => $this->item(
-                category: 'Sender',
+                category: 'Nadawca',
                 name: $field,
                 ok: filled($sender[$field] ?? null),
                 required: true,
                 message: filled($sender[$field] ?? null)
-                    ? 'Configured.'
+                    ? 'Skonfigurowano.'
                     : sprintf('POLKURIER_SENDER_%s is missing.', strtoupper($field)),
             ),
             $requiredFields,
@@ -138,8 +138,8 @@ final class PolkurierReadinessCheck
         if (! is_array($pack)) {
             return [
                 $this->item(
-                    category: 'Default pack',
-                    name: 'Default pack config',
+                    category: 'Domyślna paczka',
+                    name: 'Konfiguracja domyślnej paczki',
                     ok: false,
                     required: true,
                     message: 'delivery.providers.polkurier.default_pack is missing.',
@@ -148,13 +148,13 @@ final class PolkurierReadinessCheck
         }
 
         return [
-            $this->item('Default pack', 'shipmenttype', filled($pack['shipmenttype'] ?? null), true, 'Default shipment type.'),
-            $this->item('Default pack', 'length', (int) ($pack['length'] ?? 0) > 0, true, 'Must be greater than 0 cm.'),
-            $this->item('Default pack', 'width', (int) ($pack['width'] ?? 0) > 0, true, 'Must be greater than 0 cm.'),
-            $this->item('Default pack', 'height', (int) ($pack['height'] ?? 0) > 0, true, 'Must be greater than 0 cm.'),
-            $this->item('Default pack', 'weight', (float) ($pack['weight'] ?? 0) > 0, true, 'Must be greater than 0 kg.'),
-            $this->item('Default pack', 'amount', (int) ($pack['amount'] ?? 0) > 0, true, 'Must be greater than 0.'),
-            $this->item('Default pack', 'type', filled($pack['type'] ?? null), true, 'Default Polkurier pack type.'),
+            $this->item('Domyślna paczka', 'shipmenttype', filled($pack['shipmenttype'] ?? null), true, 'Domyślny typ przesyłki.'),
+            $this->item('Domyślna paczka', 'length', (int) ($pack['length'] ?? 0) > 0, true, 'Musi być większe niż 0 cm.'),
+            $this->item('Domyślna paczka', 'width', (int) ($pack['width'] ?? 0) > 0, true, 'Musi być większe niż 0 cm.'),
+            $this->item('Domyślna paczka', 'height', (int) ($pack['height'] ?? 0) > 0, true, 'Musi być większe niż 0 cm.'),
+            $this->item('Domyślna paczka', 'weight', (float) ($pack['weight'] ?? 0) > 0, true, 'Musi być większe niż 0 kg.'),
+            $this->item('Domyślna paczka', 'amount', (int) ($pack['amount'] ?? 0) > 0, true, 'Musi być większe niż 0.'),
+            $this->item('Domyślna paczka', 'type', filled($pack['type'] ?? null), true, 'Domyślny typ paczki Polkurier.'),
         ];
     }
 
@@ -168,8 +168,8 @@ final class PolkurierReadinessCheck
 
         return [
             $this->item(
-                category: 'Labels',
-                name: 'Label disk',
+                category: 'Etykiety',
+                name: 'Dysk etykiet',
                 ok: filled($disk) && $this->diskExists($disk),
                 required: true,
                 message: filled($disk)
@@ -177,8 +177,8 @@ final class PolkurierReadinessCheck
                     : 'POLKURIER_LABEL_DISK is missing.',
             ),
             $this->item(
-                category: 'Labels',
-                name: 'Label path',
+                category: 'Etykiety',
+                name: 'Ścieżka etykiet',
                 ok: filled($path),
                 required: true,
                 message: filled($path)
@@ -198,8 +198,8 @@ final class PolkurierReadinessCheck
 
         return [
             $this->item(
-                category: 'Protocols',
-                name: 'Protocol disk',
+                category: 'Protokoły',
+                name: 'Dysk protokołów',
                 ok: filled($disk) && $this->diskExists($disk),
                 required: true,
                 message: filled($disk)
@@ -207,8 +207,8 @@ final class PolkurierReadinessCheck
                     : 'POLKURIER_PROTOCOL_DISK is missing.',
             ),
             $this->item(
-                category: 'Protocols',
-                name: 'Protocol path',
+                category: 'Protokoły',
+                name: 'Ścieżka protokołów',
                 ok: filled($path),
                 required: true,
                 message: filled($path)
@@ -225,34 +225,34 @@ final class PolkurierReadinessCheck
     {
         $items = [
             $this->item(
-                category: 'Carrier availability',
-                name: 'Available carriers cache',
+                category: 'Dostępność przewoźników',
+                name: 'Cache dostępnych przewoźników',
                 ok: $this->availableCarriersService->hasCachedData(),
                 required: false,
                 message: $this->availableCarriersService->hasCachedData()
                     ? sprintf('Cached carrier records: %d.', count($this->availableCarriersService->cached()))
-                    : 'Available carriers have not been refreshed yet. Refresh them in Polkurier diagnostics before production use.',
+                    : 'Dostępni przewoźnicy nie zostali jeszcze odświeżeni. Odśwież ich w diagnostyce Polkurier przed użyciem produkcyjnym.',
             ),
         ];
 
         foreach ($this->availableCarriersService->configuredCarrierSummaries() as $summary) {
             $items[] = $this->item(
-                category: 'Carrier availability',
+                category: 'Dostępność przewoźników',
                 name: $summary['label'].' / '.$summary['code'],
                 ok: (bool) $summary['available'],
                 required: false,
                 message: $summary['available']
                     ? $this->carrierSummaryMessage($summary)
-                    : 'This configured carrier was not returned by Polkurier available_carriers.',
+                    : 'Ten skonfigurowany przewoźnik nie został zwrócony przez Polkurier available_carriers.',
             );
 
             if ($summary['required_additional_fields'] !== []) {
                 $items[] = $this->item(
-                    category: 'Carrier availability',
+                    category: 'Dostępność przewoźników',
                     name: $summary['label'].' required fields',
                     ok: false,
                     required: false,
-                    message: 'Required additional fields: '.implode(', ', $summary['required_additional_fields']).'. These should be rendered on the admin shipment form.',
+                    message: 'Wymagane pola dodatkowe: '.implode(', ', $summary['required_additional_fields']).'. Powinny być wyświetlone w formularzu przesyłki w panelu administracyjnym.',
                 );
             }
         }
@@ -282,20 +282,20 @@ final class PolkurierReadinessCheck
         }
 
         if ($summary['shipment_types'] !== []) {
-            $parts[] = 'shipment types: '.implode(', ', $summary['shipment_types']);
+            $parts[] = 'typy przesyłek: '.implode(', ', $summary['shipment_types']);
         }
 
         if ($summary['courier_services'] !== []) {
-            $parts[] = 'services: '.implode(', ', $summary['courier_services']);
+            $parts[] = 'usługi: '.implode(', ', $summary['courier_services']);
         }
 
         if ($summary['foreign_shipments'] !== null) {
-            $parts[] = 'foreign shipments: '.($summary['foreign_shipments'] ? 'yes' : 'no');
+            $parts[] = 'przesyłki zagraniczne: '.($summary['foreign_shipments'] ? 'tak' : 'nie');
         }
 
         return $parts !== []
             ? implode('; ', $parts).'.'
-            : 'Returned by Polkurier available_carriers.';
+            : 'Zwrócono przez Polkurier available_carriers.';
     }
 
     /**
@@ -307,13 +307,13 @@ final class PolkurierReadinessCheck
 
         return [
             $this->item(
-                category: 'Valuation',
-                name: 'Live valuation',
+                category: 'Wycena',
+                name: 'Wycena na żywo',
                 ok: $enabled,
                 required: false,
                 message: $enabled
-                    ? 'Live Polkurier valuation is enabled.'
-                    : 'Live valuation is disabled. Fallback prices will be used.',
+                    ? 'Wycena Polkurier na żywo jest włączona.'
+                    : 'Wycena na żywo jest wyłączona. Zostaną użyte ceny zapasowe.',
             ),
         ];
     }
@@ -325,25 +325,25 @@ final class PolkurierReadinessCheck
     {
         return [
             $this->item(
-                category: 'Operations',
-                name: 'Status sync scheduler',
+                category: 'Operacje',
+                name: 'Harmonogram synchronizacji statusów',
                 ok: true,
                 required: false,
-                message: 'Ensure the Laravel scheduler is running in production so polkurier:sync-shipments executes regularly.',
+                message: 'Upewnij się, że scheduler Laravela działa na produkcji, aby polkurier:sync-shipments wykonywało się regularnie.',
             ),
             $this->item(
-                category: 'Operations',
-                name: 'Queue worker',
+                category: 'Operacje',
+                name: 'Worker kolejki',
                 ok: true,
                 required: false,
-                message: 'Ensure a queue worker is running in production if queued tracking emails are not using the sync queue.',
+                message: 'Upewnij się, że worker kolejki działa na produkcji, jeśli e-maile trackingowe w kolejce nie używają kolejki sync.',
             ),
             $this->item(
-                category: 'Operations',
-                name: 'Mail delivery',
+                category: 'Operacje',
+                name: 'Wysyłka e-mail',
                 ok: true,
                 required: false,
-                message: 'Ensure production mail configuration is working so customers receive shipment tracking emails.',
+                message: 'Upewnij się, że produkcyjna konfiguracja poczty działa, aby klienci otrzymywali e-maile ze śledzeniem przesyłki.',
             ),
         ];
     }

@@ -31,7 +31,7 @@ class CheckoutShowController extends Controller
         if (! $cart || $cart->items()->count() === 0) {
             return redirect()
                 ->route('cart.show')
-                ->with('error', 'Your cart is empty.');
+                ->with('error', 'Twój koszyk jest pusty.');
         }
 
         $cart->load([

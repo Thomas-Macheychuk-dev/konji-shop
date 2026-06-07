@@ -64,7 +64,7 @@ class Payment extends Model
 
         $this->order->events()->create([
             'type' => 'payment_paid',
-            'description' => 'Payment marked as paid.',
+            'description' => 'Płatność oznaczono jako opłaconą.',
         ]);
     }
 
@@ -76,7 +76,7 @@ class Payment extends Model
 
         $this->order->events()->create([
             'type' => 'payment_failed',
-            'description' => 'Payment failed.',
+            'description' => 'Płatność nie powiodła się.',
         ]);
     }
 
@@ -123,7 +123,7 @@ class Payment extends Model
 
         $this->order->events()->create([
             'type' => 'payment_pending',
-            'description' => 'Payment moved to pending.',
+            'description' => 'Płatność oznaczono jako oczekującą.',
         ]);
     }
 
@@ -147,7 +147,7 @@ class Payment extends Model
 
         $this->order->events()->create([
             'type' => 'payment_notification_received',
-            'description' => 'Payment notification received from provider.',
+            'description' => 'Otrzymano powiadomienie o płatności od operatora.',
             'meta' => [
                 'external_status' => $externalStatus,
             ],

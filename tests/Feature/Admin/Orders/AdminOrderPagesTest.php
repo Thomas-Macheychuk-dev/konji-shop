@@ -47,9 +47,9 @@ it('shows a blocking Polkurier carrier availability warning on the shipment form
     $this->actingAs($user)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Polkurier carrier availability')
-        ->assertSee('Polkurier did not return the selected courier code DPD in available carriers.')
-        ->assertSee('Shipment creation is blocked until this is resolved.')
+        ->assertSee('Dostępność przewoźników Polkurier')
+        ->assertSee('Polkurier nie zwrócił wybranego kodu kuriera DPD w dostępnych przewoźnikach.')
+        ->assertSee('Utworzenie przesyłki jest zablokowane do czasu rozwiązania problemu.')
         ->assertSee('disabled', false);
 });
 
@@ -74,7 +74,7 @@ it('shows failed shipment retry information on the admin order detail page', fun
         'service' => 'courier',
         'payload' => [
             'error' => [
-                'message' => 'Polkurier rejected create_order.',
+                'message' => 'Polkurier odrzucił create_order.',
                 'class' => RuntimeException::class,
             ],
         ],
@@ -84,9 +84,9 @@ it('shows failed shipment retry information on the admin order detail page', fun
         ->actingAs($admin)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Latest shipment creation failed.')
-        ->assertSee('Polkurier rejected create_order.')
-        ->assertSee('Retry create shipment');
+        ->assertSee('Ostatnie utworzenie przesyłki nie powiodło się.')
+        ->assertSee('Polkurier odrzucił create_order.')
+        ->assertSee('Ponów utworzenie przesyłki');
 });
 
 it('shows the admin order index page', function (): void {
@@ -101,7 +101,7 @@ it('shows the admin order index page', function (): void {
     $this->actingAs($user)
         ->get(route('admin.orders.index'))
         ->assertOk()
-        ->assertSee('Orders')
+        ->assertSee('Zamówienia')
         ->assertSee($order->number);
 });
 
@@ -131,28 +131,28 @@ it('shows the admin order detail page', function (): void {
     $this->actingAs($user)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Order '.$order->number)
-        ->assertSee('Fulfilment actions')
-        ->assertSee('Customer')
-        ->assertSee('Delivery choice')
+        ->assertSee('Zamówienie '.$order->number)
+        ->assertSee('Akcje realizacji')
+        ->assertSee('Klient')
+        ->assertSee('Wybrana dostawa')
         ->assertSee('InPost')
-        ->assertSee('Parcel locker')
+        ->assertSee('Paczkomat')
         ->assertSee('WAW01A')
-        ->assertSee('Legal acceptance')
-        ->assertSee('Terms accepted at')
-        ->assertSee('Terms version')
+        ->assertSee('Akceptacje prawne')
+        ->assertSee('Regulamin zaakceptowany')
+        ->assertSee('Wersja regulaminu')
         ->assertSee('terms-admin-test-v1')
-        ->assertSee('Privacy policy version')
+        ->assertSee('Wersja polityki prywatności')
         ->assertSee('privacy-admin-test-v1')
-        ->assertSee('Returns policy version')
+        ->assertSee('Wersja zasad zwrotów')
         ->assertSee('returns-admin-test-v1')
-        ->assertSee('Acceptance IP')
+        ->assertSee('IP akceptacji')
         ->assertSee('203.0.113.20')
         ->assertSee('User agent')
         ->assertSee('KonjiAdminTestBrowser/1.0')
-        ->assertSee('Items')
-        ->assertSee('Payments')
-        ->assertSee('Internal notes');
+        ->assertSee('Pozycje')
+        ->assertSee('Płatności')
+        ->assertSee('Notatki wewnętrzne');
 });
 
 it('shows the Polkurier pickup selector when creating a courier shipment', function (): void {
@@ -173,11 +173,11 @@ it('shows the Polkurier pickup selector when creating a courier shipment', funct
     $this->actingAs($user)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Fulfilment actions')
+        ->assertSee('Akcje realizacji')
         ->assertSee('admin-polkurier-pickup-selector', false)
         ->assertSee(route('admin.orders.polkurier-pickup-times', $order), false)
-        ->assertSeeText('Create shipment')
-        ->assertDontSeeText('Create shipment & mark as shipped');
+        ->assertSeeText('Utwórz przesyłkę')
+        ->assertDontSeeText('Utwórz przesyłkę i oznacz jako wysłane');
 });
 
 it('redirects guests away from admin orders', function (): void {
@@ -255,8 +255,8 @@ it('shows order timeline events on the admin order detail page', function (): vo
     $this->actingAs($user)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Order timeline')
-        ->assertSee('Order confirmed after successful payment.');
+        ->assertSee('Oś czasu zamówienia')
+        ->assertSee('Zamówienie potwierdzone po pomyślnej płatności.');
 });
 
 it('shows order timeline event metadata on the admin order detail page', function (): void {
@@ -268,7 +268,7 @@ it('shows order timeline event metadata on the admin order detail page', functio
 
     $order->events()->create([
         'type' => 'payment_notification_received',
-        'description' => 'Payment notification received from provider.',
+        'description' => 'Otrzymano powiadomienie o płatności od operatora.',
         'meta' => [
             'external_status' => 'CONFIRMED',
         ],
@@ -277,8 +277,8 @@ it('shows order timeline event metadata on the admin order detail page', functio
     $this->actingAs($user)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Payment notification received from provider.')
-        ->assertSee('External Status')
+        ->assertSee('Otrzymano powiadomienie o płatności od operatora.')
+        ->assertSee('Status zewnętrzny')
         ->assertSee('CONFIRMED');
 });
 
@@ -387,18 +387,18 @@ it('shows required Polkurier additional fields on the shipment form', function (
                 'additional_fields' => [
                     [
                         'name' => 'external_transport_security',
-                        'label' => 'Transport security',
-                        'description' => 'Describe how the parcel is secured.',
+                        'label' => 'Zabezpieczenie transportu',
+                        'description' => 'Opisz, jak paczka jest zabezpieczona.',
                         'type' => 'SELECT',
                         'required' => true,
                         'options' => [
                             [
                                 'value' => 'stretch_wrap',
-                                'label' => 'Stretch wrap',
+                                'label' => 'Folia stretch',
                             ],
                             [
                                 'value' => 'cardboard',
-                                'label' => 'Cardboard',
+                                'label' => 'Karton',
                             ],
                         ],
                     ],
@@ -424,15 +424,15 @@ it('shows required Polkurier additional fields on the shipment form', function (
     $this->actingAs($user)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Polkurier carrier availability')
-        ->assertSee('Polkurier carrier DPD requires additional fields. Fill them in before creating the shipment.')
-        ->assertSee('Polkurier additional fields')
-        ->assertSee('Transport security')
-        ->assertSee('Describe how the parcel is secured.')
+        ->assertSee('Dostępność przewoźników Polkurier')
+        ->assertSee('Przewoźnik Polkurier DPD wymaga dodatkowych pól. Uzupełnij je przed utworzeniem przesyłki.')
+        ->assertSee('Dodatkowe pola Polkurier')
+        ->assertSee('Zabezpieczenie transportu')
+        ->assertSee('Opisz, jak paczka jest zabezpieczona.')
         ->assertSee('polkurier_additional_fields[external_transport_security]', false)
-        ->assertSee('Stretch wrap')
-        ->assertSee('Cardboard')
-        ->assertDontSee('Shipment creation is blocked until this is resolved.');
+        ->assertSee('Folia stretch')
+        ->assertSee('Karton')
+        ->assertDontSee('Utworzenie przesyłki jest zablokowane do czasu rozwiązania problemu.');
 });
 
 it('shows shipments on the admin order detail page', function (): void {
@@ -464,15 +464,15 @@ it('shows shipments on the admin order detail page', function (): void {
     $this->actingAs($user)
         ->get(route('admin.orders.show', $order))
         ->assertOk()
-        ->assertSee('Shipments')
+        ->assertSee('Przesyłki')
         ->assertSee('InPost')
-        ->assertSee('Created')
-        ->assertSee('Parcel locker')
+        ->assertSee('Utworzona')
+        ->assertSee('Paczkomat')
         ->assertSee('WAW01A')
         ->assertSee('TRACK123')
-        ->assertSee('Documents')
-        ->assertSee('Download label')
-        ->assertSee('Download protocol')
+        ->assertSee('Dokumenty')
+        ->assertSee('Pobierz etykietę')
+        ->assertSee('Pobierz protokół')
         ->assertSee('Polkurier:')
         ->assertSee('W przewozie')
         ->assertSee('WP');

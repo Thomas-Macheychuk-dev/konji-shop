@@ -48,7 +48,7 @@
 
             <flux:input
                 name="email"
-                :label="__('Email address')"
+                :label="__('Adres e-mail')"
                 :value="old('email', $user->email)"
                 type="email"
                 required
@@ -86,7 +86,7 @@
                         :value="old('apartment_number', $user->apartment_number)"
                         type="text"
                         autocomplete="address-line2"
-                        :placeholder="__('Apartment number (optional)')"
+                        :placeholder="__('Apartment number (opcjonalnie)')"
                     />
                 </div>
             </div>
@@ -230,7 +230,7 @@
                             :label="__('Company apartment number')"
                             :value="old('company_apartment_number', $user->company_apartment_number)"
                             type="text"
-                            :placeholder="__('Company apartment number (optional)')"
+                            :placeholder="__('Company apartment number (opcjonalnie)')"
                         />
                     </div>
                 </div>

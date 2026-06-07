@@ -76,18 +76,18 @@ final class ShopReadinessCheck
     {
         if ($this->settings->hasLegalVersions()) {
             return $this->ready(
-                'Legal',
-                'Legal document versions',
+                'Prawo',
+                'Wersje dokumentów prawnych',
                 true,
-                'Terms, privacy, and returns policy versions are configured.'
+                'Wersje regulaminu, polityki prywatności i zwrotów są skonfigurowane.'
             );
         }
 
         return $this->missing(
-            'Legal',
-            'Legal document versions',
+            'Prawo',
+            'Wersje dokumentów prawnych',
             true,
-            'Terms, privacy, and returns policy versions must be configured.'
+            'Wersje regulaminu, polityki prywatności i zwrotów muszą być skonfigurowane.'
         );
     }
 
@@ -98,18 +98,18 @@ final class ShopReadinessCheck
     {
         if ($this->settings->hasSellerIdentity()) {
             return $this->ready(
-                'Seller',
-                'Seller identity and address',
+                'Sprzedawca',
+                'Tożsamość i adres sprzedawcy',
                 true,
-                'Seller company name and address are configured.'
+                'Nazwa firmy i adres sprzedawcy są skonfigurowane.'
             );
         }
 
         return $this->missing(
-            'Seller',
-            'Seller identity and address',
+            'Sprzedawca',
+            'Tożsamość i adres sprzedawcy',
             true,
-            'Seller company name, street, postcode, city, and country must be configured.'
+            'Nazwa firmy, ulica, kod pocztowy, miasto i kraj sprzedawcy muszą być skonfigurowane.'
         );
     }
 
@@ -120,18 +120,18 @@ final class ShopReadinessCheck
     {
         if ($this->settings->email() !== '') {
             return $this->ready(
-                'Seller',
-                'Seller email',
+                'Sprzedawca',
+                'E-mail sprzedawcy',
                 true,
-                'Seller email is configured.'
+                'E-mail sprzedawcy jest skonfigurowany.'
             );
         }
 
         return $this->missing(
-            'Seller',
-            'Seller email',
+            'Sprzedawca',
+            'E-mail sprzedawcy',
             true,
-            'Seller contact email must be configured.'
+            'Kontaktowy e-mail sprzedawcy musi być skonfigurowany.'
         );
     }
 
@@ -142,18 +142,18 @@ final class ShopReadinessCheck
     {
         if ($this->settings->phone() !== '') {
             return $this->ready(
-                'Seller',
-                'Seller phone',
+                'Sprzedawca',
+                'Telefon sprzedawcy',
                 true,
-                'Seller phone number is configured.'
+                'Telefon sprzedawcy jest skonfigurowany.'
             );
         }
 
         return $this->missing(
-            'Seller',
-            'Seller phone',
+            'Sprzedawca',
+            'Telefon sprzedawcy',
             true,
-            'Seller phone number must be configured.'
+            'Telefon sprzedawcy musi być skonfigurowany.'
         );
     }
 
@@ -164,18 +164,18 @@ final class ShopReadinessCheck
     {
         if ($this->settings->taxId() !== '') {
             return $this->ready(
-                'Seller',
-                'Tax ID',
+                'Sprzedawca',
+                'NIP',
                 false,
-                'Seller tax ID is configured.'
+                'NIP sprzedawcy jest skonfigurowany.'
             );
         }
 
         return $this->warning(
-            'Seller',
-            'Tax ID',
+            'Sprzedawca',
+            'NIP',
             false,
-            'Seller tax ID is empty. Add it before production if the business should display one.'
+            'NIP sprzedawcy jest pusty. Dodaj go przed produkcją, jeżeli firma powinna go wyświetlać.'
         );
     }
 
@@ -186,18 +186,18 @@ final class ShopReadinessCheck
     {
         if ($this->settings->returnAddress() !== '') {
             return $this->ready(
-                'Returns',
-                'Return address',
+                'Zwroty',
+                'Adres zwrotu',
                 true,
-                'Return address is configured.'
+                'Adres zwrotu jest skonfigurowany.'
             );
         }
 
         return $this->missing(
-            'Returns',
-            'Return address',
+            'Zwroty',
+            'Adres zwrotu',
             true,
-            'Return address must be configured.'
+            'Adres zwrotu musi być skonfigurowany.'
         );
     }
 
@@ -210,27 +210,27 @@ final class ShopReadinessCheck
 
         if ($appUrl === '') {
             return $this->missing(
-                'Application',
+                'Aplikacja',
                 'APP_URL',
                 true,
-                'APP_URL must be configured.'
+                'APP_URL musi być skonfigurowany.'
             );
         }
 
         if (str_contains($appUrl, 'localhost') || str_contains($appUrl, '127.0.0.1')) {
             return $this->warning(
-                'Application',
+                'Aplikacja',
                 'APP_URL',
                 false,
-                'APP_URL points to a local address. Use the public production URL before going live.'
+                'APP_URL wskazuje na adres lokalny. Przed uruchomieniem użyj publicznego adresu produkcyjnego.'
             );
         }
 
         return $this->ready(
-            'Application',
+            'Aplikacja',
             'APP_URL',
             true,
-            'APP_URL is configured.'
+            'APP_URL jest skonfigurowany.'
         );
     }
 
@@ -241,18 +241,18 @@ final class ShopReadinessCheck
     {
         if ((bool) config('app.debug') === false) {
             return $this->ready(
-                'Application',
+                'Aplikacja',
                 'APP_DEBUG',
                 true,
-                'APP_DEBUG is disabled.'
+                'APP_DEBUG jest wyłączony.'
             );
         }
 
         return $this->missing(
-            'Application',
+            'Aplikacja',
             'APP_DEBUG',
             true,
-            'APP_DEBUG must be false in production.'
+            'APP_DEBUG musi mieć wartość false na produkcji.'
         );
     }
 
@@ -265,18 +265,18 @@ final class ShopReadinessCheck
 
         if ($defaultProvider === '') {
             return $this->missing(
-                'Payments',
-                'Default payment provider',
+                'Płatności',
+                'Domyślny operator płatności',
                 true,
-                'Default payment provider must be configured.'
+                'Domyślny operator płatności musi być skonfigurowany.'
             );
         }
 
         return $this->ready(
-            'Payments',
-            'Default payment provider',
+            'Płatności',
+            'Domyślny operator płatności',
             true,
-            'Default payment provider is configured: '.$defaultProvider.'.'
+            'Domyślny operator płatności jest skonfigurowany: '.$defaultProvider.'.'
         );
     }
 
@@ -289,18 +289,18 @@ final class ShopReadinessCheck
 
         if ($mailFromAddress === '') {
             return $this->missing(
-                'Mail',
-                'Mail from address',
+                'Poczta',
+                'Adres nadawcy e-mail',
                 true,
-                'Mail from address must be configured.'
+                'Adres nadawcy e-mail musi być skonfigurowany.'
             );
         }
 
         return $this->ready(
-            'Mail',
-            'Mail from address',
+            'Poczta',
+            'Adres nadawcy e-mail',
             true,
-            'Mail from address is configured.'
+            'Adres nadawcy e-mail jest skonfigurowany.'
         );
     }
 
@@ -311,18 +311,18 @@ final class ShopReadinessCheck
     {
         if (trim((string) config('delivery.providers.polkurier.base_url')) !== '') {
             return $this->ready(
-                'Delivery',
-                'Polkurier base URL',
+                'Dostawa',
+                'Bazowy URL Polkurier',
                 true,
-                'Polkurier base URL is configured.'
+                'Bazowy URL Polkurier jest skonfigurowany.'
             );
         }
 
         return $this->missing(
-            'Delivery',
-            'Polkurier base URL',
+            'Dostawa',
+            'Bazowy URL Polkurier',
             true,
-            'Polkurier base URL must be configured.'
+            'Bazowy URL Polkurier musi być skonfigurowany.'
         );
     }
 
@@ -333,18 +333,18 @@ final class ShopReadinessCheck
     {
         if (trim((string) config('delivery.providers.polkurier.login')) !== '') {
             return $this->ready(
-                'Delivery',
-                'Polkurier login',
+                'Dostawa',
+                'Login Polkurier',
                 true,
-                'Polkurier login is configured.'
+                'Login Polkurier jest skonfigurowany.'
             );
         }
 
         return $this->missing(
-            'Delivery',
-            'Polkurier login',
+            'Dostawa',
+            'Login Polkurier',
             true,
-            'Polkurier login must be configured.'
+            'Login Polkurier musi być skonfigurowany.'
         );
     }
 
@@ -355,18 +355,18 @@ final class ShopReadinessCheck
     {
         if (trim((string) config('delivery.providers.polkurier.token')) !== '') {
             return $this->ready(
-                'Delivery',
-                'Polkurier token',
+                'Dostawa',
+                'Token Polkurier',
                 true,
-                'Polkurier token is configured.'
+                'Token Polkurier jest skonfigurowany.'
             );
         }
 
         return $this->missing(
-            'Delivery',
-            'Polkurier token',
+            'Dostawa',
+            'Token Polkurier',
             true,
-            'Polkurier token must be configured.'
+            'Token Polkurier musi być skonfigurowany.'
         );
     }
 

@@ -21,19 +21,19 @@ return [
 
             'configured_carriers' => [
                 'inpost_parcel_locker' => [
-                    'label' => 'InPost parcel locker',
+                    'label' => 'Paczkomat InPost',
                     'code' => 'INPOST_PACZKOMAT',
                 ],
                 'inpost_courier' => [
-                    'label' => 'InPost courier',
+                    'label' => 'Kurier InPost',
                     'code' => 'INPOST',
                 ],
                 'ups_courier' => [
-                    'label' => 'UPS courier',
+                    'label' => 'Kurier UPS',
                     'code' => 'UPS',
                 ],
                 'dpd_courier' => [
-                    'label' => 'DPD courier',
+                    'label' => 'Kurier DPD',
                     'code' => 'DPD',
                 ],
             ],

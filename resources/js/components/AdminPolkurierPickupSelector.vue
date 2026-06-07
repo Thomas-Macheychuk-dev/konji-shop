@@ -32,11 +32,11 @@
                     class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                 >
 
-                I will arrange courier pickup myself
+                Samodzielnie zamówię odbiór kurierski
             </label>
 
             <p class="mt-1 text-xs text-zinc-500">
-                Uncheck this if Polkurier should order the courier pickup.
+                Odznacz tę opcję, jeśli Polkurier ma zamówić odbiór kurierski.
             </p>
         </div>
 
@@ -48,7 +48,7 @@
                     :disabled="loading"
                     @click="loadPickupTimes"
                 >
-                    {{ loading ? 'Loading pickup times...' : 'Load available pickup times' }}
+                    {{ loading ? 'Ładowanie terminów odbioru...' : 'Wczytaj dostępne terminy odbioru' }}
                 </button>
 
                 <p v-if="errorMessage" class="text-sm text-red-700">
@@ -59,7 +59,7 @@
 
         <div v-if="!noCourierOrder" class="sm:col-span-3">
             <label class="mb-1 block text-xs font-medium text-zinc-600">
-                Available pickup window
+                Dostępne okno odbioru
             </label>
 
             <select
@@ -67,7 +67,7 @@
                 class="block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
             >
                 <option value="">
-                    Select pickup window
+                    Wybierz okno odbioru
                 </option>
 
                 <option
@@ -80,11 +80,11 @@
             </select>
 
             <p v-if="pickupTimes.length === 0 && !loading" class="mt-2 text-xs text-zinc-500">
-                Load available pickup times before creating a courier pickup.
+                Wczytaj dostępne terminy odbioru przed utworzeniem odbioru kurierskiego.
             </p>
 
             <p v-if="selectedPickup" class="mt-2 text-xs text-zinc-500">
-                Selected pickup:
+                Wybrany odbiór:
                 <span class="font-medium text-zinc-700">
                     {{ selectedPickup.label }}
                 </span>
@@ -149,7 +149,7 @@ async function loadPickupTimes() {
         });
 
         if (!response.ok) {
-            throw new Error('Could not load pickup times.');
+            throw new Error('Nie udało się wczytać terminów odbioru.');
         }
 
         const payload = await response.json();
@@ -160,7 +160,7 @@ async function loadPickupTimes() {
             selectedKey.value = optionKey(pickupTimes.value[0]);
         }
     } catch (error) {
-        errorMessage.value = error?.message ?? 'Could not load pickup times.';
+        errorMessage.value = error?.message ?? 'Nie udało się wczytać terminów odbioru.';
     } finally {
         loading.value = false;
     }

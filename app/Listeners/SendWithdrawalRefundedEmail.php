@@ -22,7 +22,7 @@ final class SendWithdrawalRefundedEmail
 
         $withdrawalRequest->order?->events()->create([
             'type' => 'withdrawal_refund_email_sent',
-            'description' => 'Withdrawal refund email sent to customer.',
+            'description' => 'E-mail o zwrocie środków został wysłany do klienta.',
             'meta' => [
                 'withdrawal_request_id' => $withdrawalRequest->id,
                 'withdrawal_request_number' => $withdrawalRequest->number,

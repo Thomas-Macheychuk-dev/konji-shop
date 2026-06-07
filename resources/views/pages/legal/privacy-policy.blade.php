@@ -3,10 +3,10 @@
 @section('content')
     <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
-            <p class="text-sm font-medium text-zinc-500">Personal data</p>
+            <p class="text-sm font-medium text-zinc-500">Dane osobowe</p>
 
             <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
-                Privacy Policy
+                Polityka prywatności
             </h1>
 
             <p class="mt-2 text-sm text-zinc-500">
@@ -14,41 +14,41 @@
             </p>
 
             <p class="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-                Draft text. Review before production use.
+                Tekst roboczy. Sprawdź przed użyciem produkcyjnym.
             </p>
 
             <div class="prose prose-zinc mt-8 max-w-none">
-                <h2>Data controller</h2>
+                <h2>Administrator danych</h2>
                 <p>
-                    The data controller is {{ config('legal.seller.company_name') }},
+                    Administratorem danych jest {{ config('legal.seller.company_name') }},
                     {{ config('legal.seller.street') }},
                     {{ config('legal.seller.postcode') }} {{ config('legal.seller.city') }}.
                 </p>
 
-                <h2>Contact</h2>
+                <h2>Kontakt</h2>
                 <p>
-                    Privacy-related questions can be sent to
+                    Pytania dotyczące prywatności można wysyłać na adres
                     <a href="mailto:{{ config('legal.seller.email') }}">{{ config('legal.seller.email') }}</a>.
                 </p>
 
-                <h2>Data processed</h2>
+                <h2>Przetwarzane dane</h2>
                 <p>
-                    The shop may process customer account data, contact details, delivery and billing addresses, order history, payment information, and technical data necessary to operate the website.
+                    Sklep może przetwarzać dane konta klienta, dane kontaktowe, adresy dostawy i rozliczeniowe, historię zamówień, informacje o płatnościach oraz dane techniczne niezbędne do działania strony internetowej.
                 </p>
 
-                <h2>Purpose of processing</h2>
+                <h2>Cel przetwarzania</h2>
                 <p>
-                    Data is processed to handle orders, payments, delivery, customer communication, complaints, returns, accounting obligations, security, and website operation.
+                    Dane są przetwarzane w celu obsługi zamówień, płatności, dostawy, komunikacji z klientem, reklamacji, zwrotów, obowiązków księgowych, bezpieczeństwa oraz działania strony internetowej.
                 </p>
 
-                <h2>Data recipients</h2>
+                <h2>Odbiorcy danych</h2>
                 <p>
-                    Data may be shared with service providers such as payment operators, delivery providers, hosting providers, email providers, and accounting/legal advisers where necessary.
+                    Dane mogą być udostępniane usługodawcom, takim jak operatorzy płatności, dostawcy usług dostawy, hostingodawcy, dostawcy poczty e-mail oraz doradcy księgowi lub prawni, gdy jest to niezbędne.
                 </p>
 
-                <h2>Customer rights</h2>
+                <h2>Prawa klienta</h2>
                 <p>
-                    Customers may have rights to access, correct, delete, restrict, object to processing, and request data portability, subject to applicable law.
+                    Klienci mogą mieć prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, wniesienia sprzeciwu oraz przenoszenia danych, zgodnie z obowiązującym prawem.
                 </p>
             </div>
         </div>

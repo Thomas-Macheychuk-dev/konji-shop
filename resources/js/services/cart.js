@@ -8,7 +8,7 @@ export async function fetchCartSummary(summaryUrl) {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to load cart summary.');
+        throw new Error('Nie udało się wczytać podsumowania koszyka.');
     }
 
     return await response.json();
@@ -32,7 +32,7 @@ export async function updateCartItem(updateUrl, quantity) {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to update cart item.');
+        throw new Error('Nie udało się zaktualizować pozycji koszyka.');
     }
 
     return await response.json();
@@ -54,7 +54,7 @@ export async function removeCartItem(removeUrl) {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to remove cart item.');
+        throw new Error('Nie udało się usunąć pozycji koszyka.');
     }
 
     return await response.json();

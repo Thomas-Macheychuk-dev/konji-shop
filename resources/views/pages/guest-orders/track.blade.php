@@ -3,9 +3,9 @@
 @section('content')
     <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8">
-            <h1 class="text-3xl font-bold tracking-tight text-zinc-900">Track your order</h1>
+            <h1 class="text-3xl font-bold tracking-tight text-zinc-900">Śledź zamówienie</h1>
             <p class="mt-2 text-sm text-zinc-600">
-                Enter your order number and the email address used during checkout.
+                Wpisz numer zamówienia oraz adres e-mail użyty podczas składania zamówienia.
             </p>
         </div>
 
@@ -15,7 +15,7 @@
 
                 <div>
                     <label for="number" class="block text-sm font-medium text-zinc-900">
-                        Order number
+                        Numer zamówienia
                     </label>
                     <input
                         id="number"
@@ -33,7 +33,7 @@
 
                 <div>
                     <label for="email" class="block text-sm font-medium text-zinc-900">
-                        Email address
+                        Adres e-mail
                     </label>
                     <input
                         id="email"
@@ -54,7 +54,7 @@
                         type="submit"
                         class="inline-flex items-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-zinc-800"
                     >
-                        Check order status
+                        Sprawdź status zamówienia
                     </button>
                 </div>
             </form>

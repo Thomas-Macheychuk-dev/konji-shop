@@ -48,7 +48,7 @@ function failingDeliveryGateway(): DeliveryGateway
 
         public function createShipment(Order $order, Shipment $shipment, array $options = []): ShipmentCreationResult
         {
-            throw new RuntimeException('Polkurier rejected create_order.');
+            throw new RuntimeException('Polkurier odrzucił create_order.');
         }
     };
 }
@@ -86,7 +86,7 @@ it('keeps a failed shipment when the delivery gateway fails', function (): void 
         ->service->toBe('courier')
         ->payload->toHaveKey('error');
 
-    expect($shipment->payload['error']['message'])->toBe('Polkurier rejected create_order.');
+    expect($shipment->payload['error']['message'])->toBe('Polkurier odrzucił create_order.');
 
     expect($order->events()->where('type', 'shipment_failed')->exists())->toBeTrue();
 });

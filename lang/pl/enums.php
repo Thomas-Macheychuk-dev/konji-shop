@@ -94,4 +94,23 @@ return [
         'cancelled' => 'Anulowana',
         'returned' => 'Zwrócona do nadawcy',
     ],
+    'withdrawal_status' => [
+        'submitted' => 'Złożone',
+        'acknowledged' => 'Potwierdzone',
+        'under_review' => 'W trakcie weryfikacji',
+        'awaiting_goods' => 'Oczekuje na towar',
+        'goods_received' => 'Towar otrzymany',
+        'refund_pending' => 'Zwrot oczekuje',
+        'refunded' => 'Zwrócone środki',
+        'rejected' => 'Odrzucone',
+        'cancelled' => 'Anulowane',
+    ],
+
+    'cart_status' => [
+        'active' => 'Aktywny',
+        'converted' => 'Przekształcony',
+        'abandoned' => 'Porzucony',
+        'expired' => 'Wygasły',
+    ],
+
 ];

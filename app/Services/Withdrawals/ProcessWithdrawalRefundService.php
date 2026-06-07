@@ -36,7 +36,7 @@ final class ProcessWithdrawalRefundService
                 PaymentStatus::PAID,
                 PaymentStatus::PARTIALLY_REFUNDED,
             ], true)) {
-                throw new DomainException('Only paid orders can be refunded.');
+                throw new DomainException('Zwrot można wykonać tylko dla opłaconych zamówień.');
             }
 
             $withdrawalRequests = $lockedOrder->withdrawalRequests
@@ -44,14 +44,14 @@ final class ProcessWithdrawalRefundService
                 ->values();
 
             if ($withdrawalRequests->isEmpty()) {
-                throw new DomainException('There are no refundable withdrawal requests for this order.');
+                throw new DomainException('Brak zgłoszeń odstąpienia kwalifikujących się do zwrotu dla tego zamówienia.');
             }
 
             $refundAmount = (int) $withdrawalRequests
                 ->sum(fn (WithdrawalRequest $withdrawalRequest): int => $withdrawalRequest->refundAmount());
 
             if ($refundAmount <= 0) {
-                throw new DomainException('Cannot refund a withdrawal request with zero amount.');
+                throw new DomainException('Nie można wykonać zwrotu dla odstąpienia o zerowej kwocie.');
             }
 
             $withdrawalRequests->each(
@@ -82,7 +82,7 @@ final class ProcessWithdrawalRefundService
 
             $lockedOrder->events()->create([
                 'type' => 'withdrawal_refund_processed',
-                'description' => 'Admin processed withdrawal refund.',
+                'description' => 'Administrator przetworzył zwrot z odstąpienia.',
                 'meta' => [
                     'refund_amount' => $refundAmount,
                     'fully_refunded' => $fullyRefunded,

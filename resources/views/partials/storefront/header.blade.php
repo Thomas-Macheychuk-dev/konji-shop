@@ -9,7 +9,7 @@
                 href="{{ route('home') }}"
                 class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             >
-                Home
+                Strona główna
             </a>
 
             @auth
@@ -17,7 +17,7 @@
                     href="{{ route('account.orders.index') }}"
                     class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                 >
-                    My orders
+                    Moje zamówienia
                 </a>
             @endauth
 
@@ -25,14 +25,14 @@
                 href="{{ route('guest.orders.track.show') }}"
                 class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             >
-                Order tracking
+                Śledzenie zamówienia
             </a>
 
             <a
                 href="{{ route('withdrawals.start') }}"
                 class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             >
-                Withdraw from contract
+                Odstąp od umowy
             </a>
 
             @auth
@@ -40,7 +40,7 @@
                     href="{{ route('account.details.show') }}"
                     class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                 >
-                    Account
+                    Konto
                 </a>
 
                 @if(auth()->user()->is_admin)
@@ -48,28 +48,28 @@
                         href="{{ route('admin.orders.index') }}"
                         class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                     >
-                        Admin
+                        Administracja
                     </a>
 
                     <a
                         href="{{ route('admin.products.index') }}"
                         class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                     >
-                        Products
+                        Produkty
                     </a>
 
                     <a
                         href="{{ route('admin.withdrawals.index') }}"
                         class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                     >
-                        Withdrawals
+                        Odstąpienia
                     </a>
 
                     <a
                         href="{{ route('admin.shop.readiness') }}"
                         class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                     >
-                        Readiness
+                        Gotowość
                     </a>
                 @endif
 
@@ -85,14 +85,14 @@
                     href="{{ route('login') }}"
                     class="text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                 >
-                    Login
+                    Logowanie
                 </a>
 
                 <a
                     href="{{ route('register') }}"
                     class="inline-flex items-center rounded-lg bg-zinc-900 px-4 py-2 font-medium text-white transition hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
                 >
-                    Register
+                    Rejestracja
                 </a>
             @endauth
 

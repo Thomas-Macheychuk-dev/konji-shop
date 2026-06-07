@@ -229,19 +229,19 @@ function selectOption(groupCode, valueId) {
 
 function handleAddToCartSubmit(event) {
     if (missingOptionGroups.value.length > 0) {
-        selectionError.value = `Please select: ${missingOptionGroups.value.map((group) => group.label).join(', ')}`;
+        selectionError.value = `Wybierz: ${missingOptionGroups.value.map((group) => group.label).join(', ')}`;
         event.preventDefault();
         return;
     }
 
     if (!exactSelectedVariant.value?.id) {
-        selectionError.value = 'Please select a valid product variant.';
+        selectionError.value = 'Wybierz prawidłowy wariant produktu.';
         event.preventDefault();
         return;
     }
 
     if (exactSelectedVariant.value.stock_status === 'out_of_stock') {
-        selectionError.value = 'This variant is out of stock.';
+        selectionError.value = 'Ten wariant jest niedostępny.';
         event.preventDefault();
     }
 }
@@ -293,7 +293,7 @@ function selectImage(index) {
 
 function formatPrice(price, currency = 'PLN') {
     if (price === null || price === undefined) {
-        return 'Price unavailable';
+        return 'Cena niedostępna';
     }
 
     return new Intl.NumberFormat('pl-PL', {
@@ -309,9 +309,13 @@ function formatStockStatus(status) {
         return '';
     }
 
-    const normalized = status.replaceAll('_', ' ');
+    const labels = {
+        in_stock: 'Dostępny',
+        out_of_stock: 'Niedostępny',
+        preorder: 'Przedsprzedaż',
+    };
 
-    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+    return labels[status] ?? status;
 }
 
 function isSelected(groupCode, valueId) {
@@ -361,7 +365,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 
                 <template v-else>
                     <div class="flex aspect-[4/5] items-center justify-center bg-zinc-100 text-sm text-zinc-500">
-                        No image available
+                        Brak dostępnego zdjęcia
                     </div>
                 </template>
             </div>
@@ -460,7 +464,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                                 type="submit"
                                 class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                             >
-                                Add to cart
+                                Dodaj do koszyka
                             </button>
                         </div>
                     </form>

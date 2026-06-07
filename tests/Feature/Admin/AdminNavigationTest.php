@@ -13,7 +13,7 @@ it('shows the admin navigation link for admins', function (): void {
     $this->actingAs($admin)
         ->get(route('home'))
         ->assertOk()
-        ->assertSee('Admin')
+        ->assertSee('Administracja')
         ->assertSee(route('admin.orders.index'));
 });
 
@@ -25,6 +25,6 @@ it('does not show the admin navigation link for normal users', function (): void
     $this->actingAs($user)
         ->get(route('home'))
         ->assertOk()
-        ->assertDontSee('Admin')
+        ->assertDontSee('Administracja')
         ->assertDontSee(route('admin.orders.index'));
 });

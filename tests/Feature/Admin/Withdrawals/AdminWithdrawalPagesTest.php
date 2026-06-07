@@ -29,15 +29,15 @@ it('shows the admin withdrawal index page', function (): void {
         ->actingAs($admin)
         ->get(route('admin.withdrawals.index'))
         ->assertOk()
-        ->assertSee('Contract withdrawals')
-        ->assertSee('Review customer withdrawal requests submitted through the one-click withdrawal flow.')
+        ->assertSee('Odstąpienia od umowy')
+        ->assertSee('Przeglądaj zgłoszenia odstąpienia od umowy przesłane przez formularz online.')
         ->assertSee($withdrawalRequest->number)
         ->assertSee($withdrawalRequest->order_number_snapshot)
         ->assertSee($withdrawalRequest->customer_name)
         ->assertSee($withdrawalRequest->customer_email)
-        ->assertSee('Withdrawals')
+        ->assertSee('Odstąpienia')
         ->assertSee(route('admin.withdrawals.index'), false)
-        ->assertSee('Acknowledged')
+        ->assertSee('Potwierdzone')
         ->assertSee(route('admin.withdrawals.show', $withdrawalRequest), false);
 });
 
@@ -52,23 +52,23 @@ it('shows the admin withdrawal detail page', function (): void {
         ->actingAs($admin)
         ->get(route('admin.withdrawals.show', $withdrawalRequest))
         ->assertOk()
-        ->assertSee('Withdrawal '.$withdrawalRequest->number)
-        ->assertSee('Selected items')
+        ->assertSee('Odstąpienie '.$withdrawalRequest->number)
+        ->assertSee('Wybrane pozycje')
         ->assertSee($orderItem->product_name_snapshot)
         ->assertSee($orderItem->sku_snapshot)
-        ->assertSee('Quantity requested')
+        ->assertSee('Żądana ilość')
         ->assertSee('1 / 2')
-        ->assertSee('Amount gross')
+        ->assertSee('Kwota brutto')
         ->assertSee('123.00 PLN')
-        ->assertSee('Customer statement')
+        ->assertSee('Oświadczenie klienta')
         ->assertSee('Changed my mind.')
         ->assertSee('Please process the withdrawal.')
-        ->assertSee('Refund to original payment method.')
-        ->assertSee('Details')
+        ->assertSee('Zwrot na pierwotną metodę płatności.')
+        ->assertSee('Szczegóły')
         ->assertSee($withdrawalRequest->order_number_snapshot)
         ->assertSee($withdrawalRequest->customer_name)
         ->assertSee($withdrawalRequest->customer_email)
-        ->assertSee('Submission IP')
+        ->assertSee('IP zgłoszenia')
         ->assertSee('203.0.113.50')
         ->assertSee('User agent')
         ->assertSee('KonjiAdminWithdrawalTestBrowser/1.0')
@@ -166,7 +166,7 @@ function adminWithdrawalTestRequest(): array
         'order_number_snapshot' => $order->number,
         'reason' => 'Changed my mind.',
         'customer_note' => 'Please process the withdrawal.',
-        'refund_note' => 'Refund to original payment method.',
+        'refund_note' => 'Zwrot na pierwotną metodę płatności.',
         'submitted_at' => now(),
         'acknowledged_at' => now(),
         'submission_ip' => '203.0.113.50',

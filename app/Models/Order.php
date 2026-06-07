@@ -241,11 +241,11 @@ class Order extends Model
     public function confirm(): void
     {
         if (! $this->payment_status->isPaid()) {
-            throw new DomainException('Cannot confirm an order that has not been paid.');
+            throw new DomainException('Nie można potwierdzić nieopłaconego zamówienia.');
         }
 
         if ($this->status->isCancelled()) {
-            throw new DomainException('Cannot confirm a cancelled order.');
+            throw new DomainException('Nie można potwierdzić anulowanego zamówienia.');
         }
 
         $this->update([
@@ -254,18 +254,18 @@ class Order extends Model
 
         $this->recordEvent(
             'order_confirmed',
-            'Order confirmed after successful payment.'
+            'Zamówienie potwierdzone po pomyślnej płatności.'
         );
     }
 
     public function complete(): void
     {
         if (! $this->status->isConfirmed()) {
-            throw new DomainException('Only confirmed orders can be completed.');
+            throw new DomainException('Tylko potwierdzone zamówienia mogą zostać zakończone.');
         }
 
         if (! $this->fulfilment_status->isDelivered()) {
-            throw new DomainException('Only delivered orders can be completed.');
+            throw new DomainException('Tylko dostarczone zamówienia mogą zostać zakończone.');
         }
 
         $this->update([
@@ -274,14 +274,14 @@ class Order extends Model
 
         $this->recordEvent(
             'order_completed',
-            'Order marked as completed.'
+            'Zamówienie oznaczono jako zakończone.'
         );
     }
 
     public function cancel(?string $note = null): void
     {
         if (! $this->canBeCancelled()) {
-            throw new DomainException('This order can no longer be cancelled.');
+            throw new DomainException('Tego zamówienia nie można już anulować.');
         }
 
         $existingNotes = trim((string) $this->notes);
@@ -303,7 +303,7 @@ class Order extends Model
     public function markFulfilmentAsProcessing(): void
     {
         if (! $this->status->isConfirmed()) {
-            throw new DomainException('Only confirmed orders can enter fulfilment processing.');
+            throw new DomainException('Tylko potwierdzone zamówienia mogą przejść do realizacji.');
         }
 
         $this->update([
@@ -319,11 +319,11 @@ class Order extends Model
     public function markAsShipped(): void
     {
         if (! $this->payment_status->isPaid()) {
-            throw new DomainException('Cannot ship an unpaid order.');
+            throw new DomainException('Nie można wysłać nieopłaconego zamówienia.');
         }
 
         if (! $this->status->isConfirmed()) {
-            throw new DomainException('Only confirmed orders can be shipped.');
+            throw new DomainException('Tylko potwierdzone zamówienia mogą zostać wysłane.');
         }
 
         $this->update([
@@ -332,14 +332,14 @@ class Order extends Model
 
         $this->recordEvent(
             'order_shipped',
-            'Order shipped to customer.'
+            'Zamówienie wysłane do klienta.'
         );
     }
 
     public function markAsDelivered(): void
     {
         if (! $this->fulfilment_status->isShipped()) {
-            throw new DomainException('Only shipped orders can be marked as delivered.');
+            throw new DomainException('Tylko wysłane zamówienia można oznaczyć jako dostarczone.');
         }
 
         $this->update([
@@ -348,14 +348,14 @@ class Order extends Model
 
         $this->recordEvent(
             'order_delivered',
-            'Order delivered to customer.'
+            'Zamówienie dostarczone do klienta.'
         );
     }
 
     public function markAsReturned(): void
     {
         if (! $this->fulfilment_status->isDelivered()) {
-            throw new DomainException('Only delivered orders can be marked as returned.');
+            throw new DomainException('Tylko dostarczone zamówienia można oznaczyć jako zwrócone.');
         }
 
         $this->update([
@@ -371,7 +371,7 @@ class Order extends Model
     public function markPaymentAsPending(): void
     {
         if (! $this->payment_status->isUnpaid()) {
-            throw new DomainException('Only unpaid orders can move to pending payment.');
+            throw new DomainException('Tylko nieopłacone zamówienia mogą oczekiwać na płatność.');
         }
 
         $this->update([
@@ -399,7 +399,7 @@ class Order extends Model
     public function cancelByAdmin(string $note): void
     {
         if (! $this->canBeCancelledByAdmin()) {
-            throw new DomainException('This order can no longer be cancelled.');
+            throw new DomainException('Tego zamówienia nie można już anulować.');
         }
 
         $this->update([
@@ -429,7 +429,7 @@ class Order extends Model
 
         $this->recordEvent(
             'delivery_choice_selected',
-            'Delivery method selected.',
+            'Wybrano metodę dostawy.',
             [
                 'provider' => $provider->value,
                 'carrier' => $carrier->value,
@@ -442,11 +442,11 @@ class Order extends Model
     public function markAsReadyForPickup(): void
     {
         if (! $this->payment_status->isPaid()) {
-            throw new DomainException('Only paid orders can be marked as ready for pickup.');
+            throw new DomainException('Tylko opłacone zamówienia można oznaczyć jako gotowe do odbioru.');
         }
 
         if (! $this->status->isConfirmed()) {
-            throw new DomainException('Only confirmed orders can be marked as ready for pickup.');
+            throw new DomainException('Tylko potwierdzone zamówienia można oznaczyć jako gotowe do odbioru.');
         }
 
         if ($this->fulfilment_status === FulfilmentStatus::READY_FOR_PICKUP) {
@@ -457,7 +457,7 @@ class Order extends Model
             FulfilmentStatus::UNFULFILLED,
             FulfilmentStatus::PROCESSING,
         ], true)) {
-            throw new DomainException('Only unfulfilled or processing orders can be marked as ready for pickup.');
+            throw new DomainException('Tylko niezrealizowane lub realizowane zamówienia można oznaczyć jako gotowe do odbioru.');
         }
 
         $this->update([
@@ -494,19 +494,19 @@ class Order extends Model
     public function markAsPickedUp(): void
     {
         if (! $this->payment_status->isPaid()) {
-            throw new DomainException('Only paid orders can be marked as picked up.');
+            throw new DomainException('Tylko opłacone zamówienia można oznaczyć jako odebrane.');
         }
 
         if (! $this->status->isConfirmed()) {
-            throw new DomainException('Only confirmed orders can be marked as picked up.');
+            throw new DomainException('Tylko potwierdzone zamówienia można oznaczyć jako odebrane.');
         }
 
         if ($this->delivery_service !== 'local_pickup') {
-            throw new DomainException('Only pickup orders can be marked as picked up.');
+            throw new DomainException('Tylko zamówienia z odbiorem osobistym można oznaczyć jako odebrane.');
         }
 
         if ($this->fulfilment_status !== FulfilmentStatus::READY_FOR_PICKUP) {
-            throw new DomainException('Only ready-for-pickup orders can be marked as picked up.');
+            throw new DomainException('Tylko zamówienia gotowe do odbioru można oznaczyć jako odebrane.');
         }
 
         $this->update([
@@ -522,11 +522,11 @@ class Order extends Model
     public function markAsReturnedToSender(?string $note = null): void
     {
         if (! $this->status->isConfirmed()) {
-            throw new DomainException('Only confirmed orders can be marked as returned to sender.');
+            throw new DomainException('Tylko potwierdzone zamówienia można oznaczyć jako zwrócone do nadawcy.');
         }
 
         if (! $this->fulfilment_status->isShipped()) {
-            throw new DomainException('Only shipped orders can be marked as returned to sender.');
+            throw new DomainException('Tylko wysłane zamówienia można oznaczyć jako zwrócone do nadawcy.');
         }
 
         $this->update([
@@ -549,7 +549,7 @@ class Order extends Model
             PaymentStatus::PAID,
             PaymentStatus::PARTIALLY_REFUNDED,
         ], true)) {
-            throw new DomainException('Only paid orders can be refunded.');
+            throw new DomainException('Zwrot można wykonać tylko dla opłaconych zamówień.');
         }
 
         $this->update([

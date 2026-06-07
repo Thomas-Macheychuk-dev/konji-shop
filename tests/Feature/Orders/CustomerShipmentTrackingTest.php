@@ -37,9 +37,9 @@ it('shows shipment tracking on the account order detail page', function (): void
         ->actingAs($user)
         ->get(route('account.orders.show', $order->id))
         ->assertOk()
-        ->assertSee('Shipment tracking')
+        ->assertSee('Śledzenie przesyłki')
         ->assertSee('TRACK123')
-        ->assertSee('Track shipment')
+        ->assertSee('Śledź przesyłkę')
         ->assertSee('POL-123');
 });
 
@@ -74,8 +74,8 @@ it('shows shipment tracking on the guest order status page', function (): void {
     $this
         ->get(route('guest.orders.show', $order))
         ->assertOk()
-        ->assertSee('Shipment tracking')
+        ->assertSee('Śledzenie przesyłki')
         ->assertSee('TRACK456')
-        ->assertSee('Track shipment')
+        ->assertSee('Śledź przesyłkę')
         ->assertSee('POL-456');
 });

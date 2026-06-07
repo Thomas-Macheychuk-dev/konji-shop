@@ -36,18 +36,18 @@ it('reports the shop as not ready when required production settings are missing'
 
     expect($items->where('status', 'missing')->pluck('name')->all())
         ->toContain(
-            'Legal document versions',
-            'Seller identity and address',
-            'Seller email',
-            'Seller phone',
-            'Return address',
+            'Wersje dokumentów prawnych',
+            'Tożsamość i adres sprzedawcy',
+            'E-mail sprzedawcy',
+            'Telefon sprzedawcy',
+            'Adres zwrotu',
             'APP_URL',
             'APP_DEBUG',
-            'Default payment provider',
-            'Mail from address',
-            'Polkurier base URL',
-            'Polkurier login',
-            'Polkurier token',
+            'Domyślny operator płatności',
+            'Adres nadawcy e-mail',
+            'Bazowy URL Polkurier',
+            'Login Polkurier',
+            'Token Polkurier',
         );
 });
 
@@ -84,5 +84,5 @@ it('reports the shop as ready when required production settings are configured',
     $items = collect($check->items());
 
     expect($items->where('required', true)->where('status', '!=', 'ready'))->toHaveCount(0)
-        ->and($items->firstWhere('name', 'Tax ID')['status'])->toBe('warning');
+        ->and($items->firstWhere('name', 'NIP')['status'])->toBe('warning');
 });

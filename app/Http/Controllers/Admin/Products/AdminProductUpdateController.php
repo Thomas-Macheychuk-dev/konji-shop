@@ -29,6 +29,6 @@ final class AdminProductUpdateController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Product updated.');
+        return back()->with('success', 'Produkt zaktualizowany.');
     }
 }

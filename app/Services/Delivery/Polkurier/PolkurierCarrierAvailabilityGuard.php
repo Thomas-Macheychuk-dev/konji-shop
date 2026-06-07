@@ -67,7 +67,7 @@ final class PolkurierCarrierAvailabilityGuard
                 blocking: true,
                 severity: 'error',
                 courierCode: null,
-                message: 'The selected delivery carrier cannot be mapped to a Polkurier courier code.',
+                message: 'Wybranego przewoźnika nie można przypisać do kodu kuriera Polkurier.',
             );
         }
 
@@ -78,8 +78,8 @@ final class PolkurierCarrierAvailabilityGuard
                 severity: $this->failWhenCacheEmpty() ? 'error' : 'warning',
                 courierCode: $courierCode,
                 message: $this->failWhenCacheEmpty()
-                    ? 'Polkurier available carrier data has not been refreshed yet.'
-                    : 'Polkurier available carrier data has not been refreshed yet. Shipment creation is allowed, but refresh carrier data in diagnostics before production use.',
+                    ? 'Dane dostępnych przewoźników Polkurier nie zostały jeszcze odświeżone.'
+                    : 'Dane dostępnych przewoźników Polkurier nie zostały jeszcze odświeżone. Shipment creation is allowed, but refresh carrier data in diagnostics before production use.',
             );
         }
 
@@ -91,7 +91,7 @@ final class PolkurierCarrierAvailabilityGuard
                 blocking: true,
                 severity: 'error',
                 courierCode: $courierCode,
-                message: 'Polkurier did not return the selected courier code '.$courierCode.' in available carriers.',
+                message: 'Polkurier nie zwrócił wybranego kodu kuriera '.$courierCode.' w dostępnych przewoźnikach.',
             );
         }
 

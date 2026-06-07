@@ -43,7 +43,7 @@ class SendShipmentTrackingEmail implements ShouldQueue
 
         $order->events()->create([
             'type' => 'shipment_tracking_email_sent',
-            'description' => 'Shipment tracking email sent to customer.',
+            'description' => 'E-mail ze śledzeniem przesyłki został wysłany do klienta.',
             'meta' => [
                 'shipment_id' => $shipment->id,
                 'recipient' => $recipient,

@@ -1,15 +1,15 @@
 @php
     $sidebarCategories = $storefrontSidebarCategories ?? collect();
-    $currentCategory = request()->route('category');
-    $currentCategorySlug = $currentCategory instanceof \App\Models\Category
-        ? $currentCategory->slug
+    $currentKategoria = request()->route('category');
+    $currentKategoriaSlug = $currentKategoria instanceof \App\Models\Kategoria
+        ? $currentKategoria->slug
         : null;
 @endphp
 
 <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
     <div class="mb-4">
         <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">
-            Categories
+            Kategorie
         </h2>
     </div>
 
@@ -17,7 +17,7 @@
         <nav class="flex flex-col gap-2">
             @foreach ($sidebarCategories as $category)
                 @php
-                    $isActive = $currentCategorySlug === $category->slug;
+                    $isActive = $currentKategoriaSlug === $category->slug;
                 @endphp
 
                 <a
@@ -34,7 +34,7 @@
         </nav>
     @else
         <p class="text-sm text-zinc-500 dark:text-zinc-400">
-            No categories available yet.
+            Brak dostępnych kategorii.
         </p>
     @endif
 </div>

@@ -14,7 +14,7 @@
             <flux:input
                 name="email"
                 value="{{ request('email') }}"
-                :label="__('Email')"
+                :label="__('E-mail')"
                 type="email"
                 required
                 autocomplete="email"

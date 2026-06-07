@@ -54,7 +54,7 @@ class CartSummaryData
         return [
             'id' => $item->id,
             'quantity' => $item->quantity,
-            'product_name' => $product?->name ?? ($item->meta['product_name'] ?? 'Product'),
+            'product_name' => $product?->name ?? ($item->meta['product_name'] ?? 'Produkt'),
             'variant_name' => self::variantName($item),
             'product_url' => $product ? route('products.show', $product->slug) : null,
             'image_url' => self::resolveVariantImageUrl($item),

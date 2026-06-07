@@ -64,7 +64,7 @@ it('blocks Polkurier shipment creation when the selected carrier is not availabl
     expect($shipment)
         ->status->toBe(ShipmentStatus::FAILED)
         ->and(data_get($shipment->payload, 'error.message'))
-        ->toContain('Polkurier did not return the selected courier code DPD');
+        ->toContain('Polkurier nie zwrócił wybranego kodu kuriera DPD');
 
     Http::assertNothingSent();
 });
@@ -161,14 +161,14 @@ it('redirects back with an error and stores failed shipment when shipment creati
         $mock
             ->shouldReceive('create')
             ->once()
-            ->andThrow(new RuntimeException('Shipment creation failed: Polkurier rejected create_order.'));
+            ->andThrow(new RuntimeException('Shipment creation failed: Polkurier odrzucił create_order.'));
     });
 
     $this
         ->actingAs($admin)
         ->patch(route('admin.orders.fulfilment.update', [$order, 'shipped']))
         ->assertRedirect()
-        ->assertSessionHas('error', 'Shipment creation failed: Polkurier rejected create_order.');
+        ->assertSessionHas('error', 'Shipment creation failed: Polkurier odrzucił create_order.');
 
     expect($order->refresh()->fulfilment_status)->toBe(FulfilmentStatus::PROCESSING);
 });
@@ -468,17 +468,17 @@ it('passes Polkurier additional fields when creating a shipment through the admi
                 'additional_fields' => [
                     [
                         'name' => 'external_transport_security',
-                        'label' => 'Transport security',
+                        'label' => 'Zabezpieczenie transportu',
                         'type' => 'SELECT',
                         'required' => true,
                         'options' => [
                             [
                                 'value' => 'stretch_wrap',
-                                'label' => 'Stretch wrap',
+                                'label' => 'Folia stretch',
                             ],
                             [
                                 'value' => 'cardboard',
-                                'label' => 'Cardboard',
+                                'label' => 'Karton',
                             ],
                         ],
                     ],
@@ -577,17 +577,17 @@ it('validates required Polkurier additional fields when creating a shipment thro
                 'additional_fields' => [
                     [
                         'name' => 'external_transport_security',
-                        'label' => 'Transport security',
+                        'label' => 'Zabezpieczenie transportu',
                         'type' => 'SELECT',
                         'required' => true,
                         'options' => [
                             [
                                 'value' => 'stretch_wrap',
-                                'label' => 'Stretch wrap',
+                                'label' => 'Folia stretch',
                             ],
                             [
                                 'value' => 'cardboard',
-                                'label' => 'Cardboard',
+                                'label' => 'Karton',
                             ],
                         ],
                     ],
@@ -643,17 +643,17 @@ it('validates Polkurier additional field select options when creating a shipment
                 'additional_fields' => [
                     [
                         'name' => 'external_transport_security',
-                        'label' => 'Transport security',
+                        'label' => 'Zabezpieczenie transportu',
                         'type' => 'SELECT',
                         'required' => true,
                         'options' => [
                             [
                                 'value' => 'stretch_wrap',
-                                'label' => 'Stretch wrap',
+                                'label' => 'Folia stretch',
                             ],
                             [
                                 'value' => 'cardboard',
-                                'label' => 'Cardboard',
+                                'label' => 'Karton',
                             ],
                         ],
                     ],

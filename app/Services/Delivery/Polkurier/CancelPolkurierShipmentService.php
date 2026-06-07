@@ -19,11 +19,11 @@ final class CancelPolkurierShipmentService
     public function cancel(Shipment $shipment): Shipment
     {
         if ($shipment->provider !== DeliveryProvider::POLKURIER) {
-            throw new DomainException('Only Polkurier shipments can be cancelled through Polkurier.');
+            throw new DomainException('Tylko przesyłki Polkurier można anulować przez Polkurier.');
         }
 
         if (! $shipment->provider_reference) {
-            throw new DomainException('Shipment has no Polkurier order number.');
+            throw new DomainException('Przesyłka nie ma numeru zamówienia Polkurier.');
         }
 
         if (! in_array($shipment->status, [
@@ -31,7 +31,7 @@ final class CancelPolkurierShipmentService
             ShipmentStatus::CREATED,
             ShipmentStatus::DISPATCHED,
         ], true)) {
-            throw new DomainException('Only pending, created or recently dispatched shipments can be cancelled.');
+            throw new DomainException('Można anulować tylko przesyłki oczekujące, utworzone lub niedawno wysłane.');
         }
 
         $payload = $this->client->cancelOrder($shipment->provider_reference);
