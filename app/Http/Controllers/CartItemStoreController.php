@@ -48,7 +48,7 @@ class CartItemStoreController extends Controller
         if ($variant->stock_status === StockStatus::OUT_OF_STOCK) {
             return back()
                 ->withErrors([
-                    'product_variant_id' => 'This product variant is out of stock.',
+                    'product_variant_id' => 'Ten wariant produktu jest niedostępny.',
                 ])
                 ->withInput();
         }
@@ -71,7 +71,7 @@ class CartItemStoreController extends Controller
 
         $response = redirect()
             ->route('cart.show')
-            ->with('success', 'Product added to cart.');
+            ->with('success', 'Produkt dodany do koszyka.');
 
         if (! $request->user() && $guestToken !== null) {
             $response->withCookie(

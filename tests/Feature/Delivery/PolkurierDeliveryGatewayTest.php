@@ -116,7 +116,7 @@ it('sends Polkurier additional fields in the create order payload', function ():
                 'additional_fields' => [
                     [
                         'name' => 'external_transport_security',
-                        'label' => 'Transport security',
+                        'label' => 'Zabezpieczenie transportu',
                         'type' => 'TEXT',
                         'required' => true,
                     ],

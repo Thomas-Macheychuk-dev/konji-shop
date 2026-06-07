@@ -584,6 +584,6 @@ test('guest checkout stores accepted legal policy versions', function (): void {
     $this->assertDatabaseHas('order_events', [
         'order_id' => $order->id,
         'type' => 'legal_terms_accepted',
-        'description' => 'Checkout legal terms accepted.',
+        'description' => 'Zaakceptowano warunki prawne kasy.',
     ]);
 });

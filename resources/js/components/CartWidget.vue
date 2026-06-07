@@ -60,7 +60,7 @@ async function loadSummary() {
     try {
         summary.value = await fetchCartSummary(props.summaryUrl);
     } catch (error) {
-        errorMessage.value = error?.message ?? 'Could not load cart.';
+        errorMessage.value = error?.message ?? 'Nie udało się wczytać koszyka.';
     } finally {
         isLoading.value = false;
     }
@@ -70,7 +70,7 @@ async function changeItemQuantity(item, nextQuantity) {
     const quantity = clampQuantity(nextQuantity);
 
     if (!item?.update_url) {
-        errorMessage.value = 'Missing cart update URL.';
+        errorMessage.value = 'Brakuje adresu aktualizacji koszyka.';
         return;
     }
 
@@ -86,7 +86,7 @@ async function changeItemQuantity(item, nextQuantity) {
         await loadSummary();
         window.dispatchEvent(new CustomEvent('cart:updated'));
     } catch (error) {
-        errorMessage.value = error?.message ?? 'Could not update cart item.';
+        errorMessage.value = error?.message ?? 'Nie udało się zaktualizować pozycji koszyka.';
     } finally {
         stopProcessing(item.id);
     }
@@ -102,7 +102,7 @@ async function decreaseQuantity(item) {
 
 async function deleteItem(item) {
     if (!item?.remove_url) {
-        errorMessage.value = 'Missing cart remove URL.';
+        errorMessage.value = 'Brakuje adresu usunięcia pozycji koszyka.';
         return;
     }
 
@@ -114,7 +114,7 @@ async function deleteItem(item) {
         await loadSummary();
         window.dispatchEvent(new CustomEvent('cart:updated'));
     } catch (error) {
-        errorMessage.value = error?.message ?? 'Could not remove cart item.';
+        errorMessage.value = error?.message ?? 'Nie udało się usunąć pozycji koszyka.';
     } finally {
         stopProcessing(item.id);
     }
@@ -168,10 +168,10 @@ onBeforeUnmount(() => {
         <button
             type="button"
             class="relative inline-flex items-center gap-2 text-sm font-medium text-zinc-700 transition hover:text-zinc-900"
-            :aria-label="isEmpty ? 'Open empty cart' : `Open cart with ${itemCount} item(s)`"
+            :aria-label="isEmpty ? 'Otwórz pusty koszyk' : `Otwórz koszyk: ${itemCount} szt.`"
             @click="toggleCart"
         >
-            <span>Cart</span>
+            <span>Koszyk</span>
 
             <span class="relative inline-flex h-6 w-6 items-center justify-center">
                 <!-- Empty cart -->
@@ -229,8 +229,8 @@ onBeforeUnmount(() => {
             >
                 <div class="flex items-center justify-between border-b border-zinc-200 px-6 py-4">
                     <div>
-                        <h2 class="text-lg font-semibold text-zinc-900">Your cart</h2>
-                        <p class="text-sm text-zinc-500">{{ itemCount }} item(s)</p>
+                        <h2 class="text-lg font-semibold text-zinc-900">Twój koszyk</h2>
+                        <p class="text-sm text-zinc-500">{{ itemCount }} szt.</p>
                     </div>
 
                     <button
@@ -238,7 +238,7 @@ onBeforeUnmount(() => {
                         class="text-sm text-zinc-500 hover:text-zinc-900"
                         @click="closeCart"
                     >
-                        Close
+                        Zamknij
                     </button>
                 </div>
 
@@ -247,7 +247,7 @@ onBeforeUnmount(() => {
                         v-if="isLoading"
                         class="text-sm text-zinc-500"
                     >
-                        Loading cart…
+                        Ładowanie koszyka…
                     </div>
 
                     <div
@@ -261,7 +261,7 @@ onBeforeUnmount(() => {
                         v-else-if="isEmpty"
                         class="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-6 text-sm text-zinc-600"
                     >
-                        Your cart is empty.
+                        Twój koszyk jest pusty.
                     </div>
 
                     <ul
@@ -296,7 +296,7 @@ onBeforeUnmount(() => {
                                 v-else
                                 class="flex h-20 w-20 items-center justify-center rounded-xl bg-zinc-100 text-xs text-zinc-400"
                             >
-                                No image
+                                Brak zdjęcia
                             </div>
 
                             <div class="min-w-0 flex-1">
@@ -357,14 +357,14 @@ onBeforeUnmount(() => {
                                         v-if="isItemProcessing(item.id)"
                                         class="text-xs text-zinc-500"
                                     >
-                                        Updating…
+                                        Aktualizowanie…
                                     </span>
 
                                     <span
                                         v-else
                                         class="text-xs text-zinc-500"
                                     >
-                                        Qty: {{ item.quantity }}
+                                        Ilość: {{ item.quantity }}
                                     </span>
 
                                     <button
@@ -372,7 +372,7 @@ onBeforeUnmount(() => {
                                         class="cursor-pointer text-xs font-medium text-red-600 transition hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-40"                                        :disabled="isItemProcessing(item.id)"
                                         @click="deleteItem(item)"
                                     >
-                                        Remove
+                                        Usuń
                                     </button>
                                 </div>
                             </div>
@@ -382,7 +382,7 @@ onBeforeUnmount(() => {
 
                 <div class="border-t border-zinc-200 px-6 py-4">
                     <div class="mb-4 flex items-center justify-between text-sm">
-                        <span class="text-zinc-600">Subtotal</span>
+                        <span class="text-zinc-600">Suma częściowa</span>
                         <span class="font-semibold text-zinc-900">{{ subtotal }}</span>
                     </div>
 
@@ -391,14 +391,14 @@ onBeforeUnmount(() => {
                             :href="summary.cart_url"
                             class="inline-flex items-center justify-center rounded-xl border border-zinc-300 px-4 py-3 text-sm font-medium text-zinc-800 transition hover:bg-zinc-50"
                         >
-                            View cart
+                            Zobacz koszyk
                         </a>
 
                         <a
                             :href="summary.checkout_url"
                             class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-zinc-800"
                         >
-                            Checkout
+                            Kasa
                         </a>
                     </div>
                 </div>

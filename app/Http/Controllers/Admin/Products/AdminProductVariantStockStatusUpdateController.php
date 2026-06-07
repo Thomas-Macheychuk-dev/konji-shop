@@ -31,6 +31,6 @@ final class AdminProductVariantStockStatusUpdateController extends Controller
             }
         });
 
-        return back()->with('success', 'Variant stock statuses updated.');
+        return back()->with('success', 'Statusy dostępności wariantów zostały zaktualizowane.');
     }
 }

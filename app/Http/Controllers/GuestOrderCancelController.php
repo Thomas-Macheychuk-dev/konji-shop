@@ -28,7 +28,7 @@ class GuestOrderCancelController extends Controller
         if (! $order->canBeCancelled()) {
             return redirect()
                 ->route('guest.orders.show', $order)
-                ->with('error', 'This order can no longer be cancelled.');
+                ->with('error', 'Tego zamówienia nie można już anulować.');
         }
 
         $order->cancel(
@@ -37,6 +37,6 @@ class GuestOrderCancelController extends Controller
 
         return redirect()
             ->route('guest.orders.show', $order)
-            ->with('success', 'Your order has been cancelled.');
+            ->with('success', 'Zamówienie zostało anulowane.');
     }
 }

@@ -1,44 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order confirmation</title>
+    <title>Potwierdzenie zamówienia</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f5; font-family: Arial, Helvetica, sans-serif; color: #18181b;">
 <div style="width: 100%; background-color: #f4f4f5; padding: 32px 16px;">
     <div style="max-width: 640px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e4e4e7; border-radius: 16px; overflow: hidden;">
         <div style="padding: 32px; border-bottom: 1px solid #e4e4e7;">
             <h1 style="margin: 0 0 12px; font-size: 28px; line-height: 1.2;">
-                Thank you for your order
+                Dziękujemy za zamówienie
             </h1>
 
             <p style="margin: 0 0 8px; font-size: 16px; line-height: 1.6;">
-                We have received your order and it is now being processed.
+                Otrzymaliśmy Twoje zamówienie i rozpoczęliśmy jego obsługę.
             </p>
 
             <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #52525b;">
-                <strong>Order number:</strong> {{ $order->number }}<br>
-                <strong>Placed at:</strong> {{ optional($order->placed_at)?->format('Y-m-d H:i') ?? '—' }}
+                <strong>Numer zamówienia:</strong> {{ $order->number }}<br>
+                <strong>Złożono:</strong> {{ optional($order->placed_at)?->format('Y-m-d H:i') ?? '—' }}
             </p>
         </div>
 
         <div style="padding: 32px;">
             <h2 style="margin: 0 0 16px; font-size: 20px; line-height: 1.3;">
-                Order summary
+                Podsumowanie zamówienia
             </h2>
 
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; width: 100%; margin-bottom: 24px;">
                 <thead>
                 <tr>
                     <th align="left" style="padding: 12px 8px; border-bottom: 1px solid #e4e4e7; font-size: 14px;">
-                        Product
+                        Produkt
                     </th>
                     <th align="center" style="padding: 12px 8px; border-bottom: 1px solid #e4e4e7; font-size: 14px;">
-                        Qty
+                        Ilość
                     </th>
                     <th align="right" style="padding: 12px 8px; border-bottom: 1px solid #e4e4e7; font-size: 14px;">
-                        Total gross
+                        Razem brutto
                     </th>
                 </tr>
                 </thead>
@@ -58,9 +58,9 @@
 
                             @if ($item->hasTaxBreakdown())
                                 <div style="margin-top: 8px; color: #71717a; font-size: 12px; line-height: 1.5;">
-                                    Unit net: {{ $item->unitNetDecimal() }} {{ $order->currency }}<br>
-                                    Unit VAT {{ $item->vatRateLabel() }}: {{ $item->unitTaxDecimal() }} {{ $order->currency }}<br>
-                                    Unit gross: {{ $item->unitGrossDecimal() }} {{ $order->currency }}
+                                    Cena netto szt.: {{ $item->unitNetDecimal() }} {{ $order->currency }}<br>
+                                    VAT szt. {{ $item->vatRateLabel() }}: {{ $item->unitTaxDecimal() }} {{ $order->currency }}<br>
+                                    Cena brutto szt.: {{ $item->unitGrossDecimal() }} {{ $order->currency }}
                                 </div>
                             @endif
                         </td>
@@ -76,7 +76,7 @@
 
                             @if ($item->hasTaxBreakdown())
                                 <div style="margin-top: 8px; color: #71717a; font-size: 12px; line-height: 1.5;">
-                                    Net: {{ $item->lineNetDecimal() }} {{ $order->currency }}<br>
+                                    Netto: {{ $item->lineNetDecimal() }} {{ $order->currency }}<br>
                                     VAT {{ $item->vatRateLabel() }}: {{ $item->lineTaxDecimal() }} {{ $order->currency }}
                                 </div>
                             @endif
@@ -90,7 +90,7 @@
                 <tbody>
                 <tr>
                     <td style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                        Items gross
+                        Produkty brutto
                     </td>
                     <td align="right" style="padding: 6px 0; font-size: 14px; color: #52525b;">
                         {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
@@ -100,7 +100,7 @@
                 @if ($order->hasTaxBreakdown())
                     <tr>
                         <td style="padding: 6px 0; font-size: 13px; color: #71717a;">
-                            Items net
+                            Produkty netto
                         </td>
                         <td align="right" style="padding: 6px 0; font-size: 13px; color: #71717a;">
                             {{ $order->itemsNetDecimal() }} {{ $order->currency }}
@@ -109,7 +109,7 @@
 
                     <tr>
                         <td style="padding: 6px 0 12px; font-size: 13px; color: #71717a;">
-                            Items VAT
+                            VAT od produktów
                         </td>
                         <td align="right" style="padding: 6px 0 12px; font-size: 13px; color: #71717a;">
                             {{ $order->itemsTaxDecimal() }} {{ $order->currency }}
@@ -119,7 +119,7 @@
 
                 <tr>
                     <td style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                        Shipping gross
+                        Dostawa brutto
                     </td>
                     <td align="right" style="padding: 6px 0; font-size: 14px; color: #52525b;">
                         {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
@@ -129,7 +129,7 @@
                 @if ($order->hasTaxBreakdown() && (($order->shipping_gross_amount ?? 0) > 0 || ($order->shipping_amount ?? 0) > 0))
                     <tr>
                         <td style="padding: 6px 0; font-size: 13px; color: #71717a;">
-                            Shipping net
+                            Dostawa netto
                         </td>
                         <td align="right" style="padding: 6px 0; font-size: 13px; color: #71717a;">
                             {{ $order->shippingNetDecimal() }} {{ $order->currency }}
@@ -138,7 +138,7 @@
 
                     <tr>
                         <td style="padding: 6px 0 12px; font-size: 13px; color: #71717a;">
-                            Shipping VAT
+                            VAT od dostawy
                         </td>
                         <td align="right" style="padding: 6px 0 12px; font-size: 13px; color: #71717a;">
                             {{ $order->shippingTaxDecimal() }} {{ $order->currency }}
@@ -160,7 +160,7 @@
                 @if ($order->hasTaxBreakdown())
                     <tr>
                         <td style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                            Total VAT
+                            VAT razem
                         </td>
                         <td align="right" style="padding: 6px 0; font-size: 14px; color: #52525b;">
                             {{ $order->taxDecimal() }} {{ $order->currency }}
@@ -170,7 +170,7 @@
 
                 <tr>
                     <td style="padding: 12px 0 0; border-top: 1px solid #e4e4e7; font-size: 16px; font-weight: 700;">
-                        Total gross
+                        Razem brutto
                     </td>
                     <td align="right" style="padding: 12px 0 0; border-top: 1px solid #e4e4e7; font-size: 16px; font-weight: 700;">
                         {{ $order->totalDecimal() }} {{ $order->currency }}
@@ -182,7 +182,7 @@
             @if ($order->shippingAddress)
                 <div style="margin-bottom: 24px;">
                     <h2 style="margin: 0 0 12px; font-size: 20px; line-height: 1.3;">
-                        Shipping address
+                        Adres dostawy
                     </h2>
 
                     <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #3f3f46;">
@@ -214,7 +214,7 @@
             @if ($order->billingAddress)
                 <div style="margin-bottom: 24px;">
                     <h2 style="margin: 0 0 12px; font-size: 20px; line-height: 1.3;">
-                        Billing address
+                        Adres rozliczeniowy
                     </h2>
 
                     <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #3f3f46;">
@@ -248,7 +248,7 @@
             @endif
 
             <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #52525b;">
-                If you have any questions about your order, please contact our support team.
+                Jeśli masz pytania dotyczące zamówienia, skontaktuj się z naszym zespołem obsługi klienta.
             </p>
         </div>
     </div>

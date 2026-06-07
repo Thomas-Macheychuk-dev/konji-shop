@@ -4,11 +4,11 @@
 <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
     <div class="mb-8">
         <h1 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-            {{ __('Polityka cookies') }}
+            {{ __('Polityka plików cookie') }}
         </h1>
 
         <p class="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-            {{ __('Niniejsza Polityka cookies wyjaśnia, czym są pliki cookies, w jakim celu są wykorzystywane w naszym sklepie internetowym oraz jakie prawa przysługują użytkownikowi w związku z ich stosowaniem.') }}
+            {{ __('Niniejsza Polityka plików cookie wyjaśnia, czym są pliki cookies, w jakim celu są wykorzystywane w naszym sklepie internetowym oraz jakie prawa przysługują użytkownikowi w związku z ich stosowaniem.') }}
         </p>
     </div>
 
@@ -103,7 +103,7 @@
             </h2>
 
             <p class="mt-3">
-                {{ __('Niniejsza Polityka cookies może być okresowo aktualizowana, w szczególności w przypadku zmian technologicznych, prawnych lub organizacyjnych. Aktualna wersja dokumentu jest zawsze publikowana na tej stronie.') }}
+                {{ __('Niniejsza Polityka plików cookie może być okresowo aktualizowana, w szczególności w przypadku zmian technologicznych, prawnych lub organizacyjnych. Aktualna wersja dokumentu jest zawsze publikowana na tej stronie.') }}
             </p>
         </section>
 

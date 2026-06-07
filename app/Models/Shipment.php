@@ -78,7 +78,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_created',
-            'description' => 'Shipment created.',
+            'description' => 'Przesyłka utworzona.',
             'meta' => [
                 'provider' => $this->provider->value,
                 'provider_reference' => $this->provider_reference,
@@ -101,7 +101,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_dispatched',
-            'description' => 'Shipment dispatched.',
+            'description' => 'Przesyłka wysłana.',
             'meta' => [
                 'tracking_number' => $this->tracking_number,
                 'tracking_url' => $this->tracking_url,
@@ -121,7 +121,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_delivered',
-            'description' => 'Shipment delivered.',
+            'description' => 'Przesyłka dostarczona.',
         ]);
     }
 
@@ -134,7 +134,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_failed',
-            'description' => 'Shipment failed.',
+            'description' => 'Przesyłka nieudana.',
             'meta' => [
                 'payload' => $payload === [] ? $this->payload : $payload,
             ],
@@ -150,7 +150,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_cancelled',
-            'description' => 'Shipment cancelled.',
+            'description' => 'Przesyłka anulowana.',
             'meta' => [
                 'provider' => $this->provider?->value,
                 'provider_reference' => $this->provider_reference,
@@ -166,7 +166,7 @@ class Shipment extends Model
             ShipmentStatus::DISPATCHED,
             ShipmentStatus::IN_TRANSIT,
         ], true)) {
-            throw new DomainException('Only created or dispatched shipments can be marked as returned to sender.');
+            throw new DomainException('Tylko utworzone lub wysłane przesyłki można oznaczyć jako zwrócone do nadawcy.');
         }
 
         $this->update(array_merge([
@@ -176,7 +176,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_returned_to_sender',
-            'description' => 'Shipment returned to sender.',
+            'description' => 'Przesyłka zwrócona do nadawcy.',
             'meta' => [
                 'provider' => $this->provider?->value,
                 'provider_reference' => $this->provider_reference,
@@ -199,7 +199,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_in_transit',
-            'description' => 'Shipment is in transit.',
+            'description' => 'Przesyłka jest w transporcie.',
             'meta' => [
                 'provider' => $this->provider?->value,
                 'provider_reference' => $this->provider_reference,
@@ -216,7 +216,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_status_synced',
-            'description' => 'Shipment status synced.',
+            'description' => 'Status przesyłki zsynchronizowany.',
             'meta' => [
                 'provider' => $this->provider?->value,
                 'provider_reference' => $this->provider_reference,
@@ -239,7 +239,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_label_stored',
-            'description' => 'Shipment label stored.',
+            'description' => 'Etykieta przesyłki zapisana.',
             'meta' => [
                 'provider' => $this->provider?->value,
                 'provider_reference' => $this->provider_reference,
@@ -340,7 +340,7 @@ class Shipment extends Model
 
         $this->order->events()->create([
             'type' => 'shipment_protocol_stored',
-            'description' => 'Shipment handover protocol stored.',
+            'description' => 'Protokół przekazania przesyłki zapisany.',
             'meta' => [
                 'provider' => $this->provider?->value,
                 'provider_reference' => $this->provider_reference,

@@ -23,7 +23,7 @@ final class SyncPolkurierShipmentStatusService
         }
 
         if (! $shipment->provider_reference) {
-            throw new RuntimeException('Shipment has no Polkurier order number.');
+            throw new RuntimeException('Przesyłka nie ma numeru zamówienia Polkurier.');
         }
 
         $statusData = $this->client->shipmentStatus($shipment->provider_reference);

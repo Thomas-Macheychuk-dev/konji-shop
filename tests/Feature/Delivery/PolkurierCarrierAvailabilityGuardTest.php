@@ -50,7 +50,7 @@ it('blocks shipment creation when cache is required but empty', function (): voi
     ]);
 
     expect(fn () => app(PolkurierCarrierAvailabilityGuard::class)->ensureCanCreateShipment($order))
-        ->toThrow(PolkurierCarrierAvailabilityException::class, 'Polkurier available carrier data has not been refreshed yet.');
+        ->toThrow(PolkurierCarrierAvailabilityException::class, 'Dane dostępnych przewoźników Polkurier nie zostały jeszcze odświeżone.');
 });
 
 it('blocks shipment creation when selected courier is not returned by Polkurier', function (): void {
@@ -75,7 +75,7 @@ it('blocks shipment creation when selected courier is not returned by Polkurier'
     ]);
 
     expect(fn () => app(PolkurierCarrierAvailabilityGuard::class)->ensureCanCreateShipment($order))
-        ->toThrow(PolkurierCarrierAvailabilityException::class, 'Polkurier did not return the selected courier code DPD in available carriers.');
+        ->toThrow(PolkurierCarrierAvailabilityException::class, 'Polkurier nie zwrócił wybranego kodu kuriera DPD w dostępnych przewoźnikach.');
 });
 
 it('blocks shipment creation when shipment type is explicitly unavailable', function (): void {
@@ -117,8 +117,8 @@ it('warns and exposes definitions when selected courier requires additional fiel
                 'additional_fields' => [
                     [
                         'name' => 'external_transport_security',
-                        'label' => 'Transport security',
-                        'description' => 'Describe how the parcel is secured.',
+                        'label' => 'Zabezpieczenie transportu',
+                        'description' => 'Opisz, jak paczka jest zabezpieczona.',
                         'type' => 'TEXT',
                         'required' => true,
                     ],
@@ -144,8 +144,8 @@ it('warns and exposes definitions when selected courier requires additional fiel
     expect($check['additional_fields'])
         ->toHaveCount(1)
         ->and($check['additional_fields'][0]['name'])->toBe('external_transport_security')
-        ->and($check['additional_fields'][0]['label'])->toBe('Transport security')
-        ->and($check['additional_fields'][0]['description'])->toBe('Describe how the parcel is secured.')
+        ->and($check['additional_fields'][0]['label'])->toBe('Zabezpieczenie transportu')
+        ->and($check['additional_fields'][0]['description'])->toBe('Opisz, jak paczka jest zabezpieczona.')
         ->and($check['additional_fields'][0]['type'])->toBe('TEXT')
         ->and($check['additional_fields'][0]['required'])->toBeTrue();
 });
@@ -233,17 +233,17 @@ it('normalizes select additional field definitions', function (): void {
                 'additional_fields' => [
                     [
                         'name' => 'external_transport_security',
-                        'label' => 'Transport security',
+                        'label' => 'Zabezpieczenie transportu',
                         'type' => 'SELECT',
                         'required' => true,
                         'options' => [
                             [
                                 'value' => 'stretch_wrap',
-                                'label' => 'Stretch wrap',
+                                'label' => 'Folia stretch',
                             ],
                             [
                                 'value' => 'cardboard',
-                                'label' => 'Cardboard',
+                                'label' => 'Karton',
                             ],
                         ],
                     ],
@@ -268,11 +268,11 @@ it('normalizes select additional field definitions', function (): void {
         ->and($definitions[0]['options'])->toBe([
             [
                 'value' => 'stretch_wrap',
-                'label' => 'Stretch wrap',
+                'label' => 'Folia stretch',
             ],
             [
                 'value' => 'cardboard',
-                'label' => 'Cardboard',
+                'label' => 'Karton',
             ],
         ]);
 });

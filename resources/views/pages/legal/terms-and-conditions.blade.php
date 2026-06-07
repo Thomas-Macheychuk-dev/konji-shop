@@ -3,10 +3,10 @@
 @section('content')
     <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
-            <p class="text-sm font-medium text-zinc-500">Shop rules</p>
+            <p class="text-sm font-medium text-zinc-500">Zasady sklepu</p>
 
             <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
-                Terms and Conditions
+                Regulamin
             </h1>
 
             <p class="mt-2 text-sm text-zinc-500">
@@ -14,49 +14,49 @@
             </p>
 
             <p class="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-                Draft text. Review before production use.
+                Tekst roboczy. Sprawdź przed użyciem produkcyjnym.
             </p>
 
             <div class="prose prose-zinc mt-8 max-w-none">
-                <h2>Seller</h2>
+                <h2>Sprzedawca</h2>
                 <p>
-                    The online shop is operated by {{ config('legal.seller.company_name') }},
+                    Sklep internetowy jest prowadzony przez {{ config('legal.seller.company_name') }},
                     {{ config('legal.seller.street') }},
                     {{ config('legal.seller.postcode') }} {{ config('legal.seller.city') }},
                     {{ config('legal.seller.country') }}.
                 </p>
 
                 <p>
-                    Contact:
+                    Kontakt:
                     <a href="mailto:{{ config('legal.seller.email') }}">{{ config('legal.seller.email') }}</a>,
                     {{ config('legal.seller.phone') }}.
                 </p>
 
-                <h2>Orders</h2>
+                <h2>Zamówienia</h2>
                 <p>
-                    Orders may be placed through the checkout form. Before placing an order, the customer can review product prices, VAT, delivery costs, delivery method, and the total amount payable.
+                    Zamówienia można składać przez formularz kasy. Przed złożeniem zamówienia klient może sprawdzić ceny produktów, VAT, koszty dostawy, metodę dostawy oraz łączną kwotę do zapłaty.
                 </p>
 
-                <h2>Prices and payments</h2>
+                <h2>Ceny i płatności</h2>
                 <p>
-                    Product prices are shown as gross prices in PLN unless stated otherwise. The checkout shows the VAT breakdown, delivery cost, and total gross amount before the order is placed.
+                    Ceny produktów są podawane jako ceny brutto w PLN, chyba że wskazano inaczej. Kasa pokazuje rozbicie VAT, koszt dostawy oraz łączną kwotę brutto przed złożeniem zamówienia.
                 </p>
 
-                <h2>Delivery</h2>
+                <h2>Dostawa</h2>
                 <p>
-                    Available delivery methods and costs are displayed during checkout. Delivery may be provided through courier services, parcel lockers, or local pickup where available.
+                    Dostępne metody i koszty dostawy są wyświetlane w kasie. Dostawa może być realizowana kurierem, do paczkomatu albo przez odbiór osobisty, jeśli jest dostępny.
                 </p>
 
-                <h2>Right of withdrawal</h2>
+                <h2>Prawo odstąpienia od umowy</h2>
                 <p>
-                    Consumers may have the right to withdraw from a distance contract within 14 days, subject to statutory exceptions. Details are provided on the Returns and Withdrawal page.
+                    Konsumenci mogą mieć prawo odstąpienia od umowy zawartej na odległość w terminie 14 dni, z uwzględnieniem ustawowych wyjątków. Szczegóły znajdują się na stronie Zwroty i odstąpienie od umowy.
                 </p>
 
-                <h2>Complaints</h2>
+                <h2>Reklamacje</h2>
                 <p>
-                    Complaints can be submitted by email to
+                    Reklamacje można składać e-mailem na adres
                     <a href="mailto:{{ config('legal.seller.email') }}">{{ config('legal.seller.email') }}</a>.
-                    Details are provided on the Complaints and Warranty page.
+                    Szczegóły znajdują się na stronie Reklamacje i gwarancja.
                 </p>
             </div>
         </div>

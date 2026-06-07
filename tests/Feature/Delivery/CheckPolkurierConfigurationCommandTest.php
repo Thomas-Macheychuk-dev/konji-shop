@@ -19,8 +19,8 @@ it('fails when required Polkurier configuration is missing', function (): void {
 
     $this
         ->artisan('polkurier:check')
-        ->expectsOutputToContain('Polkurier configuration check')
-        ->expectsOutputToContain('Polkurier is NOT ready for production.')
+        ->expectsOutputToContain('Sprawdzenie konfiguracji Polkurier')
+        ->expectsOutputToContain('Polkurier NIE jest gotowy do produkcji.')
         ->assertFailed();
 });
 
@@ -65,12 +65,12 @@ it('passes when required Polkurier configuration is present', function (): void 
 
     $this
         ->artisan('polkurier:check')
-        ->expectsOutputToContain('Polkurier configuration check')
-        ->expectsOutputToContain('Labels')
-        ->expectsOutputToContain('Protocols')
-        ->expectsOutputToContain('Carrier availability')
-        ->expectsOutputToContain('Operations')
-        ->expectsOutputToContain('Polkurier is ready for production.')
+        ->expectsOutputToContain('Sprawdzenie konfiguracji Polkurier')
+        ->expectsOutputToContain('Etykiety')
+        ->expectsOutputToContain('Protokoły')
+        ->expectsOutputToContain('Dostępność przewoźników')
+        ->expectsOutputToContain('Operacje')
+        ->expectsOutputToContain('Polkurier jest gotowy do produkcji.')
         ->assertSuccessful();
 });
 
@@ -98,11 +98,11 @@ it('can output Polkurier readiness as json', function (): void {
 
     expect(collect($payload['items'])->pluck('category')->unique()->values()->all())
         ->toContain('API')
-        ->toContain('Sender')
-        ->toContain('Default pack')
-        ->toContain('Labels')
-        ->toContain('Protocols')
-        ->toContain('Carrier availability')
-        ->toContain('Valuation')
-        ->toContain('Operations');
+        ->toContain('Nadawca')
+        ->toContain('Domyślna paczka')
+        ->toContain('Etykiety')
+        ->toContain('Protokoły')
+        ->toContain('Dostępność przewoźników')
+        ->toContain('Wycena')
+        ->toContain('Operacje');
 });

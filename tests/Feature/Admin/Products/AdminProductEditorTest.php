@@ -138,9 +138,9 @@ it('shows the admin product index', function (): void {
         ->actingAs($admin)
         ->get(route('admin.products.index'))
         ->assertOk()
-        ->assertSee('Products')
+        ->assertSee('Produkty')
         ->assertSee('Editable Product')
-        ->assertSee('1 missing weight/dimensions');
+        ->assertSee('1 z brakującą wagą/wymiarami');
 });
 
 it('shows the admin product edit page with variants', function (): void {
@@ -155,25 +155,25 @@ it('shows the admin product edit page with variants', function (): void {
         ->get(route('admin.products.edit', $product))
         ->assertOk()
         ->assertSee('Editable Product')
-        ->assertSee('Product name')
-        ->assertSee('Save product')
-        ->assertSee('Default product picture')
-        ->assertSee('Apply price to all variants')
-        ->assertSee('Variant price data')
-        ->assertSee('Apply package data to all variants')
+        ->assertSee('Nazwa produktu')
+        ->assertSee('Zapisz produkt')
+        ->assertSee('Domyślne zdjęcie produktu')
+        ->assertSee('Zastosuj cenę do wszystkich wariantów')
+        ->assertSee('Ceny wariantów')
+        ->assertSee('Zastosuj dane paczki do wszystkich wariantów')
         ->assertSee('EDIT-MISSING')
         ->assertSee('EDIT-COMPLETE')
-        ->assertSee('Product status')
-        ->assertSee('Product category')
-        ->assertSee('Short description')
+        ->assertSee('Status produktu')
+        ->assertSee('Kategoria produktu')
+        ->assertSee('Krótki opis')
         ->assertSee('Existing short description.')
-        ->assertSee('Product HTML description')
+        ->assertSee('Opis HTML produktu')
         ->assertSee('&lt;p&gt;Existing &lt;strong&gt;HTML&lt;/strong&gt; description.&lt;/p&gt;', false)
-        ->assertSee('SEO title')
+        ->assertSee('Tytuł SEO')
         ->assertSee('Existing SEO title')
-        ->assertSee('SEO description')
+        ->assertSee('Opis SEO')
         ->assertSee('Existing SEO description.')
-        ->assertSee('No category')
+        ->assertSee('Brak kategorii')
         ->assertSee(ProductStatus::DRAFT->label())
         ->assertSee(ProductStatus::ACTIVE->label())
         ->assertSee(ProductStatus::ARCHIVED->label());
@@ -230,8 +230,8 @@ it('shows selectable active categories on the admin product edit page', function
         ->actingAs($admin)
         ->get(route('admin.products.edit', $product))
         ->assertOk()
-        ->assertSee('Product category')
-        ->assertSee('No category')
+        ->assertSee('Kategoria produktu')
+        ->assertSee('Brak kategorii')
         ->assertSee('Medical Tunics')
         ->assertSee('Medical Trousers');
 });
@@ -318,12 +318,12 @@ it('shows selectable product and variant images on the admin product edit page',
         ->actingAs($admin)
         ->get(route('admin.products.edit', $product))
         ->assertOk()
-        ->assertSee('Default product picture')
-        ->assertSee('Product images')
-        ->assertSee('Variant images')
+        ->assertSee('Domyślne zdjęcie produktu')
+        ->assertSee('Zdjęcia produktu')
+        ->assertSee('Zdjęcia wariantów')
         ->assertSee('Base product image')
         ->assertSee('Colour: Navy')
-        ->assertSee('Save default picture');
+        ->assertSee('Zapisz domyślne zdjęcie');
 });
 
 it('allows an admin to choose a product gallery image as the default product image', function (): void {
@@ -542,9 +542,9 @@ it('shows stock status controls on the admin product edit page', function (): vo
         ->actingAs($admin)
         ->get(route('admin.products.edit', $product))
         ->assertOk()
-        ->assertSee('Variant stock status')
-        ->assertSee('Apply stock status to all variants')
-        ->assertSee('Save variant stock statuses')
+        ->assertSee('Status dostępności wariantów')
+        ->assertSee('Zastosuj status dostępności do wszystkich wariantów')
+        ->assertSee('Zapisz statusy dostępności wariantów')
         ->assertSee(StockStatus::IN_STOCK->label())
         ->assertSee(StockStatus::OUT_OF_STOCK->label())
         ->assertSee(StockStatus::PREORDER->label());
@@ -563,7 +563,7 @@ it('allows an admin to apply stock status to all product variants', function ():
             'stock_status' => StockStatus::OUT_OF_STOCK->value,
         ])
         ->assertRedirect()
-        ->assertSessionHas('success', 'Stock status applied to all variants.');
+        ->assertSessionHas('success', 'Status dostępności zastosowano do wszystkich wariantów.');
 
     foreach ($product->variants()->get() as $variant) {
         expect($variant->refresh()->stock_status)->toBe(StockStatus::OUT_OF_STOCK);
@@ -594,7 +594,7 @@ it('allows an admin to update variant stock statuses separately', function (): v
             ],
         ])
         ->assertRedirect()
-        ->assertSessionHas('success', 'Variant stock statuses updated.');
+        ->assertSessionHas('success', 'Statusy dostępności wariantów zostały zaktualizowane.');
 
     expect($first->refresh()->stock_status)->toBe(StockStatus::OUT_OF_STOCK)
         ->and($second->refresh()->stock_status)->toBe(StockStatus::PREORDER);
@@ -802,7 +802,7 @@ it('filters products by missing package data', function (): void {
         ->get(route('admin.products.index', ['missing_package_data' => 1]))
         ->assertOk()
         ->assertSee('Editable Product')
-        ->assertSee('missing weight/dimensions')
+        ->assertSee('brakującą wagą/wymiarami')
         ->assertDontSee('Complete Package Product');
 });
 
@@ -884,10 +884,10 @@ it('warns admins when priced variants are still draft', function (): void {
         ->actingAs($admin)
         ->get(route('admin.products.edit', $product))
         ->assertOk()
-        ->assertSee('Variant publication')
-        ->assertSee('Draft variants are not visible on the storefront')
-        ->assertSee('2 priced draft variants can be activated now')
-        ->assertSee('Activate priced variants');
+        ->assertSee('Publikacja wariantów')
+        ->assertSee('Warianty w szkicu nie są widoczne w sklepie')
+        ->assertSee('2 wycenione warianty w szkicu można teraz aktywować')
+        ->assertSee('Aktywuj wycenione warianty');
 });
 
 it('allows an admin to activate only priced draft variants', function (): void {
@@ -911,15 +911,15 @@ it('allows an admin to activate only priced draft variants', function (): void {
     $unpricedDraftVariant->update([
         'status' => ProductVariantStatus::DRAFT,
         'price_net_amount' => null,
-        'currency' => null,
-        'vat_rate' => null,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
     ]);
 
     $this
         ->actingAs($admin)
         ->patch(route('admin.products.variants.activate-priced', $product))
         ->assertRedirect()
-        ->assertSessionHas('success', '1 priced variant activated.');
+        ->assertSessionHas('success', '1 wyceniony wariant został aktywowany.');
 
     expect($pricedDraftVariant->refresh()->status)->toBe(ProductVariantStatus::ACTIVE)
         ->and($unpricedDraftVariant->refresh()->status)->toBe(ProductVariantStatus::DRAFT);

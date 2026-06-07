@@ -44,7 +44,7 @@ final class OrderFulfilmentController extends Controller
                 'refund' => $this->processWithdrawalRefundService->process($order),
 
                 default => throw new DomainException(
-                    'Unsupported fulfilment action.'
+                    'Nieobsługiwana akcja realizacji.'
                 ),
             };
         } catch (DomainException|RuntimeException $exception) {
@@ -54,8 +54,8 @@ final class OrderFulfilmentController extends Controller
         return back()->with(
             'success',
             $action === 'refund'
-                ? 'Withdrawal refund processed and customer notified.'
-                : 'Order fulfilment status updated.'
+                ? 'Zwrot z odstąpienia został przetworzony, a klient powiadomiony.'
+                : 'Status realizacji zamówienia został zaktualizowany.'
         );
     }
 
@@ -102,7 +102,7 @@ final class OrderFulfilmentController extends Controller
     private function markExistingShipmentAsShipped(Order $order, Shipment $shipment): void
     {
         if (! $order->fulfilment_status->isProcessing()) {
-            throw new DomainException('Only orders in processing can be marked as shipped.');
+            throw new DomainException('Tylko zamówienia w realizacji można oznaczyć jako wysłane.');
         }
 
         if (in_array($shipment->status, [
@@ -136,7 +136,7 @@ final class OrderFulfilmentController extends Controller
     private function returnOrderToSender(Order $order): void
     {
         if (! $order->fulfilment_status->isShipped()) {
-            throw new DomainException('Only shipped orders can be marked as returned to sender.');
+            throw new DomainException('Tylko wysłane zamówienia można oznaczyć jako zwrócone do nadawcy.');
         }
 
         $shipment = $order->shipments()
@@ -144,7 +144,7 @@ final class OrderFulfilmentController extends Controller
             ->first();
 
         if ($shipment === null) {
-            throw new DomainException('Cannot return an order without a shipment.');
+            throw new DomainException('Nie można zwrócić zamówienia bez przesyłki.');
         }
 
         $shipment->markAsReturnedToSender();

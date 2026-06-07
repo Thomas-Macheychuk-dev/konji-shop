@@ -67,7 +67,7 @@ it('shows active top-level categories in the storefront sidebar', function (): v
     $this
         ->get(route('home'))
         ->assertOk()
-        ->assertSee('Categories')
+        ->assertSee('Kategorie')
         ->assertSee('Odzież medyczna')
         ->assertSee(route('categories.show', $activeCategory->slug), false)
         ->assertDontSee('Archived category')

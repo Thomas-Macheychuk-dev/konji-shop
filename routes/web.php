@@ -184,8 +184,6 @@ Route::middleware(['auth', 'admin'])
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
-
     Route::prefix('account')->name('account.')->group(function () {
         Route::get('/details', AccountDetailsShowController::class)
             ->name('details.show');

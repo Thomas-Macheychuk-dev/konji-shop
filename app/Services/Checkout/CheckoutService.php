@@ -141,7 +141,7 @@ class CheckoutService
 
             $order->events()->create([
                 'type' => 'delivery_choice_selected',
-                'description' => 'Delivery method selected.',
+                'description' => 'Wybrano metodę dostawy.',
                 'meta' => [
                     'provider' => $deliveryProvider->value,
                     'carrier' => $deliveryCarrier->value,
@@ -154,7 +154,7 @@ class CheckoutService
 
             $order->events()->create([
                 'type' => 'legal_terms_accepted',
-                'description' => 'Checkout legal terms accepted.',
+                'description' => 'Zaakceptowano warunki prawne kasy.',
                 'meta' => [
                     'terms_version' => (string) config('legal.versions.terms'),
                     'privacy_version' => (string) config('legal.versions.privacy'),

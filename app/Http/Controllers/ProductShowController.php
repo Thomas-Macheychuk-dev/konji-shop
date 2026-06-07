@@ -219,7 +219,7 @@ class ProductShowController extends Controller
     {
         $items = [
             [
-                'label' => 'Home',
+                'label' => 'Strona główna',
                 'url' => route('home'),
             ],
         ];
@@ -482,8 +482,8 @@ class ProductShowController extends Controller
     private function displayLabelForCode(string $code, ?string $fallback = null): string
     {
         return match ($code) {
-            'color' => 'Colour',
-            'size' => 'Size',
+            'color' => 'Kolor',
+            'size' => 'Rozmiar',
             default => $fallback ?: Str::headline($code),
         };
     }

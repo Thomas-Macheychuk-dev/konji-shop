@@ -5,11 +5,11 @@
         <div class="mb-8 flex items-start justify-between gap-4">
             <div>
                 <h1 class="text-3xl font-bold tracking-tight text-zinc-900">
-                    Polkurier diagnostics
+                    Diagnostyka Polkurier
                 </h1>
 
                 <p class="mt-2 text-sm text-zinc-600">
-                    Check Polkurier configuration and run a safe valuation test without creating a shipment.
+                    Sprawdź konfigurację Polkurier i uruchom bezpieczną testową wycenę bez tworzenia przesyłki.
                 </p>
             </div>
 
@@ -17,7 +17,7 @@
                 href="{{ route('admin.orders.index') }}"
                 class="rounded-xl border border-zinc-300 px-4 py-2 text-sm font-semibold text-zinc-700 hover:bg-zinc-50"
             >
-                Orders
+                Zamówienia
             </a>
         </div>
 
@@ -37,11 +37,11 @@
             <div class="flex items-start justify-between gap-4">
                 <div>
                     <h2 class="text-lg font-semibold {{ $polkurierReady ? 'text-green-900' : 'text-red-900' }}">
-                        {{ $polkurierReady ? 'Polkurier is ready for production.' : 'Polkurier is NOT ready for production.' }}
+                        {{ $polkurierReady ? 'Polkurier jest gotowy do produkcji.' : 'Polkurier NIE jest gotowy do produkcji.' }}
                     </h2>
 
                     <p class="mt-2 text-sm {{ $polkurierReady ? 'text-green-800' : 'text-red-800' }}">
-                        This summary is also available from the command line with
+                        To podsumowanie jest też dostępne z terminala przez
                         <code class="rounded bg-white/70 px-1 py-0.5">php artisan polkurier:check</code>.
                     </p>
                 </div>
@@ -51,10 +51,10 @@
                 <table class="min-w-full divide-y divide-zinc-200">
                     <thead class="bg-zinc-50">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Category</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Check</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Kategoria</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Sprawdzenie</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Message</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Komunikat</th>
                     </tr>
                     </thead>
 
@@ -76,11 +76,11 @@
                             </span>
                                 @elseif ($item['status'] === 'WARNING')
                                     <span class="inline-flex rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                                Warning
+                                Ostrzeżenie
                             </span>
                                 @else
                                     <span class="inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
-                                Missing
+                                Brakujące
                             </span>
                                 @endif
                             </td>
@@ -99,12 +99,12 @@
             <div class="flex flex-wrap items-start justify-between gap-4">
                 <div>
                     <h2 class="text-lg font-semibold text-zinc-900">
-                        Available carriers
+                        Dostępni przewoźnicy
                     </h2>
 
                     <p class="mt-2 text-sm text-zinc-500">
-                        Cached Polkurier carrier data: {{ $availableCarriersCount }} carrier(s).
-                        Refreshing calls Polkurier <code>available_carriers</code> with <code>additional_data=true</code>.
+                        Dane przewoźników Polkurier w cache: {{ $availableCarriersCount }} {{ $availableCarriersCount === 1 ? 'przewoźnik' : 'przewoźników' }}.
+                        Odświeżenie wywołuje Polkurier <code>available_carriers</code> z <code>additional_data=true</code>.
                     </p>
                 </div>
 
@@ -112,14 +112,14 @@
                     @csrf
 
                     <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                        Refresh carriers from Polkurier
+                        Odśwież przewoźników z Polkurier
                     </button>
                 </form>
             </div>
 
             @if ($availableCarriersCount === 0)
                 <div class="mt-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-                    No Polkurier carrier data cached yet. Use “Refresh carriers from Polkurier” to check the currently available API carriers.
+                    Brak danych przewoźników Polkurier w cache.
                 </div>
             @endif
 
@@ -127,12 +127,12 @@
                 <table class="min-w-full divide-y divide-zinc-200">
                     <thead class="bg-zinc-50">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Configured option</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Polkurier code</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">API status</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Shipment types</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Services</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Required fields</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Skonfigurowana opcja</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Kod Polkurier</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status API</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Typy przesyłek</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Usługi</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Wymagane pola</th>
                     </tr>
                     </thead>
 
@@ -158,18 +158,18 @@
                             <td class="px-4 py-3 text-sm">
                                 @if ($carrier['available'])
                                     <span class="inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700">
-                                Available
+                                Dostępny
                             </span>
                                 @else
                                     <span class="inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
-                                Not returned
+                                Nie zwrócono
                             </span>
                                 @endif
 
                                 @if ($carrier['foreign_shipments'] !== null)
                                     <p class="mt-1 text-xs text-zinc-500">
-                                        Foreign shipments:
-                                        {{ $carrier['foreign_shipments'] ? 'yes' : 'no' }}
+                                        Przesyłki zagraniczne:
+                                        {{ $carrier['foreign_shipments'] ? 'tak' : 'nie' }}
                                     </p>
                                 @endif
                             </td>
@@ -189,7 +189,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-4 py-8 text-center text-sm text-zinc-500">
-                                No Polkurier carrier data cached yet. Use “Refresh carriers from Polkurier”.
+                                Brak danych przewoźników Polkurier w cache.
                             </td>
                         </tr>
                     @endforelse
@@ -201,7 +201,7 @@
         <div class="grid gap-6 lg:grid-cols-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">
-                    API configuration
+                    Konfiguracja API
                 </h2>
 
                 <dl class="mt-4 divide-y divide-zinc-100 text-sm">
@@ -215,7 +215,7 @@
                                     </span>
                                 @else
                                     <span class="inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
-                                        Missing
+                                        Brakujące
                                     </span>
                                 @endif
                             </dd>
@@ -224,17 +224,17 @@
                 </dl>
 
                 <p class="mt-4 text-xs text-zinc-500">
-                    The token value is intentionally not displayed.
+                    Wartość tokenu jest celowo ukryta.
                 </p>
             </div>
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">
-                    Test valuation
+                    Testowa wycena
                 </h2>
 
                 <p class="mt-2 text-sm text-zinc-500">
-                    This calls Polkurier <code>order_valuation_v2</code>. It does not create an order or shipment.
+                    To wywołuje Polkurier <code>order_valuation_v2</code>. Nie tworzy zamówienia ani przesyłki.
                 </p>
 
                 <form
@@ -246,7 +246,7 @@
 
                     <div>
                         <label for="courier_code" class="mb-2 block text-sm font-medium text-zinc-700">
-                            Courier
+                            Kurier
                         </label>
 
                         <select
@@ -272,7 +272,7 @@
                     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                         <div>
                             <label for="recipient_postcode" class="mb-2 block text-sm font-medium text-zinc-700">
-                                Recipient postcode
+                                Kod pocztowy odbiorcy
                             </label>
 
                             <input
@@ -332,7 +332,7 @@
                                     </span>
                                 @else
                                     <span class="inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
-                                        Missing
+                                        Brakujące
                                     </span>
                                 @endif
                             </dd>
@@ -357,7 +357,7 @@
                                     </span>
                                 @else
                                     <span class="inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
-                                        Missing
+                                        Brakujące
                                     </span>
                                 @endif
                             </dd>

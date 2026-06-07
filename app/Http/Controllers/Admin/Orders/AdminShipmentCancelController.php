@@ -25,6 +25,6 @@ final class AdminShipmentCancelController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return back()->with('success', 'Shipment cancelled.');
+        return back()->with('success', 'Przesyłka anulowana.');
     }
 }

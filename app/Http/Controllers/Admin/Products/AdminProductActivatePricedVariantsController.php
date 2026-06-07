@@ -23,9 +23,9 @@ final class AdminProductActivatePricedVariantsController extends Controller
             ]);
 
         if ($updated === 0) {
-            return back()->with('success', 'No priced draft variants were ready to activate.');
+            return back()->with('success', 'Brak wycenionych wariantów w szkicu gotowych do aktywacji.');
         }
 
-        return back()->with('success', $updated.' priced variant'.($updated === 1 ? '' : 's').' activated.');
+        return back()->with('success', trans_choice('{1} :count wyceniony wariant został aktywowany.|[2,*] :count wycenione warianty zostały aktywowane.', $updated, ['count' => $updated]));
     }
 }

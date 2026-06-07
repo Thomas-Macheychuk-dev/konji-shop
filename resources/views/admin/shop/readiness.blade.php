@@ -8,11 +8,11 @@
                     href="{{ route('admin.orders.index') }}"
                     class="text-sm font-medium text-zinc-500 hover:text-zinc-700"
                 >
-                    ← Back to admin orders
+                    ← Wróć do zamówień administratora
                 </a>
 
                 <h1 class="mt-3 text-3xl font-bold tracking-tight text-zinc-900">
-                    Production readiness
+                    Gotowość produkcyjna
                 </h1>
 
                 <p class="mt-2 text-sm text-zinc-600">
@@ -22,7 +22,7 @@
 
             <div class="rounded-2xl border {{ $ready ? 'border-green-200 bg-green-50 text-green-900' : 'border-red-200 bg-red-50 text-red-900' }} px-5 py-4 text-sm shadow-sm">
                 <p class="font-semibold">
-                    {{ $ready ? 'Ready for production' : 'Not ready for production' }}
+                    {{ $ready ? 'Gotowe do produkcji' : 'Nie gotowe do produkcji' }}
                 </p>
 
                 <p class="mt-1 text-xs">
@@ -48,7 +48,7 @@
             </div>
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
-                <p class="text-sm text-zinc-500">Missing</p>
+                <p class="text-sm text-zinc-500">Brakujące</p>
                 <p class="mt-2 text-2xl font-bold text-red-700">
                     {{ collect($items)->where('status', 'missing')->count() }}
                 </p>
@@ -58,7 +58,7 @@
         <div class="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
             <div class="border-b border-zinc-200 px-6 py-4">
                 <h2 class="text-lg font-semibold text-zinc-900">
-                    Configuration checks
+                    Kontrole konfiguracji
                 </h2>
             </div>
 
@@ -67,7 +67,7 @@
                     <thead class="bg-zinc-50">
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                            Category
+                            Kategoria
                         </th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
                             Check
@@ -79,7 +79,7 @@
                             Required
                         </th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                            Message
+                            Komunikat
                         </th>
                     </tr>
                     </thead>
@@ -126,11 +126,11 @@
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <h2 class="text-lg font-semibold text-zinc-900">
-                Console command
+                Polecenie konsoli
             </h2>
 
             <p class="mt-2 text-sm text-zinc-600">
-                The same checks are available from the CLI:
+                Te same kontrole są dostępne z poziomu CLI:
             </p>
 
             <pre class="mt-4 overflow-x-auto rounded-xl bg-zinc-900 p-4 text-sm text-white"><code>php artisan shop:check

@@ -22,7 +22,7 @@ it('returns a free shipping quote for local pickup', function (): void {
         ->assertOk()
         ->assertJson([
             'amount' => 0,
-            'formatted' => 'Free',
+            'formatted' => 'Bezpłatnie',
             'currency' => 'PLN',
             'provider' => 'polkurier',
             'carrier' => 'local_pickup',

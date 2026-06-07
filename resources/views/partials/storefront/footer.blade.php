@@ -48,7 +48,7 @@
                         @endif
 
                         @if (filled($registryNumber))
-                            <p>Registry number: {{ $registryNumber }}</p>
+                            <p>Numer w rejestrze: {{ $registryNumber }}</p>
                         @endif
                     </div>
                 @endif
@@ -56,7 +56,7 @@
                 @if (filled($returnAddress))
                     <div class="mt-6">
                         <h4 class="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-white">
-                            Returns address
+                            Adres do zwrotów
                         </h4>
 
                         <div class="mt-2 space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
@@ -69,67 +69,67 @@
 
             <div>
                 <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">
-                    Shopping
+                    Zakupy
                 </h3>
 
                 <nav class="mt-4 flex flex-col gap-3 text-sm">
                     <a href="{{ route('legal.delivery-payments') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Delivery & payments
+                        Dostawa i płatności
                     </a>
 
                     <a href="{{ route('guest.orders.track.show') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Guest order tracking
+                        Śledzenie zamówienia gościa
                     </a>
 
                     <a href="{{ route('legal.returns') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Returns & withdrawal
+                        Zwroty i odstąpienie od umowy
                     </a>
 
                     <a href="{{ route('legal.complaints') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Complaints & warranty
+                        Reklamacje i gwarancja
                     </a>
 
                     <a href="{{ route('legal.contact') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Contact
+                        Kontakt
                     </a>
                 </nav>
             </div>
 
             <div>
                 <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">
-                    Legal
+                    Informacje prawne
                 </h3>
 
                 <nav class="mt-4 flex flex-col gap-3 text-sm">
                     <a href="{{ route('legal.terms') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Terms & conditions
+                        Regulamin
                     </a>
 
                     <a href="{{ route('legal.privacy') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Privacy policy
+                        Polityka prywatności
                     </a>
 
                     <a href="{{ route('legal.returns') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Returns & withdrawal
+                        Zwroty i odstąpienie od umowy
                     </a>
 
                     <a href="{{ route('legal.complaints') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Complaints & warranty
+                        Reklamacje i gwarancja
                     </a>
 
                     <a href="{{ route('legal.delivery-payments') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Delivery & payments
+                        Dostawa i płatności
                     </a>
 
                     <a href="{{ route('legal.cookie-policy') }}" class="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white">
-                        Cookie policy
+                        Polityka plików cookie
                     </a>
                 </nav>
             </div>
 
             <div>
                 <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">
-                    Contact
+                    Kontakt
                 </h3>
 
                 <div class="mt-4 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
@@ -151,14 +151,14 @@
 
                     <p>
                         <a href="{{ route('legal.contact') }}" class="font-medium text-zinc-700 underline decoration-zinc-300 underline-offset-4 transition hover:text-zinc-900 dark:text-zinc-200 dark:hover:text-white">
-                            Full seller details
+                            Pełne dane sprzedawcy
                         </a>
                     </p>
                 </div>
 
                 <div class="mt-8">
                     <h4 class="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-white">
-                        Follow us
+                        Obserwuj nas
                     </h4>
 
                     <div class="mt-3 flex items-center gap-4 text-sm">

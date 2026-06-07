@@ -8,11 +8,11 @@
     <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
         <div class="border-b border-zinc-200 px-6 py-4">
             <h2 class="text-lg font-semibold text-zinc-900">
-                Shipment tracking
+                Śledzenie przesyłki
             </h2>
 
             <p class="mt-1 text-sm text-zinc-500">
-                Track delivery status and shipment details for this order.
+                Śledź status dostawy i szczegóły przesyłki dla tego zamówienia.
             </p>
         </div>
 
@@ -23,7 +23,7 @@
                         <div class="min-w-0">
                             <div class="flex flex-wrap items-center gap-2">
                                 <p class="font-semibold text-zinc-900">
-                                    {{ $shipment->carrier()?->label() ?? ucfirst((string) ($shipment->provider?->value ?? 'Delivery')) }}
+                                    {{ $shipment->carrier()?->label() ?? ucfirst((string) ($shipment->provider?->value ?? 'Dostawa')) }}
                                 </p>
 
                                 <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $shipment->status->badgeColorClasses() }}">
@@ -33,28 +33,28 @@
 
                             <dl class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                                 <div>
-                                    <dt class="text-zinc-500">Service</dt>
+                                    <dt class="text-zinc-500">Usługa</dt>
                                     <dd class="mt-1 font-medium text-zinc-900">
                                         {{ \App\Enums\DeliveryService::tryFrom((string) $shipment->service)?->label() ?? ($shipment->service ?: '—') }}
                                     </dd>
                                 </div>
 
                                 <div>
-                                    <dt class="text-zinc-500">Tracking number</dt>
+                                    <dt class="text-zinc-500">Numer śledzenia</dt>
                                     <dd class="mt-1 break-all font-medium text-zinc-900">
                                         {{ $shipment->tracking_number ?: '—' }}
                                     </dd>
                                 </div>
 
                                 <div>
-                                    <dt class="text-zinc-500">Reference</dt>
+                                    <dt class="text-zinc-500">Referencja</dt>
                                     <dd class="mt-1 break-all font-medium text-zinc-900">
                                         {{ $shipment->provider_reference ?: '—' }}
                                     </dd>
                                 </div>
 
                                 <div>
-                                    <dt class="text-zinc-500">Locker code</dt>
+                                    <dt class="text-zinc-500">Kod paczkomatu</dt>
                                     <dd class="mt-1 font-medium text-zinc-900">
                                         {{ $shipment->locker_code ?: '—' }}
                                     </dd>
@@ -62,7 +62,7 @@
 
                                 @if ($shipment->shipped_at)
                                     <div>
-                                        <dt class="text-zinc-500">Shipped at</dt>
+                                        <dt class="text-zinc-500">Wysłano</dt>
                                         <dd class="mt-1 font-medium text-zinc-900">
                                             {{ $shipment->shipped_at->format('Y-m-d H:i') }}
                                         </dd>
@@ -71,7 +71,7 @@
 
                                 @if ($shipment->delivered_at)
                                     <div>
-                                        <dt class="text-zinc-500">Delivered at</dt>
+                                        <dt class="text-zinc-500">Dostarczono</dt>
                                         <dd class="mt-1 font-medium text-zinc-900">
                                             {{ $shipment->delivered_at->format('Y-m-d H:i') }}
                                         </dd>
@@ -88,7 +88,7 @@
                                     rel="noopener noreferrer"
                                     class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-700"
                                 >
-                                    Track shipment
+                                    Śledź przesyłkę
                                 </a>
                             </div>
                         @endif

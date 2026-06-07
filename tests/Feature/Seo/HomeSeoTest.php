@@ -32,8 +32,8 @@ it('renders homepage SEO metadata, structured data and category links', function
     $this
         ->get($homeUrl)
         ->assertOk()
-        ->assertSee('<title>Medical clothing, orthopedic supports and recovery products - Konji Shop</title>', false)
-        ->assertSee('<meta name="description" content="Shop medical clothing, orthopedic supports, braces and recovery products with delivery across Poland.">', false)
+        ->assertSee('<title>Odzież medyczna, stabilizatory ortopedyczne i produkty do regeneracji - Konji Shop</title>', false)
+        ->assertSee('<meta name="description" content="Kupuj odzież medyczną, stabilizatory, ortezy i produkty do regeneracji z dostawą na terenie Polski.">', false)
         ->assertSee('<link rel="canonical" href="'.$homeUrl.'">', false)
         ->assertSee('"@type": "WebSite"', false)
         ->assertSee('"@type": "Organization"', false)

@@ -26,7 +26,7 @@ final class PolkurierShipmentProtocolService
         }
 
         if (! $shipment->provider_reference) {
-            throw new RuntimeException('Shipment has no Polkurier order number.');
+            throw new RuntimeException('Przesyłka nie ma numeru zamówienia Polkurier.');
         }
 
         if (

@@ -21,7 +21,7 @@ class OrderCancelController extends Controller
         if (! $order->canBeCancelledByCustomer()) {
             return redirect()
                 ->route('account.orders.show', $order->id)
-                ->with('error', 'This order can no longer be cancelled.');
+                ->with('error', 'Tego zamówienia nie można już anulować.');
         }
 
         DB::transaction(function () use ($order): void {

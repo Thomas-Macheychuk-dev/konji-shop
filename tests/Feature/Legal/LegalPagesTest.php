@@ -10,13 +10,13 @@ it('shows public legal pages', function (string $routeName, string $expectedText
         ->assertOk()
         ->assertSee($expectedText);
 })->with([
-    ['legal.terms', 'Terms and Conditions'],
-    ['legal.privacy', 'Privacy Policy'],
-    ['legal.returns', 'Returns and Withdrawal'],
-    ['legal.complaints', 'Complaints and Warranty'],
-    ['legal.delivery-payments', 'Delivery and Payments'],
-    ['legal.contact', 'Contact'],
-    ['legal.cookie-policy', 'Cookie'],
+    ['legal.terms', 'Regulamin'],
+    ['legal.privacy', 'Polityka prywatności'],
+    ['legal.returns', 'Zwroty i odstąpienie od umowy'],
+    ['legal.complaints', 'Reklamacje i gwarancja'],
+    ['legal.delivery-payments', 'Dostawa i płatności'],
+    ['legal.contact', 'Kontakt'],
+    ['legal.cookie-policy', 'Polityka plików cookie'],
 ]);
 
 it('shows legal footer links on the storefront', function (): void {
@@ -30,10 +30,10 @@ it('shows legal footer links on the storefront', function (): void {
         ->assertSee(route('legal.delivery-payments'), false)
         ->assertSee(route('legal.contact'), false)
         ->assertSee(route('legal.cookie-policy'), false)
-        ->assertSee('Terms & conditions', false)
-        ->assertSee('Privacy policy')
-        ->assertSee('Returns & withdrawal', false)
-        ->assertSee('Complaints & warranty', false)
-        ->assertSee('Delivery & payments', false)
-        ->assertSee('Cookie policy');
+        ->assertSee('Regulamin', false)
+        ->assertSee('Polityka prywatności')
+        ->assertSee('Zwroty i odstąpienie od umowy', false)
+        ->assertSee('Reklamacje i gwarancja', false)
+        ->assertSee('Dostawa i płatności', false)
+        ->assertSee('Polityka plików cookie');
 });

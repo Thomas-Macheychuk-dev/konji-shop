@@ -4,15 +4,15 @@
     <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8">
             <a href="{{ $backUrl }}" class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900">
-                ← Back to order
+                ← Wróć do zamówienia
             </a>
 
             <h1 class="mt-3 text-3xl font-bold tracking-tight text-zinc-900">
-                Withdraw from contract
+                Odstąp od umowy
             </h1>
 
             <p class="mt-2 text-sm text-zinc-600">
-                Order {{ $order->number }}. Select the items and quantities you want to include in your withdrawal statement.
+                Zamówienie {{ $order->number }}. Wybierz pozycje i ilości, które chcesz objąć oświadczeniem o odstąpieniu od umowy.
             </p>
         </div>
 
@@ -29,13 +29,13 @@
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">
-                    Customer details
+                    Dane klienta
                 </h2>
 
                 <div class="mt-5 grid gap-5 sm:grid-cols-2">
                     <div>
                         <label for="customer_name" class="mb-2 block text-sm font-medium text-zinc-700">
-                            Customer name
+                            Imię i nazwisko klienta
                         </label>
 
                         <input
@@ -53,7 +53,7 @@
 
                     <div>
                         <label for="customer_email" class="mb-2 block text-sm font-medium text-zinc-700">
-                            Confirmation email
+                            E-mail z potwierdzeniem
                         </label>
 
                         <input
@@ -73,11 +73,11 @@
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-zinc-900">
-                    Items
+                    Pozycje
                 </h2>
 
                 <p class="mt-2 text-sm text-zinc-600">
-                    Enter the quantity you want to withdraw. Leave quantity as 0 for items you do not want to include.
+                    Wpisz ilość, którą chcesz objąć odstąpieniem. Pozostaw 0 przy pozycjach, których nie chcesz uwzględniać.
                 </p>
 
                 @error('items')
@@ -115,13 +115,13 @@
                                     @endif
 
                                     <p class="mt-2 text-sm text-zinc-500">
-                                        Ordered: {{ $item->quantity }} · Available for withdrawal: {{ $remainingQuantity }}
+                                        Zamówiono: {{ $item->quantity }} · Dostępne do odstąpienia: {{ $remainingQuantity }}
                                     </p>
                                 </div>
 
                                 <div class="w-full sm:w-36">
                                     <label for="items_{{ $item->id }}" class="mb-2 block text-sm font-medium text-zinc-700">
-                                        Quantity
+                                        Ilość
                                     </label>
 
                                     <input
@@ -153,8 +153,8 @@
                 <div class="mt-5 space-y-5">
                     <div>
                         <label for="reason" class="mb-2 block text-sm font-medium text-zinc-700">
-                            Reason
-                            <span class="text-zinc-400">(optional)</span>
+                            Powód
+                            <span class="text-zinc-400">(opcjonalnie)</span>
                         </label>
 
                         <textarea
@@ -171,8 +171,8 @@
 
                     <div>
                         <label for="customer_note" class="mb-2 block text-sm font-medium text-zinc-700">
-                            Message
-                            <span class="text-zinc-400">(optional)</span>
+                            Wiadomość
+                            <span class="text-zinc-400">(opcjonalnie)</span>
                         </label>
 
                         <textarea
@@ -189,8 +189,8 @@
 
                     <div>
                         <label for="refund_note" class="mb-2 block text-sm font-medium text-zinc-700">
-                            Refund note
-                            <span class="text-zinc-400">(optional)</span>
+                            Notatka do zwrotu
+                            <span class="text-zinc-400">(opcjonalnie)</span>
                         </label>
 
                         <textarea
@@ -216,7 +216,7 @@
                             >
 
                             <span>
-                                I confirm that I want to withdraw from the contract for the selected item(s).
+                                Potwierdzam, że chcę odstąpić od umowy w zakresie wybranych pozycji.
                             </span>
                         </label>
 
@@ -232,14 +232,14 @@
                     href="{{ $backUrl }}"
                     class="inline-flex items-center justify-center rounded-xl border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
                 >
-                    Cancel
+                    Anuluj
                 </a>
 
                 <button
                     type="submit"
                     class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                 >
-                    Confirm withdrawal
+                    Potwierdź odstąpienie
                 </button>
             </div>
         </form>

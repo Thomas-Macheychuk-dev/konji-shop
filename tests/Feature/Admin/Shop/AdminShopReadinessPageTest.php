@@ -39,16 +39,16 @@ it('shows the production readiness page to admins', function (): void {
         ->actingAs($admin)
         ->get(route('admin.shop.readiness'))
         ->assertOk()
-        ->assertSee('Production readiness')
-        ->assertSee('Ready for production')
-        ->assertSee('Configuration checks')
-        ->assertSee('Legal document versions')
-        ->assertSee('Seller identity and address')
-        ->assertSee('Default payment provider')
+        ->assertSee('Gotowość produkcyjna')
+        ->assertSee('Gotowe do produkcji')
+        ->assertSee('Kontrole konfiguracji')
+        ->assertSee('Wersje dokumentów prawnych')
+        ->assertSee('Tożsamość i adres sprzedawcy')
+        ->assertSee('Domyślny operator płatności')
         ->assertSee(route('admin.shop.readiness'), false)
-        ->assertSee('Readiness')
-        ->assertSee('Polkurier base URL')
-        ->assertSee('Console command')
+        ->assertSee('Gotowość')
+        ->assertSee('Bazowy URL Polkurier')
+        ->assertSee('Polecenie konsoli')
         ->assertSee('php artisan shop:check');
 });
 
@@ -67,11 +67,11 @@ it('shows missing production readiness items to admins', function (): void {
         ->actingAs($admin)
         ->get(route('admin.shop.readiness'))
         ->assertOk()
-        ->assertSee('Production readiness')
-        ->assertSee('Not ready for production')
-        ->assertSee('Legal document versions')
+        ->assertSee('Gotowość produkcyjna')
+        ->assertSee('Nie gotowe do produkcji')
+        ->assertSee('Wersje dokumentów prawnych')
         ->assertSee('APP_DEBUG')
-        ->assertSee('APP_DEBUG must be false in production.');
+        ->assertSee('APP_DEBUG musi mieć wartość false na produkcji.');
 });
 
 it('does not allow guests to view the production readiness page', function (): void {

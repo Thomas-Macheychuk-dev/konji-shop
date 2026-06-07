@@ -3,35 +3,35 @@
 @section('content')
     <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
-            <p class="text-sm font-medium text-zinc-500">Checkout information</p>
+            <p class="text-sm font-medium text-zinc-500">Informacje o kasie</p>
 
             <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
-                Delivery and Payments
+                Dostawa i płatności
             </h1>
 
             <p class="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-                Draft text. Review before production use.
+                Tekst roboczy. Sprawdź przed użyciem produkcyjnym.
             </p>
 
             <div class="prose prose-zinc mt-8 max-w-none">
-                <h2>Delivery methods</h2>
+                <h2>Metody dostawy</h2>
                 <p>
-                    Available delivery methods may include courier delivery, InPost parcel locker delivery, and local pickup where enabled.
+                    Dostępne metody dostawy mogą obejmować dostawę kurierską, dostawę do paczkomatu InPost oraz odbiór osobisty, jeśli jest włączony.
                 </p>
 
-                <h2>Delivery costs</h2>
+                <h2>Koszty dostawy</h2>
                 <p>
-                    Delivery costs are calculated and displayed during checkout before the order is placed.
+                    Koszty dostawy są obliczane i wyświetlane w kasie przed złożeniem zamówienia.
                 </p>
 
-                <h2>Payments</h2>
+                <h2>Płatności</h2>
                 <p>
-                    Available payment methods are shown during checkout. Orders are processed after payment confirmation unless otherwise stated.
+                    Dostępne metody płatności są wyświetlane w kasie. Zamówienia są realizowane po potwierdzeniu płatności, chyba że wskazano inaczej.
                 </p>
 
-                <h2>Order tracking</h2>
+                <h2>Śledzenie zamówienia</h2>
                 <p>
-                    Where shipment tracking is available, tracking details are displayed on the customer order page and may be sent by email.
+                    Jeśli śledzenie przesyłki jest dostępne, szczegóły śledzenia są wyświetlane na stronie zamówienia klienta i mogą zostać wysłane e-mailem.
                 </p>
             </div>
         </div>

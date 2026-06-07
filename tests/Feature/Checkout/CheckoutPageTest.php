@@ -43,23 +43,23 @@ it('shows VAT breakdown on the checkout page before placing an order', function 
         ->withCookie(CartGuestTokenResolver::COOKIE_NAME, $guestToken)
         ->get(route('checkout.show'))
         ->assertOk()
-        ->assertSee('Checkout')
-        ->assertSee('Order summary')
-        ->assertSee('Items gross')
+        ->assertSee('Kasa')
+        ->assertSee('Podsumowanie zamówienia')
+        ->assertSee('Produkty brutto')
         ->assertSee(number_format($itemsGross / 100, 2, ',', ' ').' PLN')
-        ->assertSee('Items net')
+        ->assertSee('Produkty netto')
         ->assertSee(number_format($itemsNet / 100, 2, ',', ' ').' PLN')
-        ->assertSee('Items VAT')
+        ->assertSee('VAT od produktów')
         ->assertSee(number_format($itemsTax / 100, 2, ',', ' ').' PLN')
-        ->assertSee('Total VAT')
-        ->assertSee('Total gross');
+        ->assertSee('VAT razem')
+        ->assertSee('Razem brutto');
 });
 
 it('redirects to the cart when the checkout cart is empty', function (): void {
     $this
         ->get(route('checkout.show'))
         ->assertRedirect(route('cart.show'))
-        ->assertSessionHas('error', 'Your cart is empty.');
+        ->assertSessionHas('error', 'Twój koszyk jest pusty.');
 });
 
 /**

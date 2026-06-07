@@ -17,7 +17,7 @@ enum DeliveryCarrier: string
             self::INPOST => 'InPost',
             self::UPS => 'UPS',
             self::DPD => 'DPD',
-            self::LOCAL_PICKUP => 'Local pickup',
+            self::LOCAL_PICKUP => __('Pickup from shop'),
         };
     }
 

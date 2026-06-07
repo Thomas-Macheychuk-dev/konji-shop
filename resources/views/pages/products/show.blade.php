@@ -61,7 +61,7 @@
                             >
                         @else
                             <div class="flex aspect-[4/5] items-center justify-center bg-zinc-100 text-sm text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
-                                No image available
+                                Brak dostępnego zdjęcia
                             </div>
                         @endif
                     </div>
@@ -88,7 +88,7 @@
                                 </p>
                             @else
                                 <p class="text-base text-zinc-500 dark:text-zinc-400">
-                                    Price unavailable
+                                    Cena niedostępna
                                 </p>
                             @endif
 
@@ -100,7 +100,7 @@
 
                             <noscript>
                                 <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
-                                    Enable JavaScript to choose variants and add this product to your cart.
+                                    Włącz JavaScript, aby wybrać warianty i dodać ten produkt do koszyka.
                                 </p>
                             </noscript>
                         </div>

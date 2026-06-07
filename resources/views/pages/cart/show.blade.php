@@ -3,9 +3,9 @@
 @section('content')
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8">
-            <h1 class="text-3xl font-bold tracking-tight text-zinc-900">Shopping Cart</h1>
+            <h1 class="text-3xl font-bold tracking-tight text-zinc-900">Koszyk</h1>
             <p class="mt-2 text-sm text-zinc-600">
-                Review your selected products before checkout.
+                Sprawdź wybrane produkty przed przejściem do kasy.
             </p>
         </div>
 
@@ -23,21 +23,21 @@
 
         @if (! $cart || $cart->items->isEmpty())
             <div class="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
-                <p class="text-zinc-700">Your cart is empty.</p>
+                <p class="text-zinc-700">Twój koszyk jest pusty.</p>
 
                 <div class="mt-4">
                     <a
                         href="{{ route('home') }}"
                         class="inline-flex items-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                     >
-                        Continue shopping
+                        Kontynuuj zakupy
                     </a>
                 </div>
             </div>
         @else
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px]">
                 <section class="space-y-4">
-                    @foreach ($cart->items as $item)
+                    @forza szt. ($cart->items as $item)
                         @php
                             $product = $item->product;
                             $variant = $item->variant;
@@ -78,12 +78,12 @@
                                             @if ($imageUrl)
                                                 <img
                                                     src="{{ $imageUrl }}"
-                                                    alt="{{ $item->meta['product_name'] ?? $product?->name ?? 'Product image' }}"
+                                                    alt="{{ $item->meta['product_name'] ?? $product?->name ?? 'Zdjęcie produktu' }}"
                                                     class="aspect-square w-full rounded-xl border border-zinc-200 object-cover transition hover:opacity-90"
                                                 >
                                             @else
                                                 <div class="flex aspect-square w-full items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500 transition hover:bg-zinc-200">
-                                                    No image
+                                                    Brak zdjęcia
                                                 </div>
                                             @endif
                                         </a>
@@ -91,12 +91,12 @@
                                         @if ($imageUrl)
                                             <img
                                                 src="{{ $imageUrl }}"
-                                                alt="{{ $item->meta['product_name'] ?? $product?->name ?? 'Product image' }}"
+                                                alt="{{ $item->meta['product_name'] ?? $product?->name ?? 'Zdjęcie produktu' }}"
                                                 class="aspect-square w-full rounded-xl border border-zinc-200 object-cover"
                                             >
                                         @else
                                             <div class="flex aspect-square w-full items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-xs text-zinc-500">
-                                                No image
+                                                Brak zdjęcia
                                             </div>
                                         @endif
                                     @endif
@@ -111,12 +111,12 @@
                                                         href="{{ $productUrl }}"
                                                         class="transition hover:text-zinc-700 hover:underline"
                                                     >
-                                                        {{ $item->meta['product_name'] ?? $product?->name ?? 'Product' }}
+                                                        {{ $item->meta['product_name'] ?? $product?->name ?? 'Produkt' }}
                                                     </a>
                                                 </h2>
                                             @else
                                                 <h2 class="text-lg font-semibold text-zinc-900">
-                                                    {{ $item->meta['product_name'] ?? $product?->name ?? 'Product' }}
+                                                    {{ $item->meta['product_name'] ?? $product?->name ?? 'Produkt' }}
                                                 </h2>
                                             @endif
 
@@ -128,15 +128,15 @@
 
                                             @if (! $variant)
                                                 <p class="mt-2 text-sm font-medium text-red-600">
-                                                    This variant is no longer available.
+                                                    Ten wariant nie jest już dostępny.
                                                 </p>
                                             @elseif ($currentUnitPrice === null)
                                                 <p class="mt-2 text-sm font-medium text-red-600">
-                                                    Current price is unavailable for this item.
+                                                    Aktualna cena tej pozycji jest niedostępna.
                                                 </p>
                                             @elseif ($priceChanged)
                                                 <p class="mt-2 text-sm font-medium text-amber-600">
-                                                    Price updated since this item was added to your cart.
+                                                    Cena zmieniła się od momentu dodania produktu do koszyka.
                                                 </p>
                                             @endif
                                         </div>
@@ -145,14 +145,14 @@
                                             @if ($currentUnitPrice !== null)
                                                 <p class="text-sm text-zinc-500">
                                                     {{ number_format($currentUnitPrice / 100, 2, ',', ' ') }} {{ $variant?->currency?->value ?? $item->currency }}
-                                                    each
+                                                    za szt.
                                                 </p>
                                                 <p class="mt-1 text-lg font-semibold text-zinc-900">
                                                     {{ number_format(($currentLineTotal ?? 0) / 100, 2, ',', ' ') }} {{ $variant?->currency?->value ?? $item->currency }}
                                                 </p>
                                             @else
                                                 <p class="text-sm font-medium text-red-600">
-                                                    Price unavailable
+                                                    Cena niedostępna
                                                 </p>
                                             @endif
                                         </div>
@@ -172,7 +172,7 @@
                                                 for="quantity-{{ $item->id }}"
                                                 class="text-sm text-zinc-600"
                                             >
-                                                Quantity
+                                                Ilość
                                             </label>
 
                                             <div class="flex items-center rounded-xl border border-zinc-300 bg-white shadow-sm">
@@ -219,7 +219,7 @@
                                                 type="submit"
                                                 class="inline-flex h-11 items-center justify-center rounded-xl border border-zinc-300 px-4 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
                                             >
-                                                Update
+                                                Aktualizuj
                                             </button>
                                         </form>
 
@@ -234,35 +234,35 @@
                                                 type="submit"
                                                 class="inline-flex h-11 items-center justify-center rounded-xl border border-red-200 px-4 text-sm font-medium text-red-700 transition hover:bg-red-50"
                                             >
-                                                Remove
+                                                Usuń
                                             </button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </article>
-                    @endforeach
+                    @endforza szt.
                 </section>
 
                 <aside>
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                        <h2 class="text-lg font-semibold text-zinc-900">Order Summary</h2>
+                        <h2 class="text-lg font-semibold text-zinc-900">Podsumowanie zamówienia</h2>
 
                         <dl class="mt-5 space-y-3 text-sm text-zinc-700">
                             <div class="flex items-center justify-between">
-                                <dt>Items</dt>
+                                <dt>Pozycje</dt>
                                 <dd>{{ $cart->items->sum('quantity') }}</dd>
                             </div>
 
                             <div class="flex items-center justify-between">
-                                <dt>Subtotal</dt>
+                                <dt>Suma częściowa</dt>
                                 <dd class="font-medium text-zinc-900">
                                     {{ number_format($subtotal / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                 </dd>
                             </div>
 
                             <div class="flex items-center justify-between">
-                                <dt>Shipping</dt>
+                                <dt>Dostawa</dt>
                                 <dd class="font-medium text-zinc-900">
                                     {{ number_format(($shipping ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                 </dd>
@@ -279,7 +279,7 @@
 
                             <div class="border-t border-zinc-200 pt-3">
                                 <div class="flex items-center justify-between">
-                                    <dt class="text-base font-semibold text-zinc-900">Total</dt>
+                                    <dt class="text-base font-semibold text-zinc-900">Razem</dt>
                                     <dd class="text-base font-semibold text-zinc-900">
                                         {{ number_format(($total ?? $subtotal) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>
@@ -288,7 +288,7 @@
                         </dl>
 
                         <p class="mt-4 text-xs text-zinc-500">
-                            Prices in cart reflect current product variant prices.
+                            Ceny w koszyku odzwierciedlają aktualne ceny wariantów produktów.
                         </p>
 
                         <div class="mt-6 space-y-3">
@@ -296,14 +296,14 @@
                                 href="{{ route('checkout.show') }}"
                                 class="inline-flex w-full items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                             >
-                                Proceed to checkout
+                                Przejdź do kasy
                             </a>
 
                             <a
                                 href="{{ route('home') }}"
                                 class="inline-flex w-full items-center justify-center rounded-xl border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
                             >
-                                Continue shopping
+                                Kontynuuj zakupy
                             </a>
                         </div>
                     </div>

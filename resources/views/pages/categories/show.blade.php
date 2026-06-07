@@ -4,7 +4,7 @@
     <div class="space-y-8">
         <section class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:p-8">
             <p class="text-sm font-medium uppercase tracking-wide text-zinc-500">
-                Category
+                Kategoria
             </p>
 
             <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
@@ -19,12 +19,12 @@
 
             @if ($category->children->isNotEmpty())
                 <div class="mt-6 flex flex-wrap gap-2">
-                    @foreach ($category->children as $childCategory)
+                    @foreach ($category->children as $childKategoria)
                         <a
-                            href="{{ route('categories.show', $childCategory->slug) }}"
+                            href="{{ route('categories.show', $childKategoria->slug) }}"
                             class="inline-flex rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
                         >
-                            {{ $childCategory->name }}
+                            {{ $childKategoria->name }}
                         </a>
                     @endforeach
                 </div>
@@ -62,7 +62,7 @@
                                     >
                                 @else
                                     <div class="flex h-full items-center justify-center px-6 text-center text-sm text-zinc-400">
-                                        No image available
+                                        Brak dostępnego zdjęcia
                                     </div>
                                 @endif
                             </div>
@@ -85,7 +85,7 @@
                                         </p>
                                     @else
                                         <p class="text-sm text-zinc-500 dark:text-zinc-400">
-                                            Price unavailable
+                                            Cena niedostępna
                                         </p>
                                     @endif
                                 </div>
@@ -100,7 +100,7 @@
             </section>
         @else
             <section class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                No active products are available in this category yet.
+                W tej kategorii nie ma jeszcze aktywnych produktów.
             </section>
         @endif
     </div>

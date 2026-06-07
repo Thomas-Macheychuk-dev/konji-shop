@@ -23,7 +23,7 @@ class ShipmentTrackingMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your shipment tracking is ready - '.$this->shipment->order->number,
+            subject: 'Śledzenie przesyłki jest gotowe - '.$this->shipment->order->number,
         );
     }
 

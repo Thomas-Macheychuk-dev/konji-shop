@@ -2,11 +2,11 @@
     <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
         <div class="border-b border-zinc-200 px-6 py-4">
             <h2 class="text-lg font-semibold text-zinc-900">
-                Contract withdrawal requests
+                Zgłoszenia odstąpienia od umowy
             </h2>
 
             <p class="mt-1 text-sm text-zinc-600">
-                Your submitted withdrawal statement(s) for this order.
+                Zgłoszenia odstąpienia przesłane dla tego zamówienia.
             </p>
         </div>
 
@@ -20,32 +20,32 @@
                             </p>
 
                             <p class="mt-1 text-sm text-zinc-600">
-                                Submitted at {{ $withdrawalRequest->submitted_at?->format('Y-m-d H:i') ?? '—' }}
+                                Zgłoszono {{ $withdrawalRequest->submitted_at?->format('Y-m-d H:i') ?? '—' }}
                             </p>
 
                             @if ($withdrawalRequest->acknowledged_at)
                                 <p class="mt-1 text-sm text-zinc-600">
-                                    Acknowledged at {{ $withdrawalRequest->acknowledged_at->format('Y-m-d H:i') }}
+                                    Potwierdzono {{ $withdrawalRequest->acknowledged_at->format('Y-m-d H:i') }}
                                 </p>
                             @endif
 
                             @if ($withdrawalRequest->refunded_at)
                                 <p class="mt-1 text-sm text-zinc-600">
-                                    Refunded at {{ $withdrawalRequest->refunded_at->format('Y-m-d H:i') }}
+                                    Zwrócono środki {{ $withdrawalRequest->refunded_at->format('Y-m-d H:i') }}
                                 </p>
                             @endif
                         </div>
 
                         <div class="sm:text-right">
                             <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $withdrawalRequest->status->badgeColorClasses() }}">
-                                {{ \Illuminate\Support\Str::headline($withdrawalRequest->status->value) }}
+                                {{ $withdrawalRequest->status->label() }}
                             </span>
                         </div>
                     </div>
 
                     <div class="mt-4 rounded-xl bg-zinc-50 p-4">
                         <p class="text-sm font-medium text-zinc-900">
-                            Selected item(s)
+                            Wybrane pozycje
                         </p>
 
                         <div class="mt-3 space-y-3">
@@ -70,11 +70,11 @@
                                     </div>
 
                                     <div class="text-zinc-700 sm:text-right">
-                                        Qty {{ $item->quantity_requested }} / {{ $item->quantity_ordered }}
+                                        Ilość {{ $item->quantity_requested }} / {{ $item->quantity_ordered }}
 
                                         @if ($loop->last)
                                             <div class="mt-2 font-medium text-zinc-900">
-                                                Refund amount: {{ $withdrawalRequest->refundAmountDecimal() }} {{ $order->currency }}
+                                                Kwota zwrotu: {{ $withdrawalRequest->refundAmountDecimal() }} {{ $order->currency }}
                                             </div>
                                         @endif
                                     </div>

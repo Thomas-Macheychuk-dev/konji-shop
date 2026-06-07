@@ -41,7 +41,7 @@ final class PolkurierShippingQuoteService
                 carrier: DeliveryCarrier::LOCAL_PICKUP->value,
                 service: 'local_pickup',
                 providerServiceCode: null,
-                providerServiceName: 'Local pickup',
+                providerServiceName: __('Pickup from shop'),
                 payload: [
                     'source' => 'local_pickup',
                 ],
@@ -253,7 +253,7 @@ final class PolkurierShippingQuoteService
             }
         }
 
-        throw new RuntimeException('Polkurier did not return an available valuation.');
+        throw new RuntimeException('Polkurier nie zwrócił dostępnej wyceny.');
     }
 
     private function courierCode(DeliveryCarrier $carrier, string $service): string

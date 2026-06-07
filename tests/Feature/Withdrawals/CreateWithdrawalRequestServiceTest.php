@@ -28,7 +28,7 @@ it('creates a withdrawal request with selected order item snapshots', function (
         ],
         'reason' => null,
         'customer_note' => 'I want to withdraw from part of the order.',
-        'refund_note' => 'Refund to original payment method.',
+        'refund_note' => 'Zwrot na pierwotną metodę płatności.',
         'statement_confirmed' => true,
         'submission_ip' => '203.0.113.30',
         'submission_user_agent' => 'KonjiWithdrawalTestBrowser/1.0',
@@ -42,7 +42,7 @@ it('creates a withdrawal request with selected order item snapshots', function (
         ->customer_email->toBe('jan@example.test')
         ->order_number_snapshot->toBe($order->number)
         ->customer_note->toBe('I want to withdraw from part of the order.')
-        ->refund_note->toBe('Refund to original payment method.')
+        ->refund_note->toBe('Zwrot na pierwotną metodę płatności.')
         ->submission_ip->toBe('203.0.113.30');
 
     expect($withdrawalRequest->items)->toHaveCount(1);
@@ -61,7 +61,7 @@ it('creates a withdrawal request with selected order item snapshots', function (
     $this->assertDatabaseHas('order_events', [
         'order_id' => $order->id,
         'type' => 'withdrawal_request_submitted',
-        'description' => 'Customer submitted a contract withdrawal request.',
+        'description' => 'Klient złożył oświadczenie o odstąpieniu od umowy.',
     ]);
 });
 

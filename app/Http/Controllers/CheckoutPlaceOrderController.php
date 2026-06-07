@@ -28,7 +28,7 @@ class CheckoutPlaceOrderController extends Controller
         $cart = $cartService->findActiveCart($request->user(), $guestToken);
 
         if (! $cart || $cart->items()->count() === 0) {
-            return redirect()->route('cart.show')->with('error', 'Your cart is empty.');
+            return redirect()->route('cart.show')->with('error', 'Twój koszyk jest pusty.');
         }
 
         try {

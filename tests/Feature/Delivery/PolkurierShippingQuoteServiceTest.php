@@ -139,7 +139,7 @@ it('returns fallback shipping amount when live Polkurier valuation returns no av
         ->and($quote->providerServiceCode)->toBe('INPOST_PACZKOMAT')
         ->and($quote->payload['source'])->toBe('fallback')
         ->and($quote->payload['reason'])->toBe('live_valuation_failed')
-        ->and($quote->payload['error']['message'])->toBe('Polkurier did not return an available valuation.');
+        ->and($quote->payload['error']['message'])->toBe('Polkurier nie zwrócił dostępnej wyceny.');
 
     Http::assertSent(fn ($request): bool => $request['apimethod'] === 'order_valuation_v2'
         && $request['data']['returnvaluations'] === 'INPOST_PACZKOMAT'

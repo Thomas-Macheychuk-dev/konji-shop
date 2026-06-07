@@ -202,7 +202,7 @@
                                     href="{{ route('account.orders.show', $order) }}"
                                     class="inline-flex w-full items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                                 >
-                                    View order details
+                                    Zobacz szczegóły zamówienia
                                 </a>
                             @endauth
 

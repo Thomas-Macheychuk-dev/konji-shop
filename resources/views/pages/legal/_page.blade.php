@@ -5,7 +5,7 @@
         <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
             <div class="border-b border-zinc-200 pb-6">
                 <p class="text-sm font-medium text-zinc-500">
-                    {{ $eyebrow ?? 'Legal information' }}
+                    {{ $eyebrow ?? 'Informacje prawne' }}
                 </p>
 
                 <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
@@ -19,7 +19,7 @@
                 @endif
 
                 <p class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-                    This page contains operational draft text for the shop. Review it with a qualified legal/accounting adviser before production use.
+                    Ta strona zawiera roboczy tekst operacyjny sklepu. Przed użyciem produkcyjnym skonsultuj go z wykwalifikowanym doradcą prawnym lub księgowym.
                 </p>
             </div>
 

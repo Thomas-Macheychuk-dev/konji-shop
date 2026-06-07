@@ -23,7 +23,7 @@ final class WithdrawalAcknowledgementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contract withdrawal received - '.$this->withdrawalRequest->number,
+            subject: 'Otrzymaliśmy oświadczenie o odstąpieniu - '.$this->withdrawalRequest->number,
         );
     }
 

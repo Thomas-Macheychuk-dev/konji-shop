@@ -1,4 +1,4 @@
-<x-layouts::auth :title="__('Register')">
+<x-layouts::auth :title="__('Rejestracja')">
     <div class="flex flex-col gap-6" x-data="{ wantsCompanyInvoice: @js(old('wants_company_invoice', false)) }">
         <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
 
@@ -32,7 +32,7 @@
 
             <flux:input
                 name="email"
-                :label="__('Email address')"
+                :label="__('Adres e-mail')"
                 :value="old('email')"
                 type="email"
                 required
@@ -67,7 +67,7 @@
                     :value="old('apartment_number')"
                     type="text"
                     autocomplete="address-line2"
-                    :placeholder="__('Apartment number (optional)')"
+                    :placeholder="__('Apartment number (opcjonalnie)')"
                 />
             </div>
 
@@ -200,7 +200,7 @@
                         :label="__('Company apartment number')"
                         :value="old('company_apartment_number')"
                         type="text"
-                        :placeholder="__('Company apartment number (optional)')"
+                        :placeholder="__('Company apartment number (opcjonalnie)')"
                     />
                 </div>
 

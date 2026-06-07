@@ -5,15 +5,15 @@
         <div class="mb-8 flex items-start justify-between gap-4">
             <div>
                 <a href="{{ route('admin.orders.index') }}" class="text-sm font-medium text-zinc-500 hover:text-zinc-700">
-                    ← Back to orders
+                    ← Wróć do zamówień
                 </a>
 
                 <h1 class="mt-3 text-3xl font-bold tracking-tight text-zinc-900">
-                    Order {{ $order->number }}
+                    Zamówienie {{ $order->number }}
                 </h1>
 
                 <p class="mt-2 text-sm text-zinc-600">
-                    Placed at {{ $order->placed_at?->format('Y-m-d H:i') ?? 'not placed' }}
+                    Złożono {{ $order->placed_at?->format('Y-m-d H:i') ?? '—' }}
                 </p>
             </div>
 
@@ -21,7 +21,7 @@
                 <p class="font-semibold text-zinc-900">
                     {{ $order->totalDecimal() }} {{ $order->currency }}
                 </p>
-                <p class="mt-1 text-zinc-500">Total gross</p>
+                <p class="mt-1 text-zinc-500">Razem brutto</p>
             </div>
         </div>
 
@@ -75,39 +75,39 @@
 
                 <dl class="mt-4 space-y-3 text-sm">
                     <div>
-                        <dt class="text-zinc-500">Order</dt>
+                        <dt class="text-zinc-500">Zamówienie</dt>
                         <dd class="font-medium text-zinc-900">{{ $order->status->label() }}</dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Payment</dt>
+                        <dt class="text-zinc-500">Płatność</dt>
                         <dd class="font-medium text-zinc-900">{{ $order->payment_status->label() }}</dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Fulfilment</dt>
+                        <dt class="text-zinc-500">Realizacja</dt>
                         <dd class="font-medium text-zinc-900">{{ $order->fulfilment_status->label() }}</dd>
                     </div>
                 </dl>
             </div>
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm lg:col-span-2">
-                <h2 class="text-lg font-semibold text-zinc-900">Fulfilment actions</h2>
+                <h2 class="text-lg font-semibold text-zinc-900">Akcje realizacji</h2>
 
                 <div class="mt-4 flex flex-wrap gap-3">
                     @if ($refundableWithdrawalRequests->isNotEmpty())
                         <div class="w-full rounded-2xl border border-purple-200 bg-purple-50 p-4 text-sm text-purple-900">
                             <p class="font-semibold">
-                                Withdrawal refund requested
+                                Zgłoszono zwrot środków z odstąpienia
                             </p>
 
                             <p class="mt-1">
-                                Refundable withdrawal request(s):
+                                Zgłoszenia odstąpienia kwalifikujące się do zwrotu:
                                 {{ $refundableWithdrawalRequests->pluck('number')->join(', ') }}.
                             </p>
 
                             <p class="mt-1">
-                                Estimated refund amount from selected withdrawal item(s):
+                                Szacowana kwota zwrotu za wybrane pozycje odstąpienia:
                                 <strong>{{ number_format($withdrawalRefundAmount / 100, 2, '.', '') }} {{ $order->currency }}</strong>.
                             </p>
                         </div>
@@ -116,18 +116,18 @@
                             <form
                                 method="POST"
                                 action="{{ route('admin.orders.fulfilment.update', [$order, 'refund']) }}"
-                                onsubmit="return confirm('Mark this withdrawal as refunded and email the customer?')"
+                                onsubmit="return confirm('Oznaczyć odstąpienie jako zwrócone i wysłać e-mail do klienta?')"
                             >
                                 @csrf
                                 @method('PATCH')
 
                                 <button class="rounded-xl bg-purple-700 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-600">
-                                    Refund
+                                    Zwrot środków
                                 </button>
                             </form>
                         @else
                             <p class="w-full text-sm text-zinc-500">
-                                Refund is available only while the order payment status is paid or partially refunded.
+                                Zwrot środków jest dostępny tylko wtedy, gdy płatność zamówienia jest opłacona lub częściowo zwrócona.
                             </p>
                         @endif
                     @endif
@@ -141,7 +141,7 @@
                             @method('PATCH')
 
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                                Start processing
+                                Rozpocznij realizację
                             </button>
                         </form>
                     @endif
@@ -153,7 +153,7 @@
                         @if ($latestFailedShipment && ! $activeShipment)
                             <div class="mb-4 w-full rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
                                 <p class="font-semibold">
-                                    Latest shipment creation failed.
+                                    Ostatnie utworzenie przesyłki nie powiodło się.
                                 </p>
 
                                 @if ($latestFailedShipmentMessage)
@@ -163,7 +163,7 @@
                                 @endif
 
                                 <p class="mt-2 text-xs text-red-700">
-                                    You can retry shipment creation after correcting the problem.
+                                    Możesz ponowić utworzenie przesyłki po usunięciu problemu.
                                 </p>
                             </div>
                         @endif
@@ -171,21 +171,21 @@
                         @if ($order->delivery_service !== 'local_pickup' && $activeShipment)
                             <div class="w-full rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
                                 <p class="font-semibold">
-                                    Shipment already created.
+                                    Przesyłka została już utworzona.
                                 </p>
 
                                 <p class="mt-1">
-                                    Download the label, hand the parcel to the carrier, then mark the order as shipped.
+                                    Pobierz etykietę, przekaż paczkę przewoźnikowi, a następnie oznacz zamówienie jako wysłane.
                                 </p>
 
                                 <dl class="mt-3 grid gap-2 text-xs sm:grid-cols-2">
                                     <div>
-                                        <dt class="font-medium text-blue-900">Carrier</dt>
+                                        <dt class="font-medium text-blue-900">Przewoźnik</dt>
                                         <dd>{{ $activeShipment->carrier()?->label() ?? '—' }}</dd>
                                     </div>
 
                                     <div>
-                                        <dt class="font-medium text-blue-900">Reference</dt>
+                                        <dt class="font-medium text-blue-900">Referencja</dt>
                                         <dd>{{ $activeShipment->provider_reference ?: '—' }}</dd>
                                     </div>
 
@@ -195,7 +195,7 @@
                                     </div>
 
                                     <div>
-                                        <dt class="font-medium text-blue-900">Tracking</dt>
+                                        <dt class="font-medium text-blue-900">Śledzenie</dt>
                                         <dd>
                                             @if ($activeShipment->tracking_url)
                                                 <a
@@ -204,7 +204,7 @@
                                                     rel="noopener noreferrer"
                                                     class="font-medium underline decoration-blue-300 underline-offset-4 hover:text-blue-900"
                                                 >
-                                                    {{ $activeShipment->tracking_number ?: 'Track shipment' }}
+                                                    {{ $activeShipment->tracking_number ?: 'Śledź przesyłkę' }}
                                                 </a>
                                             @else
                                                 {{ $activeShipment->tracking_number ?: '—' }}
@@ -219,7 +219,7 @@
                                 @method('PATCH')
 
                                 <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                                    Mark as shipped
+                                    Oznacz jako wysłane
                                 </button>
                             </form>
                         @else
@@ -240,7 +240,7 @@
 
                                 <div class="mb-4 w-full rounded-2xl border p-4 text-sm {{ $carrierAvailabilityClasses }}">
                                     <p class="font-semibold">
-                                        Polkurier carrier availability
+                                        Dostępność przewoźników Polkurier
                                     </p>
 
                                     <p class="mt-1">
@@ -249,7 +249,7 @@
 
                                     @if ($polkurierCarrierAvailabilityCheck['blocking'])
                                         <p class="mt-2 text-xs">
-                                            Shipment creation is blocked until this is resolved.
+                                            Utworzenie przesyłki jest zablokowane do czasu rozwiązania problemu.
                                         </p>
                                     @endif
                                 </div>
@@ -278,11 +278,11 @@
                                 )
                                     <div class="mb-4 rounded-2xl border border-amber-200 bg-amber-50 p-4">
                                         <h3 class="text-sm font-semibold text-amber-900">
-                                            Polkurier additional fields
+                                            Dodatkowe pola Polkurier
                                         </h3>
 
                                         <p class="mt-1 text-xs text-amber-800">
-                                            This carrier requires extra information before the shipment can be created.
+                                            Przewoźnik Polkurier DPD wymaga dodatkowych pól. Uzupełnij je przed utworzeniem przesyłki.
                                         </p>
 
                                         <div class="mt-4 grid gap-4 sm:grid-cols-2">
@@ -291,7 +291,7 @@
                                                     $fieldName = (string) ($field['name'] ?? '');
                                                     $fieldLabel = (string) ($field['label'] ?? $fieldName);
                                                     $fieldDescription = (string) ($field['description'] ?? '');
-                                                    $fieldType = (string) ($field['type'] ?? 'TEXT');
+                                                    $fieldTyp = (string) ($field['type'] ?? 'TEXT');
                                                     $fieldRequired = (bool) ($field['required'] ?? false);
                                                     $fieldOptions = is_array($field['options'] ?? null) ? $field['options'] : [];
                                                     $inputId = 'polkurier_additional_field_'.$fieldName;
@@ -316,7 +316,7 @@
                                                         </p>
                                                     @endif
 
-                                                    @if ($fieldType === 'SELECT' && $fieldOptions !== [])
+                                                    @if ($fieldTyp === 'SELECT' && $fieldOptions !== [])
                                                         <select
                                                             id="{{ $inputId }}"
                                                             name="{{ $inputName }}"
@@ -324,7 +324,7 @@
                                                             class="mt-2 block w-full rounded-xl border border-amber-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-amber-700 focus:ring-4 focus:ring-amber-100"
                                                         >
                                                             <option value="">
-                                                                Select option
+                                                                Wybierz opcję
                                                             </option>
 
                                                             @foreach ($fieldOptions as $option)
@@ -365,11 +365,11 @@
                                     @disabled(($polkurierCarrierAvailabilityCheck['blocking'] ?? false) === true)
                                 >
                                     @if ($order->delivery_service === 'local_pickup')
-                                        Mark as ready for pickup
+                                        Oznacz jako gotowe do odbioru
                                     @elseif ($latestFailedShipment)
-                                        Retry create shipment
+                                        Ponów utworzenie przesyłki
                                     @else
-                                        Create shipment
+                                        Utwórz przesyłkę
                                     @endif
                                 </button>
                             </form>
@@ -386,7 +386,7 @@
                             @method('PATCH')
 
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                                Mark as picked up & complete
+                                Oznacz jako odebrane i zakończ
                             </button>
                         </form>
                     @endif
@@ -401,7 +401,7 @@
                             @method('PATCH')
 
                             <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                                Mark as delivered
+                                Oznacz jako dostarczone
                             </button>
                         </form>
 
@@ -410,7 +410,7 @@
                             @method('PATCH')
 
                             <button class="rounded-xl bg-orange-700 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
-                                Mark as returned to sender
+                                Oznacz jako zwrócone do nadawcy
                             </button>
                         </form>
                     @endif
@@ -424,7 +424,7 @@
                             @method('PATCH')
 
                             <button class="rounded-xl bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600">
-                                Complete order
+                                Zakończ zamówienie
                             </button>
                         </form>
                     @endif
@@ -441,7 +441,7 @@
                             @method('PATCH')
 
                             <label for="cancel_note" class="block text-sm font-medium text-zinc-700">
-                                Cancel order
+                                Anuluj zamówienie
                             </label>
 
                             <textarea
@@ -450,16 +450,16 @@
                                 rows="3"
                                 required
                                 class="w-full rounded-xl border border-zinc-300 px-3 py-2 text-sm"
-                                placeholder="Reason for cancellation..."
+                                placeholder="Powód anulowania..."
                             ></textarea>
 
                             <button class="rounded-xl bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600">
-                                Cancel order
+                                Anuluj zamówienie
                             </button>
                         </form>
                     @else
                         <p class="mt-6 border-t border-zinc-200 pt-6 text-sm text-zinc-500">
-                            This order can no longer be cancelled.
+                            Tego zamówienia nie można już anulować.
                         </p>
                     @endif
                 @endif
@@ -468,45 +468,45 @@
 
         <div class="mt-6 grid gap-6 lg:grid-cols-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                <h2 class="text-lg font-semibold text-zinc-900">Customer</h2>
+                <h2 class="text-lg font-semibold text-zinc-900">Klient</h2>
 
                 <dl class="mt-4 space-y-3 text-sm">
                     <div>
-                        <dt class="text-zinc-500">Email</dt>
+                        <dt class="text-zinc-500">E-mail</dt>
                         <dd class="font-medium text-zinc-900">
-                            {{ $order->user?->email ?? $order->guest_email ?? 'Unknown' }}
+                            {{ $order->user?->email ?? $order->guest_email ?? 'Nieznany' }}
                         </dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Type</dt>
+                        <dt class="text-zinc-500">Typ</dt>
                         <dd class="font-medium text-zinc-900">
-                            {{ $order->isGuestOrder() ? 'Guest' : 'Registered user' }}
+                            {{ $order->isGuestOrder() ? 'Gość' : 'Zarejestrowany użytkownik' }}
                         </dd>
                     </div>
                 </dl>
             </div>
 
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                <h2 class="text-lg font-semibold text-zinc-900">Delivery choice</h2>
+                <h2 class="text-lg font-semibold text-zinc-900">Wybrana dostawa</h2>
 
                 <dl class="mt-4 space-y-3 text-sm">
                     <div>
-                        <dt class="text-zinc-500">Carrier</dt>
+                        <dt class="text-zinc-500">Przewoźnik</dt>
                         <dd class="font-medium text-zinc-900">
                             {{ $order->delivery_carrier?->label() ?? '—' }}
                         </dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Service</dt>
+                        <dt class="text-zinc-500">Usługa</dt>
                         <dd class="font-medium text-zinc-900">
                             {{ \App\Enums\DeliveryService::tryFrom((string) $order->delivery_service)?->label() ?? '—' }}
                         </dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Locker code</dt>
+                        <dt class="text-zinc-500">Kod paczkomatu</dt>
                         <dd class="font-medium text-zinc-900">
                             {{ $order->delivery_locker_code ?: '—' }}
                         </dd>
@@ -516,40 +516,40 @@
         </div>
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-            <h2 class="text-lg font-semibold text-zinc-900">Legal acceptance</h2>
+            <h2 class="text-lg font-semibold text-zinc-900">Akceptacje prawne</h2>
 
             @if ($order->terms_accepted_at)
                 <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2">
                     <div>
-                        <dt class="text-zinc-500">Terms accepted at</dt>
+                        <dt class="text-zinc-500">Regulamin zaakceptowany</dt>
                         <dd class="mt-1 font-medium text-zinc-900">
                             {{ $order->terms_accepted_at->format('Y-m-d H:i') }}
                         </dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Terms version</dt>
+                        <dt class="text-zinc-500">Wersja regulaminu</dt>
                         <dd class="mt-1 font-medium text-zinc-900">
                             {{ $order->terms_version ?: '—' }}
                         </dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Privacy policy version</dt>
+                        <dt class="text-zinc-500">Wersja polityki prywatności</dt>
                         <dd class="mt-1 font-medium text-zinc-900">
                             {{ $order->privacy_version ?: '—' }}
                         </dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Returns policy version</dt>
+                        <dt class="text-zinc-500">Wersja zasad zwrotów</dt>
                         <dd class="mt-1 font-medium text-zinc-900">
                             {{ $order->returns_policy_version ?: '—' }}
                         </dd>
                     </div>
 
                     <div>
-                        <dt class="text-zinc-500">Acceptance IP</dt>
+                        <dt class="text-zinc-500">IP akceptacji</dt>
                         <dd class="mt-1 font-medium text-zinc-900">
                             {{ $order->legal_acceptance_ip ?: '—' }}
                         </dd>
@@ -564,38 +564,38 @@
                 </dl>
             @else
                 <p class="mt-4 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-500">
-                    This order does not have stored legal acceptance metadata.
+                    To zamówienie nie ma zapisanych metadanych akceptacji prawnych.
                 </p>
             @endif
         </div>
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-            <h2 class="text-lg font-semibold text-zinc-900">Financial summary</h2>
+            <h2 class="text-lg font-semibold text-zinc-900">Podsumowanie finansowe</h2>
 
             <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
                 <div class="rounded-xl bg-zinc-50 p-4">
-                    <dt class="text-zinc-500">Items gross</dt>
+                    <dt class="text-zinc-500">Produkty brutto</dt>
                     <dd class="mt-1 font-semibold text-zinc-900">
                         {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
                     </dd>
                 </div>
 
                 <div class="rounded-xl bg-zinc-50 p-4">
-                    <dt class="text-zinc-500">Shipping gross</dt>
+                    <dt class="text-zinc-500">Dostawa brutto</dt>
                     <dd class="mt-1 font-semibold text-zinc-900">
                         {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
                     </dd>
                 </div>
 
                 <div class="rounded-xl bg-zinc-50 p-4">
-                    <dt class="text-zinc-500">Total VAT</dt>
+                    <dt class="text-zinc-500">VAT razem</dt>
                     <dd class="mt-1 font-semibold text-zinc-900">
                         {{ $order->taxDecimal() }} {{ $order->currency }}
                     </dd>
                 </div>
 
                 <div class="rounded-xl bg-zinc-900 p-4 text-white">
-                    <dt class="text-zinc-300">Total gross</dt>
+                    <dt class="text-zinc-300">Razem brutto</dt>
                     <dd class="mt-1 font-semibold">
                         {{ $order->totalDecimal() }} {{ $order->currency }}
                     </dd>
@@ -607,17 +607,17 @@
                     <table class="min-w-full divide-y divide-zinc-200">
                         <thead class="bg-zinc-50">
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Component</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Net</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Składnik</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Netto</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">VAT</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Gross</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Brutto</th>
                         </tr>
                         </thead>
 
                         <tbody class="divide-y divide-zinc-200 bg-white">
                         <tr>
                             <td class="px-4 py-4 text-sm font-medium text-zinc-900">
-                                Items
+                                Pozycje
                             </td>
                             <td class="px-4 py-4 text-right text-sm text-zinc-700">
                                 {{ $order->itemsNetDecimal() }} {{ $order->currency }}
@@ -632,7 +632,7 @@
 
                         <tr>
                             <td class="px-4 py-4 text-sm font-medium text-zinc-900">
-                                Shipping
+                                Dostawa
                             </td>
                             <td class="px-4 py-4 text-right text-sm text-zinc-700">
                                 {{ $order->shippingNetDecimal() }} {{ $order->currency }}
@@ -648,7 +648,7 @@
                         @if ($order->discount_amount > 0)
                             <tr>
                                 <td class="px-4 py-4 text-sm font-medium text-zinc-900">
-                                    Discount
+                                    Rabat
                                 </td>
                                 <td class="px-4 py-4 text-right text-sm text-zinc-700">
                                     —
@@ -664,7 +664,7 @@
 
                         <tr>
                             <td class="px-4 py-4 text-sm font-bold text-zinc-900">
-                                Total
+                                Razem
                             </td>
                             <td class="px-4 py-4 text-right text-sm text-zinc-700">
                                 —
@@ -681,27 +681,27 @@
                 </div>
             @else
                 <p class="mt-4 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-500">
-                    This order does not have a stored VAT breakdown.
+                    To zamówienie nie ma zapisanego rozbicia VAT.
                 </p>
             @endif
         </div>
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-            <h2 class="text-lg font-semibold text-zinc-900">Shipments</h2>
+            <h2 class="text-lg font-semibold text-zinc-900">Przesyłki</h2>
 
             <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
                 <table class="min-w-full divide-y divide-zinc-200">
                     <thead class="bg-zinc-50">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Carrier</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Reference</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Service</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Przewoźnik</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Referencja</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Usługa</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Tracking</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Locker</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Shipped</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Documents</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Actions</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Śledzenie</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Paczkomat</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Wysłano</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Dokumenty</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Akcje</th>
                     </tr>
                     </thead>
 
@@ -742,7 +742,7 @@
 
                                 @if ($shipment->provider_status_updated_at)
                                     <p class="mt-1 text-xs text-zinc-400">
-                                        Updated {{ $shipment->provider_status_updated_at->format('Y-m-d H:i') }}
+                                        Zaktualizowano {{ $shipment->provider_status_updated_at->format('Y-m-d H:i') }}
                                     </p>
                                 @endif
 
@@ -767,7 +767,7 @@
                                         rel="noopener noreferrer"
                                         class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
                                     >
-                                        {{ $shipment->tracking_number ?: 'Track shipment' }}
+                                        {{ $shipment->tracking_number ?: 'Śledź przesyłkę' }}
                                     </a>
                                 @else
                                     {{ $shipment->tracking_number ?: '—' }}
@@ -792,14 +792,14 @@
                                             href="{{ route('admin.shipments.label', $shipment) }}"
                                             class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
                                         >
-                                            Download label
+                                            Pobierz etykietę
                                         </a>
 
                                         <a
                                             href="{{ route('admin.shipments.protocol', $shipment) }}"
                                             class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
                                         >
-                                            Download protocol
+                                            Pobierz protokół
                                         </a>
                                     </div>
                                 @else
@@ -827,7 +827,7 @@
                                             @method('PATCH')
 
                                             <button class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700">
-                                                Refresh status
+                                                Odśwież status
                                             </button>
                                         </form>
 
@@ -835,13 +835,13 @@
                                             <form
                                                 method="POST"
                                                 action="{{ route('admin.shipments.cancel', $shipment) }}"
-                                                onsubmit="return confirm('Cancel this Polkurier shipment?')"
+                                                onsubmit="return confirm('Anulować tę przesyłkę Polkurier?')"
                                             >
                                                 @csrf
                                                 @method('PATCH')
 
                                                 <button class="font-medium text-red-700 underline decoration-red-300 underline-offset-4 hover:text-red-600">
-                                                    Cancel shipment
+                                                    Anuluj przesyłkę
                                                 </button>
                                             </form>
                                         @endif
@@ -854,7 +854,7 @@
                     @empty
                         <tr>
                             <td colspan="9" class="px-4 py-8 text-center text-sm text-zinc-500">
-                                No shipments found.
+                                Nie znaleziono przesyłek.
                             </td>
                         </tr>
                     @endforelse
@@ -865,10 +865,10 @@
 
         <div class="mt-6 grid gap-6 lg:grid-cols-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-                <h2 class="text-lg font-semibold text-zinc-900">Internal notes</h2>
+                <h2 class="text-lg font-semibold text-zinc-900">Notatki wewnętrzne</h2>
 
                 <div class="mt-4 whitespace-pre-line rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">
-                    {{ $order->notes ?: 'No notes.' }}
+                    {{ $order->notes ?: 'Brak notatek.' }}
                 </div>
 
                 <form
@@ -883,18 +883,18 @@
                         name="note"
                         rows="4"
                         class="w-full rounded-xl border border-zinc-300 px-3 py-2 text-sm"
-                        placeholder="Add an internal note..."
+                        placeholder="Dodaj notatkę wewnętrzną..."
                     ></textarea>
 
                     <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
-                        Add note
+                        Dodaj notatkę
                     </button>
                 </form>
             </div>
         </div>
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-            <h2 class="text-lg font-semibold text-zinc-900">Order timeline</h2>
+            <h2 class="text-lg font-semibold text-zinc-900">Oś czasu zamówienia</h2>
 
             <div class="mt-4 space-y-4">
                 @forelse ($order->events as $event)
@@ -911,7 +911,13 @@
                             <dl class="mt-2 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-600">
                                 @foreach ($event->meta as $key => $value)
                                     <div class="flex justify-between gap-4">
-                                        <dt class="font-medium">{{ str($key)->headline() }}</dt>
+                                        <dt class="font-medium">{{ [
+                                            'provider_status' => 'Status zewnętrzny',
+                                            'provider_status_code' => 'Kod statusu zewnętrznego',
+                                            'provider_status_label' => 'Status zewnętrzny',
+                                            'payment_status' => 'Status płatności',
+                                            'fulfilment_status' => 'Status realizacji',
+                                        ][$key] ?? str($key)->headline() }}</dt>
                                         <dd>{{ is_scalar($value) ? $value : json_encode($value) }}</dd>
                                     </div>
                                 @endforeach
@@ -919,25 +925,25 @@
                         @endif
                     </div>
                 @empty
-                    <p class="text-sm text-zinc-500">No timeline events yet.</p>
+                    <p class="text-sm text-zinc-500">Brak zdarzeń na osi czasu.</p>
                 @endforelse
             </div>
         </div>
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-            <h2 class="text-lg font-semibold text-zinc-900">Items</h2>
+            <h2 class="text-lg font-semibold text-zinc-900">Pozycje</h2>
 
             <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
                 <table class="min-w-full divide-y divide-zinc-200">
                     <thead class="bg-zinc-50">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Product</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Produkt</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">SKU</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Unit gross</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Qty</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Line net</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Cena brutto szt.</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Ilość</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Wartość netto</th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">VAT</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Line gross</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Wartość brutto</th>
                     </tr>
                     </thead>
 
@@ -973,7 +979,7 @@
                                                 >
                                             @else
                                                 <span class="px-2 text-center text-xs text-zinc-400">
-                                                    No image
+                                                    Brak zdjęcia
                                                 </span>
                                             @endif
                                         </a>
@@ -988,7 +994,7 @@
                                                 >
                                             @else
                                                 <span class="px-2 text-center text-xs text-zinc-400">
-                                                    No image
+                                                    Brak zdjęcia
                                                 </span>
                                             @endif
                                         </div>
@@ -1053,7 +1059,7 @@
                     @empty
                         <tr>
                             <td colspan="7" class="px-4 py-8 text-center text-sm text-zinc-500">
-                                No items found.
+                                Nie znaleziono pozycji.
                             </td>
                         </tr>
                     @endforelse
@@ -1066,7 +1072,7 @@
             @forelse ($order->addresses as $address)
                 <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                     <h2 class="text-lg font-semibold text-zinc-900">
-                        {{ ucfirst($address->type) }} address
+                        {{ ucfirst($address->type) === 'Shipping' ? 'Adres dostawy' : (ucfirst($address->type) === 'Billing' ? 'Adres rozliczeniowy' : ucfirst($address->type).' adres') }}
                     </h2>
 
                     <div class="mt-4 space-y-1 text-sm text-zinc-700">
@@ -1085,22 +1091,22 @@
                 </div>
             @empty
                 <div class="rounded-2xl border border-zinc-200 bg-white p-6 text-sm text-zinc-500 shadow-sm lg:col-span-2">
-                    No addresses found.
+                    Nie znaleziono adresów.
                 </div>
             @endforelse
         </div>
 
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-            <h2 class="text-lg font-semibold text-zinc-900">Payments</h2>
+            <h2 class="text-lg font-semibold text-zinc-900">Płatności</h2>
 
             <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
                 <table class="min-w-full divide-y divide-zinc-200">
                     <thead class="bg-zinc-50">
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Provider</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Reference</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Referencja</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">External status</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Status zewnętrzny</th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Amount</th>
                     </tr>
                     </thead>
@@ -1131,7 +1137,7 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-4 py-8 text-center text-sm text-zinc-500">
-                                No payments found.
+                                Nie znaleziono płatności.
                             </td>
                         </tr>
                     @endforelse

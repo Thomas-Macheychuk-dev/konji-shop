@@ -94,4 +94,23 @@ return [
         'cancelled' => 'Cancelled',
         'returned' => 'Returned to sender',
     ],
+    'withdrawal_status' => [
+        'submitted' => 'Submitted',
+        'acknowledged' => 'Acknowledged',
+        'under_review' => 'Under review',
+        'awaiting_goods' => 'Awaiting goods',
+        'goods_received' => 'Goods received',
+        'refund_pending' => 'Refund pending',
+        'refunded' => 'Refunded',
+        'rejected' => 'Rejected',
+        'cancelled' => 'Cancelled',
+    ],
+
+    'cart_status' => [
+        'active' => 'Active',
+        'converted' => 'Converted',
+        'abandoned' => 'Abandoned',
+        'expired' => 'Expired',
+    ],
+
 ];

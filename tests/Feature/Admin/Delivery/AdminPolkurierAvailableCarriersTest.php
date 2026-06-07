@@ -23,10 +23,10 @@ it('shows an empty available carriers cache on the diagnostics page', function (
         ->actingAs($admin)
         ->get(route('admin.polkurier.index'))
         ->assertOk()
-        ->assertSee('Available carriers')
-        ->assertSee('Cached Polkurier carrier data: 0 carrier(s).')
-        ->assertSee('No Polkurier carrier data cached yet.')
-        ->assertSee('Refresh carriers from Polkurier');
+        ->assertSee('Dostępni przewoźnicy')
+        ->assertSee('Dane przewoźników Polkurier w cache: 0 przewoźników.')
+        ->assertSee('Brak danych przewoźników Polkurier w cache.')
+        ->assertSee('Odśwież przewoźników z Polkurier');
 
     Http::assertNothingSent();
 });
@@ -98,13 +98,13 @@ it('refreshes and displays Polkurier available carriers', function (): void {
         ->actingAs($admin)
         ->get(route('admin.polkurier.index'))
         ->assertOk()
-        ->assertSee('Cached Polkurier carrier data: 2 carrier(s).')
-        ->assertSee('UPS courier')
+        ->assertSee('Dane przewoźników Polkurier w cache: 2 przewoźników.')
+        ->assertSee('Kurier UPS')
         ->assertSee('UPS - Standard')
-        ->assertSee('DPD courier')
+        ->assertSee('Kurier DPD')
         ->assertSee('DPD Classic')
-        ->assertSee('Available')
-        ->assertSee('Not returned')
+        ->assertSee('Dostępny')
+        ->assertSee('Nie zwrócono')
         ->assertSee('box')
         ->assertSee('ROD')
         ->assertSee('external_transport_security');

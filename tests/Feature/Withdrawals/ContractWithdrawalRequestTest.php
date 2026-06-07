@@ -24,10 +24,10 @@ it('shows the public withdrawal start page', function (): void {
     $this
         ->get(route('withdrawals.start'))
         ->assertOk()
-        ->assertSee('Withdraw from contract here')
-        ->assertSee('I have an account')
-        ->assertSee('I ordered as a guest')
-        ->assertSee('You do not need to provide a reason')
+        ->assertSee('Odstąp od umowy tutaj')
+        ->assertSee('Mam konto')
+        ->assertSee('Zamawiałem jako gość')
+        ->assertSee('Nie musisz podawać powodu odstąpienia od umowy')
         ->assertSee(route('guest.orders.track.show'), false);
 });
 
@@ -46,7 +46,7 @@ it('shows a withdrawal button on the account order detail page', function (): vo
         ->actingAs($user)
         ->get(route('account.orders.show', $order->id))
         ->assertOk()
-        ->assertSee('Withdraw from contract')
+        ->assertSee('Odstąp od umowy')
         ->assertSee(route('account.orders.withdrawals.create', $order->id), false);
 });
 
@@ -64,7 +64,7 @@ it('shows a withdrawal button on the guest order detail page', function (): void
         ])
         ->get(route('guest.orders.show', $order))
         ->assertOk()
-        ->assertSee('Withdraw from contract')
+        ->assertSee('Odstąp od umowy')
         ->assertSee(route('guest.orders.withdrawals.create', $order), false);
 });
 
@@ -83,12 +83,12 @@ it('shows the account withdrawal form to the order owner', function (): void {
         ->actingAs($user)
         ->get(route('account.orders.withdrawals.create', $order->id))
         ->assertOk()
-        ->assertSee('Withdraw from contract')
-        ->assertSee('Order '.$order->number)
+        ->assertSee('Odstąp od umowy')
+        ->assertSee('Zamówienie '.$order->number)
         ->assertSee($orderItem->product_name_snapshot)
-        ->assertSee('Confirm withdrawal')
-        ->assertSee('Reason')
-        ->assertSee('(optional)');
+        ->assertSee('Potwierdź odstąpienie')
+        ->assertSee('Powód')
+        ->assertSee('(opcjonalnie)');
 });
 
 it('allows an authenticated customer to submit a withdrawal request', function (): void {
@@ -172,10 +172,10 @@ it('shows the guest withdrawal form when the guest has order access', function (
         ])
         ->get(route('guest.orders.withdrawals.create', $order))
         ->assertOk()
-        ->assertSee('Withdraw from contract')
-        ->assertSee('Order '.$order->number)
+        ->assertSee('Odstąp od umowy')
+        ->assertSee('Zamówienie '.$order->number)
         ->assertSee($orderItem->product_name_snapshot)
-        ->assertSee('Confirm withdrawal');
+        ->assertSee('Potwierdź odstąpienie');
 });
 
 it('allows a guest customer with order access to submit a withdrawal request', function (): void {
@@ -315,8 +315,8 @@ function withdrawalFeatureTestOrderWithItem(?User $user, ?string $guestEmail): a
 
     $order->shippingAddress()->create([
         'type' => 'shipping',
-        'first_name' => $user ? 'Jan' : 'Guest',
-        'last_name' => $user ? 'Kowalski' : 'Customer',
+        'first_name' => $user ? 'Jan' : 'Gość',
+        'last_name' => $user ? 'Kowalski' : 'Klient',
         'company' => null,
         'phone' => '123456789',
         'email' => $user?->email ?? $guestEmail,
@@ -386,11 +386,11 @@ it('shows withdrawal history on the account order detail page', function (): voi
         ->actingAs($user)
         ->get(route('account.orders.show', $order->id))
         ->assertOk()
-        ->assertSee('Contract withdrawal requests')
+        ->assertSee('Zgłoszenia odstąpienia od umowy')
         ->assertSee($withdrawalRequest->number)
-        ->assertSee('Acknowledged')
+        ->assertSee('Potwierdzone')
         ->assertSee($orderItem->product_name_snapshot)
-        ->assertSee('Qty 1 / 2');
+        ->assertSee('Ilość 1 / 2');
 });
 
 it('shows withdrawal history on the guest order detail page', function (): void {
@@ -426,9 +426,9 @@ it('shows withdrawal history on the guest order detail page', function (): void 
         ->withSession($session)
         ->get(route('guest.orders.show', $order))
         ->assertOk()
-        ->assertSee('Contract withdrawal requests')
+        ->assertSee('Zgłoszenia odstąpienia od umowy')
         ->assertSee($withdrawalRequest->number)
-        ->assertSee('Acknowledged')
+        ->assertSee('Potwierdzone')
         ->assertSee($orderItem->product_name_snapshot)
-        ->assertSee('Qty 2 / 2');
+        ->assertSee('Ilość 2 / 2');
 });
