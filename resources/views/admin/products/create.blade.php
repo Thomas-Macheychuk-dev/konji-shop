@@ -42,7 +42,7 @@
             ];
 
             $variantRows = old('variants', $defaultVariantRows);
-            $variantRowCount = max(5, count($variantRows));
+            $variantRowCount = max(1, count($variantRows));
             $defaultVariantIndex = (string) old('default_variant_index', '0');
         @endphp
 
@@ -268,16 +268,24 @@
                         <h2 class="text-lg font-semibold text-zinc-900">Warianty produktu</h2>
 
                         <p class="mt-2 text-sm text-zinc-500">
-                            Pierwszy uzupełniony wariant jest wymagany. Kolejne wiersze są opcjonalne, ale po wpisaniu SKU wszystkie pola danego wariantu muszą być kompletne.
+                            Pierwszy wariant jest wymagany. Dodaj kolejne warianty tylko wtedy, gdy produkt ich potrzebuje.
                         </p>
                     </div>
+
+                    <button
+                        type="button"
+                        data-add-product-variant
+                        class="inline-flex items-center justify-center rounded-xl border border-zinc-300 px-4 py-2 text-sm font-semibold text-zinc-700 hover:bg-zinc-50"
+                    >
+                        Dodaj kolejny wariant
+                    </button>
                 </div>
 
                 @error('variants')
                 <p class="mt-4 text-sm text-red-600">{{ $message }}</p>
                 @enderror
 
-                <div class="mt-5 space-y-5">
+                <div class="mt-5 space-y-5" data-product-variant-list>
                     @for ($variantIndex = 0; $variantIndex < $variantRowCount; $variantIndex++)
                         @php
                             $variant = $variantRows[$variantIndex] ?? [
@@ -295,25 +303,36 @@
                             ];
                         @endphp
 
-                        <div class="rounded-2xl border border-zinc-200 bg-zinc-50 p-5">
+                        <div class="rounded-2xl border border-zinc-200 bg-zinc-50 p-5" data-product-variant-card data-variant-index="{{ $variantIndex }}">
                             <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                                 <h3 class="text-sm font-semibold text-zinc-900">
-                                    Wariant {{ $variantIndex + 1 }}
+                                    <span data-variant-title>Wariant {{ $variantIndex + 1 }}</span>
                                     @if ($variantIndex === 0)
                                         <span class="text-red-500">*</span>
                                     @endif
                                 </h3>
 
-                                <label class="inline-flex items-center gap-2 text-sm font-medium text-zinc-700">
-                                    <input
-                                        type="radio"
-                                        name="default_variant_index"
-                                        value="{{ $variantIndex }}"
-                                        @checked($defaultVariantIndex === (string) $variantIndex)
-                                        class="border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <label class="inline-flex items-center gap-2 text-sm font-medium text-zinc-700">
+                                        <input
+                                            type="radio"
+                                            name="default_variant_index"
+                                            value="{{ $variantIndex }}"
+                                            @checked($defaultVariantIndex === (string) $variantIndex)
+                                            class="border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                        >
+                                        Wariant domyślny
+                                    </label>
+
+                                    <button
+                                        type="button"
+                                        data-remove-product-variant
+                                        @if ($variantIndex === 0) hidden @endif
+                                        class="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50"
                                     >
-                                    Wariant domyślny
-                                </label>
+                                        Usuń wariant
+                                    </button>
+                                </div>
                             </div>
 
                             <div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
@@ -612,4 +631,123 @@
             </div>
         </form>
     </div>
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const list = document.querySelector('[data-product-variant-list]');
+            const addButton = document.querySelector('[data-add-product-variant]');
+
+            if (!list || !addButton) {
+                return;
+            }
+
+            const cards = () => Array.from(list.querySelectorAll('[data-product-variant-card]'));
+
+            const reindexCard = (card, index, clearValues = false) => {
+                card.dataset.variantIndex = String(index);
+
+                const title = card.querySelector('[data-variant-title]');
+                if (title) {
+                    title.textContent = `Wariant ${index + 1}`;
+                }
+
+                card.querySelectorAll('[name]').forEach((element) => {
+                    element.name = element.name.replace(/variants\[\d+\]/g, `variants[${index}]`);
+                });
+
+                card.querySelectorAll('[id]').forEach((element) => {
+                    element.id = element.id.replace(/variants-\d+-/g, `variants-${index}-`);
+                });
+
+                card.querySelectorAll('label[for]').forEach((element) => {
+                    element.htmlFor = element.htmlFor.replace(/variants-\d+-/g, `variants-${index}-`);
+                });
+
+                const defaultRadio = card.querySelector('input[type="radio"][name="default_variant_index"]');
+                if (defaultRadio) {
+                    defaultRadio.value = String(index);
+
+                    if (clearValues) {
+                        defaultRadio.checked = false;
+                    }
+                }
+
+                const removeButton = card.querySelector('[data-remove-product-variant]');
+                if (removeButton) {
+                    removeButton.hidden = index === 0;
+                }
+
+                if (!clearValues) {
+                    return;
+                }
+
+                card.querySelectorAll('p.text-red-600').forEach((element) => element.remove());
+
+                card.querySelectorAll('input').forEach((input) => {
+                    if (input.type === 'radio') {
+                        return;
+                    }
+
+                    input.value = '';
+                });
+
+                card.querySelectorAll('select').forEach((select) => {
+                    select.selectedIndex = 0;
+                });
+            };
+
+            const refreshVariantCards = () => {
+                cards().forEach((card, index) => reindexCard(card, index));
+
+                if (!list.querySelector('input[type="radio"][name="default_variant_index"]:checked')) {
+                    const firstDefaultRadio = list.querySelector('input[type="radio"][name="default_variant_index"]');
+                    if (firstDefaultRadio) {
+                        firstDefaultRadio.checked = true;
+                    }
+                }
+            };
+
+            addButton.addEventListener('click', () => {
+                const existingCards = cards();
+                const sourceCard = existingCards[existingCards.length - 1];
+
+                if (!sourceCard) {
+                    return;
+                }
+
+                const newCard = sourceCard.cloneNode(true);
+                reindexCard(newCard, existingCards.length, true);
+
+                list.appendChild(newCard);
+                refreshVariantCards();
+            });
+
+            list.addEventListener('click', (event) => {
+                const removeButton = event.target.closest('[data-remove-product-variant]');
+
+                if (!removeButton) {
+                    return;
+                }
+
+                const existingCards = cards();
+                if (existingCards.length <= 1) {
+                    return;
+                }
+
+                const card = removeButton.closest('[data-product-variant-card]');
+                const removedDefault = card?.querySelector('input[type="radio"][name="default_variant_index"]')?.checked ?? false;
+
+                card?.remove();
+                refreshVariantCards();
+
+                if (removedDefault) {
+                    const firstDefaultRadio = list.querySelector('input[type="radio"][name="default_variant_index"]');
+                    if (firstDefaultRadio) {
+                        firstDefaultRadio.checked = true;
+                    }
+                }
+            });
+        });
+</script>
+
 @endsection
