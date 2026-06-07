@@ -137,9 +137,10 @@ final class WojdakProductPayloadExtractor
     private function extractAttributeDefinitions(Crawler $crawler): array
     {
         $definitions = [];
+        $swatches = $this->extractAttributeSwatches($crawler);
 
         try {
-            $crawler->filter('select[name^="attribute_"], select[data-attribute_name]')->each(function (Crawler $node) use (&$definitions): void {
+            $crawler->filter('select[name^="attribute_"], select[data-attribute_name]')->each(function (Crawler $node) use (&$definitions, $swatches): void {
                 $rawAttributeName = $node->attr('data-attribute_name') ?: $node->attr('name');
 
                 if (! is_string($rawAttributeName) || trim($rawAttributeName) === '') {
@@ -166,6 +167,7 @@ final class WojdakProductPayloadExtractor
                     'name' => $this->attributeLabel($code),
                     'external_attribute_id' => 'wojdak-'.$code,
                     'options' => $options,
+                    'swatches' => $swatches[$code] ?? [],
                 ];
             });
         } catch (Throwable) {
@@ -173,6 +175,57 @@ final class WojdakProductPayloadExtractor
         }
 
         return $definitions;
+    }
+
+    /**
+     * @return array<string, array<string, array{swatch_type:string, swatch_value:string}>>
+     */
+    private function extractAttributeSwatches(Crawler $crawler): array
+    {
+        $swatches = [];
+
+        try {
+            $crawler->filter('.attribute-swatch label[selectid][data-option], label[selectid][data-option]')->each(function (Crawler $node) use (&$swatches): void {
+                $selectId = $node->attr('selectid');
+                $rawValue = $node->attr('data-option');
+
+                if (! is_string($selectId) || ! is_string($rawValue) || trim($selectId) === '' || trim($rawValue) === '') {
+                    return;
+                }
+
+                $style = $node->attr('style');
+                $color = is_string($style) ? $this->extractCssColor($style) : null;
+
+                if ($color === null) {
+                    return;
+                }
+
+                $code = $this->attributeCodeFromWooName($selectId);
+                $swatches[$code][trim($rawValue)] = [
+                    'swatch_type' => 'color',
+                    'swatch_value' => $color,
+                ];
+            });
+        } catch (Throwable) {
+            return $swatches;
+        }
+
+        return $swatches;
+    }
+
+    private function extractCssColor(string $style): ?string
+    {
+        if (preg_match('/(?:background-color|background)\s*:\s*(#[0-9a-f]{3,8})\b/iu', $style, $matches) === 1) {
+            return mb_strtolower($matches[1]);
+        }
+
+        if (preg_match('/(?:background-color|background)\s*:\s*rgb\s*\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/iu', $style, $matches) === 1) {
+            $channels = array_map(static fn (string $value): int => max(0, min(255, (int) $value)), array_slice($matches, 1, 3));
+
+            return sprintf('#%02x%02x%02x', $channels[0], $channels[1], $channels[2]);
+        }
+
+        return null;
     }
 
     /**
@@ -222,6 +275,7 @@ final class WojdakProductPayloadExtractor
                     'sort_order' => count($attributes),
                     'source_name' => $rawAttributeName,
                     'source_value' => $rawValue,
+                    ...$this->attributeSwatchPayload(is_array($definition) ? data_get($definition, 'swatches.'.$rawValue) : null),
                 ];
             }
 
@@ -249,6 +303,28 @@ final class WojdakProductPayloadExtractor
         }
 
         return $variations;
+    }
+
+    /**
+     * @return array{swatch_type?: string, swatch_value?: string}
+     */
+    private function attributeSwatchPayload(mixed $swatch): array
+    {
+        if (! is_array($swatch)) {
+            return [];
+        }
+
+        $type = $this->stringOrNull($swatch['swatch_type'] ?? null);
+        $value = $this->stringOrNull($swatch['swatch_value'] ?? null);
+
+        if ($type === null || $value === null) {
+            return [];
+        }
+
+        return [
+            'swatch_type' => $type,
+            'swatch_value' => $value,
+        ];
     }
 
     private function variationImageUrl(array $variation): ?string

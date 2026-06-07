@@ -173,6 +173,7 @@ final class WojdakProductImporter
                 $attribute = $this->resolveAttribute(
                     externalAttributeId: $externalAttributeId,
                     name: (string) $attributeData['name'],
+                    displayType: $this->displayTypeForAttribute($attributeData),
                 );
 
                 $value = $this->resolveAttributeValue(
@@ -180,6 +181,8 @@ final class WojdakProductImporter
                     externalOptionId: $externalOptionId,
                     value: (string) $attributeData['value'],
                     sortOrder: (int) ($attributeData['sort_order'] ?? 0),
+                    swatchType: $this->stringOrNull($attributeData['swatch_type'] ?? null),
+                    swatchValue: $this->stringOrNull($attributeData['swatch_value'] ?? null),
                 );
 
                 $map[$key] = $value->id;
@@ -189,7 +192,17 @@ final class WojdakProductImporter
         return $map;
     }
 
-    private function resolveAttribute(string $externalAttributeId, string $name): Attribute
+    /**
+     * @param  array<string, mixed>  $attributeData
+     */
+    private function displayTypeForAttribute(array $attributeData): AttributeDisplayType
+    {
+        return ($attributeData['swatch_type'] ?? null) === 'color'
+            ? AttributeDisplayType::COLOR_SWATCH
+            : AttributeDisplayType::SELECT;
+    }
+
+    private function resolveAttribute(string $externalAttributeId, string $name, AttributeDisplayType $displayType): Attribute
     {
         $slug = Str::slug($name);
 
@@ -206,7 +219,7 @@ final class WojdakProductImporter
         if ($attribute) {
             $updates = [
                 'name' => $name,
-                'display_type' => AttributeDisplayType::SELECT,
+                'display_type' => $displayType,
             ];
 
             if (! filled($attribute->external_attribute_id)) {
@@ -222,7 +235,7 @@ final class WojdakProductImporter
             'external_attribute_id' => $externalAttributeId,
             'name' => $name,
             'slug' => $slug,
-            'display_type' => AttributeDisplayType::SELECT,
+            'display_type' => $displayType,
         ]);
     }
 
@@ -231,6 +244,8 @@ final class WojdakProductImporter
         string $externalOptionId,
         string $value,
         int $sortOrder,
+        ?string $swatchType = null,
+        ?string $swatchValue = null,
     ): AttributeValue {
         $slug = Str::slug($value);
 
@@ -250,6 +265,8 @@ final class WojdakProductImporter
             $updates = [
                 'value' => $value,
                 'sort_order' => $sortOrder,
+                'swatch_type' => $swatchType,
+                'swatch_value' => $swatchValue,
             ];
 
             if (! filled($attributeValue->external_option_id)) {
@@ -266,6 +283,8 @@ final class WojdakProductImporter
             'external_option_id' => $externalOptionId,
             'value' => $value,
             'slug' => $slug,
+            'swatch_type' => $swatchType,
+            'swatch_value' => $swatchValue,
             'sort_order' => $sortOrder,
         ]);
     }

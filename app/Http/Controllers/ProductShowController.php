@@ -387,7 +387,7 @@ class ProductShowController extends Controller
             ->values();
 
         $grouped = $allValues->groupBy(function (AttributeValue $value) {
-            return $this->normalizeAttributeCode($value->attribute->name);
+            return $this->normalizeAttributeCode($value);
         });
 
         return $grouped
@@ -417,7 +417,8 @@ class ProductShowController extends Controller
             })
             ->sortBy(fn (array $group) => match ($group['code']) {
                 'color' => 1,
-                'size' => 2,
+                'kolor_wstawek' => 2,
+                'size' => 3,
                 default => 99,
             })
             ->values()
@@ -476,11 +477,24 @@ class ProductShowController extends Controller
         return $this->baseImages($product);
     }
 
-    private function normalizeAttributeCode(string $name): string
+    private function normalizeAttributeCode(AttributeValue $value): string
     {
+        $attribute = $value->attribute;
+        $externalAttributeId = $attribute?->external_attribute_id;
+        $name = $attribute?->name ?? '';
+
+        if ($externalAttributeId === 'wojdak-kolor_wstawek') {
+            return 'kolor_wstawek';
+        }
+
+        if ($externalAttributeId === 'wojdak-kolory') {
+            return 'color';
+        }
+
         $normalized = Str::of($name)->lower()->ascii()->value();
 
         return match (true) {
+            str_contains($normalized, 'kolor wstawek') => 'kolor_wstawek',
             str_contains($normalized, 'kolor') => 'color',
             str_contains($normalized, 'colour') => 'color',
             str_contains($normalized, 'color') => 'color',
@@ -494,6 +508,7 @@ class ProductShowController extends Controller
     {
         return match ($code) {
             'color' => 'Kolor',
+            'kolor_wstawek' => 'Kolor wstawek',
             'size' => 'Rozmiar',
             default => $fallback ?: Str::headline($code),
         };
