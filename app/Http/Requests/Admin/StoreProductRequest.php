@@ -81,7 +81,7 @@ final class StoreProductRequest extends FormRequest
             'product_images' => ['nullable', 'array', 'max:10'],
             'product_images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
 
-            'variants' => ['required', 'array', 'min:1', 'max:10'],
+            'variants' => ['required', 'array', 'min:1'],
             'variants.*.sku' => ['required', 'string', 'max:255', Rule::unique('product_variants', 'sku')],
             'variants.*.status' => ['required', 'string', Rule::in(ProductVariantStatus::options())],
             'variants.*.gross_price' => ['required', 'numeric', 'min:0.01', 'max:999999.99'],

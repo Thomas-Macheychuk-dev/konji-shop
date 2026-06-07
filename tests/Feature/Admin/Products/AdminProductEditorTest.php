@@ -181,6 +181,9 @@ it('shows the admin product create page', function (): void {
         ->assertSee('Cena brutto')
         ->assertSee('Waga paczki')
         ->assertSee('Atrybuty wariantu')
+        ->assertSee('Dodaj kolejny wariant')
+        ->assertSee('Wariant 1')
+        ->assertDontSee('Wariant 2')
         ->assertSee('Bluzy Damskie');
 });
 
@@ -288,6 +291,50 @@ it('allows an admin to create a product with variants and attributes', function 
         ->and($variants[1]->is_default)->toBeFalse()
         ->and($variants[1]->price_net_amount)->toBe(10000)
         ->and($variants[1]->attributeValues->first()?->value)->toBe('S');
+});
+
+
+
+it('allows an admin to create a product with more variants than the old fixed create form showed', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $variants = [];
+
+    for ($i = 0; $i < 12; $i++) {
+        $variants[$i] = [
+            'sku' => sprintf('MANY-VARIANTS-%02d', $i + 1),
+            'status' => ProductVariantStatus::ACTIVE->value,
+            'gross_price' => '49.99',
+            'currency' => Currency::PLN->value,
+            'vat_rate' => VatRate::VAT_23->value,
+            'stock_status' => StockStatus::IN_STOCK->value,
+            'package_weight_grams' => 500,
+            'package_length_mm' => 300,
+            'package_width_mm' => 200,
+            'package_height_mm' => 100,
+            'attributes' => [],
+        ];
+    }
+
+    $this
+        ->actingAs($admin)
+        ->post(route('admin.products.store'), [
+            'name' => 'Produkt z wieloma wariantami',
+            'status' => ProductStatus::DRAFT->value,
+            'default_variant_index' => 11,
+            'variants' => $variants,
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Produkt został utworzony.');
+
+    $product = Product::query()
+        ->where('slug', 'produkt-z-wieloma-wariantami')
+        ->firstOrFail();
+
+    expect($product->variants)->toHaveCount(12)
+        ->and($product->variants()->where('sku', 'MANY-VARIANTS-12')->firstOrFail()->is_default)->toBeTrue();
 });
 
 
