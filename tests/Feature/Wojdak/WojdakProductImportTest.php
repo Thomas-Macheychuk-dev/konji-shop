@@ -58,6 +58,53 @@ it('extracts Wojdak shop product payload from a WooCommerce clothing page', func
         ]);
 });
 
+it('prefers product class category links over unrelated Wojdak navigation category links', function (): void {
+    $html = preg_replace('/<nav class="woocommerce-breadcrumb">.*?<\/nav>/s', <<<'HTML'
+            <nav class="woocommerce-breadcrumb">
+                <a href="https://sklep.wojdak.pl">Strona główna</a>
+                <a href="https://sklep.wojdak.pl/kategoria-produktu/odziez-medyczna/">Odzież medyczna</a>
+                <a href="https://sklep.wojdak.pl/kategoria-produktu/odziez-medyczna/odziez-damska/">Odzież damska</a>
+                <a href="https://sklep.wojdak.pl/kategoria-produktu/obuwie-medyczne/obuwie-wyprzedaz/">Obuwie wyprzedaż</a>
+                Bluza E2002
+            </nav>
+        HTML, wojdakShopFemaleBlouseHtml());
+
+    if (! is_string($html)) {
+        throw new RuntimeException('Failed to prepare Wojdak clothing HTML fixture.');
+    }
+
+    $payload = app(WojdakProductPayloadExtractor::class)->extract(
+        $html,
+        'https://sklep.wojdak.pl/produkt/bluza-e2002/'
+    );
+
+    expect($payload['category_slug'])->toBe('bluzy-damskie')
+        ->and($payload['category_url'])->toBe('https://sklep.wojdak.pl/kategoria-produktu/odziez-medyczna/odziez-damska/')
+        ->and($payload['size_table_type'])->toBe('clothing');
+});
+
+it('does not let unrelated footwear category URLs override a Wojdak clothing product type', function (): void {
+    $html = preg_replace('/<nav class="woocommerce-breadcrumb">.*?<\/nav>/s', <<<'HTML'
+            <nav class="woocommerce-breadcrumb">
+                <a href="https://sklep.wojdak.pl/kategoria-produktu/obuwie-medyczne/obuwie-wyprzedaz/">Obuwie wyprzedaż</a>
+                Bluza E2002
+            </nav>
+        HTML, wojdakShopFemaleBlouseHtml());
+
+    if (! is_string($html)) {
+        throw new RuntimeException('Failed to prepare Wojdak clothing HTML fixture.');
+    }
+
+    $payload = app(WojdakProductPayloadExtractor::class)->extract(
+        $html,
+        'https://sklep.wojdak.pl/produkt/bluza-e2002/'
+    );
+
+    expect($payload['category_slug'])->toBe('bluzy-damskie')
+        ->and($payload['category_url'])->toBeNull()
+        ->and($payload['size_table_type'])->toBe('clothing');
+});
+
 it('builds variants from Wojdak WooCommerce variation JSON instead of generic size-table assumptions', function (): void {
     $payload = app(WojdakProductPayloadExtractor::class)->extract(wojdakShopFemaleBlouseHtml(), 'https://sklep.wojdak.pl/produkt/bluza-e2002/');
     $result = app(WojdakVariantBuilder::class)->build($payload);

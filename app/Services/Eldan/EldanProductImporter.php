@@ -121,25 +121,26 @@ class EldanProductImporter
 
         foreach (($normalized['attributes'] ?? []) as $attributeData) {
             $displayType = $this->mapDisplayType($attributeData['swatch_type'] ?? null);
-            $externalAttributeId = isset($attributeData['external_attribute_id'])
-                ? (string) $attributeData['external_attribute_id']
-                : null;
+            $externalAttributeId = $this->stringOrNull($attributeData['external_attribute_id'] ?? null);
+            $attributeName = (string) ($attributeData['name'] ?? '');
 
-            $attribute = Attribute::updateOrCreate(
-                [
-                    'external_attribute_id' => $externalAttributeId,
-                ],
-                [
-                    'name' => $attributeData['name'],
-                    'slug' => Str::slug($attributeData['name']),
-                    'display_type' => $displayType,
-                ]
+            if ($attributeName === '') {
+                continue;
+            }
+
+            $attribute = $this->resolveAttribute(
+                externalAttributeId: $externalAttributeId,
+                name: $attributeName,
+                displayType: $displayType,
             );
 
             foreach (($attributeData['options'] ?? []) as $sortOrder => $optionData) {
-                $externalOptionId = isset($optionData['external_option_id'])
-                    ? (string) $optionData['external_option_id']
-                    : null;
+                $externalOptionId = $this->stringOrNull($optionData['external_option_id'] ?? null);
+                $optionLabel = (string) ($optionData['label'] ?? '');
+
+                if ($optionLabel === '') {
+                    continue;
+                }
 
                 $declaredSwatchType = $attributeData['swatch_type'] ?? null;
                 $rawSwatchValue = $optionData['swatch_value'] ?? null;
@@ -159,7 +160,8 @@ class EldanProductImporter
 
                         $importedSwatch = $this->remoteImageImporter->import(
                             $rawSwatchValue,
-                            'swatches/eldan/attribute-'.$externalAttributeId.'/option-'.$externalOptionId
+                            'swatches/eldan/attribute-'.$this->pathSegment($externalAttributeId, 'unknown')
+                                .'/option-'.$this->pathSegment($externalOptionId, Str::slug($optionLabel))
                         );
 
                         $swatchImageDisk = $importedSwatch['disk'];
@@ -170,29 +172,116 @@ class EldanProductImporter
                     }
                 }
 
-                $value = AttributeValue::updateOrCreate(
-                    [
-                        'attribute_id' => $attribute->id,
-                        'external_option_id' => $externalOptionId,
-                    ],
-                    [
-                        'value' => $optionData['label'],
-                        'slug' => Str::slug($optionData['label']),
-                        'swatch_type' => $swatchType,
-                        'swatch_value' => $swatchValue,
-                        'swatch_image_disk' => $swatchImageDisk,
-                        'swatch_image_path' => $swatchImagePath,
-                        'swatch_source_url' => $swatchSourceUrl,
-                        'sort_order' => $sortOrder,
-                    ]
+                $value = $this->resolveAttributeValue(
+                    attribute: $attribute,
+                    externalOptionId: $externalOptionId,
+                    value: $optionLabel,
+                    sortOrder: (int) $sortOrder,
+                    swatchType: $swatchType,
+                    swatchValue: $swatchValue,
+                    swatchImageDisk: $swatchImageDisk,
+                    swatchImagePath: $swatchImagePath,
+                    swatchSourceUrl: $swatchSourceUrl,
                 );
 
-                $map[$attributeData['name']][$optionData['label']] = $value->id;
-                $map['by_attribute_id'][$externalAttributeId][$externalOptionId] = $value->id;
+                $map[$attributeName][$optionLabel] = $value->id;
+
+                if ($externalAttributeId !== null && $externalOptionId !== null) {
+                    $map['by_attribute_id'][$externalAttributeId][$externalOptionId] = $value->id;
+                }
             }
         }
 
         return $map;
+    }
+
+    private function resolveAttribute(?string $externalAttributeId, string $name, AttributeDisplayType $displayType): Attribute
+    {
+        $slug = Str::slug($name);
+
+        $attribute = $externalAttributeId !== null
+            ? Attribute::query()->where('external_attribute_id', $externalAttributeId)->first()
+            : null;
+
+        if (! $attribute) {
+            $attribute = Attribute::query()->where('slug', $slug)->first();
+        }
+
+        if ($attribute) {
+            $updates = [
+                'name' => $name,
+                'display_type' => $displayType,
+            ];
+
+            if ($externalAttributeId !== null && ! filled($attribute->external_attribute_id)) {
+                $updates['external_attribute_id'] = $externalAttributeId;
+            }
+
+            $attribute->update($updates);
+
+            return $attribute;
+        }
+
+        return Attribute::query()->create([
+            'external_attribute_id' => $externalAttributeId,
+            'name' => $name,
+            'slug' => $slug,
+            'display_type' => $displayType,
+        ]);
+    }
+
+    private function resolveAttributeValue(
+        Attribute $attribute,
+        ?string $externalOptionId,
+        string $value,
+        int $sortOrder,
+        ?string $swatchType,
+        ?string $swatchValue,
+        ?string $swatchImageDisk,
+        ?string $swatchImagePath,
+        ?string $swatchSourceUrl,
+    ): AttributeValue {
+        $slug = Str::slug($value);
+
+        $attributeValue = $externalOptionId !== null
+            ? AttributeValue::query()
+                ->where('attribute_id', $attribute->id)
+                ->where('external_option_id', $externalOptionId)
+                ->first()
+            : null;
+
+        if (! $attributeValue) {
+            $attributeValue = AttributeValue::query()
+                ->where('attribute_id', $attribute->id)
+                ->where('slug', $slug)
+                ->first();
+        }
+
+        $attributes = [
+            'value' => $value,
+            'sort_order' => $sortOrder,
+            'swatch_type' => $swatchType,
+            'swatch_value' => $swatchValue,
+            'swatch_image_disk' => $swatchImageDisk,
+            'swatch_image_path' => $swatchImagePath,
+            'swatch_source_url' => $swatchSourceUrl,
+        ];
+
+        if ($attributeValue) {
+            if ($externalOptionId !== null && ! filled($attributeValue->external_option_id)) {
+                $attributes['external_option_id'] = $externalOptionId;
+            }
+
+            $attributeValue->update($attributes);
+
+            return $attributeValue;
+        }
+
+        return AttributeValue::query()->create(array_merge($attributes, [
+            'attribute_id' => $attribute->id,
+            'external_option_id' => $externalOptionId,
+            'slug' => $slug,
+        ]));
     }
 
     private function syncVariants(Product $product, array $normalized, array $attributeValueMap): void
@@ -344,6 +433,22 @@ class EldanProductImporter
                 ]
             );
         }
+    }
+
+    private function stringOrNull(mixed $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        $value = trim((string) $value);
+
+        return $value === '' ? null : $value;
+    }
+
+    private function pathSegment(?string $value, string $fallback): string
+    {
+        return $value !== null && $value !== '' ? $value : $fallback;
     }
 
     private function isHexColour(string $value): bool

@@ -493,6 +493,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                             type="button"
                             class="rounded-xl border px-4 py-2 text-sm transition"
                             :aria-label="`${group.label}: ${value.label}`"
+                            :title="value.label"
                             :class="{
                                 'border-zinc-900 bg-zinc-900 text-white': isSelected(group.code, value.id),
                                 'border-zinc-200 bg-white text-zinc-900': !isSelected(group.code, value.id),
@@ -504,10 +505,10 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                         <span class="inline-flex items-center gap-2">
                             <template v-if="value.swatch?.type === 'color' && value.swatch?.value">
                                 <span
-                                    class="inline-block h-7 w-7 rounded-full border border-zinc-300 shadow-sm ring-1 ring-black/5"
+                                    class="inline-block h-5 w-5 shrink-0 rounded-full border border-zinc-300 shadow-sm ring-1 ring-black/5"
                                     :style="{ backgroundColor: value.swatch.value }"
                                 />
-                                <span class="sr-only">{{ value.label }}</span>
+                                <span>{{ value.label }}</span>
                             </template>
 
                             <template v-else-if="value.swatch?.type === 'image' && value.swatch?.image_url">
