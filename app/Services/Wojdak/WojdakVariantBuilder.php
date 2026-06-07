@@ -338,11 +338,45 @@ final class WojdakVariantBuilder
             return $type;
         }
 
-        $text = $this->searchableText($payload);
+        foreach ([
+            $payload['category_slug'] ?? null,
+            $payload['name'] ?? null,
+            $payload['description_text'] ?? null,
+            $payload['size_table_pdf_url'] ?? null,
+            $payload['category_url'] ?? null,
+        ] as $value) {
+            $type = $this->classifyProductType($value);
+
+            if ($type !== null) {
+                return $type;
+            }
+        }
+
+        return null;
+    }
+
+    private function classifyProductType(mixed $value): ?string
+    {
+        if (! is_scalar($value) || trim((string) $value) === '') {
+            return null;
+        }
+
+        $text = Str::of((string) $value)->lower()->ascii()->value().' '.mb_strtolower((string) $value);
 
         return match (true) {
+            str_contains($text, 'odziez')
+                || str_contains($text, 'odzież')
+                || str_contains($text, 'bluz')
+                || str_contains($text, 'tunik')
+                || str_contains($text, 'fartuch')
+                || str_contains($text, 'spodn')
+                || str_contains($text, 'spódn')
+                || str_contains($text, 'marynark')
+                || str_contains($text, 'sukien')
+                || str_contains($text, 'kamizel')
+                || str_contains($text, 'polar')
+                || str_contains($text, 'czepk') => 'clothing',
             str_contains($text, 'obuwie') || str_contains($text, 'buty') => 'footwear',
-            str_contains($text, 'odziez') || str_contains($text, 'odzież') || str_contains($text, 'bluza') || str_contains($text, 'marynarka') => 'clothing',
             default => null,
         };
     }

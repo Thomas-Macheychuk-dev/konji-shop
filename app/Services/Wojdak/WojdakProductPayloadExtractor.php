@@ -407,6 +407,33 @@ final class WojdakProductPayloadExtractor
 
     private function extractProductCategorySlug(Crawler $crawler): ?string
     {
+        $slugs = $this->extractProductCategorySlugs($crawler);
+
+        if ($slugs === []) {
+            return null;
+        }
+
+        $broadCategorySlugs = [
+            'odziez-medyczna',
+            'odziez-damska',
+            'odziez-meska',
+            'obuwie-medyczne',
+        ];
+
+        foreach ($slugs as $slug) {
+            if (! in_array($slug, $broadCategorySlugs, true)) {
+                return $slug;
+            }
+        }
+
+        return $slugs[0] ?? null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function extractProductCategorySlugs(Crawler $crawler): array
+    {
         $slugs = [];
 
         try {
@@ -422,34 +449,75 @@ final class WojdakProductPayloadExtractor
                 }
 
                 foreach ($matches[1] as $slug) {
-                    $slugs[$slug] = true;
+                    $slug = trim($slug);
+
+                    if ($slug !== '') {
+                        $slugs[$slug] = true;
+                    }
                 }
             });
         } catch (Throwable) {
-            return null;
+            return [];
         }
 
-        if ($slugs === []) {
-            return null;
-        }
-
-        $broadCategorySlugs = [
-            'odziez-medyczna',
-            'odziez-damska',
-            'odziez-meska',
-            'obuwie-medyczne',
-        ];
-
-        foreach (array_keys($slugs) as $slug) {
-            if (! in_array($slug, $broadCategorySlugs, true)) {
-                return $slug;
-            }
-        }
-
-        return array_key_first($slugs);
+        return array_keys($slugs);
     }
 
     private function extractCategoryUrl(Crawler $crawler, ?string $categorySlug = null): ?string
+    {
+        $categoryUrls = $this->extractCategoryUrls($crawler);
+
+        if ($categoryUrls === []) {
+            return null;
+        }
+
+        if (is_string($categorySlug) && $categorySlug !== '') {
+            foreach ($categoryUrls as $categoryUrl) {
+                if ($this->categoryUrlContainsSlug($categoryUrl, $categorySlug)) {
+                    return $categoryUrl;
+                }
+            }
+        }
+
+        $productCategorySlugs = $this->extractProductCategorySlugs($crawler);
+        $matchedCategoryUrls = [];
+
+        foreach ($categoryUrls as $categoryUrl) {
+            foreach ($productCategorySlugs as $productCategorySlug) {
+                if (! $this->categoryUrlContainsSlug($categoryUrl, $productCategorySlug)) {
+                    continue;
+                }
+
+                $matchedCategoryUrls[$categoryUrl] = max(
+                    $matchedCategoryUrls[$categoryUrl] ?? 0,
+                    $this->categoryUrlSpecificity($categoryUrl)
+                );
+            }
+        }
+
+        if ($matchedCategoryUrls !== []) {
+            arsort($matchedCategoryUrls, SORT_NUMERIC);
+
+            return array_key_first($matchedCategoryUrls);
+        }
+
+        if ($productCategorySlugs !== []) {
+            return null;
+        }
+
+        $breadcrumbCategoryUrl = $this->extractBreadcrumbCategoryUrl($crawler);
+
+        if ($breadcrumbCategoryUrl !== null) {
+            return $breadcrumbCategoryUrl;
+        }
+
+        return end($categoryUrls) ?: null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function extractCategoryUrls(Crawler $crawler): array
     {
         $categoryUrls = [];
 
@@ -474,24 +542,49 @@ final class WojdakProductPayloadExtractor
                 }
             });
         } catch (Throwable) {
+            return [];
+        }
+
+        return array_keys($categoryUrls);
+    }
+
+    private function extractBreadcrumbCategoryUrl(Crawler $crawler): ?string
+    {
+        $categoryUrl = null;
+
+        try {
+            $crawler->filter('.woocommerce-breadcrumb a[href], .breadcrumbs a[href], .ms-breadcrumbs a[href], [class*="breadcrumb"] a[href]')
+                ->each(function (Crawler $node) use (&$categoryUrl): void {
+                    $href = $node->attr('href');
+                    $normalized = $this->normalizeUrl(is_string($href) ? $href : null);
+
+                    if ($normalized === null) {
+                        return;
+                    }
+
+                    $path = (string) parse_url($normalized, PHP_URL_PATH);
+
+                    if (str_contains($path, '/kategoria-produktu/') || str_contains($path, '/produkty/')) {
+                        $categoryUrl = $this->normalizePathUrl($normalized);
+                    }
+                });
+        } catch (Throwable) {
             return null;
         }
 
-        if ($categoryUrls === []) {
-            return null;
-        }
+        return $categoryUrl;
+    }
 
-        if (is_string($categorySlug) && $categorySlug !== '') {
-            foreach (array_keys($categoryUrls) as $categoryUrl) {
-                if (str_contains((string) parse_url($categoryUrl, PHP_URL_PATH), '/'.$categorySlug.'/')) {
-                    return $categoryUrl;
-                }
-            }
-        }
+    private function categoryUrlContainsSlug(string $categoryUrl, string $slug): bool
+    {
+        return str_contains((string) parse_url($categoryUrl, PHP_URL_PATH), '/'.trim($slug, '/').'/');
+    }
 
-        $categoryUrls = array_keys($categoryUrls);
+    private function categoryUrlSpecificity(string $categoryUrl): int
+    {
+        $path = trim((string) parse_url($categoryUrl, PHP_URL_PATH), '/');
 
-        return end($categoryUrls) ?: null;
+        return count(array_filter(explode('/', $path)));
     }
 
     private function extractSizeTablePdfUrl(Crawler $crawler): ?string
@@ -613,12 +706,38 @@ final class WojdakProductPayloadExtractor
 
     private function sizeTableType(?string $url, ?string $categoryUrl = null, ?string $categorySlug = null, ?string $name = null, ?string $descriptionText = null): ?string
     {
-        $text = mb_strtolower(implode(' ', array_filter([$url, $categoryUrl, $categorySlug, $name, $descriptionText], 'is_string')));
-        $ascii = Str::ascii($text);
+        foreach ([$categorySlug, $name, $descriptionText, $url, $categoryUrl] as $value) {
+            $type = $this->classifyProductType($value);
+
+            if ($type !== null) {
+                return $type;
+            }
+        }
+
+        return null;
+    }
+
+    private function classifyProductType(?string $value): ?string
+    {
+        if (! is_string($value) || trim($value) === '') {
+            return null;
+        }
+
+        $text = Str::ascii(mb_strtolower($value));
 
         return match (true) {
-            str_contains($ascii, 'obuwie') || str_contains($ascii, 'buty') => 'footwear',
-            str_contains($ascii, 'odziez') || str_contains($ascii, 'bluza') || str_contains($ascii, 'fartuch') || str_contains($ascii, 'spodnie') || str_contains($ascii, 'spodnica') || str_contains($ascii, 'marynarka') => 'clothing',
+            str_contains($text, 'odziez')
+                || str_contains($text, 'bluz')
+                || str_contains($text, 'tunik')
+                || str_contains($text, 'fartuch')
+                || str_contains($text, 'spodn')
+                || str_contains($text, 'spodnic')
+                || str_contains($text, 'marynark')
+                || str_contains($text, 'sukien')
+                || str_contains($text, 'kamizel')
+                || str_contains($text, 'polar')
+                || str_contains($text, 'czepk') => 'clothing',
+            str_contains($text, 'obuwie') || str_contains($text, 'buty') => 'footwear',
             default => null,
         };
     }
