@@ -25,6 +25,12 @@ final class WojdakVariantBuilder
      */
     public function build(array $payload): array
     {
+        $woocommerceVariations = $payload['woocommerce_variations'] ?? null;
+
+        if (is_array($woocommerceVariations) && $woocommerceVariations !== []) {
+            return $this->buildWooCommerceVariants($payload, $woocommerceVariations);
+        }
+
         $type = $this->productType($payload);
         $gender = $this->gender($payload);
 
@@ -50,6 +56,68 @@ final class WojdakVariantBuilder
                 'warnings' => ['Unsupported Wojdak size table type ['.$type.'].'],
             ],
         };
+    }
+
+    /**
+     * @param  array<string, mixed>  $payload
+     * @param  array<int, array<string, mixed>>  $woocommerceVariations
+     * @return array{variants: array<int, array<string, mixed>>, warnings: array<int, string>}
+     */
+    private function buildWooCommerceVariants(array $payload, array $woocommerceVariations): array
+    {
+        $variants = [];
+        $warnings = [];
+
+        foreach (array_values($woocommerceVariations) as $index => $variation) {
+            if (! is_array($variation)) {
+                continue;
+            }
+
+            $attributes = array_values(array_filter(
+                $variation['attributes'] ?? [],
+                fn (mixed $attribute): bool => is_array($attribute) && isset($attribute['code'], $attribute['name'], $attribute['value'])
+            ));
+
+            if ($attributes === []) {
+                $warnings[] = 'Skipped Wojdak WooCommerce variation without attributes.';
+
+                continue;
+            }
+
+            $externalVariantId = (string) ($variation['external_variant_id'] ?? 'row-'.$index);
+            $sku = $this->stringOrNull($variation['sku'] ?? null)
+                ?? $this->generatedSkuFromAttributes($payload, $attributes);
+
+            $isSellable = (bool) ($variation['is_active'] ?? false)
+                && (bool) ($variation['is_visible'] ?? false)
+                && (bool) ($variation['is_purchasable'] ?? false)
+                && is_int($variation['price_gross_amount'] ?? null);
+
+            $variants[] = [
+                'external_variant_id' => $externalVariantId,
+                'sku' => $sku,
+                'attributes' => $attributes,
+                'sort_order' => $index,
+                'status' => $isSellable ? 'active' : 'draft',
+                'stock_status' => (bool) ($variation['is_in_stock'] ?? false) ? 'in_stock' : 'out_of_stock',
+                'price_gross_amount' => $variation['price_gross_amount'] ?? null,
+                'regular_price_gross_amount' => $variation['regular_price_gross_amount'] ?? null,
+                'currency' => 'PLN',
+                'vat_rate' => 23,
+                'package_weight_grams' => $variation['weight_grams'] ?? null,
+                'source_image_url' => $variation['image_url'] ?? null,
+                'source_max_qty' => $variation['max_qty'] ?? null,
+            ];
+        }
+
+        if ($variants === []) {
+            $warnings[] = 'No usable Wojdak WooCommerce variations were found.';
+        }
+
+        return [
+            'variants' => $variants,
+            'warnings' => array_values(array_unique($warnings)),
+        ];
     }
 
     /**
@@ -185,11 +253,39 @@ final class WojdakVariantBuilder
         ];
     }
 
+    /**
+     * @param  array<string, mixed>  $payload
+     * @param  array<int, array<string, mixed>>  $attributes
+     */
+    private function generatedSkuFromAttributes(array $payload, array $attributes): string
+    {
+        $externalId = (string) ($payload['external_id'] ?? 'wojdak-product');
+        $skuBase = 'WOJDAK-'.Str::upper(Str::slug($externalId, '-'));
+        $suffix = collect($attributes)
+            ->pluck('value')
+            ->map(fn (mixed $value): string => $this->skuSegment((string) $value))
+            ->filter()
+            ->implode('-');
+
+        return $suffix === '' ? $skuBase : $skuBase.'-'.$suffix;
+    }
+
     private function skuSegment(string $value): string
     {
         $value = str_replace(['/', '\\'], '-', $value);
 
         return Str::upper(Str::slug($value, '-'));
+    }
+
+    private function stringOrNull(mixed $value): ?string
+    {
+        if (! is_scalar($value)) {
+            return null;
+        }
+
+        $value = trim((string) $value);
+
+        return $value === '' ? null : $value;
     }
 
     /**

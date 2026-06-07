@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Http;
 final class InspectWojdakProduct extends Command
 {
     protected $signature = 'wojdak:inspect
-        {url : Wojdak product URL, for example https://wojdak.pl/product/bluza-2002/}
+        {url : Wojdak product URL, for example https://sklep.wojdak.pl/produkt/bluza-e2002/}
         {--save-html : Save fetched HTML to storage/app/wojdak-inspect.html}
         {--import : Import product without asking for confirmation}
         {--no-dump : Do not print the extracted JSON payload}';

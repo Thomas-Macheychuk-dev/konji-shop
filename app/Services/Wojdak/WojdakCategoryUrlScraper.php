@@ -4,23 +4,31 @@ declare(strict_types=1);
 
 namespace App\Services\Wojdak;
 
-use Illuminate\Support\Facades\Http;
-use Symfony\Component\DomCrawler\Crawler;
-use Throwable;
-
 final class WojdakCategoryUrlScraper
 {
-    public const DEFAULT_ROOT_CATEGORY_URLS = [
-        'https://wojdak.pl/produkty/odziez-medyczna-damska/',
-        'https://wojdak.pl/produkty/odziez-medyczna-meska/',
+    public const DEFAULT_CATEGORY_URLS = [
+        'https://sklep.wojdak.pl/kategoria-produktu/odziez-medyczna/odziez-damska/',
+        'https://sklep.wojdak.pl/kategoria-produktu/obuwie-medyczne/obuwie-damskie/',
+        'https://sklep.wojdak.pl/kategoria-produktu/odziez-medyczna/odziez-meska/',
+        'https://sklep.wojdak.pl/kategoria-produktu/obuwie-medyczne/obuwie-meskie/',
     ];
 
-    public const HARD_CODED_CATEGORY_URLS = [
-        'https://wojdak.pl/produkty/obuwie-damskie/',
-        'https://wojdak.pl/produkty/obuwie-meskie/',
-    ];
+    /**
+     * Backwards-compatible alias for older command/service callers.
+     * Wojdak product discovery now starts from hard-coded WooCommerce shop categories.
+     *
+     * @var array<int, string>
+     */
+    public const DEFAULT_ROOT_CATEGORY_URLS = self::DEFAULT_CATEGORY_URLS;
 
-    private const WOJDAK_HOST = 'wojdak.pl';
+    /**
+     * Backwards-compatible alias for older tests/callers.
+     *
+     * @var array<int, string>
+     */
+    public const HARD_CODED_CATEGORY_URLS = self::DEFAULT_CATEGORY_URLS;
+
+    private const WOJDAK_SHOP_HOST = 'sklep.wojdak.pl';
 
     /**
      * Convenience wrapper for callers/tests that only need category URLs.
@@ -29,7 +37,7 @@ final class WojdakCategoryUrlScraper
      * @return array<int, string>
      */
     public function discover(
-        array $startUrls = self::DEFAULT_ROOT_CATEGORY_URLS,
+        array $startUrls = self::DEFAULT_CATEGORY_URLS,
         bool $includeHardCodedCategories = true,
     ): array {
         return $this->scrape(
@@ -47,167 +55,28 @@ final class WojdakCategoryUrlScraper
      * }
      */
     public function scrape(
-        array $startUrls = self::DEFAULT_ROOT_CATEGORY_URLS,
+        array $startUrls = self::DEFAULT_CATEGORY_URLS,
         bool $includeHardCodedCategories = true,
     ): array {
-        $rootUrls = $this->normalizeRootUrls($startUrls);
-        $visited = [];
-        $failed = [];
         $categoryUrls = [];
+        $sourceUrls = $includeHardCodedCategories
+            ? array_merge($startUrls, self::DEFAULT_CATEGORY_URLS)
+            : $startUrls;
 
-        foreach ($rootUrls as $rootUrl) {
-            if (isset($visited[$rootUrl])) {
-                continue;
-            }
-
-            $visited[$rootUrl] = true;
-            $html = $this->fetchBody($rootUrl, $failed);
-
-            if ($html === null) {
-                continue;
-            }
-
-            foreach ($this->extractCandidateCategoryUrls($html, $rootUrl) as $candidateUrl) {
-                if (! $this->shouldKeepCategoryUrl($candidateUrl, $rootUrls)) {
-                    continue;
-                }
-
-                $categoryUrls[$candidateUrl] = true;
-            }
-        }
-
-        if ($includeHardCodedCategories) {
-            foreach (self::HARD_CODED_CATEGORY_URLS as $hardCodedCategoryUrl) {
-                $normalized = $this->normalizeCategoryUrl($hardCodedCategoryUrl);
-
-                if ($normalized !== null) {
-                    $categoryUrls[$normalized] = true;
-                }
-            }
-        }
-
-        return [
-            'category_urls' => array_keys($categoryUrls),
-            'visited_urls' => array_keys($visited),
-            'failed_urls' => $failed,
-        ];
-    }
-
-    /**
-     * @param  array<int, string>  $startUrls
-     * @return array<int, string>
-     */
-    private function normalizeRootUrls(array $startUrls): array
-    {
-        $rootUrls = [];
-
-        foreach ($startUrls as $startUrl) {
-            $normalized = $this->normalizeCategoryUrl($startUrl);
+        foreach ($sourceUrls as $url) {
+            $normalized = $this->normalizeCategoryUrl($url);
 
             if ($normalized === null) {
                 continue;
             }
 
-            $rootUrls[$normalized] = true;
+            $categoryUrls[$normalized] = true;
         }
 
-        return array_keys($rootUrls);
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    private function extractCandidateCategoryUrls(string $html, string $baseUrl): array
-    {
-        $urls = [];
-
-        try {
-            $crawler = new Crawler($html, $baseUrl);
-
-            $crawler->filter('a[href]')->each(function (Crawler $node) use (&$urls, $baseUrl): void {
-                $href = $node->attr('href');
-
-                if (! is_string($href) || trim($href) === '') {
-                    return;
-                }
-
-                $url = $this->normalizeCategoryUrl($href, $baseUrl);
-
-                if ($url === null || ! $this->isWojdakUrl($url)) {
-                    return;
-                }
-
-                $urls[$url] = true;
-            });
-        } catch (Throwable) {
-            return [];
-        }
-
-        return array_keys($urls);
-    }
-
-    /**
-     * @param  array<int, string>  $rootUrls
-     */
-    private function shouldKeepCategoryUrl(string $url, array $rootUrls): bool
-    {
-        if (! $this->isWojdakUrl($url)) {
-            return false;
-        }
-
-        $path = $this->normalizedPath($url);
-
-        if ($path === null || $path === '/produkty/') {
-            return false;
-        }
-
-        foreach ($rootUrls as $rootUrl) {
-            $rootPath = $this->normalizedPath($rootUrl);
-
-            if ($rootPath === null || $path === $rootPath) {
-                continue;
-            }
-
-            if (str_starts_with($path, $rootPath)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param  array<string, string>  $failed
-     */
-    private function fetchBody(string $url, array &$failed): ?string
-    {
-        try {
-            $response = Http::timeout(30)
-                ->withHeaders($this->headers())
-                ->get($url);
-        } catch (Throwable $exception) {
-            $failed[$url] = $exception->getMessage();
-
-            return null;
-        }
-
-        if (! $response->successful()) {
-            $failed[$url] = 'HTTP '.$response->status();
-
-            return null;
-        }
-
-        return $response->body();
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    private function headers(): array
-    {
         return [
-            'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36',
-            'Accept-Language' => 'pl-PL,pl;q=0.9,en;q=0.8',
+            'category_urls' => array_keys($categoryUrls),
+            'visited_urls' => [],
+            'failed_urls' => [],
         ];
     }
 
@@ -227,7 +96,7 @@ final class WojdakCategoryUrlScraper
         if (str_starts_with($url, '//')) {
             $url = 'https:'.$url;
         } elseif (str_starts_with($url, '/')) {
-            $url = 'https://'.self::WOJDAK_HOST.$url;
+            $url = 'https://'.self::WOJDAK_SHOP_HOST.$url;
         } elseif (! preg_match('#^https?://#i', $url)) {
             if ($baseUrl === null) {
                 return null;
@@ -253,24 +122,17 @@ final class WojdakCategoryUrlScraper
             return null;
         }
 
+        if (! $this->isWojdakShopHost((string) $parts['host'])) {
+            return null;
+        }
+
         $path = $parts['path'] ?? '/';
 
-        if (! str_starts_with($path, '/produkty/')) {
+        if (! str_starts_with($path, '/kategoria-produktu/')) {
             return null;
         }
 
-        return 'https://'.self::WOJDAK_HOST.$this->normalizePath($path);
-    }
-
-    private function normalizedPath(string $url): ?string
-    {
-        $path = parse_url($url, PHP_URL_PATH);
-
-        if (! is_string($path) || $path === '') {
-            return null;
-        }
-
-        return $this->normalizePath($path);
+        return 'https://'.self::WOJDAK_SHOP_HOST.$this->normalizePath($path);
     }
 
     private function normalizePath(string $path): string
@@ -281,10 +143,8 @@ final class WojdakCategoryUrlScraper
         return rtrim($path, '/').'/';
     }
 
-    private function isWojdakUrl(string $url): bool
+    private function isWojdakShopHost(string $host): bool
     {
-        $host = parse_url($url, PHP_URL_HOST);
-
-        return $host === self::WOJDAK_HOST || $host === 'www.'.self::WOJDAK_HOST;
+        return mb_strtolower($host) === self::WOJDAK_SHOP_HOST;
     }
 }
