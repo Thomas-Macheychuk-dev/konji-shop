@@ -10,7 +10,7 @@ use Throwable;
 
 final class WojdakProductUrlScraper
 {
-    private const WOJDAK_HOST = 'wojdak.pl';
+    private const WOJDAK_SHOP_HOST = 'sklep.wojdak.pl';
 
     public function __construct(
         private readonly WojdakCategoryUrlScraper $categoryUrlScraper,
@@ -20,29 +20,31 @@ final class WojdakProductUrlScraper
     /**
      * Convenience wrapper for callers/tests that only need product URLs.
      *
-     * When no category URLs are passed, phase 1 category discovery is run first.
+     * When no category URLs are passed, the hard-coded Wojdak shop categories are used.
      *
      * @param  array<int, string>  $categoryUrls
-     * @param  array<int, string>  $rootCategoryUrls
+     * @param  array<int, string>  $rootCategoryUrls Backwards-compatible alias for category URLs.
      * @return array<int, string>
      */
     public function discover(
         array $categoryUrls = [],
-        array $rootCategoryUrls = WojdakCategoryUrlScraper::DEFAULT_ROOT_CATEGORY_URLS,
+        array $rootCategoryUrls = WojdakCategoryUrlScraper::DEFAULT_CATEGORY_URLS,
         bool $discoverCategories = true,
         ?int $limit = null,
+        ?int $maxPages = null,
     ): array {
         return $this->scrape(
             categoryUrls: $categoryUrls,
             rootCategoryUrls: $rootCategoryUrls,
             discoverCategories: $discoverCategories,
             limit: $limit,
+            maxPages: $maxPages,
         )['product_urls'];
     }
 
     /**
      * @param  array<int, string>  $categoryUrls
-     * @param  array<int, string>  $rootCategoryUrls
+     * @param  array<int, string>  $rootCategoryUrls Backwards-compatible alias for category URLs.
      * @return array{
      *     product_urls: array<int, string>,
      *     category_urls: array<int, string>,
@@ -52,9 +54,10 @@ final class WojdakProductUrlScraper
      */
     public function scrape(
         array $categoryUrls = [],
-        array $rootCategoryUrls = WojdakCategoryUrlScraper::DEFAULT_ROOT_CATEGORY_URLS,
+        array $rootCategoryUrls = WojdakCategoryUrlScraper::DEFAULT_CATEGORY_URLS,
         bool $discoverCategories = true,
         ?int $limit = null,
+        ?int $maxPages = null,
     ): array {
         $failed = [];
         $visited = [];
@@ -71,26 +74,19 @@ final class WojdakProductUrlScraper
                 $categoryUrls[$categoryUrl] = true;
             }
 
-            foreach ($categoryDiscoveryResult['visited_urls'] as $visitedUrl) {
-                $visited[$visitedUrl] = true;
-            }
-
             $failed = array_replace($failed, $categoryDiscoveryResult['failed_urls']);
         }
 
         foreach (array_keys($categoryUrls) as $categoryUrl) {
-            if (isset($visited[$categoryUrl])) {
-                continue;
-            }
+            $categoryProductUrls = $this->crawlCategory(
+                categoryUrl: $categoryUrl,
+                visited: $visited,
+                failed: $failed,
+                remainingLimit: $limit === null ? null : max(0, $limit - count($productUrls)),
+                maxPages: $maxPages,
+            );
 
-            $visited[$categoryUrl] = true;
-            $html = $this->fetchBody($categoryUrl, $failed);
-
-            if ($html === null) {
-                continue;
-            }
-
-            foreach ($this->extractProductUrls($html, $categoryUrl) as $productUrl) {
+            foreach ($categoryProductUrls as $productUrl) {
                 $productUrls[$productUrl] = true;
 
                 if ($limit !== null && count($productUrls) >= $limit) {
@@ -99,18 +95,78 @@ final class WojdakProductUrlScraper
             }
         }
 
-        $discoveredProductUrls = array_keys($productUrls);
-
-        if ($limit !== null) {
-            $discoveredProductUrls = array_slice($discoveredProductUrls, 0, $limit);
-        }
-
         return [
-            'product_urls' => $discoveredProductUrls,
+            'product_urls' => array_keys($productUrls),
             'category_urls' => array_keys($categoryUrls),
             'visited_urls' => array_keys($visited),
             'failed_urls' => $failed,
         ];
+    }
+
+    /**
+     * @param  array<string, true>  $visited
+     * @param  array<string, string>  $failed
+     * @return array<int, string>
+     */
+    private function crawlCategory(
+        string $categoryUrl,
+        array &$visited,
+        array &$failed,
+        ?int $remainingLimit = null,
+        ?int $maxPages = null,
+    ): array {
+        $categoryProductUrls = [];
+        $queued = [$categoryUrl => true];
+        $queue = [$categoryUrl];
+        $pagesVisitedForCategory = 0;
+
+        while ($queue !== []) {
+            if ($remainingLimit !== null && count($categoryProductUrls) >= $remainingLimit) {
+                break;
+            }
+
+            if ($maxPages !== null && $pagesVisitedForCategory >= $maxPages) {
+                break;
+            }
+
+            $pageUrl = array_shift($queue);
+
+            if (! is_string($pageUrl) || isset($visited[$pageUrl])) {
+                continue;
+            }
+
+            $visited[$pageUrl] = true;
+            $pagesVisitedForCategory++;
+
+            $html = $this->fetchBody($pageUrl, $failed);
+
+            if ($html === null) {
+                continue;
+            }
+
+            foreach ($this->extractProductUrls($html, $pageUrl) as $productUrl) {
+                $categoryProductUrls[$productUrl] = true;
+
+                if ($remainingLimit !== null && count($categoryProductUrls) >= $remainingLimit) {
+                    break;
+                }
+            }
+
+            if ($remainingLimit !== null && count($categoryProductUrls) >= $remainingLimit) {
+                break;
+            }
+
+            foreach ($this->extractPaginationUrls($html, $pageUrl, $categoryUrl) as $paginationUrl) {
+                if (isset($queued[$paginationUrl]) || isset($visited[$paginationUrl])) {
+                    continue;
+                }
+
+                $queued[$paginationUrl] = true;
+                $queue[] = $paginationUrl;
+            }
+        }
+
+        return array_keys($categoryProductUrls);
     }
 
     /**
@@ -227,9 +283,9 @@ final class WojdakProductUrlScraper
         $decodedHtml = str_replace(['\\/', '\/'], '/', $decodedHtml);
 
         $patterns = [
-            '#https?://(?:www\.)?wojdak\.pl/product/[^\s"\'<>\)]+#iu',
-            '#["\'](?:url|product_url|canonical_url|href)["\']\s*:\s*["\'](https?://(?:www\.)?wojdak\.pl/product/[^"\'<>]+|/product/[^"\'<>]+)["\']#iu',
-            '#(?<![a-z0-9/_-])/product/[a-z0-9][a-z0-9\-]*(?:/)?#iu',
+            '#https?://sklep\.wojdak\.pl/produkt/[^\s"\'<>)]+#iu',
+            '#["\'](?:url|product_url|canonical_url|href)["\']\s*:\s*["\'](https?://sklep\.wojdak\.pl/produkt/[^"\'<>]+|/produkt/[^"\'<>]+)["\']#iu',
+            '#(?<![a-z0-9/_-])/produkt/[a-z0-9][a-z0-9\-]*(?:/)?#iu',
         ];
 
         foreach ($patterns as $pattern) {
@@ -253,6 +309,40 @@ final class WojdakProductUrlScraper
         return array_keys($urls);
     }
 
+    /**
+     * @return array<int, string>
+     */
+    private function extractPaginationUrls(string $html, string $baseUrl, string $rootCategoryUrl): array
+    {
+        $urls = [];
+
+        try {
+            $crawler = new Crawler($html, $baseUrl);
+
+            $crawler->filter('.woocommerce-pagination a[href], a.page-numbers[href]')->each(
+                function (Crawler $node) use (&$urls, $baseUrl, $rootCategoryUrl): void {
+                    $href = $node->attr('href');
+
+                    if (! is_string($href) || trim($href) === '') {
+                        return;
+                    }
+
+                    $url = $this->normalizeCategoryPageUrl($href, $baseUrl, $rootCategoryUrl);
+
+                    if ($url === null) {
+                        return;
+                    }
+
+                    $urls[$url] = true;
+                }
+            );
+        } catch (Throwable) {
+            return [];
+        }
+
+        return array_keys($urls);
+    }
+
     private function trimRawUrlMatch(string $url): string
     {
         return trim(rtrim($url, '.,;:)]}'), '"\'');
@@ -262,24 +352,46 @@ final class WojdakProductUrlScraper
     {
         $url = $this->normalizeUrl($url, $baseUrl);
 
-        if ($url === null || ! $this->isWojdakUrl($url)) {
+        if ($url === null || ! $this->isWojdakShopUrl($url)) {
             return null;
         }
 
         $path = (string) parse_url($url, PHP_URL_PATH);
 
-        if (! str_starts_with($path, '/produkty/')) {
+        if (! str_starts_with($path, '/kategoria-produktu/')) {
             return null;
         }
 
-        return 'https://'.self::WOJDAK_HOST.$this->normalizePath($path);
+        return 'https://'.self::WOJDAK_SHOP_HOST.$this->normalizePath($path);
+    }
+
+    private function normalizeCategoryPageUrl(string $url, string $baseUrl, string $rootCategoryUrl): ?string
+    {
+        $normalized = $this->normalizeCategoryUrl($url, $baseUrl);
+
+        if ($normalized === null) {
+            return null;
+        }
+
+        $rootPath = $this->normalizeCategoryRootPath((string) parse_url($rootCategoryUrl, PHP_URL_PATH));
+        $pagePath = $this->normalizePath((string) parse_url($normalized, PHP_URL_PATH));
+
+        if ($pagePath === $rootPath) {
+            return $normalized;
+        }
+
+        if (preg_match('#^'.preg_quote(rtrim($rootPath, '/'), '#').'/page/[1-9][0-9]*/$#', $pagePath) !== 1) {
+            return null;
+        }
+
+        return $normalized;
     }
 
     private function normalizeProductUrl(string $url, ?string $baseUrl = null): ?string
     {
         $url = $this->normalizeUrl($url, $baseUrl);
 
-        if ($url === null || ! $this->isWojdakUrl($url)) {
+        if ($url === null || ! $this->isWojdakShopUrl($url)) {
             return null;
         }
 
@@ -289,7 +401,7 @@ final class WojdakProductUrlScraper
             return null;
         }
 
-        return 'https://'.self::WOJDAK_HOST.$this->normalizePath($path);
+        return 'https://'.self::WOJDAK_SHOP_HOST.$this->normalizePath($path);
     }
 
     private function normalizeUrl(string $url, ?string $baseUrl = null): ?string
@@ -308,7 +420,7 @@ final class WojdakProductUrlScraper
         if (str_starts_with($url, '//')) {
             $url = 'https:'.$url;
         } elseif (str_starts_with($url, '/')) {
-            $url = 'https://'.self::WOJDAK_HOST.$url;
+            $url = 'https://'.self::WOJDAK_SHOP_HOST.$url;
         } elseif (! preg_match('#^https?://#i', $url)) {
             if ($baseUrl === null) {
                 return null;
@@ -336,14 +448,21 @@ final class WojdakProductUrlScraper
 
         $path = $parts['path'] ?? '/';
 
-        return $parts['scheme'].'://'.$parts['host'].$path;
+        return 'https://'.$parts['host'].$path;
     }
 
     private function looksLikeProductPath(string $path): bool
     {
         $path = mb_strtolower($this->normalizePath($path));
 
-        return preg_match('#^/product/[a-z0-9][a-z0-9\-]*/$#', $path) === 1;
+        return preg_match('#^/produkt/[a-z0-9][a-z0-9\-]*/$#', $path) === 1;
+    }
+
+    private function normalizeCategoryRootPath(string $path): string
+    {
+        $path = $this->normalizePath($path);
+
+        return preg_replace('#/page/[1-9][0-9]*/$#', '/', $path) ?: $path;
     }
 
     private function normalizePath(string $path): string
@@ -354,10 +473,10 @@ final class WojdakProductUrlScraper
         return rtrim($path, '/').'/';
     }
 
-    private function isWojdakUrl(string $url): bool
+    private function isWojdakShopUrl(string $url): bool
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return $host === self::WOJDAK_HOST || $host === 'www.'.self::WOJDAK_HOST;
+        return is_string($host) && mb_strtolower($host) === self::WOJDAK_SHOP_HOST;
     }
 }

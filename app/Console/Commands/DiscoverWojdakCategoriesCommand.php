@@ -10,12 +10,12 @@ use Illuminate\Console\Command;
 final class DiscoverWojdakCategoriesCommand extends Command
 {
     protected $signature = 'wojdak:categories
-        {--category=* : Wojdak root category URL to scan. Defaults to women and men medical clothing roots.}
+        {--category=* : Wojdak shop category URL to list. Defaults to the hard-coded Wojdak shop categories.}
         {--json : Print the discovery result as JSON.}
         {--save= : Save the discovery result as JSON under storage/app.}
-        {--show-failures : Print failed root category URLs.}';
+        {--show-failures : Print failed Wojdak category URLs.}';
 
-    protected $description = 'Discover Wojdak category URLs for phase 1 of the Wojdak product scraper.';
+    protected $description = 'List hard-coded Wojdak shop category URLs for the Wojdak product scraper.';
 
     public function __construct(
         private readonly WojdakCategoryUrlScraper $scraper,
@@ -25,9 +25,9 @@ final class DiscoverWojdakCategoriesCommand extends Command
 
     public function handle(): int
     {
-        $rootCategories = $this->option('category') ?: WojdakCategoryUrlScraper::DEFAULT_ROOT_CATEGORY_URLS;
+        $rootCategories = $this->option('category') ?: WojdakCategoryUrlScraper::DEFAULT_CATEGORY_URLS;
 
-        $this->info('Discovering Wojdak category URLs...');
+        $this->info('Listing Wojdak shop category URLs...');
 
         $result = $this->scraper->scrape(
             startUrls: $rootCategories,
@@ -36,8 +36,7 @@ final class DiscoverWojdakCategoriesCommand extends Command
 
         $categoryUrls = $result['category_urls'];
 
-        $this->info('Visited root categories: '.count($result['visited_urls']));
-        $this->info('Discovered category URLs: '.count($categoryUrls));
+        $this->info('Configured category URLs: '.count($categoryUrls));
 
         if ((bool) $this->option('json')) {
             $this->line(json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
@@ -49,7 +48,7 @@ final class DiscoverWojdakCategoriesCommand extends Command
 
         if ((bool) $this->option('show-failures') && $result['failed_urls'] !== []) {
             $this->newLine();
-            $this->warn('Failed root category URLs:');
+            $this->warn('Failed Wojdak category URLs:');
 
             foreach ($result['failed_urls'] as $url => $reason) {
                 $this->line($url.' - '.$reason);

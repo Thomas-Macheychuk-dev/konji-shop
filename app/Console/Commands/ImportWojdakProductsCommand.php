@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Services\Wojdak\WojdakCategoryUrlScraper;
 use App\Services\Wojdak\WojdakProductImporter;
 use App\Services\Wojdak\WojdakProductNormalizer;
 use App\Services\Wojdak\WojdakProductPayloadExtractor;
@@ -16,13 +15,14 @@ final class ImportWojdakProductsCommand extends Command
 {
     protected $signature = 'wojdak:import
         {--url=* : Wojdak product URL to import. If passed, category discovery is skipped.}
-        {--category=* : Wojdak category URL to scan. If omitted, phase 1 category discovery is used.}
-        {--root-category=* : Wojdak root category URL for phase 1 category discovery. Defaults to women and men medical clothing roots.}
+        {--category=* : Wojdak shop category URL to scan. If omitted, the hard-coded Wojdak shop categories are used.}
+        {--root-category=* : Deprecated alias for --category kept for backwards compatibility.}
         {--limit= : Stop after discovering/importing this many product URLs.}
+        {--max-pages= : Stop after visiting this many paginated pages per category during URL discovery.}
         {--dry-run : Fetch and normalize products without writing them to the database.}
         {--show-failures : Print failed category/product URLs.}';
 
-    protected $description = 'Import Wojdak products as draft products with size variants generated from configured Wojdak size tables.';
+    protected $description = 'Import Wojdak shop products as draft products with variants scraped from WooCommerce product pages.';
 
     public function __construct(
         private readonly WojdakProductUrlScraper $productUrlScraper,
@@ -40,17 +40,17 @@ final class ImportWojdakProductsCommand extends Command
         $failed = [];
 
         if ($productUrls === []) {
-            $categoryUrls = $this->option('category') ?: [];
-            $rootCategoryUrls = $this->option('root-category') ?: WojdakCategoryUrlScraper::DEFAULT_ROOT_CATEGORY_URLS;
+            $categoryUrls = $this->option('category') ?: ($this->option('root-category') ?: []);
+            $maxPages = $this->option('max-pages') !== null ? max(1, (int) $this->option('max-pages')) : null;
             $shouldDiscoverCategories = $categoryUrls === [];
 
             $this->info('Discovering Wojdak product URLs...');
 
             $discovery = $this->productUrlScraper->scrape(
                 categoryUrls: $categoryUrls,
-                rootCategoryUrls: $rootCategoryUrls,
                 discoverCategories: $shouldDiscoverCategories,
                 limit: $limit,
+                maxPages: $maxPages,
             );
 
             $productUrls = $discovery['product_urls'];

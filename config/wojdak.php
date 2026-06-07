@@ -3,7 +3,14 @@
 declare(strict_types=1);
 
 return [
-    'base_url' => 'https://wojdak.pl',
+    'base_url' => 'https://sklep.wojdak.pl',
+
+    'category_urls' => [
+        'https://sklep.wojdak.pl/kategoria-produktu/odziez-medyczna/odziez-damska/',
+        'https://sklep.wojdak.pl/kategoria-produktu/obuwie-medyczne/obuwie-damskie/',
+        'https://sklep.wojdak.pl/kategoria-produktu/odziez-medyczna/odziez-meska/',
+        'https://sklep.wojdak.pl/kategoria-produktu/obuwie-medyczne/obuwie-meskie/',
+    ],
 
     'attributes' => [
         'size' => [

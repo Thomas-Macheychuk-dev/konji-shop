@@ -19,15 +19,18 @@ final class WojdakProductNormalizer
      */
     public function normalize(array $payload): array
     {
-        $name = $this->stringOrNull($payload['name'] ?? null) ?: 'Wojdak product';
-        $externalId = $this->stringOrNull($payload['external_id'] ?? null) ?: Str::slug($name);
+        $sourceName = $this->stringOrNull($payload['name'] ?? null) ?: 'Wojdak product';
+        $name = $this->ensureWojdakSuffix($sourceName);
+        $externalId = $this->stringOrNull($payload['external_id'] ?? null) ?: Str::slug($sourceName);
+        $parentSku = $this->stringOrNull($payload['parent_sku'] ?? null);
         $variantResult = $this->variantBuilder->build($payload);
 
         return [
             'external_id' => $externalId,
-            'external_parent_sku' => 'WOJDAK-'.Str::upper(Str::slug($externalId, '-')),
+            'external_parent_sku' => $parentSku !== null ? 'WOJDAK-'.Str::upper(Str::slug($parentSku, '-')) : 'WOJDAK-'.Str::upper(Str::slug($externalId, '-')),
             'name' => $name,
-            'slug' => $externalId,
+            'source_name' => $sourceName,
+            'slug' => Str::slug($name),
             'short_description_html' => $this->shortDescription($payload),
             'description_html' => $this->description($payload),
             'category_url' => $payload['category_url'] ?? null,
@@ -79,6 +82,18 @@ final class WojdakProductNormalizer
         $blocks = array_values(array_filter($blocks, fn (?string $block): bool => is_string($block) && trim(strip_tags($block)) !== ''));
 
         return $blocks === [] ? null : implode('', $blocks);
+    }
+
+
+    private function ensureWojdakSuffix(string $name): string
+    {
+        $name = trim($name);
+
+        if (preg_match('/\bWojdak$/iu', $name) === 1) {
+            return $name;
+        }
+
+        return $name.' Wojdak';
     }
 
     private function cleanHtml(string $html): string
