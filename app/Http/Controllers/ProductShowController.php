@@ -15,6 +15,7 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Shop\ShopSettings;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -26,7 +27,10 @@ class ProductShowController extends Controller
 
     public function __invoke(Product $product): View
     {
-        abort_unless($product->status?->isActive() === true, 404);
+        $isActive = $product->status?->isActive() === true;
+        $isAdminPreview = ! $isActive && $this->currentUserCanPreviewInactiveProducts();
+
+        abort_unless($isActive || $isAdminPreview, 404);
 
         $product->load([
             'mainImage',
@@ -80,7 +84,14 @@ class ProductShowController extends Controller
             'openGraphImage' => $openGraphImage,
             'openGraphType' => 'product',
             'structuredData' => $structuredData,
+            'isAdminPreview' => $isAdminPreview,
+            'robots' => $isAdminPreview ? 'noindex, nofollow' : null,
         ]);
+    }
+
+    private function currentUserCanPreviewInactiveProducts(): bool
+    {
+        return Auth::user()?->is_admin === true;
     }
 
     private function seoTitle(Product $product): string

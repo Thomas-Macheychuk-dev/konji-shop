@@ -17,6 +17,12 @@
             </div>
         @endif
 
+        @if ($isAdminPreview ?? false)
+            <div class="mb-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                Podgląd administracyjny: ten produkt ma status {{ $product->status?->label() ?? 'nieznany' }} i nie jest widoczny publicznie.
+            </div>
+        @endif
+
         @if ($errors->any())
             <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {{ $errors->first() }}
