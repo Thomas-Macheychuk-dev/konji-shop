@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AttributeDisplayType;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
@@ -42,8 +43,18 @@ it('extracts Wojdak shop product payload from a WooCommerce clothing page', func
             ['code' => 'rozmiar_damski', 'name' => 'Rozmiar damski', 'value' => '34'],
             ['code' => 'wzrost_damski', 'name' => 'Wzrost damski', 'value' => '164 (161-166 cm)'],
             ['code' => 'kolory', 'name' => 'Kolor', 'value' => '196'],
+            ['code' => 'kolor_wstawek', 'name' => 'Kolor wstawek', 'value' => '196'],
             ['code' => 'tkaniny', 'name' => 'Tkanina', 'value' => 'Charlotte (50%BW 50%PES 180g/m2)'],
             ['code' => 'dlugosc_rekawa', 'name' => 'Długość rękawa', 'value' => 'Krótki'],
+        ])
+        ->and(collect($payload['woocommerce_variations'][0]['attributes'])->firstWhere('code', 'kolory'))->toMatchArray([
+            'swatch_type' => 'color',
+            'swatch_value' => '#2e619c',
+        ])
+        ->and(collect($payload['woocommerce_variations'][0]['attributes'])->firstWhere('code', 'kolor_wstawek'))->toMatchArray([
+            'name' => 'Kolor wstawek',
+            'swatch_type' => 'color',
+            'swatch_value' => '#2e619c',
         ]);
 });
 
@@ -124,9 +135,18 @@ it('imports a Wojdak shop product as draft with scraped active priced variants, 
             '34',
             '164 (161-166 cm)',
             '196',
+            '196',
             'Charlotte (50%BW 50%PES 180g/m2)',
             'Krótki',
         ]);
+
+    $colourAttribute = Attribute::query()->where('external_attribute_id', 'wojdak-kolory')->firstOrFail();
+    $insetColourAttribute = Attribute::query()->where('external_attribute_id', 'wojdak-kolor_wstawek')->firstOrFail();
+
+    expect($colourAttribute->display_type)->toBe(AttributeDisplayType::COLOR_SWATCH)
+        ->and($insetColourAttribute->display_type)->toBe(AttributeDisplayType::COLOR_SWATCH)
+        ->and($colourAttribute->values()->where('value', '196')->firstOrFail()->swatch_value)->toBe('#2e619c')
+        ->and($insetColourAttribute->values()->where('value', '196')->firstOrFail()->swatch_value)->toBe('#2e619c');
 
     expect(Attribute::query()->where('external_attribute_id', 'wojdak-rozmiar_damski')->exists())->toBeTrue()
         ->and(Attribute::query()->where('external_attribute_id', 'wojdak-wzrost_damski')->exists())->toBeTrue()
@@ -173,6 +193,7 @@ function wojdakShopFemaleBlouseHtml(): string
                 'attribute_pa_rozmiar-damski' => '34',
                 'attribute_pa_wzrost-damski' => '164-161-166cm',
                 'attribute_pa_kolory' => '196',
+                'attribute_pa_kolor-wstawek' => '196',
                 'attribute_pa_tkaniny' => '6',
                 'attribute_pa_dlugosc-rekawa' => 'krotki',
             ],
@@ -193,6 +214,7 @@ function wojdakShopFemaleBlouseHtml(): string
                 'attribute_pa_rozmiar-damski' => '50',
                 'attribute_pa_wzrost-damski' => '170-167-172cm',
                 'attribute_pa_kolory' => '201',
+                'attribute_pa_kolor-wstawek' => '201',
                 'attribute_pa_tkaniny' => '1',
                 'attribute_pa_dlugosc-rekawa' => 'krotki',
             ],
@@ -240,9 +262,20 @@ function wojdakShopFemaleBlouseHtml(): string
                         <select name="attribute_pa_wzrost-damski" data-attribute_name="attribute_pa_wzrost-damski">
                             <option value="">Wybierz opcję</option><option value="164-161-166cm">164-161-166cm</option><option value="170-167-172cm">170-167-172cm</option>
                         </select>
-                        <select name="attribute_pa_kolory" data-attribute_name="attribute_pa_kolory">
+                        <select id="pa_kolory" name="attribute_pa_kolory" data-attribute_name="attribute_pa_kolory">
                             <option value="">Wybierz opcję</option><option value="196">196</option><option value="201">201</option>
                         </select>
+                        <div class="attribute-swatch">
+                            <label selectid="pa_kolory" data-option="196" selectedtext="196" title="196" style="background-color:#2e619c; width:22px; height:22px;"></label>
+                            <label selectid="pa_kolory" data-option="201" selectedtext="201" title="201" style="background-color:#00112f; width:22px; height:22px;"></label>
+                        </div>
+                        <select id="pa_kolor-wstawek" name="attribute_pa_kolor-wstawek" data-attribute_name="attribute_pa_kolor-wstawek">
+                            <option value="">Wybierz opcję</option><option value="196">196</option><option value="201">201</option>
+                        </select>
+                        <div class="attribute-swatch">
+                            <label selectid="pa_kolor-wstawek" data-option="196" selectedtext="196" title="196" style="background-color:#2e619c; width:22px; height:22px;"></label>
+                            <label selectid="pa_kolor-wstawek" data-option="201" selectedtext="201" title="201" style="background-color:#00112f; width:22px; height:22px;"></label>
+                        </div>
                         <select name="attribute_pa_tkaniny" data-attribute_name="attribute_pa_tkaniny">
                             <option value="">Wybierz opcję</option><option value="6">Charlotte (50%BW 50%PES 180g/m2)</option><option value="1">Teredo (35%BW 65%PES 195g/m2)</option>
                         </select>
