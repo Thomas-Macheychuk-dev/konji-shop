@@ -65,7 +65,7 @@
         @endphp
 
         <div class="grid gap-6 lg:grid-cols-3">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm lg:col-span-3">
                 <h2 class="text-lg font-semibold text-zinc-900">Szczegóły produktu</h2>
 
                 <form
@@ -257,7 +257,7 @@
                 </form>
             </div>
 
-            <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm lg:col-span-2">
+            <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm lg:col-span-3">
                 <div class="flex flex-col gap-5 lg:flex-row lg:items-start">
                     <div class="w-full lg:w-64">
                         <h2 class="text-lg font-semibold text-zinc-900">Domyślne zdjęcie produktu</h2>
