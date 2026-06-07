@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AttributeDisplayType;
 use App\Enums\CategoryStatus;
 use App\Enums\Currency;
 use App\Enums\ProductStatus;
@@ -15,6 +16,8 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -141,6 +144,241 @@ it('shows the admin product index', function (): void {
         ->assertSee('Produkty')
         ->assertSee('Editable Product')
         ->assertSee('1 z brakującą wagą/wymiarami');
+});
+
+
+
+it('shows a create product button on the admin product index', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.index'))
+        ->assertOk()
+        ->assertSee('Stwórz produkt')
+        ->assertSee(route('admin.products.create'), false);
+});
+
+it('shows the admin product create page', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    createCategoryForAdminProductEditorTest('Bluzy Damskie', 'bluzy-damskie');
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.create'))
+        ->assertOk()
+        ->assertSee('Stwórz produkt')
+        ->assertSee('Szczegóły produktu')
+        ->assertSee('Warianty produktu')
+        ->assertSee('Zdjęcia produktu')
+        ->assertSee('Nazwa produktu')
+        ->assertSee('SKU')
+        ->assertSee('Cena brutto')
+        ->assertSee('Waga paczki')
+        ->assertSee('Atrybuty wariantu')
+        ->assertSee('Bluzy Damskie');
+});
+
+it('allows an admin to create a product with variants and attributes', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $category = createCategoryForAdminProductEditorTest('Bluzy Damskie', 'bluzy-damskie');
+
+    $this
+        ->actingAs($admin)
+        ->post(route('admin.products.store'), [
+            'name' => 'Ręcznie tworzony produkt',
+            'slug' => '',
+            'short_description' => 'Krótki opis produktu.',
+            'description' => '<p>Opis HTML produktu.</p>',
+            'seo_title' => 'SEO ręcznego produktu',
+            'seo_description' => 'Opis SEO ręcznego produktu.',
+            'status' => ProductStatus::DRAFT->value,
+            'category_id' => $category->id,
+            'default_variant_index' => 1,
+            'variants' => [
+                0 => [
+                    'sku' => 'MANUAL-S',
+                    'status' => ProductVariantStatus::ACTIVE->value,
+                    'gross_price' => '123,00',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                    'stock_status' => StockStatus::IN_STOCK->value,
+                    'package_weight_grams' => 500,
+                    'package_length_mm' => 300,
+                    'package_width_mm' => 200,
+                    'package_height_mm' => 100,
+                    'attributes' => [
+                        0 => [
+                            'name' => 'Rozmiar',
+                            'value' => 'S',
+                            'display_type' => AttributeDisplayType::RADIO->value,
+                        ],
+                    ],
+                ],
+                1 => [
+                    'sku' => 'MANUAL-M',
+                    'status' => ProductVariantStatus::ACTIVE->value,
+                    'gross_price' => '123.00',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                    'stock_status' => StockStatus::PREORDER->value,
+                    'package_weight_grams' => 550,
+                    'package_length_mm' => 310,
+                    'package_width_mm' => 210,
+                    'package_height_mm' => 110,
+                    'attributes' => [
+                        0 => [
+                            'name' => 'Rozmiar',
+                            'value' => 'M',
+                            'display_type' => AttributeDisplayType::RADIO->value,
+                        ],
+                    ],
+                ],
+                2 => [
+                    'sku' => '',
+                    'status' => ProductVariantStatus::ACTIVE->value,
+                    'gross_price' => '',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                    'stock_status' => StockStatus::IN_STOCK->value,
+                    'package_weight_grams' => '',
+                    'package_length_mm' => '',
+                    'package_width_mm' => '',
+                    'package_height_mm' => '',
+                    'attributes' => [],
+                ],
+            ],
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Produkt został utworzony.');
+
+    $product = Product::query()
+        ->where('slug', 'recznie-tworzony-produkt')
+        ->firstOrFail();
+
+    expect($product)
+        ->name->toBe('Ręcznie tworzony produkt')
+        ->short_description->toBe('Krótki opis produktu.')
+        ->description->toBe('<p>Opis HTML produktu.</p>')
+        ->seo_title->toBe('SEO ręcznego produktu')
+        ->seo_description->toBe('Opis SEO ręcznego produktu.')
+        ->status->toBe(ProductStatus::DRAFT)
+        ->and($product->categories()->pluck('categories.id')->all())->toBe([$category->id]);
+
+    $variants = $product->variants()->with('attributeValues.attribute')->orderBy('sku')->get();
+
+    expect($variants)->toHaveCount(2)
+        ->and($variants[0]->sku)->toBe('MANUAL-M')
+        ->and($variants[0]->is_default)->toBeTrue()
+        ->and($variants[0]->stock_status)->toBe(StockStatus::PREORDER)
+        ->and($variants[0]->price_net_amount)->toBe(10000)
+        ->and($variants[0]->package_weight_grams)->toBe(550)
+        ->and($variants[0]->attributeValues->first()?->attribute?->name)->toBe('Rozmiar')
+        ->and($variants[0]->attributeValues->first()?->attribute?->display_type)->toBe(AttributeDisplayType::RADIO)
+        ->and($variants[0]->attributeValues->first()?->value)->toBe('M')
+        ->and($variants[1]->sku)->toBe('MANUAL-S')
+        ->and($variants[1]->is_default)->toBeFalse()
+        ->and($variants[1]->price_net_amount)->toBe(10000)
+        ->and($variants[1]->attributeValues->first()?->value)->toBe('S');
+});
+
+
+it('allows an admin to upload product images while creating a product', function (): void {
+    Storage::fake('public');
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->post(route('admin.products.store'), [
+            'name' => 'Produkt ze zdjęciami',
+            'status' => ProductStatus::DRAFT->value,
+            'product_images' => [
+                UploadedFile::fake()->image('front.jpg', 800, 800),
+                UploadedFile::fake()->image('side.png', 800, 800),
+            ],
+            'variants' => [
+                0 => [
+                    'sku' => 'IMAGE-PRODUCT-001',
+                    'status' => ProductVariantStatus::ACTIVE->value,
+                    'gross_price' => '99.99',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                    'stock_status' => StockStatus::IN_STOCK->value,
+                    'package_weight_grams' => 500,
+                    'package_length_mm' => 300,
+                    'package_width_mm' => 200,
+                    'package_height_mm' => 100,
+                    'attributes' => [],
+                ],
+            ],
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Produkt został utworzony.');
+
+    $product = Product::query()
+        ->where('slug', 'produkt-ze-zdjeciami')
+        ->with('images')
+        ->firstOrFail();
+
+    expect($product->images)->toHaveCount(2)
+        ->and($product->images[0]->is_main)->toBeTrue()
+        ->and($product->images[1]->is_main)->toBeFalse()
+        ->and($product->default_image_type)->toBe(Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE)
+        ->and($product->default_image_id)->toBe($product->images[0]->id);
+
+    foreach ($product->images as $image) {
+        expect($image->disk)->toBe('public')
+            ->and($image->alt_text)->toBe('Produkt ze zdjęciami')
+            ->and($image->title)->toBe('Produkt ze zdjęciami')
+            ->and(str_starts_with((string) $image->mime_type, 'image/'))->toBeTrue()
+            ->and($image->file_size)->not->toBeNull()
+            ->and($image->sha256)->not->toBeNull();
+
+        Storage::disk('public')->assertExists($image->path);
+    }
+});
+
+
+it('validates product creation when no variant is provided', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->post(route('admin.products.store'), [
+            'name' => 'Invalid product',
+            'status' => ProductStatus::DRAFT->value,
+            'variants' => [
+                0 => [
+                    'sku' => '',
+                    'status' => ProductVariantStatus::ACTIVE->value,
+                    'gross_price' => '',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                    'stock_status' => StockStatus::IN_STOCK->value,
+                    'package_weight_grams' => '',
+                    'package_length_mm' => '',
+                    'package_width_mm' => '',
+                    'package_height_mm' => '',
+                    'attributes' => [],
+                ],
+            ],
+        ])
+        ->assertSessionHasErrors(['variants']);
+
+    expect(Product::query()->where('name', 'Invalid product')->exists())->toBeFalse();
 });
 
 it('shows the admin product edit page with variants', function (): void {

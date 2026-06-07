@@ -20,12 +20,14 @@ use App\Http\Controllers\Admin\Orders\AdminShipmentProtocolController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentStatusRefreshController;
 use App\Http\Controllers\Admin\Orders\OrderFulfilmentController;
 use App\Http\Controllers\Admin\Products\AdminProductActivatePricedVariantsController;
+use App\Http\Controllers\Admin\Products\AdminProductCreateController;
 use App\Http\Controllers\Admin\Products\AdminProductDefaultImageUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductEditController;
 use App\Http\Controllers\Admin\Products\AdminProductIndexController;
 use App\Http\Controllers\Admin\Products\AdminProductPackageDimensionsUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductPricesUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductStockStatusUpdateController;
+use App\Http\Controllers\Admin\Products\AdminProductStoreController;
 use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantPricesUpdateController;
@@ -131,6 +133,12 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/products', AdminProductIndexController::class)
             ->name('products.index');
+
+        Route::get('/products/create', AdminProductCreateController::class)
+            ->name('products.create');
+
+        Route::post('/products', AdminProductStoreController::class)
+            ->name('products.store');
 
         Route::get('/products/{product}/edit', AdminProductEditController::class)
             ->name('products.edit');

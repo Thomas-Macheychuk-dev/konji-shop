@@ -35,6 +35,7 @@ return [
         'select' => 'Lista wyboru',
         'radio' => 'Przyciski opcji',
         'color_swatch' => 'Próbnik koloru',
+        'text' => 'Tekst',
     ],
 
     'stock_status' => [

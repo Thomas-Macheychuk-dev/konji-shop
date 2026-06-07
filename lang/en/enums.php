@@ -35,6 +35,7 @@ return [
         'select' => 'Select',
         'radio' => 'Radio',
         'color_swatch' => 'Color swatch',
+        'text' => 'Text',
     ],
 
     'stock_status' => [

@@ -14,10 +14,10 @@
             </div>
 
             <a
-                href="{{ route('admin.orders.index') }}"
+                href="{{ route('admin.products.create') }}"
                 class="rounded-xl border border-zinc-300 px-4 py-2 text-sm font-semibold text-zinc-700 hover:bg-zinc-50"
             >
-                Zamówienia
+                Stwórz produkt
             </a>
         </div>
 
