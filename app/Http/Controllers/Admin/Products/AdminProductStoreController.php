@@ -58,6 +58,7 @@ final class AdminProductStoreController extends Controller
                     'sku' => $variantData['sku'],
                     'status' => $variantData['status'],
                     'price_net_amount' => $vatRate->netFromGross((int) $variantData['gross_price_amount']),
+                    'price_gross_amount' => (int) $variantData['gross_price_amount'],
                     'currency' => $variantData['currency'],
                     'vat_rate' => $vatRate->value,
                     'stock_status' => $variantData['stock_status'],

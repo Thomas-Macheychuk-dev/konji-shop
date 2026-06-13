@@ -1,0 +1,164 @@
+diff --git a/app/Console/Commands/ImportMobilexProductsCommand.php b/app/Console/Commands/ImportMobilexProductsCommand.php
+index 8333ec8..72e919f 100644
+--- a/app/Console/Commands/ImportMobilexProductsCommand.php
++++ b/app/Console/Commands/ImportMobilexProductsCommand.php
+@@ -17,7 +17,7 @@ final class ImportMobilexProductsCommand extends Command
+         {--no-images : Do not download or sync product images.}
+         {--show-failures : Print failed product imports at the end.}';
+ 
+-    protected $description = 'Import Mobilex products from inspected JSON into draft Konji Shop products.';
++    protected $description = 'Import Mobilex products from inspected JSON into active Konji Shop products.';
+ 
+     public function __construct(
+         private readonly MobilexProductImporter $importer,
+diff --git a/app/Services/Mobilex/MobilexProductImporter.php b/app/Services/Mobilex/MobilexProductImporter.php
+index 1c5ad15..3af6f8d 100644
+--- a/app/Services/Mobilex/MobilexProductImporter.php
++++ b/app/Services/Mobilex/MobilexProductImporter.php
+@@ -98,7 +98,7 @@ private function resolveProduct(array $normalized, string $externalId): Product
+             'description' => $this->cleanHtml($this->stringOrNull($normalized['description_html'] ?? null)),
+             'seo_title' => $this->stringOrNull($normalized['seo_title'] ?? null),
+             'seo_description' => $this->stringOrNull($normalized['seo_description'] ?? null),
+-            'status' => ProductStatus::DRAFT,
++            'status' => ProductStatus::ACTIVE,
+             'external_source' => 'mobilex',
+             'external_id' => $externalId,
+             'external_parent_sku' => $this->stringOrNull($normalized['slug'] ?? null),
+@@ -450,7 +450,7 @@ private function syncVariants(Product $product, array $normalized): void
+                     'price_gross_amount' => $this->variantPriceGrossAmount($candidate),
+                     'currency' => Currency::PLN,
+                     'vat_rate' => $vatRate,
+-                    'stock_status' => StockStatus::OUT_OF_STOCK,
++                    'stock_status' => StockStatus::IN_STOCK,
+                     'is_default' => $index === 0,
+                 ]
+             );
+@@ -484,7 +484,7 @@ private function syncDefaultVariant(Product $product, array $normalized): void
+                 'price_gross_amount' => $this->defaultVariantPriceGrossAmount($normalized),
+                 'currency' => Currency::PLN,
+                 'vat_rate' => $vatRate,
+-                'stock_status' => StockStatus::OUT_OF_STOCK,
++                'stock_status' => StockStatus::IN_STOCK,
+                 'is_default' => true,
+             ]
+         );
+@@ -866,8 +866,10 @@ private function cleanHtml(?string $html): ?string
+             return null;
+         }
+ 
++        $html = $this->removeIframes($html);
+         $html = $this->removeParagraphsContainingMobilexServiceLink($html);
+         $html = $this->removeServiceSections($html);
++        $html = $this->removeLinks($html);
+         $html = preg_replace('/<!--\s*wp:themify-builder\/canvas\s*\/-->/i', '', $html) ?? $html;
+         $html = preg_replace('/<p>\s*(?:&nbsp;)?\s*<\/p>/i', '', $html) ?? $html;
+         $html = trim(preg_replace('/\s+/', ' ', $html) ?? $html);
+@@ -875,6 +877,13 @@ private function cleanHtml(?string $html): ?string
+         return $html === '' ? null : $html;
+     }
+ 
++    private function removeIframes(string $html): string
++    {
++        $html = preg_replace('/<iframe\b[^>]*>.*?<\/iframe>/isu', '', $html) ?? $html;
++
++        return preg_replace('/<iframe\b[^>]*\/?>/isu', '', $html) ?? $html;
++    }
++
+     private function removeParagraphsContainingMobilexServiceLink(string $html): string
+     {
+         return preg_replace(
+@@ -884,6 +893,17 @@ private function removeParagraphsContainingMobilexServiceLink(string $html): str
+         ) ?? $html;
+     }
+ 
++    private function removeLinks(string $html): string
++    {
++        $html = preg_replace_callback(
++            '/<a\b[^>]*>(.*?)<\/a>/isu',
++            fn (array $matches): string => $matches[1],
++            $html
++        ) ?? $html;
++
++        return preg_replace('/(?<![\"\'=])https?:\/\/[^\s<>"]+/iu', '', $html) ?? $html;
++    }
++
+     private function removeServiceSections(string $html): string
+     {
+         return preg_replace_callback(
+diff --git a/tests/Feature/Mobilex/MobilexProductImporterTest.php b/tests/Feature/Mobilex/MobilexProductImporterTest.php
+index b524860..98ca499 100644
+--- a/tests/Feature/Mobilex/MobilexProductImporterTest.php
++++ b/tests/Feature/Mobilex/MobilexProductImporterTest.php
+@@ -34,7 +34,7 @@
+         ->and(Attribute::query()->count())->toBe(0);
+ });
+ 
+-it('imports Mobilex inspected JSON as draft products with categories producer metadata and variants from specification', function (): void {
++it('imports Mobilex inspected JSON as active products with categories producer metadata and variants from specification', function (): void {
+     $path = storage_path('app/mobilex/test-product-data.json');
+ 
+     if (! is_dir(dirname($path))) {
+@@ -58,7 +58,7 @@
+ 
+     expect($product->name)->toBe('Wózek inwalidzki ręczny aluminiowy FLIPPER WHEELCHAIR')
+         ->and($product->slug)->toBe('wozek-inwalidzki-flipper')
+-        ->and($product->status->isDraft())->toBeTrue()
++        ->and($product->status->isActive())->toBeTrue()
+         ->and($product->seo_title)->toBe('Flipper SEO title')
+         ->and($product->description)->not->toContain('themify-builder');
+ 
+@@ -84,7 +84,7 @@
+         ->and($variant->price_net_amount)->toBe(VatRate::VAT_8->netFromGross(250000))
+         ->and($variant->price_gross_amount)->toBe(250000)
+         ->and($variant->grossPriceAmount())->toBe(250000)
+-        ->and($variant->stock_status->isOutOfStock())->toBeTrue()
++        ->and($variant->stock_status->isInStock())->toBeTrue()
+         ->and($variant->attributeValues()->where('value', 'nr art. 271940')->exists())->toBeTrue();
+ 
+     expect($product->images()->count())->toBe(0);
+@@ -302,6 +302,45 @@
+         ->and($product->description)->toContain('Keep final paragraph.');
+ });
+ 
++it('removes links and iframes from imported descriptions', function (): void {
++    $path = storage_path('app/mobilex/test-link-and-iframe-description-data.json');
++
++    if (! is_dir(dirname($path))) {
++        mkdir(dirname($path), 0755, true);
++    }
++
++    $payload = mobilexImporterProductPayload([
++        'external_product_id' => '99905',
++        'slug' => 'description-with-links-and-iframe',
++        'name' => 'Description with links and iframe',
++        'description_html' => '<p>Read <a href="https://example.com/manual" target="_blank">manual text</a> before use.</p><iframe src="https://www.youtube.com/embed/example"><p>Hidden video text</p></iframe><p>Plain link https://example.com/plain should disappear.</p>',
++        'variant_candidates' => [],
++    ]);
++
++    file_put_contents($path, json_encode([
++        'source' => 'mobilex',
++        'products' => [$payload],
++    ], JSON_THROW_ON_ERROR));
++
++    $this->artisan('mobilex:import', [
++        '--data' => 'mobilex/test-link-and-iframe-description-data.json',
++        '--no-images' => true,
++    ])->assertSuccessful();
++
++    $product = Product::query()
++        ->where('external_source', 'mobilex')
++        ->where('external_id', '99905')
++        ->firstOrFail();
++
++    expect($product->description)->toContain('manual text')
++        ->and($product->description)->not->toContain('<a ')
++        ->and($product->description)->not->toContain('href=')
++        ->and($product->description)->not->toContain('https://example.com/manual')
++        ->and($product->description)->not->toContain('https://example.com/plain')
++        ->and($product->description)->not->toContain('<iframe')
++        ->and($product->description)->not->toContain('Hidden video text');
++});
++
+ it('does not append the producer twice when the inspected product name already ends with it', function (): void {
+     $path = storage_path('app/mobilex/test-product-name-suffix-data.json');
+ 

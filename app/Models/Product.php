@@ -64,6 +64,12 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function attributeValues(): BelongsToMany
+    {
+        return $this->belongsToMany(AttributeValue::class, 'product_attribute_value')
+            ->withTimestamps();
+    }
+
     public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class)
