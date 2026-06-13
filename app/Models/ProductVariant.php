@@ -23,6 +23,7 @@ class ProductVariant extends Model
         'sku',
         'status',
         'price_net_amount',
+        'price_gross_amount',
         'currency',
         'vat_rate',
         'stock_status',
@@ -42,6 +43,7 @@ class ProductVariant extends Model
             'vat_rate' => VatRate::class,
             'stock_status' => StockStatus::class,
             'is_default' => 'boolean',
+            'price_gross_amount' => 'integer',
             'deleted_at' => 'datetime',
             'package_weight_grams' => 'integer',
             'package_length_mm' => 'integer',
@@ -70,6 +72,10 @@ class ProductVariant extends Model
 
     public function grossPriceAmount(): ?int
     {
+        if ($this->price_gross_amount !== null) {
+            return $this->price_gross_amount;
+        }
+
         if ($this->price_net_amount === null || $this->vat_rate === null) {
             return null;
         }
@@ -81,6 +87,10 @@ class ProductVariant extends Model
     {
         if ($this->price_net_amount === null || $this->vat_rate === null) {
             return null;
+        }
+
+        if ($this->price_gross_amount !== null) {
+            return $this->price_gross_amount - $this->price_net_amount;
         }
 
         return $this->vat_rate->vatAmountFromNet($this->price_net_amount);

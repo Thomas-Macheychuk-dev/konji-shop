@@ -21,6 +21,7 @@ final class AdminProductPricesUpdateController extends Controller
 
         $product->variants()->update([
             'price_net_amount' => $vatRate->netFromGross($grossPriceAmount),
+            'price_gross_amount' => $grossPriceAmount,
             'currency' => $request->validated('currency'),
             'vat_rate' => $vatRate->value,
         ]);

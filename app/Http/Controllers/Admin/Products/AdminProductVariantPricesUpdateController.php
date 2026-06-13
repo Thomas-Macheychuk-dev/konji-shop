@@ -27,6 +27,7 @@ final class AdminProductVariantPricesUpdateController extends Controller
                     ->whereKey((int) $variantId)
                     ->update([
                         'price_net_amount' => $vatRate->netFromGross((int) $data['gross_price_amount']),
+                        'price_gross_amount' => (int) $data['gross_price_amount'],
                         'currency' => $data['currency'],
                         'vat_rate' => $vatRate->value,
                     ]);

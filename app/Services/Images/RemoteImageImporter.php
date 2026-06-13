@@ -99,6 +99,7 @@ class RemoteImageImporter
             'image/jpeg', 'image/jpg' => 'jpg',
             'image/png' => 'png',
             'image/webp' => 'webp',
+            'image/avif' => 'avif',
             'image/gif' => 'gif',
             default => throw new RuntimeException("Unsupported image MIME type [{$mimeType}]"),
         };

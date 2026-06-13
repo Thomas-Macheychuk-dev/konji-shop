@@ -46,6 +46,12 @@ class AttributeValue extends Model
         )->withTimestamps();
     }
 
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_attribute_value')
+            ->withTimestamps();
+    }
+
     public function productImages(): HasMany
     {
         return $this->hasMany(ProductAttributeValueImage::class)
