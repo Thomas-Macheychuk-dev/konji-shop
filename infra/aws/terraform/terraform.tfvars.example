@@ -1,0 +1,43 @@
+project_name = "konji-shop"
+environment  = "staging"
+aws_region   = "eu-central-1"
+
+# Replace with your own public IP/CIDR before applying.
+# Example: ["83.12.34.56/32"]
+ssh_cidr_blocks = ["0.0.0.0/0"]
+web_cidr_blocks = ["0.0.0.0/0"]
+
+# Existing EC2 key pair name. Leave null if you use Session Manager only.
+ssh_key_name = null
+
+instance_type       = "t3.small"
+root_volume_size_gb = 30
+
+# Optional. Use HTTPS or SSH Git URL depending on repository access.
+# repository_url    = "https://github.com/Thomas-Macheychuk-dev/konji-shop.git"
+# repository_branch = "main"
+
+rds_instance_class           = "db.t4g.micro"
+rds_allocated_storage_gb     = 20
+rds_max_allocated_storage_gb = 100
+rds_engine_version           = "8.0"
+db_name                      = "konji_shop"
+db_username                  = "konji_shop"
+
+# Leave null to let Terraform generate it.
+# db_password = null
+
+rds_backup_retention_days = 7
+rds_deletion_protection   = false
+rds_skip_final_snapshot   = true
+
+# Optional exact bucket name. Must be globally unique.
+# s3_bucket_name = "konji-shop-staging-uploads-123456789012"
+
+# Optional Route 53 DNS record.
+# route53_zone_id = "Z123456789ABCDEFG"
+# domain_name     = "staging.example.pl"
+
+extra_tags = {
+  Owner = "konji-shop"
+}

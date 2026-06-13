@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get update
+apt-get install -y \
+    ca-certificates \
+    curl \
+    git \
+    gnupg \
+    lsb-release \
+    unzip \
+    jq
+
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+  > /etc/apt/sources.list.d/docker.list
+
+apt-get update
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+systemctl enable docker
+systemctl start docker
+usermod -aG docker ubuntu
+
+snap install amazon-ssm-agent --classic || true
+systemctl enable snap.amazon-ssm-agent.amazon-ssm-agent.service || true
+systemctl start snap.amazon-ssm-agent.amazon-ssm-agent.service || true
+
+mkdir -p ${project_directory}
+chown -R ubuntu:ubuntu ${project_directory}
+
+if [ -n "${repository_url}" ] && [ ! -d "${project_directory}/.git" ]; then
+    sudo -u ubuntu git clone --branch "${repository_branch}" "${repository_url}" ${project_directory}
+fi
+
+cat >/etc/profile.d/konji-shop.sh <<PROFILE
+export KONJI_SHOP_DIR=${project_directory}
+PROFILE
+
+cat >/etc/motd <<MOTD
+Konji Shop AWS host is ready.
+Project directory: ${project_directory}
+
+Next steps:
+  cd ${project_directory}
+  cp .env.production.example .env
+  nano .env
+  bash scripts/deploy/aws-production.sh
+MOTD
