@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: app
     image: konji-shop-app:local
     pull_policy: never
     user: "1000:1000"

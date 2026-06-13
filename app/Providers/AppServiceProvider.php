@@ -9,6 +9,7 @@ use App\Services\Delivery\Polkurier\PolkurierDeliveryGateway;
 use App\Services\Payments\PaymentGatewayRegistry;
 use App\Services\Payments\Paynow\PaynowGateway;
 use App\Services\Payments\Przelewy24\Przelewy24Gateway;
+use App\Services\Storefront\StorefrontCache;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -69,12 +70,34 @@ class AppServiceProvider extends ServiceProvider
     protected function composeStorefrontCategorySidebar(): void
     {
         View::composer('partials.storefront.category-sidebar', function ($view): void {
-            $view->with('storefrontSidebarCategories', Category::query()
-                ->whereNull('parent_id')
-                ->where('status', CategoryStatus::ACTIVE->value)
-                ->orderBy('name')
-                ->get(['id', 'name', 'slug']));
+            $cache = app(StorefrontCache::class);
+            $cacheKey = 'storefront.category-sidebar.v1.'.sha1(json_encode([
+                'max_updated_at' => $this->topLevelCategoryCacheTimestamp(),
+                'count' => Category::query()
+                    ->whereNull('parent_id')
+                    ->where('status', CategoryStatus::ACTIVE->value)
+                    ->count(),
+            ], JSON_THROW_ON_ERROR));
+
+            $view->with('storefrontSidebarCategories', $cache->remember(
+                $cacheKey,
+                fn () => Category::query()
+                    ->whereNull('parent_id')
+                    ->where('status', CategoryStatus::ACTIVE->value)
+                    ->orderBy('name')
+                    ->get(['id', 'name', 'slug']),
+                $cache->categorySidebarTtlSeconds(),
+            ));
         });
+    }
+
+    private function topLevelCategoryCacheTimestamp(): ?string
+    {
+        $timestamp = Category::query()
+            ->whereNull('parent_id')
+            ->max('updated_at');
+
+        return $timestamp === null ? null : (string) $timestamp;
     }
 
     /**

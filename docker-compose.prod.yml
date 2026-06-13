@@ -1,0 +1,106 @@
+name: konji-shop-prod
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
+    image: ${APP_IMAGE:-konji-shop-app:prod}
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      HOME: /tmp
+    depends_on:
+      redis:
+        condition: service_started
+    networks:
+      - konji
+    volumes:
+      - app_storage:/var/www/html/storage
+    healthcheck:
+      test: ["CMD-SHELL", "php artisan about --only=environment >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: web
+    image: ${WEB_IMAGE:-konji-shop-web:prod}
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_started
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    networks:
+      - konji
+
+  queue:
+    image: ${APP_IMAGE:-konji-shop-app:prod}
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      HOME: /tmp
+    depends_on:
+      app:
+        condition: service_started
+      redis:
+        condition: service_started
+    command: php artisan queue:work redis --sleep=3 --tries=3 --timeout=120 --max-time=3600
+    networks:
+      - konji
+    volumes:
+      - app_storage:/var/www/html/storage
+
+  scheduler:
+    image: ${APP_IMAGE:-konji-shop-app:prod}
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      HOME: /tmp
+    depends_on:
+      app:
+        condition: service_started
+      redis:
+        condition: service_started
+    command: sh -c "while true; do php artisan schedule:run --verbose --no-interaction; sleep 60; done"
+    networks:
+      - konji
+    volumes:
+      - app_storage:/var/www/html/storage
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory ${REDIS_MAXMEMORY:-256mb} --maxmemory-policy allkeys-lru
+    networks:
+      - konji
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  app_storage:
+  redis_data:
+
+networks:
+  konji:
+    driver: bridge
