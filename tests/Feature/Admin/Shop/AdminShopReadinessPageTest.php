@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ShopConfigurationValue;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
@@ -42,6 +43,11 @@ it('shows the production readiness page to admins', function (): void {
         ->assertSee('Gotowość produkcyjna')
         ->assertSee('Gotowe do produkcji')
         ->assertSee('Kontrole konfiguracji')
+        ->assertSee('Ustawienia gotowości produkcyjnej')
+        ->assertSee('Tożsamość i adres sprzedawcy')
+        ->assertSee('Adres nadawcy e-mail')
+        ->assertSee('Login Polkurier')
+        ->assertSee('Token Polkurier')
         ->assertSee('Wersje dokumentów prawnych')
         ->assertSee('Tożsamość i adres sprzedawcy')
         ->assertSee('Domyślny operator płatności')
@@ -50,6 +56,97 @@ it('shows the production readiness page to admins', function (): void {
         ->assertSee('Bazowy URL Polkurier')
         ->assertSee('Polecenie konsoli')
         ->assertSee('php artisan shop:check');
+});
+
+
+it('allows admins to update editable production readiness settings', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $sellerIdentityAddress = implode("\n", [
+        'Konji Shop Sp. z o.o.',
+        'Bolesława Prusa 20',
+        '60-406 Poznań',
+        'Poland',
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.shop.readiness.update'), [
+            'settings' => [
+                'seller_identity_address' => $sellerIdentityAddress,
+                'seller_email' => 'seller@example.test',
+                'seller_phone' => '+48 500 600 700',
+                'seller_tax_id' => '1234567890',
+                'return_address' => 'Bolesława Prusa 20, 60-406 Poznań, Poland',
+                'mail_from_address' => 'shop@example.test',
+                'polkurier_login' => 'polkurier-login',
+                'polkurier_token' => 'polkurier-token',
+            ],
+        ])
+        ->assertRedirect(route('admin.shop.readiness'))
+        ->assertSessionHasNoErrors()
+        ->assertSessionHas('status', 'Ustawienia gotowości produkcyjnej zostały zapisane.');
+
+    expect(ShopConfigurationValue::query()->count())->toBe(8);
+
+    $this->assertDatabaseHas('shop_configuration_values', [
+        'key' => 'legal.seller.identity_address',
+        'value' => $sellerIdentityAddress,
+    ]);
+
+    $this->assertDatabaseHas('shop_configuration_values', [
+        'key' => 'mail.from.address',
+        'value' => 'shop@example.test',
+    ]);
+
+    $this->assertDatabaseHas('shop_configuration_values', [
+        'key' => 'delivery.providers.polkurier.token',
+        'value' => 'polkurier-token',
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.shop.readiness'))
+        ->assertOk()
+        ->assertSee('Konji Shop Sp. z o.o.')
+        ->assertSee('seller@example.test')
+        ->assertSee('1234567890')
+        ->assertSee('polkurier-login')
+        ->assertSee('polkurier-token');
+});
+
+it('validates editable production readiness settings', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->from(route('admin.shop.readiness'))
+        ->patch(route('admin.shop.readiness.update'), [
+            'settings' => [
+                'seller_identity_address' => '',
+                'seller_email' => 'not-an-email',
+                'seller_phone' => '',
+                'seller_tax_id' => '',
+                'return_address' => '',
+                'mail_from_address' => 'not-an-email',
+                'polkurier_login' => '',
+                'polkurier_token' => '',
+            ],
+        ])
+        ->assertRedirect(route('admin.shop.readiness'))
+        ->assertSessionHasErrors([
+            'settings.seller_identity_address',
+            'settings.seller_email',
+            'settings.seller_phone',
+            'settings.return_address',
+            'settings.mail_from_address',
+            'settings.polkurier_login',
+            'settings.polkurier_token',
+        ]);
 });
 
 it('shows missing production readiness items to admins', function (): void {

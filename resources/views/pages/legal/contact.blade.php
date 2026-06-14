@@ -10,16 +10,32 @@
             </h1>
 
             <div class="prose prose-zinc mt-8 max-w-none">
+                @php
+                    $identityAddress = trim((string) config('legal.seller.identity_address'));
+                    $identityAddressLines = filled($identityAddress)
+                        ? array_values(array_filter(preg_split('/\R+/', $identityAddress) ?: [], fn (string $line): bool => trim($line) !== ''))
+                        : [];
+                @endphp
+
                 <h2>{{ config('legal.seller.shop_name') }}</h2>
 
-                <p>
-                    <strong>Firma:</strong> {{ config('legal.seller.company_name') }}<br>
-                    <strong>Reprezentant:</strong> {{ config('legal.seller.representative') }}<br>
-                    <strong>Adres:</strong>
-                    {{ config('legal.seller.street') }},
-                    {{ config('legal.seller.postcode') }} {{ config('legal.seller.city') }},
-                    {{ config('legal.seller.country') }}
-                </p>
+                @if ($identityAddressLines !== [])
+                    <p>
+                        <strong>Sprzedawca:</strong><br>
+                        @foreach ($identityAddressLines as $identityAddressLine)
+                            {{ trim($identityAddressLine) }}@if (! $loop->last)<br>@endif
+                        @endforeach
+                    </p>
+                @else
+                    <p>
+                        <strong>Firma:</strong> {{ config('legal.seller.company_name') }}<br>
+                        <strong>Reprezentant:</strong> {{ config('legal.seller.representative') }}<br>
+                        <strong>Adres:</strong>
+                        {{ config('legal.seller.street') }},
+                        {{ config('legal.seller.postcode') }} {{ config('legal.seller.city') }},
+                        {{ config('legal.seller.country') }}
+                    </p>
+                @endif
 
                 @if (filled(config('legal.seller.tax_id')))
                     <p>

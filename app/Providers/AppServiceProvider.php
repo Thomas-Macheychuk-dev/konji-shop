@@ -9,6 +9,7 @@ use App\Services\Delivery\Polkurier\PolkurierDeliveryGateway;
 use App\Services\Payments\PaymentGatewayRegistry;
 use App\Services\Payments\Paynow\PaynowGateway;
 use App\Services\Payments\Przelewy24\Przelewy24Gateway;
+use App\Services\Shop\ShopConfiguration;
 use App\Services\Storefront\StorefrontCache;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
@@ -55,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        app(ShopConfiguration::class)->applyConfigOverrides();
         $this->composeStorefrontCategorySidebar();
 
         if (Str::startsWith((string) config('app.url'), 'https://')) {

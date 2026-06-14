@@ -18,12 +18,28 @@
             </p>
 
             <div class="prose prose-zinc mt-8 max-w-none">
+                @php
+                    $identityAddress = trim((string) config('legal.seller.identity_address'));
+                    $identityAddressLines = filled($identityAddress)
+                        ? array_values(array_filter(preg_split('/\R+/', $identityAddress) ?: [], fn (string $line): bool => trim($line) !== ''))
+                        : [];
+                @endphp
+
                 <h2>Administrator danych</h2>
-                <p>
-                    Administratorem danych jest {{ config('legal.seller.company_name') }},
-                    {{ config('legal.seller.street') }},
-                    {{ config('legal.seller.postcode') }} {{ config('legal.seller.city') }}.
-                </p>
+                @if ($identityAddressLines !== [])
+                    <p>
+                        Administratorem danych jest:<br>
+                        @foreach ($identityAddressLines as $identityAddressLine)
+                            {{ trim($identityAddressLine) }}@if (! $loop->last)<br>@endif
+                        @endforeach
+                    </p>
+                @else
+                    <p>
+                        Administratorem danych jest {{ config('legal.seller.company_name') }},
+                        {{ config('legal.seller.street') }},
+                        {{ config('legal.seller.postcode') }} {{ config('legal.seller.city') }}.
+                    </p>
+                @endif
 
                 <h2>Kontakt</h2>
                 <p>

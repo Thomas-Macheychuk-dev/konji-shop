@@ -184,6 +184,11 @@ Route::middleware(['auth', 'admin'])
             AdminShopReadinessController::class
         )->name('shop.readiness');
 
+        Route::patch(
+            '/production-readiness',
+            [AdminShopReadinessController::class, 'update']
+        )->name('shop.readiness.update');
+
         Route::get('/withdrawals', AdminWithdrawalIndexController::class)
             ->name('withdrawals.index');
 

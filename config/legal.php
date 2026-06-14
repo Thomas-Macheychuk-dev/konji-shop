@@ -31,6 +31,7 @@ return [
     'seller' => [
         'shop_name' => env('SHOP_NAME', 'Konji Shop'),
         'company_name' => env('SHOP_COMPANY_NAME', 'Max-Corp'),
+        'identity_address' => env('SHOP_SELLER_IDENTITY_ADDRESS', ''),
         'representative' => env('SHOP_REPRESENTATIVE', 'Krzysztof Maciejczuk'),
         'street' => env('SHOP_STREET', 'Bolesława Prusa 20'),
         'postcode' => env('SHOP_POSTCODE', '60-406'),

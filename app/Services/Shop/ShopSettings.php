@@ -6,6 +6,10 @@ namespace App\Services\Shop;
 
 final class ShopSettings
 {
+    public function __construct(
+        private readonly ShopConfiguration $configuration,
+    ) {}
+
     public function shopName(): string
     {
         return $this->string('legal.seller.shop_name', 'Konji Shop');
@@ -13,7 +17,32 @@ final class ShopSettings
 
     public function companyName(): string
     {
+        $identityAddress = $this->string('legal.seller.identity_address');
+
+        if ($identityAddress !== '') {
+            $identityAddressLines = preg_split('/\R+/', $identityAddress) ?: [];
+            $firstLine = trim((string) ($identityAddressLines[0] ?? ''));
+
+            if ($firstLine !== '') {
+                return $firstLine;
+            }
+        }
+
         return $this->string('legal.seller.company_name', $this->shopName());
+    }
+
+    public function sellerIdentityAddress(): string
+    {
+        $identityAddress = $this->string('legal.seller.identity_address');
+
+        if ($identityAddress !== '') {
+            return $identityAddress;
+        }
+
+        return trim(implode(PHP_EOL, array_filter([
+            $this->companyName(),
+            ...$this->addressLines(),
+        ], fn (string $line): bool => $line !== '')));
     }
 
     public function representative(): string
@@ -133,6 +162,10 @@ final class ShopSettings
 
     public function hasSellerIdentity(): bool
     {
+        if ($this->sellerIdentityAddress() !== '') {
+            return true;
+        }
+
         return $this->companyName() !== ''
             && $this->street() !== ''
             && $this->postcode() !== ''
@@ -155,6 +188,6 @@ final class ShopSettings
 
     private function string(string $key, string $default = ''): string
     {
-        return trim((string) config($key, $default));
+        return $this->configuration->get($key, $default);
     }
 }

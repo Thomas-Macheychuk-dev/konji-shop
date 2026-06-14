@@ -8,6 +8,7 @@ final class ShopReadinessCheck
 {
     public function __construct(
         private readonly ShopSettings $settings,
+        private readonly ShopConfiguration $configuration,
     ) {}
 
     /**
@@ -285,7 +286,7 @@ final class ShopReadinessCheck
      */
     private function checkMailFromAddress(): array
     {
-        $mailFromAddress = trim((string) config('mail.from.address'));
+        $mailFromAddress = $this->configuration->get('mail.from.address');
 
         if ($mailFromAddress === '') {
             return $this->missing(
@@ -331,7 +332,7 @@ final class ShopReadinessCheck
      */
     private function checkPolkurierLogin(): array
     {
-        if (trim((string) config('delivery.providers.polkurier.login')) !== '') {
+        if ($this->configuration->get('delivery.providers.polkurier.login') !== '') {
             return $this->ready(
                 'Dostawa',
                 'Login Polkurier',
@@ -353,7 +354,7 @@ final class ShopReadinessCheck
      */
     private function checkPolkurierToken(): array
     {
-        if (trim((string) config('delivery.providers.polkurier.token')) !== '') {
+        if ($this->configuration->get('delivery.providers.polkurier.token') !== '') {
             return $this->ready(
                 'Dostawa',
                 'Token Polkurier',

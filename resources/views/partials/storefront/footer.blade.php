@@ -4,7 +4,11 @@
         $returns = config('legal.returns', []);
 
         $shopName = $seller['shop_name'] ?? 'Konji Shop';
-        $companyName = $seller['company_name'] ?? $shopName;
+        $identityAddress = trim((string) ($seller['identity_address'] ?? ''));
+        $identityAddressLines = filled($identityAddress)
+            ? array_values(array_filter(preg_split('/\R+/', $identityAddress) ?: [], fn (string $line): bool => trim($line) !== ''))
+            : [];
+        $companyName = $identityAddressLines[0] ?? ($seller['company_name'] ?? $shopName);
         $street = $seller['street'] ?? '';
         $postcode = $seller['postcode'] ?? '';
         $city = $seller['city'] ?? '';
@@ -28,16 +32,22 @@
                 </h3>
 
                 <div class="mt-4 space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
-                    @if (filled($street))
-                        <p>{{ $street }}</p>
-                    @endif
+                    @if ($identityAddressLines !== [])
+                        @foreach (array_slice($identityAddressLines, 1) as $identityAddressLine)
+                            <p>{{ trim($identityAddressLine) }}</p>
+                        @endforeach
+                    @else
+                        @if (filled($street))
+                            <p>{{ $street }}</p>
+                        @endif
 
-                    @if (filled($postcode) || filled($city))
-                        <p>{{ trim($postcode.' '.$city) }}</p>
-                    @endif
+                        @if (filled($postcode) || filled($city))
+                            <p>{{ trim($postcode.' '.$city) }}</p>
+                        @endif
 
-                    @if (filled($country))
-                        <p>{{ $country }}</p>
+                        @if (filled($country))
+                            <p>{{ $country }}</p>
+                        @endif
                     @endif
                 </div>
 

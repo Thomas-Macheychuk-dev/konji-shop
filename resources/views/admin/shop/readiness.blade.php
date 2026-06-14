@@ -55,6 +55,106 @@
             </div>
         </div>
 
+        @if (session('status'))
+            <div class="mt-6 rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-medium text-green-900 shadow-sm">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="mt-6 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-900 shadow-sm">
+                <p class="font-semibold">Nie zapisano ustawień. Popraw zaznaczone pola.</p>
+            </div>
+        @endif
+
+        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                    <h2 class="text-lg font-semibold text-zinc-900">
+                        Ustawienia gotowości produkcyjnej
+                    </h2>
+
+                    <p class="mt-1 text-sm text-zinc-600">
+                        Uzupełnij najważniejsze dane sklepu używane przez kontrole produkcyjne, wiadomości e-mail i integrację Polkurier.
+                    </p>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ route('admin.shop.readiness.update') }}" class="mt-6 space-y-8">
+                @csrf
+                @method('PATCH')
+
+                @foreach (collect($settingsFields)->groupBy('category', true) as $category => $fields)
+                    <section class="rounded-2xl border border-zinc-100 bg-zinc-50/70 p-5">
+                        <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-500">
+                            {{ $category }}
+                        </h3>
+
+                        <div class="mt-4 grid gap-5 lg:grid-cols-2">
+                            @foreach ($fields as $name => $field)
+                                @php
+                                    $fieldId = 'settings_'.$name;
+                                    $fieldName = 'settings['.$name.']';
+                                    $fieldValue = old('settings.'.$name, $settingsValues[$name] ?? '');
+                                    $fieldError = $errors->first('settings.'.$name);
+                                @endphp
+
+                                <div class="{{ $field['type'] === 'textarea' ? 'lg:col-span-2' : '' }}">
+                                    <label for="{{ $fieldId }}" class="block text-sm font-semibold text-zinc-900">
+                                        {{ $field['label'] }}
+                                        @if ($field['required'])
+                                            <span class="text-red-600">*</span>
+                                        @endif
+                                    </label>
+
+                                    @if ($field['type'] === 'textarea')
+                                        <textarea
+                                            id="{{ $fieldId }}"
+                                            name="{{ $fieldName }}"
+                                            rows="4"
+                                            @if ($field['required']) required @endif
+                                            class="mt-2 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                                        >{{ $fieldValue }}</textarea>
+                                    @else
+                                        <input
+                                            id="{{ $fieldId }}"
+                                            name="{{ $fieldName }}"
+                                            type="{{ $field['type'] }}"
+                                            value="{{ $fieldValue }}"
+                                            @if ($field['required']) required @endif
+                                            autocomplete="{{ $field['autocomplete'] ?? 'on' }}"
+                                            class="mt-2 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                                        >
+                                    @endif
+
+                                    @if (! empty($field['help']))
+                                        <p class="mt-1 text-xs text-zinc-500">
+                                            {{ $field['help'] }}
+                                        </p>
+                                    @endif
+
+                                    @if ($fieldError)
+                                        <p class="mt-1 text-xs font-medium text-red-700">
+                                            {{ $fieldError }}
+                                        </p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </section>
+                @endforeach
+
+                <div class="flex justify-end">
+                    <button
+                        type="submit"
+                        class="inline-flex items-center rounded-xl bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2"
+                    >
+                        Zapisz ustawienia
+                    </button>
+                </div>
+            </form>
+        </div>
+
         <div class="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
             <div class="border-b border-zinc-200 px-6 py-4">
                 <h2 class="text-lg font-semibold text-zinc-900">
