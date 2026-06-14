@@ -59,6 +59,13 @@
                     </a>
 
                     <a
+                        href="{{ route('admin.categories.index') }}"
+                        class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+                    >
+                        Kategorie
+                    </a>
+
+                    <a
                         href="{{ route('admin.withdrawals.index') }}"
                         class="text-sm font-medium text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                     >

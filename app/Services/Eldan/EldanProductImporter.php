@@ -38,7 +38,7 @@ class EldanProductImporter
                     'slug' => $normalized['slug'] ?: Str::slug($normalized['name']),
                     'short_description' => $normalized['short_description_html'] ?? null,
                     'description' => $normalized['description_html'] ?? null,
-                    'status' => ProductStatus::DRAFT,
+                    'status' => ProductStatus::ACTIVE,
                     'external_parent_sku' => $normalized['external_parent_sku'] ?? null,
                 ]
             );

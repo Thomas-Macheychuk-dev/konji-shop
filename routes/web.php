@@ -5,6 +5,13 @@ use App\Http\Controllers\Account\AccountDetailsUpdateController;
 use App\Http\Controllers\Account\OrderCancelController;
 use App\Http\Controllers\Account\OrderIndexController;
 use App\Http\Controllers\Account\OrderShowController;
+use App\Http\Controllers\Admin\Categories\AdminCategoryArchiveController;
+use App\Http\Controllers\Admin\Categories\AdminCategoryCreateController;
+use App\Http\Controllers\Admin\Categories\AdminCategoryDestroyController;
+use App\Http\Controllers\Admin\Categories\AdminCategoryEditController;
+use App\Http\Controllers\Admin\Categories\AdminCategoryIndexController;
+use App\Http\Controllers\Admin\Categories\AdminCategoryStoreController;
+use App\Http\Controllers\Admin\Categories\AdminCategoryUpdateController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierAvailableCarriersRefreshController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
@@ -170,6 +177,27 @@ Route::middleware(['auth', 'admin'])
         Route::patch('/products/{product}/variants/package-dimensions', AdminProductVariantPackageDimensionsUpdateController::class)
             ->name('products.variants.package-dimensions.update');
 
+        Route::get('/categories', AdminCategoryIndexController::class)
+            ->name('categories.index');
+
+        Route::get('/categories/create', AdminCategoryCreateController::class)
+            ->name('categories.create');
+
+        Route::post('/categories', AdminCategoryStoreController::class)
+            ->name('categories.store');
+
+        Route::get('/categories/{category}/edit', AdminCategoryEditController::class)
+            ->name('categories.edit');
+
+        Route::patch('/categories/{category}', AdminCategoryUpdateController::class)
+            ->name('categories.update');
+
+        Route::patch('/categories/{category}/archive', AdminCategoryArchiveController::class)
+            ->name('categories.archive');
+
+        Route::delete('/categories/{category}', AdminCategoryDestroyController::class)
+            ->name('categories.destroy');
+
         Route::get('/polkurier', AdminPolkurierDiagnosticsController::class)
             ->name('polkurier.index');
 
@@ -271,3 +299,40 @@ Route::view('/withdraw-from-contract', 'pages.withdrawals.start')
     ->name('withdrawals.start');
 
 require __DIR__.'/settings.php';
+
+if (! Route::has('admin.categories.index')) {
+    Route::middleware(['auth', 'admin'])
+        ->prefix('admin')
+        ->name('admin.')
+        ->group(function (): void {
+            Route::get('/categories', \App\Http\Controllers\Admin\Categories\AdminCategoryIndexController::class)
+                ->name('categories.index');
+
+            Route::get('/categories/create', \App\Http\Controllers\Admin\Categories\AdminCategoryCreateController::class)
+                ->name('categories.create');
+
+            Route::post('/categories', \App\Http\Controllers\Admin\Categories\AdminCategoryStoreController::class)
+                ->name('categories.store');
+
+            Route::get('/categories/{category}/edit', \App\Http\Controllers\Admin\Categories\AdminCategoryEditController::class)
+                ->name('categories.edit');
+
+            Route::patch('/categories/{category}', \App\Http\Controllers\Admin\Categories\AdminCategoryUpdateController::class)
+                ->name('categories.update');
+
+            Route::patch('/categories/{category}/archive', \App\Http\Controllers\Admin\Categories\AdminCategoryArchiveController::class)
+                ->name('categories.archive');
+
+            Route::delete('/categories/{category}', \App\Http\Controllers\Admin\Categories\AdminCategoryDestroyController::class)
+                ->name('categories.destroy');
+        });
+}
+
+if (! Route::has('admin.shop.readiness.update')) {
+    Route::patch(
+        '/admin/production-readiness',
+        [\App\Http\Controllers\Admin\Shop\AdminShopReadinessController::class, 'update']
+    )
+        ->middleware(['auth', 'admin'])
+        ->name('admin.shop.readiness.update');
+}

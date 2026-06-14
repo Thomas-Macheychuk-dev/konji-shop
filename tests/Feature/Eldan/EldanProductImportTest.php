@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\AttributeDisplayType;
+use App\Enums\ProductStatus;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Services\Eldan\EldanProductImporter;
@@ -101,7 +102,8 @@ it('reuses existing global attribute slugs when importing Eldan attributes', fun
 
     $product->load('variants.attributeValues.attribute');
 
-    expect(Attribute::query()->where('slug', 'kolor')->count())->toBe(1)
+    expect($product->status)->toBe(ProductStatus::ACTIVE)
+        ->and(Attribute::query()->where('slug', 'kolor')->count())->toBe(1)
         ->and($wojdakColourAttribute->fresh()->external_attribute_id)->toBe('wojdak-kolory')
         ->and(Attribute::query()->where('external_attribute_id', '23')->exists())->toBeFalse()
         ->and($existingBlackValue->fresh()->external_option_id)->toBe('wojdak-kolory-czarny')

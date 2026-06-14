@@ -1,8 +1,8 @@
 @php
     $sidebarCategories = $storefrontSidebarCategories ?? collect();
-    $currentKategoria = request()->route('category');
-    $currentKategoriaSlug = $currentKategoria instanceof \App\Models\Kategoria
-        ? $currentKategoria->slug
+    $currentCategory = request()->route('category');
+    $currentCategorySlug = $currentCategory instanceof \App\Models\Category
+        ? $currentCategory->slug
         : null;
 @endphp
 
@@ -17,7 +17,7 @@
         <nav class="flex flex-col gap-2">
             @foreach ($sidebarCategories as $category)
                 @php
-                    $isActive = $currentKategoriaSlug === $category->slug;
+                    $isActive = $currentCategorySlug === $category->slug;
                 @endphp
 
                 <a
