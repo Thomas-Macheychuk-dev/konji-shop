@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\Products\AdminProductActivatePricedVariantsContro
 use App\Http\Controllers\Admin\Products\AdminProductCreateController;
 use App\Http\Controllers\Admin\Products\AdminProductDefaultImageUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductEditController;
+use App\Http\Controllers\Admin\Products\AdminProductImageStoreController;
 use App\Http\Controllers\Admin\Products\AdminProductIndexController;
 use App\Http\Controllers\Admin\Products\AdminProductPackageDimensionsUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductPricesUpdateController;
@@ -152,6 +153,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::patch('/products/{product}', AdminProductUpdateController::class)
             ->name('products.update');
+
+        Route::post('/products/{product}/images', AdminProductImageStoreController::class)
+            ->name('products.images.store');
 
         Route::patch('/products/{product}/default-image', AdminProductDefaultImageUpdateController::class)
             ->name('products.default-image.update');

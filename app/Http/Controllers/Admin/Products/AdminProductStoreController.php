@@ -12,30 +12,27 @@ use App\Http\Requests\Admin\StoreProductRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\ProductVariant;
+use App\Services\Products\ProductImageUploadService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 final class AdminProductStoreController extends Controller
 {
-    public function __invoke(StoreProductRequest $request): RedirectResponse
-    {
+    public function __invoke(
+        StoreProductRequest $request,
+        ProductImageUploadService $imageUploadService,
+    ): RedirectResponse {
         $validated = $request->validated();
         $variants = $validated['variants'];
         $categoryId = $validated['category_id'] ?? null;
         $defaultVariantIndex = $validated['default_variant_index'] ?? array_key_first($variants);
         $uploadedImages = $request->file('product_images', []);
 
-        if ($uploadedImages instanceof UploadedFile) {
-            $uploadedImages = [$uploadedImages];
-        }
-
         unset($validated['variants'], $validated['category_id'], $validated['default_variant_index'], $validated['product_images']);
 
-        $product = DB::transaction(function () use ($validated, $variants, $categoryId, $defaultVariantIndex, $uploadedImages): Product {
+        $product = DB::transaction(function () use ($validated, $variants, $categoryId, $defaultVariantIndex, $uploadedImages, $imageUploadService): Product {
             $product = Product::query()->create([
                 ...$validated,
                 'slug' => $validated['slug'] ?: $this->uniqueSlug($validated['name']),
@@ -86,7 +83,7 @@ final class AdminProductStoreController extends Controller
                 'is_default' => true,
             ]);
 
-            $this->storeUploadedImages($product, $uploadedImages);
+            $imageUploadService->upload($product, $uploadedImages);
 
             return $product;
         });
@@ -94,59 +91,6 @@ final class AdminProductStoreController extends Controller
         return redirect()
             ->route('admin.products.edit', $product)
             ->with('success', 'Produkt został utworzony.');
-    }
-
-
-    /**
-     * @param  array<int, UploadedFile>  $uploadedImages
-     */
-    private function storeUploadedImages(Product $product, array $uploadedImages): void
-    {
-        $firstImage = null;
-
-        foreach (array_values($uploadedImages) as $index => $uploadedImage) {
-            if (! $uploadedImage instanceof UploadedFile || ! $uploadedImage->isValid()) {
-                continue;
-            }
-
-            $extension = $uploadedImage->extension() ?: $uploadedImage->guessExtension() ?: 'jpg';
-            $mimeType = $uploadedImage->getMimeType();
-            $fileSize = $uploadedImage->getSize();
-            $sha256 = hash_file('sha256', $uploadedImage->getRealPath());
-            $directory = 'products/manual/'.$product->id.'/gallery';
-            $path = $uploadedImage->storeAs(
-                $directory,
-                (string) Str::uuid().'.'.$extension,
-                'public'
-            );
-
-            if (! is_string($path) || $path === '') {
-                continue;
-            }
-
-            $image = ProductImage::query()->create([
-                'product_id' => $product->id,
-                'disk' => 'public',
-                'path' => $path,
-                'source_url' => null,
-                'mime_type' => $mimeType,
-                'file_size' => $fileSize,
-                'sha256' => $sha256,
-                'alt_text' => $product->name,
-                'title' => $product->name,
-                'sort_order' => $index,
-                'is_main' => $index === 0,
-            ]);
-
-            $firstImage ??= $image;
-        }
-
-        if ($firstImage !== null) {
-            $product->update([
-                'default_image_type' => Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE,
-                'default_image_id' => $firstImage->id,
-            ]);
-        }
     }
 
     private function uniqueSlug(string $name): string

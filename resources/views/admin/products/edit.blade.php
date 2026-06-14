@@ -284,6 +284,54 @@
                     <div class="flex-1">
                         <form
                             method="POST"
+                            action="{{ route('admin.products.images.store', $product) }}"
+                            enctype="multipart/form-data"
+                            class="mb-6 rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-5"
+                        >
+                            @csrf
+
+                            <h3 class="text-sm font-semibold text-zinc-900">Dodaj zdjęcia produktu</h3>
+
+                            <p class="mt-2 text-sm text-zinc-500">
+                                Dodane pliki trafią do galerii produktu i będą dostępne do wyboru jako domyślne zdjęcie.
+                            </p>
+
+                            <div class="mt-4">
+                                <label for="product_images" class="mb-2 block text-sm font-medium text-zinc-700">
+                                    Nowe zdjęcia produktu
+                                </label>
+
+                                <input
+                                    id="product_images"
+                                    type="file"
+                                    name="product_images[]"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    multiple
+                                    class="@error('product_images') border-red-300 ring-red-100 @else border-zinc-300 @enderror @error('product_images.*') border-red-300 ring-red-100 @enderror block w-full rounded-xl border bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-zinc-900 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-zinc-700 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                >
+
+                                <p class="mt-2 text-xs text-zinc-500">
+                                    Możesz dodać do 10 plików JPG, PNG lub WebP. Maksymalny rozmiar jednego pliku: 5 MB.
+                                </p>
+
+                                @error('product_images')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+
+                                @error('product_images.*')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="mt-4 flex justify-end">
+                                <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
+                                    Dodaj zdjęcia
+                                </button>
+                            </div>
+                        </form>
+
+                        <form
+                            method="POST"
                             action="{{ route('admin.products.default-image.update', $product) }}"
                             class="space-y-5"
                         >

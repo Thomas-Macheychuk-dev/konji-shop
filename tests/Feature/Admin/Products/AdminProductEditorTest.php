@@ -604,11 +604,96 @@ it('shows selectable product and variant images on the admin product edit page',
         ->get(route('admin.products.edit', $product))
         ->assertOk()
         ->assertSee('Domyślne zdjęcie produktu')
+        ->assertSee('Dodaj zdjęcia produktu')
+        ->assertSee(route('admin.products.images.store', $product), false)
         ->assertSee('Zdjęcia produktu')
         ->assertSee('Zdjęcia wariantów')
         ->assertSee('Base product image')
         ->assertSee('Colour: Navy')
         ->assertSee('Zapisz domyślne zdjęcie');
+});
+
+it('allows an admin to upload product images from the product edit page', function (): void {
+    Storage::fake('public');
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $this
+        ->actingAs($admin)
+        ->post(route('admin.products.images.store', $product), [
+            'product_images' => [
+                UploadedFile::fake()->image('front.jpg', 800, 800),
+                UploadedFile::fake()->image('back.png', 800, 800),
+            ],
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Dodano 2 zdjęcia produktu.');
+
+    $product->refresh()->load('images');
+
+    expect($product->images)->toHaveCount(2)
+        ->and($product->images[0]->is_main)->toBeTrue()
+        ->and($product->images[0]->sort_order)->toBe(0)
+        ->and($product->images[1]->is_main)->toBeFalse()
+        ->and($product->images[1]->sort_order)->toBe(1)
+        ->and($product->default_image_type)->toBe(Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE)
+        ->and($product->default_image_id)->toBe($product->images[0]->id);
+
+    foreach ($product->images as $image) {
+        expect($image->disk)->toBe('public')
+            ->and($image->alt_text)->toBe('Editable Product')
+            ->and($image->title)->toBe('Editable Product')
+            ->and(str_starts_with((string) $image->mime_type, 'image/'))->toBeTrue()
+            ->and($image->file_size)->not->toBeNull()
+            ->and($image->sha256)->not->toBeNull();
+
+        Storage::disk('public')->assertExists($image->path);
+    }
+});
+
+it('does not replace the current default product image when adding more images', function (): void {
+    Storage::fake('public');
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+    $images = createImagesForAdminProductEditorTest($product);
+
+    $product->update([
+        'default_image_type' => Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE,
+        'default_image_id' => $images['product_image']->id,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->post(route('admin.products.images.store', $product), [
+            'product_images' => [
+                UploadedFile::fake()->image('new-product-image.jpg', 800, 800),
+            ],
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Dodano 1 zdjęcie produktu.');
+
+    $uploadedImage = $product->images()
+        ->where('title', 'Editable Product')
+        ->orderByDesc('id')
+        ->firstOrFail();
+
+    expect($product->refresh())
+        ->default_image_type->toBe(Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE)
+        ->default_image_id->toBe($images['product_image']->id);
+
+    expect($uploadedImage)
+        ->is_main->toBeFalse()
+        ->sort_order->toBe(3);
+
+    Storage::disk('public')->assertExists($uploadedImage->path);
 });
 
 it('allows an admin to choose a product gallery image as the default product image', function (): void {
