@@ -1,5 +1,101 @@
 @extends('layouts.storefront')
 
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trix@2.1.19/dist/trix.css">
+@endpush
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/trix@2.1.19/dist/trix.umd.min.js"></script>
+    <script>
+        (() => {
+            const initialiseProductHtmlDescriptionEditors = () => {
+                document.querySelectorAll('[data-product-html-description-editor]').forEach((container) => {
+                    if (container.dataset.initialised === '1') {
+                        return;
+                    }
+
+                    container.dataset.initialised = '1';
+
+                    const source = container.querySelector('[data-html-description-source]');
+                    const preview = container.querySelector('[data-html-description-preview]');
+                    const trixInput = container.querySelector('[data-html-description-trix-input]');
+                    const trixEditor = container.querySelector('trix-editor');
+
+                    if (! source || ! preview || ! trixInput || ! trixEditor) {
+                        return;
+                    }
+
+                    let syncingFromSource = false;
+                    let trixHasFocus = false;
+                    let trixRefreshTimeout = null;
+                    let trixChangeSuppressionTimeout = null;
+
+                    const setPreviewHtml = (html) => {
+                        preview.innerHTML = html.trim() === ''
+                            ? '<p class="text-sm text-zinc-500">Podgląd pojawi się po wpisaniu opisu HTML produktu.</p>'
+                            : html;
+                    };
+
+                    const refreshTrixFromSource = () => {
+                        if (! trixEditor.editor) {
+                            return;
+                        }
+
+                        syncingFromSource = true;
+                        trixInput.value = source.value;
+                        trixEditor.editor.loadHTML(source.value);
+
+                        window.clearTimeout(trixChangeSuppressionTimeout);
+                        trixChangeSuppressionTimeout = window.setTimeout(() => {
+                            syncingFromSource = false;
+                        }, 500);
+                    };
+
+                    const syncFromSource = () => {
+                        trixInput.value = source.value;
+                        setPreviewHtml(source.value);
+
+                        window.clearTimeout(trixRefreshTimeout);
+                        trixRefreshTimeout = window.setTimeout(refreshTrixFromSource, 350);
+                    };
+
+                    const syncFromTrix = () => {
+                        if (syncingFromSource || ! trixHasFocus) {
+                            return;
+                        }
+
+                        source.value = trixInput.value;
+                        setPreviewHtml(source.value);
+                    };
+
+                    source.addEventListener('focus', () => {
+                        trixHasFocus = false;
+                    });
+                    source.addEventListener('input', syncFromSource);
+                    trixEditor.addEventListener('trix-focus', () => {
+                        trixHasFocus = true;
+                    });
+                    trixEditor.addEventListener('trix-change', syncFromTrix);
+                    trixEditor.addEventListener('trix-file-accept', (event) => event.preventDefault());
+                    trixEditor.addEventListener('trix-initialize', refreshTrixFromSource);
+
+                    setPreviewHtml(source.value);
+
+                    if (trixEditor.editor) {
+                        refreshTrixFromSource();
+                    }
+                });
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initialiseProductHtmlDescriptionEditors);
+            } else {
+                initialiseProductHtmlDescriptionEditors();
+            }
+        })();
+    </script>
+@endpush
+
 @section('content')
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8">
@@ -174,22 +270,79 @@
                         @enderror
                     </div>
 
-                    <div>
-                        <label for="description" class="mb-2 block text-sm font-medium text-zinc-700">
-                            Opis HTML produktu
-                        </label>
+                    <div data-product-html-description-editor>
+                        <div class="mb-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                            <label for="description" class="block text-sm font-medium text-zinc-700">
+                                Opis HTML produktu
+                            </label>
 
-                        <textarea
-                            id="description"
-                            name="description"
-                            rows="12"
-                            spellcheck="false"
-                            class="@error('description') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 font-mono text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                        >{{ old('description', $product->description) }}</textarea>
+                            <span class="text-xs font-medium text-zinc-500">
+                                Edytor Trix + kod HTML + podgląd
+                            </span>
+                        </div>
 
-                        <p class="mt-2 text-xs text-zinc-500">
-                            Surowy HTML jest widoczny tutaj i zapisywany w podanej formie.
-                        </p>
+                        <div class="grid gap-4 xl:grid-cols-2">
+                            <div>
+                                <label for="description" class="mb-2 block text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                                    Kod HTML zapisywany w produkcie
+                                </label>
+
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    rows="18"
+                                    spellcheck="false"
+                                    data-html-description-source
+                                    class="@error('description') border-red-300 ring-red-100 @else border-zinc-300 @enderror block w-full rounded-xl border bg-white px-4 py-3 font-mono text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                                >{{ old('description', $product->description) }}</textarea>
+
+                                <p class="mt-2 text-xs text-zinc-500">
+                                    Ten kod HTML jest źródłem prawdy i zostanie zapisany dokładnie w tym polu.
+                                    Przy tabelach, stylach inline i zaawansowanym HTML edytuj przede wszystkim tutaj.
+                                </p>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="description_trix" class="mb-2 block text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                                        Edytor wizualny Trix
+                                    </label>
+
+                                    <input
+                                        id="description_trix_input"
+                                        type="hidden"
+                                        data-html-description-trix-input
+                                        value="{{ old('description', $product->description) }}"
+                                    >
+
+                                    <trix-editor
+                                        id="description_trix"
+                                        input="description_trix_input"
+                                        class="admin-trix-editor min-h-64 rounded-xl border border-zinc-300 bg-white text-sm text-zinc-900"
+                                    ></trix-editor>
+
+                                    <p class="mt-2 text-xs text-zinc-500">
+                                        Trix nadaje się do szybkiej edycji tekstu, pogrubień i list.
+                                        Może uprościć niestandardowe tagi, więc złożone tabele i style sprawdzaj w kodzie HTML.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <div class="mb-2 flex items-center justify-between gap-3">
+                                        <span class="block text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                                            Podgląd HTML
+                                        </span>
+
+                                        <span class="text-xs text-zinc-400">Aktualizuje się podczas pisania</span>
+                                    </div>
+
+                                    <div
+                                        data-html-description-preview
+                                        class="product-description admin-product-html-preview min-h-64 overflow-x-auto rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-sm"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
 
                         @error('description')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

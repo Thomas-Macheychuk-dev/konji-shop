@@ -165,3 +165,23 @@ select:focus[data-flux-control] {
     border: 0;
     border-top: 1px solid rgb(228 228 231);
 }
+
+.admin-trix-editor {
+    min-height: 16rem;
+    padding: 0.875rem 1rem;
+}
+
+.admin-trix-editor:focus {
+    outline: none;
+    border-color: rgb(24 24 27);
+    box-shadow: 0 0 0 4px rgb(244 244 245);
+}
+
+.admin-trix-editor .trix-content,
+.admin-product-html-preview {
+    line-height: 1.7;
+}
+
+.admin-product-html-preview table {
+    min-width: 36rem;
+}
