@@ -57,6 +57,7 @@ final class ImportPerukaProductsCommand extends Command
         $this->line('Mode: '.($dryRun ? 'dry-run' : 'database import'));
         $this->line('Product status: '.$productStatus->value);
         $this->line('Images: '.($importImages ? 'download and sync' : 'skip'));
+        $this->line('Peruka price reduction: 6%');
 
         if ($selectedProducts === []) {
             $this->warn('No products selected after offset/limit.');
@@ -193,6 +194,7 @@ final class ImportPerukaProductsCommand extends Command
         $this->line('Products marked out of stock: '.$outOfStockCount);
         $this->line('Products missing external ID: '.$missingExternalIdCount);
         $this->line('Products missing gross price: '.$missingPriceCount);
+        $this->line('Peruka import prices will be saved 6% lower than scraped gross prices.');
     }
 
     /**

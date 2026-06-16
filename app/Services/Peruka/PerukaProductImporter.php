@@ -204,7 +204,7 @@ final class PerukaProductImporter
     {
         $externalVariantId = 'peruka-'.$product->external_id.'-default';
         $vatRate = $this->vatRateForProduct($productData);
-        $grossAmount = $this->grossAmountMinor($productData['price_gross_amount'] ?? null);
+        $grossAmount = PerukaPriceCalculator::adjustedGrossMinorFromSource($productData['price_gross_amount'] ?? null);
 
         $variant = ProductVariant::withTrashed()
             ->where('product_id', $product->id)
@@ -458,29 +458,6 @@ final class PerukaProductImporter
     private function variantStatusForProduct(array $productData): ProductVariantStatus
     {
         return ProductVariantStatus::ACTIVE;
-    }
-
-    private function grossAmountMinor(mixed $value): ?int
-    {
-        if (is_int($value)) {
-            return $value * 100;
-        }
-
-        if (is_float($value)) {
-            return (int) round($value * 100);
-        }
-
-        if (! is_string($value)) {
-            return null;
-        }
-
-        $value = trim(str_replace(',', '.', $value));
-
-        if ($value === '' || ! is_numeric($value)) {
-            return null;
-        }
-
-        return (int) round(((float) $value) * 100);
     }
 
     private function integerOrNull(mixed $value): ?int

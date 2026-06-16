@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Currency;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
@@ -84,8 +85,8 @@ it('imports Peruka product-data as independent products with one default variant
         ->and($variant->status)->toBe(ProductVariantStatus::ACTIVE)
         ->and($variant->stock_status)->toBe(StockStatus::IN_STOCK)
         ->and($variant->vat_rate)->toBe(VatRate::VAT_23)
-        ->and($variant->price_gross_amount)->toBe(9000)
-        ->and($variant->price_net_amount)->toBe(VatRate::VAT_23->netFromGross(9000));
+        ->and($variant->price_gross_amount)->toBe(8460)
+        ->and($variant->price_net_amount)->toBe(VatRate::VAT_23->netFromGross(8460));
 
     expect(ProductVariant::query()->where('product_id', $secondProduct->id)->count())->toBe(1)
         ->and(Product::query()->where('external_source', 'peruka')->count())->toBe(2);
@@ -125,7 +126,7 @@ it('updates existing Peruka products by external ID instead of duplicating them'
     expect(Product::query()->where('external_source', 'peruka')->count())->toBe(1)
         ->and(ProductVariant::query()->where('product_id', $product->id)->count())->toBe(1)
         ->and($product->name)->toBe('Updated Peruka product name')
-        ->and($variant->price_gross_amount)->toBe(9550)
+        ->and($variant->price_gross_amount)->toBe(8977)
         ->and($variant->stock_status)->toBe(StockStatus::OUT_OF_STOCK)
         ->and($variant->status)->toBe(ProductVariantStatus::ACTIVE);
 });
@@ -154,6 +155,65 @@ it('strips anchor tags from Peruka descriptions during import', function (): voi
         ->and($product->short_description)->toBe('<p>Short link text.</p>')
         ->and($product->description)->not->toContain('<a ')
         ->and($product->short_description)->not->toContain('<a ');
+});
+
+
+
+it('adjusts already imported Peruka product prices from source JSON without compounding the reduction', function (): void {
+    writePerukaImportFixture('scrapers/peruka/test-product-data.json', [perukaImportProductPayload()]);
+
+    $product = Product::query()->create([
+        'name' => 'Existing Peruka product',
+        'slug' => 'existing-peruka-product',
+        'status' => ProductStatus::DRAFT,
+        'external_source' => 'peruka',
+        'external_id' => '38772',
+    ]);
+
+    $variant = ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'external_variant_id' => 'peruka-38772-default',
+        'sku' => '38772',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => VatRate::VAT_23->netFromGross(9000),
+        'price_gross_amount' => 9000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+
+    $this->artisan('peruka:adjust-prices', [
+        '--from' => 'scrapers/peruka/test-product-data.json',
+        '--dry-run' => true,
+        '--show-products' => true,
+    ])
+        ->expectsOutputToContain('Reduction: 6%')
+        ->expectsOutputToContain('Products that would be updated: 1')
+        ->assertSuccessful();
+
+    expect($variant->fresh()->price_gross_amount)->toBe(9000);
+
+    $this->artisan('peruka:adjust-prices', [
+        '--from' => 'scrapers/peruka/test-product-data.json',
+        '--show-products' => true,
+    ])
+        ->expectsOutputToContain('Updated Peruka product prices: 1')
+        ->assertSuccessful();
+
+    $variant = $variant->fresh();
+
+    expect($variant->price_gross_amount)->toBe(8460)
+        ->and($variant->price_net_amount)->toBe(VatRate::VAT_23->netFromGross(8460));
+
+    $this->artisan('peruka:adjust-prices', [
+        '--from' => 'scrapers/peruka/test-product-data.json',
+    ])
+        ->expectsOutputToContain('Updated Peruka product prices: 0')
+        ->expectsOutputToContain('Already correct / unchanged: 1')
+        ->assertSuccessful();
+
+    expect($variant->fresh()->price_gross_amount)->toBe(8460);
 });
 
 /**
