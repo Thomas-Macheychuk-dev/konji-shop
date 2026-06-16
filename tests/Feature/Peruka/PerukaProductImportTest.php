@@ -130,6 +130,32 @@ it('updates existing Peruka products by external ID instead of duplicating them'
         ->and($variant->status)->toBe(ProductVariantStatus::ACTIVE);
 });
 
+
+
+it('strips anchor tags from Peruka descriptions during import', function (): void {
+    writePerukaImportFixture('scrapers/peruka/test-product-data.json', [
+        perukaImportProductPayload([
+            'description_html' => '<p>Read <a href="https://www.peruka.pl/example.html">product guide</a> and <a href="/more"><strong>details</strong></a>.</p>',
+            'short_description_html' => '<p>Short <a href="https://www.peruka.pl/example.html">link text</a>.</p>',
+        ]),
+    ]);
+
+    $this->artisan('peruka:import', [
+        '--from' => 'scrapers/peruka/test-product-data.json',
+        '--no-images' => true,
+    ])->assertSuccessful();
+
+    $product = Product::query()
+        ->where('external_source', 'peruka')
+        ->where('external_id', '38772')
+        ->firstOrFail();
+
+    expect($product->description)->toBe('<p>Read product guide and <strong>details</strong>.</p>')
+        ->and($product->short_description)->toBe('<p>Short link text.</p>')
+        ->and($product->description)->not->toContain('<a ')
+        ->and($product->short_description)->not->toContain('<a ');
+});
+
 /**
  * @param  list<array<string, mixed>>  $products
  */

@@ -84,9 +84,9 @@ final class PerukaProductImporter
             $baseSlug = 'peruka-product-'.$externalId;
         }
 
-        $descriptionHtml = $this->stringOrNull($productData['description_html'] ?? null);
-        $shortDescriptionHtml = $this->stringOrNull($productData['short_description_html'] ?? null);
-        $shortDescription = $this->stringOrNull($productData['short_description'] ?? null);
+        $descriptionHtml = PerukaProductHtmlCleaner::clean($this->stringOrNull($productData['description_html'] ?? null));
+        $shortDescriptionHtml = PerukaProductHtmlCleaner::clean($this->stringOrNull($productData['short_description_html'] ?? null));
+        $shortDescription = PerukaProductHtmlCleaner::clean($this->stringOrNull($productData['short_description'] ?? null));
 
         $attributes = [
             'name' => $this->stringOrNull($productData['name'] ?? null) ?: 'Peruka product '.$externalId,

@@ -470,15 +470,7 @@ final class PerukaProductScraper
 
     private function cleanProductHtml(string $html): string
     {
-        $html = str_replace(['<!--[mode:html]-->', '<!--[mode:tiny]-->'], '', $html);
-        $html = preg_replace('/\sdata-(?:start|end)=(["\'])[^"\']*\1/iu', '', $html) ?: $html;
-        $html = preg_replace('/\scontenteditable=(["\'])[^"\']*\1/iu', '', $html) ?: $html;
-        $html = preg_replace('/\sclass=(["\'])Mso[^"\']*\1/iu', '', $html) ?: $html;
-        $html = preg_replace('/<\/?span\b[^>]*>/iu', '', $html) ?: $html;
-        $html = preg_replace('/\s+/u', ' ', $html) ?: $html;
-        $html = preg_replace('/>\s+</u', '><', $html) ?: $html;
-
-        return trim($html);
+        return PerukaProductHtmlCleaner::clean($html) ?? '';
     }
 
     private function normalizeAssetUrl(string $url, string $baseUrl): ?string
