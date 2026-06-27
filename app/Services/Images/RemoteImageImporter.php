@@ -10,6 +10,10 @@ use RuntimeException;
 
 class RemoteImageImporter
 {
+    private const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
+
+    private const MAX_DIMENSION_PX = 2200;
+
     /**
      * @param  array<int, string>|null  $allowedHosts
      */
@@ -51,9 +55,11 @@ class RemoteImageImporter
             throw new RuntimeException("Downloaded image is empty [{$url}]");
         }
 
+        [$contents, $mimeType] = $this->optimizeIfNeeded($contents, $mimeType);
+
         $fileSize = strlen($contents);
 
-        if ($fileSize > 10 * 1024 * 1024) {
+        if ($fileSize > self::MAX_FILE_SIZE_BYTES) {
             throw new RuntimeException("Image too large [{$url}]");
         }
 
@@ -74,6 +80,191 @@ class RemoteImageImporter
             'file_size' => $fileSize,
             'sha256' => $sha256,
         ];
+    }
+
+    /**
+     * @return array{0: string, 1: string}
+     */
+    private function optimizeIfNeeded(string $contents, string $mimeType): array
+    {
+        $imageSize = @getimagesizefromstring($contents);
+
+        if (! is_array($imageSize)) {
+            return [$contents, $mimeType];
+        }
+
+        $width = isset($imageSize[0]) ? (int) $imageSize[0] : 0;
+        $height = isset($imageSize[1]) ? (int) $imageSize[1] : 0;
+
+        if (
+            strlen($contents) <= self::MAX_FILE_SIZE_BYTES
+            && max($width, $height) <= self::MAX_DIMENSION_PX
+        ) {
+            return [$contents, $mimeType];
+        }
+
+        if (! extension_loaded('gd')) {
+            return [$contents, $mimeType];
+        }
+
+        $sourceImage = @imagecreatefromstring($contents);
+
+        if ($sourceImage === false) {
+            return [$contents, $mimeType];
+        }
+
+        $bestContents = $contents;
+        $bestMimeType = $mimeType;
+        $baseScale = max($width, $height) > 0
+            ? min(1, self::MAX_DIMENSION_PX / max($width, $height))
+            : 1;
+
+        $scaleSteps = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2];
+
+        try {
+            foreach ($scaleSteps as $scaleStep) {
+                $targetScale = $baseScale * $scaleStep;
+                $targetWidth = max(1, (int) round($width * $targetScale));
+                $targetHeight = max(1, (int) round($height * $targetScale));
+
+                $resizedImage = $this->resizeImage($sourceImage, $targetWidth, $targetHeight, $mimeType);
+
+                try {
+                    foreach ($this->encodingVariants($mimeType) as [$candidateMimeType, $quality]) {
+                        $candidateContents = $this->encodeImage($resizedImage, $candidateMimeType, $quality);
+
+                        if ($candidateContents === null || $candidateContents === '') {
+                            continue;
+                        }
+
+                        if (strlen($candidateContents) < strlen($bestContents)) {
+                            $bestContents = $candidateContents;
+                            $bestMimeType = $candidateMimeType;
+                        }
+
+                        if (strlen($candidateContents) <= self::MAX_FILE_SIZE_BYTES) {
+                            return [$candidateContents, $candidateMimeType];
+                        }
+                    }
+                } finally {
+                    if ($resizedImage !== $sourceImage) {
+                        imagedestroy($resizedImage);
+                    }
+                }
+            }
+        } finally {
+            imagedestroy($sourceImage);
+        }
+
+        return [$bestContents, $bestMimeType];
+    }
+
+    /**
+     * @return array<int, array{0: string, 1: int}>
+     */
+    private function encodingVariants(string $mimeType): array
+    {
+        return match ($mimeType) {
+            'image/jpeg', 'image/jpg' => [
+                ['image/jpeg', 90],
+                ['image/jpeg', 82],
+                ['image/jpeg', 74],
+                ['image/jpeg', 66],
+            ],
+            'image/png' => [
+                ['image/png', 9],
+            ],
+            'image/webp' => function_exists('imagewebp')
+                ? [
+                    ['image/webp', 90],
+                    ['image/webp', 82],
+                    ['image/webp', 74],
+                ]
+                : [
+                    ['image/jpeg', 82],
+                ],
+            'image/gif' => [
+                ['image/png', 9],
+            ],
+            default => [[$mimeType, 82]],
+        };
+    }
+
+    /**
+     * @param  \GdImage|resource  $sourceImage
+     * @return \GdImage|resource
+     */
+    private function resizeImage($sourceImage, int $targetWidth, int $targetHeight, string $mimeType)
+    {
+        $sourceWidth = imagesx($sourceImage);
+        $sourceHeight = imagesy($sourceImage);
+
+        if ($sourceWidth === $targetWidth && $sourceHeight === $targetHeight) {
+            return $sourceImage;
+        }
+
+        $targetImage = imagecreatetruecolor($targetWidth, $targetHeight);
+
+        if ($targetImage === false) {
+            return $sourceImage;
+        }
+
+        if (in_array($mimeType, ['image/png', 'image/gif', 'image/webp'], true)) {
+            imagealphablending($targetImage, false);
+            imagesavealpha($targetImage, true);
+            $transparent = imagecolorallocatealpha($targetImage, 0, 0, 0, 127);
+            imagefill($targetImage, 0, 0, $transparent);
+        } else {
+            $background = imagecolorallocate($targetImage, 255, 255, 255);
+            imagefill($targetImage, 0, 0, $background);
+        }
+
+        imagecopyresampled(
+            $targetImage,
+            $sourceImage,
+            0,
+            0,
+            0,
+            0,
+            $targetWidth,
+            $targetHeight,
+            $sourceWidth,
+            $sourceHeight,
+        );
+
+        return $targetImage;
+    }
+
+    /**
+     * @param  \GdImage|resource  $image
+     */
+    private function encodeImage($image, string $mimeType, int $quality): ?string
+    {
+        ob_start();
+
+        try {
+            $successful = match ($mimeType) {
+                'image/jpeg', 'image/jpg' => imagejpeg($image, null, $quality),
+                'image/png' => imagepng($image, null, max(0, min(9, $quality))),
+                'image/webp' => function_exists('imagewebp') ? imagewebp($image, null, $quality) : false,
+                'image/gif' => imagegif($image),
+                default => false,
+            };
+
+            if (! $successful) {
+                ob_end_clean();
+
+                return null;
+            }
+
+            $contents = ob_get_clean();
+
+            return is_string($contents) ? $contents : null;
+        } catch (\Throwable $throwable) {
+            ob_end_clean();
+
+            return null;
+        }
     }
 
     /**
