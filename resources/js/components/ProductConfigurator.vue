@@ -614,8 +614,8 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 .product-description :deep(th) {
     padding: 0.875rem 0.75rem;
     border: 1px solid rgb(212 212 216);
-    text-align: left;
-    vertical-align: top;
+    text-align: center;
+    vertical-align: middle;
     font-weight: 600;
     color: rgb(24 24 27);
 }
@@ -623,8 +623,14 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 .product-description :deep(td) {
     padding: 0.875rem 0.75rem;
     border: 1px solid rgb(212 212 216);
-    vertical-align: top;
+    text-align: center;
+    vertical-align: middle;
     color: rgb(39 39 42);
+}
+
+.product-description :deep(th p),
+.product-description :deep(td p) {
+    text-align: center;
 }
 
 .product-description :deep(a) {
