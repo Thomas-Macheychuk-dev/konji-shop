@@ -22,6 +22,11 @@ final class Reh4MatProductScraper
         'reh4mat.com',
         'stabilobedsystem.pl',
         'www.stabilobedsystem.pl',
+        'bodymapsystem.pl',
+        'www.bodymapsystem.pl',
+        'bodymapsystem.com',
+        'www.bodymapsystem.com',
+        'ru.bodymapsystem.com',
     ];
 
     private ?Closure $progressCallback = null;
@@ -661,6 +666,7 @@ final class Reh4MatProductScraper
         foreach ([
             '//*[contains(concat(" ", normalize-space(@class), " "), " itemFullText ")][1]',
             '//*[@id="opis-produktu"][1]',
+            '//*[@id="content"][1]',
             '//*[@id="content"]//*[contains(concat(" ", normalize-space(@class), " "), " column ")][1]',
         ] as $query) {
             $node = $this->firstElement($xpath, $query);
@@ -716,6 +722,8 @@ final class Reh4MatProductScraper
             '//*[@id="opis-produktu"]//a[@href][img]',
             '//*[@id="opis-produktu"]//img',
             '//*[contains(concat(" ", normalize-space(@class), " "), " itemFullText ")]//img',
+            '//*[@id="content"]/p[1]//a[@href][img]',
+            '//*[@id="content"]/p[1]//img',
         ] as $query) {
             $nodes = $xpath->query($query);
 
@@ -885,6 +893,10 @@ final class Reh4MatProductScraper
             if (str_contains($pathLower, $marker)) {
                 return [1000, 800, 600, 300, 150][$index];
             }
+        }
+
+        if (preg_match('/[-_][0-9]{2,4}x[0-9]{2,4}(?=\.(?:jpe?g|png|webp)$)/i', $pathLower) !== 1) {
+            return 1200;
         }
 
         return 700;

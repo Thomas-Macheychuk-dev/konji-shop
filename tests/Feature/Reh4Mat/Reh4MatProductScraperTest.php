@@ -99,6 +99,32 @@ it('extracts StabiloBed-style pictograms and tab downloads when the page contain
         ]);
 });
 
+
+it('scrapes BodyMap product page gallery images from the top product content gallery', function (): void {
+    Http::fake([
+        'https://bodymapsystem.pl/p/zaglowek-motylkowy-bodymap-dx/' => Http::response(reh4MatBodyMapProductPageFixture()),
+        '*' => Http::response('', 404),
+    ]);
+
+    $result = app(Reh4MatProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape('https://bodymapsystem.pl/p/zaglowek-motylkowy-bodymap-dx/');
+
+    expect($result['source'])->toBe('reh4mat')
+        ->and($result['source_url'])->toBe('https://bodymapsystem.pl/p/zaglowek-motylkowy-bodymap-dx/')
+        ->and($result['external_product_id'])->toBe('651')
+        ->and($result['slug'])->toBe('zaglowek-motylkowy-bodymap-dx')
+        ->and($result['name'])->toBe('BodyMap® DX – Zagłówek motylkowy')
+        ->and($result['images'])->toHaveCount(4)
+        ->and($result['images'][0]['url'])->toBe('https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-stroller2.jpg')
+        ->and($result['images'][1]['url'])->toBe('https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-2.jpg')
+        ->and($result['images'][2]['url'])->toBe('https://bodymapsystem.pl/wp-content/uploads/2014/10/zaglowek-DX-tasma.jpg')
+        ->and($result['images'][3]['url'])->toBe('https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-3.jpg')
+        ->and($result['description_html'])->toContain('BodyMap<sup>®</sup> DX')
+        ->and($result['description_html'])->toContain('Tabela rozmiarowa')
+        ->and($result['warnings'])->toBe([]);
+});
+
 it('prints one Reh4Mat product as JSON', function (): void {
     Http::fake([
         'https://www.reh4mat.com/produkt/ortezy-dloni/am-sp-07/' => Http::response(reh4MatProductPageFixture()),
@@ -232,6 +258,48 @@ function reh4MatProductPageFixture(): string
                         </div>
                         <p class="etykieta">TO JEST WYRÓB MEDYCZNY.<br>UŻYWAJ GO ZGODNIE Z INSTRUKCJĄ UŻYWANIA LUB ETYKIETĄ.</p>
                         <p class="ce"><img src="https://www.reh4mat.com/wp-content/themes/r4m-rwd/images/ce.png" alt="CE"><img src="https://www.reh4mat.com/wp-content/themes/r4m-rwd/images/md.png" alt="MD">Wyrób Medyczny klasy I zgodny z Rozporządzeniem.</p>
+                    </div>
+                </div>
+            </body>
+        </html>
+    HTML;
+}
+
+
+function reh4MatBodyMapProductPageFixture(): string
+{
+    return <<<'HTML'
+        <!doctype html>
+        <html lang="pl_PL">
+            <head>
+                <title>BodyMap® DX &#8211; Zagłówek motylkowy | BodyMap®</title>
+                <meta name="description" content="BodyMap DX to zagłówek ortopedyczny w kształcie motyla.">
+                <link rel="canonical" href="https://bodymapsystem.pl/p/zaglowek-motylkowy-bodymap-dx/">
+                <link rel="shortlink" href="https://bodymapsystem.pl/?p=651">
+            </head>
+            <body>
+                <div id="container">
+                    <img title="BodyMap® DX &#8211; Zagłówek motylkowy" class="wp-post-image" src="https://bodymapsystem.pl/wp-content/uploads/2014/10/baner-dx.jpg">
+                    <div id="crumbs">
+                        <div class="breadcrumbs">
+                            <a href="https://bodymapsystem.pl" class="home">BodyMap®</a> &gt;
+                            <a href="https://bodymapsystem.pl/p/">Produkty</a> &gt;
+                            <span>BodyMap® DX &#8211; Zagłówek motylkowy</span>
+                        </div>
+                    </div>
+                    <div id="content">
+                        <h1 class="title"><a href="https://bodymapsystem.pl/p/zaglowek-motylkowy-bodymap-dx/">BodyMap® DX &#8211; Zagłówek motylkowy</a></h1>
+                        <p>
+                            <a href="https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-stroller2.jpg"><img class="alignleft size-thumbnail" src="https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-stroller2-250x250.jpg" alt="Zagłówek motylkowy BodyMap DX" width="250" height="250" /></a>
+                            <a href="https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-2.jpg"><img class="alignleft size-thumbnail" src="https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-2-250x250.jpg" alt="BodyMap DX" width="250" height="250" /></a>
+                            <a href="https://bodymapsystem.pl/wp-content/uploads/2014/10/zaglowek-DX-tasma.jpg"><img class="alignleft wp-image-4228 size-thumbnail" src="https://bodymapsystem.pl/wp-content/uploads/2014/10/zaglowek-DX-tasma-250x250.jpg" alt="" width="250" height="250" srcset="https://bodymapsystem.pl/wp-content/uploads/2014/10/zaglowek-DX-tasma-250x250.jpg 250w, https://bodymapsystem.pl/wp-content/uploads/2014/10/zaglowek-DX-tasma-400x400.jpg 400w, https://bodymapsystem.pl/wp-content/uploads/2014/10/zaglowek-DX-tasma-800x800.jpg 800w, https://bodymapsystem.pl/wp-content/uploads/2014/10/zaglowek-DX-tasma.jpg 1000w" /></a>
+                            <a href="https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-3.jpg"><img class="alignleft size-thumbnail" src="https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-3-250x250.jpg" alt="BodyMap DX" width="250" height="250" /></a>
+                        </p>
+                        <div class="clear"></div>
+                        <p><strong>BodyMap<sup>®</sup> DX</strong> to zagłówek ortopedyczny w kształcie motyla dla podparcia głowy i szyi.</p>
+                        <p><a href="https://bodymapsystem.pl/wp-content/uploads/2014/07/k62.png"><img class="aligncenter size-full" src="https://bodymapsystem.pl/wp-content/uploads/2014/07/k62.png" alt="k62" /></a></p>
+                        <h3><strong>Tabela rozmiarowa</strong></h3>
+                        <p><img class="alignnone" src="https://bodymapsystem.pl/wp-content/uploads/2014/10/1d3063374ca83e855f6b84a1f981ab5e.png" alt="" /></p>
                     </div>
                 </div>
             </body>

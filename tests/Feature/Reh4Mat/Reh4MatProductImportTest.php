@@ -181,6 +181,49 @@ it('preserves safe YouTube iframes and removes unsafe iframe embeds', function (
         ->and($product->description)->not->toContain('onload=');
 });
 
+
+it('imports BodyMap gallery images from allowed BodyMap hosts', function (): void {
+    Storage::fake('public');
+    Http::fake([
+        'https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-stroller2.jpg' => Http::response(reh4matImporterInlineImageContents(10, 20, 30), 200, ['Content-Type' => 'image/png']),
+        '*' => Http::response('', 404),
+    ]);
+
+    writeReh4MatImportFixture('scrapers/reh4mat/test-bodymap-image-import.json', [
+        reh4matImportProductPayload([
+            'external_product_id' => '651',
+            'source_url' => 'https://bodymapsystem.pl/p/zaglowek-motylkowy-bodymap-dx/',
+            'canonical_url' => 'https://bodymapsystem.pl/p/zaglowek-motylkowy-bodymap-dx/',
+            'slug' => 'zaglowek-motylkowy-bodymap-dx',
+            'name' => 'BodyMap® DX – Zagłówek motylkowy',
+            'downloads' => [],
+            'images' => [
+                [
+                    'url' => 'https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-stroller2.jpg',
+                    'alt' => 'Zagłówek motylkowy BodyMap DX',
+                    'position' => 1,
+                ],
+            ],
+        ]),
+    ]);
+
+    $this->artisan('reh4mat:import', [
+        '--from' => 'scrapers/reh4mat/test-bodymap-image-import.json',
+        '--no-downloads' => true,
+    ])->assertSuccessful();
+
+    $product = Product::query()
+        ->where('external_source', 'reh4mat')
+        ->where('external_id', '651')
+        ->firstOrFail();
+
+    $image = $product->images()->firstOrFail();
+
+    expect($product->images()->count())->toBe(1)
+        ->and($image->source_url)->toBe('https://bodymapsystem.pl/wp-content/uploads/2014/10/DX-stroller2.jpg')
+        ->and($image->alt_text)->toBe('Zagłówek motylkowy BodyMap DX');
+});
+
 it('can import Reh4Mat products as active products', function (): void {
     writeReh4MatImportFixture('scrapers/reh4mat/test-product-data-active.json', [reh4matImportProductPayload()]);
 

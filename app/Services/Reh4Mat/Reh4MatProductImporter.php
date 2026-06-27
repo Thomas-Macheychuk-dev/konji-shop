@@ -28,7 +28,15 @@ final class Reh4MatProductImporter
     /**
      * @var list<string>
      */
-    private const DOWNLOAD_ALLOWED_HOSTS = ['reh4mat.com', 'www.reh4mat.com'];
+    private const DOWNLOAD_ALLOWED_HOSTS = [
+        'reh4mat.com',
+        'www.reh4mat.com',
+        'bodymapsystem.pl',
+        'www.bodymapsystem.pl',
+        'bodymapsystem.com',
+        'www.bodymapsystem.com',
+        'ru.bodymapsystem.com',
+    ];
 
     private const DOWNLOAD_DISK = 'public';
 
@@ -42,6 +50,11 @@ final class Reh4MatProductImporter
         'www.reh4mat.com',
         'stabilobedsystem.pl',
         'www.stabilobedsystem.pl',
+        'bodymapsystem.pl',
+        'www.bodymapsystem.pl',
+        'bodymapsystem.com',
+        'www.bodymapsystem.com',
+        'ru.bodymapsystem.com',
     ];
 
     private const CONTENT_IMAGE_DISK = 'public';
@@ -280,7 +293,7 @@ final class Reh4MatProductImporter
                     $url,
                     'products/reh4mat/'.$product->external_id.'/gallery',
                     'public',
-                    ['reh4mat.com', 'stabilobedsystem.pl']
+                    self::REMOTE_ASSET_ALLOWED_HOSTS
                 );
             } catch (Throwable $exception) {
                 $this->warnings[] = 'Image skipped for '.$product->external_id.': '.$url.' — '.$exception->getMessage();
@@ -1175,12 +1188,7 @@ final class Reh4MatProductImporter
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return is_string($host) && $this->hostIsAllowed($host, [
-            'reh4mat.com',
-            'www.reh4mat.com',
-            'stabilobedsystem.pl',
-            'www.stabilobedsystem.pl',
-        ]);
+        return is_string($host) && $this->hostIsAllowed($host, self::REMOTE_ASSET_ALLOWED_HOSTS);
     }
 
     /**
