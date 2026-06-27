@@ -113,15 +113,11 @@ final class Reh4MatProductImporter
             'short_description' => $this->shortDescriptionHtml($scraped, $downloadContext),
             'description' => $this->productDescriptionHtml($scraped, $downloadContext),
             'seo_title' => $this->stringOrNull($scraped['seo_title'] ?? null) ?: $name,
-            'seo_description' => $this->stringOrNull($scraped['seo_description'] ?? null)
-                ?: $this->plainTextSnippet($scraped['description'] ?? $scraped['short_description'] ?? null, 300),
+            'seo_description' => $this->seoDescription($scraped),
             'status' => $status,
             'external_source' => 'reh4mat',
             'external_id' => $externalId,
-            'external_parent_sku' => $this->limitNullableDatabaseString(
-                $this->stringOrNull($scraped['canonical_url'] ?? null)
-                ?: $this->stringOrNull($scraped['source_url'] ?? null)
-            ),
+            'external_parent_sku' => $this->parentSku($scraped, $externalId),
         ];
 
         if ($product !== null) {
@@ -368,6 +364,131 @@ final class Reh4MatProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
+    private function parentSku(array $scraped, string $externalId): string
+    {
+        $sku = $this->stringOrNull($scraped['sku'] ?? null)
+            ?: $this->productMetaValue($scraped, 'Kod katalogowy')
+                ?: $this->productMetaValue($scraped, 'Model')
+                    ?: 'REH4MAT-'.$externalId;
+
+        return $this->limitDatabaseString($this->normaliseSku($sku));
+    }
+
+    /**
+     * @param  array<string, mixed>  $scraped
+     */
+    private function productMetaValue(array $scraped, string $key): ?string
+    {
+        $meta = $scraped['product_meta'] ?? null;
+
+        if (! is_array($meta)) {
+            return null;
+        }
+
+        return $this->stringOrNull($meta[$key] ?? null);
+    }
+
+    /**
+     * @param  array<string, mixed>  $scraped
+     */
+    private function seoDescription(array $scraped): ?string
+    {
+        return $this->productSummaryText($scraped, 300)
+            ?: $this->plainTextSnippet($scraped['seo_description'] ?? null, 300);
+    }
+
+    /**
+     * @param  array<string, mixed>  $scraped
+     */
+    private function productSummaryText(array $scraped, int $limit): ?string
+    {
+        foreach ([
+            $scraped['description_html'] ?? null,
+            $scraped['description'] ?? null,
+            $scraped['short_description_html'] ?? null,
+            $scraped['short_description'] ?? null,
+            $scraped['seo_description'] ?? null,
+        ] as $candidate) {
+            $summary = $this->productSummarySnippet($candidate, $limit);
+
+            if ($summary !== null && ! $this->looksLikeMetaSummary($summary)) {
+                return $summary;
+            }
+        }
+
+        return null;
+    }
+
+    private function productSummarySnippet(mixed $value, int $limit): ?string
+    {
+        $string = $this->stringOrNull($value);
+
+        if ($string === null) {
+            return null;
+        }
+
+        $string = $this->removeUnsafeHtmlBlocksForText($string);
+
+        foreach ($this->paragraphTexts($string) as $paragraph) {
+            if (! $this->looksLikeMetaSummary($paragraph)) {
+                return Str::limit($paragraph, $limit, '');
+            }
+        }
+
+        return $this->plainTextSnippet($string, $limit);
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function paragraphTexts(string $html): array
+    {
+        if (! preg_match_all('/<p\b[^>]*>(.*?)<\/p>/isu', $html, $matches)) {
+            return [];
+        }
+
+        $paragraphs = [];
+
+        foreach ($matches[1] as $paragraphHtml) {
+            $paragraph = trim(preg_replace('/\s+/', ' ', strip_tags($paragraphHtml)) ?? strip_tags($paragraphHtml));
+
+            if ($paragraph === '') {
+                continue;
+            }
+
+            $paragraphs[] = html_entity_decode($paragraph, ENT_QUOTES | ENT_HTML5);
+        }
+
+        return $paragraphs;
+    }
+
+    private function looksLikeMetaSummary(string $summary): bool
+    {
+        $normalized = Str::of($summary)->lower()->ascii()->value();
+
+        $signals = 0;
+
+        foreach ([
+            'wyrob medyczny',
+            'marka:',
+            'kod umdns',
+            'kod nfz',
+            'rozmiar uniwersalny',
+            'minimum device',
+            'maximum effect',
+            'press-slide',
+        ] as $needle) {
+            if (str_contains($normalized, $needle)) {
+                $signals++;
+            }
+        }
+
+        return $signals >= 3;
+    }
+
+    /**
+     * @param  array<string, mixed>  $scraped
+     */
     private function stockStatus(array $scraped): StockStatus
     {
         $availability = Str::of((string) ($scraped['availability'] ?? ''))
@@ -428,18 +549,13 @@ final class Reh4MatProductImporter
      */
     private function shortDescriptionHtml(array $scraped, array $downloadContext): ?string
     {
-        $short = $this->stringOrNull($scraped['short_description_html'] ?? null)
-            ?: $this->stringOrNull($scraped['short_description'] ?? null);
+        $summary = $this->productSummaryText($scraped, 500);
 
-        if ($short === null) {
+        if ($summary === null) {
             return null;
         }
 
-        if (! str_contains($short, '<')) {
-            $short = '<p>'.e($this->plainTextSnippet($short, 500) ?? $short).'</p>';
-        }
-
-        return $this->cleanImportedHtml($short, $downloadContext);
+        return $this->cleanImportedHtml('<p>'.e($summary).'</p>', $downloadContext);
     }
 
     /**
@@ -879,11 +995,7 @@ final class Reh4MatProductImporter
 
         $product = Product::query()
             ->where('external_source', 'reh4mat')
-            ->where(function ($query) use ($url, $slug): void {
-                $query
-                    ->where('external_parent_sku', $this->limitNullableDatabaseString($url))
-                    ->orWhere('slug', $slug);
-            })
+            ->where('slug', $slug)
             ->first();
 
         return $product === null ? null : '/products/'.$product->slug;
@@ -1069,13 +1181,28 @@ final class Reh4MatProductImporter
             return null;
         }
 
+        $string = $this->removeUnsafeHtmlBlocksForText($string);
         $text = trim(preg_replace('/\s+/', ' ', strip_tags($string)) ?? strip_tags($string));
 
         if ($text === '') {
             return null;
         }
 
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5);
+
         return Str::limit($text, $limit, '');
+    }
+
+    private function removeUnsafeHtmlBlocksForText(string $html): string
+    {
+        $html = preg_replace('/<script\b[^>]*>.*?<\/script>/isu', '', $html) ?? $html;
+        $html = preg_replace('/<style\b[^>]*>.*?<\/style>/isu', '', $html) ?? $html;
+        $html = preg_replace('/<iframe\b[^>]*>.*?<\/iframe>/isu', '', $html) ?? $html;
+        $html = preg_replace('/<embed\b[^>]*>.*?<\/embed>/isu', '', $html) ?? $html;
+        $html = preg_replace('/<embed\b[^>]*\/?>/isu', '', $html) ?? $html;
+        $html = preg_replace('/<object\b[^>]*>.*?<\/object>/isu', '', $html) ?? $html;
+
+        return $html;
     }
 
     /**

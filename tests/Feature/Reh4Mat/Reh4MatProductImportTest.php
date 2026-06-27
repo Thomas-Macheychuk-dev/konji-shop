@@ -56,9 +56,10 @@ it('imports Reh4Mat product-data as draft products with category hierarchy, defa
     expect($product->name)->toBe('Orteza kończyny dolnej AM-KD-AM/2R')
         ->and($product->slug)->toBe('aparat-szynowo-opaskowy-konczyny-dolnej-z-szynami-2r-am-kd-am2r')
         ->and($product->status)->toBe(ProductStatus::DRAFT)
-        ->and($product->external_parent_sku)->toBe('https://www.reh4mat.com/produkt/kolano-funkcja-pooperacyjna/aparat-szynowo-opaskowy-konczyny-dolnej-z-szynami-2r-am-kd-am2r/')
+        ->and($product->external_parent_sku)->toBe('AM-KD-AM-2R')
         ->and($product->seo_title)->toBe('Orteza kończyny dolnej AM-KD-AM/2R | Reh4Mat')
-        ->and($product->short_description)->toContain('Aparat szynowo-opaskowy')
+        ->and($product->short_description)->toBe('<p>Opis produktu dla klienta z właściwego opisu, a nie z listy piktogramów.</p>')
+        ->and($product->short_description)->not->toContain('Alternatywa gipsuER')
         ->and($product->description)->toContain('Opis produktu')
         ->and($product->description)->toContain('Piktogramy produktu')
         ->and($product->description)->toContain('Alternatywa gipsu')
@@ -195,10 +196,10 @@ function reh4matImportProductPayload(array $overrides = []): array
         'categories' => ['KOŃCZYNA DOLNA', 'Ortezy całej kończyny dolnej'],
         'source_category_path' => ['KOŃCZYNA DOLNA', 'Ortezy całej kończyny dolnej'],
         'seo_title' => 'Orteza kończyny dolnej AM-KD-AM/2R | Reh4Mat',
-        'seo_description' => 'Aparat szynowo-opaskowy kończyny dolnej.',
-        'short_description' => 'Aparat szynowo-opaskowy kończyny dolnej.',
-        'description' => 'Opis produktu.',
-        'description_html' => '<h2>Opis produktu</h2><p>Aparat szynowo-opaskowy kończyny dolnej.</p><script>alert("x")</script>',
+        'seo_description' => 'Orteza kończyny dolnejERInnowacyjnyMinimum device – maximum effectPress-slidePrzyjazny dla skóryRozmiar uniwersalnySzeroki zakres regulacjiSzyna z regulacją ruchomości 1RETrwałyWyrób medyczny kl.IMarka: 4medic Kod UMDNS: 18029 Kod NFZ H.03.03.00',
+        'short_description' => 'Orteza kończyny dolnejERInnowacyjnyMinimum device – maximum effectPress-slidePrzyjazny dla skóryRozmiar uniwersalnySzeroki zakres regulacjiSzyna z regulacją ruchomości 1RETrwałyWyrób medyczny kl.IMarka: 4medic Kod UMDNS: 18029 Kod NFZ H.03.03.00',
+        'description' => 'Opis produktu dla klienta z właściwego opisu, a nie z listy piktogramów.',
+        'description_html' => '<h2>Opis produktu</h2><p>Opis produktu dla klienta z właściwego opisu, a nie z listy piktogramów.</p><script>alert("x")</script>',
         'price_gross_amount' => null,
         'currency' => 'PLN',
         'availability' => 'unknown',
