@@ -71,6 +71,8 @@ it('imports Reh4Mat product-data as draft products with category hierarchy, defa
         ->and($product->description)->toContain('reh4mat-pending-accessory')
         ->and($product->description)->toContain('data-external-slug="rekaw-elastyczny-pod-orteze"')
         ->and($product->description)->toContain('Rękaw elastyczny pod ortezę')
+        ->and($product->description)->not->toContain('Powiązany produkt')
+        ->and($product->description)->not->toContain('href="https://www.reh4mat.com/produkt/kolano-funkcja-pooperacyjna/empty-related/"')
         ->and($product->description)->toContain('TO JEST WYRÓB MEDYCZNY')
         ->and($product->description)->not->toContain('<script')
         ->and($product->description)->not->toContain('reh4mat.com')
@@ -100,6 +102,50 @@ it('imports Reh4Mat product-data as draft products with category hierarchy, defa
     expect($product->images()->count())->toBe(0);
 
     Storage::disk('public')->assertExists('products/reh4mat/3692/downloads/deklaracja-zgodnosci-'.substr(sha1('https://reh4mat.com/deklaracje/pl/117.pdf'), 0, 10).'.pdf');
+});
+
+it('localizes inline Reh4Mat content images in imported descriptions and tabs', function (): void {
+    Storage::fake('public');
+    Http::fake([
+        'https://www.reh4mat.com/uploads/2026/05/opis.png' => Http::response(reh4matImporterInlineImageContents(255, 0, 0), 200, ['Content-Type' => 'image/png']),
+        'https://www.reh4mat.com/uploads/2026/05/pomiar.png' => Http::response(reh4matImporterInlineImageContents(0, 0, 255), 200, ['Content-Type' => 'image/png']),
+        '*' => Http::response('', 404),
+    ]);
+
+    writeReh4MatImportFixture('scrapers/reh4mat/test-product-data-inline-images.json', [
+        reh4matImportProductPayload([
+            'downloads' => [],
+            'images' => [],
+            'description_html' => '<p>Opis z obrazem <img src="https://www.reh4mat.com/uploads/2026/05/opis.png" srcset="https://www.reh4mat.com/uploads/2026/05/opis.png 600w" sizes="(max-width: 600px) 100vw, 600px" alt="Opis produktu"></p>',
+            'tabs' => [
+                [
+                    'title' => 'Rozmiary',
+                    'html' => '<table><tbody><tr><td>Sposób dokonywania pomiaru</td><td><img src="https://www.reh4mat.com/uploads/2026/05/pomiar.png" srcset="https://www.reh4mat.com/uploads/2026/05/pomiar.png 250w" alt="Pomiar"></td></tr></tbody></table>',
+                    'text' => 'Sposób dokonywania pomiaru',
+                ],
+            ],
+        ]),
+    ]);
+
+    $this->artisan('reh4mat:import', [
+        '--from' => 'scrapers/reh4mat/test-product-data-inline-images.json',
+        '--no-downloads' => true,
+        '--image-limit' => 0,
+    ])->assertSuccessful();
+
+    $product = Product::query()
+        ->where('external_source', 'reh4mat')
+        ->where('external_id', '3692')
+        ->firstOrFail();
+
+    expect($product->description)->toContain('/storage/products/reh4mat/3692/content/')
+        ->and($product->description)->toContain('alt="Pomiar"')
+        ->and($product->description)->toContain('alt="Opis produktu"')
+        ->and($product->description)->not->toContain('reh4mat.com/uploads')
+        ->and($product->description)->not->toContain('srcset=')
+        ->and($product->description)->not->toContain('sizes=');
+
+    expect(Storage::disk('public')->allFiles('products/reh4mat/3692/content'))->toHaveCount(2);
 });
 
 it('can import Reh4Mat products as active products', function (): void {
@@ -182,6 +228,33 @@ function writeReh4MatImportFixture(string $relativePath, array $products): void
  * @param  array<string, mixed>  $overrides
  * @return array<string, mixed>
  */
+function reh4matImporterInlineImageContents(int $red = 255, int $green = 255, int $blue = 255): string
+{
+    $image = imagecreatetruecolor(1, 1);
+
+    if ($image === false) {
+        throw new RuntimeException('Unable to create Reh4Mat importer test image.');
+    }
+
+    try {
+        $color = imagecolorallocate($image, $red, $green, $blue);
+        imagefill($image, 0, 0, $color);
+
+        ob_start();
+        imagepng($image);
+
+        $contents = ob_get_clean();
+
+        if (! is_string($contents)) {
+            throw new RuntimeException('Unable to render Reh4Mat importer test image.');
+        }
+
+        return $contents;
+    } finally {
+        imagedestroy($image);
+    }
+}
+
 function reh4matImportProductPayload(array $overrides = []): array
 {
     return array_replace_recursive([
@@ -199,7 +272,7 @@ function reh4matImportProductPayload(array $overrides = []): array
         'seo_description' => 'Orteza kończyny dolnejERInnowacyjnyMinimum device – maximum effectPress-slidePrzyjazny dla skóryRozmiar uniwersalnySzeroki zakres regulacjiSzyna z regulacją ruchomości 1RETrwałyWyrób medyczny kl.IMarka: 4medic Kod UMDNS: 18029 Kod NFZ H.03.03.00',
         'short_description' => 'Orteza kończyny dolnejERInnowacyjnyMinimum device – maximum effectPress-slidePrzyjazny dla skóryRozmiar uniwersalnySzeroki zakres regulacjiSzyna z regulacją ruchomości 1RETrwałyWyrób medyczny kl.IMarka: 4medic Kod UMDNS: 18029 Kod NFZ H.03.03.00',
         'description' => 'Opis produktu dla klienta z właściwego opisu, a nie z listy piktogramów.',
-        'description_html' => '<h2>Opis produktu</h2><p>Opis produktu dla klienta z właściwego opisu, a nie z listy piktogramów.</p><script>alert("x")</script>',
+        'description_html' => '<h2>Opis produktu</h2><p>Opis produktu dla klienta z właściwego opisu, a nie z listy piktogramów.</p><a href="https://www.reh4mat.com/produkt/kolano-funkcja-pooperacyjna/empty-related/"></a><script>alert("x")</script>',
         'price_gross_amount' => null,
         'currency' => 'PLN',
         'availability' => 'unknown',

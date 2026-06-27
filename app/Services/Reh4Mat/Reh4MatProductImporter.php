@@ -37,6 +37,18 @@ final class Reh4MatProductImporter
     /**
      * @var list<string>
      */
+    private const REMOTE_ASSET_ALLOWED_HOSTS = [
+        'reh4mat.com',
+        'www.reh4mat.com',
+        'stabilobedsystem.pl',
+        'www.stabilobedsystem.pl',
+    ];
+
+    private const CONTENT_IMAGE_DISK = 'public';
+
+    /**
+     * @var list<string>
+     */
     private array $warnings = [];
 
     public function __construct(
@@ -56,7 +68,7 @@ final class Reh4MatProductImporter
     ): array {
         $this->warnings = [];
         $externalId = $this->externalProductId($scraped);
-        $downloadContext = $this->downloadContext($scraped, $externalId, $importDownloads);
+        $downloadContext = $this->downloadContext($scraped, $externalId, $importDownloads, $importImages);
 
         $product = DB::transaction(function () use ($scraped, $externalId, $status, $importImages, $imageLimit, $downloadContext): Product {
             $product = $this->resolveProduct($scraped, $externalId, $status, $downloadContext);
@@ -762,9 +774,9 @@ final class Reh4MatProductImporter
 
     /**
      * @param  array<string, mixed>  $scraped
-     * @return array{downloads: list<array<string, mixed>>, url_map: array<string, string>}
+     * @return array{external_id: string, import_content_images: bool, downloads: list<array<string, mixed>>, url_map: array<string, string>, content_image_url_map: array<string, string>}
      */
-    private function downloadContext(array $scraped, string $externalId, bool $importDownloads): array
+    private function downloadContext(array $scraped, string $externalId, bool $importDownloads, bool $importContentImages): array
     {
         $downloads = [];
         $urlMap = [];
@@ -801,8 +813,11 @@ final class Reh4MatProductImporter
         }
 
         return [
+            'external_id' => $externalId,
+            'import_content_images' => $importContentImages,
             'downloads' => $downloads,
             'url_map' => $urlMap,
+            'content_image_url_map' => [],
         ];
     }
 
@@ -889,6 +904,8 @@ final class Reh4MatProductImporter
         }
 
         $html = $this->rewriteDownloadUrls($html, $downloadContext);
+        $html = $this->localizeRemoteImageTags($html, $downloadContext);
+        $html = $this->localizeRemoteImageAnchors($html, $downloadContext);
         $html = $this->removeRemoteAssetTags($html);
         $html = $this->rewriteExternalAnchors($html);
         $html = preg_replace('/\s+(srcset|src)\s*=\s*("[^"]*reh4mat\.com[^"]*"|\'[^\']*reh4mat\.com[^\']*\')/iu', '', $html) ?? $html;
@@ -913,6 +930,150 @@ final class Reh4MatProductImporter
         }
 
         return $html;
+    }
+
+    /**
+     * @param  array<string, mixed>  $downloadContext
+     */
+    private function localizeRemoteImageTags(string $html, array &$downloadContext): string
+    {
+        return preg_replace_callback('/<img\b[^>]*>/isu', function (array $matches) use (&$downloadContext): string {
+            $tag = $matches[0];
+            $src = $this->attributeValue($tag, 'src');
+
+            if (($src === null || ! $this->isReh4MatExternalUrl($src)) && $this->attributeValue($tag, 'srcset') !== null) {
+                $src = $this->firstImageUrlFromSrcset((string) $this->attributeValue($tag, 'srcset'));
+            }
+
+            if ($src === null || ! $this->isReh4MatExternalUrl($src) || ! $this->looksLikeImageUrl($src)) {
+                return $tag;
+            }
+
+            $localUrl = $this->localContentImageUrl($src, $downloadContext);
+
+            if ($localUrl === null) {
+                return '';
+            }
+
+            $tag = $this->setAttribute($tag, 'src', $localUrl);
+            $tag = $this->removeAttribute($tag, 'srcset');
+            $tag = $this->removeAttribute($tag, 'sizes');
+
+            if ($this->attributeValue($tag, 'loading') === null) {
+                $tag = $this->setAttribute($tag, 'loading', 'lazy');
+            }
+
+            return $tag;
+        }, $html) ?? $html;
+    }
+
+    /**
+     * @param  array<string, mixed>  $downloadContext
+     */
+    private function localizeRemoteImageAnchors(string $html, array &$downloadContext): string
+    {
+        return preg_replace_callback('/<a\b([^>]*)>(.*?)<\/a>/isu', function (array $matches) use (&$downloadContext): string {
+            $attributes = $matches[1];
+            $innerHtml = $matches[2];
+            $href = $this->attributeValue($attributes, 'href');
+
+            if ($href === null || ! $this->isReh4MatExternalUrl($href) || ! $this->looksLikeImageUrl($href)) {
+                return $matches[0];
+            }
+
+            $localUrl = $this->localContentImageUrl($href, $downloadContext);
+
+            if ($localUrl === null) {
+                return $innerHtml;
+            }
+
+            $attributes = $this->setAttribute('<a'.$attributes.'>', 'href', $localUrl);
+            $attributes = preg_replace('/^<a\b|>$/iu', '', $attributes) ?? ' href="'.e($localUrl).'"';
+
+            return '<a'.$attributes.'>'.$innerHtml.'</a>';
+        }, $html) ?? $html;
+    }
+
+    /**
+     * @param  array<string, mixed>  $downloadContext
+     */
+    private function localContentImageUrl(string $url, array &$downloadContext): ?string
+    {
+        $normalizedUrl = $this->normalizeUrlForMap($url);
+
+        if (isset($downloadContext['content_image_url_map'][$normalizedUrl]) && is_string($downloadContext['content_image_url_map'][$normalizedUrl])) {
+            return $downloadContext['content_image_url_map'][$normalizedUrl];
+        }
+
+        if (($downloadContext['import_content_images'] ?? false) !== true) {
+            return null;
+        }
+
+        $externalId = $this->stringOrNull($downloadContext['external_id'] ?? null);
+
+        if ($externalId === null) {
+            return null;
+        }
+
+        try {
+            $imported = $this->remoteImageImporter->import(
+                $normalizedUrl,
+                'products/reh4mat/'.$externalId.'/content',
+                self::CONTENT_IMAGE_DISK,
+                self::REMOTE_ASSET_ALLOWED_HOSTS,
+            );
+        } catch (Throwable $exception) {
+            $this->warnings[] = 'Content image skipped for '.$externalId.': '.$normalizedUrl.' — '.$exception->getMessage();
+
+            return null;
+        }
+
+        $localUrl = Storage::disk((string) $imported['disk'])->url((string) $imported['path']);
+        $downloadContext['content_image_url_map'][$normalizedUrl] = $localUrl;
+
+        return $localUrl;
+    }
+
+    private function firstImageUrlFromSrcset(string $srcset): ?string
+    {
+        foreach (explode(',', $srcset) as $candidate) {
+            $parts = preg_split('/\s+/', trim($candidate));
+            $url = $parts[0] ?? null;
+
+            if (is_string($url) && filter_var($url, FILTER_VALIDATE_URL) && $this->looksLikeImageUrl($url)) {
+                return html_entity_decode($url, ENT_QUOTES | ENT_HTML5);
+            }
+        }
+
+        return null;
+    }
+
+    private function looksLikeImageUrl(string $url): bool
+    {
+        $path = parse_url($url, PHP_URL_PATH);
+
+        if (! is_string($path)) {
+            return false;
+        }
+
+        return preg_match('/\.(avif|gif|jpe?g|png|webp)$/iu', $path) === 1;
+    }
+
+    private function setAttribute(string $tag, string $attribute, string $value): string
+    {
+        $encodedValue = e($value);
+        $pattern = '/\b'.preg_quote($attribute, '/').'\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/iu';
+
+        if (preg_match($pattern, $tag)) {
+            return preg_replace($pattern, $attribute.'="'.$encodedValue.'"', $tag, 1) ?? $tag;
+        }
+
+        return preg_replace('/\s*\/?>$/u', ' '.$attribute.'="'.$encodedValue.'">', $tag, 1) ?? $tag;
+    }
+
+    private function removeAttribute(string $tag, string $attribute): string
+    {
+        return preg_replace('/\s+'.preg_quote($attribute, '/').'\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/iu', '', $tag) ?? $tag;
     }
 
     private function removeRemoteAssetTags(string $html): string
@@ -951,7 +1112,7 @@ final class Reh4MatProductImporter
             $label = trim(preg_replace('/\s+/', ' ', strip_tags($innerHtml)) ?? strip_tags($innerHtml));
 
             if ($label === '') {
-                $label = 'Powiązany produkt';
+                return '';
             }
 
             if ($this->looksLikeDownloadUrl($href)) {
@@ -970,7 +1131,7 @@ final class Reh4MatProductImporter
                 return '<span class="reh4mat-pending-accessory" data-external-source="reh4mat" data-external-slug="'.e($externalSlug).'">'.e($label).'</span>';
             }
 
-            return '<span class="reh4mat-pending-accessory">'.e($label).'</span>';
+            return e($label);
         }, $html) ?? $html;
     }
 
