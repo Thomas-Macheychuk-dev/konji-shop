@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -19,7 +21,7 @@ it('can dry-run a Reh4Mat product-data file without database writes', function (
         '--from' => 'scrapers/reh4mat/test-product-data.json',
         '--dry-run' => true,
     ])
-        ->expectsOutputToContain('Dry-run summary. No database writes were made. No images were downloaded.')
+        ->expectsOutputToContain('Dry-run summary. No database writes were made. No images or downloads were downloaded.')
         ->expectsOutputToContain('Products to import/update: 1')
         ->expectsOutputToContain('Categories to create/update: 2')
         ->expectsOutputToContain('Pictograms discovered: 2')
@@ -31,7 +33,14 @@ it('can dry-run a Reh4Mat product-data file without database writes', function (
         ->and(ProductVariant::query()->count())->toBe(0);
 });
 
-it('imports Reh4Mat product-data as draft products with category hierarchy and default variants', function (): void {
+it('imports Reh4Mat product-data as draft products with category hierarchy, default variants, local downloads, and safe accessory placeholders', function (): void {
+    Storage::fake('public');
+    Http::fake([
+        'reh4mat.com/*' => Http::response('%PDF-1.4 test file', 200, ['Content-Type' => 'application/pdf']),
+        'www.reh4mat.com/*' => Http::response('%PDF-1.4 test file', 200, ['Content-Type' => 'application/pdf']),
+        '*' => Http::response('', 404),
+    ]);
+
     writeReh4MatImportFixture('scrapers/reh4mat/test-product-data.json', [reh4matImportProductPayload()]);
 
     $this->artisan('reh4mat:import', [
@@ -57,8 +66,14 @@ it('imports Reh4Mat product-data as draft products with category hierarchy and d
         ->and($product->description)->toContain('UMDNS')
         ->and($product->description)->toContain('Do pobrania')
         ->and($product->description)->toContain('Deklaracja zgodności')
+        ->and($product->description)->toContain('/storage/products/reh4mat/3692/downloads/deklaracja-zgodnosci-')
+        ->and($product->description)->toContain('reh4mat-pending-accessory')
+        ->and($product->description)->toContain('data-external-slug="rekaw-elastyczny-pod-orteze"')
+        ->and($product->description)->toContain('Rękaw elastyczny pod ortezę')
         ->and($product->description)->toContain('TO JEST WYRÓB MEDYCZNY')
-        ->and($product->description)->not->toContain('<script');
+        ->and($product->description)->not->toContain('<script')
+        ->and($product->description)->not->toContain('reh4mat.com')
+        ->and($product->description)->not->toContain('stabilobedsystem.pl');
 
     $rootCategory = Category::query()->where('slug', 'konczyna-dolna')->firstOrFail();
     $leafCategory = Category::query()->where('slug', 'ortezy-calej-konczyny-dolnej')->firstOrFail();
@@ -82,6 +97,8 @@ it('imports Reh4Mat product-data as draft products with category hierarchy and d
         ->and($variant->stock_status)->toBe(StockStatus::IN_STOCK);
 
     expect($product->images()->count())->toBe(0);
+
+    Storage::disk('public')->assertExists('products/reh4mat/3692/downloads/deklaracja-zgodnosci-'.substr(sha1('https://reh4mat.com/deklaracje/pl/117.pdf'), 0, 10).'.pdf');
 });
 
 it('can import Reh4Mat products as active products', function (): void {
@@ -91,6 +108,7 @@ it('can import Reh4Mat products as active products', function (): void {
         '--from' => 'scrapers/reh4mat/test-product-data-active.json',
         '--status' => 'active',
         '--no-images' => true,
+        '--no-downloads' => true,
     ])->assertSuccessful();
 
     $product = Product::query()
@@ -110,6 +128,7 @@ it('updates existing Reh4Mat products by external ID instead of duplicating them
     $this->artisan('reh4mat:import', [
         '--from' => 'scrapers/reh4mat/test-product-data-update.json',
         '--no-images' => true,
+        '--no-downloads' => true,
     ])->assertSuccessful();
 
     writeReh4MatImportFixture('scrapers/reh4mat/test-product-data-update.json', [
@@ -123,6 +142,7 @@ it('updates existing Reh4Mat products by external ID instead of duplicating them
     $this->artisan('reh4mat:import', [
         '--from' => 'scrapers/reh4mat/test-product-data-update.json',
         '--no-images' => true,
+        '--no-downloads' => true,
     ])->assertSuccessful();
 
     $product = Product::query()
@@ -241,6 +261,11 @@ function reh4matImportProductPayload(array $overrides = []): array
                 'title' => 'Rozmiary',
                 'html' => '<table><tbody><tr><td>M</td><td>30 cm</td></tr></tbody></table>',
                 'text' => 'M 30 cm',
+            ],
+            [
+                'title' => 'Akcesoria',
+                'html' => '<h3>AKCESORIA/PRODUKTY DO STOSOWANIA RAZEM Z WYROBEM</h3><ul><li><a href="https://www.reh4mat.com/produkt/akcesoria/rekaw-elastyczny-pod-orteze/">Rękaw elastyczny pod ortezę</a></li><li><a href="https://www.reh4mat.com/produkt/akcesoria/rekaw-ochronny-pod-orteze-am-rb/">Rękaw ochronny pod ortezę AM-RB</a></li></ul>',
+                'text' => 'Rękaw elastyczny pod ortezę Rękaw ochronny pod ortezę AM-RB',
             ],
         ],
         'medical_device_notice' => 'TO JEST WYRÓB MEDYCZNY. UŻYWAJ GO ZGODNIE Z INSTRUKCJĄ UŻYWANIA LUB ETYKIETĄ.',

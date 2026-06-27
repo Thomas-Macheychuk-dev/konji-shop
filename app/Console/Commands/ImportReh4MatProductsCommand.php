@@ -19,6 +19,7 @@ final class ImportReh4MatProductsCommand extends Command
         {--offset=0 : Number of products to skip before importing.}
         {--status=draft : Product status to assign: draft, active, or archived.}
         {--no-images : Do not download or sync product images.}
+        {--no-downloads : Do not download or sync Reh4Mat downloadable files; render download labels as plain text.}
         {--image-limit=10 : Maximum number of images to import per product. Use 0 for no limit.}
         {--show-failures : Print failed product imports at the end.}';
 
@@ -47,6 +48,7 @@ final class ImportReh4MatProductsCommand extends Command
         $selectedProducts = array_slice($products, $offset, $limit);
         $dryRun = (bool) $this->option('dry-run');
         $importImages = ! $dryRun && ! (bool) $this->option('no-images');
+        $importDownloads = ! $dryRun && ! (bool) $this->option('no-downloads');
         $imageLimit = $this->imageLimitOption();
 
         $this->info('Importing Reh4Mat products from: '.$dataPath);
@@ -56,6 +58,7 @@ final class ImportReh4MatProductsCommand extends Command
         $this->line('Status: '.$status->value);
         $this->line('Mode: '.($dryRun ? 'dry-run' : 'database import'));
         $this->line('Images: '.($importImages ? 'download and sync' : 'skipped'));
+        $this->line('Downloads: '.($importDownloads ? 'download and localize' : 'skipped / plain text'));
         $this->line('Image limit per product: '.($imageLimit === null ? 'none' : (string) $imageLimit));
 
         if ($dryRun) {
@@ -88,7 +91,7 @@ final class ImportReh4MatProductsCommand extends Command
             }
 
             try {
-                $result = $this->importer->import($productData, $status, $importImages, $imageLimit);
+                $result = $this->importer->import($productData, $status, $importImages, $imageLimit, $importDownloads);
                 $product = $result['product'];
                 $imported++;
 
@@ -169,7 +172,7 @@ final class ImportReh4MatProductsCommand extends Command
             $downloadCount += is_array($product['downloads'] ?? null) ? count($product['downloads']) : 0;
         }
 
-        $this->info('Dry-run summary. No database writes were made. No images were downloaded.');
+        $this->info('Dry-run summary. No database writes were made. No images or downloads were downloaded.');
         $this->line('Products to import/update: '.count($products));
         $this->line('Categories to create/update: '.count($categoryKeys));
         $this->line('Default variants to create/update: '.count($products));

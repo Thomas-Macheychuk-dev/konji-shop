@@ -16,12 +16,23 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Throwable;
 
 final class Reh4MatProductImporter
 {
     private const MAX_DATABASE_STRING_LENGTH = 190;
+
+    /**
+     * @var list<string>
+     */
+    private const DOWNLOAD_ALLOWED_HOSTS = ['reh4mat.com', 'www.reh4mat.com'];
+
+    private const DOWNLOAD_DISK = 'public';
+
+    private const DOWNLOAD_MAX_BYTES = 20 * 1024 * 1024;
 
     /**
      * @var list<string>
@@ -41,12 +52,14 @@ final class Reh4MatProductImporter
         ProductStatus $status = ProductStatus::DRAFT,
         bool $importImages = true,
         ?int $imageLimit = 10,
+        bool $importDownloads = true,
     ): array {
         $this->warnings = [];
+        $externalId = $this->externalProductId($scraped);
+        $downloadContext = $this->downloadContext($scraped, $externalId, $importDownloads);
 
-        $product = DB::transaction(function () use ($scraped, $status, $importImages, $imageLimit): Product {
-            $externalId = $this->externalProductId($scraped);
-            $product = $this->resolveProduct($scraped, $externalId, $status);
+        $product = DB::transaction(function () use ($scraped, $externalId, $status, $importImages, $imageLimit, $downloadContext): Product {
+            $product = $this->resolveProduct($scraped, $externalId, $status, $downloadContext);
 
             $this->syncCategories($product, $scraped);
             $this->syncDefaultVariant($product, $scraped, $status);
@@ -71,7 +84,10 @@ final class Reh4MatProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function resolveProduct(array $scraped, string $externalId, ProductStatus $status): Product
+    /**
+     * @param  array<string, mixed>  $downloadContext
+     */
+    private function resolveProduct(array $scraped, string $externalId, ProductStatus $status, array $downloadContext): Product
     {
         $product = Product::withTrashed()
             ->where('external_source', 'reh4mat')
@@ -94,8 +110,8 @@ final class Reh4MatProductImporter
         $attributes = [
             'name' => $name,
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
-            'short_description' => $this->shortDescriptionHtml($scraped),
-            'description' => $this->productDescriptionHtml($scraped),
+            'short_description' => $this->shortDescriptionHtml($scraped, $downloadContext),
+            'description' => $this->productDescriptionHtml($scraped, $downloadContext),
             'seo_title' => $this->stringOrNull($scraped['seo_title'] ?? null) ?: $name,
             'seo_description' => $this->stringOrNull($scraped['seo_description'] ?? null)
                 ?: $this->plainTextSnippet($scraped['description'] ?? $scraped['short_description'] ?? null, 300),
@@ -407,7 +423,10 @@ final class Reh4MatProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function shortDescriptionHtml(array $scraped): ?string
+    /**
+     * @param  array<string, mixed>  $downloadContext
+     */
+    private function shortDescriptionHtml(array $scraped, array $downloadContext): ?string
     {
         $short = $this->stringOrNull($scraped['short_description_html'] ?? null)
             ?: $this->stringOrNull($scraped['short_description'] ?? null);
@@ -420,13 +439,16 @@ final class Reh4MatProductImporter
             $short = '<p>'.e($this->plainTextSnippet($short, 500) ?? $short).'</p>';
         }
 
-        return $this->cleanHtml($short);
+        return $this->cleanImportedHtml($short, $downloadContext);
     }
 
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function productDescriptionHtml(array $scraped): ?string
+    /**
+     * @param  array<string, mixed>  $downloadContext
+     */
+    private function productDescriptionHtml(array $scraped, array $downloadContext): ?string
     {
         $sections = [];
         $mainHtml = $this->stringOrNull($scraped['description_html'] ?? null);
@@ -456,7 +478,7 @@ final class Reh4MatProductImporter
             $sections[] = $regulatorySection;
         }
 
-        $downloadsSection = $this->downloadsSection($scraped);
+        $downloadsSection = $this->downloadsSection($downloadContext);
         if ($downloadsSection !== null) {
             $sections[] = $downloadsSection;
         }
@@ -470,7 +492,7 @@ final class Reh4MatProductImporter
             return null;
         }
 
-        return $this->cleanHtml(implode("\n", $sections));
+        return $this->cleanImportedHtml(implode("\n", $sections), $downloadContext);
     }
 
     /**
@@ -590,11 +612,46 @@ final class Reh4MatProductImporter
     }
 
     /**
-     * @param  array<string, mixed>  $scraped
+     * @param  array<string, mixed>  $downloadContext
      */
-    private function downloadsSection(array $scraped): ?string
+    private function downloadsSection(array $downloadContext): ?string
     {
         $items = [];
+
+        foreach (($downloadContext['downloads'] ?? []) as $download) {
+            if (! is_array($download)) {
+                continue;
+            }
+
+            $label = $this->stringOrNull($download['label'] ?? null);
+            $url = $this->stringOrNull($download['local_url'] ?? null);
+
+            if ($label === null) {
+                continue;
+            }
+
+            if ($url !== null) {
+                $items[] = '<li><a href="'.e($url).'">'.e($label).'</a></li>';
+            } else {
+                $items[] = '<li>'.e($label).'</li>';
+            }
+        }
+
+        if ($items === []) {
+            return null;
+        }
+
+        return '<section class="reh4mat-downloads"><h2>Do pobrania</h2><ul>'.implode('', $items).'</ul></section>';
+    }
+
+    /**
+     * @param  array<string, mixed>  $scraped
+     * @return array{downloads: list<array<string, mixed>>, url_map: array<string, string>}
+     */
+    private function downloadContext(array $scraped, string $externalId, bool $importDownloads): array
+    {
+        $downloads = [];
+        $urlMap = [];
 
         foreach (($scraped['downloads'] ?? []) as $download) {
             if (! is_array($download)) {
@@ -608,18 +665,272 @@ final class Reh4MatProductImporter
                 continue;
             }
 
-            if ($url !== null && filter_var($url, FILTER_VALIDATE_URL)) {
-                $items[] = '<li><a href="'.e($url).'" rel="nofollow noopener" target="_blank">'.e($label).'</a></li>';
-            } else {
-                $items[] = '<li>'.e($label).'</li>';
+            $localized = [
+                'label' => $label,
+                'original_url' => $url,
+                'local_url' => null,
+            ];
+
+            if ($url !== null && $importDownloads) {
+                try {
+                    $localUrl = $this->downloadFile($url, $externalId, $label);
+                    $localized['local_url'] = $localUrl;
+                    $urlMap[$this->normalizeUrlForMap($url)] = $localUrl;
+                } catch (Throwable $exception) {
+                    $this->warnings[] = 'Download skipped for '.$externalId.': '.$label.' — '.$exception->getMessage();
+                }
             }
+
+            $downloads[] = $localized;
         }
 
-        if ($items === []) {
+        return [
+            'downloads' => $downloads,
+            'url_map' => $urlMap,
+        ];
+    }
+
+    private function downloadFile(string $url, string $externalId, string $label): string
+    {
+        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new \RuntimeException('Invalid download URL.');
+        }
+
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (! is_string($host) || ! $this->hostIsAllowed($host, self::DOWNLOAD_ALLOWED_HOSTS)) {
+            throw new \RuntimeException('Disallowed download host ['.$host.'].');
+        }
+
+        $response = Http::timeout(30)
+            ->retry(2, 750)
+            ->withHeaders([
+                'User-Agent' => 'KonjiShopBot/1.0',
+                'Accept' => 'application/pdf,application/octet-stream,*/*;q=0.8',
+            ])
+            ->get($url);
+
+        if (! $response->successful()) {
+            throw new \RuntimeException('HTTP '.$response->status());
+        }
+
+        $contents = $response->body();
+
+        if ($contents === '') {
+            throw new \RuntimeException('Downloaded file is empty.');
+        }
+
+        if (strlen($contents) > self::DOWNLOAD_MAX_BYTES) {
+            throw new \RuntimeException('Downloaded file is too large.');
+        }
+
+        $mimeType = $this->downloadMimeType($response->header('Content-Type'));
+        $extension = $this->downloadExtension($url, $mimeType);
+        $filename = Str::slug($label) ?: 'download';
+        $filename .= '-'.substr(sha1($url), 0, 10).'.'.$extension;
+        $path = 'products/reh4mat/'.$externalId.'/downloads/'.$filename;
+
+        if (! Storage::disk(self::DOWNLOAD_DISK)->exists($path)) {
+            Storage::disk(self::DOWNLOAD_DISK)->put($path, $contents);
+        }
+
+        return Storage::disk(self::DOWNLOAD_DISK)->url($path);
+    }
+
+    private function downloadMimeType(?string $contentType): string
+    {
+        if ($contentType === null) {
+            return 'application/octet-stream';
+        }
+
+        return mb_strtolower(trim(explode(';', $contentType)[0]));
+    }
+
+    private function downloadExtension(string $url, string $mimeType): string
+    {
+        $path = parse_url($url, PHP_URL_PATH);
+        $extension = is_string($path) ? mb_strtolower(pathinfo($path, PATHINFO_EXTENSION)) : '';
+
+        if ($extension !== '') {
+            return preg_replace('/[^a-z0-9]+/', '', $extension) ?: 'bin';
+        }
+
+        return match ($mimeType) {
+            'application/pdf' => 'pdf',
+            default => 'bin',
+        };
+    }
+
+    /**
+     * @param  array<string, mixed>  $downloadContext
+     */
+    private function cleanImportedHtml(?string $html, array $downloadContext): ?string
+    {
+        $html = $this->cleanHtml($html);
+
+        if ($html === null) {
             return null;
         }
 
-        return '<section class="reh4mat-downloads"><h2>Do pobrania</h2><ul>'.implode('', $items).'</ul></section>';
+        $html = $this->rewriteDownloadUrls($html, $downloadContext);
+        $html = $this->removeRemoteAssetTags($html);
+        $html = $this->rewriteExternalAnchors($html);
+        $html = preg_replace('/\s+(srcset|src)\s*=\s*("[^"]*reh4mat\.com[^"]*"|\'[^\']*reh4mat\.com[^\']*\')/iu', '', $html) ?? $html;
+        $html = preg_replace('/\s+(srcset|src)\s*=\s*("[^"]*stabilobedsystem\.pl[^"]*"|\'[^\']*stabilobedsystem\.pl[^\']*\')/iu', '', $html) ?? $html;
+        $html = trim(preg_replace('/\s+/', ' ', $html) ?? $html);
+
+        return $html === '' ? null : $html;
+    }
+
+    /**
+     * @param  array<string, mixed>  $downloadContext
+     */
+    private function rewriteDownloadUrls(string $html, array $downloadContext): string
+    {
+        foreach (($downloadContext['url_map'] ?? []) as $sourceUrl => $localUrl) {
+            if (! is_string($sourceUrl) || ! is_string($localUrl)) {
+                continue;
+            }
+
+            $html = str_replace($sourceUrl, $localUrl, $html);
+            $html = str_replace(e($sourceUrl), e($localUrl), $html);
+        }
+
+        return $html;
+    }
+
+    private function removeRemoteAssetTags(string $html): string
+    {
+        $html = preg_replace_callback('/<img\b[^>]*>/isu', function (array $matches): string {
+            $tag = $matches[0];
+            $src = $this->attributeValue($tag, 'src');
+
+            if ($src !== null && $this->isReh4MatExternalUrl($src)) {
+                return '';
+            }
+
+            $srcset = $this->attributeValue($tag, 'srcset');
+
+            if ($srcset !== null && preg_match('/(?:reh4mat\.com|stabilobedsystem\.pl)/iu', $srcset)) {
+                return '';
+            }
+
+            return $tag;
+        }, $html) ?? $html;
+
+        return $html;
+    }
+
+    private function rewriteExternalAnchors(string $html): string
+    {
+        return preg_replace_callback('/<a\b([^>]*)>(.*?)<\/a>/isu', function (array $matches): string {
+            $attributes = $matches[1];
+            $innerHtml = $matches[2];
+            $href = $this->attributeValue($attributes, 'href');
+
+            if ($href === null || ! $this->isReh4MatExternalUrl($href)) {
+                return $matches[0];
+            }
+
+            $label = trim(preg_replace('/\s+/', ' ', strip_tags($innerHtml)) ?? strip_tags($innerHtml));
+
+            if ($label === '') {
+                $label = 'Powiązany produkt';
+            }
+
+            if ($this->looksLikeDownloadUrl($href)) {
+                return '<span class="reh4mat-pending-download">'.e($label).'</span>';
+            }
+
+            $localUrl = $this->localProductUrlForExternalUrl($href);
+
+            if ($localUrl !== null) {
+                return '<a href="'.e($localUrl).'">'.e($label).'</a>';
+            }
+
+            $externalSlug = $this->slugFromUrl($href);
+
+            if ($externalSlug !== null) {
+                return '<span class="reh4mat-pending-accessory" data-external-source="reh4mat" data-external-slug="'.e($externalSlug).'">'.e($label).'</span>';
+            }
+
+            return '<span class="reh4mat-pending-accessory">'.e($label).'</span>';
+        }, $html) ?? $html;
+    }
+
+    private function looksLikeDownloadUrl(string $url): bool
+    {
+        $path = parse_url($url, PHP_URL_PATH);
+
+        if (! is_string($path)) {
+            return false;
+        }
+
+        return preg_match('/\.(pdf|doc|docx|xls|xlsx|zip)$/iu', $path) === 1;
+    }
+
+    private function localProductUrlForExternalUrl(string $url): ?string
+    {
+        $slug = $this->slugFromUrl($url);
+
+        if ($slug === null) {
+            return null;
+        }
+
+        $product = Product::query()
+            ->where('external_source', 'reh4mat')
+            ->where(function ($query) use ($url, $slug): void {
+                $query
+                    ->where('external_parent_sku', $this->limitNullableDatabaseString($url))
+                    ->orWhere('slug', $slug);
+            })
+            ->first();
+
+        return $product === null ? null : '/products/'.$product->slug;
+    }
+
+    private function attributeValue(string $html, string $attribute): ?string
+    {
+        if (! preg_match('/\b'.preg_quote($attribute, '/').'\s*=\s*("([^"]*)"|\'([^\']*)\'|([^\s>]+))/iu', $html, $matches)) {
+            return null;
+        }
+
+        return html_entity_decode($matches[2] ?? $matches[3] ?? $matches[4] ?? '', ENT_QUOTES | ENT_HTML5);
+    }
+
+    private function isReh4MatExternalUrl(string $url): bool
+    {
+        $host = parse_url($url, PHP_URL_HOST);
+
+        return is_string($host) && $this->hostIsAllowed($host, [
+            'reh4mat.com',
+            'www.reh4mat.com',
+            'stabilobedsystem.pl',
+            'www.stabilobedsystem.pl',
+        ]);
+    }
+
+    /**
+     * @param  list<string>  $allowedHosts
+     */
+    private function hostIsAllowed(string $host, array $allowedHosts): bool
+    {
+        $host = mb_strtolower($host);
+
+        foreach ($allowedHosts as $allowedHost) {
+            $allowedHost = mb_strtolower(ltrim($allowedHost, '.'));
+
+            if ($host === $allowedHost || str_ends_with($host, '.'.$allowedHost)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function normalizeUrlForMap(string $url): string
+    {
+        return html_entity_decode($url, ENT_QUOTES | ENT_HTML5);
     }
 
     private function uniqueProductSlug(string $baseSlug, ?int $currentProductId, string $externalId): string
