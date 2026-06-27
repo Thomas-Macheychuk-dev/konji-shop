@@ -647,6 +647,24 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
     border-radius: 0.75rem;
 }
 
+.product-description :deep(.product-video-embed) {
+    position: relative;
+    width: 100%;
+    max-width: 48rem;
+    margin: 1.5rem auto;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: rgb(9 9 11);
+}
+
+.product-description :deep(.product-video-embed iframe) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
 .product-description :deep(hr) {
     margin: 1.5rem 0;
     border: 0;

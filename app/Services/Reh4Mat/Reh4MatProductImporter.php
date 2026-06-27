@@ -1323,7 +1323,8 @@ final class Reh4MatProductImporter
 
         $html = preg_replace('/<script\b[^>]*>.*?<\/script>/isu', '', $html) ?? $html;
         $html = preg_replace('/<style\b[^>]*>.*?<\/style>/isu', '', $html) ?? $html;
-        $html = preg_replace('/<iframe\b[^>]*>.*?<\/iframe>/isu', '', $html) ?? $html;
+        $html = $this->rewriteSafeYouTubeIframes($html);
+        $html = preg_replace('/<iframe\b[^>]*\/\s*>/isu', '', $html) ?? $html;
         $html = preg_replace('/<embed\b[^>]*>.*?<\/embed>/isu', '', $html) ?? $html;
         $html = preg_replace('/<embed\b[^>]*\/?>/isu', '', $html) ?? $html;
         $html = preg_replace('/<object\b[^>]*>.*?<\/object>/isu', '', $html) ?? $html;
@@ -1332,6 +1333,67 @@ final class Reh4MatProductImporter
         $html = trim(preg_replace('/\s+/', ' ', $html) ?? $html);
 
         return $html === '' ? null : $html;
+    }
+
+    private function rewriteSafeYouTubeIframes(string $html): string
+    {
+        return preg_replace_callback('/<iframe\b[^>]*>.*?<\/iframe>/isu', function (array $matches): string {
+            $iframe = $matches[0];
+            $embedUrl = $this->safeYouTubeEmbedUrl($this->attributeValue($iframe, 'src'));
+
+            if ($embedUrl === null) {
+                return '';
+            }
+
+            $title = $this->stringOrNull($this->attributeValue($iframe, 'title')) ?: 'Film produktu';
+
+            return '<div class="product-video-embed"><iframe src="'.e($embedUrl).'" title="'.e($title).'" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
+        }, $html) ?? $html;
+    }
+
+    private function safeYouTubeEmbedUrl(?string $url): ?string
+    {
+        if ($url === null) {
+            return null;
+        }
+
+        $url = trim(html_entity_decode($url, ENT_QUOTES | ENT_HTML5));
+
+        if (str_starts_with($url, '//')) {
+            $url = 'https:'.$url;
+        }
+
+        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+            return null;
+        }
+
+        $host = mb_strtolower((string) parse_url($url, PHP_URL_HOST));
+        $host = preg_replace('/^www\./iu', '', $host) ?? $host;
+        $path = (string) parse_url($url, PHP_URL_PATH);
+        $videoId = null;
+
+        if ($host === 'youtube.com' || $host === 'm.youtube.com' || $host === 'youtube-nocookie.com') {
+            if (preg_match('#^/embed/([A-Za-z0-9_-]{6,64})#', $path, $matches) === 1) {
+                $videoId = $matches[1];
+            } elseif (preg_match('#^/shorts/([A-Za-z0-9_-]{6,64})#', $path, $matches) === 1) {
+                $videoId = $matches[1];
+            } elseif ($path === '/watch') {
+                parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+                $candidate = $query['v'] ?? null;
+
+                if (is_string($candidate) && preg_match('/^[A-Za-z0-9_-]{6,64}$/', $candidate) === 1) {
+                    $videoId = $candidate;
+                }
+            }
+        } elseif ($host === 'youtu.be' && preg_match('#^/([A-Za-z0-9_-]{6,64})#', $path, $matches) === 1) {
+            $videoId = $matches[1];
+        }
+
+        if ($videoId === null) {
+            return null;
+        }
+
+        return 'https://www.youtube-nocookie.com/embed/'.$videoId;
     }
 
     private function plainTextSnippet(mixed $value, int $limit): ?string

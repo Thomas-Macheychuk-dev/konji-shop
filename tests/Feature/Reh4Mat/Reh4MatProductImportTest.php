@@ -148,6 +148,39 @@ it('localizes inline Reh4Mat content images in imported descriptions and tabs', 
     expect(Storage::disk('public')->allFiles('products/reh4mat/3692/content'))->toHaveCount(2);
 });
 
+it('preserves safe YouTube iframes and removes unsafe iframe embeds', function (): void {
+    writeReh4MatImportFixture('scrapers/reh4mat/test-product-data-youtube-video.json', [
+        reh4matImportProductPayload([
+            'downloads' => [],
+            'images' => [],
+            'description_html' => '<p>Film instruktażowy:</p><iframe class="aligncenter" width="640" height="360" src="https://www.youtube.com/embed/pfTEKfA6xoQ" frameborder="0" allowfullscreen></iframe><iframe src="https://evil.example/embed/bad" onload="alert(1)"></iframe>',
+            'tabs' => [],
+        ]),
+    ]);
+
+    $this->artisan('reh4mat:import', [
+        '--from' => 'scrapers/reh4mat/test-product-data-youtube-video.json',
+        '--no-images' => true,
+        '--no-downloads' => true,
+    ])->assertSuccessful();
+
+    $product = Product::query()
+        ->where('external_source', 'reh4mat')
+        ->where('external_id', '3692')
+        ->firstOrFail();
+
+    expect($product->description)->toContain('product-video-embed')
+        ->and($product->description)->toContain('<iframe src="https://www.youtube-nocookie.com/embed/pfTEKfA6xoQ"')
+        ->and($product->description)->toContain('title="Film produktu"')
+        ->and($product->description)->toContain('loading="lazy"')
+        ->and($product->description)->toContain('allowfullscreen')
+        ->and($product->description)->not->toContain('www.youtube.com/embed')
+        ->and($product->description)->not->toContain('class="aligncenter"')
+        ->and($product->description)->not->toContain('frameborder')
+        ->and($product->description)->not->toContain('evil.example')
+        ->and($product->description)->not->toContain('onload=');
+});
+
 it('can import Reh4Mat products as active products', function (): void {
     writeReh4MatImportFixture('scrapers/reh4mat/test-product-data-active.json', [reh4matImportProductPayload()]);
 
