@@ -352,7 +352,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 </script>
 
 <template>
-    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-[5fr_6fr]">
         <section>
             <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
                 <template v-if="mainImage">
