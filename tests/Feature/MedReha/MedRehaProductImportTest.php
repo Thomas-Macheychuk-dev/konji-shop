@@ -59,6 +59,9 @@ it('imports MedReha product-data as draft products with category hierarchy attri
         ->and($product->description)->toContain('Dane produktu')
         ->and($product->description)->toContain('To jest wyrób medyczny')
         ->and($product->description)->toContain('https://www.youtube-nocookie.com/embed/v4MjZ-gOWLc')
+        ->and($product->description)->not->toContain('<th>Dostępność</th>')
+        ->and($product->description)->not->toContain('<th>Wysyłka</th>')
+        ->and($product->description)->not->toContain('Wysyłka w: 24 godziny')
         ->and($product->description)->not->toContain('<script')
         ->and($product->description)->not->toContain('evil.example');
 

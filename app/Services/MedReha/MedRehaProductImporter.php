@@ -703,8 +703,6 @@ final class MedRehaProductImporter
             'Producent' => $this->brandName($scraped),
             'SKU' => $this->stringOrNull($scraped['sku'] ?? null),
             'EAN' => $this->stringOrNull($scraped['ean'] ?? null),
-            'Dostępność' => $this->stringOrNull($scraped['availability_label'] ?? null),
-            'Wysyłka' => $this->stringOrNull($scraped['shipping_time'] ?? null),
         ] as $label => $value) {
             if ($value !== null) {
                 $rows[] = '<tr><th>'.e($label).'</th><td>'.e($value).'</td></tr>';
