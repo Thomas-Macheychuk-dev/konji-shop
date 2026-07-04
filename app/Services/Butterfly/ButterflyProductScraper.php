@@ -994,7 +994,25 @@ final class ButterflyProductScraper
             return null;
         }
 
-        return 'https://'.self::BUTTERFLY_HOST.$path;
+        return 'https://'.self::BUTTERFLY_HOST.$this->preferOriginalAssetPath($path);
+    }
+
+    private function preferOriginalAssetPath(string $path): string
+    {
+        foreach ([
+            '#^/environment/cache/images/(?:[0-9]+_[0-9]+_)?productGfx_([a-f0-9]{32})(?:_[0-9]+_[0-9]+)?\.(jpe?g|png|gif|webp)$#iu',
+            '#^/environment/cache/images/productGfx_([a-f0-9]{32})(?:_[0-9]+_[0-9]+)?\.(jpe?g|png|gif|webp)$#iu',
+        ] as $pattern) {
+            if (preg_match($pattern, $path, $matches) === 1) {
+                return '/userdata/public/gfx/'.$matches[1].'.'.mb_strtolower($matches[2]);
+            }
+        }
+
+        if (preg_match('#^/environment/cache/images/productGfx_([0-9]+)_[0-9]+_[0-9]+/(.+\.(?:jpe?g|png|gif|webp))$#iu', $path, $matches) === 1) {
+            return '/userdata/public/gfx/'.$matches[1].'/'.$matches[2];
+        }
+
+        return $path;
     }
 
     private function normalizePath(string $path): string

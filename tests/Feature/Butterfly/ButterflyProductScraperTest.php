@@ -66,6 +66,47 @@ it('extracts Butterfly product details from a Shoper product page', function ():
         ->and($result['warnings'])->toBe([]);
 });
 
+it('prefers original Butterfly image files over generated Shoper cache thumbnails', function (): void {
+    $html = butterflyProductPageDataFixture(
+        canonicalUrl: 'https://butterfly-mag.com/pl/p/Magnetyczna-opaska-na-kolano-wciagana/85',
+        externalProductId: '85',
+        name: 'Magnetyczna opaska na kolano wciągana',
+        producer: 'Butterfly Bio Magnetic System',
+        sku: 'KOLANO-85',
+        price: '125,00 zł',
+        categoryTrail: ['Magnetyczne opaski na kolana'],
+    );
+
+    $html = str_replace(
+        '<meta property="og:image" content="/userdata/public/gfx/78/poduszka-ort-butterfly.webp">',
+        '<meta property="og:image" content="/environment/cache/images/500_500_productGfx_ed30fb7ed0f4a47cbc22cc10274b57fd.jpg?overlay=1">',
+        $html,
+    );
+
+    $html = str_replace(
+        '<img itemprop="image" src="/userdata/public/gfx/78/poduszka-ort-butterfly.webp" alt="Magnetyczna opaska na kolano wciągana">',
+        '<img itemprop="image" src="/environment/cache/images/productGfx_713_300_300/KOLANO.jpg?overlay=1" alt="Magnetyczna opaska na kolano wciągana">',
+        $html,
+    );
+
+    $html = str_replace(
+        '<a href="/userdata/public/gfx/78/poduszka-ort-butterfly-2.webp"><img src="/userdata/public/gfx/78/poduszka-ort-butterfly-2.webp" alt="Magnetyczna opaska na kolano wciągana drugi widok"></a>',
+        '<a href="/environment/cache/images/productGfx_696_300_300/DSC_1211.jpg"><img src="/environment/cache/images/productGfx_a332152089ebff26d1276e2a13aac88b_300_300.jpg" alt="Magnetyczna opaska na kolano wciągana drugi widok"></a>',
+        $html,
+    );
+
+    $result = app(ButterflyProductScraper::class)->extract(
+        $html,
+        'https://butterfly-mag.com/pl/p/Magnetyczna-opaska-na-kolano-wciagana/85',
+    );
+
+    expect(collect($result['images'])->pluck('url')->all())->toBe([
+        'https://butterfly-mag.com/userdata/public/gfx/ed30fb7ed0f4a47cbc22cc10274b57fd.jpg',
+        'https://butterfly-mag.com/userdata/public/gfx/713/KOLANO.jpg',
+        'https://butterfly-mag.com/userdata/public/gfx/a332152089ebff26d1276e2a13aac88b.jpg',
+        'https://butterfly-mag.com/userdata/public/gfx/696/DSC_1211.jpg',
+    ]);
+});
 
 it('prefers the visible Butterfly availability label over hidden unavailable page text', function (): void {
     $html = butterflyProductPageDataFixture(
