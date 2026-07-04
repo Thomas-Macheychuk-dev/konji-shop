@@ -738,10 +738,18 @@ final class RelaxSanProductImporter
         $html = preg_replace('/<embed\b[^>]*\/?>/isu', '', $html) ?? $html;
         $html = preg_replace('/<object\b[^>]*>.*?<\/object>/isu', '', $html) ?? $html;
         $html = preg_replace('/\s+on[a-z]+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/iu', '', $html) ?? $html;
+        $html = $this->unwrapAnchorTags($html);
         $html = preg_replace('/<p>\s*(?:&nbsp;)?\s*<\/p>/i', '', $html) ?? $html;
         $html = trim(preg_replace('/\s+/', ' ', $html) ?? $html);
 
         return $html === '' ? null : $html;
+    }
+
+    private function unwrapAnchorTags(string $html): string
+    {
+        $html = preg_replace('/<a\b[^>]*>/isu', '', $html) ?? $html;
+
+        return preg_replace('/<\/a>/isu', '', $html) ?? $html;
     }
 
     private function rewriteEmbeddedDescriptionImages(string $html, string $externalId): string

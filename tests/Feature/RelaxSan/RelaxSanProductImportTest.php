@@ -60,6 +60,12 @@ it('imports RelaxSan product-data as draft products with category hierarchy attr
         ->and($product->description)->toContain('Dostępne warianty')
         ->and($product->description)->toContain('Dane produktu')
         ->and($product->description)->toContain('To jest wyrób medyczny')
+        ->and($product->description)->toContain('Bielizna poporodowa')
+        ->and($product->description)->toContain('oryginalny sklep')
+        ->and($product->description)->not->toContain('<a')
+        ->and($product->description)->not->toContain('</a>')
+        ->and($product->description)->not->toContain('href=')
+        ->and($product->description)->not->toContain('relaxsansklep.pl/pl/p/original')
         ->and($product->description)->toContain('https://www.youtube-nocookie.com/embed/v4MjZ-gOWLc')
         ->and($product->description)->not->toContain('<script')
         ->and($product->description)->not->toContain('evil.example');
@@ -282,7 +288,7 @@ function relaxsanImportProductPayload(array $overrides = []): array
         'seo_description' => 'Podkolanówki z kontrolowanym uciskiem',
         'short_description' => 'Podkolanówki z kontrolowanym uciskiem',
         'description' => 'Opis produktu',
-        'description_html' => '<h2>Opis produktu</h2><p>Podkolanówki uciskowe do codziennej profilaktyki.</p><script>alert("x")</script><iframe src="//www.youtube.com/embed/v4MjZ-gOWLc"></iframe><iframe src="https://evil.example/embed/bad"></iframe>',
+        'description_html' => '<h2>Opis produktu</h2><p>Podkolanówki uciskowe do codziennej profilaktyki. Sprawdź <a href="/bielizna-poporodowa">Bielizna poporodowa</a> i <a href="https://relaxsansklep.pl/pl/p/original/1" target="_blank">oryginalny sklep</a>.</p><script>alert("x")</script><iframe src="//www.youtube.com/embed/v4MjZ-gOWLc"></iframe><iframe src="https://evil.example/embed/bad"></iframe>',
         'price_gross_amount' => 78.0,
         'currency' => 'PLN',
         'availability' => 'in_stock',
