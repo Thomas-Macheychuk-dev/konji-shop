@@ -59,6 +59,8 @@ it('imports RelaxSan product-data as draft products with category hierarchy attr
         ->and($product->description)->toContain('Parametry produktu')
         ->and($product->description)->toContain('Dostępne warianty')
         ->and($product->description)->toContain('Dane produktu')
+        ->and($product->description)->not->toContain('<th>Wysyłka</th>')
+        ->and($product->description)->not->toContain('<td>24 godziny</td>')
         ->and($product->description)->toContain('To jest wyrób medyczny')
         ->and($product->description)->toContain('Bielizna poporodowa')
         ->and($product->description)->toContain('oryginalny sklep')
@@ -77,7 +79,10 @@ it('imports RelaxSan product-data as draft products with category hierarchy attr
     expect($middleCategory->parent_id)->toBe($topCategory->id)
         ->and($leafCategory->parent_id)->toBe($middleCategory->id)
         ->and($product->categories()->whereKey($leafCategory->id)->wherePivot('is_primary', true)->exists())->toBeTrue()
-        ->and($product->categories()->whereKey($topCategory->id)->exists())->toBeTrue();
+        ->and($product->categories()->whereKey($topCategory->id)->exists())->toBeTrue()
+        ->and(Category::query()->where('name', 'Jesteś tutaj::')->exists())->toBeFalse()
+        ->and(Category::query()->where('name', 'Strona główna')->exists())->toBeFalse()
+        ->and(Category::query()->where('name', 'like', '> %')->exists())->toBeFalse();
 
     expect($product->attributeValues()->whereHas('attribute', fn ($query) => $query->where('slug', 'producent'))->where('slug', 'relaxsan')->exists())->toBeTrue()
         ->and($product->attributeValues()->whereHas('attribute', fn ($query) => $query->where('slug', 'wyrob-medyczny'))->where('slug', 'tak')->exists())->toBeTrue()
@@ -292,7 +297,7 @@ function relaxsanImportProductPayload(array $overrides = []): array
         'price_gross_amount' => 78.0,
         'currency' => 'PLN',
         'availability' => 'in_stock',
-        'availability_label' => 'duża ilość Wysyłka w: 24 godziny',
+        'availability_label' => 'Dostępny',
         'shipping_time' => '24 godziny',
         'stock_quantity' => null,
         'sku' => 'A-05',
@@ -355,7 +360,7 @@ function relaxsanImportProductPayload(array $overrides = []): array
         'source_category_url' => 'https://relaxsansklep.pl/podkolanowki-uciskowe',
         'source_top_category_name' => 'Przeciwżylakowe',
         'source_top_category_url' => 'https://relaxsansklep.pl/wyroby-przeciwzylakowe',
-        'source_category_path' => ['Przeciwżylakowe', 'Podkolanówki uciskowe', 'Podkolanówki uciskowe profilaktyczne'],
+        'source_category_path' => ['Strona główna', 'Jesteś tutaj::', '> Strona główna', '> Przeciwżylakowe', '> Podkolanówki uciskowe', '> Podkolanówki uciskowe profilaktyczne'],
         'source_product_list_name' => 'Podkolanówki testowe RelaxSan',
     ];
 

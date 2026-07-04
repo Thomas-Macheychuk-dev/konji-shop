@@ -8,6 +8,7 @@ use App\Enums\ProductStatus;
 use App\Services\RelaxSan\RelaxSanProductImporter;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use JsonException;
 
 final class ImportRelaxSanProductsCommand extends Command
@@ -149,19 +150,15 @@ final class ImportRelaxSanProductsCommand extends Command
             }
 
             foreach (($product['source_category_path'] ?? []) as $categoryName) {
-                if (is_string($categoryName) && trim($categoryName) !== '') {
-                    $categoryKeys[trim($categoryName)] = true;
-                }
+                $this->addCategoryKey($categoryKeys, $categoryName);
             }
 
             foreach (($product['categories'] ?? []) as $categoryName) {
-                if (is_string($categoryName) && trim($categoryName) !== '') {
-                    $categoryKeys[trim($categoryName)] = true;
-                }
+                $this->addCategoryKey($categoryKeys, $categoryName);
             }
 
-            if (($product['categories'] ?? []) === [] && is_string($product['category'] ?? null) && trim($product['category']) !== '') {
-                $categoryKeys[trim((string) $product['category'])] = true;
+            if (($product['categories'] ?? []) === []) {
+                $this->addCategoryKey($categoryKeys, $product['category'] ?? null);
             }
 
             $imageCount += is_array($product['images'] ?? null) ? count($product['images']) : 0;
@@ -180,6 +177,47 @@ final class ImportRelaxSanProductsCommand extends Command
         $this->line('Variants to create/update: '.$variantCount);
         $this->line('Product images discovered: '.$imageCount);
         $this->line('Medical device products: '.$medicalDeviceCount);
+    }
+
+    /**
+     * @param  array<string, bool>  $categoryKeys
+     */
+    private function addCategoryKey(array &$categoryKeys, mixed $value): void
+    {
+        $categoryName = $this->normaliseCategoryName($value);
+
+        if ($categoryName !== null) {
+            $categoryKeys[$categoryName] = true;
+        }
+    }
+
+    private function normaliseCategoryName(mixed $value): ?string
+    {
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $name = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $name = trim(preg_replace('/\s+/u', ' ', $name) ?? $name);
+        $name = trim($name, " \t\n\r\0\x0B>/");
+        $name = trim(preg_replace('/\s+/u', ' ', $name) ?? $name);
+
+        if ($name === '') {
+            return null;
+        }
+
+        $fingerprint = Str::of($name)
+            ->lower()
+            ->ascii()
+            ->replaceMatches('/[^a-z0-9]+/', ' ')
+            ->squish()
+            ->value();
+
+        if (in_array($fingerprint, ['jestes tutaj', 'strona glowna'], true)) {
+            return null;
+        }
+
+        return $name;
     }
 
     /**

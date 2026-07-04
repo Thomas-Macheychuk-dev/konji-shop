@@ -495,7 +495,7 @@ final class RelaxSanProductImporter
         $names = [];
 
         foreach (($scraped['source_category_path'] ?? []) as $categoryName) {
-            $categoryName = $this->stringOrNull($categoryName);
+            $categoryName = $this->normaliseCategoryName($categoryName);
 
             if ($categoryName !== null) {
                 $names[] = $categoryName;
@@ -503,7 +503,7 @@ final class RelaxSanProductImporter
         }
 
         foreach (($scraped['categories'] ?? []) as $categoryName) {
-            $categoryName = $this->stringOrNull($categoryName);
+            $categoryName = $this->normaliseCategoryName($categoryName);
 
             if ($categoryName !== null) {
                 $names[] = $categoryName;
@@ -511,16 +511,53 @@ final class RelaxSanProductImporter
         }
 
         if ($names === []) {
-            $category = $this->stringOrNull($scraped['category'] ?? null)
-                ?: $this->stringOrNull($scraped['source_category_name'] ?? null)
-                    ?: $this->stringOrNull($scraped['source_top_category_name'] ?? null);
+            foreach ([
+                $scraped['category'] ?? null,
+                $scraped['source_category_name'] ?? null,
+                $scraped['source_top_category_name'] ?? null,
+            ] as $category) {
+                $categoryName = $this->normaliseCategoryName($category);
 
-            if ($category !== null) {
-                $names[] = $category;
+                if ($categoryName !== null) {
+                    $names[] = $categoryName;
+
+                    break;
+                }
             }
         }
 
         return array_values(array_unique($names));
+    }
+
+    private function normaliseCategoryName(mixed $value): ?string
+    {
+        $name = $this->stringOrNull($value);
+
+        if ($name === null) {
+            return null;
+        }
+
+        $name = html_entity_decode($name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $name = trim(preg_replace('/\s+/u', ' ', $name) ?? $name);
+        $name = trim($name, " \t\n\r\0\x0B>/");
+        $name = trim(preg_replace('/\s+/u', ' ', $name) ?? $name);
+
+        if ($name === '') {
+            return null;
+        }
+
+        $fingerprint = Str::of($name)
+            ->lower()
+            ->ascii()
+            ->replaceMatches('/[^a-z0-9]+/', ' ')
+            ->squish()
+            ->value();
+
+        if (in_array($fingerprint, ['jestes tutaj', 'strona glowna'], true)) {
+            return null;
+        }
+
+        return $name;
     }
 
     /**
@@ -710,7 +747,6 @@ final class RelaxSanProductImporter
             'SKU' => $this->stringOrNull($scraped['sku'] ?? null),
             'EAN' => $this->stringOrNull($scraped['ean'] ?? null),
             'Dostępność' => $this->stringOrNull($scraped['availability_label'] ?? null),
-            'Wysyłka' => $this->stringOrNull($scraped['shipping_time'] ?? null),
         ] as $label => $value) {
             if ($value !== null) {
                 $rows[] = '<tr><th>'.e($label).'</th><td>'.e($value).'</td></tr>';
