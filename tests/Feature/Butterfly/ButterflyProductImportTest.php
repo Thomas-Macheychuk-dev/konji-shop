@@ -59,7 +59,9 @@ it('imports Butterfly product-data as draft products with category hierarchy att
         ->and($product->description)->toContain('Dostępne warianty')
         ->and($product->description)->toContain('Dane produktu')
         ->and($product->description)->not->toContain('<th>Wysyłka</th>')
+        ->and($product->description)->not->toContain('<th>Dostępność</th>')
         ->and($product->description)->not->toContain('<td>24 godziny</td>')
+        ->and($product->description)->not->toContain('<td>Wysyłka w: 48 godzin</td>')
         ->and($product->description)->toContain('To jest wyrób medyczny')
         ->and($product->description)->toContain('Pasy Euromag')
         ->and($product->description)->toContain('oryginalny sklep')
@@ -292,7 +294,7 @@ function butterflyImportProductPayload(array $overrides = []): array
         'price_gross_amount' => 250.0,
         'currency' => 'PLN',
         'availability' => 'in_stock',
-        'availability_label' => 'Towar dostępny od ręki',
+        'availability_label' => 'Wysyłka w: 48 godzin',
         'shipping_time' => '24 godziny',
         'stock_quantity' => null,
         'sku' => 'HARMONIUM',
