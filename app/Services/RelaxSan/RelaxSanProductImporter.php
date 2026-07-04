@@ -55,7 +55,7 @@ final class RelaxSanProductImporter
         $externalId = $this->externalProductId($scraped);
 
         $product = DB::transaction(function () use ($scraped, $externalId, $status, $importImages, $imageLimit): Product {
-            $product = $this->resolveProduct($scraped, $externalId, $status);
+            $product = $this->resolveProduct($scraped, $externalId, $status, $importImages);
 
             $this->syncCategories($product, $scraped);
             $this->syncProductAttributes($product, $scraped);
@@ -82,7 +82,7 @@ final class RelaxSanProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function resolveProduct(array $scraped, string $externalId, ProductStatus $status): Product
+    private function resolveProduct(array $scraped, string $externalId, ProductStatus $status, bool $importDescriptionImages): Product
     {
         $product = Product::withTrashed()
             ->where('external_source', 'relaxsan')
@@ -106,7 +106,7 @@ final class RelaxSanProductImporter
             'name' => $name,
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($scraped),
-            'description' => $this->productDescriptionHtml($scraped),
+            'description' => $this->productDescriptionHtml($scraped, $externalId, $importDescriptionImages),
             'seo_title' => $this->stringOrNull($scraped['seo_title'] ?? null) ?: $name,
             'seo_description' => $this->seoDescription($scraped),
             'status' => $status,
@@ -586,7 +586,7 @@ final class RelaxSanProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function productDescriptionHtml(array $scraped): ?string
+    private function productDescriptionHtml(array $scraped, string $externalId, bool $importDescriptionImages): ?string
     {
         $sections = [];
         $mainHtml = $this->stringOrNull($scraped['description_html'] ?? null);
@@ -622,7 +622,13 @@ final class RelaxSanProductImporter
             return null;
         }
 
-        return $this->cleanImportedHtml(implode("\n", $sections));
+        $html = $this->cleanImportedHtml(implode("\n", $sections));
+
+        if ($html === null || ! $importDescriptionImages) {
+            return $html;
+        }
+
+        return $this->rewriteEmbeddedDescriptionImages($html, $externalId);
     }
 
     /**
@@ -736,6 +742,105 @@ final class RelaxSanProductImporter
         $html = trim(preg_replace('/\s+/', ' ', $html) ?? $html);
 
         return $html === '' ? null : $html;
+    }
+
+    private function rewriteEmbeddedDescriptionImages(string $html, string $externalId): string
+    {
+        return preg_replace_callback('/<img\b[^>]*>/isu', function (array $matches) use ($externalId): string {
+            $tag = $matches[0];
+            $sourceUrl = $this->normalizeRelaxSanImageUrl($this->attributeValue($tag, 'src'));
+
+            if ($sourceUrl === null) {
+                return $tag;
+            }
+
+            try {
+                $imported = $this->remoteImageImporter->import(
+                    $sourceUrl,
+                    'products/relaxsan/'.$externalId.'/description',
+                    'public',
+                    self::IMAGE_ALLOWED_HOSTS,
+                );
+
+                $url = Storage::disk($imported['disk'])->url($imported['path']);
+            } catch (Throwable $exception) {
+                $this->warnings[] = 'Description image kept as remote URL for RelaxSan product '.$externalId.': '.$sourceUrl.' — '.$exception->getMessage();
+                $url = $sourceUrl;
+            }
+
+            $tag = $this->replaceHtmlAttribute($tag, 'src', $url);
+
+            foreach (['srcset', 'data-src', 'data-original', 'data-lazy', 'data-srcset'] as $attribute) {
+                $tag = $this->removeHtmlAttribute($tag, $attribute);
+            }
+
+            return $tag;
+        }, $html) ?? $html;
+    }
+
+    private function normalizeRelaxSanImageUrl(?string $url): ?string
+    {
+        if ($url === null) {
+            return null;
+        }
+
+        $url = trim(html_entity_decode($url, ENT_QUOTES | ENT_HTML5));
+
+        if ($url === '' || preg_match('/^(?:data|javascript|cid|mailto):/iu', $url) === 1) {
+            return null;
+        }
+
+        if (str_starts_with($url, '//')) {
+            $url = 'https:'.$url;
+        } elseif (str_starts_with($url, '/')) {
+            $url = 'https://relaxsansklep.pl'.$url;
+        } elseif (! filter_var($url, FILTER_VALIDATE_URL)
+            && preg_match('#^(?:userdata|environment|public)/#iu', $url) === 1) {
+            $url = 'https://relaxsansklep.pl/'.$url;
+        }
+
+        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+            return null;
+        }
+
+        $host = mb_strtolower((string) parse_url($url, PHP_URL_HOST));
+        $host = preg_replace('/^www\./iu', '', $host) ?? $host;
+
+        if ($host !== 'relaxsansklep.pl') {
+            return null;
+        }
+
+        $path = (string) parse_url($url, PHP_URL_PATH);
+        $path = preg_replace('#/+#', '/', $path) ?? $path;
+
+        if ($path === '' || preg_match('/\.(?:jpe?g|png|webp|gif|avif)$/iu', $path) !== 1) {
+            return null;
+        }
+
+        $query = parse_url($url, PHP_URL_QUERY);
+
+        return 'https://relaxsansklep.pl'.$path.(is_string($query) && $query !== '' ? '?'.$query : '');
+    }
+
+    private function replaceHtmlAttribute(string $html, string $attribute, string $value): string
+    {
+        $escapedValue = e($value);
+        $pattern = '/\b'.preg_quote($attribute, '/').'\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/iu';
+
+        if (preg_match($pattern, $html) === 1) {
+            return preg_replace($pattern, $attribute.'="'.$escapedValue.'"', $html, 1) ?? $html;
+        }
+
+        return preg_replace('/<img\b/iu', '<img '.$attribute.'="'.$escapedValue.'"', $html, 1) ?? $html;
+    }
+
+    private function removeHtmlAttribute(string $html, string $attribute): string
+    {
+        return preg_replace(
+            '/\s+'.preg_quote($attribute, '/').'\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/iu',
+            '',
+            $html,
+        ) ?? $html;
     }
 
     private function rewriteSafeYouTubeIframes(string $html): string

@@ -10,6 +10,8 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -102,6 +104,39 @@ it('imports RelaxSan product-data as draft products with category hierarchy attr
         ->and($mediumVariant->attributeValues()->whereHas('attribute', fn ($query) => $query->where('slug', 'rozmiar'))->where('slug', 'm')->exists())->toBeTrue();
 
     expect($product->images()->count())->toBe(0);
+});
+
+it('downloads and rewrites RelaxSan embedded description images during image imports', function (): void {
+    Storage::fake('public');
+
+    Http::fake([
+        'relaxsansklep.pl/*' => Http::response('fake-image-contents', 200, ['Content-Type' => 'image/png']),
+    ]);
+
+    writeRelaxSanImportFixture('scrapers/relaxsan/test-description-image-product-data.json', [
+        relaxsanImportProductPayload([
+            'images' => [],
+            'description_html' => '<h2>Opis produktu</h2><p><img src="/userdata/public/assets//5704-pack3d.jpg" srcset="/userdata/public/assets//5704-pack3d.jpg 1x" data-src="/userdata/public/assets//lazy.jpg" alt="Tabela rozmiarów" width="280" height="374"></p>',
+        ]),
+    ]);
+
+    $this->artisan('relaxsan:import', [
+        '--from' => 'scrapers/relaxsan/test-description-image-product-data.json',
+    ])->assertSuccessful();
+
+    $product = Product::query()
+        ->where('external_source', 'relaxsan')
+        ->where('external_id', '94')
+        ->firstOrFail();
+
+    $descriptionFiles = Storage::disk('public')->allFiles('products/relaxsan/94/description');
+
+    expect($descriptionFiles)->toHaveCount(1)
+        ->and($product->description)->toContain('/storage/products/relaxsan/94/description/')
+        ->and($product->description)->toContain('alt="Tabela rozmiarów"')
+        ->and($product->description)->not->toContain('/userdata/public/assets')
+        ->and($product->description)->not->toContain('srcset=')
+        ->and($product->description)->not->toContain('data-src=');
 });
 
 it('imports RelaxSan products without variant candidates with a single default variant', function (): void {
