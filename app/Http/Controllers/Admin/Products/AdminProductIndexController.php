@@ -41,7 +41,7 @@ final class AdminProductIndexController extends Controller
                     $this->missingPackageDataQuery($query);
                 });
             })
-            ->orderBy('name')
+            ->orderBy('updated_at')
             ->paginate(50)
             ->withQueryString();
 
