@@ -1,0 +1,487 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services\Antar;
+
+use Closure;
+
+final class AntarProductDataCrawler
+{
+    private ?Closure $progressCallback = null;
+
+    private int $timeoutSeconds = 15;
+
+    private int $requestDelayMilliseconds = 500;
+
+    private int $attempts = 3;
+
+    private int $retryDelayMilliseconds = 1000;
+
+    public function __construct(
+        private readonly AntarProductScraper $productScraper,
+    ) {}
+
+    public function withProgressCallback(?Closure $callback): self
+    {
+        $this->progressCallback = $callback;
+        $this->productScraper->withProgressCallback($callback);
+
+        return $this;
+    }
+
+    public function withTimeout(int $seconds): self
+    {
+        $this->timeoutSeconds = max(1, $seconds);
+        $this->productScraper->withTimeout($this->timeoutSeconds);
+
+        return $this;
+    }
+
+    public function withRequestDelayMilliseconds(int $milliseconds): self
+    {
+        $this->requestDelayMilliseconds = max(0, $milliseconds);
+        $this->productScraper->withRequestDelayMilliseconds($this->requestDelayMilliseconds);
+
+        return $this;
+    }
+
+    public function withRetry(int $attempts, int $delayMilliseconds): self
+    {
+        $this->attempts = max(1, $attempts);
+        $this->retryDelayMilliseconds = max(0, $delayMilliseconds);
+        $this->productScraper->withRetry($this->attempts, $this->retryDelayMilliseconds);
+
+        return $this;
+    }
+
+    /**
+     * @param  array<string, mixed>  $productLinkDiscovery
+     * @return array<string, mixed>
+     */
+    public function crawlFromProductLinkDiscovery(
+        array $productLinkDiscovery,
+        ?int $limit = null,
+        int $offset = 0,
+    ): array {
+        return $this->crawlProductUrls(
+            $this->productUrlsFromDiscovery($productLinkDiscovery),
+            $limit,
+            $offset,
+            $productLinkDiscovery,
+        );
+    }
+
+    /**
+     * @param  array<int, string>  $productUrls
+     * @param  array<string, mixed>|null  $productLinkDiscovery
+     * @return array<string, mixed>
+     */
+    public function crawlProductUrls(
+        array $productUrls,
+        ?int $limit = null,
+        int $offset = 0,
+        ?array $productLinkDiscovery = null,
+    ): array {
+        $sourceUrls = $this->sliceProductUrls($productUrls, $limit, $offset);
+        $sourceUrlCount = count($sourceUrls);
+        $contextsByUrl = $this->productContextsByUrl($productLinkDiscovery);
+
+        $products = [];
+        $scrapedUrls = [];
+        $canonicalUrls = [];
+        $externalProductIds = [];
+        $failedUrls = [];
+        $skippedFailedProducts = [];
+        $skippedDuplicateUrls = [];
+        $skippedDuplicateExternalIds = [];
+        $warnings = [];
+        $stoppedEarly = false;
+        $stopReason = null;
+
+        foreach ($sourceUrls as $index => $sourceUrl) {
+            $this->emit('Scraping Antar product '.($index + 1).'/'.$sourceUrlCount.': '.$sourceUrl);
+
+            if (isset($scrapedUrls[$sourceUrl])) {
+                $skippedDuplicateUrls[] = [
+                    'url' => $sourceUrl,
+                    'reason' => 'duplicate_source_url',
+                ];
+
+                continue;
+            }
+
+            $scrapedUrls[$sourceUrl] = true;
+            $product = $this->productScraper->scrape($sourceUrl, $contextsByUrl[$sourceUrl] ?? null);
+            $productFailedUrls = $this->stringMap($product['failed_urls'] ?? []);
+
+            foreach ($productFailedUrls as $failedUrl => $reason) {
+                $failedUrls[$failedUrl] = $reason;
+            }
+
+            foreach ($this->stringList($product['warnings'] ?? []) as $warning) {
+                $warnings[] = [
+                    'url' => $sourceUrl,
+                    'warning' => $warning,
+                ];
+            }
+
+            if (($product['name'] ?? '') === '' || $productFailedUrls !== []) {
+                $skippedFailedProducts[] = [
+                    'url' => $sourceUrl,
+                    'reason' => $this->firstFailureReason($productFailedUrls) ?? 'missing_required_product_data',
+                ];
+
+                if ($this->hasRateLimitFailure($productFailedUrls)) {
+                    $stoppedEarly = true;
+                    $stopReason = 'HTTP 429 rate limit or temporary block from Antar';
+                    $this->emit('Stopping Antar product crawl: '.$stopReason);
+                    break;
+                }
+
+                continue;
+            }
+
+            $canonicalUrl = $this->normalizeProductUrl((string) ($product['canonical_url'] ?? $product['source_url'] ?? $sourceUrl));
+            $externalProductId = $this->normalizeProductId($product['external_product_id'] ?? null);
+
+            if ($canonicalUrl !== null && isset($canonicalUrls[$canonicalUrl])) {
+                $skippedDuplicateUrls[] = [
+                    'url' => $sourceUrl,
+                    'canonical_url' => $canonicalUrl,
+                    'kept_url' => $canonicalUrls[$canonicalUrl],
+                    'reason' => 'duplicate_canonical_url',
+                ];
+
+                continue;
+            }
+
+            if ($externalProductId !== null && isset($externalProductIds[$externalProductId])) {
+                $skippedDuplicateExternalIds[] = [
+                    'external_product_id' => $externalProductId,
+                    'url' => $sourceUrl,
+                    'kept_url' => $externalProductIds[$externalProductId],
+                    'reason' => 'duplicate_external_product_id',
+                ];
+
+                continue;
+            }
+
+            if ($canonicalUrl !== null) {
+                $canonicalUrls[$canonicalUrl] = $sourceUrl;
+            }
+
+            if ($externalProductId !== null) {
+                $externalProductIds[$externalProductId] = $sourceUrl;
+            }
+
+            $products[] = $product;
+        }
+
+        return [
+            'source' => 'antar',
+            'product_count' => count($products),
+            'products' => $products,
+            'source_product_urls' => $sourceUrls,
+            'source_product_url_count' => count($sourceUrls),
+            'total_product_url_count' => $this->totalProductUrlCount($productUrls),
+            'offset' => max(0, $offset),
+            'limit' => $limit,
+            'request_delay_ms' => $this->requestDelayMilliseconds,
+            'attempts' => $this->attempts,
+            'retry_delay_ms' => $this->retryDelayMilliseconds,
+            'product_link_discovery' => $productLinkDiscovery,
+            'skipped_failed_products' => $skippedFailedProducts,
+            'skipped_duplicate_urls' => $skippedDuplicateUrls,
+            'skipped_duplicate_external_ids' => $skippedDuplicateExternalIds,
+            'warnings' => $warnings,
+            'failed_urls' => $failedUrls,
+            'failed_url_counts' => $this->failureCounts($failedUrls),
+            'stopped_early' => $stoppedEarly,
+            'stop_reason' => $stopReason,
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $productLinkDiscovery
+     * @return array<int, string>
+     */
+    private function productUrlsFromDiscovery(array $productLinkDiscovery): array
+    {
+        if (is_array($productLinkDiscovery['product_urls'] ?? null)) {
+            return $this->stringList($productLinkDiscovery['product_urls']);
+        }
+
+        if (! is_array($productLinkDiscovery['products'] ?? null)) {
+            return [];
+        }
+
+        $urls = [];
+
+        foreach ($productLinkDiscovery['products'] as $product) {
+            if (! is_array($product) || ! is_string($product['url'] ?? null)) {
+                continue;
+            }
+
+            $urls[] = $product['url'];
+        }
+
+        return $this->stringList($urls);
+    }
+
+    /**
+     * @param  array<int, string>  $productUrls
+     * @return array<int, string>
+     */
+    private function sliceProductUrls(array $productUrls, ?int $limit, int $offset): array
+    {
+        $normalized = [];
+
+        foreach ($productUrls as $url) {
+            $normalizedUrl = $this->normalizeProductUrl($url);
+
+            if ($normalizedUrl === null) {
+                continue;
+            }
+
+            $normalized[] = $normalizedUrl;
+        }
+
+        $offset = max(0, $offset);
+        $limit = $limit !== null && $limit > 0 ? $limit : null;
+
+        if ($limit === null) {
+            return array_slice($normalized, $offset);
+        }
+
+        return array_slice($normalized, $offset, $limit);
+    }
+
+    /**
+     * @param  array<int, string>  $productUrls
+     */
+    private function totalProductUrlCount(array $productUrls): int
+    {
+        return count(array_values(array_filter(array_map(
+            fn (mixed $url): ?string => is_string($url) ? $this->normalizeProductUrl($url) : null,
+            $productUrls,
+        ))));
+    }
+
+    /**
+     * @param  array<string, mixed>|null  $productLinkDiscovery
+     * @return array<string, array<string, mixed>>
+     */
+    private function productContextsByUrl(?array $productLinkDiscovery): array
+    {
+        if ($productLinkDiscovery === null) {
+            return [];
+        }
+
+        $contexts = [];
+
+        if (is_array($productLinkDiscovery['products'] ?? null)) {
+            foreach ($productLinkDiscovery['products'] as $product) {
+                if (! is_array($product) || ! is_string($product['url'] ?? null)) {
+                    continue;
+                }
+
+                $url = $this->normalizeProductUrl($product['url']);
+
+                if ($url === null) {
+                    continue;
+                }
+
+                $contexts[$url] = $product;
+            }
+        }
+
+        if (! is_array($productLinkDiscovery['category_results'] ?? null)) {
+            return $contexts;
+        }
+
+        foreach ($productLinkDiscovery['category_results'] as $categoryResult) {
+            if (! is_array($categoryResult) || ! is_array($categoryResult['product_urls'] ?? null)) {
+                continue;
+            }
+
+            $categoryPath = is_array($categoryResult['category_path'] ?? null)
+                ? array_values(array_filter($categoryResult['category_path'], 'is_string'))
+                : [];
+            $categoryName = $this->stringValue($categoryResult['name'] ?? null)
+                ?? ($categoryPath === [] ? null : $categoryPath[array_key_last($categoryPath)]);
+            $topCategoryName = $categoryPath[0] ?? $categoryName;
+            $categoryContext = [
+                'source_category_name' => $categoryName,
+                'source_category_url' => $this->stringValue($categoryResult['url'] ?? null),
+                'source_top_category_name' => $topCategoryName,
+                'source_top_category_url' => $this->topCategoryUrl($categoryResult),
+                'source_category_path' => $categoryPath,
+            ];
+
+            foreach ($categoryResult['product_urls'] as $productUrl) {
+                if (! is_string($productUrl)) {
+                    continue;
+                }
+
+                $url = $this->normalizeProductUrl($productUrl);
+
+                if ($url === null) {
+                    continue;
+                }
+
+                $contexts[$url] ??= ['url' => $url];
+                $contexts[$url] = array_filter(array_merge($contexts[$url], $categoryContext), static fn (mixed $value): bool => $value !== null && $value !== []);
+                $contexts[$url]['source_category_contexts'] ??= [];
+                $contexts[$url]['source_category_contexts'][] = array_filter($categoryContext, static fn (mixed $value): bool => $value !== null && $value !== []);
+            }
+        }
+
+        return $contexts;
+    }
+
+    /**
+     * @param  array<string, mixed>  $categoryResult
+     */
+    private function topCategoryUrl(array $categoryResult): ?string
+    {
+        $category = is_array($categoryResult['category'] ?? null) ? $categoryResult['category'] : null;
+        $path = is_array($category['path'] ?? null) ? array_values($category['path']) : [];
+        $url = $this->stringValue($category['url'] ?? null) ?? $this->stringValue($categoryResult['url'] ?? null);
+
+        if ($path === [] || count($path) <= 1) {
+            return $url;
+        }
+
+        return null;
+    }
+
+    private function normalizeProductUrl(string $url): ?string
+    {
+        return $this->productScraper->normalizeProductUrl($url);
+    }
+
+    private function normalizeProductId(mixed $value): ?string
+    {
+        if (is_int($value)) {
+            return (string) $value;
+        }
+
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        return $value !== '' ? $value : null;
+    }
+
+    /**
+     * @param  mixed  $value
+     * @return array<int, string>
+     */
+    private function stringList(mixed $value): array
+    {
+        if (! is_array($value)) {
+            return [];
+        }
+
+        $strings = [];
+
+        foreach ($value as $entry) {
+            if (! is_string($entry) || trim($entry) === '') {
+                continue;
+            }
+
+            $strings[] = trim($entry);
+        }
+
+        return array_values($strings);
+    }
+
+    /**
+     * @param  mixed  $value
+     * @return array<string, string>
+     */
+    private function stringMap(mixed $value): array
+    {
+        if (! is_array($value)) {
+            return [];
+        }
+
+        $map = [];
+
+        foreach ($value as $key => $entry) {
+            if (! is_string($key) || ! is_string($entry)) {
+                continue;
+            }
+
+            $map[$key] = $entry;
+        }
+
+        return $map;
+    }
+
+    /**
+     * @param  array<string, string>  $failedUrls
+     */
+    private function firstFailureReason(array $failedUrls): ?string
+    {
+        foreach ($failedUrls as $reason) {
+            return $reason;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param  array<string, string>  $failedUrls
+     */
+    private function hasRateLimitFailure(array $failedUrls): bool
+    {
+        foreach ($failedUrls as $reason) {
+            if (str_contains($reason, '429')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param  array<string, string>  $failedUrls
+     * @return array<string, int>
+     */
+    private function failureCounts(array $failedUrls): array
+    {
+        $counts = [];
+
+        foreach ($failedUrls as $reason) {
+            $counts[$reason] = ($counts[$reason] ?? 0) + 1;
+        }
+
+        ksort($counts);
+
+        return $counts;
+    }
+
+    private function stringValue(mixed $value): ?string
+    {
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        return $value !== '' ? $value : null;
+    }
+
+    private function emit(string $message): void
+    {
+        if ($this->progressCallback === null) {
+            return;
+        }
+
+        ($this->progressCallback)($message);
+    }
+}

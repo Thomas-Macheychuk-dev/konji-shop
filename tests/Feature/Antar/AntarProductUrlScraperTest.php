@@ -62,6 +62,48 @@ it('discovers Antar WooCommerce product links across product-page pagination', f
         ->and($result['failed_urls'])->toBe([]);
 });
 
+it('retries transient Antar product-list page failures', function (): void {
+    $paginatedPageAttempts = 0;
+
+    Http::fake([
+        'https://antar.net/produkty/rehabilitacja/chodziki/' => Http::response(<<<'HTML'
+            <html><body>
+                <a href="https://antar.net/produkt/at51004-chodzik-stalowy-trzykolowy/" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">Chodzik</a>
+                <nav class="woocommerce-pagination">
+                    <a class="next page-numbers" href="/produkty/rehabilitacja/chodziki/page/2/">→</a>
+                </nav>
+            </body></html>
+            HTML),
+        'https://antar.net/produkty/rehabilitacja/chodziki/page/2/' => function () use (&$paginatedPageAttempts) {
+            $paginatedPageAttempts++;
+
+            if ($paginatedPageAttempts === 1) {
+                throw new RuntimeException('cURL error 28: Operation timed out');
+            }
+
+            return Http::response(<<<'HTML'
+                <html><body>
+                    <a href="https://antar.net/produkt/chodzik-lekki-aluminiowy-at51034/" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">Chodzik lekki</a>
+                </body></html>
+                HTML);
+        },
+        '*' => Http::response('', 404),
+    ]);
+
+    $result = app(AntarProductUrlScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->withMaxAttempts(2, 0)
+        ->scrapeCategories(['https://antar.net/produkty/rehabilitacja/chodziki/']);
+
+    expect($paginatedPageAttempts)->toBe(2)
+        ->and($result['failed_urls'])->toBe([])
+        ->and($result['product_urls'])->toBe([
+            'https://antar.net/produkt/at51004-chodzik-stalowy-trzykolowy/',
+            'https://antar.net/produkt/chodzik-lekki-aluminiowy-at51034/',
+        ])
+        ->and($result['category_results'][0]['failed_page_count'])->toBe(0);
+});
+
 it('discovers Antar product links from a saved category discovery payload', function (): void {
     Http::fake([
         'https://antar.net/produkty/ortopedia/' => Http::response(<<<'HTML'

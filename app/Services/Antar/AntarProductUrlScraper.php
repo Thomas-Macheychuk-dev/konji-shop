@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Antar;
 
 use Closure;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
@@ -40,6 +41,10 @@ final class AntarProductUrlScraper
 
     private int $requestDelayMilliseconds = 0;
 
+    private int $maxAttempts = 3;
+
+    private int $retryDelayMilliseconds = 1500;
+
     public function __construct(
         private readonly AntarCategoryUrlScraper $categoryScraper,
     ) {}
@@ -64,6 +69,15 @@ final class AntarProductUrlScraper
     {
         $this->requestDelayMilliseconds = max(0, $milliseconds);
         $this->categoryScraper->withRequestDelayMilliseconds($this->requestDelayMilliseconds);
+
+        return $this;
+    }
+
+    public function withMaxAttempts(int $attempts, int $retryDelayMilliseconds = 1500): self
+    {
+        $this->maxAttempts = max(1, $attempts);
+        $this->retryDelayMilliseconds = max(0, $retryDelayMilliseconds);
+        $this->categoryScraper->withMaxAttempts($this->maxAttempts, $this->retryDelayMilliseconds);
 
         return $this;
     }
@@ -142,7 +156,12 @@ final class AntarProductUrlScraper
             ];
         }
 
-        return $this->scrapeCategoryRecords(array_values($categories), $pageLimit, $categoryLimit);
+        return $this->scrapeCategoryRecords(
+            array_values($categories),
+            $pageLimit,
+            $categoryLimit,
+            $this->stringMap($discovery['failed_urls'] ?? []),
+        );
     }
 
     /**
@@ -175,9 +194,10 @@ final class AntarProductUrlScraper
 
     /**
      * @param  array<int, array<string, mixed>>  $categories
+     * @param  array<string, string>  $initialFailedUrls
      * @return array<string, mixed>
      */
-    private function scrapeCategoryRecords(array $categories, ?int $pageLimit = null, ?int $categoryLimit = null): array
+    private function scrapeCategoryRecords(array $categories, ?int $pageLimit = null, ?int $categoryLimit = null, array $initialFailedUrls = []): array
     {
         if ($categoryLimit !== null) {
             $categories = array_slice($categories, 0, max(1, $categoryLimit));
@@ -186,7 +206,7 @@ final class AntarProductUrlScraper
         $productUrls = [];
         $categoryResults = [];
         $visitedUrls = [];
-        $failedUrls = [];
+        $failedUrls = $initialFailedUrls;
 
         foreach ($categories as $index => $category) {
             $categoryUrl = (string) ($category['url'] ?? '');
@@ -205,6 +225,7 @@ final class AntarProductUrlScraper
 
             $categoryProductUrls = [];
             $categoryPageUrls = [];
+            $failedPageUrls = [];
             $nextPageUrl = $categoryUrl;
             $pagesScraped = 0;
 
@@ -224,14 +245,11 @@ final class AntarProductUrlScraper
                 $this->emit(sprintf('  Fetching page %d: %s', $pagesScraped, $nextPageUrl));
 
                 try {
-                    $this->pauseBeforeRequest();
-
-                    $response = Http::withHeaders($this->headers())
-                        ->timeout($this->timeoutSeconds)
-                        ->get($nextPageUrl);
+                    $response = $this->fetch($nextPageUrl);
 
                     if (! $response->successful()) {
                         $failedUrls[$nextPageUrl] = 'HTTP '.$response->status();
+                        $failedPageUrls[$nextPageUrl] = 'HTTP '.$response->status();
 
                         break;
                     }
@@ -249,6 +267,7 @@ final class AntarProductUrlScraper
                     $nextPageUrl = $this->extractNextPageUrl($body, $nextPageUrl);
                 } catch (Throwable $exception) {
                     $failedUrls[$nextPageUrl] = $exception->getMessage();
+                    $failedPageUrls[$nextPageUrl] = $exception->getMessage();
 
                     break;
                 }
@@ -263,6 +282,8 @@ final class AntarProductUrlScraper
                 'category_path' => is_array($category['path'] ?? null) ? array_values($category['path']) : [$this->categoryNameFromUrl($categoryUrl)],
                 'page_urls' => $categoryPageUrls,
                 'pages_scraped' => count($categoryPageUrls),
+                'failed_page_urls' => $failedPageUrls,
+                'failed_page_count' => count($failedPageUrls),
                 'product_count' => count($categoryProductUrls),
                 'product_urls' => array_keys($categoryProductUrls),
             ];
@@ -288,6 +309,29 @@ final class AntarProductUrlScraper
             'visited_urls' => array_keys($visitedUrls),
             'failed_urls' => $failedUrls,
         ];
+    }
+
+    /**
+     * @param  mixed  $value
+     * @return array<string, string>
+     */
+    private function stringMap(mixed $value): array
+    {
+        if (! is_array($value)) {
+            return [];
+        }
+
+        $map = [];
+
+        foreach ($value as $key => $reason) {
+            if (! is_string($key) || ! is_scalar($reason)) {
+                continue;
+            }
+
+            $map[$key] = (string) $reason;
+        }
+
+        return $map;
     }
 
     /**
@@ -494,6 +538,55 @@ final class AntarProductUrlScraper
     private function externalProductIdFromUrl(string $url): string
     {
         return $this->productSlugFromUrl($url);
+    }
+
+
+    private function fetch(string $url): Response
+    {
+        $lastException = null;
+
+        for ($attempt = 1; $attempt <= $this->maxAttempts; $attempt++) {
+            try {
+                $this->pauseBeforeRequest();
+
+                $response = Http::withHeaders($this->headers())
+                    ->connectTimeout(min(10, $this->timeoutSeconds))
+                    ->timeout($this->timeoutSeconds)
+                    ->get($url);
+
+                if ($this->shouldRetryResponse($response) && $attempt < $this->maxAttempts) {
+                    $this->pauseBeforeRetry();
+
+                    continue;
+                }
+
+                return $response;
+            } catch (Throwable $exception) {
+                $lastException = $exception;
+
+                if ($attempt >= $this->maxAttempts) {
+                    throw $exception;
+                }
+
+                $this->pauseBeforeRetry();
+            }
+        }
+
+        throw $lastException ?? new \RuntimeException('Failed to fetch Antar URL: '.$url);
+    }
+
+    private function shouldRetryResponse(Response $response): bool
+    {
+        return $response->status() === 429 || $response->serverError();
+    }
+
+    private function pauseBeforeRetry(): void
+    {
+        if ($this->retryDelayMilliseconds <= 0) {
+            return;
+        }
+
+        usleep($this->retryDelayMilliseconds * 1000);
     }
 
     private function pauseBeforeRequest(): void

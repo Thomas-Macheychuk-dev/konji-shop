@@ -19,6 +19,8 @@ final class DiscoverAntarProductLinksCommand extends Command
         {--page-limit= : Maximum number of paginated product-list pages to scrape per category.}
         {--category-limit= : Maximum number of product-scraping categories to scrape. Useful while testing.}
         {--timeout=15 : HTTP request timeout in seconds.}
+        {--attempts=3 : Maximum attempts per Antar HTTP request.}
+        {--retry-delay-ms=1500 : Milliseconds to pause between retry attempts.}
         {--request-delay-ms=500 : Milliseconds to pause before each Antar HTTP request.}
         {--no-progress : Do not print per-category and per-page progress.}
         {--json : Print the discovery result as JSON.}
@@ -40,6 +42,7 @@ final class DiscoverAntarProductLinksCommand extends Command
 
         $this->scraper
             ->withTimeout($this->timeoutSeconds())
+            ->withMaxAttempts($this->maxAttempts(), $this->retryDelayMilliseconds())
             ->withRequestDelayMilliseconds($this->requestDelayMilliseconds());
 
         if (! $json && ! (bool) $this->option('no-progress')) {
@@ -84,10 +87,11 @@ final class DiscoverAntarProductLinksCommand extends Command
                     : (string) ($categoryResult['name'] ?? $categoryResult['url'] ?? 'Unknown category');
 
                 $this->line(sprintf(
-                    '- %s: %d products, %d page(s)',
+                    '- %s: %d products, %d page(s), %d failed page(s)',
                     $path,
                     count($categoryResult['product_urls'] ?? []),
                     (int) ($categoryResult['pages_scraped'] ?? 0),
+                    (int) ($categoryResult['failed_page_count'] ?? 0),
                 ));
             }
         }
@@ -133,6 +137,16 @@ final class DiscoverAntarProductLinksCommand extends Command
     private function timeoutSeconds(): int
     {
         return max(1, (int) $this->option('timeout'));
+    }
+
+    private function maxAttempts(): int
+    {
+        return max(1, (int) $this->option('attempts'));
+    }
+
+    private function retryDelayMilliseconds(): int
+    {
+        return max(0, (int) $this->option('retry-delay-ms'));
     }
 
     private function requestDelayMilliseconds(): int

@@ -15,6 +15,9 @@ final class DiscoverAntarCategoriesCommand extends Command
         {--save= : Save the discovery result as JSON under storage/app.}
         {--show-failures : Print failed Antar URLs.}
         {--page-limit=250 : Maximum Antar category pages to visit while discovering nested categories.}
+        {--timeout=15 : HTTP request timeout in seconds.}
+        {--attempts=3 : Maximum attempts per Antar HTTP request.}
+        {--retry-delay-ms=1500 : Milliseconds to pause between retry attempts.}
         {--request-delay-ms=500 : Milliseconds to pause before each Antar HTTP request.}';
 
     protected $description = 'Discover Antar category hierarchy and product-scraping category URLs.';
@@ -31,6 +34,8 @@ final class DiscoverAntarCategoriesCommand extends Command
 
         $this->scraper
             ->withMaxPages($this->pageLimit())
+            ->withTimeout($this->timeoutSeconds())
+            ->withMaxAttempts($this->maxAttempts(), $this->retryDelayMilliseconds())
             ->withRequestDelayMilliseconds($this->requestDelayMilliseconds())
             ->withProgressCallback(function (string $message): void {
                 $this->line($message);
@@ -69,6 +74,39 @@ final class DiscoverAntarCategoriesCommand extends Command
         }
 
         return $productCategoryUrls === [] ? self::FAILURE : self::SUCCESS;
+    }
+
+    private function timeoutSeconds(): int
+    {
+        $value = $this->option('timeout');
+
+        if (! is_string($value) || trim($value) === '') {
+            return 15;
+        }
+
+        return max(1, (int) $value);
+    }
+
+    private function maxAttempts(): int
+    {
+        $value = $this->option('attempts');
+
+        if (! is_string($value) || trim($value) === '') {
+            return 3;
+        }
+
+        return max(1, (int) $value);
+    }
+
+    private function retryDelayMilliseconds(): int
+    {
+        $value = $this->option('retry-delay-ms');
+
+        if (! is_string($value) || trim($value) === '') {
+            return 1500;
+        }
+
+        return max(0, (int) $value);
     }
 
     private function requestDelayMilliseconds(): int

@@ -6,6 +6,7 @@ namespace App\Services\Antar;
 
 use Closure;
 use DOMElement;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
@@ -48,6 +49,10 @@ final class AntarCategoryUrlScraper
 
     private int $requestDelayMilliseconds = 0;
 
+    private int $maxAttempts = 3;
+
+    private int $retryDelayMilliseconds = 1500;
+
     private int $maxPages = 250;
 
     public function withProgressCallback(?Closure $callback): self
@@ -67,6 +72,14 @@ final class AntarCategoryUrlScraper
     public function withRequestDelayMilliseconds(int $milliseconds): self
     {
         $this->requestDelayMilliseconds = max(0, $milliseconds);
+
+        return $this;
+    }
+
+    public function withMaxAttempts(int $attempts, int $retryDelayMilliseconds = 1500): self
+    {
+        $this->maxAttempts = max(1, $attempts);
+        $this->retryDelayMilliseconds = max(0, $retryDelayMilliseconds);
 
         return $this;
     }
@@ -142,11 +155,7 @@ final class AntarCategoryUrlScraper
             $this->emit('Fetching Antar category page: '.$url);
 
             try {
-                $this->pauseBeforeRequest();
-
-                $response = Http::withHeaders($this->headers())
-                    ->timeout($this->timeoutSeconds)
-                    ->get($url);
+                $response = $this->fetch($url);
 
                 if (! $response->successful()) {
                     $failed[$url] = 'HTTP '.$response->status();
@@ -480,6 +489,55 @@ final class AntarCategoryUrlScraper
     private function urlFromCategorySegments(array $segments): string
     {
         return 'https://'.self::ANTAR_HOST.'/produkty/'.implode('/', $segments).'/';
+    }
+
+
+    private function fetch(string $url): Response
+    {
+        $lastException = null;
+
+        for ($attempt = 1; $attempt <= $this->maxAttempts; $attempt++) {
+            try {
+                $this->pauseBeforeRequest();
+
+                $response = Http::withHeaders($this->headers())
+                    ->connectTimeout(min(10, $this->timeoutSeconds))
+                    ->timeout($this->timeoutSeconds)
+                    ->get($url);
+
+                if ($this->shouldRetryResponse($response) && $attempt < $this->maxAttempts) {
+                    $this->pauseBeforeRetry();
+
+                    continue;
+                }
+
+                return $response;
+            } catch (Throwable $exception) {
+                $lastException = $exception;
+
+                if ($attempt >= $this->maxAttempts) {
+                    throw $exception;
+                }
+
+                $this->pauseBeforeRetry();
+            }
+        }
+
+        throw $lastException ?? new \RuntimeException('Failed to fetch Antar URL: '.$url);
+    }
+
+    private function shouldRetryResponse(Response $response): bool
+    {
+        return $response->status() === 429 || $response->serverError();
+    }
+
+    private function pauseBeforeRetry(): void
+    {
+        if ($this->retryDelayMilliseconds <= 0) {
+            return;
+        }
+
+        usleep($this->retryDelayMilliseconds * 1000);
     }
 
     private function pauseBeforeRequest(): void
