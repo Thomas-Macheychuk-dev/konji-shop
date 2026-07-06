@@ -124,3 +124,29 @@ function generatedTestImageContents(int $width, int $height, string $mimeType): 
         imagedestroy($image);
     }
 }
+
+it('skips images whose decoded dimensions would exceed the safe memory budget', function (): void {
+    Storage::fake('public');
+
+    $oversizedPngHeader = "\x89PNG\r\n\x1a\n"
+        .pack('N', 13)
+        .'IHDR'
+        .pack('NNCCCCC', 12000, 12000, 8, 2, 0, 0, 0)
+        .pack('N', 0)
+        .pack('N', 0)
+        .'IEND'
+        .pack('N', 0);
+
+    Http::fake([
+        'https://antar.net/wp-content/uploads/*' => Http::response($oversizedPngHeader, 200, [
+            'Content-Type' => 'image/png',
+        ]),
+    ]);
+
+    app(RemoteImageImporter::class)->import(
+        'https://antar.net/wp-content/uploads/2026/07/huge-image.png',
+        'products/antar/test',
+        'public',
+        ['antar.net'],
+    );
+})->throws(RuntimeException::class, 'Image dimensions too large to process safely');

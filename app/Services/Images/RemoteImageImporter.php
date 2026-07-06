@@ -14,6 +14,8 @@ class RemoteImageImporter
 
     private const MAX_DIMENSION_PX = 2200;
 
+    private const MAX_DECODED_IMAGE_MEMORY_BYTES = 160 * 1024 * 1024;
+
     /**
      * @param  array<int, string>|null  $allowedHosts
      */
@@ -55,7 +57,7 @@ class RemoteImageImporter
             throw new RuntimeException("Downloaded image is empty [{$url}]");
         }
 
-        [$contents, $mimeType] = $this->optimizeIfNeeded($contents, $mimeType);
+        [$contents, $mimeType] = $this->optimizeIfNeeded($contents, $mimeType, $url);
 
         $fileSize = strlen($contents);
 
@@ -85,7 +87,7 @@ class RemoteImageImporter
     /**
      * @return array{0: string, 1: string}
      */
-    private function optimizeIfNeeded(string $contents, string $mimeType): array
+    private function optimizeIfNeeded(string $contents, string $mimeType, string $url): array
     {
         $imageSize = @getimagesizefromstring($contents);
 
@@ -101,6 +103,10 @@ class RemoteImageImporter
             && max($width, $height) <= self::MAX_DIMENSION_PX
         ) {
             return [$contents, $mimeType];
+        }
+
+        if ($this->estimatedDecodedImageBytes($width, $height) > self::MAX_DECODED_IMAGE_MEMORY_BYTES) {
+            throw new RuntimeException("Image dimensions too large to process safely [{$url}]");
         }
 
         if (! extension_loaded('gd')) {
@@ -157,6 +163,16 @@ class RemoteImageImporter
         }
 
         return [$bestContents, $bestMimeType];
+    }
+
+
+    private function estimatedDecodedImageBytes(int $width, int $height): int
+    {
+        if ($width <= 0 || $height <= 0) {
+            return 0;
+        }
+
+        return $width * $height * 4;
     }
 
     /**
