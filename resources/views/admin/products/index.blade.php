@@ -93,6 +93,7 @@
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Warianty</th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Dane paczek</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Źródło zewnętrzne</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500">Aktualizacja</th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-zinc-500">Akcja</th>
                     </tr>
                     </thead>
@@ -146,6 +147,12 @@
                                         {{ $product->external_id }}
                                     </div>
                                 @endif
+                            </td>
+
+                            <td class="px-4 py-4 text-sm text-zinc-700">
+                                <div>
+                                    {{ $product->updated_at ?: $product->created_at }}
+                                </div>
                             </td>
 
                             <td class="px-4 py-4 text-right text-sm">
