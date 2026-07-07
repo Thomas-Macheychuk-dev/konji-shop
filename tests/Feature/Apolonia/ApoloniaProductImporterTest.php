@@ -104,6 +104,18 @@ it('qualifies Apolonia variant SKUs with the external product ID across colour p
         ->toBe(['BL60-2977-XS', 'BL60-2977-S', 'BL60-2977-M']);
 });
 
+
+it('does not append Apolonia source notice to product descriptions', function (): void {
+    $product = app(ApoloniaProductImporter::class)
+        ->import(apoloniaImporterProductPayload(), ProductStatus::DRAFT, false)['product'];
+
+    expect($product->description)
+        ->toContain('Opis produktu Apolonia.')
+        ->toContain('Dane produktu')
+        ->not->toContain('Źródło')
+        ->not->toContain('Dane produktu zaimportowane z Apolonia.');
+});
+
 function apoloniaImporterProductPayload(array $overrides = []): array
 {
     return array_replace_recursive([

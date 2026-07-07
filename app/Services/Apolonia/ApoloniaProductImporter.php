@@ -627,11 +627,6 @@ final class ApoloniaProductImporter
             $sections[] = '<section class="apolonia-details"><h2>Dane produktu</h2><table><tbody>'.implode('', $detailsRows).'</tbody></table></section>';
         }
 
-        $sourceUrl = $this->stringOrNull($scraped['canonical_url'] ?? null) ?: $this->stringOrNull($scraped['source_url'] ?? null);
-
-        if ($sourceUrl !== null) {
-            $sections[] = '<section class="apolonia-source"><h2>Źródło</h2><p>Dane produktu zaimportowane z Apolonia.</p></section>';
-        }
 
         return $sections !== [] ? implode("\n", $sections) : null;
     }
