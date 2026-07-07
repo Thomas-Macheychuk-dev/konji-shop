@@ -178,6 +178,22 @@ it('extracts Apolonia shoe numeric sizes and high-resolution gallery images', fu
         ]);
 });
 
+it('ignores Apolonia thumbnail navigation images and keeps high-resolution gallery images first', function (): void {
+    $result = app(ApoloniaProductScraper::class)->extract(
+        apoloniaGalleryWithThumbnailNavigationFixture(),
+        'https://www.apolonia.com.pl/product-pol-3251-Koszulka-polo-damska-granatowa-Malfini-COTTON-213.html',
+    );
+
+    expect($result['images'])->toHaveCount(2)
+        ->and($result['images'][0])->toMatchArray([
+            'url' => 'https://www.apolonia.com.pl/hpeciai/high-res-1/pol_pl_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_1.webp',
+            'alt' => 'Koszulka polo damska granatowa Malfini COTTON 213',
+        ])
+        ->and($result['images'][1]['url'])->toBe('https://www.apolonia.com.pl/hpeciai/high-res-2/pol_pl_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_2.webp')
+        ->and(collect($result['images'])->pluck('url')->implode(' '))->not->toContain('/pol_ps_')
+        ->and(collect($result['images'])->pluck('url')->implode(' '))->not->toContain('/pol_pm_');
+});
+
 it('uses JSON-LD offer data as an Apolonia price and availability fallback', function (): void {
     $result = app(ApoloniaProductScraper::class)->extract(
         apoloniaJsonLdOfferFixture(),
@@ -473,6 +489,59 @@ function apoloniaMissingLongDescriptionFixture(): string
                         ],
                     }];
                 </script>
+            </body>
+        </html>
+        HTML;
+}
+
+function apoloniaGalleryWithThumbnailNavigationFixture(): string
+{
+    return <<<'HTML'
+        <!doctype html>
+        <html lang="pl">
+            <head>
+                <title>Koszulka polo damska granatowa Malfini COTTON 213</title>
+                <link rel="canonical" href="/product-pol-3251-Koszulka-polo-damska-granatowa-Malfini-COTTON-213.html">
+            </head>
+            <body>
+                <main id="content">
+                    <h1 class="product_name__name">Koszulka polo damska granatowa Malfini COTTON 213</h1>
+                    <section id="projector_photos" class="photos">
+                        <div id="photos_nav" class="photos__nav">
+                            <div id="photos_nav_list" class="photos__nav_wrapper swiper swiperThumbs">
+                                <figure class="photos__figure --nav swiper-slide" data-slide-index="0">
+                                    <picture>
+                                        <source type="image/webp" srcset="/hpeciai/thumb-1/pol_ps_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_1.webp">
+                                        <img class="photos__photo --nav" src="/hpeciai/thumb-1-jpg/pol_ps_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_1.jpg" alt="Koszulka polo damska granatowa Malfini COTTON 213">
+                                    </picture>
+                                </figure>
+                                <figure class="photos__figure --nav swiper-slide" data-slide-index="1">
+                                    <picture>
+                                        <source type="image/webp" srcset="/hpeciai/thumb-2/pol_ps_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_2.webp">
+                                        <img class="photos__photo --nav" src="/hpeciai/thumb-2-jpg/pol_ps_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_2.jpg" alt="Koszulka polo damska granatowa Malfini COTTON 213">
+                                    </picture>
+                                </figure>
+                            </div>
+                        </div>
+                        <div id="photos_slider" class="photos__slider swiper">
+                            <div class="photos___slider_wrapper swiper-wrapper">
+                                <figure class="photos__figure swiper-slide" data-slide-index="0">
+                                    <picture>
+                                        <source type="image/webp" srcset="/hpeciai/medium-1/pol_pm_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_1.webp" data-img_high_res_webp="/hpeciai/high-res-1/pol_pl_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_1.webp">
+                                        <img class="photos__photo" src="/hpeciai/medium-jpg-1/pol_pm_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_1.jpg" data-img_high_res="/hpeciai/high-res-jpg-1/pol_pl_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_1.jpg" alt="Koszulka polo damska granatowa Malfini COTTON 213">
+                                    </picture>
+                                </figure>
+                                <figure class="photos__figure swiper-slide" data-slide-index="1">
+                                    <picture>
+                                        <source type="image/webp" srcset="/hpeciai/medium-2/pol_pm_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_2.webp" data-img_high_res_webp="/hpeciai/high-res-2/pol_pl_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_2.webp">
+                                        <img class="photos__photo" src="/hpeciai/medium-jpg-2/pol_pm_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_2.jpg" data-img_high_res="/hpeciai/high-res-jpg-2/pol_pl_Koszulka-polo-damska-granatowa-Malfini-COTTON-213-3251_2.jpg" alt="Koszulka polo damska granatowa Malfini COTTON 213">
+                                    </picture>
+                                </figure>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="projector_longdescription"><p>Koszulka polo damska.</p></section>
+                </main>
             </body>
         </html>
         HTML;

@@ -971,10 +971,19 @@ final class ApoloniaProductScraper
     {
         $images = [];
 
-        foreach (['#projector_photos figure, #projector_photos picture, #projector_photos img', '.projector_photos figure, .projector_photos picture, .projector_photos img', '.photos figure, .photos picture, .photos img', '.product_photos figure, .product_photos picture, .product_photos img', 'main figure, main picture, main img', '#content figure, #content picture, #content img'] as $selector) {
+        foreach ([
+            '#photos_slider figure, #photos_slider picture, #photos_slider img',
+            '.photos__slider figure, .photos__slider picture, .photos__slider img',
+            '#projector_photos figure, #projector_photos picture, #projector_photos img',
+            '.projector_photos figure, .projector_photos picture, .projector_photos img',
+            '.photos figure, .photos picture, .photos img',
+            '.product_photos figure, .product_photos picture, .product_photos img',
+            'main figure, main picture, main img',
+            '#content figure, #content picture, #content img',
+        ] as $selector) {
             try {
                 $crawler->filter($selector)->each(function (Crawler $node) use (&$images, $baseUrl): void {
-                    if ($this->isNestedGalleryImageNode($node)) {
+                    if ($this->isNestedGalleryImageNode($node) || $this->isThumbnailGalleryNode($node)) {
                         return;
                     }
 
@@ -1044,18 +1053,62 @@ final class ApoloniaProductScraper
         return false;
     }
 
+    private function isThumbnailGalleryNode(Crawler $node): bool
+    {
+        $domNode = $node->getNode(0);
+
+        while ($domNode instanceof \DOMElement) {
+            $class = ' '.$domNode->getAttribute('class').' ';
+            $id = $domNode->getAttribute('id');
+
+            if (
+                str_contains($class, ' --nav ')
+                || str_contains($class, ' photos__nav ')
+                || str_contains($class, ' photos__nav_wrapper ')
+                || str_contains($class, ' swiperThumbs ')
+                || str_contains($class, ' thumbs ')
+                || str_contains($id, 'photos_nav')
+            ) {
+                return true;
+            }
+
+            if ($id === 'photos_slider' || str_contains($class, ' photos__slider ')) {
+                return false;
+            }
+
+            if ($id === 'projector_photos') {
+                return false;
+            }
+
+            $domNode = $domNode->parentNode;
+        }
+
+        return false;
+    }
+
     private function bestImageUrl(Crawler $node, string $baseUrl): ?string
     {
         $candidates = [];
 
+        $attributes = [
+            'data-img_high_res_webp' => 1000,
+            'data-img_high_res' => 950,
+            'data-large' => 850,
+            'data-zoom' => 825,
+            'data-original' => 800,
+            'data-src' => 600,
+            'srcset' => 500,
+            'src' => 100,
+        ];
+
         foreach (['source', 'img'] as $selector) {
             try {
-                $node->filter($selector)->each(function (Crawler $child) use (&$candidates): void {
-                    foreach (['data-img_high_res_webp', 'data-img_high_res', 'data-large', 'data-original', 'data-src', 'srcset', 'src'] as $attribute) {
+                $node->filter($selector)->each(function (Crawler $child) use (&$candidates, $attributes): void {
+                    foreach ($attributes as $attribute => $score) {
                         $value = $child->attr($attribute);
 
                         if (is_string($value) && trim($value) !== '') {
-                            $candidates[] = $value;
+                            $candidates[] = [$value, $score];
                         }
                     }
                 });
@@ -1064,23 +1117,34 @@ final class ApoloniaProductScraper
             }
         }
 
-        foreach (['data-img_high_res_webp', 'data-img_high_res', 'data-large', 'data-original', 'data-src', 'srcset', 'src'] as $attribute) {
+        foreach ($attributes as $attribute => $score) {
             $value = $node->attr($attribute);
 
             if (is_string($value) && trim($value) !== '') {
-                $candidates[] = $value;
+                $candidates[] = [$value, $score];
             }
         }
 
-        foreach ($candidates as $candidate) {
-            $url = $this->normalizeImageUrl($this->firstSrcSetCandidate($candidate), $baseUrl);
+        $bestUrl = null;
+        $bestScore = PHP_INT_MIN;
 
-            if ($url !== null && ! $this->isIgnoredImageUrl($url)) {
-                return $url;
+        foreach ($candidates as [$candidate, $score]) {
+            $candidateUrl = $this->bestSrcSetCandidate($candidate);
+            $url = $this->normalizeImageUrl($candidateUrl, $baseUrl);
+
+            if ($url === null || $this->isIgnoredImageUrl($url)) {
+                continue;
+            }
+
+            $candidateScore = $score + $this->imageUrlQualityScore($url);
+
+            if ($candidateScore > $bestScore) {
+                $bestUrl = $url;
+                $bestScore = $candidateScore;
             }
         }
 
-        return null;
+        return $bestUrl;
     }
 
     private function imageNodeAttribute(Crawler $node, string $attribute): ?string
@@ -1134,13 +1198,73 @@ final class ApoloniaProductScraper
     }
 
 
-    private function firstSrcSetCandidate(string $src): string
+    private function bestSrcSetCandidate(string $src): string
     {
         $src = trim($src);
-        $first = trim(explode(',', $src)[0] ?? $src);
-        $parts = preg_split('/\s+/u', $first);
 
-        return is_array($parts) && isset($parts[0]) ? (string) $parts[0] : $src;
+        if (! str_contains($src, ',')) {
+            $parts = preg_split('/\s+/u', $src);
+
+            return is_array($parts) && isset($parts[0]) ? (string) $parts[0] : $src;
+        }
+
+        $bestUrl = null;
+        $bestWidth = -1;
+
+        foreach (explode(',', $src) as $candidate) {
+            $candidate = trim($candidate);
+
+            if ($candidate === '') {
+                continue;
+            }
+
+            $parts = preg_split('/\s+/u', $candidate);
+            $url = is_array($parts) && isset($parts[0]) ? (string) $parts[0] : $candidate;
+            $descriptor = is_array($parts) && isset($parts[1]) ? (string) $parts[1] : '';
+            $width = 0;
+
+            if (preg_match('/^(?P<width>\d+)w$/u', $descriptor, $matches) === 1) {
+                $width = (int) $matches['width'];
+            } elseif (preg_match('/^(?P<scale>\d+(?:\.\d+)?)x$/u', $descriptor, $matches) === 1) {
+                $width = (int) round(((float) $matches['scale']) * 1000);
+            }
+
+            if ($bestUrl === null || $width >= $bestWidth) {
+                $bestUrl = $url;
+                $bestWidth = $width;
+            }
+        }
+
+        return $bestUrl ?? $src;
+    }
+
+    private function imageUrlQualityScore(string $url): int
+    {
+        $path = mb_strtolower((string) parse_url($url, PHP_URL_PATH));
+
+        $score = 0;
+
+        if (str_contains($path, '/pol_pl_')) {
+            $score += 200;
+        }
+
+        if (str_contains($path, '/pol_pm_')) {
+            $score -= 75;
+        }
+
+        if (str_contains($path, '/pol_ps_')) {
+            $score -= 250;
+        }
+
+        if (str_contains($path, '/pol_il_')) {
+            $score -= 25;
+        }
+
+        if (str_ends_with($path, '.webp')) {
+            $score += 10;
+        }
+
+        return $score;
     }
 
     /**
