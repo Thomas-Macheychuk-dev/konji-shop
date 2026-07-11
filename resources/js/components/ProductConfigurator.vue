@@ -462,9 +462,21 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 
                             <button
                                 type="submit"
-                                class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
+                                class="inline-flex h-11 min-w-[176px] items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-[#155fa8] px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[#0b3b70] focus:outline-none focus:ring-4 focus:ring-blue-100 active:translate-y-px"
                             >
-                                Dodaj do koszyka
+                                <svg
+                                    class="h-4.5 w-4.5 shrink-0"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    aria-hidden="true"
+                                >
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.4 10.1a2 2 0 0 0 2 1.5h7.8a2 2 0 0 0 2-1.6L21 8H7" />
+                                    <circle cx="10" cy="20" r="1" />
+                                    <circle cx="18" cy="20" r="1" />
+                                </svg>
+                                <span>Dodaj do koszyka</span>
                             </button>
                         </div>
                     </form>
