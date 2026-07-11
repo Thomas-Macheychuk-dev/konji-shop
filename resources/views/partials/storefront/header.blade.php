@@ -119,36 +119,115 @@
             <nav class="ml-auto flex shrink-0 items-center gap-1 sm:gap-2" aria-label="Narzędzia sklepu">
                 <a
                     href="{{ route('guest.orders.track.show') }}"
-                    class="hidden min-w-[72px] flex-col items-center justify-center rounded-xl px-2 py-2 text-xs font-medium text-slate-600 transition hover:bg-blue-50 hover:text-[#155fa8] xl:flex"
+                    class="hidden min-w-[88px] flex-col items-center justify-center rounded-xl px-2 py-2 text-center text-xs font-medium text-slate-600 transition hover:bg-blue-50 hover:text-[#155fa8] lg:flex"
                 >
                     <svg class="mb-1 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h13v10H3zM16 9h3l2 3v4h-5zM7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
                     </svg>
-                    Śledzenie
+                    Śledzenie przesyłki
                 </a>
 
                 @auth
-                    <a
-                        href="{{ route('account.details.show') }}"
-                        class="hidden min-w-[68px] flex-col items-center justify-center rounded-xl px-2 py-2 text-xs font-medium text-slate-600 transition hover:bg-blue-50 hover:text-[#155fa8] sm:flex"
-                    >
-                        <svg class="mb-1 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <circle cx="12" cy="8" r="4" />
-                            <path stroke-linecap="round" d="M4 21a8 8 0 0 1 16 0" />
-                        </svg>
-                        Konto
-                    </a>
+                    @if(auth()->user()->is_admin)
+                        <div class="relative hidden lg:block" x-data="{ open: false }">
+                            <button
+                                type="button"
+                                class="inline-flex min-w-[76px] flex-col items-center justify-center rounded-xl px-2 py-2 text-xs font-semibold text-[#d95513] transition hover:bg-orange-50"
+                                :aria-expanded="open.toString()"
+                                aria-haspopup="menu"
+                                @click="open = ! open"
+                                @keydown.escape.window="open = false"
+                            >
+                                <svg class="mb-1 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2M9 11a4 4 0 1 1 6 0M12 3v2M5.6 5.6 7 7M18.4 5.6 17 7" />
+                                </svg>
+                                Panel admina
+                            </button>
+
+                            <div
+                                x-cloak
+                                x-show="open"
+                                x-transition.origin.top.right
+                                class="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_20px_55px_rgba(15,23,42,0.18)]"
+                                role="menu"
+                                @click.outside="open = false"
+                            >
+                                <p class="px-3 pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Zarządzanie sklepem</p>
+                                @foreach ([
+                                    ['route' => 'admin.orders.index', 'label' => 'Zamówienia'],
+                                    ['route' => 'admin.products.index', 'label' => 'Produkty'],
+                                    ['route' => 'admin.categories.index', 'label' => 'Kategorie'],
+                                    ['route' => 'admin.withdrawals.index', 'label' => 'Odstąpienia'],
+                                    ['route' => 'admin.shop.readiness', 'label' => 'Gotowość sklepu'],
+                                ] as $adminNavigationItem)
+                                    <a
+                                        href="{{ route($adminNavigationItem['route']) }}"
+                                        class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-orange-50 hover:text-[#d95513]"
+                                        role="menuitem"
+                                    >
+                                        {{ $adminNavigationItem['label'] }}
+                                        <span class="text-slate-300" aria-hidden="true">→</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="relative hidden sm:block" x-data="{ open: false }">
+                        <button
+                            type="button"
+                            class="inline-flex min-w-[72px] flex-col items-center justify-center rounded-xl px-2 py-2 text-xs font-medium text-slate-600 transition hover:bg-blue-50 hover:text-[#155fa8]"
+                            :aria-expanded="open.toString()"
+                            aria-haspopup="menu"
+                            @click="open = ! open"
+                            @keydown.escape.window="open = false"
+                        >
+                            <svg class="mb-1 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <circle cx="12" cy="8" r="4" />
+                                <path stroke-linecap="round" d="M4 21a8 8 0 0 1 16 0" />
+                            </svg>
+                            Moje konto
+                        </button>
+
+                        <div
+                            x-cloak
+                            x-show="open"
+                            x-transition.origin.top.right
+                            class="absolute right-0 top-full z-50 mt-2 w-60 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_20px_55px_rgba(15,23,42,0.18)]"
+                            role="menu"
+                            @click.outside="open = false"
+                        >
+                            <a href="{{ route('account.orders.index') }}" class="block rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]" role="menuitem">
+                                Moje zamówienia
+                            </a>
+                            <a href="{{ route('account.details.show') }}" class="block rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]" role="menuitem">
+                                Dane konta
+                            </a>
+                            <div class="my-1 border-t border-slate-100"></div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-slate-950" data-test="logout-button" role="menuitem">
+                                    Wyloguj się
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 @else
-                    <a
-                        href="{{ route('login') }}"
-                        class="hidden min-w-[68px] flex-col items-center justify-center rounded-xl px-2 py-2 text-xs font-medium text-slate-600 transition hover:bg-blue-50 hover:text-[#155fa8] sm:flex"
-                    >
-                        <svg class="mb-1 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <circle cx="12" cy="8" r="4" />
-                            <path stroke-linecap="round" d="M4 21a8 8 0 0 1 16 0" />
-                        </svg>
-                        Zaloguj się
-                    </a>
+                    <div class="hidden items-center gap-1 sm:flex">
+                        <a
+                            href="{{ route('login') }}"
+                            class="inline-flex min-w-[68px] flex-col items-center justify-center rounded-xl px-2 py-2 text-xs font-medium text-slate-600 transition hover:bg-blue-50 hover:text-[#155fa8]"
+                        >
+                            <svg class="mb-1 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <circle cx="12" cy="8" r="4" />
+                                <path stroke-linecap="round" d="M4 21a8 8 0 0 1 16 0" />
+                            </svg>
+                            Zaloguj się
+                        </a>
+                        <a href="{{ route('register') }}" class="hidden rounded-xl bg-blue-50 px-3 py-2 text-xs font-bold text-[#155fa8] transition hover:bg-blue-100 xl:inline-flex">
+                            Załóż konto
+                        </a>
+                    </div>
                 @endauth
 
                 <div class="rounded-xl px-2 py-2 transition hover:bg-blue-50 sm:px-3">
@@ -208,26 +287,13 @@
                 </a>
             @endforeach
 
-            <a href="{{ route('legal.delivery-payments') }}" class="ml-auto shrink-0 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
-                Dostawa i płatności
+            <a href="{{ route('withdrawals.start') }}" class="ml-auto shrink-0 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
+                Odstąp od umowy
             </a>
 
-            @auth
-                @if(auth()->user()->is_admin)
-                    <a
-                        href="{{ route('admin.orders.index') }}"
-                        class="shrink-0 rounded-xl bg-orange-50 px-3.5 py-2.5 text-sm font-semibold text-[#d95513] transition hover:bg-orange-100"
-                    >
-                        Administracja
-                    </a>
-                    <span class="sr-only">
-                        <a href="{{ route('admin.products.index') }}">Produkty</a>
-                        <a href="{{ route('admin.categories.index') }}">Kategorie</a>
-                        <a href="{{ route('admin.withdrawals.index') }}">Odstąpienia</a>
-                        <a href="{{ route('admin.shop.readiness') }}">Gotowość</a>
-                    </span>
-                @endif
-            @endauth
+            <a href="{{ route('legal.delivery-payments') }}" class="shrink-0 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
+                Dostawa i płatności
+            </a>
         </div>
     </div>
 
@@ -258,17 +324,22 @@
             </div>
 
             <div class="mt-5 grid gap-1 border-t border-slate-100 pt-5 sm:grid-cols-2">
-                <a href="{{ route('guest.orders.track.show') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Śledzenie zamówienia</a>
+                <a href="{{ route('guest.orders.track.show') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Śledzenie przesyłki</a>
                 <a href="{{ route('withdrawals.start') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Odstąp od umowy</a>
                 <a href="{{ route('legal.contact') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Kontakt</a>
                 <a href="{{ route('legal.delivery-payments') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Dostawa i płatności</a>
 
                 @auth
                     <a href="{{ route('account.orders.index') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Moje zamówienia</a>
-                    <a href="{{ route('account.details.show') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Moje konto</a>
+                    <a href="{{ route('account.details.show') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Dane konta</a>
 
                     @if(auth()->user()->is_admin)
-                        <a href="{{ route('admin.orders.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Administracja</a>
+                        <p class="px-3 pt-4 text-xs font-bold uppercase tracking-[0.16em] text-[#d95513] sm:col-span-2">Panel administracyjny</p>
+                        <a href="{{ route('admin.orders.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Zamówienia</a>
+                        <a href="{{ route('admin.products.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Produkty</a>
+                        <a href="{{ route('admin.categories.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Kategorie</a>
+                        <a href="{{ route('admin.withdrawals.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Odstąpienia</a>
+                        <a href="{{ route('admin.shop.readiness') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513] sm:col-span-2">Gotowość sklepu</a>
                     @endif
 
                     <form method="POST" action="{{ route('logout') }}">
