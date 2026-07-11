@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 280" role="img" aria-labelledby="title desc">
+<title id="title">ortezka.pl</title>
+<desc id="desc">Logo sklepu medycznego i ortopedycznego ortezka.pl</desc>
+<g transform="translate(4 4) scale(1.0625)">
+  <defs>
+    <clipPath id="circleClip"><circle cx="128" cy="128" r="112"/></clipPath>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B63C9"/>
+      <stop offset="1" stop-color="#084FA6"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF702F"/>
+      <stop offset="1" stop-color="#FF5A1F"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#circleClip)">
+    <rect width="256" height="256" fill="url(#blueGrad)"/>
+    <path d="M143 -8 C155 42 158 80 146 112 C137 136 139 162 158 197 C171 221 179 243 181 264 H266 V-8 Z" fill="url(#orangeGrad)"/>
+  </g>
+  <circle cx="128" cy="128" r="112" fill="none" stroke="#0B63C9" stroke-width="6"/>
+
+  <!-- medical cross -->
+  <path d="M55 74 h25 v-25 h24 v25 h25 v24 h-25 v25 h-24 v-25 h-25 z" fill="#FFFFFF"/>
+
+  <!-- stylised knee / orthopaedic joint -->
+  <path d="M126 32 C129 53 140 72 142 88 C145 106 137 119 127 132"
+        fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M129 132 C112 147 107 163 109 181 C111 199 106 216 99 230"
+        fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M143 91 C159 99 168 112 168 127 C168 145 156 158 141 166"
+        fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="130" cy="136" r="18" fill="none" stroke="#FFFFFF" stroke-width="10"/>
+</g>
+<text x="310" y="190" font-family="Arial, Helvetica, sans-serif" font-size="154" font-weight="700" letter-spacing="-6" fill="#084FA6">ortezka</text>
+<text x="798" y="190" font-family="Arial, Helvetica, sans-serif" font-size="154" font-weight="700" letter-spacing="-6" fill="#FF5A1F">.pl</text>
+</svg>

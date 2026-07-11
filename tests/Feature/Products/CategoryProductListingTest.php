@@ -59,19 +59,44 @@ function createProductForProductListingTest(
     return $product;
 }
 
-it('shows active top-level categories in the storefront sidebar', function (): void {
+it('shows a nested active category tree in the storefront sidebar', function (): void {
     $activeCategory = createCategoryForProductListingTest();
+    $childCategory = createCategoryForProductListingTest(
+        'Bluzy medyczne',
+        'bluzy-medyczne',
+        CategoryStatus::ACTIVE,
+        $activeCategory,
+    );
+    $grandchildCategory = createCategoryForProductListingTest(
+        'Bluzy damskie',
+        'bluzy-damskie',
+        CategoryStatus::ACTIVE,
+        $childCategory,
+    );
+
     createCategoryForProductListingTest('Archived category', 'archived-category', CategoryStatus::ARCHIVED);
-    createCategoryForProductListingTest('Child category', 'child-category', CategoryStatus::ACTIVE, $activeCategory);
+    createCategoryForProductListingTest(
+        'Archived child',
+        'archived-child',
+        CategoryStatus::ARCHIVED,
+        $activeCategory,
+    );
 
     $this
         ->get(route('home'))
         ->assertOk()
-        ->assertSee('Kategorie')
+        ->assertSee('data-category-sidebar', false)
+        ->assertSee('Kategorie produktów')
         ->assertSee('Odzież medyczna')
+        ->assertSee('Bluzy medyczne')
+        ->assertSee('Bluzy damskie')
+        ->assertSee('data-category-toggle="'.$activeCategory->id.'"', false)
+        ->assertSee('data-category-toggle="'.$childCategory->id.'"', false)
+        ->assertSee('data-category-link="'.$grandchildCategory->id.'"', false)
         ->assertSee(route('categories.show', $activeCategory->slug), false)
+        ->assertSee(route('categories.show', $grandchildCategory->slug), false)
         ->assertDontSee('Archived category')
-        ->assertDontSee('Child category');
+        ->assertDontSee('Archived child');
 });
 
 it('shows active products from a category with product links and prices', function (): void {
@@ -90,18 +115,34 @@ it('shows active products from a category with product links and prices', functi
         ->assertDontSee('Draft product');
 });
 
-it('includes active products assigned to active direct child categories', function (): void {
+it('includes active products assigned to active descendants at any depth', function (): void {
     $parentCategory = createCategoryForProductListingTest();
-    $childCategory = createCategoryForProductListingTest('Bluzy medyczne', 'bluzy-medyczne', CategoryStatus::ACTIVE, $parentCategory);
-    $archivedChildCategory = createCategoryForProductListingTest('Archived child', 'archived-child', CategoryStatus::ARCHIVED, $parentCategory);
+    $childCategory = createCategoryForProductListingTest(
+        'Bluzy medyczne',
+        'bluzy-medyczne',
+        CategoryStatus::ACTIVE,
+        $parentCategory,
+    );
+    $grandchildCategory = createCategoryForProductListingTest(
+        'Bluzy damskie',
+        'bluzy-damskie',
+        CategoryStatus::ACTIVE,
+        $childCategory,
+    );
+    $archivedChildCategory = createCategoryForProductListingTest(
+        'Archived child',
+        'archived-child',
+        CategoryStatus::ARCHIVED,
+        $parentCategory,
+    );
 
-    createProductForProductListingTest($childCategory, 'Child category product', 'child-category-product');
+    createProductForProductListingTest($grandchildCategory, 'Deep descendant product', 'deep-descendant-product');
     createProductForProductListingTest($archivedChildCategory, 'Archived child product', 'archived-child-product');
 
     $this
         ->get(route('categories.show', $parentCategory->slug))
         ->assertOk()
-        ->assertSee('Child category product')
+        ->assertSee('Deep descendant product')
         ->assertDontSee('Archived child product');
 });
 
@@ -143,4 +184,28 @@ it('does not show archived categories publicly', function (): void {
     $this
         ->get(route('categories.show', $category->slug))
         ->assertNotFound();
+});
+
+it('opens the active category branch in the sidebar', function (): void {
+    $parentCategory = createCategoryForProductListingTest();
+    $childCategory = createCategoryForProductListingTest(
+        'Bluzy medyczne',
+        'bluzy-medyczne',
+        CategoryStatus::ACTIVE,
+        $parentCategory,
+    );
+    $grandchildCategory = createCategoryForProductListingTest(
+        'Bluzy damskie',
+        'bluzy-damskie',
+        CategoryStatus::ACTIVE,
+        $childCategory,
+    );
+
+    $response = $this
+        ->get(route('categories.show', $grandchildCategory->slug))
+        ->assertOk();
+
+    expect($response->getContent())
+        ->toMatch('/data-category-item="'.$parentCategory->id.'".*?data-category-open-by-default="true"/s')
+        ->toMatch('/data-category-item="'.$childCategory->id.'".*?data-category-open-by-default="true"/s');
 });

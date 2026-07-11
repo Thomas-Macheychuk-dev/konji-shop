@@ -18,6 +18,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use App\Contracts\Delivery\CreatesShipments;
 use App\Services\Delivery\CreateShipmentService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -57,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
         app(ShopConfiguration::class)->applyConfigOverrides();
-        $this->composeStorefrontCategorySidebar();
+        $this->composeStorefrontNavigation();
 
         if (Str::startsWith((string) config('app.url'), 'https://')) {
             URL::forceRootUrl((string) config('app.url'));
@@ -65,41 +66,88 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
-
     /**
-     * Share active top-level categories with the storefront sidebar.
+     * Share the active category tree with storefront navigation components.
      */
-    protected function composeStorefrontCategorySidebar(): void
+    protected function composeStorefrontNavigation(): void
     {
-        View::composer('partials.storefront.category-sidebar', function ($view): void {
+        View::composer([
+            'partials.storefront.header',
+            'partials.storefront.category-sidebar',
+            'partials.storefront.footer',
+        ], function ($view): void {
             $cache = app(StorefrontCache::class);
-            $cacheKey = 'storefront.category-sidebar.v1.'.sha1(json_encode([
-                'max_updated_at' => $this->topLevelCategoryCacheTimestamp(),
-                'count' => Category::query()
-                    ->whereNull('parent_id')
-                    ->where('status', CategoryStatus::ACTIVE->value)
-                    ->count(),
-            ], JSON_THROW_ON_ERROR));
-
-            $view->with('storefrontSidebarCategories', $cache->remember(
-                $cacheKey,
-                fn () => Category::query()
-                    ->whereNull('parent_id')
-                    ->where('status', CategoryStatus::ACTIVE->value)
-                    ->orderBy('name')
-                    ->get(['id', 'name', 'slug']),
-                $cache->categorySidebarTtlSeconds(),
+            $categorySnapshot = $this->storefrontCategorySnapshot();
+            $cacheKey = 'storefront.navigation.v4.'.hash('sha256', json_encode(
+                $categorySnapshot
+                    ->map(fn (Category $category): array => [
+                        'id' => (int) $category->id,
+                        'parent_id' => $category->parent_id === null
+                            ? null
+                            : (int) $category->parent_id,
+                        'name' => (string) $category->name,
+                        'slug' => (string) $category->slug,
+                    ])
+                    ->values()
+                    ->all(),
+                JSON_THROW_ON_ERROR,
             ));
+
+            $categories = $cache->remember(
+                $cacheKey,
+                fn (): Collection => $this->buildStorefrontCategoryTree($categorySnapshot),
+                $cache->categorySidebarTtlSeconds(),
+            );
+
+            $view->with([
+                'storefrontNavigationCategories' => $categories,
+                'storefrontSidebarCategories' => $categories,
+            ]);
         });
     }
 
-    private function topLevelCategoryCacheTimestamp(): ?string
+    /**
+     * Return the exact category data used by storefront navigation.
+     *
+     * The snapshot is also used to build the cache key. This prevents a
+     * category tree from another database state being reused when the active
+     * category count and second-level updated_at timestamp happen to match.
+     *
+     * @return Collection<int, Category>
+     */
+    private function storefrontCategorySnapshot(): Collection
     {
-        $timestamp = Category::query()
-            ->whereNull('parent_id')
-            ->max('updated_at');
+        return Category::query()
+            ->where('status', CategoryStatus::ACTIVE->value)
+            ->whereNotNull('slug')
+            ->orderBy('name')
+            ->get(['id', 'parent_id', 'name', 'slug']);
+    }
 
-        return $timestamp === null ? null : (string) $timestamp;
+    /**
+     * Build a recursively nested tree from the supplied public categories.
+     *
+     * @param Collection<int, Category> $categories
+     * @return Collection<int, Category>
+     */
+    private function buildStorefrontCategoryTree(Collection $categories): Collection
+    {
+        $categoriesByParent = $categories->groupBy(
+            fn (Category $category): int => (int) ($category->parent_id ?? 0),
+        );
+
+        $buildTree = function (?int $parentId = null) use (&$buildTree, $categoriesByParent): Collection {
+            return $categoriesByParent
+                ->get($parentId ?? 0, collect())
+                ->map(function (Category $category) use (&$buildTree): Category {
+                    $category->setRelation('children', $buildTree((int) $category->id));
+
+                    return $category;
+                })
+                ->values();
+        };
+
+        return $buildTree();
     }
 
     /**

@@ -4,22 +4,12 @@
         @include('partials.head')
         @stack('styles')
     </head>
-    <body class="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-white">
+    <body class="min-h-screen bg-[#f7f9fc] text-slate-900 antialiased">
         @include('partials.storefront.header')
 
-        <div class="px-4 py-8 sm:px-6 lg:px-8 xl:px-10">
-            <div class="grid grid-cols-1 gap-8 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start">
-                <aside>
-                    @include('partials.storefront.category-sidebar')
-                </aside>
-
-                <main>
-                    <div id="app">
-                        @yield('content')
-                    </div>
-                </main>
-            </div>
-        </div>
+        <main id="app" class="min-h-[60vh]">
+            @yield('content')
+        </main>
 
         @include('partials.storefront.footer')
 

@@ -26,10 +26,7 @@ final class CategoryProductIndexController extends Controller
             },
         ]);
 
-        $categoryIds = $category->children
-            ->pluck('id')
-            ->prepend($category->id)
-            ->all();
+        $categoryIds = $this->categoryAndActiveDescendantIds($category);
 
         $products = Product::query()
             ->where('status', ProductStatus::ACTIVE->value)
@@ -40,6 +37,7 @@ final class CategoryProductIndexController extends Controller
                 'mainImage',
                 'images',
                 'attributeValueImages',
+                'categories:id,name,slug',
                 'variants' => function ($query): void {
                     $query
                         ->where('status', ProductVariantStatus::ACTIVE->value)
@@ -65,6 +63,35 @@ final class CategoryProductIndexController extends Controller
             'openGraphDescription' => $seoDescription,
             'openGraphType' => 'website',
         ]);
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function categoryAndActiveDescendantIds(Category $category): array
+    {
+        $categoryIds = [(int) $category->id];
+        $pendingParentIds = $categoryIds;
+
+        while ($pendingParentIds !== []) {
+            $childIds = Category::query()
+                ->whereIn('parent_id', $pendingParentIds)
+                ->where('status', CategoryStatus::ACTIVE->value)
+                ->pluck('id')
+                ->map(fn ($id): int => (int) $id)
+                ->reject(fn (int $id): bool => in_array($id, $categoryIds, true))
+                ->values()
+                ->all();
+
+            if ($childIds === []) {
+                break;
+            }
+
+            $categoryIds = [...$categoryIds, ...$childIds];
+            $pendingParentIds = $childIds;
+        }
+
+        return $categoryIds;
     }
 
     private function seoDescription(Category $category): ?string

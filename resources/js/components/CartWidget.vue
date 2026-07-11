@@ -167,13 +167,11 @@ onBeforeUnmount(() => {
     <div class="relative">
         <button
             type="button"
-            class="relative inline-flex items-center gap-2 text-sm font-medium text-zinc-700 transition hover:text-zinc-900"
+            class="relative inline-flex items-center gap-2.5 text-sm font-medium text-slate-700 transition hover:text-[#155fa8]"
             :aria-label="isEmpty ? 'Otwórz pusty koszyk' : `Otwórz koszyk: ${itemCount} szt.`"
             @click="toggleCart"
         >
-            <span>Koszyk</span>
-
-            <span class="relative inline-flex h-6 w-6 items-center justify-center">
+            <span class="relative inline-flex h-7 w-7 items-center justify-center">
                 <!-- Empty cart -->
                 <svg
                     v-if="isEmpty"
@@ -209,10 +207,15 @@ onBeforeUnmount(() => {
                 <!-- Optional badge -->
                 <span
                     v-if="itemCount > 0"
-                    class="absolute -right-2 -top-2 inline-flex min-w-5 items-center justify-center rounded-full bg-zinc-900 px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white"
+                    class="absolute -right-2.5 -top-2.5 inline-flex min-w-5 items-center justify-center rounded-full bg-[#f26722] px-1.5 py-0.5 text-[10px] font-bold leading-none text-white ring-2 ring-white"
                 >
                     {{ itemCount }}
                 </span>
+            </span>
+
+            <span class="hidden min-w-0 flex-col items-start sm:flex">
+                <strong class="text-xs font-bold leading-none text-slate-800">Koszyk</strong>
+                <span class="mt-1 max-w-[90px] truncate text-[10px] font-medium leading-none text-slate-400">{{ subtotal }}</span>
             </span>
         </button>
 

@@ -1,107 +1,100 @@
 @extends('layouts.storefront')
 
 @section('content')
-    <div class="space-y-8">
-        <section class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:p-8">
-            <p class="text-sm font-medium uppercase tracking-wide text-zinc-500">
-                Kategoria
-            </p>
+    <x-storefront.category-page-shell>
+    <section class="border-b border-slate-200 bg-white">
+        <div class="mx-auto max-w-[1480px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+            <nav class="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-400" aria-label="Okruszki">
+                <a href="{{ route('home') }}" class="transition hover:text-[#155fa8]">Strona główna</a>
+                <span aria-hidden="true">/</span>
+                <span class="text-slate-600">{{ $category->name }}</span>
+            </nav>
 
-            <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
-                {{ $category->name }}
-            </h1>
+            <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#1674c4]">Kategoria produktów</p>
+                    <h1 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+                        {{ $category->name }}
+                    </h1>
 
-            @if (filled($category->description))
-                <p class="mt-4 max-w-3xl text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-                    {{ $category->description }}
-                </p>
-            @endif
+                    @if (filled($category->description))
+                        <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
+                            {{ strip_tags($category->description) }}
+                        </p>
+                    @endif
+                </div>
+
+                <div class="inline-flex w-fit items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3">
+                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#155fa8] shadow-sm">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h10" />
+                        </svg>
+                    </span>
+                    <span>
+                        <strong class="block text-sm font-bold text-slate-900">{{ $products->total() }} {{ $products->total() === 1 ? 'produkt' : 'produktów' }}</strong>
+                        <span class="block text-xs text-slate-500">w tej kategorii</span>
+                    </span>
+                    <span class="sr-only">{{ $products->total() }} {{ \Illuminate\Support\Str::plural('product', $products->total()) }} found.</span>
+                </div>
+            </div>
 
             @if ($category->children->isNotEmpty())
-                <div class="mt-6 flex flex-wrap gap-2">
-                    @foreach ($category->children as $childKategoria)
+                <div class="mt-8 flex flex-wrap gap-2.5">
+                    @foreach ($category->children as $childCategory)
                         <a
-                            href="{{ route('categories.show', $childKategoria->slug) }}"
-                            class="inline-flex rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                            href="{{ route('categories.show', $childCategory->slug) }}"
+                            class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-[#155fa8]"
                         >
-                            {{ $childKategoria->name }}
+                            {{ $childCategory->name }}
+                            <span class="text-slate-300" aria-hidden="true">→</span>
                         </a>
                     @endforeach
                 </div>
             @endif
+        </div>
+    </section>
 
-            <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
-                {{ $products->total() }} {{ \Illuminate\Support\Str::plural('product', $products->total()) }} found.
-            </p>
-        </section>
+    <section>
+        <div class="mx-auto max-w-[1480px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+            @if ($products->count() > 0)
+                <div class="mb-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <h2 class="text-2xl font-extrabold tracking-tight text-slate-950">Dostępne produkty</h2>
+                        <p class="mt-1 text-sm text-slate-500">Wybierz produkt, aby sprawdzić warianty, rozmiary i dostępność.</p>
+                    </div>
 
-        @if ($products->count() > 0)
-            <section>
-                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    <a href="{{ route('legal.contact') }}" class="inline-flex w-fit items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-blue-200 hover:text-[#155fa8]">
+                        Potrzebujesz pomocy?
+                        <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     @foreach ($products as $product)
-                        @php
-                            $displayVariant = $product->variants->firstWhere('is_default', true)
-                                ?? $product->variants->first();
-
-                            $grossPriceAmount = $displayVariant?->grossPriceAmount();
-                            $currency = $displayVariant?->currency?->value ?? 'PLN';
-                            $imageUrl = $product->default_image_url;
-                        @endphp
-
-                        <a
-                            href="{{ route('products.show', $product->slug) }}"
-                            class="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
-                        >
-                            <div class="aspect-square bg-zinc-100 dark:bg-zinc-800">
-                                @if ($imageUrl)
-                                    <img
-                                        src="{{ $imageUrl }}"
-                                        alt="{{ $product->name }}"
-                                        class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                                        loading="lazy"
-                                    >
-                                @else
-                                    <div class="flex h-full items-center justify-center px-6 text-center text-sm text-zinc-400">
-                                        Brak dostępnego zdjęcia
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="flex flex-1 flex-col p-4">
-                                <h2 class="text-base font-semibold text-zinc-900 transition group-hover:text-zinc-700 dark:text-white dark:group-hover:text-zinc-200">
-                                    {{ $product->name }}
-                                </h2>
-
-                                @if (filled($product->short_description))
-                                    <p class="mt-2 line-clamp-2 text-sm text-zinc-500 dark:text-zinc-400">
-                                        {{ strip_tags($product->short_description) }}
-                                    </p>
-                                @endif
-
-                                <div class="mt-auto pt-4">
-                                    @if ($grossPriceAmount !== null)
-                                        <p class="text-sm font-semibold text-zinc-900 dark:text-white">
-                                            {{ number_format($grossPriceAmount / 100, 2, ',', ' ') }} {{ $currency }}
-                                        </p>
-                                    @else
-                                        <p class="text-sm text-zinc-500 dark:text-zinc-400">
-                                            Cena niedostępna
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </a>
+                        <x-storefront.product-card :product="$product" />
                     @endforeach
                 </div>
 
-                <div class="mt-8">
+                <div class="mt-10 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-slate-200">
                     {{ $products->links() }}
                 </div>
-            </section>
-        @else
-            <section class="rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                W tej kategorii nie ma jeszcze aktywnych produktów.
-            </section>
-        @endif
-    </div>
+            @else
+                <div class="rounded-[28px] border border-blue-100 bg-gradient-to-r from-blue-50 to-white px-6 py-12 text-center sm:px-10">
+                    <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-[#155fa8] shadow-sm ring-1 ring-blue-100">
+                        <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h10" />
+                        </svg>
+                    </span>
+                    <h2 class="mt-5 text-2xl font-bold text-slate-900">Produkty pojawią się wkrótce</h2>
+                    <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600">
+                        W tej kategorii nie ma jeszcze aktywnych produktów. Skontaktuj się z nami, gdy szukasz konkretnego rozwiązania.
+                    </p>
+                    <a href="{{ route('legal.contact') }}" class="mt-6 inline-flex rounded-xl bg-[#155fa8] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0b3b70]">
+                        Skontaktuj się z obsługą
+                    </a>
+                </div>
+            @endif
+        </div>
+    </section>
+    </x-storefront.category-page-shell>
 @endsection
