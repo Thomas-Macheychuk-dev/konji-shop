@@ -8,6 +8,8 @@ docker compose exec app php artisan shop:check
 docker compose exec app php artisan polkurier:check
 ```
 
+For Medi catalogue refreshes, recovery, image repair and final validation, follow [the Medi final audit and operations runbook](../imports/medi-final-audit.md).
+
 Confirm:
 
 ```text
