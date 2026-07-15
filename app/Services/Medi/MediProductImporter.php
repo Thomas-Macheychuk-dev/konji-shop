@@ -26,6 +26,10 @@ final class MediProductImporter
 {
     private const MAX_DATABASE_STRING_LENGTH = 190;
 
+    private const IMAGE_MINIMUM_FILE_SIZE_BYTES = 5 * 1024;
+
+    private const IMAGE_MINIMUM_DIMENSION_PX = 300;
+
     /**
      * @var list<string>
      */
@@ -469,6 +473,7 @@ final class MediProductImporter
     {
         $imageRows = [];
         $seenUrls = [];
+        $hadFailures = false;
         $maxImages = $imageLimit !== null && $imageLimit > 0 ? $imageLimit : null;
 
         foreach (($scraped['images'] ?? []) as $imageData) {
@@ -494,8 +499,13 @@ final class MediProductImporter
                     'products/medi/'.$product->external_id.'/gallery',
                     'public',
                     self::IMAGE_ALLOWED_HOSTS,
+                    [
+                        'minimum_file_size_bytes' => self::IMAGE_MINIMUM_FILE_SIZE_BYTES,
+                        'minimum_dimension_px' => self::IMAGE_MINIMUM_DIMENSION_PX,
+                    ],
                 );
             } catch (Throwable $exception) {
+                $hadFailures = true;
                 $this->warnings[] = 'Image skipped for Medi product '.$product->external_id.': '.$url.' — '.$exception->getMessage();
 
                 continue;
@@ -519,14 +529,16 @@ final class MediProductImporter
 
         $paths = array_column($imageRows, 'path');
 
-        ProductImage::query()
-            ->where('product_id', $product->id)
-            ->when(
-                $paths !== [],
-                fn ($query) => $query->whereNotIn('path', $paths),
-                fn ($query) => $query,
-            )
-            ->delete();
+        if (! $hadFailures) {
+            ProductImage::query()
+                ->where('product_id', $product->id)
+                ->when(
+                    $paths !== [],
+                    fn ($query) => $query->whereNotIn('path', $paths),
+                    fn ($query) => $query,
+                )
+                ->delete();
+        }
 
         foreach ($imageRows as $row) {
             ProductImage::updateOrCreate(
@@ -546,6 +558,24 @@ final class MediProductImporter
                     'sort_order' => $row['sort_order'],
                 ],
             );
+        }
+
+        $this->normalizeProductImages($product);
+    }
+
+    private function normalizeProductImages(Product $product): void
+    {
+        $images = ProductImage::query()
+            ->where('product_id', $product->id)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+
+        foreach ($images as $index => $image) {
+            $image->update([
+                'sort_order' => $index,
+                'is_main' => $index === 0,
+            ]);
         }
     }
 
