@@ -91,7 +91,7 @@ it('imports Butterfly product-data as draft products with category hierarchy att
 
     $smallVariant = ProductVariant::query()
         ->where('product_id', $product->id)
-        ->where('external_variant_id', 'butterfly-76-s')
+        ->where('external_variant_id', 'butterfly-76-S')
         ->firstOrFail();
 
     expect($smallVariant->sku)->toBe('HARMONIUM-S')
@@ -106,7 +106,7 @@ it('imports Butterfly product-data as draft products with category hierarchy att
 
     $mediumVariant = ProductVariant::query()
         ->where('product_id', $product->id)
-        ->where('external_variant_id', 'butterfly-76-m')
+        ->where('external_variant_id', 'butterfly-76-M')
         ->firstOrFail();
 
     expect($mediumVariant->sku)->toBe('HARMONIUM-M')
