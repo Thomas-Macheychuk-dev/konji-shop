@@ -18,8 +18,15 @@ class RemoteImageImporter
 
     /**
      * @param  array<int, string>|null  $allowedHosts
+     * @param  array{minimum_file_size_bytes?: int, minimum_dimension_px?: int}  $requirements
      */
-    public function import(string $url, string $directory, string $disk = 'public', ?array $allowedHosts = null): array
+    public function import(
+        string $url,
+        string $directory,
+        string $disk = 'public',
+        ?array $allowedHosts = null,
+        array $requirements = [],
+    ): array
     {
         if (! filter_var($url, FILTER_VALIDATE_URL)) {
             throw new RuntimeException("Invalid image URL [{$url}]");
@@ -57,6 +64,8 @@ class RemoteImageImporter
             throw new RuntimeException("Downloaded image is empty [{$url}]");
         }
 
+        $this->assertMeetsRequirements($contents, $url, $requirements);
+
         [$contents, $mimeType] = $this->optimizeIfNeeded($contents, $mimeType, $url);
 
         $fileSize = strlen($contents);
@@ -82,6 +91,37 @@ class RemoteImageImporter
             'file_size' => $fileSize,
             'sha256' => $sha256,
         ];
+    }
+
+    /**
+     * @param  array{minimum_file_size_bytes?: int, minimum_dimension_px?: int}  $requirements
+     */
+    private function assertMeetsRequirements(string $contents, string $url, array $requirements): void
+    {
+        $minimumFileSize = max(0, (int) ($requirements['minimum_file_size_bytes'] ?? 0));
+
+        if ($minimumFileSize > 0 && strlen($contents) < $minimumFileSize) {
+            throw new RuntimeException("Image file is smaller than the required minimum [{$url}]");
+        }
+
+        $minimumDimension = max(0, (int) ($requirements['minimum_dimension_px'] ?? 0));
+
+        if ($minimumDimension === 0) {
+            return;
+        }
+
+        $imageSize = @getimagesizefromstring($contents);
+
+        if (! is_array($imageSize)) {
+            throw new RuntimeException("Unable to read image dimensions [{$url}]");
+        }
+
+        $width = isset($imageSize[0]) ? (int) $imageSize[0] : 0;
+        $height = isset($imageSize[1]) ? (int) $imageSize[1] : 0;
+
+        if (min($width, $height) < $minimumDimension) {
+            throw new RuntimeException("Image dimensions are smaller than the required minimum [{$url}]");
+        }
     }
 
     /**
