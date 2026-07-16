@@ -19,6 +19,12 @@ class RemoteImageImporter
     /**
      * @param  array<int, string>|null  $allowedHosts
      * @param  array{minimum_file_size_bytes?: int, minimum_dimension_px?: int}  $requirements
+     * @param  array{
+     *     timeout_seconds?: int,
+     *     retry_attempts?: int,
+     *     retry_delay_ms?: int,
+     *     headers?: array<string, string>
+     * }  $requestOptions
      */
     public function import(
         string $url,
@@ -26,6 +32,7 @@ class RemoteImageImporter
         string $disk = 'public',
         ?array $allowedHosts = null,
         array $requirements = [],
+        array $requestOptions = [],
     ): array
     {
         if (! filter_var($url, FILTER_VALIDATE_URL)) {
@@ -40,12 +47,23 @@ class RemoteImageImporter
             throw new RuntimeException("Disallowed image host [{$url}]");
         }
 
-        $response = Http::timeout(20)
-            ->retry(2, 500)
-            ->withHeaders([
-                'User-Agent' => 'KonjiShopBot/1.0',
-                'Accept' => 'image/*',
-            ])
+        $timeoutSeconds = max(1, (int) ($requestOptions['timeout_seconds'] ?? 20));
+        $retryAttempts = max(1, (int) ($requestOptions['retry_attempts'] ?? 2));
+        $retryDelayMs = max(0, (int) ($requestOptions['retry_delay_ms'] ?? 500));
+        $headers = [
+            'User-Agent' => 'KonjiShopBot/1.0',
+            'Accept' => 'image/*',
+        ];
+
+        foreach (($requestOptions['headers'] ?? []) as $name => $value) {
+            if (is_string($name) && $name !== '' && is_string($value) && $value !== '') {
+                $headers[$name] = $value;
+            }
+        }
+
+        $response = Http::timeout($timeoutSeconds)
+            ->retry($retryAttempts, $retryDelayMs)
+            ->withHeaders($headers)
             ->get($url);
 
         if (! $response->successful()) {
