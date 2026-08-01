@@ -27,6 +27,9 @@ const optionGroups = computed(() => {
 const variants = computed(() => props.product.variants ?? []);
 const baseImages = computed(() => props.product.base_images ?? []);
 const defaultImage = computed(() => props.product.default_image ?? null);
+const informationalColorGroups = computed(
+    () => props.product.informational_color_groups ?? []
+);
 
 const currentImage = ref(0);
 const selectedOptionValueIds = ref({});
@@ -326,6 +329,13 @@ function isImageSelected(index) {
     return currentImage.value === index;
 }
 
+function swatchFallback(label) {
+    const normalized = String(label ?? '').trim();
+    const code = normalized.match(/\b[A-Z]{1,3}\d{1,4}\b/i)?.[0];
+
+    return (code ?? normalized).slice(0, 6);
+}
+
 const canAddToCart = computed(() => {
     return exactSelectedVariant.value?.stock_status !== 'out_of_stock';
 });
@@ -490,6 +500,70 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                 </div>
 
                 <div
+                    v-if="informationalColorGroups.length"
+                    class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
+                >
+                    <h2 class="text-lg font-semibold text-zinc-900">
+                        Dostępne kolory
+                    </h2>
+
+                    <div class="mt-5 space-y-6">
+                        <section
+                            v-for="group in informationalColorGroups"
+                            :key="group.code"
+                            :aria-labelledby="`informational-color-group-${group.code}`"
+                        >
+                            <h3
+                                :id="`informational-color-group-${group.code}`"
+                                class="text-sm font-semibold text-zinc-800"
+                            >
+                                {{ group.label }}
+                            </h3>
+
+                            <ul class="mt-3 flex flex-wrap gap-4">
+                                <li
+                                    v-for="value in group.values"
+                                    :key="value.id"
+                                    class="flex max-w-24 flex-col items-center gap-2 text-center"
+                                >
+                                    <span
+                                        class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-zinc-300 bg-zinc-100 shadow-sm ring-1 ring-black/5"
+                                        :title="value.label"
+                                        :aria-label="`${group.label}: ${value.label}`"
+                                    >
+                                        <img
+                                            v-if="value.image_url"
+                                            :src="value.image_url"
+                                            :alt="value.image_alt || value.label"
+                                            class="h-full w-full object-contain"
+                                            loading="lazy"
+                                        >
+
+                                        <span
+                                            v-else-if="value.color"
+                                            class="h-full w-full rounded-full"
+                                            :style="{ backgroundColor: value.color }"
+                                            aria-hidden="true"
+                                        />
+
+                                        <span
+                                            v-else
+                                            class="px-1 text-[10px] font-bold uppercase leading-tight text-zinc-700"
+                                        >
+                                            {{ swatchFallback(value.label) }}
+                                        </span>
+                                    </span>
+
+                                    <span class="text-xs leading-4 text-zinc-600">
+                                        {{ value.label }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+
+                <div
                     v-for="group in optionGroups"
                     :key="group.code"
                     class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
@@ -541,7 +615,10 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                         </button>
                     </div>
                 </div>
-                <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
+                <div
+                    v-if="product.description"
+                    class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8"
+                >
                     <div
                         class="product-description overflow-x-auto"
                         v-html="product.description"

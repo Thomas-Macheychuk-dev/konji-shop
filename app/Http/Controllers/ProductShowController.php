@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\AttributeDisplayType;
 use App\Enums\CategoryStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
@@ -16,9 +17,9 @@ use App\Models\ProductVariant;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class ProductShowController extends Controller
@@ -53,6 +54,7 @@ class ProductShowController extends Controller
         $product->load([
             'mainImage',
             'images',
+            'attributeValues.attribute',
             'categories' => fn ($query) => $query
                 ->where('status', CategoryStatus::ACTIVE->value)
                 ->with('parent')
@@ -68,13 +70,20 @@ class ProductShowController extends Controller
             ->sortByDesc(fn (ProductVariant $variant) => (int) $variant->is_default)
             ->first();
 
+        $informationalColorGroups = $this->buildInformationalColorGroups($product);
+        $storefrontDescription = $this->storefrontDescription(
+            $product,
+            $informationalColorGroups !== [],
+        );
+
         $productPayload = [
             'id' => $product->id,
             'name' => $product->name,
             'slug' => $product->slug,
-            'description' => $product->description,
+            'description' => $storefrontDescription,
             'default_image' => $this->imagePayload($product->selectedDefaultImage(), $product->name),
             'base_images' => $this->baseImages($product),
+            'informational_color_groups' => $informationalColorGroups,
 
             'option_groups' => $this->buildOptionGroups($product),
             'variants' => $this->buildVariants($product),
@@ -93,6 +102,8 @@ class ProductShowController extends Controller
             'productPayload' => $productPayload,
             'defaultVariant' => $defaultVariant,
             'breadcrumbs' => $breadcrumbs,
+            'informationalColorGroups' => $informationalColorGroups,
+            'storefrontDescription' => $storefrontDescription,
 
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
@@ -125,12 +136,35 @@ class ProductShowController extends Controller
         $variantIds = DB::table('product_variants')
             ->where('product_id', $productId)
             ->pluck('id');
+        $productAttributeValueIds = DB::table('product_attribute_value')
+            ->where('product_id', $productId)
+            ->pluck('attribute_value_id');
 
         return [
             'product' => $this->timestampForCache($product->updated_at),
             'product_deleted' => $this->timestampForCache($product->deleted_at),
             'images' => $this->timestampForCache($product->images()->max('updated_at')),
             'attribute_value_images' => $this->timestampForCache($product->attributeValueImages()->max('updated_at')),
+            'product_attribute_value_pivot' => $this->timestampForCache(
+                DB::table('product_attribute_value')
+                    ->where('product_id', $productId)
+                    ->max('updated_at'),
+            ),
+            'product_attribute_values' => $this->timestampForCache($productAttributeValueIds->isEmpty()
+                ? null
+                : DB::table('attribute_values')
+                    ->whereIn('id', $productAttributeValueIds)
+                    ->max('updated_at')),
+            'product_attributes' => $this->timestampForCache($productAttributeValueIds->isEmpty()
+                ? null
+                : DB::table('attributes')
+                    ->whereIn('id', function ($query) use ($productAttributeValueIds): void {
+                        $query
+                            ->select('attribute_id')
+                            ->from('attribute_values')
+                            ->whereIn('id', $productAttributeValueIds);
+                    })
+                    ->max('updated_at')),
             'variants' => $this->timestampForCache(
                 ProductVariant::withTrashed()
                     ->where('product_id', $productId)
@@ -481,6 +515,106 @@ class ProductShowController extends Controller
             'is_main' => (bool) $image->is_main,
             'sort_order' => $image->sort_order,
         ];
+    }
+
+    /**
+     * Vermeiren colours describe available finishes but do not identify
+     * purchasable variants. Keep them separate from the variant configurator.
+     *
+     * @return list<array{
+     *     code: string,
+     *     label: string,
+     *     values: list<array{
+     *         id: int,
+     *         label: string,
+     *         image_url: string|null,
+     *         image_alt: string,
+     *         color: string|null
+     *     }>
+     * }>
+     */
+    private function buildInformationalColorGroups(Product $product): array
+    {
+        if ($product->external_source !== 'vermeiren') {
+            return [];
+        }
+
+        $imagesByAttributeValue = $product->attributeValueImages
+            ->groupBy('attribute_value_id');
+
+        return $product->attributeValues
+            ->filter(function (AttributeValue $value): bool {
+                $attribute = $value->attribute;
+
+                return $attribute?->display_type === AttributeDisplayType::COLOR_SWATCH
+                    && Str::startsWith((string) $attribute->external_attribute_id, 'vermeiren-color-');
+            })
+            ->groupBy('attribute_id')
+            ->map(function (Collection $values) use ($imagesByAttributeValue): array {
+                /** @var AttributeValue|null $first */
+                $first = $values->first();
+                $attribute = $first?->attribute;
+                $externalAttributeId = (string) $attribute?->external_attribute_id;
+                $code = Str::after($externalAttributeId, 'vermeiren-color-');
+
+                return [
+                    'code' => $code !== '' ? $code : 'color',
+                    'label' => $attribute?->name ?: 'Kolor',
+                    'values' => $values
+                        ->sortBy(fn (AttributeValue $value): array => [
+                            $value->sort_order,
+                            $value->id,
+                        ])
+                        ->map(function (AttributeValue $value) use ($imagesByAttributeValue): array {
+                            /** @var ProductAttributeValueImage|null $image */
+                            $image = $imagesByAttributeValue
+                                ->get($value->id, collect())
+                                ->sortBy(fn (ProductAttributeValueImage $candidate): array => [
+                                    $candidate->sort_order,
+                                    $candidate->id,
+                                ])
+                                ->first();
+
+                            return [
+                                'id' => $value->id,
+                                'label' => $value->value,
+                                'image_url' => $image?->url ?? $value->swatch_image_url,
+                                'image_alt' => $image?->alt_text ?: $value->value,
+                                'color' => $value->swatchKind() === 'color'
+                                    ? $value->swatch_value
+                                    : null,
+                            ];
+                        })
+                        ->values()
+                        ->all(),
+                ];
+            })
+            ->sortBy(fn (array $group): int => match ($group['code']) {
+                'upholstery' => 1,
+                'frame' => 2,
+                default => 99,
+            })
+            ->values()
+            ->all();
+    }
+
+    private function storefrontDescription(Product $product, bool $hasInformationalColors): ?string
+    {
+        if (! is_string($product->description) || trim($product->description) === '') {
+            return null;
+        }
+
+        if (! $hasInformationalColors || $product->external_source !== 'vermeiren') {
+            return $product->description;
+        }
+
+        $description = preg_replace(
+            '/<section class="vermeiren-colors">.*?<\/section>/su',
+            '',
+            $product->description,
+        );
+
+        return trim(is_string($description) ? $description : $product->description);
     }
 
     private function buildOptionGroups(Product $product): array

@@ -111,10 +111,66 @@
                             </noscript>
                         </div>
 
-                        @if ($product->description)
+                        @if (! empty($informationalColorGroups))
+                            <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+                                <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">
+                                    Dostępne kolory
+                                </h2>
+
+                                <div class="mt-5 space-y-6">
+                                    @foreach ($informationalColorGroups as $group)
+                                        <section aria-labelledby="vermeiren-color-group-{{ $group['code'] }}">
+                                            <h3
+                                                id="vermeiren-color-group-{{ $group['code'] }}"
+                                                class="text-sm font-semibold text-zinc-800 dark:text-zinc-200"
+                                            >
+                                                {{ $group['label'] }}
+                                            </h3>
+
+                                            <ul class="mt-3 flex flex-wrap gap-4">
+                                                @foreach ($group['values'] as $value)
+                                                    <li class="flex max-w-24 flex-col items-center gap-2 text-center">
+                                                        <span
+                                                            class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-zinc-300 bg-zinc-100 shadow-sm ring-1 ring-black/5 dark:border-zinc-600 dark:bg-zinc-800"
+                                                            title="{{ $value['label'] }}"
+                                                            aria-label="{{ $group['label'] }}: {{ $value['label'] }}"
+                                                        >
+                                                            @if ($value['image_url'])
+                                                                <img
+                                                                    src="{{ $value['image_url'] }}"
+                                                                    alt="{{ $value['image_alt'] }}"
+                                                                    class="h-full w-full object-contain"
+                                                                    loading="lazy"
+                                                                >
+                                                            @elseif ($value['color'])
+                                                                <span
+                                                                    class="h-full w-full rounded-full"
+                                                                    style="background-color: {{ $value['color'] }}"
+                                                                    aria-hidden="true"
+                                                                ></span>
+                                                            @else
+                                                                <span class="px-1 text-[10px] font-bold uppercase leading-tight text-zinc-700 dark:text-zinc-200">
+                                                                    {{ \Illuminate\Support\Str::limit($value['label'], 6, '') }}
+                                                                </span>
+                                                            @endif
+                                                        </span>
+
+                                                        <span class="text-xs leading-4 text-zinc-600 dark:text-zinc-300">
+                                                            {{ $value['label'] }}
+                                                        </span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </section>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($storefrontDescription)
                             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:p-8">
                                 <div class="product-description overflow-x-auto">
-                                    {!! $product->description !!}
+                                    {!! $storefrontDescription !!}
                                 </div>
                             </div>
                         @endif
