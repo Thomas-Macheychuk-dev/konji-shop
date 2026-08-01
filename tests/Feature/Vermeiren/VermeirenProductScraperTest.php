@@ -67,11 +67,12 @@ it('extracts Vermeiren descriptions images specifications colors options and doc
         ])
         ->and($product['options'])->toHaveCount(1)
         ->and($product['options'][0]['name'])->toBe('B02 podłokietnik długi.')
-        ->and($product['documents'])->toHaveCount(3)
+        ->and($product['documents'])->toHaveCount(4)
         ->and(array_column($product['documents'], 'type'))->toBe([
             'brochure',
             'manual',
             'certificate',
+            'spare_part',
         ]);
 });
 
@@ -162,6 +163,7 @@ function vermeirenDetailedProductFixture(string $name): string
             <div id="doc_brochures"><a href="https://www.vermeiren.pl/product/brochure.nsf/O/ONE/\$FILE/D200.pdf">D200.pdf</a></div>
             <div id="doc_gebr"><a href="/product/manuals.nsf/O/TWO/\$FILE/User-manual.pdf">User manual</a></div>
             <div id="doc_cert"><a href="https://www.vermeiren.pl/product/certificate.nsf/O/THREE/\$FILE/CE-D200.pdf">CE D200</a></div>
+            <div id="doc_ond"><a href="https://www.vermeiren.pl/product/spareparts.nsf/O/FOUR/\$FILE/D200-frame.pdf">D200 frame</a></div>
             <div id="opt">
                 <div class="well well-sm offer">
                     <img src="https://www.vermeiren.pl/product/picture.nsf/O/B02/\$FILE/th_B02.jpg">

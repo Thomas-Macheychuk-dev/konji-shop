@@ -23,6 +23,7 @@ class RemoteImageImporter
      *     timeout_seconds?: int,
      *     retry_attempts?: int,
      *     retry_delay_ms?: int,
+     *     verify_tls?: bool,
      *     headers?: array<string, string>
      * }  $requestOptions
      */
@@ -33,10 +34,12 @@ class RemoteImageImporter
         ?array $allowedHosts = null,
         array $requirements = [],
         array $requestOptions = [],
-    ): array
-    {
+    ): array {
+        $sourceUrl = $url;
+        $url = $this->normalizeUrl($url);
+
         if (! filter_var($url, FILTER_VALIDATE_URL)) {
-            throw new RuntimeException("Invalid image URL [{$url}]");
+            throw new RuntimeException("Invalid image URL [{$sourceUrl}]");
         }
 
         $host = parse_url($url, PHP_URL_HOST);
@@ -50,6 +53,7 @@ class RemoteImageImporter
         $timeoutSeconds = max(1, (int) ($requestOptions['timeout_seconds'] ?? 20));
         $retryAttempts = max(1, (int) ($requestOptions['retry_attempts'] ?? 2));
         $retryDelayMs = max(0, (int) ($requestOptions['retry_delay_ms'] ?? 500));
+        $verifyTls = (bool) ($requestOptions['verify_tls'] ?? true);
         $headers = [
             'User-Agent' => 'KonjiShopBot/1.0',
             'Accept' => 'image/*',
@@ -61,10 +65,15 @@ class RemoteImageImporter
             }
         }
 
-        $response = Http::timeout($timeoutSeconds)
+        $request = Http::timeout($timeoutSeconds)
             ->retry($retryAttempts, $retryDelayMs)
-            ->withHeaders($headers)
-            ->get($url);
+            ->withHeaders($headers);
+
+        if (! $verifyTls) {
+            $request = $request->withoutVerifying();
+        }
+
+        $response = $request->get($url);
 
         if (! $response->successful()) {
             throw new RuntimeException("Failed to download image [{$url}]");
@@ -109,6 +118,86 @@ class RemoteImageImporter
             'file_size' => $fileSize,
             'sha256' => $sha256,
         ];
+    }
+
+    private function normalizeUrl(string $url): string
+    {
+        $url = trim($url);
+        $parts = parse_url($url);
+
+        if (! is_array($parts)) {
+            return $url;
+        }
+
+        $scheme = strtolower((string) ($parts['scheme'] ?? ''));
+        $host = (string) ($parts['host'] ?? '');
+
+        if (! in_array($scheme, ['http', 'https'], true) || $host === '') {
+            return $url;
+        }
+
+        $normalized = $scheme.'://'.$host;
+
+        if (isset($parts['port'])) {
+            $normalized .= ':'.(int) $parts['port'];
+        }
+
+        $normalized .= $this->encodeUrlComponent(
+            (string) ($parts['path'] ?? ''),
+            "-._~!$&'()*+,;=:@/",
+        );
+
+        if (array_key_exists('query', $parts)) {
+            $normalized .= '?'.$this->encodeUrlComponent(
+                (string) $parts['query'],
+                "-._~!$&'()*+,;=:@/?",
+            );
+        }
+
+        if (array_key_exists('fragment', $parts)) {
+            $normalized .= '#'.$this->encodeUrlComponent(
+                (string) $parts['fragment'],
+                "-._~!$&'()*+,;=:@/?",
+            );
+        }
+
+        return $normalized;
+    }
+
+    private function encodeUrlComponent(string $value, string $safeCharacters): string
+    {
+        $encoded = '';
+        $length = strlen($value);
+
+        for ($index = 0; $index < $length; $index++) {
+            $character = $value[$index];
+
+            if (
+                $character === '%'
+                && $index + 2 < $length
+                && ctype_xdigit($value[$index + 1].$value[$index + 2])
+            ) {
+                $encoded .= substr($value, $index, 3);
+                $index += 2;
+
+                continue;
+            }
+
+            $ordinal = ord($character);
+            $isAsciiAlphaNumeric = ($ordinal >= 48 && $ordinal <= 57)
+                || ($ordinal >= 65 && $ordinal <= 90)
+                || ($ordinal >= 97 && $ordinal <= 122);
+
+            if ($isAsciiAlphaNumeric || str_contains($safeCharacters, $character)) {
+                $encoded .= $character;
+
+                continue;
+            }
+
+            $encoded .= sprintf('%%%02X', $ordinal);
+        }
+
+        return $encoded;
     }
 
     /**
@@ -222,7 +311,6 @@ class RemoteImageImporter
 
         return [$bestContents, $bestMimeType];
     }
-
 
     private function estimatedDecodedImageBytes(int $width, int $height): int
     {

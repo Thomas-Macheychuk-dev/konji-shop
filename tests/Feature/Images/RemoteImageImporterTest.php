@@ -38,6 +38,33 @@ it('resizes oversized-dimension remote images instead of skipping them', functio
         ->and($result['mime_type'])->toBe('image/jpeg');
 });
 
+it('percent-encodes unsafe path characters before validating and downloading remote images', function (): void {
+    Storage::fake('public');
+
+    $contents = generatedTestImageContents(800, 600, 'image/jpeg');
+    $sourceUrl = 'https://www.vermeiren.pl/product/picture.nsf/O/13C1350768D8E83FC12585FF00357244/$FILE/web_Klick Power Standard Limited Editiom.jpg';
+    $requestUrl = 'https://www.vermeiren.pl/product/picture.nsf/O/13C1350768D8E83FC12585FF00357244/$FILE/web_Klick%20Power%20Standard%20Limited%20Editiom.jpg';
+
+    Http::fake([
+        $requestUrl => Http::response($contents, 200, [
+            'Content-Type' => 'image/jpeg',
+        ]),
+    ]);
+
+    $result = app(RemoteImageImporter::class)->import(
+        $sourceUrl,
+        'products/vermeiren/test',
+        'public',
+        ['vermeiren.pl'],
+    );
+
+    Storage::disk('public')->assertExists($result['path']);
+
+    expect($result['source_url'])->toBe($requestUrl);
+
+    Http::assertSent(fn ($request): bool => $request->url() === $requestUrl);
+});
+
 it('keeps already acceptable remote images unchanged', function (): void {
     Storage::fake('public');
 

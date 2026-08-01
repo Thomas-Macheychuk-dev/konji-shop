@@ -579,6 +579,7 @@ final class VermeirenProductScraper
             'doc_bestelbon' => 'order_form',
             'doc_gebr' => 'manual',
             'doc_cert' => 'certificate',
+            'doc_ond' => 'spare_part',
         ];
         $documents = [];
         $seen = [];
