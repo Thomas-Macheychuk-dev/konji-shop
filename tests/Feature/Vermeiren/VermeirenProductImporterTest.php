@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
+use App\Services\Vermeiren\VermeirenColorNameNormalizer;
 use App\Services\Vermeiren\VermeirenProductImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\Request;
@@ -19,6 +20,16 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
+
+it('normalizes Vermeiren colour labels for Polish storefront display', function (): void {
+    $normalizer = app(VermeirenColorNameNormalizer::class);
+
+    expect($normalizer->normalize('C29 grey', 'frame'))->toBe('C29 szary')
+        ->and($normalizer->normalize('upholstery dartex grey', 'upholstery'))->toBe('Dartex szary')
+        ->and($normalizer->normalize('Black nylon', 'upholstery'))->toBe('Nylon czarny')
+        ->and($normalizer->normalize('frame dark blue', 'frame'))->toBe('Ciemnoniebieski')
+        ->and($normalizer->normalize('Anthracite', 'color'))->toBe('Antracytowy');
+});
 
 it('dry-runs Vermeiren product data without database writes or asset downloads', function (): void {
     writeVermeirenImportFixture('scrapers/vermeiren/test-product-data.json', [vermeirenImporterPayload()]);
@@ -88,6 +99,8 @@ it('imports Vermeiren hierarchy specifications colors options documents images a
         ->toContain('Maksymalna waga użytkownika')
         ->toContain('Dostępne kolory')
         ->toContain('Kolor ramy')
+        ->toContain('C29 szary')
+        ->toContain('Dartex szary')
         ->toContain('Opcje dodatkowe')
         ->toContain('SE42 winda siedziska')
         ->toContain('Dokumenty i materiały')
@@ -97,6 +110,8 @@ it('imports Vermeiren hierarchy specifications colors options documents images a
         ->toContain('To jest wyrób medyczny')
         ->not->toContain('Źródło')
         ->not->toContain('Dane produktu zaimportowane')
+        ->not->toContain('C29 grey')
+        ->not->toContain('upholstery dartex grey')
         ->not->toContain('<script')
         ->not->toContain('<img');
 
@@ -118,8 +133,8 @@ it('imports Vermeiren hierarchy specifications colors options documents images a
         'Wyrób medyczny=Tak',
         'Maksymalna waga użytkownika=130 kg',
         'Prędkość maksymalna=6 km/h',
-        'Kolor ramy=C29 grey',
-        'Kolor tapicerki=Black nylon',
+        'Kolor ramy=C29 szary',
+        'Kolor tapicerki=Dartex szary',
     );
 
     $variant = $product->variants()->firstOrFail();
@@ -358,7 +373,7 @@ function vermeirenImporterPayload(array $overrides = []): array
             ],
             [
                 'type' => 'upholstery',
-                'name' => 'Black nylon',
+                'name' => 'upholstery dartex grey',
                 'image_url' => 'https://www.vermeiren.pl/product/colors.nsf/O/BLACK/$FILE/black-nylon.jpg',
             ],
         ],

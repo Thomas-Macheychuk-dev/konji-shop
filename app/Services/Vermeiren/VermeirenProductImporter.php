@@ -58,6 +58,7 @@ final class VermeirenProductImporter
 
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
+        private readonly VermeirenColorNameNormalizer $colorNameNormalizer,
     ) {}
 
     /**
@@ -368,13 +369,19 @@ final class VermeirenProductImporter
         }
 
         foreach ($this->colors($scraped) as $index => $color) {
-            $name = $this->stringOrNull($color['name'] ?? null);
+            $sourceName = $this->stringOrNull($color['name'] ?? null);
 
-            if ($name === null || ! $this->isSafeFilterAttributeValue($name)) {
+            if ($sourceName === null) {
                 continue;
             }
 
             $type = $this->colorType($color);
+            $name = $this->colorNameNormalizer->normalize($sourceName, $type);
+
+            if (! $this->isSafeFilterAttributeValue($name)) {
+                continue;
+            }
+
             $attribute = $this->resolveAttribute(
                 externalAttributeId: 'vermeiren-color-'.$type,
                 name: $this->colorAttributeName($type),
@@ -382,7 +389,7 @@ final class VermeirenProductImporter
             );
             $value = $this->resolveAttributeValue(
                 attribute: $attribute,
-                externalOptionId: 'vermeiren-color-'.$type.'-'.substr(sha1(Str::lower($name)), 0, 20),
+                externalOptionId: 'vermeiren-color-'.$type.'-'.substr(sha1(Str::lower($sourceName)), 0, 20),
                 value: $name,
                 sortOrder: $index,
             );
@@ -1021,13 +1028,14 @@ final class VermeirenProductImporter
         $groups = [];
 
         foreach ($this->colors($scraped) as $color) {
-            $name = $this->stringOrNull($color['name'] ?? null);
+            $sourceName = $this->stringOrNull($color['name'] ?? null);
 
-            if ($name === null) {
+            if ($sourceName === null) {
                 continue;
             }
 
-            $groups[$this->colorAttributeName($this->colorType($color))][] = $name;
+            $type = $this->colorType($color);
+            $groups[$this->colorAttributeName($type)][] = $this->colorNameNormalizer->normalize($sourceName, $type);
         }
 
         if ($groups === []) {
