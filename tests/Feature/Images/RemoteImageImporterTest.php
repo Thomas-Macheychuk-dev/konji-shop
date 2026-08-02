@@ -65,6 +65,51 @@ it('percent-encodes unsafe path characters before validating and downloading rem
     Http::assertSent(fn ($request): bool => $request->url() === $requestUrl);
 });
 
+it('detects image MIME type from bytes when the server sends application octet-stream', function (): void {
+    Storage::fake('public');
+
+    $contents = generatedTestImageContents(800, 600, 'image/jpeg');
+    $url = 'https://novicare.pl/wp-content/uploads/2024/09/test-product.jpg.webp';
+
+    Http::fake([
+        $url => Http::response($contents, 200, [
+            'Content-Type' => 'application/octet-stream',
+        ]),
+    ]);
+
+    $result = app(RemoteImageImporter::class)->import(
+        $url,
+        'products/novicare/test',
+        'public',
+        ['novicare.pl'],
+    );
+
+    Storage::disk('public')->assertExists($result['path']);
+
+    expect($result['mime_type'])->toBe('image/jpeg')
+        ->and($result['path'])->toEndWith('.jpg')
+        ->and(Storage::disk('public')->get($result['path']))->toBe($contents);
+});
+
+it('still rejects generic binary responses that are not supported images', function (): void {
+    Storage::fake('public');
+
+    $url = 'https://novicare.pl/wp-content/uploads/2024/09/not-an-image.bin';
+
+    Http::fake([
+        $url => Http::response('not an image', 200, [
+            'Content-Type' => 'application/octet-stream',
+        ]),
+    ]);
+
+    app(RemoteImageImporter::class)->import(
+        $url,
+        'products/novicare/test',
+        'public',
+        ['novicare.pl'],
+    );
+})->throws(RuntimeException::class, 'Response is not an image');
+
 it('keeps already acceptable remote images unchanged', function (): void {
     Storage::fake('public');
 

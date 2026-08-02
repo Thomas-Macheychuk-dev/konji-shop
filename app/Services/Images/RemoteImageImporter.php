@@ -17,6 +17,18 @@ class RemoteImageImporter
     private const MAX_DECODED_IMAGE_MEMORY_BYTES = 160 * 1024 * 1024;
 
     /**
+     * @var list<string>
+     */
+    private const SUPPORTED_IMAGE_MIME_TYPES = [
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+        'image/gif',
+    ];
+
+    /**
      * @param  array<int, string>|null  $allowedHosts
      * @param  array{minimum_file_size_bytes?: int, minimum_dimension_px?: int}  $requirements
      * @param  array{
@@ -79,17 +91,17 @@ class RemoteImageImporter
             throw new RuntimeException("Failed to download image [{$url}]");
         }
 
-        $mimeType = $response->header('Content-Type');
-
-        if (! is_string($mimeType) || ! str_starts_with($mimeType, 'image/')) {
-            throw new RuntimeException("Response is not an image [{$url}]");
-        }
-
         $contents = $response->body();
 
         if ($contents === '') {
             throw new RuntimeException("Downloaded image is empty [{$url}]");
         }
+
+        $mimeType = $this->resolveImageMimeType(
+            contentType: $response->header('Content-Type'),
+            contents: $contents,
+            url: $url,
+        );
 
         $this->assertMeetsRequirements($contents, $url, $requirements);
 
@@ -118,6 +130,76 @@ class RemoteImageImporter
             'file_size' => $fileSize,
             'sha256' => $sha256,
         ];
+    }
+
+    private function resolveImageMimeType(?string $contentType, string $contents, string $url): string
+    {
+        $declaredMimeType = $this->normalizeMimeType($contentType);
+
+        if ($declaredMimeType !== null && in_array($declaredMimeType, self::SUPPORTED_IMAGE_MIME_TYPES, true)) {
+            return $declaredMimeType;
+        }
+
+        $detectedMimeType = $this->detectImageMimeType($contents);
+
+        if ($detectedMimeType !== null) {
+            return $detectedMimeType;
+        }
+
+        if ($declaredMimeType !== null && str_starts_with($declaredMimeType, 'image/')) {
+            throw new RuntimeException("Unsupported image MIME type [{$declaredMimeType}] for [{$url}]");
+        }
+
+        throw new RuntimeException("Response is not an image [{$url}]");
+    }
+
+    private function normalizeMimeType(?string $contentType): ?string
+    {
+        if (! is_string($contentType)) {
+            return null;
+        }
+
+        $mimeType = strtolower(trim(explode(';', $contentType, 2)[0]));
+
+        return $mimeType !== '' ? $mimeType : null;
+    }
+
+    private function detectImageMimeType(string $contents): ?string
+    {
+        $imageSize = @getimagesizefromstring($contents);
+        $imageSizeMimeType = is_array($imageSize)
+            ? $this->normalizeMimeType($imageSize['mime'] ?? null)
+            : null;
+
+        if ($imageSizeMimeType !== null && in_array($imageSizeMimeType, self::SUPPORTED_IMAGE_MIME_TYPES, true)) {
+            return $imageSizeMimeType;
+        }
+
+        if (str_starts_with($contents, "\xFF\xD8\xFF")) {
+            return 'image/jpeg';
+        }
+
+        if (str_starts_with($contents, "\x89PNG\r\n\x1a\n")) {
+            return 'image/png';
+        }
+
+        if (str_starts_with($contents, 'GIF87a') || str_starts_with($contents, 'GIF89a')) {
+            return 'image/gif';
+        }
+
+        if (strlen($contents) >= 12 && substr($contents, 0, 4) === 'RIFF' && substr($contents, 8, 4) === 'WEBP') {
+            return 'image/webp';
+        }
+
+        if (strlen($contents) >= 16 && substr($contents, 4, 4) === 'ftyp') {
+            $fileTypeBox = substr($contents, 8, 32);
+
+            if (str_contains($fileTypeBox, 'avif') || str_contains($fileTypeBox, 'avis')) {
+                return 'image/avif';
+            }
+        }
+
+        return null;
     }
 
     private function normalizeUrl(string $url): string
