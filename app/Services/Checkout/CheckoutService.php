@@ -31,7 +31,7 @@ class CheckoutService
     ) {}
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function placeOrder(Cart $cart, array $data, ?User $user = null): Order
     {
@@ -247,7 +247,7 @@ class CheckoutService
     }
 
     /**
-     * @param array<string, mixed> $shippingAddressData
+     * @param  array<string, mixed>  $shippingAddressData
      * @return array<string, mixed>
      */
     private function buildBillingAddressData(array $data, ?User $user, array $shippingAddressData): array
@@ -365,7 +365,7 @@ class CheckoutService
                 'product_id' => $product->id,
                 'product_variant_id' => $variant->id,
                 'product_name_snapshot' => (string) $product->name,
-                'variant_name_snapshot' => $this->resolveVariantSnapshotName($variant),
+                'variant_name_snapshot' => $this->resolveVariantSnapshotName($variant, $item->selectedOptionsLabel()),
                 'sku_snapshot' => $variant->sku,
 
                 'unit_price_amount' => $unitGrossAmount,
@@ -421,7 +421,7 @@ class CheckoutService
         return VatRate::VAT_23;
     }
 
-    private function resolveVariantSnapshotName($variant): ?string
+    private function resolveVariantSnapshotName($variant, ?string $selectedOptionsLabel = null): ?string
     {
         if ($variant->relationLoaded('attributeValues') && $variant->attributeValues->isNotEmpty()) {
             $parts = $variant->attributeValues
@@ -429,9 +429,17 @@ class CheckoutService
                 ->filter()
                 ->values();
 
+            if ($selectedOptionsLabel !== null) {
+                $parts->push($selectedOptionsLabel);
+            }
+
             if ($parts->isNotEmpty()) {
                 return $parts->implode(' / ');
             }
+        }
+
+        if ($selectedOptionsLabel !== null) {
+            return $selectedOptionsLabel;
         }
 
         if (filled($variant->sku)) {

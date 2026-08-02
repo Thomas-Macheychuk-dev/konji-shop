@@ -88,6 +88,12 @@ class CartSummaryData
             ->filter()
             ->values();
 
+        $selectedOptions = $item->selectedOptionsLabel();
+
+        if ($selectedOptions !== null) {
+            $parts->push($selectedOptions);
+        }
+
         if ($parts->isNotEmpty()) {
             return $parts->implode(', ');
         }
@@ -103,6 +109,7 @@ class CartSummaryData
     protected static function resolveVariantImageUrl(CartItem $item): ?string
     {
         $variant = $item->variant;
+
         return $variant?->main_image_url
             ?? $item->product?->default_image_url
             ?? ($item->meta['image_url'] ?? null);

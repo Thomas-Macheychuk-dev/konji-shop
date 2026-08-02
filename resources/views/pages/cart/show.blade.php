@@ -37,7 +37,7 @@
         @else
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px]">
                 <section class="space-y-4">
-                    @forza szt. ($cart->items as $item)
+                    @foreach ($cart->items as $item)
                         @php
                             $product = $item->product;
                             $variant = $item->variant;
@@ -61,6 +61,7 @@
                                 })
                                 ->filter()
                                 ->implode(', ');
+                            $selectedOptionsLabel = $item->selectedOptionsLabel();
                             $initialQuantity = min(
                                 max($item->quantity, \App\Support\Cart\CartLimits::MIN_QUANTITY_PER_LINE),
                                 \App\Support\Cart\CartLimits::MAX_QUANTITY_PER_LINE
@@ -123,6 +124,12 @@
                                             @if ($variantName)
                                                 <p class="mt-1 text-sm text-zinc-600">
                                                     {{ $variantName }}
+                                                </p>
+                                            @endif
+
+                                            @if ($selectedOptionsLabel)
+                                                <p class="mt-1 text-sm font-medium text-zinc-700">
+                                                    {{ $selectedOptionsLabel }}
                                                 </p>
                                             @endif
 
@@ -241,7 +248,7 @@
                                 </div>
                             </div>
                         </article>
-                    @endforza szt.
+                    @endforeach
                 </section>
 
                 <aside>

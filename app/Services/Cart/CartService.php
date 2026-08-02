@@ -8,11 +8,15 @@ use App\Enums\CartStatus;
 use App\Models\Cart;
 use App\Models\ProductVariant;
 use App\Models\User;
+use App\Services\Products\VermeirenColorSelectionService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class CartService
 {
+    public function __construct(
+        private readonly VermeirenColorSelectionService $colorSelectionService,
+    ) {}
+
     public function getOrCreateCart(?User $user, ?string $guestToken, string $currency = 'PLN'): Cart
     {
         if ($user) {
@@ -42,15 +46,25 @@ class CartService
         );
     }
 
-    public function addItem(Cart $cart, ProductVariant $variant, int $quantity = 1): void
-    {
+    /**
+     * @param  list<array{group_code: string, group_label: string, value_id: int, value_label: string}>  $selectedOptions
+     */
+    public function addItem(
+        Cart $cart,
+        ProductVariant $variant,
+        int $quantity = 1,
+        array $selectedOptions = [],
+    ): void {
         if ($quantity < 1) {
             throw new \InvalidArgumentException('Quantity must be at least 1.');
         }
 
-        DB::transaction(function () use ($cart, $variant, $quantity) {
+        $configurationHash = $this->colorSelectionService->hash($selectedOptions);
+
+        DB::transaction(function () use ($cart, $variant, $quantity, $selectedOptions, $configurationHash) {
             $existingItem = $cart->items()
                 ->where('product_variant_id', $variant->id)
+                ->where('configuration_hash', $configurationHash)
                 ->lockForUpdate()
                 ->first();
 
@@ -65,6 +79,7 @@ class CartService
             $cart->items()->create([
                 'product_id' => $product->id,
                 'product_variant_id' => $variant->id,
+                'configuration_hash' => $configurationHash,
                 'quantity' => $quantity,
                 'unit_price' => $variant->grossPriceAmount(),
                 'currency' => $variant->currency?->value ?? $cart->currency,
@@ -72,6 +87,7 @@ class CartService
                     'product_name' => $product->name,
                     'variant_sku' => $variant->sku,
                     'image_url' => $variant->main_image_url ?? $product->default_image_url,
+                    'selected_options' => $selectedOptions,
                 ],
             ]);
         });
@@ -125,6 +141,7 @@ class CartService
             foreach ($guestCart->items as $guestItem) {
                 $existingUserItem = $userCart->items()
                     ->where('product_variant_id', $guestItem->product_variant_id)
+                    ->where('configuration_hash', $guestItem->configuration_hash)
                     ->lockForUpdate()
                     ->first();
 

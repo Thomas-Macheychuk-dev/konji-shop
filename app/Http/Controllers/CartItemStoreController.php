@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProductStatus;
+use App\Enums\ProductVariantStatus;
+use App\Enums\StockStatus;
 use App\Http\Requests\AddCartItemRequest;
 use App\Models\ProductVariant;
 use App\Services\Cart\CartGuestTokenResolver;
 use App\Services\Cart\CartService;
+use App\Services\Products\VermeirenColorSelectionService;
 use Illuminate\Http\RedirectResponse;
-use App\Enums\ProductStatus;
-use App\Enums\ProductVariantStatus;
-use App\Enums\StockStatus;
 
 class CartItemStoreController extends Controller
 {
     public function __invoke(
         AddCartItemRequest $request,
         CartService $cartService,
-        CartGuestTokenResolver $guestTokenResolver
+        CartGuestTokenResolver $guestTokenResolver,
+        VermeirenColorSelectionService $colorSelectionService,
     ): RedirectResponse {
         $variant = ProductVariant::query()
             ->with([
@@ -26,6 +28,7 @@ class CartItemStoreController extends Controller
                 'product.mainImage',
                 'product.images',
                 'product.attributeValueImages',
+                'product.attributeValues.attribute',
             ])
             ->findOrFail($request->integer('product_variant_id'));
 
@@ -53,6 +56,11 @@ class CartItemStoreController extends Controller
                 ->withInput();
         }
 
+        $selectedColors = $colorSelectionService->resolve(
+            $variant->product,
+            $request->input('informational_colors', []),
+        );
+
         $guestToken = $request->user()
             ? null
             : $guestTokenResolver->resolve($request);
@@ -66,7 +74,8 @@ class CartItemStoreController extends Controller
         $cartService->addItem(
             $cart,
             $variant,
-            $request->integer('quantity')
+            $request->integer('quantity'),
+            $selectedColors,
         );
 
         $response = redirect()

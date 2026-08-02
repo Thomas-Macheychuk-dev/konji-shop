@@ -33,6 +33,7 @@ const informationalColorGroups = computed(
 
 const currentImage = ref(0);
 const selectedOptionValueIds = ref({});
+const selectedInformationalColorValueIds = ref({});
 
 const defaultVariant = computed(() => {
     return (
@@ -65,6 +66,12 @@ watch(quantity, (value) => {
     quantity.value = Math.floor(numeric);
 });
 
+const missingInformationalColorGroups = computed(() => {
+    return informationalColorGroups.value.filter((group) => {
+        return !selectedInformationalColorValueIds.value[group.code];
+    });
+});
+
 const missingOptionGroups = computed(() => {
     return optionGroups.value.filter((group) => {
         return !selectedOptionValueIds.value[group.code];
@@ -73,6 +80,7 @@ const missingOptionGroups = computed(() => {
 
 function initializeSelection() {
     const nextSelection = {};
+    const nextInformationalColorSelection = {};
 
     for (const group of optionGroups.value) {
         if ((group.values ?? []).length === 1) {
@@ -80,7 +88,14 @@ function initializeSelection() {
         }
     }
 
+    for (const group of informationalColorGroups.value) {
+        if ((group.values ?? []).length === 1) {
+            nextInformationalColorSelection[group.code] = group.values[0].id;
+        }
+    }
+
     selectedOptionValueIds.value = nextSelection;
+    selectedInformationalColorValueIds.value = nextInformationalColorSelection;
 }
 
 function variantMatchesSelection(variant, selection) {
@@ -231,6 +246,12 @@ function selectOption(groupCode, valueId) {
 }
 
 function handleAddToCartSubmit(event) {
+    if (missingInformationalColorGroups.value.length > 0) {
+        selectionError.value = `Wybierz: ${missingInformationalColorGroups.value.map((group) => group.label).join(', ')}`;
+        event.preventDefault();
+        return;
+    }
+
     if (missingOptionGroups.value.length > 0) {
         selectionError.value = `Wybierz: ${missingOptionGroups.value.map((group) => group.label).join(', ')}`;
         event.preventDefault();
@@ -323,6 +344,24 @@ function formatStockStatus(status) {
 
 function isSelected(groupCode, valueId) {
     return selectedOptionValueIds.value[groupCode] === valueId;
+}
+
+function selectInformationalColor(groupCode, valueId) {
+    selectedInformationalColorValueIds.value = {
+        ...selectedInformationalColorValueIds.value,
+        [groupCode]: valueId,
+    };
+    selectionError.value = '';
+}
+
+function isInformationalColorSelected(groupCode, valueId) {
+    return selectedInformationalColorValueIds.value[groupCode] === valueId;
+}
+
+function selectedInformationalColor(group) {
+    const selectedValueId = selectedInformationalColorValueIds.value[group.code];
+
+    return (group.values ?? []).find((value) => value.id === selectedValueId) ?? null;
 }
 
 function isImageSelected(index) {
@@ -425,6 +464,13 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                             name="product_variant_id"
                             :value="exactSelectedVariant?.id ?? ''"
                         >
+                        <input
+                            v-for="group in informationalColorGroups"
+                            :key="`informational-color-input-${group.code}`"
+                            type="hidden"
+                            :name="`informational_colors[${group.code}]`"
+                            :value="selectedInformationalColorValueIds[group.code] ?? ''"
+                        >
 
                         <div class="min-w-0">
                             <div class="text-3xl font-semibold text-zinc-900">
@@ -520,16 +566,32 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                                 {{ group.label }}
                             </h3>
 
-                            <ul class="mt-3 flex flex-wrap gap-4">
-                                <li
+                            <div
+                                class="mt-3 flex flex-wrap gap-4"
+                                role="radiogroup"
+                                :aria-label="group.label"
+                            >
+                                <button
                                     v-for="value in group.values"
                                     :key="value.id"
-                                    class="flex max-w-24 flex-col items-center gap-2 text-center"
+                                    type="button"
+                                    role="radio"
+                                    class="group relative flex max-w-28 flex-col items-center gap-2 rounded-xl p-2 text-center transition focus:outline-none focus:ring-4 focus:ring-blue-100"
+                                    :aria-checked="isInformationalColorSelected(group.code, value.id)"
+                                    :aria-label="`${group.label}: ${value.label}`"
+                                    :title="value.label"
+                                    :class="{
+                                        'bg-blue-50 ring-2 ring-[#155fa8]': isInformationalColorSelected(group.code, value.id),
+                                        'hover:bg-zinc-50': !isInformationalColorSelected(group.code, value.id),
+                                    }"
+                                    @click="selectInformationalColor(group.code, value.id)"
                                 >
                                     <span
-                                        class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-zinc-300 bg-zinc-100 shadow-sm ring-1 ring-black/5"
-                                        :title="value.label"
-                                        :aria-label="`${group.label}: ${value.label}`"
+                                        class="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border bg-zinc-100 shadow-sm ring-1 ring-black/5"
+                                        :class="{
+                                            'border-[#155fa8] ring-2 ring-[#155fa8]/30': isInformationalColorSelected(group.code, value.id),
+                                            'border-zinc-300': !isInformationalColorSelected(group.code, value.id),
+                                        }"
                                     >
                                         <img
                                             v-if="value.image_url"
@@ -552,13 +614,34 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                                         >
                                             {{ swatchFallback(value.label) }}
                                         </span>
+
+                                        <span
+                                            v-if="isInformationalColorSelected(group.code, value.id)"
+                                            class="absolute right-0 top-0 flex h-5 w-5 items-center justify-center rounded-full bg-[#155fa8] text-xs font-bold text-white shadow"
+                                            aria-hidden="true"
+                                        >
+                                            ✓
+                                        </span>
                                     </span>
 
-                                    <span class="text-xs leading-4 text-zinc-600">
+                                    <span
+                                        class="text-xs leading-4"
+                                        :class="{
+                                            'font-semibold text-[#0b3b70]': isInformationalColorSelected(group.code, value.id),
+                                            'text-zinc-600': !isInformationalColorSelected(group.code, value.id),
+                                        }"
+                                    >
                                         {{ value.label }}
                                     </span>
-                                </li>
-                            </ul>
+                                </button>
+                            </div>
+
+                            <p class="mt-3 text-xs text-zinc-500">
+                                Wybrano:
+                                <span class="font-medium text-zinc-700">
+                                    {{ selectedInformationalColor(group)?.label ?? 'nie wybrano' }}
+                                </span>
+                            </p>
                         </section>
                     </div>
                 </div>

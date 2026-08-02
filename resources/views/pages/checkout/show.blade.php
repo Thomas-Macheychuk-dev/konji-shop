@@ -565,6 +565,7 @@
                                             ? $variant->attributeValues->pluck('value')->filter()->implode(' / ')
                                             : data_get($item->meta, 'variant_name');
 
+                                    $selectedOptionsLabel = $item->selectedOptionsLabel();
                                     $vatRate = $variant?->vat_rate;
                                     $lineNet = $vatRate instanceof \App\Enums\VatRate && $lineTotal !== null
                                         ? $vatRate->netFromGross((int) $lineTotal)
@@ -593,6 +594,12 @@
                                         @if ($variantName)
                                             <p class="mt-1 text-xs text-zinc-500">
                                                 {{ $variantName }}
+                                            </p>
+                                        @endif
+
+                                        @if ($selectedOptionsLabel)
+                                            <p class="mt-1 text-xs font-medium text-zinc-600">
+                                                {{ $selectedOptionsLabel }}
                                             </p>
                                         @endif
 

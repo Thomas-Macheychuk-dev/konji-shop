@@ -18,6 +18,8 @@ class AddCartItemRequest extends FormRequest
     {
         return [
             'product_variant_id' => ['required', 'integer', 'exists:product_variants,id'],
+            'informational_colors' => ['sometimes', 'array'],
+            'informational_colors.*' => ['required', 'integer', 'exists:attribute_values,id'],
             'quantity' => [
                 'required',
                 'integer',

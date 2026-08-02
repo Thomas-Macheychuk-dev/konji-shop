@@ -13,6 +13,7 @@ class CartItem extends Model
         'cart_id',
         'product_id',
         'product_variant_id',
+        'configuration_hash',
         'quantity',
         'unit_price',
         'currency',
@@ -41,6 +42,35 @@ class CartItem extends Model
     public function variant(): BelongsTo
     {
         return $this->belongsTo(ProductVariant::class, 'product_variant_id');
+    }
+
+    /**
+     * @return list<array{group_code?: string, group_label?: string, value_id?: int, value_label?: string}>
+     */
+    public function selectedOptions(): array
+    {
+        $options = data_get($this->meta, 'selected_options', []);
+
+        return is_array($options) ? array_values($options) : [];
+    }
+
+    public function selectedOptionsLabel(): ?string
+    {
+        $label = collect($this->selectedOptions())
+            ->map(function (array $option): ?string {
+                $group = trim((string) ($option['group_label'] ?? ''));
+                $value = trim((string) ($option['value_label'] ?? ''));
+
+                if ($group === '' || $value === '') {
+                    return null;
+                }
+
+                return "{$group}: {$value}";
+            })
+            ->filter()
+            ->implode(', ');
+
+        return $label !== '' ? $label : null;
     }
 
     public function currentUnitPriceAmount(): ?int

@@ -27,7 +27,7 @@
                     <h2 class="text-lg font-semibold text-zinc-900">Pozycje zamówienia</h2>
 
                     <div class="mt-5 space-y-4">
-                        @forza szt. ($order->items as $item)
+                        @foreach ($order->items as $item)
                             @php
                                 $product = $item->product;
                                 $variant = $item->productVariant ?? $item->variant ?? null;
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                             </article>
-                        @endforza szt.
+                        @endforeach
                     </div>
                 </div>
 
