@@ -214,3 +214,45 @@ function zamstProductionPreflightMappedProduct(): array
         ]],
     ];
 }
+
+it('fails production preflight when existing Zamst row counts match but their external IDs are not approved', function (): void {
+    Storage::fake('public');
+    Product::query()->create([
+        'name' => 'Rogue Zamst product',
+        'slug' => 'rogue-zamst-product',
+        'status' => ProductStatus::DRAFT,
+        'external_source' => 'zamst',
+        'external_id' => '999999',
+    ]);
+
+    $relativePath = 'scrapers/zamst/production-preflight-rogue-id-test.json';
+    $path = storage_path('app/'.$relativePath);
+    @mkdir(dirname($path), 0755, true);
+    file_put_contents($path, json_encode(zamstProductionPreflightCatalogue(), JSON_THROW_ON_ERROR));
+
+    try {
+        $exit = Artisan::call('zamst:production-preflight', [
+            '--from' => $relativePath,
+            '--expected-products' => '1',
+            '--expected-variants' => '2',
+            '--expected-images' => '2',
+            '--expected-category-paths' => '2',
+            '--expected-downloads' => '1',
+            '--expected-videos' => '1',
+            '--expected-vat-review' => '1',
+            '--expected-existing-products' => '1',
+            '--expected-existing-variants' => '0',
+            '--expected-existing-images' => '0',
+            '--minimum-free-mib' => '0',
+            '--probe-images' => '0',
+        ]);
+        $output = Artisan::output();
+
+        expect($exit)->toBe(1)
+            ->and($output)->toContain('[PASS] database.existing_products')
+            ->and($output)->toContain('[FAIL] database.existing_product_ids')
+            ->and($output)->toContain('999999');
+    } finally {
+        @unlink($path);
+    }
+});

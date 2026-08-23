@@ -160,7 +160,7 @@ final class PreflightZamstProductionCommand extends Command
         }
 
         if ($errors === []) {
-            $this->info('PASS: Zamst production preflight is ready for the production execution patch. No catalogue writes were performed.');
+            $this->info('PASS: Zamst production preflight is ready for production execution. No catalogue writes were performed.');
 
             return self::SUCCESS;
         }

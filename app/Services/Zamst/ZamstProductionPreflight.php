@@ -136,7 +136,7 @@ final class ZamstProductionPreflight
             'checks' => $checks,
             'errors' => array_values(array_unique($errors)),
             'review_items' => array_values(array_unique($review)),
-            'ready_for_production_execution_patch' => $errors === [],
+            'ready_for_production_execution' => $errors === [],
         ];
     }
 
@@ -287,6 +287,7 @@ final class ZamstProductionPreflight
             'unique_product_ids' => count($productIds),
             'variants' => $variantCount,
             'unique_variant_ids' => count($variantIds),
+            'variant_ids' => array_keys($variantIds),
             'unique_variant_skus' => count($variantSkus),
             'images' => $imageCount,
             'category_paths' => count($categoryPaths),
@@ -330,6 +331,69 @@ final class ZamstProductionPreflight
             $wanted = (int) ($expected[$key] ?? 0);
             $this->hardCheck($checks, $errors, 'database.'.$key, $actual === $wanted, sprintf('Expected %d; actual %d.', $wanted, $actual));
         }
+
+        $approvedProductIds = array_fill_keys($metrics['product_ids'], true);
+        $unexpectedProductIds = Product::withTrashed()
+            ->where('external_source', self::SOURCE)
+            ->pluck('external_id')
+            ->filter()
+            ->map(static fn (mixed $value): string => (string) $value)
+            ->filter(static fn (string $value): bool => ! isset($approvedProductIds[$value]))
+            ->unique()
+            ->values()
+            ->all();
+
+        $this->hardCheck(
+            $checks,
+            $errors,
+            'database.existing_product_ids',
+            $unexpectedProductIds === [],
+            $unexpectedProductIds === []
+                ? 'All existing Zamst product IDs belong to the approved import map.'
+                : 'Unexpected Zamst product IDs: '.implode(', ', $unexpectedProductIds),
+        );
+
+        $approvedVariantIds = array_fill_keys($metrics['variant_ids'], true);
+        $unexpectedVariantIds = ProductVariant::withTrashed()
+            ->whereHas('product', fn ($query) => $query->withTrashed()->where('external_source', self::SOURCE))
+            ->pluck('external_variant_id')
+            ->filter()
+            ->map(static fn (mixed $value): string => (string) $value)
+            ->filter(static fn (string $value): bool => ! isset($approvedVariantIds[$value]))
+            ->unique()
+            ->values()
+            ->all();
+
+        $this->hardCheck(
+            $checks,
+            $errors,
+            'database.existing_variant_ids',
+            $unexpectedVariantIds === [],
+            $unexpectedVariantIds === []
+                ? 'All existing Zamst variant IDs belong to the approved import map.'
+                : 'Unexpected Zamst variant IDs: '.implode(', ', $unexpectedVariantIds),
+        );
+
+        $approvedImageUrls = array_fill_keys($metrics['image_urls'], true);
+        $unexpectedImageUrls = ProductImage::query()
+            ->whereHas('product', fn ($query) => $query->withTrashed()->where('external_source', self::SOURCE))
+            ->pluck('source_url')
+            ->filter()
+            ->map(static fn (mixed $value): string => (string) $value)
+            ->filter(static fn (string $value): bool => ! isset($approvedImageUrls[$value]))
+            ->unique()
+            ->values()
+            ->all();
+
+        $this->hardCheck(
+            $checks,
+            $errors,
+            'database.existing_image_urls',
+            $unexpectedImageUrls === [],
+            $unexpectedImageUrls === []
+                ? 'All existing Zamst image source URLs belong to the approved import map.'
+                : 'Unexpected Zamst image source URLs: '.implode(', ', $unexpectedImageUrls),
+        );
 
         $slugCollisions = Product::withTrashed()
             ->whereIn('slug', $metrics['slugs'])
