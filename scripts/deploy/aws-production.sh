@@ -24,6 +24,8 @@ ${COMPOSE} build --pull app web
 echo "Starting Redis and app..."
 ${COMPOSE} up -d redis app
 
+echo "App entrypoint cache refresh is disabled in production; deploy owns bootstrap/cache."
+
 echo "Running migrations..."
 ${COMPOSE} exec -T app php artisan migrate --force
 

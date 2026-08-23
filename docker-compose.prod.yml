@@ -14,6 +14,9 @@ services:
       APP_ENV: production
       APP_DEBUG: "false"
       HOME: /tmp
+      # The deploy script owns bootstrap/cache for the app container.
+      # Avoid racing its cache refresh from docker/entrypoint.sh.
+      LARAVEL_CACHE_ON_BOOT: "false"
     depends_on:
       redis:
         condition: service_started
