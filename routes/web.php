@@ -56,6 +56,7 @@ use App\Http\Controllers\GuestOrderShowController;
 use App\Http\Controllers\GuestOrderTrackLookupController;
 use App\Http\Controllers\GuestOrderTrackShowController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HumanChallengeController;
 use App\Http\Controllers\Payments\PaymentReturnController;
 use App\Http\Controllers\Payments\PaynowNotificationController;
 use App\Http\Controllers\ProductShowController;
@@ -69,6 +70,11 @@ use App\Http\Controllers\GuestOrderWithdrawalCreateController;
 use App\Http\Controllers\GuestOrderWithdrawalStoreController;
 use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalIndexController;
 use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalShowController;
+
+Route::get('/human-check', [HumanChallengeController::class, 'show'])
+    ->name('traffic.challenge');
+Route::post('/human-check', [HumanChallengeController::class, 'verify'])
+    ->name('traffic.challenge.verify');
 
 Route::get('/', HomeController::class)->name('home');
 
