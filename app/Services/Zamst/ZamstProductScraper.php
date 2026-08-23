@@ -804,7 +804,7 @@ final class ZamstProductScraper
                 : $node->getAttribute('href');
             $url = $this->normalizeExternalAssetUrl($candidate, $baseUrl);
 
-            if ($url === null || preg_match('#(?:youtube\.com|youtu\.be|vimeo\.com)#i', $url) !== 1) {
+            if ($url === null || ! $this->isProductVideoUrl($url)) {
                 continue;
             }
 
@@ -816,6 +816,33 @@ final class ZamstProductScraper
         }
 
         return array_values($videos);
+    }
+
+    private function isProductVideoUrl(string $url): bool
+    {
+        $host = mb_strtolower((string) parse_url($url, PHP_URL_HOST));
+        $path = (string) parse_url($url, PHP_URL_PATH);
+        $query = (string) parse_url($url, PHP_URL_QUERY);
+
+        if ($host === 'youtu.be' || $host === 'www.youtu.be') {
+            return trim($path, '/') !== '';
+        }
+
+        if (in_array($host, ['youtube.com', 'www.youtube.com', 'm.youtube.com'], true)) {
+            if (preg_match('#^/(?:@|channel/|user/|c/)#i', $path) === 1) {
+                return false;
+            }
+
+            return $path === '/watch'
+                ? str_contains($query, 'v=')
+                : preg_match('#^/(?:embed|shorts|live)/[^/]+#i', $path) === 1;
+        }
+
+        if (in_array($host, ['vimeo.com', 'www.vimeo.com', 'player.vimeo.com'], true)) {
+            return preg_match('#/(?:video/)?[0-9]+#', $path) === 1;
+        }
+
+        return false;
     }
 
     /**

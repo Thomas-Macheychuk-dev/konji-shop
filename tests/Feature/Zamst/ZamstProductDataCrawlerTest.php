@@ -211,6 +211,7 @@ function zamstProductFixture(string $url): string
                                 <p>Stabilizator przeznaczony dla aktywnych sportowców.</p>
                                 <img src="https://zamst.com.pl/wp-content/uploads/2020/08/jk-2-feature.webp" alt="Technologia JK-2">
                                 <a href="https://zamst.com.pl/wp-content/uploads/2020/08/JK-2_PL.pdf">Instrukcja JK-2</a>
+                                <a href="https://www.youtube.com/@zamstpolska">Kanał Zamst Polska</a>
                                 <a href="https://www.youtube.com/watch?v=jk2-demo">Film JK-2</a>
                             </li>
                             <li><p>Tabela rozmiarów</p></li>
