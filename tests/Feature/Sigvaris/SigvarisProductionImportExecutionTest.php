@@ -182,6 +182,63 @@ it('keeps repeated Sigvaris production execution idempotent with exact pre and p
     }
 });
 
+it('preserves official local prices across a later full production import rerun', function (): void {
+    Storage::fake('public');
+    [$relativePath, $path, $sha] = sigvarisProductionExecutionFixtureFile();
+    $contents = sigvarisProductionExecutionImageContents();
+
+    Http::fake([
+        'https://www.sklep-sigvaris.com/img/p/7908.jpg' => Http::response($contents, 200, ['Content-Type' => 'image/jpeg']),
+        'https://www.sklep-sigvaris.com/module/prestadogpsrmanager/download?id_attachment=10&id_product=7908' => Http::response(sigvarisProductionExecutionGpsrPdfContents(), 200, ['Content-Type' => 'application/pdf']),
+    ]);
+
+    try {
+        $common = sigvarisProductionExecutionExpectedOptions($relativePath, $sha) + [
+            '--expected-post-products' => '1',
+            '--expected-post-variants' => '2',
+            '--expected-post-images' => '1',
+            '--minimum-free-mib' => '0',
+            '--probe-images' => '0',
+            '--write' => true,
+            '--confirm-production-write' => 'IMPORT-SIGVARIS-DRAFTS',
+            '--image-attempts' => '1',
+            '--image-retry-delay-ms' => '0',
+            '--image-request-delay-ms' => '0',
+        ];
+
+        $first = Artisan::call('sigvaris:production-import', $common + [
+            '--expected-existing-products' => '0',
+            '--expected-existing-variants' => '0',
+            '--expected-existing-images' => '0',
+        ]);
+
+        expect($first)->toBe(0);
+
+        $product = Product::query()->where('external_source', 'sigvaris')->where('external_id', '7908')->firstOrFail();
+        foreach ($product->variants as $variant) {
+            $variant->forceFill([
+                'price_net_amount' => 33240,
+                'price_gross_amount' => 35899,
+            ])->save();
+        }
+
+        $second = Artisan::call('sigvaris:production-import', $common + [
+            '--expected-existing-products' => '1',
+            '--expected-existing-variants' => '2',
+            '--expected-existing-images' => '1',
+        ]);
+        $output = Artisan::output();
+        $product->refresh();
+
+        expect($second)->toBe(0)
+            ->and($output)->toContain('Audit errors: 0')
+            ->and($product->variants()->get()->every(fn ($variant): bool => $variant->price_net_amount === 33240))->toBeTrue()
+            ->and($product->variants()->get()->every(fn ($variant): bool => $variant->price_gross_amount === 35899))->toBeTrue();
+    } finally {
+        @unlink($path);
+    }
+});
+
 /** @return array<string, string> */
 function sigvarisProductionExecutionExpectedOptions(string $relativePath, string $sha): array
 {

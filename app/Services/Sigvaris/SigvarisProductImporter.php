@@ -406,13 +406,25 @@ final class SigvarisProductImporter
                     $variant?->id,
                 ),
                 'status' => $status,
+                'stock_status' => $this->stockStatus($candidate['stock_status'] ?? null),
+                'is_default' => $requestedDefault,
+            ];
+
+            $mappedPricing = [
                 'price_net_amount' => $netMinor ?? ($grossMinor !== null ? $vatRate->netFromGross($grossMinor) : null),
                 'price_gross_amount' => $grossMinor,
                 'currency' => $this->currency($candidate['currency'] ?? null),
                 'vat_rate' => $vatRate,
-                'stock_status' => $this->stockStatus($candidate['stock_status'] ?? null),
-                'is_default' => $requestedDefault,
             ];
+
+            // The official Sigvaris price-list workflow is the source of truth for
+            // existing selling prices. A normal source re-import must not restore
+            // scraped shop prices or VAT over an already priced local variant.
+            // New variants (or legacy rows with no price at all) still receive the
+            // mapped source price until an official price plan is applied.
+            if ($variant === null || ($variant->price_net_amount === null && $variant->price_gross_amount === null)) {
+                $attributes += $mappedPricing;
+            }
 
             if ($variant !== null) {
                 if ($variant->trashed()) {

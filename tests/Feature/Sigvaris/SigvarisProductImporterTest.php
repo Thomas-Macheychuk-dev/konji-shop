@@ -125,6 +125,34 @@ it('does not invent Producent when the Sigvaris import map has no manufacturer',
         ->and($product->variants()->first()?->vat_rate)->toBe(VatRate::VAT_23);
 });
 
+it('preserves existing local Sigvaris selling prices when a later source map still contains scraped shop prices', function (): void {
+    $importer = app(SigvarisProductImporter::class);
+    $product = $importer->import(sigvarisImporterMappedProduct(), false)['product'];
+
+    foreach ($product->variants as $variant) {
+        $variant->forceFill([
+            'price_net_amount' => 33240,
+            'price_gross_amount' => 35899,
+            'vat_rate' => VatRate::VAT_8,
+        ])->save();
+    }
+
+    $laterMap = sigvarisImporterMappedProduct();
+    foreach ($laterMap['variants'] as &$candidate) {
+        $candidate['price_net_minor'] = 81300;
+        $candidate['price_gross_minor'] = 99999;
+        $candidate['vat_rate'] = 23.0;
+    }
+    unset($candidate);
+
+    $reimported = $importer->import($laterMap, false)['product']->fresh('variants');
+
+    expect($reimported->variants)->not->toBeEmpty()
+        ->and($reimported->variants->every(fn ($variant): bool => $variant->price_net_amount === 33240))->toBeTrue()
+        ->and($reimported->variants->every(fn ($variant): bool => $variant->price_gross_amount === 35899))->toBeTrue()
+        ->and($reimported->variants->every(fn ($variant): bool => $variant->vat_rate === VatRate::VAT_8))->toBeTrue();
+});
+
 it('localizes mapped Sigvaris GPSR documents and reuses the local file on an idempotent rerun', function (): void {
     Storage::fake('public');
     $mapped = sigvarisImporterMappedProduct();

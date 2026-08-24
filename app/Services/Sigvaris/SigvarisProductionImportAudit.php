@@ -204,26 +204,27 @@ final class SigvarisProductionImportAudit
                     $errors[] = $name.': variant '.$variantId.' status differs from approved mapping.';
                 }
 
-                $expectedGross = is_numeric($expectedVariant['price_gross_minor'] ?? null) ? (int) $expectedVariant['price_gross_minor'] : null;
-                $expectedNet = is_numeric($expectedVariant['price_net_minor'] ?? null) ? (int) $expectedVariant['price_net_minor'] : null;
-                $expectedVat = is_numeric($expectedVariant['vat_rate'] ?? null) ? (int) round((float) $expectedVariant['vat_rate']) : null;
-                $expectedCurrency = $this->stringOrNull($expectedVariant['currency'] ?? null);
                 $expectedDefault = ($expectedVariant['is_default'] ?? false) === true;
 
-                if ($expectedGross !== null && $actualVariant->price_gross_amount !== $expectedGross) {
-                    $errors[] = $name.': variant '.$variantId.' gross price differs from approved mapping.';
+                // Selling prices are governed by the official Sigvaris price-list
+                // workflow, not by the scraped source-shop price embedded in the
+                // frozen import map. Production import therefore validates that a
+                // usable local price exists without requiring equality to the old
+                // mapped shop price.
+                if ($actualVariant->price_gross_amount === null || $actualVariant->price_gross_amount <= 0) {
+                    $errors[] = $name.': variant '.$variantId.' has no valid local gross price.';
                 }
 
-                if ($expectedNet !== null && $actualVariant->price_net_amount !== $expectedNet) {
-                    $errors[] = $name.': variant '.$variantId.' net price differs from approved mapping.';
+                if ($actualVariant->price_net_amount === null || $actualVariant->price_net_amount <= 0) {
+                    $errors[] = $name.': variant '.$variantId.' has no valid local net price.';
                 }
 
-                if ($expectedVat !== null && $actualVariant->vat_rate?->value !== $expectedVat) {
-                    $errors[] = $name.': variant '.$variantId.' VAT differs from approved mapping.';
+                if (! in_array($actualVariant->vat_rate?->value, [8, 23], true)) {
+                    $errors[] = $name.': variant '.$variantId.' has unsupported local VAT.';
                 }
 
-                if ($expectedCurrency !== null && $actualVariant->currency?->value !== $expectedCurrency) {
-                    $errors[] = $name.': variant '.$variantId.' currency differs from approved mapping.';
+                if ($actualVariant->currency?->value !== 'PLN') {
+                    $errors[] = $name.': variant '.$variantId.' local currency must be PLN.';
                 }
 
                 if ((bool) $actualVariant->is_default !== $expectedDefault) {
