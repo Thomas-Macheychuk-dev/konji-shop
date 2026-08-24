@@ -27,6 +27,8 @@ final class SigvarisProductionImportAudit
         $expectedSelectedImages = 0;
         $actualSelectedVariants = 0;
         $actualSelectedImages = 0;
+        $expectedSelectedDocuments = 0;
+        $actualSelectedDocuments = 0;
         $categoryAssignments = 0;
 
         foreach ($selected as $index => $mapped) {
@@ -286,12 +288,35 @@ final class SigvarisProductionImportAudit
                 $errors[] = $name.': description still contains a remote/source image element.';
             }
 
-            foreach (array_values(array_filter($mapped['downloads'] ?? [], 'is_array')) as $resource) {
-                $url = $this->stringOrNull($resource['source_url'] ?? null);
+            if (str_contains($decodedDescription, 'sklep-sigvaris.com/module/prestadogpsrmanager/download')) {
+                $errors[] = $name.': description still contains an external Sigvaris GPSR document URL.';
+            }
 
-                if ($url !== null && ! str_contains($decodedDescription, $url)) {
-                    $errors[] = $name.': description is missing approved downloads resource '.$url.'.';
+            foreach (array_values(array_filter($mapped['downloads'] ?? [], 'is_array')) as $resource) {
+                $expectedSelectedDocuments++;
+                $label = $this->stringOrNull($resource['label'] ?? null) ?: 'Instrukcja / dokument PDF';
+                $href = $this->localDocumentHref($description, $externalId, $label);
+
+                if ($href === null) {
+                    $errors[] = $name.': description is missing local GPSR document '.$label.'.';
+                    continue;
                 }
+
+                $path = parse_url($href, PHP_URL_PATH);
+
+                if (! is_string($path) || ! str_starts_with($path, '/storage/')) {
+                    $errors[] = $name.': local GPSR document has an invalid href '.$href.'.';
+                    continue;
+                }
+
+                $storagePath = substr($path, strlen('/storage/'));
+
+                if (! Storage::disk('public')->exists($storagePath)) {
+                    $errors[] = $name.': local GPSR document file is missing from storage: '.$storagePath.'.';
+                    continue;
+                }
+
+                $actualSelectedDocuments++;
             }
         }
 
@@ -320,6 +345,7 @@ final class SigvarisProductionImportAudit
             'mode' => 'production_import_audit',
             'database_writes' => false,
             'image_writes' => false,
+            'document_writes' => false,
             'selected_external_product_ids' => array_values(array_unique($selectedProductIds)),
             'metrics' => [
                 'selected_products_expected' => count(array_unique($selectedProductIds)),
@@ -331,6 +357,8 @@ final class SigvarisProductionImportAudit
                 'selected_variants_actual' => $actualSelectedVariants,
                 'selected_images_expected' => $expectedSelectedImages,
                 'selected_images_actual' => $actualSelectedImages,
+                'selected_documents_expected' => $expectedSelectedDocuments,
+                'selected_documents_actual' => $actualSelectedDocuments,
                 'category_assignments' => $categoryAssignments,
                 'global_products' => $globalProducts,
                 'global_variants' => $globalVariants,
@@ -340,6 +368,38 @@ final class SigvarisProductionImportAudit
             'errors' => array_values(array_unique($errors)),
             'passed' => $errors === [],
         ];
+    }
+
+    private function localDocumentHref(string $description, string $externalId, string $label): ?string
+    {
+        preg_match_all(
+            '#<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>#isu',
+            $description,
+            $matches,
+            PREG_SET_ORDER,
+        );
+
+        $expectedLabel = $this->normalizeLabel($label);
+        $prefix = '/storage/products/sigvaris/'.$externalId.'/documents/';
+
+        foreach ($matches as $match) {
+            $href = html_entity_decode((string) ($match[1] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $anchorLabel = $this->normalizeLabel((string) ($match[2] ?? ''));
+
+            if ($anchorLabel === $expectedLabel && str_starts_with($href, $prefix)) {
+                return $href;
+            }
+        }
+
+        return null;
+    }
+
+    private function normalizeLabel(string $value): string
+    {
+        $value = html_entity_decode(strip_tags($value), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $value = preg_replace('/\s+/u', ' ', $value) ?? $value;
+
+        return mb_strtolower(trim($value), 'UTF-8');
     }
 
     private function stringOrNull(mixed $value): ?string

@@ -80,6 +80,7 @@ it('writes one complete Sigvaris draft after inline preflight and passes the exa
 
     Http::fake([
         'https://www.sklep-sigvaris.com/img/p/7908.jpg' => Http::response($contents, 200, ['Content-Type' => 'image/jpeg']),
+        'https://www.sklep-sigvaris.com/module/prestadogpsrmanager/download?id_attachment=10&id_product=7908' => Http::response(sigvarisProductionExecutionGpsrPdfContents(), 200, ['Content-Type' => 'application/pdf']),
     ]);
 
     try {
@@ -108,6 +109,8 @@ it('writes one complete Sigvaris draft after inline preflight and passes the exa
             ->and($output)->toContain('Selected products found: 1/1')
             ->and($output)->toContain('Selected variants: 2/2')
             ->and($output)->toContain('Selected images: 1/1')
+            ->and($output)->toContain('Selected local documents: 1/1')
+            ->and($output)->toContain('Documents created: 1')
             ->and($output)->toContain('Global Sigvaris products: 1')
             ->and($output)->toContain('Audit errors: 0')
             ->and($output)->toContain('PASS: selected Sigvaris products were written to production as drafts')
@@ -115,7 +118,9 @@ it('writes one complete Sigvaris draft after inline preflight and passes the exa
             ->and($product?->status)->toBe(ProductStatus::DRAFT)
             ->and($product?->published_at)->toBeNull()
             ->and($product?->variants()->count())->toBe(2)
-            ->and($product?->images()->count())->toBe(1);
+            ->and($product?->images()->count())->toBe(1)
+            ->and($product?->description)->toContain('/storage/products/sigvaris/7908/documents/')
+            ->not->toContain('www.sklep-sigvaris.com/module/prestadogpsrmanager/download');
     } finally {
         @unlink($path);
     }
@@ -128,6 +133,7 @@ it('keeps repeated Sigvaris production execution idempotent with exact pre and p
 
     Http::fake([
         'https://www.sklep-sigvaris.com/img/p/7908.jpg' => Http::response($contents, 200, ['Content-Type' => 'image/jpeg']),
+        'https://www.sklep-sigvaris.com/module/prestadogpsrmanager/download?id_attachment=10&id_product=7908' => Http::response(sigvarisProductionExecutionGpsrPdfContents(), 200, ['Content-Type' => 'application/pdf']),
     ]);
 
     try {
@@ -164,10 +170,13 @@ it('keeps repeated Sigvaris production execution idempotent with exact pre and p
             ->and($output)->toContain('Products updated: 1')
             ->and($output)->toContain('Images created: 0')
             ->and($output)->toContain('Images reused without download: 1')
+            ->and($output)->toContain('Documents created: 0')
+            ->and($output)->toContain('Documents reused without download: 1')
+            ->and($output)->toContain('Selected local documents: 1/1')
             ->and($output)->toContain('Audit errors: 0')
             ->and(Product::query()->where('external_source', 'sigvaris')->count())->toBe(1);
 
-        Http::assertSentCount(1);
+        Http::assertSentCount(2);
     } finally {
         @unlink($path);
     }
@@ -349,6 +358,11 @@ function sigvarisProductionExecutionMappedProduct(): array
         'errors' => [],
         'review_items' => [],
     ];
+}
+
+function sigvarisProductionExecutionGpsrPdfContents(): string
+{
+    return "%PDF-1.4\n1 0 obj\n<< /Type /Catalog >>\nendobj\n%%EOF\n";
 }
 
 function sigvarisProductionExecutionImageContents(): string

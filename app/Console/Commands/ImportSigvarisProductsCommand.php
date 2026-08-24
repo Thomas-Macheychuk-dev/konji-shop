@@ -160,6 +160,7 @@ final class ImportSigvarisProductsCommand extends Command
                     imageAttempts: $imageAttempts,
                     imageRetryDelayMs: $imageRetryDelay,
                     imageRequestDelayMs: $imageRequestDelay,
+                    importDocuments: true,
                 );
                 $product = $result['product'];
                 $importedProductIds[] = $product->id;
@@ -213,6 +214,8 @@ final class ImportSigvarisProductsCommand extends Command
         $this->line('Images reused without download: '.$stats['images_reused']);
         $this->line('Images deleted as stale: '.$stats['images_deleted']);
         $this->line('Image failures: '.$stats['images_failed']);
+        $this->line('Documents created: '.$stats['documents_created']);
+        $this->line('Documents reused without download: '.$stats['documents_reused']);
 
         $this->printDatabaseAudit($importedProductIds);
         $this->printReviewItems($reviewItems);
@@ -341,6 +344,8 @@ final class ImportSigvarisProductsCommand extends Command
             'images_reused' => 0,
             'images_deleted' => 0,
             'images_failed' => 0,
+            'documents_created' => 0,
+            'documents_reused' => 0,
         ];
     }
 

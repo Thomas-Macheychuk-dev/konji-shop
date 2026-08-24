@@ -26,8 +26,7 @@ it('imports a mapped Sigvaris product as a draft using concrete combination IDs 
         ->and($product->published_at)->toBeNull()
         ->and($product->description)
         ->toContain('Opis produktu Sigvaris')
-        ->toContain('Materiały produktu')
-        ->toContain('prestadogpsrmanager/download')
+        ->not->toContain('prestadogpsrmanager/download')
         ->not->toContain('<script')
         ->not->toContain('<img');
 
@@ -124,6 +123,55 @@ it('does not invent Producent when the Sigvaris import map has no manufacturer',
     expect($producer)->toBeNull()
         ->and($product->variants()->count())->toBe(1)
         ->and($product->variants()->first()?->vat_rate)->toBe(VatRate::VAT_23);
+});
+
+it('localizes mapped Sigvaris GPSR documents and reuses the local file on an idempotent rerun', function (): void {
+    Storage::fake('public');
+    $mapped = sigvarisImporterMappedProduct();
+    $pdf = sigvarisImporterGpsrPdfContents();
+    $gpsrUrl = $mapped['downloads'][0]['source_url'];
+
+    Http::fake([
+        $gpsrUrl => Http::response($pdf, 200, ['Content-Type' => 'application/pdf']),
+    ]);
+
+    $importer = app(SigvarisProductImporter::class);
+    $first = $importer->import(
+        mapped: $mapped,
+        importImages: false,
+        imageTimeoutSeconds: 5,
+        imageAttempts: 1,
+        imageRetryDelayMs: 0,
+        imageRequestDelayMs: 0,
+        importDocuments: true,
+    );
+    $firstDescription = (string) $first['product']->description;
+    $files = Storage::disk('public')->allFiles('products/sigvaris/7908/documents');
+
+    expect($first['stats']['documents_created'])->toBe(1)
+        ->and($first['stats']['documents_reused'])->toBe(0)
+        ->and($files)->toHaveCount(1)
+        ->and($firstDescription)->toContain('data-sigvaris-gpsr="1"')
+        ->toContain('/storage/products/sigvaris/7908/documents/')
+        ->toContain('ŚRODKI OSTROŻNOŚCI')
+        ->not->toContain('www.sklep-sigvaris.com/module/prestadogpsrmanager/download');
+
+    $second = $importer->import(
+        mapped: $mapped,
+        importImages: false,
+        imageTimeoutSeconds: 5,
+        imageAttempts: 1,
+        imageRetryDelayMs: 0,
+        imageRequestDelayMs: 0,
+        importDocuments: true,
+    );
+
+    expect($second['stats']['documents_created'])->toBe(0)
+        ->and($second['stats']['documents_reused'])->toBe(1)
+        ->and($second['product']->description)->toContain('/storage/products/sigvaris/7908/documents/')
+        ->not->toContain('www.sklep-sigvaris.com/module/prestadogpsrmanager/download');
+
+    Http::assertSentCount(1);
 });
 
 it('downloads mapped Sigvaris images once and reuses the local file on an idempotent rerun', function (): void {
@@ -241,6 +289,11 @@ it('removes stale PrestaShop rendition rows without deleting a shared retained i
 });
 
 it('runs Sigvaris import-products read-only by default and pins writes to the approved map SHA', function (): void {
+    Storage::fake('public');
+    Http::fake([
+        'https://www.sklep-sigvaris.com/module/prestadogpsrmanager/download?id_attachment=10&id_product=7908' => Http::response(sigvarisImporterGpsrPdfContents(), 200, ['Content-Type' => 'application/pdf']),
+    ]);
+
     $relativePath = 'scrapers/sigvaris/import-products-test.json';
     $path = storage_path('app/'.$relativePath);
     @mkdir(dirname($path), 0755, true);
@@ -297,6 +350,7 @@ it('runs Sigvaris import-products read-only by default and pins writes to the ap
 
         expect($writeExit)->toBe(0)
             ->and($writeOutput)->toContain('Products created: 1')
+            ->and($writeOutput)->toContain('Documents created: 1')
             ->and($writeOutput)->toContain('PASS: selected Sigvaris products were imported locally as drafts')
             ->and(Product::query()->where('external_source', 'sigvaris')->where('external_id', '7908')->exists())->toBeTrue();
     } finally {
@@ -506,6 +560,11 @@ function sigvarisImporterMappedProduct(): array
         'errors' => [],
         'review_items' => [],
     ];
+}
+
+function sigvarisImporterGpsrPdfContents(): string
+{
+    return "%PDF-1.4\n1 0 obj\n<< /Type /Catalog >>\nendobj\n%%EOF\n";
 }
 
 function sigvarisImporterTestImageContents(): string

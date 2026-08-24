@@ -243,6 +243,7 @@ final class ExecuteSigvarisProductionImportCommand extends Command
                     imageAttempts: $this->positiveInt('image-attempts', 5),
                     imageRetryDelayMs: $this->nonNegativeInt('image-retry-delay-ms', 3000),
                     imageRequestDelayMs: $this->nonNegativeInt('image-request-delay-ms', 500),
+                    importDocuments: true,
                 );
 
                 if ($result['action'] === 'created') {
@@ -293,6 +294,8 @@ final class ExecuteSigvarisProductionImportCommand extends Command
         $this->line('Images reused without download: '.$stats['images_reused']);
         $this->line('Images deleted as stale: '.$stats['images_deleted']);
         $this->line('Image failures: '.$stats['images_failed']);
+        $this->line('Documents created: '.$stats['documents_created']);
+        $this->line('Documents reused without download: '.$stats['documents_reused']);
 
         $audit = $this->audit->inspect($selected, [
             'products' => $postProducts ?? 0,
@@ -307,6 +310,7 @@ final class ExecuteSigvarisProductionImportCommand extends Command
         $this->line('Selected products found: '.($metrics['selected_products_found'] ?? 0).'/'.($metrics['selected_products_expected'] ?? 0));
         $this->line('Selected variants: '.($metrics['selected_variants_actual'] ?? 0).'/'.($metrics['selected_variants_expected'] ?? 0));
         $this->line('Selected images: '.($metrics['selected_images_actual'] ?? 0).'/'.($metrics['selected_images_expected'] ?? 0));
+        $this->line('Selected local documents: '.($metrics['selected_documents_actual'] ?? 0).'/'.($metrics['selected_documents_expected'] ?? 0));
         $this->line('Global Sigvaris products: '.($metrics['global_products'] ?? 0));
         $this->line('Global Sigvaris variants: '.($metrics['global_variants'] ?? 0));
         $this->line('Global Sigvaris images: '.($metrics['global_images'] ?? 0));
@@ -428,6 +432,8 @@ final class ExecuteSigvarisProductionImportCommand extends Command
             'images_reused' => 0,
             'images_deleted' => 0,
             'images_failed' => 0,
+            'documents_created' => 0,
+            'documents_reused' => 0,
         ];
     }
 

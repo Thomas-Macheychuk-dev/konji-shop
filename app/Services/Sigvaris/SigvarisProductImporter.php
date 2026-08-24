@@ -47,6 +47,7 @@ final class SigvarisProductImporter
 
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
+        private readonly SigvarisGpsrDocumentLocalizer $gpsrDocumentLocalizer,
     ) {}
 
     /**
@@ -62,6 +63,7 @@ final class SigvarisProductImporter
         int $imageAttempts = 5,
         int $imageRetryDelayMs = 3000,
         int $imageRequestDelayMs = 250,
+        bool $importDocuments = false,
     ): array {
         $this->warnings = [];
         $this->stats = $this->emptyStats();
@@ -74,10 +76,22 @@ final class SigvarisProductImporter
             ->where('external_id', $externalId)
             ->first();
         $action = $existing === null ? 'created' : 'updated';
+        $documents = $this->gpsrDocumentLocalizer->localize(
+            downloads: is_array($mapped['downloads'] ?? null) ? array_values($mapped['downloads']) : [],
+            externalId: $externalId,
+            existingDescription: $existing?->description,
+            downloadMissing: $importDocuments,
+            timeoutSeconds: max(1, $imageTimeoutSeconds),
+            attempts: max(1, $imageAttempts),
+            retryDelayMs: max(0, $imageRetryDelayMs),
+            requestDelayMs: max(0, $imageRequestDelayMs),
+        );
+        $this->stats['documents_created'] += $documents['created'];
+        $this->stats['documents_reused'] += $documents['reused'];
 
         /** @var Product $product */
-        $product = DB::transaction(function () use ($mapped, $externalId): Product {
-            $product = $this->resolveProduct($mapped, $externalId);
+        $product = DB::transaction(function () use ($mapped, $externalId, $documents): Product {
+            $product = $this->resolveProduct($mapped, $externalId, $documents['resources']);
             $this->syncCategories($product, $mapped);
             $this->syncProductAttributes($product, $mapped);
             $this->syncVariants($product, $mapped);
@@ -151,7 +165,8 @@ final class SigvarisProductImporter
     }
 
     /** @param array<string, mixed> $mapped */
-    private function resolveProduct(array $mapped, string $externalId): Product
+    /** @param list<array{source_url:string,label:string,href:string,path:string}> $localizedDownloads */
+    private function resolveProduct(array $mapped, string $externalId, array $localizedDownloads): Product
     {
         $productData = $this->productData($mapped);
         $product = Product::withTrashed()
@@ -168,7 +183,7 @@ final class SigvarisProductImporter
             'name' => $name,
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($productData),
-            'description' => $this->productDescriptionHtml($mapped, $product?->description),
+            'description' => $this->productDescriptionHtml($mapped, $product?->description, $localizedDownloads),
             'seo_title' => $this->stringOrNull($productData['seo_title'] ?? null) ?: $name,
             'seo_description' => $this->seoDescription($productData),
             'status' => ProductStatus::DRAFT,
@@ -787,8 +802,11 @@ final class SigvarisProductImporter
         return $seo !== null ? '<p>'.e(Str::limit(strip_tags($seo), 320, '')).'</p>' : null;
     }
 
-    /** @param array<string, mixed> $mapped */
-    private function productDescriptionHtml(array $mapped, ?string $existingDescription = null): ?string
+    /**
+     * @param array<string, mixed> $mapped
+     * @param list<array{source_url:string,label:string,href:string,path:string}> $localizedDownloads
+     */
+    private function productDescriptionHtml(array $mapped, ?string $existingDescription = null, array $localizedDownloads = []): ?string
     {
         $productData = $this->productData($mapped);
         $sections = [];
@@ -800,19 +818,15 @@ final class SigvarisProductImporter
 
         $resources = [];
 
-        foreach (($mapped['downloads'] ?? []) as $download) {
-            if (! is_array($download)) {
-                continue;
-            }
-
-            $url = $this->safeHttpUrl($download['source_url'] ?? null);
-
-            if ($url === null) {
-                continue;
-            }
-
+        foreach ($localizedDownloads as $download) {
+            $href = $this->stringOrNull($download['href'] ?? null);
             $label = $this->stringOrNull($download['label'] ?? null) ?: 'Instrukcja / dokument PDF';
-            $resources[$url] = '<a href="'.e($url).'" target="_blank" rel="noopener noreferrer">'.e($label).'</a>';
+
+            if ($href === null || ! str_starts_with($href, '/storage/products/sigvaris/')) {
+                continue;
+            }
+
+            $resources[$href] = '<a data-sigvaris-gpsr="1" href="'.e($href).'" target="_blank" rel="noopener noreferrer">'.e($label).'</a>';
         }
 
         foreach (($mapped['videos'] ?? []) as $video) {
@@ -941,6 +955,8 @@ final class SigvarisProductImporter
             'images_reused' => 0,
             'images_deleted' => 0,
             'images_failed' => 0,
+            'documents_created' => 0,
+            'documents_reused' => 0,
         ];
     }
 
