@@ -109,6 +109,7 @@ final class SigvarisProductionPreflight
         $variantIds = [];
         $variantSkus = [];
         $slugs = [];
+        $slugExternalIds = [];
         $categoryPaths = [];
         $imageUrls = [];
         $mediumRenditions = [];
@@ -132,6 +133,9 @@ final class SigvarisProductionPreflight
             }
             if ($slug !== null) {
                 $slugs[$slug] = true;
+                if ($externalId !== null) {
+                    $slugExternalIds[$slug] = $externalId;
+                }
             }
 
             if (($mapped['source'] ?? null) !== self::SOURCE || ($product['external_source'] ?? null) !== self::SOURCE) {
@@ -243,6 +247,7 @@ final class SigvarisProductionPreflight
             'vat_8_products' => $vat8Products,
             'vat_23_products' => $vat23Products,
             'slugs' => array_keys($slugs),
+            'slug_external_ids' => $slugExternalIds,
             'medium_rendition_urls' => array_values(array_unique($mediumRenditions)),
             'product_invariant_failures' => array_values(array_unique($failures)),
         ];
@@ -284,7 +289,36 @@ final class SigvarisProductionPreflight
         $slugCollisions = Product::withTrashed()->whereIn('slug', $metrics['slugs'])->where(function ($query): void {
             $query->whereNull('external_source')->orWhere('external_source', '!=', self::SOURCE);
         })->pluck('slug')->unique()->values()->all();
-        $this->hardCheck($checks, $errors, 'database.slug_collisions', $slugCollisions === [], $slugCollisions === [] ? 'No non-Sigvaris product slug collisions.' : 'Colliding product slugs: '.implode(', ', $slugCollisions));
+
+        $unsafeSlugCollisions = [];
+        $safeSlugResolutions = [];
+        foreach ($slugCollisions as $slug) {
+            $externalId = $metrics['slug_external_ids'][$slug] ?? null;
+            $fallback = is_string($externalId) && $externalId !== '' ? $slug.'-sigvaris-'.$externalId : null;
+            if ($fallback === null) {
+                $unsafeSlugCollisions[] = $slug;
+                continue;
+            }
+
+            $occupant = Product::withTrashed()->where('slug', $fallback)->first(['external_source', 'external_id']);
+            $matchingSigvarisOccupant = $occupant !== null
+                && $occupant->external_source === self::SOURCE
+                && (string) $occupant->external_id === $externalId;
+
+            if ($occupant !== null && ! $matchingSigvarisOccupant) {
+                $unsafeSlugCollisions[] = $slug.' -> '.$fallback;
+                continue;
+            }
+
+            $safeSlugResolutions[] = $slug.' -> '.$fallback;
+        }
+
+        $slugMessage = $unsafeSlugCollisions !== []
+            ? 'Unsafe product slug collisions: '.implode(', ', $unsafeSlugCollisions)
+            : ($safeSlugResolutions === []
+                ? 'No non-Sigvaris product slug collisions.'
+                : 'Base slug collisions safely resolve to deterministic Sigvaris slugs: '.implode(', ', $safeSlugResolutions));
+        $this->hardCheck($checks, $errors, 'database.slug_collisions', $unsafeSlugCollisions === [], $slugMessage);
 
         $skuCollisions = ProductVariant::withTrashed()->whereIn('sku', $metrics['variant_skus'])->whereHas('product', function ($query): void {
             $query->withTrashed()->where(function ($productQuery): void {

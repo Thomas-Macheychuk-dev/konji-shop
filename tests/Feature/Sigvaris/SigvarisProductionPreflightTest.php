@@ -65,6 +65,83 @@ it('passes an exact read-only Sigvaris production preflight with frozen fingerpr
     }
 });
 
+it('allows a non-Sigvaris base slug collision when the deterministic Sigvaris fallback is free', function (): void {
+    Storage::fake('public');
+    Product::query()->create([
+        'name' => 'Existing catalogue product',
+        'slug' => 'compreflex-standard-wrap-udo',
+        'status' => ProductStatus::DRAFT,
+        'external_source' => 'timago',
+        'external_id' => 'existing-base-slug',
+    ]);
+
+    $relativePath = 'scrapers/sigvaris/production-preflight-safe-slug-test.json';
+    $path = storage_path('app/'.$relativePath);
+    @mkdir(dirname($path), 0755, true);
+    file_put_contents($path, json_encode(sigvarisProductionPreflightCatalogue(), JSON_THROW_ON_ERROR));
+    $mapSha = hash_file('sha256', $path);
+
+    try {
+        $exit = Artisan::call('sigvaris:production-preflight', [
+            '--from' => $relativePath,
+            '--expected-products' => '1', '--expected-variants' => '2', '--expected-images' => '1',
+            '--expected-category-paths' => '1', '--expected-downloads' => '1', '--expected-stable-default-variants' => '0',
+            '--expected-vat-8-products' => '1', '--expected-vat-23-products' => '0', '--expected-review-items' => '0',
+            '--expected-sha256' => $mapSha, '--expected-product-data-sha256' => 'product-data-test-sha', '--expected-combinations-sha256' => 'combinations-test-sha',
+            '--minimum-free-mib' => '0', '--probe-images' => '0', '--show-checks' => true,
+        ]);
+        $output = Artisan::output();
+
+        expect($exit)->toBe(0)
+            ->and($output)->toContain('[PASS] database.slug_collisions')
+            ->and($output)->toContain('compreflex-standard-wrap-udo -> compreflex-standard-wrap-udo-sigvaris-97625')
+            ->and(Product::query()->where('external_source', 'sigvaris')->exists())->toBeFalse();
+    } finally {
+        @unlink($path);
+    }
+});
+
+it('fails when a base slug and its deterministic Sigvaris fallback are both occupied by unrelated products', function (): void {
+    Storage::fake('public');
+    foreach ([
+        ['slug' => 'compreflex-standard-wrap-udo', 'external_id' => 'existing-base'],
+        ['slug' => 'compreflex-standard-wrap-udo-sigvaris-97625', 'external_id' => 'existing-fallback'],
+    ] as $row) {
+        Product::query()->create([
+            'name' => 'Existing catalogue product '.$row['external_id'],
+            'slug' => $row['slug'],
+            'status' => ProductStatus::DRAFT,
+            'external_source' => 'other-source',
+            'external_id' => $row['external_id'],
+        ]);
+    }
+
+    $relativePath = 'scrapers/sigvaris/production-preflight-unsafe-slug-test.json';
+    $path = storage_path('app/'.$relativePath);
+    @mkdir(dirname($path), 0755, true);
+    file_put_contents($path, json_encode(sigvarisProductionPreflightCatalogue(), JSON_THROW_ON_ERROR));
+    $mapSha = hash_file('sha256', $path);
+
+    try {
+        $exit = Artisan::call('sigvaris:production-preflight', [
+            '--from' => $relativePath,
+            '--expected-products' => '1', '--expected-variants' => '2', '--expected-images' => '1',
+            '--expected-category-paths' => '1', '--expected-downloads' => '1', '--expected-stable-default-variants' => '0',
+            '--expected-vat-8-products' => '1', '--expected-vat-23-products' => '0', '--expected-review-items' => '0',
+            '--expected-sha256' => $mapSha, '--expected-product-data-sha256' => 'product-data-test-sha', '--expected-combinations-sha256' => 'combinations-test-sha',
+            '--minimum-free-mib' => '0', '--probe-images' => '0', '--show-checks' => true,
+        ]);
+        $output = Artisan::output();
+
+        expect($exit)->toBe(1)
+            ->and($output)->toContain('[FAIL] database.slug_collisions')
+            ->and($output)->toContain('compreflex-standard-wrap-udo-sigvaris-97625')
+            ->and(Product::query()->where('external_source', 'sigvaris')->exists())->toBeFalse();
+    } finally {
+        @unlink($path);
+    }
+});
+
 it('fails Sigvaris production preflight on a non-Sigvaris SKU collision', function (): void {
     Storage::fake('public');
     $existing = Product::query()->create([
