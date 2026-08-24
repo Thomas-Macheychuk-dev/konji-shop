@@ -19,6 +19,7 @@ it('extracts Sigvaris product pricing attributes assets medical flag and observe
 </div>
 <div class="product-cover"><img src="/img/p/1/main.webp" alt="Main"></div>
 <ul class="product-images"><li><img class="js-thumb" data-image-large-src="https://www.sklep-sigvaris.com/img/p/1/second.webp" alt="Second"></li></ul>
+<a class="size-chart" href="/img/cms/tabela-rozmiarow.png">TABELA ROZMIARÓW</a>
 <section id="description"><div class="product-description"><p>Opis produktu</p><a href="/download/srodki-ostroznosci.pdf">ŚRODKI OSTROŻNOŚCI</a></div></section>
 <dl class="data-sheet"><dt>skład</dt><dd>Elastan 35%; Poliamid 65%</dd></dl>
 <div>Indeks 68098</div><div>W magazynie 500 Przedmioty</div>
@@ -50,6 +51,10 @@ HTML)]);
         ->and($product['observed_combination']['external_variant_id'])->toBe('94755')
         ->and($product['images'])->toHaveCount(2)
         ->and($product['downloads'])->toHaveCount(1)
+        ->and($product['size_chart'])->toBe([
+            'url' => 'https://www.sklep-sigvaris.com/img/cms/tabela-rozmiarow.png',
+            'label' => 'TABELA ROZMIARÓW',
+        ])
         ->and($product['features'])->toContain(['label' => 'skład', 'value' => 'Elastan 35%; Poliamid 65%']);
 });
 

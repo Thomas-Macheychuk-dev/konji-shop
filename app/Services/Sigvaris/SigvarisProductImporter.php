@@ -168,7 +168,7 @@ final class SigvarisProductImporter
             'name' => $name,
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($productData),
-            'description' => $this->productDescriptionHtml($mapped),
+            'description' => $this->productDescriptionHtml($mapped, $product?->description),
             'seo_title' => $this->stringOrNull($productData['seo_title'] ?? null) ?: $name,
             'seo_description' => $this->seoDescription($productData),
             'status' => ProductStatus::DRAFT,
@@ -788,7 +788,7 @@ final class SigvarisProductImporter
     }
 
     /** @param array<string, mixed> $mapped */
-    private function productDescriptionHtml(array $mapped): ?string
+    private function productDescriptionHtml(array $mapped, ?string $existingDescription = null): ?string
     {
         $productData = $this->productData($mapped);
         $sections = [];
@@ -835,7 +835,59 @@ final class SigvarisProductImporter
             $sections[] = '<section class="sigvaris-resources"><h2>Materiały produktu</h2><ul>'.implode('', $items).'</ul></section>';
         }
 
-        return $sections !== [] ? implode("\n", $sections) : null;
+        $html = $sections !== [] ? implode("\n", $sections) : null;
+        $chartAnchor = $this->mappedSizeChartAnchor($mapped) ?: $this->preservedSizeChartAnchor($existingDescription);
+
+        return $chartAnchor !== null ? $this->injectSizeChartAnchor($html, $chartAnchor) : $html;
+    }
+
+    /** @param array<string, mixed> $mapped */
+    private function mappedSizeChartAnchor(array $mapped): ?string
+    {
+        $sizeChart = is_array($mapped['size_chart'] ?? null) ? $mapped['size_chart'] : null;
+        $url = $this->safeHttpUrl($sizeChart['source_url'] ?? null);
+
+        if ($url === null || ! $this->isSigvarisUrl($url)) {
+            return null;
+        }
+
+        return '<a data-sigvaris-size-chart="1" href="'.e($url).'" target="_blank" rel="noopener noreferrer">TABELA ROZMIARÓW</a>';
+    }
+
+    private function preservedSizeChartAnchor(?string $existingDescription): ?string
+    {
+        if ($existingDescription === null || preg_match(
+            '#<a\b(?=[^>]*data-sigvaris-size-chart=["\']1["\'])[^>]*href=["\']([^"\']+)["\'][^>]*>.*?</a>#isu',
+            $existingDescription,
+            $matches,
+        ) !== 1) {
+            return null;
+        }
+
+        $href = html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        if (! str_starts_with($href, '/storage/products/sigvaris/')) {
+            return null;
+        }
+
+        return '<a data-sigvaris-size-chart="1" href="'.e($href).'" target="_blank" rel="noopener noreferrer">TABELA ROZMIARÓW</a>';
+    }
+
+    private function injectSizeChartAnchor(?string $html, string $anchor): string
+    {
+        $html ??= '';
+
+        if (preg_match('/tabela\s+rozmiarów/ui', strip_tags($html)) === 1) {
+            $replaced = preg_replace('/TABELA\s+ROZMIARÓW/ui', $anchor, $html, 1);
+
+            if (is_string($replaced)) {
+                return $replaced;
+            }
+        }
+
+        $section = '<section class="sigvaris-size-chart"><p>'.$anchor.'</p></section>';
+
+        return trim($html) !== '' ? $html."\n".$section : $section;
     }
 
     private function cleanImportedHtml(?string $html): ?string

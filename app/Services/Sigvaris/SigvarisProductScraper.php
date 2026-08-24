@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Sigvaris;
 
 use DOMElement;
+use RuntimeException;
 use Symfony\Component\DomCrawler\Crawler;
 
 final class SigvarisProductScraper extends SigvarisHttpClient
@@ -16,6 +17,19 @@ final class SigvarisProductScraper extends SigvarisHttpClient
         $html = $this->fetchBody($url, $failed);
         if ($html === null) {
             return null;
+        }
+
+        return $this->parse($html, $url);
+    }
+
+    /** @return array<string, mixed> */
+    public function scrapeOrFail(string $url): array
+    {
+        $failed = [];
+        $html = $this->fetchBody($url, $failed);
+
+        if ($html === null) {
+            throw new RuntimeException($failed[$url] ?? 'Sigvaris product request failed.');
         }
 
         return $this->parse($html, $url);
@@ -55,6 +69,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
         $features = $this->features($crawler);
         $images = $this->images($crawler, $sourceUrl);
         $downloads = $this->downloads($crawler, $sourceUrl);
+        $sizeChart = $this->sizeChart($crawler, $sourceUrl);
         $descriptionHtml = $this->descriptionHtml($crawler);
         $manufacturer = $this->manufacturer($bodyText);
         $medicalDevice = preg_match('/WAŻNE:\s*To\s+jest\s+wyrób\s+medyczny/ui', $bodyText) === 1 ? true : null;
@@ -109,6 +124,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
             'variant_candidates' => $observedCombination !== null ? [$observedCombination] : [],
             'images' => $images,
             'downloads' => $downloads,
+            'size_chart' => $sizeChart,
             'description_html' => $descriptionHtml,
             'warnings' => $warnings,
         ];
@@ -396,6 +412,75 @@ final class SigvarisProductScraper extends SigvarisHttpClient
             });
         }
         return array_values($downloads);
+    }
+
+    /** @return array{url:string,label:string}|null */
+    private function sizeChart(Crawler $crawler, string $baseUrl): ?array
+    {
+        $resolved = null;
+
+        $crawler->filter('a[href]')->each(function (Crawler $link) use (&$resolved, $baseUrl): void {
+            if ($resolved !== null) {
+                return;
+            }
+
+            $label = $this->normalizeText($link->text(''));
+
+            if (preg_match('/tabela\s+rozmiarów/ui', $label) !== 1) {
+                return;
+            }
+
+            $href = $link->attr('href');
+            $url = is_string($href) ? $this->absoluteAssetUrl($href, $baseUrl) : null;
+
+            if ($url !== null && $this->isSizeChartImageUrl($url)) {
+                $resolved = ['url' => $url, 'label' => 'TABELA ROZMIARÓW'];
+            }
+        });
+
+        if ($resolved !== null) {
+            return $resolved;
+        }
+
+        $descriptionText = $this->normalizeText($crawler->filter('#description, .product-description')->first()->text(''));
+
+        if (preg_match('/tabela\s+rozmiarów/ui', $descriptionText) !== 1) {
+            return null;
+        }
+
+        $crawler->filter('#description img[src], .product-description img[src]')->each(function (Crawler $image) use (&$resolved, $baseUrl): void {
+            if ($resolved !== null) {
+                return;
+            }
+
+            $node = $image->getNode(0);
+
+            if (! $node instanceof DOMElement) {
+                return;
+            }
+
+            $context = $this->normalizeText($node->getAttribute('alt').' '.$node->getAttribute('title'));
+            $raw = $node->getAttribute('src');
+            $url = $raw !== '' ? $this->absoluteAssetUrl($raw, $baseUrl) : null;
+
+            if ($url === null || ! $this->isSizeChartImageUrl($url)) {
+                return;
+            }
+
+            if (preg_match('/tabela\s+rozmiarów/ui', $context) === 1 || str_contains(strtolower((string) parse_url($url, PHP_URL_PATH)), '/img/cms/')) {
+                $resolved = ['url' => $url, 'label' => 'TABELA ROZMIARÓW'];
+            }
+        });
+
+        return $resolved;
+    }
+
+    private function isSizeChartImageUrl(string $url): bool
+    {
+        $path = strtolower((string) parse_url($url, PHP_URL_PATH));
+
+        return str_contains($path, '/img/cms/')
+            && preg_match('/\.(?:png|jpe?g|webp|gif|svg)$/i', $path) === 1;
     }
 
     private function descriptionHtml(Crawler $crawler): ?string

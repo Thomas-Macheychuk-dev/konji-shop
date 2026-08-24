@@ -283,6 +283,7 @@ final class SigvarisImportMapper
             'variants' => $variants,
             'images' => $images,
             'downloads' => $downloads,
+            'size_chart' => $this->sizeChart($source['size_chart'] ?? null),
             'videos' => [],
             'errors' => array_values(array_unique($errors)),
             'review_items' => array_values(array_unique($reviewItems)),
@@ -549,6 +550,25 @@ final class SigvarisImportMapper
             ];
         }
         return array_values($downloads);
+    }
+
+    /** @return array{source_url:string,label:string}|null */
+    private function sizeChart(mixed $source): ?array
+    {
+        if (! is_array($source)) {
+            return null;
+        }
+
+        $url = $this->stringOrNull($source['url'] ?? null);
+
+        if ($url === null) {
+            return null;
+        }
+
+        return [
+            'source_url' => $url,
+            'label' => $this->stringOrNull($source['label'] ?? null) ?: 'TABELA ROZMIARÓW',
+        ];
     }
 
     private function attributeCode(string $label, ?string $groupId): string

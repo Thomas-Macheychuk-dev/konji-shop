@@ -304,6 +304,67 @@ it('runs Sigvaris import-products read-only by default and pins writes to the ap
     }
 });
 
+
+it('repairs a plain Sigvaris TABELA ROZMIARÓW string to a local linked image and preserves it on importer reruns', function (): void {
+    Storage::fake('public');
+    $mapped = sigvarisImporterMappedProduct();
+    $mapped['product']['description_html'] = '<p>Opis produktu Sigvaris</p><p>TABELA ROZMIARÓW</p>';
+    $product = app(SigvarisProductImporter::class)->import($mapped, false)['product'];
+    $relativeMap = 'scrapers/sigvaris/size-chart-repair-test.json';
+    $mapPath = storage_path('app/'.$relativeMap);
+    @mkdir(dirname($mapPath), 0755, true);
+    file_put_contents($mapPath, json_encode(['products' => [$mapped]], JSON_THROW_ON_ERROR));
+    $sha = hash_file('sha256', $mapPath);
+    $sourceUrl = $mapped['source_url'];
+    $chartUrl = 'https://www.sklep-sigvaris.com/img/cms/tabela-rozmiarow.png';
+    $contents = sigvarisImporterTestImageContents();
+
+    Http::fake([
+        $sourceUrl => Http::response(<<<'HTML'
+<!doctype html><html><body>
+<h1>MAGIC Pończochy uciskowe</h1>
+<a href="/img/cms/tabela-rozmiarow.png">TABELA ROZMIARÓW</a>
+</body></html>
+HTML),
+        $chartUrl => Http::response($contents, 200, ['Content-Type' => 'image/jpeg']),
+    ]);
+
+    try {
+        $exit = Artisan::call('sigvaris:repair-size-charts', [
+            '--from' => $relativeMap,
+            '--expected-sha256' => $sha,
+            '--write' => true,
+            '--request-delay-ms' => '0',
+            '--attempts' => '1',
+            '--retry-delay-ms' => '0',
+            '--asset-attempts' => '1',
+            '--asset-retry-delay-ms' => '0',
+        ]);
+        $output = Artisan::output();
+        $product->refresh();
+
+        expect($exit)->toBe(0)
+            ->and($output)->toContain('Linked size-chart images discovered: 1')
+            ->and($output)->toContain('Database descriptions updated: 1')
+            ->and($product->description)->toContain('data-sigvaris-size-chart="1"')
+            ->toContain('/storage/products/sigvaris/7908/size-chart/')
+            ->not->toMatch('/>TABELA ROZMIARÓW<\/p>/u');
+
+        preg_match('#href="/storage/([^"]+)"#', (string) $product->description, $matches);
+        expect($matches[1] ?? null)->not->toBeNull()
+            ->and(Storage::disk('public')->exists($matches[1]))->toBeTrue();
+
+        app(SigvarisProductImporter::class)->import($mapped, false);
+        $product->refresh();
+
+        expect($product->description)
+            ->toContain('data-sigvaris-size-chart="1"')
+            ->toContain('/storage/products/sigvaris/7908/size-chart/');
+    } finally {
+        @unlink($mapPath);
+    }
+});
+
 function sigvarisImporterCatalogue(): array
 {
     return [
