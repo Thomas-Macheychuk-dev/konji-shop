@@ -1,0 +1,2470 @@
+{
+  "source": "armedical_supplier_price_list",
+  "source_file": "Armedical_Cennik_na_2026_aktualny_od_04.03.2026 (1).xls",
+  "source_sha256": "ac97003ad885025e665961d05afe1ed2d74d88a53b4aa9b413896f292a282893",
+  "effective_from": "2026-03-04",
+  "worksheet": "Arkusz1",
+  "header_row": 9,
+  "price_column": "Cena netto",
+  "vat_column": "VAT %",
+  "ignored_price_column": "Pakiet 5+1 cena*",
+  "currency": "PLN",
+  "row_count": 245,
+  "unique_code_count": 241,
+  "vat_row_breakdown": {
+    "8": 220,
+    "23": 25
+  },
+  "rows": [
+    {
+      "source_row": 12,
+      "code": "AR-167A",
+      "description": "Elastyczny stabilizator stawu skokowego z zamkniętą piętą. IMMOBILO SOFT-A",
+      "sizes": "XS, S,M,L,XL, XXL",
+      "unit": "szt.",
+      "net_minor": 1890,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1592
+    },
+    {
+      "source_row": 13,
+      "code": "AR-167AO",
+      "description": "Elastyczny stabilizator stawu skokowego z otwartą piętą. IMMOBILO SOFT-AO",
+      "sizes": "XS, S,M,L,XL, XXL",
+      "unit": "szt.",
+      "net_minor": 1890,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1592
+    },
+    {
+      "source_row": 14,
+      "code": "AR-260A",
+      "description": "Elastyczny stabilizator stawu skokowego - zapinany. IMMOBILO TAPE-A",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 1700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1433
+    },
+    {
+      "source_row": 15,
+      "code": "AR-119",
+      "description": "Neoprenowy stabilizator stawu skokowego. IMMOBILO ANKLE-N",
+      "sizes": "XS, S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 2390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2008
+    },
+    {
+      "source_row": 16,
+      "code": "AR-205H",
+      "description": "Orteza stawu skokowego. IMMOBILO EXO-STAB",
+      "sizes": "XS, S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 7900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 6600
+    },
+    {
+      "source_row": 18,
+      "code": "AR-167K",
+      "description": "Elastyczny stabilizator stawu kolanowego. IMMOBILO SOFT-K",
+      "sizes": "S,M,L,XL,XXL",
+      "unit": "szt.",
+      "net_minor": 1890,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1592
+    },
+    {
+      "source_row": 19,
+      "code": "AR-260K",
+      "description": "Elastyczny stabilizator stawu kolanowego - zapinany. IMMOBILO TAPE-K",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 1900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1600
+    },
+    {
+      "source_row": 20,
+      "code": "AR-2900",
+      "description": "Orteza stawu kolanowego na goleń i udo. IMMOBILO SUPER BRACE",
+      "sizes": "UNI (szary/czarny)",
+      "unit": "szt.",
+      "net_minor": 19900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 16600
+    },
+    {
+      "source_row": 21,
+      "code": "AR-5650",
+      "description": "Neoprenowa orteza rzepki. IMMOBILO PATELLA",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 3500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2933
+    },
+    {
+      "source_row": 22,
+      "code": "AR-6620",
+      "description": "Neoprenowy stabilizator stawu kolanowego, zapinany. IMMOBILO FLEXI-L",
+      "sizes": "UNI (czarny/beż)",
+      "unit": "szt.",
+      "net_minor": 4900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 4100
+    },
+    {
+      "source_row": 23,
+      "code": "AR-6630",
+      "description": "Neoprenowy stabilizator stawu kolanowego, zapinany, krótki. IMMOBILO FLEXI-S",
+      "sizes": "UNI (czarny/beż)",
+      "unit": "szt.",
+      "net_minor": 4600,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3850
+    },
+    {
+      "source_row": 24,
+      "code": "AR-A-823",
+      "description": "Neoprenowa orteza stawu kolanowego z zawiasami - wciągana. IMMOBILO STAB-W",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 9900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 8267
+    },
+    {
+      "source_row": 25,
+      "code": "AR-A-824",
+      "description": "Neoprenowa orteza stawu kolanowego z zawiasami - zapinana. IMMOBILO STAB-Z",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 9900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 8267
+    },
+    {
+      "source_row": 26,
+      "code": "AR-A-825",
+      "description": "Neoprenowa orteza stawu kolanowego z regulacją kąta zgięcia - wciągana. IMMOBILO BRACE-RKW",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 11900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 9933
+    },
+    {
+      "source_row": 27,
+      "code": "AR-A-826",
+      "description": "Neoprenowa orteza stawu kolanowego z regulacją kąta zgięcia - zapinana. IMMOBILO BRACE-RKZ",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 11900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 9933
+    },
+    {
+      "source_row": 29,
+      "code": "AR-167C",
+      "description": "Elastyczny stabilizator łydki. IMMOBILO SOFT-C",
+      "sizes": "S,M,L,XL,XXL",
+      "unit": "szt.",
+      "net_minor": 1890,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1592
+    },
+    {
+      "source_row": 31,
+      "code": "AR-263",
+      "description": "Pas lędźwiowo-krzyżowy. IMMOBILO PREMIUM BELT",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 6500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 5433
+    },
+    {
+      "source_row": 32,
+      "code": "AR-264",
+      "description": "Pas lędźwiowo-krzyżowy. IMMOBILO PREMIUM BELT-XF",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 6900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 5767
+    },
+    {
+      "source_row": 33,
+      "code": "AR-265",
+      "description": "Pas lędźwiowo-krzyżowy. IMMOBILO BASIC",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 5500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 4600
+    },
+    {
+      "source_row": 34,
+      "code": "AR-781",
+      "description": "Orteza lędźwiowo-krzyżowa. IMMOBILO PRO-25",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 8900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 7433
+    },
+    {
+      "source_row": 35,
+      "code": "AR-786",
+      "description": "Pas lędźwiowo-krzyżowy. IMMOBILO BST-16",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 5900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 4933
+    },
+    {
+      "source_row": 36,
+      "code": "AR-782",
+      "description": "Orteza tułowia-wysoka. IMMOBILO PRO-30",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 9900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 8267
+    },
+    {
+      "source_row": 37,
+      "code": "AR-780",
+      "description": "Gorset stabilizująco - unieruchamiający. IMMOBILO PERFECT",
+      "sizes": "S,M,L,XL,XXL",
+      "unit": "szt.",
+      "net_minor": 9900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 8267
+    },
+    {
+      "source_row": 38,
+      "code": "AR-6816",
+      "description": "Sznurówka piersiowo-lędźwiowo-krzyżowa. IMMOBILO PRO-H",
+      "sizes": "S,M,L,XL,XXL,XXL",
+      "unit": "szt.",
+      "net_minor": 12900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 10767
+    },
+    {
+      "source_row": 39,
+      "code": "AR-2260",
+      "description": "Pas brzuszny - zapinany. IMMOBILO AB-PROTECT. 28cm. SZARY lub BEŻOWY",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 4500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3767
+    },
+    {
+      "source_row": 40,
+      "code": "AR-2260N",
+      "description": "Pas brzuszny - zapinany, niski. IMMOBILO AB-PROTECT. 23cm. SZARY lub BEŻOWY",
+      "sizes": "S,M,L,XL,XXL,XXXL",
+      "unit": "szt.",
+      "net_minor": 4000,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3350
+    },
+    {
+      "source_row": 41,
+      "code": "AR-228-1S",
+      "description": "Pas przepuklinowy pachwinowy jednostronny. IMMOBILO HERNIA-1. PRAWY, LEWY",
+      "sizes": "S,M,L,XL,XXL",
+      "unit": "szt.",
+      "net_minor": 4100,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3433
+    },
+    {
+      "source_row": 42,
+      "code": "AR-228-2S",
+      "description": "Pas przepuklinowy pachwinowy obustronny.  IMMOBILO HERNIA-2",
+      "sizes": "S,M,L,XL,XXL",
+      "unit": "szt.",
+      "net_minor": 4700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3933
+    },
+    {
+      "source_row": 43,
+      "code": "AR-7600",
+      "description": "Pas żebrowy - damski. IMMOBILO RIB-D. Kolor SZARY lub BEŻOWY",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 3900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3267
+    },
+    {
+      "source_row": 44,
+      "code": "AR-7610",
+      "description": "Pas żebrowy - męski. IMMOBILO RIB-M.Kolor SZARY  lub BEŻOWY",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 3900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3267
+    },
+    {
+      "source_row": 45,
+      "code": "AR-722W",
+      "description": "Pas lędźwiowy - stabilizujący. IMMOBILO SAFE-WORK",
+      "sizes": "S,M,L,XL,XXL",
+      "unit": "szt.",
+      "net_minor": 7500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 6267
+    },
+    {
+      "source_row": 47,
+      "code": "AR-167R",
+      "description": "Elastyczny stabilizator nadgarstka. IMMOBILO SOFT-R",
+      "sizes": "S,M,L,XL,XXL",
+      "unit": "szt.",
+      "net_minor": 1090,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 925
+    },
+    {
+      "source_row": 48,
+      "code": "AR-260R",
+      "description": "Elastyczny stabilizator nadgarstka - zapinany. IMMOBILO TAPE-R",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 1090,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 925
+    },
+    {
+      "source_row": 49,
+      "code": "AR-2010",
+      "description": "Neoprenowy stabilizator nadgarstka z taśmą dociągającą. IMMOBILO OPT",
+      "sizes": "UNI (czarny/beż)",
+      "unit": "szt.",
+      "net_minor": 2190,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1842
+    },
+    {
+      "source_row": 50,
+      "code": "AR-2020",
+      "description": "Neoprenowy stabilizator nadgarstka z klamrą. IMMOBILO OPK",
+      "sizes": "UNI (czarny/beż)",
+      "unit": "szt.",
+      "net_minor": 2290,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1925
+    },
+    {
+      "source_row": 51,
+      "code": "AR-2040",
+      "description": "Neoprenowy stabilizator nadgarstka ze wzmocnieniem śródręcza. IMMOBILO OPS",
+      "sizes": "UNI (czarny/beż)",
+      "unit": "szt.",
+      "net_minor": 2390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2008
+    },
+    {
+      "source_row": 52,
+      "code": "AR-2050",
+      "description": "Stabilizator nadgarstka ze wzmocnieniem śródręcza. IMMOBILO PREMIUM WTR",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 2590,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2175
+    },
+    {
+      "source_row": 53,
+      "code": "AR-876W",
+      "description": "Tkaninowy stabilizator nadgarstka z wzmocnieniem śródręcza. IMMOBILO WRAP-T",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 2490,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2092
+    },
+    {
+      "source_row": 54,
+      "code": "AR-872",
+      "description": "Orteza nadgarstka – krótka. IMMOBILO WRIST-S",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 4300,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3600
+    },
+    {
+      "source_row": 55,
+      "code": "AR-873",
+      "description": "Orteza nadgarstka – krótka. IMMOBILO WRIST-PRO-1 - nowość",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 4500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3767
+    },
+    {
+      "source_row": 56,
+      "code": "AR-874",
+      "description": "Orteza nadgarstka – krótka. IMMOBILO WRIST-PRO-2 - nowość",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 4500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3767
+    },
+    {
+      "source_row": 57,
+      "code": "AR-875",
+      "description": "Orteza nadgarstka i kciuka, krótka. IMMOBILO WRIST ADVANCED-S - nowość",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 5500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 4600
+    },
+    {
+      "source_row": 58,
+      "code": "AR-876",
+      "description": "Orteza nadgarstka i kciuka, długa. IMMOBILO WRIST ADVANCED-L - nowość",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 5900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 4933
+    },
+    {
+      "source_row": 59,
+      "code": "AR-878",
+      "description": "Orteza nadgarstka – długa. IMMOBILO WRIST-L",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 4500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3767
+    },
+    {
+      "source_row": 60,
+      "code": "AR-208A",
+      "description": "Neoprenowa orteza kciuka z szyną aluminiową. IMMOBILO THUM-B",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 3690,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3092
+    },
+    {
+      "source_row": 62,
+      "code": "AR-167E",
+      "description": "Elastyczny stabilizator łokcia. IMMOBILO SOFT-E",
+      "sizes": "S,M,L,XL,XXL",
+      "unit": "szt.",
+      "net_minor": 1890,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1592
+    },
+    {
+      "source_row": 63,
+      "code": "AR-260E",
+      "description": "Elastyczny stabilizator stawu łokciowego - zapinany. IMMOBILO TAPE-E",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 1700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1433
+    },
+    {
+      "source_row": 64,
+      "code": "AR-G-2060",
+      "description": "Neoprenowy stabilizator łokcia tenisisty z poduszką silikonową. IMMOBILO EHR-MAX",
+      "sizes": "UNI (czarny/beż)",
+      "unit": "szt.",
+      "net_minor": 2900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2433
+    },
+    {
+      "source_row": 65,
+      "code": "AR-6660",
+      "description": "Neoprenowy stabilizator stawu łokciowego - zapinany. IMMOBILO NEO",
+      "sizes": "UNI",
+      "unit": "szt.",
+      "net_minor": 2900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2433
+    },
+    {
+      "source_row": 67,
+      "code": "AR-763",
+      "description": "Korektor postawy. IMMOBILO POSTURE-AID",
+      "sizes": "XS,S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 4700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 3933
+    },
+    {
+      "source_row": 68,
+      "code": "AR-2198",
+      "description": "Temblak tkaninowy  z miękkim naramiennikiem. IMMOBILO SLING DELUXE",
+      "sizes": "XS, S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 2800,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2350
+    },
+    {
+      "source_row": 69,
+      "code": "AR-2199",
+      "description": "Temblak siatkowy z miękkim naramiennikiem. IMMOBILO SLING MESH",
+      "sizes": "XS, S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 2600,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2183
+    },
+    {
+      "source_row": 70,
+      "code": "AR-762",
+      "description": "Tkaninowy stabilizator stawu barkowego - zapinany. IMMOBILO SS-F",
+      "sizes": "S/M, L/XL",
+      "unit": "szt.",
+      "net_minor": 5500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 4600
+    },
+    {
+      "source_row": 71,
+      "code": "AR-2181G",
+      "description": "Kamizelka stawu barkowegona ramię i bark. IMMOBILIO SHD",
+      "sizes": "S - XXXL",
+      "unit": "szt.",
+      "net_minor": 6900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 5767
+    },
+    {
+      "source_row": 72,
+      "code": "AR-2181",
+      "description": "Kamizelka stawu barkowego na ramię i bark. IMMOBILIO PREMIUM SHD",
+      "sizes": "S - XXXL",
+      "unit": "szt.",
+      "net_minor": 7900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 6600
+    },
+    {
+      "source_row": 73,
+      "code": "AR-227",
+      "description": "Stabilizator obojczyka. IMMOBILO SUPPORT-8",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 4900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 4100
+    },
+    {
+      "source_row": 75,
+      "code": "AR-222",
+      "description": "Kołnierz ortopedyczny typu SCHANTZA Wys. 8,10,12cm. Rozmiary: S,M,L,XL",
+      "sizes": "cielisty",
+      "unit": "szt.",
+      "net_minor": 2190,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 1842
+    },
+    {
+      "source_row": 76,
+      "code": "AR-223",
+      "description": "Kołnierz ortopedyczny typu FLORIDA. Wys. 8,10,12cm. Rozmiary: S,M,L,XL",
+      "sizes": "cielisty",
+      "unit": "szt.",
+      "net_minor": 2390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": 2008
+    },
+    {
+      "source_row": 78,
+      "code": "AR-601",
+      "description": "Orteza stopowo-goleniowa Walker Pro. Niska.",
+      "sizes": "XS, S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 16500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 79,
+      "code": "AR-602",
+      "description": "Orteza stopowo-goleniowa Walker Pro. Wysoka.",
+      "sizes": "XS, S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 17500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 80,
+      "code": "AR-603",
+      "description": "Orteza stopowo-goleniowa Walker Basic. Niska.",
+      "sizes": "XS, S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 11500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 81,
+      "code": "AR-604",
+      "description": "Orteza stopowo-goleniowa Walker Basic. Wysoka.",
+      "sizes": "XS, S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 12500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 82,
+      "code": "AR-605",
+      "description": "Orteza stopowo-goleniowa, niska. Walker Clock",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 14500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 83,
+      "code": "AR-606",
+      "description": "Orteza stopowo-goleniowa, wysoka. Walker Clock",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 15500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 84,
+      "code": "AR-607",
+      "description": "Orteza stopowo-goleniowa, dwukomorowa - niska. Walker Dual Comfort",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 14900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 85,
+      "code": "AR-608",
+      "description": "Orteza stopowo-goleniowa, dwukomorowa - wysoka. Walker Dual Comfort",
+      "sizes": "S,M,L,XL",
+      "unit": "szt.",
+      "net_minor": 16900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 86,
+      "code": "AR-600P",
+      "description": "Podpiętki do ortez stopowo-goleniowych Walker. PRAWE",
+      "sizes": "5 szt. w kpl.",
+      "unit": "szt.",
+      "net_minor": 3700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 87,
+      "code": "AR-600L",
+      "description": "Podpiętki do ortez stopowo-goleniowych Walker. LEWE",
+      "sizes": "5 szt. w kpl.",
+      "unit": "szt.",
+      "net_minor": 3700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 88,
+      "code": "AR-600W",
+      "description": "Pokrowiec ochronny na Walker",
+      "sizes": "(XS,S) lub (S,M,L)",
+      "unit": "szt.",
+      "net_minor": 1000,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 96,
+      "code": "MFP-5030",
+      "description": "Poduszka ortopedyczna PROFILOWANA Exclusive Dream",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 7900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 97,
+      "code": "MFP-5030MV",
+      "description": "Poduszka ortopedyczna PROFILOWANA Exclusive Dream",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 7900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 98,
+      "code": "MFP-5030BF",
+      "description": "Poduszka ortopedyczna PROFILOWANA Bamboo Dream",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 8500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 99,
+      "code": "MFP-5030BV",
+      "description": "Poduszka ortopedyczna PROFILOWANA, Bamboo Dream",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 8600,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 100,
+      "code": "MFP-5232",
+      "description": "Poduszka ortopedyczna PROFILOWANA Bamboo Dream",
+      "sizes": "52x32x12cm",
+      "unit": "szt.",
+      "net_minor": 9900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 101,
+      "code": "MFP-5030AF",
+      "description": "Poduszka ortopedyczna PROFILOWANA AloeVera Dream",
+      "sizes": "50x30x11cm",
+      "unit": "szt.",
+      "net_minor": 8900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 102,
+      "code": "MFP-5535AF",
+      "description": "Poduszka ortopedyczna PROFILOWANA AloeVera Dream",
+      "sizes": "55x35x12cm",
+      "unit": "szt.",
+      "net_minor": 10900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 103,
+      "code": "MFP-5535",
+      "description": "Poduszka ortopedyczna PROFILOWANA Exclusive Dream",
+      "sizes": "55x35x12cm",
+      "unit": "szt.",
+      "net_minor": 10500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 104,
+      "code": "MFP-5433EP",
+      "description": "Poduszka ortopedyczna PROFILOWANA Ergonomic Dream",
+      "sizes": "54x33x12cm",
+      "unit": "szt.",
+      "net_minor": 10500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 105,
+      "code": "MFP-6035",
+      "description": "Poduszka ortopedyczna PROFILOWANA ANTY-CHRAPANIOWA Silent Dream",
+      "sizes": "60x35x12cm",
+      "unit": "szt.",
+      "net_minor": 12900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 106,
+      "code": "TFP-5030TP",
+      "description": "Poduszka ortopedyczna TRADYCYJNA Exclusive Dream",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 7900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 107,
+      "code": "TFP-6040",
+      "description": "Poduszka ortopedyczna TRADYCYJNA Exclusive Dream",
+      "sizes": "60x40x12cm",
+      "unit": "szt.",
+      "net_minor": 11900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 108,
+      "code": "MFP-4026",
+      "description": "Poduszka ortopedyczna PROFILOWANA Baby Dream",
+      "sizes": "40x26x7cm",
+      "unit": "szt.",
+      "net_minor": 4400,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 109,
+      "code": "MTP-2828",
+      "description": "Poduszka ortopedyczna PODRÓŻNA Exclusive Travel",
+      "sizes": "28X28X7cm",
+      "unit": "szt.",
+      "net_minor": 3700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 110,
+      "code": "MTP-3230",
+      "description": "Poduszka ortopedyczne PODRÓŻNA Exclusive Travel Ultra-Komfort",
+      "sizes": "32x30x12cm",
+      "unit": "szt.",
+      "net_minor": 4900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 111,
+      "code": "MFP-2520",
+      "description": "Poduszka ortopedyczna \"separator\" pomiędzy kolana \"EXCLUSIVE SUPPORT\"",
+      "sizes": "25x20x15cm",
+      "unit": "szt.",
+      "net_minor": 4400,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 112,
+      "code": "MFP-3433",
+      "description": "Poduszka ortopedyczna lędźwiowa \"EXCLUSIVE SUPPORT\"",
+      "sizes": "34x33x12cm",
+      "unit": "szt.",
+      "net_minor": 6300,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 113,
+      "code": "MFP-5344",
+      "description": "Poduszka ortopedyczne LĘDŹWIOWA Exclusive Support Ultra-Komfort",
+      "sizes": "53x44x9cm",
+      "unit": "szt.",
+      "net_minor": 9900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 114,
+      "code": "MFP-4220",
+      "description": "Poduszka ortopedyczna \"półwałek\" \"EXCLUSIVE SUPPORT\"",
+      "sizes": "42x20x10cm",
+      "unit": "szt.",
+      "net_minor": 4500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 115,
+      "code": "MFP-4015",
+      "description": "Poduszka ortopedyczne WAŁEK Exclusive Support",
+      "sizes": "40x15cm",
+      "unit": "szt.",
+      "net_minor": 5300,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 116,
+      "code": "MFP-4009",
+      "description": "Poduszka ortopedyczna do siedzenia PERFECT BALANCE",
+      "sizes": "40x9cm",
+      "unit": "szt.",
+      "net_minor": 7900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 117,
+      "code": "MFP-4235",
+      "description": "Poduszka ortopedyczna do siedzenia EXCLUSIVE SEAT",
+      "sizes": "45x40x12cm",
+      "unit": "szt.",
+      "net_minor": 5900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 118,
+      "code": "MFP-4540",
+      "description": "Poduszka ortopedyczna do siedzenia PREMIUM SEAT",
+      "sizes": "42x35x6cm",
+      "unit": "szt.",
+      "net_minor": 9900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 119,
+      "code": "MFP-4535",
+      "description": "Poduszka ortopedyczna DO SIEDZENIA \"Exclusive Seat\"",
+      "sizes": "45x35x7cm",
+      "unit": "szt.",
+      "net_minor": 6900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 120,
+      "code": "C-4535",
+      "description": "Pokrowiec na poduszkię do siedzenia EXCLUSIVE SEAT  (MFP-4535)",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 1900,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 121,
+      "code": "C-5030",
+      "description": "Pokrowiec do poduszki PROFILOWANEJ (5030 i 5030MV)",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 1700,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 122,
+      "code": "C-5030BF",
+      "description": "Pokrowiec do poduszki PROFILOWANEJ (MFP-5030BF i MFP-5030BV)",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 1700,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 123,
+      "code": "C-5232",
+      "description": "Pokrowiec do poduszki PROFILOWANEJ (MFP-5232)",
+      "sizes": "52x32x12cm",
+      "unit": "szt.",
+      "net_minor": 2100,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 124,
+      "code": "C-5030AF",
+      "description": "Pokrowiec do poduszki PROFILOWANEJ (MFP-5030AF)",
+      "sizes": "50x30x11cm",
+      "unit": "szt.",
+      "net_minor": 1900,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 125,
+      "code": "C-5535AF",
+      "description": "Pokrowiec do poduszki PROFILOWANEJ (MFP-5535AF)",
+      "sizes": "55x35x12cm",
+      "unit": "szt.",
+      "net_minor": 2100,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 126,
+      "code": "C-5535",
+      "description": "Pokrowiec do poduszki PROFILOWANEJ - DUŻY ROZMIAR",
+      "sizes": "55x35x12cm",
+      "unit": "szt.",
+      "net_minor": 2100,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 127,
+      "code": "C-5433EP",
+      "description": "Pokrowiec do poduszki PROFILOWANEJ (MFP-5433EP)",
+      "sizes": "54x33x12cm",
+      "unit": "szt.",
+      "net_minor": 1900,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 128,
+      "code": "C-4026",
+      "description": "Pokrowiec do poduszki dla dzieci BABY DREAM",
+      "sizes": "40x26x7cm",
+      "unit": "szt.",
+      "net_minor": 1300,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 129,
+      "code": "C-6035",
+      "description": "Pokrowiec do poduszki PROFILOWANEJ (MFP-6035)",
+      "sizes": "60x35x12cm",
+      "unit": "szt.",
+      "net_minor": 2100,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 130,
+      "code": "C-5030TP",
+      "description": "Pokrowiec do poduszki TRADYCYJNEJ (TFP-5030TP)",
+      "sizes": "50x30x10cm",
+      "unit": "szt.",
+      "net_minor": 1700,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 131,
+      "code": "C-6040",
+      "description": "Pokrowiec do poduszki TRADYCYJNEJ (TFP-6040)",
+      "sizes": "60x40x12cm",
+      "unit": "szt.",
+      "net_minor": 2100,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 133,
+      "code": "DSC-33",
+      "description": "Dynamiczna poduszka do siedzenia DYNAPAD (niebieska, czerwona lub szara)",
+      "sizes": "33cm",
+      "unit": "szt.",
+      "net_minor": 3900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 134,
+      "code": "DSC-35",
+      "description": "Dynamiczna poduszka do siedzenia DYNAPAD MAX",
+      "sizes": "35cm",
+      "unit": "szt.",
+      "net_minor": 5000,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 135,
+      "code": "DSC-37",
+      "description": "Dynamiczna poduszka do siedzenia DYNAPAD BALANCE",
+      "sizes": "37,5cm",
+      "unit": "szt.",
+      "net_minor": 5200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 136,
+      "code": "MB-5",
+      "description": "Piłeczka rehabilitacyjna z kolcami. Kolor POMARAŃCZOWY",
+      "sizes": "5cm",
+      "unit": "szt.",
+      "net_minor": 420,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 137,
+      "code": "MB-6",
+      "description": "Piłeczka rehabilitacyjna z kolcami. Kolor NIEBIESKI",
+      "sizes": "6cm",
+      "unit": "szt.",
+      "net_minor": 470,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 138,
+      "code": "MB-7",
+      "description": "Piłeczka rehabilitacyjna z kolcami. Kolor ZIELONY",
+      "sizes": "7cm",
+      "unit": "szt.",
+      "net_minor": 530,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 139,
+      "code": "MB-8",
+      "description": "Piłeczka rehabilitacyjna z kolcami. Kolor ŻÓŁTY",
+      "sizes": "8cm",
+      "unit": "szt.",
+      "net_minor": 585,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 140,
+      "code": "MB-9",
+      "description": "Piłeczka rehabilitacyjna z kolcami. Kolor CZERWONY",
+      "sizes": "9cm",
+      "unit": "szt.",
+      "net_minor": 650,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 141,
+      "code": "MB-10",
+      "description": "Piłeczka rehabilitacyjna z kolcami. Kolor SREBRNY",
+      "sizes": "10cm",
+      "unit": "szt.",
+      "net_minor": 700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 142,
+      "code": "TMB-20",
+      "description": "Piłeczka rehabilitacyjna MIDI. Kolor NIEBIESKI",
+      "sizes": "20cm",
+      "unit": "szt.",
+      "net_minor": 1350,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 143,
+      "code": "RLB-20",
+      "description": "Piłka rehabilitacyjna MIDI REH. Kolor CZERWONY",
+      "sizes": "20cm",
+      "unit": "szt.",
+      "net_minor": 1350,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 144,
+      "code": "RLB-25",
+      "description": "Piłka rehabilitacyjna MIDI REH. Kolor NIEBIESKI",
+      "sizes": "25cm",
+      "unit": "szt.",
+      "net_minor": 1450,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 145,
+      "code": "RLB-30",
+      "description": "Piłka rehabilitacyjna MIDI REH. Kolor ŻÓŁTY",
+      "sizes": "30cm",
+      "unit": "szt.",
+      "net_minor": 1550,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 146,
+      "code": "GM-55",
+      "description": "Piłka rahabilitacyjna CLASSIC. Kolor CZERWONY",
+      "sizes": "55cm",
+      "unit": "szt.",
+      "net_minor": 3200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 147,
+      "code": "GM-65",
+      "description": "Piłka rahabilitacyjna CLASSIC. Kolor NIEBIESKI",
+      "sizes": "65cm",
+      "unit": "szt.",
+      "net_minor": 3800,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 148,
+      "code": "GM-75",
+      "description": "Piłka rahabilitacyjna CLASSIC. Kolor SREBRNY",
+      "sizes": "75cm",
+      "unit": "szt.",
+      "net_minor": 4400,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 149,
+      "code": "GM-85",
+      "description": "Piłka rahabilitacyjna CLASSIC. Kolor ZIELONY",
+      "sizes": "85cm",
+      "unit": "szt.",
+      "net_minor": 5600,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 150,
+      "code": "ABS-55",
+      "description": "Piłka rahabilitacyjna ABS. Kolor CZERWONY",
+      "sizes": "55cm",
+      "unit": "szt.",
+      "net_minor": 3700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 151,
+      "code": "ABS-65",
+      "description": "Piłka rahabilitacyjna ABS. Kolor NIEBIESKI",
+      "sizes": "65cm",
+      "unit": "szt.",
+      "net_minor": 4200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 152,
+      "code": "ABS-75",
+      "description": "Piłka rahabilitacyjna ABS. Kolor SREBRNY",
+      "sizes": "75cm",
+      "unit": "szt.",
+      "net_minor": 4850,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 153,
+      "code": "ABS-85",
+      "description": "Piłka rahabilitacyjna ABS. Kolor ZIELONY",
+      "sizes": "85cm",
+      "unit": "szt.",
+      "net_minor": 5950,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 154,
+      "code": "BMB-55",
+      "description": "Piłka rahabilitacyjna MASUJĄCA. Kolor POMARAŃCZOWY",
+      "sizes": "55cm",
+      "unit": "szt.",
+      "net_minor": 4100,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 155,
+      "code": "BMB-65",
+      "description": "Piłka rahabilitacyjna MASUJĄCA. Kolor ZIELONY",
+      "sizes": "65cm",
+      "unit": "szt.",
+      "net_minor": 4500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 156,
+      "code": "BMB-75",
+      "description": "Piłka rahabilitacyjna MASUJĄCA. Kolor SREBRNY",
+      "sizes": "75cm",
+      "unit": "szt.",
+      "net_minor": 5200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 157,
+      "code": "PSB-50",
+      "description": "Piłka rahabilitacyjna ORZESZEK z ABS. Kolor SREBRNY",
+      "sizes": "50x100cm",
+      "unit": "szt.",
+      "net_minor": 6300,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 158,
+      "code": "HB2-45",
+      "description": "Piłka rahab. HOPPER z ROGAMI. Kolor CZERWONY",
+      "sizes": "45cm",
+      "unit": "szt.",
+      "net_minor": 2500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 159,
+      "code": "HB2-50",
+      "description": "Piłka rahab. HOPPER z ROGAMI. Kolor ZÓŁTY",
+      "sizes": "50cm",
+      "unit": "szt.",
+      "net_minor": 2700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 160,
+      "code": "HB2-55",
+      "description": "Piłka rahab. HOPPER z ROGAMI. Kolor ZIELONY",
+      "sizes": "55cm",
+      "unit": "szt.",
+      "net_minor": 2900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 161,
+      "code": "HB1-45",
+      "description": "Piłka rahab. HOPPER z UCHEM. Kolor CZERWONY",
+      "sizes": "45cm",
+      "unit": "szt.",
+      "net_minor": 2500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 162,
+      "code": "HB1-50",
+      "description": "Piłka rahab. HOPPER z UCHEM. Kolor ŻÓŁTY",
+      "sizes": "50cm",
+      "unit": "szt.",
+      "net_minor": 2700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 163,
+      "code": "HB1-55",
+      "description": "Piłka rahab. HOPPER z UCHEM. Kolor ZIELONY",
+      "sizes": "55cm",
+      "unit": "szt.",
+      "net_minor": 2900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 165,
+      "code": "EB-M30",
+      "description": "Taśma rehabilitacyjna. Kolor czerwony. SŁABA",
+      "sizes": "15cmx2m",
+      "unit": "szt.",
+      "net_minor": 690,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 166,
+      "code": "EB-M35",
+      "description": "Taśma rehabilitacyjna. Kolor zielony. ŚREDNIA",
+      "sizes": "15cmx2m",
+      "unit": "szt.",
+      "net_minor": 790,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 167,
+      "code": "EB-M40",
+      "description": "Taśma rehabilitacyjna. Kolor niebieski. MOCNA",
+      "sizes": "15cmx2m",
+      "unit": "szt.",
+      "net_minor": 890,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 168,
+      "code": "EB-M45",
+      "description": "Taśma rehabilitacyjna. Kolor fioletowy. BARDZO MOCNA",
+      "sizes": "15cmx2m",
+      "unit": "szt.",
+      "net_minor": 990,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 169,
+      "code": "EB-30R",
+      "description": "Taśma rehabilitacyjna. Kolor czerwony. SŁABA",
+      "sizes": "15cmx45,5m",
+      "unit": "szt.",
+      "net_minor": 11500,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 170,
+      "code": "EB-35R",
+      "description": "Taśma rehabilitacyjna. Kolor zielony. ŚREDNIA",
+      "sizes": "15cmx45,5m",
+      "unit": "szt.",
+      "net_minor": 13500,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 171,
+      "code": "EB-40R",
+      "description": "Taśma rehabilitacyjna. Kolor niebieski. MOCNA",
+      "sizes": "15cmx45,5m",
+      "unit": "szt.",
+      "net_minor": 15500,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 172,
+      "code": "EB-45R",
+      "description": "Taśma rehabilitacyjna. Kolor fioletowy. BARDZO MOCNA",
+      "sizes": "15cmx45,5m",
+      "unit": "szt.",
+      "net_minor": 17500,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 174,
+      "code": "AR-090",
+      "description": "Poduszka przeciwodleżynowa - okrągła. PREVENT",
+      "sizes": "43x4cm",
+      "unit": "szt.",
+      "net_minor": 2290,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 175,
+      "code": "AR-091",
+      "description": "Poduszka przeciwodleżynowa - kwadratowa. PREVENT",
+      "sizes": "44x44x4cm",
+      "unit": "szt.",
+      "net_minor": 2290,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 176,
+      "code": "AR-092",
+      "description": "Poduszka przeciwodleżynowa - kwadratowa II. PREVENT",
+      "sizes": "44x44x7cm",
+      "unit": "szt.",
+      "net_minor": 2290,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 177,
+      "code": "AR-093",
+      "description": "Poduszka przeciwodleżynowa - pneumatyczna. PREVENT CLASSIC",
+      "sizes": "42x42x4cm",
+      "unit": "szt.",
+      "net_minor": 6200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 178,
+      "code": "AR-094",
+      "description": "Poduszka przeciwodleżynowa - pneumatyczna. PREVENT PLUS",
+      "sizes": "46x38x4cm",
+      "unit": "szt.",
+      "net_minor": 9600,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 179,
+      "code": "AR-095",
+      "description": "Poduszka przeciwodleżynowa - pneumatyczna. PREVENT PREMIUM",
+      "sizes": "44x41x6cm",
+      "unit": "szt.",
+      "net_minor": 16900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 181,
+      "code": "AR-099",
+      "description": "Basen do mycia głowy z prysznicem. PREMIUM SET.",
+      "sizes": "64x50x23cm",
+      "unit": "szt.",
+      "net_minor": 6900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 183,
+      "code": "AR-920",
+      "description": "Materac przeciwodleżynowy, pneumatyczny. Max. 135kg. BĄBELKOWY",
+      "sizes": "200x90x7cm",
+      "unit": "szt.",
+      "net_minor": 10900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 184,
+      "code": "AR-921",
+      "description": "Podkład do materaca przeciwodleżynowego AR-920, max. 135kg.",
+      "sizes": "200x90x7cm",
+      "unit": "szt.",
+      "net_minor": 6500,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 185,
+      "code": "AR-950",
+      "description": "Materac pneumat. przeciwodleżynowy, zmiennociśnieniowy, RUROWY",
+      "sizes": "200x86x10cm",
+      "unit": "szt.",
+      "net_minor": 29900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 186,
+      "code": "AR-951",
+      "description": "Podkład do materaca przeciwodleżynowego - RUROWEGO",
+      "sizes": "200x86x10cm",
+      "unit": "szt.",
+      "net_minor": 18900,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 188,
+      "code": "AR-220",
+      "description": "Podpórka pod plecy (szeroka, materiał przewiewny Mesh)",
+      "sizes": "biały/czarny",
+      "unit": "szt.",
+      "net_minor": 9500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 190,
+      "code": "AR-010",
+      "description": "Kula łokciowa - aluminiowa - kolor ZIELONY",
+      "sizes": "zielona",
+      "unit": "szt.",
+      "net_minor": 2390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 191,
+      "code": "AR-010",
+      "description": "Kula łokciowa - aluminiowa - kolor NIEBIESKI",
+      "sizes": "niebieska",
+      "unit": "szt.",
+      "net_minor": 2390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 192,
+      "code": "AR-010",
+      "description": "Kula łokciowa - aluminiowa - kolor CZERWONY",
+      "sizes": "czerwona",
+      "unit": "szt.",
+      "net_minor": 2390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 193,
+      "code": "AR-010",
+      "description": "Kula łokciowa - aluminiowa - kolor CZARNO/SREBRNY",
+      "sizes": "czarno/srebrna",
+      "unit": "szt.",
+      "net_minor": 2390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 194,
+      "code": "AR-010",
+      "description": "Kula łokciowa - aluminiowa - kolor SZARO/SREBRNY",
+      "sizes": "szaro/srebrna",
+      "unit": "szt.",
+      "net_minor": 2390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 195,
+      "code": "AR-010M",
+      "description": "Kula łokciowa - aluminiowa z miękkim uchwytem Softi  - nowość",
+      "sizes": "5 kolorów",
+      "unit": "szt.",
+      "net_minor": 3390,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 196,
+      "code": "AR-024",
+      "description": "Kula łokciowa-aluminowa z ruchomą obejmą",
+      "sizes": "srebrny",
+      "unit": "szt.",
+      "net_minor": 3300,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 197,
+      "code": "AR-024M",
+      "description": "Kula łokciowa-aluminowa z ruchomą obejmą i miękkim uchwytem Pro-Soft nowość",
+      "sizes": "2 kolory",
+      "unit": "szt.",
+      "net_minor": 3790,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 198,
+      "code": "AR-025",
+      "description": "Kula łokciowa-aluminowa z ruchomą obejmą, ergonomiczny uchwyt. PRAWA/LEWA",
+      "sizes": "srebrny",
+      "unit": "szt.",
+      "net_minor": 4500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 199,
+      "code": "AR-011",
+      "description": "Nasadka gumowa na kule AR-010, kolor SZARY, CZARNY, BRĄZOWY",
+      "sizes": "szara, czarna, brązowa",
+      "unit": "szt.",
+      "net_minor": 330,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 200,
+      "code": "AR-011M",
+      "description": "Nasadka gumowa na kule AR-010M, AR-024M, kolor SZARY lub CZARNY",
+      "sizes": "szara / czarna",
+      "unit": "szt.",
+      "net_minor": 350,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 201,
+      "code": "AR-011BK",
+      "description": "Nasadka gumowa na balkonik AR-009, kolor SZARY",
+      "sizes": "szara / czarna",
+      "unit": "szt.",
+      "net_minor": 350,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 202,
+      "code": "AR-011KU",
+      "description": "Nasadka gumowa na kule AR-024, AR-025, kolor SZARY",
+      "sizes": "szara",
+      "unit": "szt.",
+      "net_minor": 330,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 203,
+      "code": "AR-011CN",
+      "description": "Nasadka gumowa na czwórnóg niski AR-017 kolor CZARNY",
+      "sizes": "szara",
+      "unit": "szt.",
+      "net_minor": 175,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 204,
+      "code": "AR-011TC",
+      "description": "Nasadka gumowa na trójnóg AR-016, czwórnóg AR-017W, kolor SZARY",
+      "sizes": "szara",
+      "unit": "szt.",
+      "net_minor": 330,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 205,
+      "code": "AR-012",
+      "description": "Nasadka gumowa na balkonik, kolor CZARNY",
+      "sizes": "czarna",
+      "unit": "szt.",
+      "net_minor": 350,
+      "vat_rate": 23,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 206,
+      "code": "AR-013",
+      "description": "Laska inwalidzka aluminiowa                                                   kolory: czarny",
+      "sizes": "srebrny/miedziany",
+      "unit": "szt.",
+      "net_minor": 2500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 207,
+      "code": "AR-014D",
+      "description": "Laska inwalidzka aluminiowa z miękkim uchwytem SOFT WAVE srebrny, niebieski, czarny",
+      "sizes": "miedziany, zielony",
+      "unit": "szt.",
+      "net_minor": 2900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 208,
+      "code": "AR-014",
+      "description": "Laska inwalidzka aluminiowa z miękkim uchwytem   KOLORY: miedziany, srebrny",
+      "sizes": "antracyt",
+      "unit": "szt.",
+      "net_minor": 2900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 209,
+      "code": "AR-014E",
+      "description": "Laska inwalidzka aluminiowa z miękkim, uchwytem. ERGO.  miedziana, srebrna",
+      "sizes": "czarna, niebieska",
+      "unit": "szt.",
+      "net_minor": 2900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 210,
+      "code": "AR-015",
+      "description": "Laska inwalidzka aluminiowa - składana.     KOLORY: miedziany, srebrny, CZARNY",
+      "sizes": "srebrny, miedziany, czarny",
+      "unit": "szt.",
+      "net_minor": 3200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 211,
+      "code": "AR-016",
+      "description": "Laska inwalidzka - trójnóg",
+      "sizes": "srebrny",
+      "unit": "szt.",
+      "net_minor": 4300,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 212,
+      "code": "AR-016M",
+      "description": "Laska inwalidzka – trójnóg z miękkim uchwytem T-SOFT",
+      "sizes": "czarny",
+      "unit": "szt.",
+      "net_minor": 6900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 213,
+      "code": "AR-017",
+      "description": "Laska inwalidzka - czwórnóg niski z miękkim uchwytem",
+      "sizes": "srebrny / antracyt",
+      "unit": "szt.",
+      "net_minor": 4800,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 214,
+      "code": "AR-017M",
+      "description": "Laska inwalidzka – czwórnóg z miękkim uchwytem T-SOFT",
+      "sizes": "czarny",
+      "unit": "szt.",
+      "net_minor": 6900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 215,
+      "code": "AR-017W",
+      "description": "Laska inwalidzka - czwórnóg wysoki",
+      "sizes": "srebrny",
+      "unit": "szt.",
+      "net_minor": 4600,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 216,
+      "code": "AR-001",
+      "description": "Balkonik aluminiowy-składany. Krocząco stały. Pojedyczna rama H",
+      "sizes": "srebrny i miedziany",
+      "unit": "szt.",
+      "net_minor": 10700,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 217,
+      "code": "AR-002",
+      "description": "Balkonik aluminiowy-składany. Krocząco stały. Podwójna rama H",
+      "sizes": "srebrny i miedziany",
+      "unit": "szt.",
+      "net_minor": 10900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 218,
+      "code": "AR-003",
+      "description": "Balkonik aluminiowy-składany. Dwukołowy - kola 5`` (12cm)",
+      "sizes": "srebrny i miedziany",
+      "unit": "szt.",
+      "net_minor": 11200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 219,
+      "code": "AR-004",
+      "description": "Balkonik trójkołowy z torbą i koszykiem",
+      "sizes": "granatowy",
+      "unit": "szt.",
+      "net_minor": 26900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 220,
+      "code": "AR-005",
+      "description": "Podpórka rehabilitacyjna 4-kołowa. Stalowa. CLASSIC",
+      "sizes": "granatowa",
+      "unit": "szt.",
+      "net_minor": 29500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 221,
+      "code": "AR-006",
+      "description": "Podpórka rehabilitacyjna 4-kołowa. Aluminiowa. PRESTIGE niebieska, srebrna",
+      "sizes": "bordowa",
+      "unit": "szt.",
+      "net_minor": 29900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 222,
+      "code": "AR-007",
+      "description": "Podpórka rehabilitacyjna 4-kołowa. Aluminiowa. DYNAMIC",
+      "sizes": "srebrny nikiel",
+      "unit": "szt.",
+      "net_minor": 39900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 223,
+      "code": "AR-008",
+      "description": "Balkonik aluminiowy-składany. 3-funkcyjny.",
+      "sizes": "srebrny i miedziany",
+      "unit": "szt.",
+      "net_minor": 11900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 224,
+      "code": "AR-009",
+      "description": "Balkonik aluminiowy z kulką - składany, dwukołowy.",
+      "sizes": "srebrny",
+      "unit": "szt.",
+      "net_minor": 12900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 225,
+      "code": "AR-020",
+      "description": "Podpórka rehabilitacyjna dwukołowa. STANDARD",
+      "sizes": "niebieski",
+      "unit": "szt.",
+      "net_minor": 12900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 226,
+      "code": "AR-021",
+      "description": "Podpórka rehabilitacyjna dwukołowa. DELUXE",
+      "sizes": "grafitowy",
+      "unit": "szt.",
+      "net_minor": 17900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 227,
+      "code": "AR-022",
+      "description": "Podpórka rehabilitacyjna 4-kołowa, aluminiowa. COMFORT",
+      "sizes": "bordowa",
+      "unit": "szt.",
+      "net_minor": 38900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 228,
+      "code": "AR-023",
+      "description": "Balkonik alumiowy, krocząco-stały, ułatwiający wstawanie.",
+      "sizes": "srebrny",
+      "unit": "szt.",
+      "net_minor": 13500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 229,
+      "code": "AR-026",
+      "description": "Podpórka rehabilitacyjna 4-kołowa aluminiowa. COMPACT",
+      "sizes": "biały",
+      "unit": "szt.",
+      "net_minor": 34900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 230,
+      "code": "AR-027",
+      "description": "Balkonik trójkołowy aluminiowy. ULTRA",
+      "sizes": "czarny",
+      "unit": "szt.",
+      "net_minor": 32900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 231,
+      "code": "AR-028",
+      "description": "Podpórka rehabilitacyjna 4-kołowa aluminiowa z podparciem łokci. SUPPORT",
+      "sizes": "bordowy",
+      "unit": "szt.",
+      "net_minor": 47900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 232,
+      "code": "AR-029",
+      "description": "Podpórka rehabilitacyjna 4-kołowa aluminiowa z podparciem łokci. SUPPORT PLUS",
+      "sizes": "biały",
+      "unit": "szt.",
+      "net_minor": 57900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 233,
+      "code": "AR-030",
+      "description": "Balkonik trójkołowy aluminiowy z siedziskiem SUPER LIGHT (4,60kg)",
+      "sizes": "zielony metalic",
+      "unit": "szt.",
+      "net_minor": 29900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 234,
+      "code": "AR-031",
+      "description": "Balkonik aluminiowy-składany. 4-kołowy z hamulcami.",
+      "sizes": "srebrny",
+      "unit": "szt.",
+      "net_minor": 15900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 235,
+      "code": "AR-032",
+      "description": "Podpórka rehabilitacyjna 4-kołowa, aluminiowa. PRACTICAL  - nowość",
+      "sizes": "czarny",
+      "unit": "szt.",
+      "net_minor": 25900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 236,
+      "code": "AR-101",
+      "description": "Krzesło toaletowe - składane",
+      "sizes": "szary",
+      "unit": "szt.",
+      "net_minor": 11900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 237,
+      "code": "AR-102",
+      "description": "Krzesło toaletowe tapicerowane. SKŁADANE",
+      "sizes": "czarny",
+      "unit": "szt.",
+      "net_minor": 22900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 238,
+      "code": "AR-103",
+      "description": "Krzesło toaletowe tapicerowane. Regulacja wysokości",
+      "sizes": "granatowy",
+      "unit": "szt.",
+      "net_minor": 24900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 239,
+      "code": "AR-104",
+      "description": "Krzesło toaletowo - prysznicowe, aluminiowe - składane",
+      "sizes": "chrom/niebieski",
+      "unit": "szt.",
+      "net_minor": 22900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 240,
+      "code": "AR-110",
+      "description": "Nakładka toaletowa z klapą, podwyższenie toalety 10cm",
+      "sizes": "10cm",
+      "unit": "szt.",
+      "net_minor": 6500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 241,
+      "code": "AR-110BK",
+      "description": "Nakładka toaletowa, podwyższenie toalety 10cm (bez klapy)",
+      "sizes": "10cm",
+      "unit": "szt.",
+      "net_minor": 6000,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 242,
+      "code": "AR-115",
+      "description": "Nakładka toaletowa z klapą, podwyższenie toalety 15cm",
+      "sizes": "15cm",
+      "unit": "szt.",
+      "net_minor": 7500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 243,
+      "code": "AR-115BK",
+      "description": "Nakładka toaletowa, podwyższenie toalety 15cm (bez klapy)",
+      "sizes": "15cm",
+      "unit": "szt.",
+      "net_minor": 7000,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 245,
+      "code": "AR-018",
+      "description": "Rotor rehabilitacyjny                  (Kolor: srebrny, niebieski lub czarny)",
+      "sizes": "49x40x30cm",
+      "unit": "szt.",
+      "net_minor": 5500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 246,
+      "code": "AR-019",
+      "description": "Rotor rehabilitacyjny - skadany  (Kolor: srebrny, niebieski lub czarny)",
+      "sizes": "50x36x26cm",
+      "unit": "szt.",
+      "net_minor": 7900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 248,
+      "code": "AR-201",
+      "description": "Taboret prysznicowy - okrągły",
+      "sizes": "biały / srebrny",
+      "unit": "szt.",
+      "net_minor": 6500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 249,
+      "code": "AR-201A",
+      "description": "Taboret prysznicowy okrągły - obrotowy",
+      "sizes": "biały / srebrny",
+      "unit": "szt.",
+      "net_minor": 8500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 250,
+      "code": "AR-202",
+      "description": "Krzesło prysznicowe bez oparcia",
+      "sizes": "biały / srebrny",
+      "unit": "szt.",
+      "net_minor": 6900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 251,
+      "code": "AR-203",
+      "description": "Krzesło prysznicowe z oparciem",
+      "sizes": "biały / srebrny",
+      "unit": "szt.",
+      "net_minor": 12500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 252,
+      "code": "AR-204",
+      "description": "Taboret prysznicowy - składany. Stalowy",
+      "sizes": "biały",
+      "unit": "szt.",
+      "net_minor": 10900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 253,
+      "code": "AR-205",
+      "description": "Taboret prysznicowy - składany. Aluminiowy",
+      "sizes": "biały / srebrny",
+      "unit": "szt.",
+      "net_minor": 11500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 254,
+      "code": "AR-206",
+      "description": "Ławka nawannowa z uchwytem. Anty-poślizgowy uchwyt",
+      "sizes": "niebieski i zielony",
+      "unit": "szt.",
+      "net_minor": 7900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 255,
+      "code": "AR-207",
+      "description": "Ławka nawannowa- wgłębna. Regulacja szerokości.",
+      "sizes": "biały / srebrny",
+      "unit": "szt.",
+      "net_minor": 9800,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 256,
+      "code": "AR-208",
+      "description": "Krzyesło prysznicowe z wycięciem U",
+      "sizes": "biały / srebrny",
+      "unit": "szt.",
+      "net_minor": 12900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 257,
+      "code": "AR-209",
+      "description": "Taboret prysznicowy z wycięciem U",
+      "sizes": "niebieski i zielony",
+      "unit": "szt.",
+      "net_minor": 9200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 258,
+      "code": "AR-210",
+      "description": "Podnóżek - taboret prysznicowy",
+      "sizes": "biały / srebrny",
+      "unit": "szt.",
+      "net_minor": 8900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 260,
+      "code": "AR-300",
+      "description": "Wózek inwalidzki aluminiowy Ergonomic. Ultralekki. Kolor: Srebrny metalic",
+      "sizes": "41,43,46,48,50cm",
+      "unit": "szt.",
+      "net_minor": 105900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 261,
+      "code": "AR-303",
+      "description": "Wózek inwalidzki aluminiowy Galactic. Ultralekki. Kolor ramy: biały",
+      "sizes": "41,45,51cm",
+      "unit": "szt.",
+      "net_minor": 84900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 262,
+      "code": "AR-320",
+      "description": "Wózek inwalidzki aluminiowy Perfect. Srebrny metalic. Koła pełne lub pomp.",
+      "sizes": "41,43,46,48,50cm",
+      "unit": "szt.",
+      "net_minor": 81900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 263,
+      "code": "AR-330A",
+      "description": "Wózek inwalidzki aluminiowy Dynamic. Srebrny metalic. Koła pełne lub pomp.",
+      "sizes": "41,43,46,48,50cm",
+      "unit": "szt.",
+      "net_minor": 86900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 264,
+      "code": "AR-350",
+      "description": "Wózek inwalidzki aluminiowy Prestige. Srebrny metalic. Koła pełne lub pompowane",
+      "sizes": "41,43,46,48,50cm",
+      "unit": "szt.",
+      "net_minor": 88900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 265,
+      "code": "AR-355",
+      "description": "Wózek inwalidzki magnezowy. Magnesium. Srebrny metalic. 2 TAPICERKI",
+      "sizes": "41,43,46,48cm",
+      "unit": "szt.",
+      "net_minor": 129900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 266,
+      "code": "AR-366",
+      "description": "Wózek inwalidzki magnezowy. Aero. Czarny mat. Koła pełne lub pompowane",
+      "sizes": "41,43,46,48cm",
+      "unit": "szt.",
+      "net_minor": 109900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 267,
+      "code": "AR-400",
+      "description": "Wózek inwalidzki stalowy Optimum. Srebrny metalic. Koła pełne lub pompowane",
+      "sizes": "41,43,46,48,50cm",
+      "unit": "szt.",
+      "net_minor": 44500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 268,
+      "code": "AR-403",
+      "description": "Wózek inwalidzki stalowy Elegant. Srebrny metalic. Koła pełne lub pompowane",
+      "sizes": "41,43,46,48,50cm",
+      "unit": "szt.",
+      "net_minor": 44900,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 269,
+      "code": "AR-405",
+      "description": "Wózek inwalidzki stalowy Regular. Srebrny metalic. Koła pełne lub pompowane",
+      "sizes": "41,43,46,48,50cm",
+      "unit": "szt.",
+      "net_minor": 40500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 271,
+      "code": "CHP-1010",
+      "description": "Okład żelowy zimno-ciepły wielokrotnegu użycia-osłonka w zestawie.",
+      "sizes": "10x10cm",
+      "unit": "szt.",
+      "net_minor": 750,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 272,
+      "code": "CHP-1025",
+      "description": "Okład żelowy zimno-ciepły wielokrotnegu użycia-osłonka w zestawie.",
+      "sizes": "10x25cm",
+      "unit": "szt.",
+      "net_minor": 1600,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 273,
+      "code": "CHP-2030",
+      "description": "Okład żelowy zimno-ciepły wielokrotnegu użycia-osłonka w zestawie.",
+      "sizes": "20x30cm",
+      "unit": "szt.",
+      "net_minor": 3500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 295,
+      "code": "MS01",
+      "description": "Pończocha podgipsowa Stockinet 3M, op.handlowe a`1 rolka (22,8mb). BIAŁA",
+      "sizes": "2,5cm",
+      "unit": "szt.",
+      "net_minor": 8800,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 296,
+      "code": "MS02",
+      "description": "Pończocha podgipsowa Stockinet 3M, op.handlowe a`1 rolka (22,8mb). BIAŁA",
+      "sizes": "5cm",
+      "unit": "szt.",
+      "net_minor": 9500,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 297,
+      "code": "MS03",
+      "description": "Pończocha podgipsowa Stockinet 3M, op.handlowe a`1 rolka (22,8mb). BIAŁA",
+      "sizes": "7,6cm",
+      "unit": "szt.",
+      "net_minor": 12400,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 298,
+      "code": "MS04",
+      "description": "Pończocha podgipsowa Stockinet 3M, op.handlowe a`1 rolka (22,8mb). BIAŁA",
+      "sizes": "10,1cm",
+      "unit": "szt.",
+      "net_minor": 14600,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 299,
+      "code": "MS06",
+      "description": "Pończocha podgipsowa Stockinet 3M, op.handlowe a`1 rolka (22,8mb). BIAŁA",
+      "sizes": "15,2cm",
+      "unit": "szt.",
+      "net_minor": 21200,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 301,
+      "code": "PDG-6",
+      "description": "Syntetyczny podkład podgipsowy. Rolka - 3mb. (Op. zbiorcze 20 szt.)",
+      "sizes": "6cm",
+      "unit": "szt.",
+      "net_minor": 99,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 302,
+      "code": "PDG-10",
+      "description": "Syntetyczny podkład podgipsowy. Rolka - 3mb. (Op. zbiorcze 20 szt.)",
+      "sizes": "10cm",
+      "unit": "szt.",
+      "net_minor": 159,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 303,
+      "code": "PDG-15",
+      "description": "Syntetyczny podkład podgipsowy. Rolka - 3mb. (Op. zbiorcze 20 szt.)",
+      "sizes": "15cm",
+      "unit": "szt.",
+      "net_minor": 239,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    },
+    {
+      "source_row": 304,
+      "code": "PDG-20",
+      "description": "Syntetyczny podkład podgipsowy. Rolka - 3mb. (Op. zbiorcze 20 szt.)",
+      "sizes": "20cm",
+      "unit": "szt.",
+      "net_minor": 265,
+      "vat_rate": 8,
+      "promo_5plus1_net_minor": null
+    }
+  ]
+}
