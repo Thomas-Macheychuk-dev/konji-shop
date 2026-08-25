@@ -65,6 +65,24 @@ it('imports a fully priced ARmedical product as a draft with exact per-variant p
         ->and($small?->attributeValues()->first()?->value)->toBe('S');
 });
 
+
+it('preserves another supplier product and deterministically resolves an ARmedical product slug collision', function (): void {
+    $existing = Product::query()->create([
+        'name' => 'Existing supplier product',
+        'slug' => 'stabilizator-testowy-armedical',
+        'status' => ProductStatus::DRAFT,
+        'external_source' => 'other-source',
+        'external_id' => 'other-source-product',
+    ]);
+
+    $product = app(ArmedicalProductImporter::class)->import(armedicalImporterPricedProduct())['product'];
+
+    expect($existing->fresh()?->slug)->toBe('stabilizator-testowy-armedical')
+        ->and($product->slug)->toBe('stabilizator-testowy-armedical-armedical-57ef397b16')
+        ->and($product->external_source)->toBe('armedical')
+        ->and($product->external_id)->toBe('armedical-test-brace');
+});
+
 it('keeps ARmedical local imports idempotent and archives variants removed from a later fully priced map', function (): void {
     $importer = app(ArmedicalProductImporter::class);
     $first = $importer->import(armedicalImporterPricedProduct())['product'];

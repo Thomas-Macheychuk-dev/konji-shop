@@ -194,7 +194,7 @@ final class ArmedicalProductImporter
 
         $attributes = [
             'name' => $name,
-            'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
+            'slug' => $this->resolveUniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($productData),
             'description' => $this->productDescriptionHtml($mapped),
             'seo_title' => $this->stringOrNull($productData['seo_title'] ?? null) ?: $name,
@@ -751,7 +751,7 @@ final class ArmedicalProductImporter
         return $code !== '' ? $code : 'attribute';
     }
 
-    private function uniqueProductSlug(string $baseSlug, ?int $currentProductId, string $externalId): string
+    public function resolveUniqueProductSlug(string $baseSlug, ?int $currentProductId, string $externalId): string
     {
         $baseSlug = Str::slug($baseSlug) ?: 'armedical-product-'.substr(hash('sha256', $externalId), 0, 16);
         $candidate = $baseSlug;

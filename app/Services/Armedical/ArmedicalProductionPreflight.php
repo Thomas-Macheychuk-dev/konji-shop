@@ -122,7 +122,7 @@ final class ArmedicalProductionPreflight
         $this->hardCheck($checks, $errors, 'pricing.summary_unmatched', (int) ($pricingSummary['unmatched_variants'] ?? -1) === $metrics['unmatched_variants'], 'pricing_summary unmatched_variants must equal the excluded unresolved variant count.');
         $this->hardCheck($checks, $errors, 'pricing.summary_products', (int) ($pricingSummary['fully_priced_products'] ?? -1) === $metrics['eligible_products'] && (int) ($pricingSummary['unpriced_products'] ?? -1) === $metrics['excluded_products'], 'pricing_summary product cohort counts must match the frozen eligible/excluded split.');
 
-        $this->databaseChecks($checks, $errors, $metrics, $expected);
+        $this->databaseChecks($checks, $errors, $metrics, $expected, $eligible);
         $this->storageChecks($checks, $errors, $expected, max(0, $minimumFreeMiB));
         $this->deploymentConfigChecks($checks, $errors);
 
@@ -342,8 +342,8 @@ final class ArmedicalProductionPreflight
         ];
     }
 
-    /** @param list<array<string,mixed>> $checks @param list<string> $errors @param array<string,mixed> $metrics @param array<string,int|string|null> $expected */
-    private function databaseChecks(array &$checks, array &$errors, array $metrics, array $expected): void
+    /** @param list<array<string,mixed>> $checks @param list<string> $errors @param array<string,mixed> $metrics @param array<string,int|string|null> $expected @param list<array<string,mixed>> $eligible */
+    private function databaseChecks(array &$checks, array &$errors, array $metrics, array $expected, array $eligible): void
     {
         try {
             DB::connection()->getPdo();
@@ -390,11 +390,52 @@ final class ArmedicalProductionPreflight
             ->filter(static fn (string $value): bool => ! isset($approvedImageUrls[$value]))->unique()->values()->all();
         $this->hardCheck($checks, $errors, 'database.existing_image_urls', $unexpectedImageUrls === [], $unexpectedImageUrls === [] ? 'All existing ARmedical image source URLs belong to the eligible frozen cohort.' : 'Unexpected ARmedical image URLs: '.implode(', ', array_slice($unexpectedImageUrls, 0, 20)));
 
-        $slugCollisions = Product::withTrashed()->whereIn('slug', $metrics['slugs'])
-            ->where(function ($query): void {
-                $query->whereNull('external_source')->orWhere('external_source', '!=', self::SOURCE);
-            })->pluck('slug')->unique()->values()->all();
-        $this->hardCheck($checks, $errors, 'database.slug_collisions', $slugCollisions === [], $slugCollisions === [] ? 'No non-ARmedical product slug collisions.' : 'Colliding product slugs: '.implode(', ', $slugCollisions));
+        $resolvedSlugOwners = [];
+        $slugResolutions = [];
+
+        foreach ($eligible as $mapped) {
+            $productData = is_array($mapped['product'] ?? null) ? $mapped['product'] : [];
+            $externalId = $this->stringOrNull($productData['external_id'] ?? null);
+            $baseSlug = $this->stringOrNull($productData['slug'] ?? null);
+
+            if ($externalId === null || $baseSlug === null) {
+                continue;
+            }
+
+            $existingProductId = Product::withTrashed()
+                ->where('external_source', self::SOURCE)
+                ->where('external_id', $externalId)
+                ->value('id');
+            $resolvedSlug = $this->productImporter->resolveUniqueProductSlug(
+                $baseSlug,
+                is_numeric($existingProductId) ? (int) $existingProductId : null,
+                $externalId,
+            );
+            $resolvedSlugOwners[$resolvedSlug][] = $externalId;
+
+            if ($resolvedSlug !== $baseSlug) {
+                $slugResolutions[] = $baseSlug.' -> '.$resolvedSlug;
+            }
+        }
+
+        $resolvedSlugCollisions = [];
+        foreach ($resolvedSlugOwners as $slug => $owners) {
+            if (count($owners) > 1) {
+                $resolvedSlugCollisions[] = $slug.' ['.implode(', ', $owners).']';
+            }
+        }
+
+        $this->hardCheck(
+            $checks,
+            $errors,
+            'database.slug_collisions',
+            $resolvedSlugCollisions === [],
+            $resolvedSlugCollisions !== []
+                ? 'Resolved product slug collisions remain: '.implode(', ', $resolvedSlugCollisions)
+                : ($slugResolutions === []
+                    ? 'No non-ARmedical product slug collisions.'
+                    : 'Non-ARmedical base slug collision(s) will be resolved deterministically: '.implode('; ', $slugResolutions)),
+        );
 
         $externalIdCollisions = Product::withTrashed()->whereIn('external_id', $metrics['product_ids'])
             ->where(function ($query): void {

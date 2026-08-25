@@ -58,7 +58,7 @@ it('passes an exact read-only ARmedical production preflight and probes UTF-8 im
     }
 });
 
-it('fails ARmedical production preflight on non-ARmedical external ID slug SKU and external variant ID collisions', function (): void {
+it('fails ARmedical production preflight on non-ARmedical external ID SKU and external variant ID collisions while safely resolving the slug', function (): void {
     Storage::fake('public');
     $existing = Product::query()->create([
         'name' => 'Existing product',
@@ -94,11 +94,47 @@ it('fails ARmedical production preflight on non-ARmedical external ID slug SKU a
         $output = Artisan::output();
 
         expect($exit)->toBe(1)
-            ->and($output)->toContain('[FAIL] database.slug_collisions')
+            ->and($output)->toContain('[PASS] database.slug_collisions')
+            ->and($output)->toContain('stabilizator-testowy-armedical -> stabilizator-testowy-armedical-armedical-57ef397b16')
             ->and($output)->toContain('[FAIL] database.external_id_collisions')
             ->and($output)->toContain('[FAIL] database.variant_sku_collisions')
             ->and($output)->toContain('[FAIL] database.variant_external_id_collisions')
             ->and($output)->toContain('Do not perform production ARmedical writes');
+    } finally {
+        @unlink($path);
+    }
+});
+
+
+it('passes ARmedical production preflight when only a non-ARmedical base product slug collides', function (): void {
+    Storage::fake('public');
+    Product::query()->create([
+        'name' => 'Existing supplier product',
+        'slug' => 'stabilizator-testowy-armedical',
+        'status' => ProductStatus::DRAFT,
+        'external_source' => 'other-source',
+        'external_id' => 'other-source-product',
+    ]);
+
+    $relativePath = 'scrapers/armedical/production-preflight-slug-collision-test.json';
+    $path = Storage::disk('local')->path($relativePath);
+    @mkdir(dirname($path), 0755, true);
+    file_put_contents($path, json_encode(armedicalProductionPreflightMap(), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+    $mapSha = hash_file('sha256', $path);
+
+    try {
+        $exit = Artisan::call('armedical:production-preflight', armedicalProductionPreflightOptions($relativePath, $mapSha) + [
+            '--minimum-free-mib' => '0',
+            '--probe-images' => '0',
+            '--probe-documents' => '0',
+            '--show-checks' => true,
+        ]);
+        $output = Artisan::output();
+
+        expect($exit)->toBe(0)
+            ->and($output)->toContain('[PASS] database.slug_collisions')
+            ->and($output)->toContain('stabilizator-testowy-armedical -> stabilizator-testowy-armedical-armedical-57ef397b16')
+            ->and($output)->toContain('PASS: ARmedical production preflight is ready');
     } finally {
         @unlink($path);
     }
