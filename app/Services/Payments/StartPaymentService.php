@@ -31,6 +31,9 @@ final class StartPaymentService
                 'provider' => $result->provider,
                 'provider_reference' => $result->providerReference,
                 'payload' => $result->payload,
+                'external_status' => is_string($result->payload['status'] ?? null)
+                    ? $result->payload['status']
+                    : null,
             ]);
 
             $payment->markAsPending();

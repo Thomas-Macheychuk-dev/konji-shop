@@ -33,6 +33,7 @@ beforeEach(function (): void {
                             'mode' => 'test',
                             'order_id' => $order->id,
                             'payment_id' => $payment->id,
+                            'status' => 'NEW',
                         ],
                     );
                 }
@@ -87,6 +88,7 @@ it('starts a payment and updates payment and order state', function (): void {
     expect($payment->provider)->toBe('test')
         ->and($payment->provider_reference)->toBe('fake-payment-'.$payment->id)
         ->and($payment->status)->toBe(PaymentStatus::PENDING)
+        ->and($payment->external_status)->toBe('NEW')
         ->and($payment->payload)->toBeArray();
 
     expect($order->payment_status)->toBe(PaymentStatus::PENDING);

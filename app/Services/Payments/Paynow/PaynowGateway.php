@@ -10,12 +10,18 @@ use App\Data\Payments\PaymentNotificationData;
 use App\Enums\PaymentProvider;
 use App\Models\Order;
 use App\Models\Payment;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use JsonException;
 use RuntimeException;
 
 final class PaynowGateway implements PaymentGateway
 {
+    /** @var list<string> */
+    private const ACCEPTED_INITIAL_STATUSES = ['NEW', 'PENDING'];
+
     public function providerKey(): string
     {
         return PaymentProvider::PAYNOW->value;
@@ -23,59 +29,85 @@ final class PaynowGateway implements PaymentGateway
 
     public function initialize(Order $order, Payment $payment): PaymentInitializationResult
     {
+        /** @var array<string, mixed> $config */
         $config = config('payments.providers.paynow');
 
-        $baseUrl = $config['sandbox']
+        $apiKey = trim((string) ($config['api_key'] ?? ''));
+        $signatureKey = trim((string) ($config['signature_key'] ?? ''));
+
+        if ($apiKey === '' || $signatureKey === '') {
+            throw new RuntimeException('Paynow is not configured for payment initialization.');
+        }
+
+        $buyerEmail = trim((string) ($order->user?->email ?? $order->guest_email ?? ''));
+
+        if ($buyerEmail === '' || filter_var($buyerEmail, FILTER_VALIDATE_EMAIL) === false) {
+            throw new RuntimeException('A valid buyer email is required to initialize Paynow payment.');
+        }
+
+        $baseUrl = (bool) ($config['sandbox'] ?? true)
             ? 'https://api.sandbox.paynow.pl'
             : 'https://api.paynow.pl';
 
-        // Payment amount is already stored in minor units.
-        // Example: 180.00 PLN = 18000 groszy.
-        $amountInGrosze = (int) $payment->amount;
-
         $body = [
-            'amount' => $amountInGrosze,
+            // Paynow expects the amount in the smallest currency unit (grosz for PLN).
+            'amount' => (int) $payment->amount,
             'currency' => $payment->currency ?? 'PLN',
             'externalId' => (string) $order->id,
             'description' => "Zamówienie #{$order->number}",
             'buyer' => [
-                'email' => $order->user?->email ?? $order->guest_email ?? 'test@example.com',
+                'email' => $buyerEmail,
             ],
-            'continueUrl' => url($config['return_path']),
+            'continueUrl' => url((string) ($config['return_path'] ?? '/checkout/success')),
         ];
 
-        $rawBody = json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-
-        if ($rawBody === false) {
-            throw new RuntimeException('Could not encode Paynow request body.');
+        try {
+            $rawBody = json_encode(
+                $body,
+                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR,
+            );
+        } catch (JsonException $exception) {
+            throw new RuntimeException('Could not prepare Paynow payment request.', 0, $exception);
         }
 
-        $signature = base64_encode(
-            hash_hmac('sha256', $rawBody, $config['signature_key'], true)
-        );
+        // Stable for one local Payment row, so a transport-level retry can safely reuse
+        // the same key without creating another Paynow payment. A future payment retry
+        // should use a new local Payment attempt and therefore receives a new key.
+        $idempotencyKey = 'konji-payment-'.$payment->id;
 
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-            'Api-Key' => $config['api_key'],
-            'Signature' => $signature,
-            'Idempotency-Key' => (string) Str::uuid(),
-        ])
-            ->withBody($rawBody, 'application/json')
-            ->post("{$baseUrl}/v1/payments");
-
-        if (! $response->successful() || ($response->json('status') ?? '') !== 'SUCCESS') {
-            throw new RuntimeException('Paynow initialize failed: '.$response->body());
+        try {
+            $signature = PaynowSignature::forRequest(
+                apiKey: $apiKey,
+                signatureKey: $signatureKey,
+                idempotencyKey: $idempotencyKey,
+                body: $rawBody,
+            );
+        } catch (JsonException $exception) {
+            throw new RuntimeException('Could not sign Paynow payment request.', 0, $exception);
         }
 
-        $data = $response->json();
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'Api-Key' => $apiKey,
+                'Signature' => $signature,
+                'Idempotency-Key' => $idempotencyKey,
+            ])
+                ->connectTimeout(max(1, (int) ($config['connect_timeout'] ?? 5)))
+                ->timeout(max(1, (int) ($config['timeout'] ?? 15)))
+                ->withBody($rawBody, 'application/json')
+                ->post("{$baseUrl}/v3/payments");
+        } catch (ConnectionException $exception) {
+            Log::warning('Paynow payment initialization connection failure', [
+                'order_id' => $order->id,
+                'payment_id' => $payment->id,
+            ]);
 
-        return new PaymentInitializationResult(
-            provider: $this->providerKey(),
-            providerReference: $data['paymentId'],
-            redirectUrl: $data['redirectUrl'],
-            payload: $data,
-        );
+            throw new RuntimeException('Payment provider is temporarily unavailable.', 0, $exception);
+        }
+
+        return $this->initializationResult($response, $order, $payment);
     }
 
     public function parseNotification(array $payload): PaymentNotificationData
@@ -105,5 +137,86 @@ final class PaynowGateway implements PaymentGateway
         $receivedSignature = request()->header('Signature');
 
         return hash_equals($computedSignature, $receivedSignature ?? '');
+    }
+
+    private function initializationResult(
+        Response $response,
+        Order $order,
+        Payment $payment,
+    ): PaymentInitializationResult {
+        $data = $response->json();
+
+        if ($response->status() !== 201 || ! is_array($data)) {
+            $this->logInitializationFailure($response, $order, $payment, $data);
+
+            throw new RuntimeException('Payment provider rejected payment initialization.');
+        }
+
+        $status = strtoupper(trim((string) ($data['status'] ?? '')));
+        $providerReference = trim((string) ($data['paymentId'] ?? ''));
+        $redirectUrl = trim((string) ($data['redirectUrl'] ?? ''));
+
+        if ($status === 'ERROR' || ($status !== '' && ! in_array($status, self::ACCEPTED_INITIAL_STATUSES, true))) {
+            $this->logInitializationFailure($response, $order, $payment, $data);
+
+            throw new RuntimeException('Payment provider did not create a payable payment.');
+        }
+
+        if ($providerReference === '' || ! $this->isSecureRedirectUrl($redirectUrl)) {
+            $this->logInitializationFailure($response, $order, $payment, $data);
+
+            throw new RuntimeException('Payment provider returned an invalid initialization response.');
+        }
+
+        return new PaymentInitializationResult(
+            provider: $this->providerKey(),
+            providerReference: $providerReference,
+            redirectUrl: $redirectUrl,
+            payload: $data,
+        );
+    }
+
+    private function logInitializationFailure(
+        Response $response,
+        Order $order,
+        Payment $payment,
+        mixed $data,
+    ): void {
+        Log::warning('Paynow payment initialization rejected', [
+            'order_id' => $order->id,
+            'payment_id' => $payment->id,
+            'http_status' => $response->status(),
+            'external_status' => is_array($data) ? ($data['status'] ?? null) : null,
+            'error_types' => $this->errorTypes($data),
+        ]);
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function errorTypes(mixed $data): array
+    {
+        if (! is_array($data) || ! isset($data['errors']) || ! is_array($data['errors'])) {
+            return [];
+        }
+
+        $types = [];
+
+        foreach ($data['errors'] as $error) {
+            if (is_array($error) && isset($error['errorType']) && is_string($error['errorType'])) {
+                $types[] = $error['errorType'];
+            }
+        }
+
+        return array_values(array_unique($types));
+    }
+
+    private function isSecureRedirectUrl(string $redirectUrl): bool
+    {
+        if (filter_var($redirectUrl, FILTER_VALIDATE_URL) === false) {
+            return false;
+        }
+
+        return strtolower((string) parse_url($redirectUrl, PHP_URL_SCHEME)) === 'https';
     }
 }

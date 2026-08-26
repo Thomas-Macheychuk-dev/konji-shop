@@ -6,18 +6,20 @@ return [
     'providers' => [
         'przelewy24' => [
             'merchant_id' => env('PRZELEWY24_MERCHANT_ID'),
-            'pos_id'      => env('PRZELEWY24_POS_ID'),
-            'crc'         => env('PRZELEWY24_CRC'),
-            'sandbox'     => env('PRZELEWY24_SANDBOX', true),
+            'pos_id' => env('PRZELEWY24_POS_ID'),
+            'crc' => env('PRZELEWY24_CRC'),
+            'sandbox' => env('PRZELEWY24_SANDBOX', true),
         ],
 
         'paynow' => [
-            'api_key'       => env('PAYNOW_API_KEY'),
+            'api_key' => env('PAYNOW_API_KEY'),
             'signature_key' => env('PAYNOW_SIGNATURE_KEY'),
-            'sandbox'       => env('PAYNOW_SANDBOX', true),
+            'sandbox' => env('PAYNOW_SANDBOX', true),
+            'connect_timeout' => (int) env('PAYNOW_CONNECT_TIMEOUT', 5),
+            'timeout' => (int) env('PAYNOW_HTTP_TIMEOUT', 15),
 
             'notification_path' => env('PAYNOW_NOTIFICATION_PATH', '/api/payments/paynow/notifications'),
-            'return_path'       => env('PAYNOW_RETURN_PATH', '/checkout/success'),
+            'return_path' => env('PAYNOW_RETURN_PATH', '/checkout/success'),
         ],
     ],
 ];

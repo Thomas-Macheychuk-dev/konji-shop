@@ -55,8 +55,8 @@ class CheckoutPlaceOrderController extends Controller
             Log::info('Payment initialization result', [
                 'provider' => $paymentInitialization->provider,
                 'provider_reference' => $paymentInitialization->providerReference,
-                'redirect_url' => $paymentInitialization->redirectUrl,
-                'payload' => $paymentInitialization->payload,
+                'order_id' => $order->id,
+                'payment_id' => $payment->id,
             ]);
 
         } catch (RuntimeException $exception) {
@@ -71,13 +71,13 @@ class CheckoutPlaceOrderController extends Controller
 
                 return redirect()
                     ->route('checkout.success')
-                    ->with('error', 'Order was created, but payment could not be started: '.$exception->getMessage());
+                    ->with('error', 'Zamówienie zostało utworzone, ale nie udało się rozpocząć płatności.');
             }
 
             return redirect()
                 ->route('checkout.show')
                 ->withInput()
-                ->with('error', 'BŁĄD PAYNOW: '.$exception->getMessage());
+                ->with('error', 'Nie udało się rozpocząć płatności. Spróbuj ponownie.');
         }
 
         OrderPlaced::dispatch($order);
