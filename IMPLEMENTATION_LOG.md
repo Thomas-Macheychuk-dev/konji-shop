@@ -43,3 +43,12 @@
 - Made localized ARmedical/Sigvaris documents, Sigvaris size charts, and Timago inline images use the logical public filesystem URL so the same importer output works locally and behind S3/CloudFront.
 - Preserved legacy `/storage/...` URL recognition for already-imported content while allowing the same parsers/audits to recognize future object-storage/CDN URLs.
 - Added focused coverage for dry-run/write migration behavior, source retention, description rewriting, HTTPS URL gating, and public URL/path compatibility.
+
+## 2026-08-27 — Private S3 + CloudFront product-media delivery
+
+- Added a dedicated CloudFront product-media distribution backed by the existing private S3 bucket through Origin Access Control with SigV4 signing; the bucket remains fully blocked from public access, CloudFront read permission is limited to `products/*`, and bucket-owner-enforced object ownership is enabled.
+- Use AWS managed `CachingOptimized`, HTTPS redirects, compression, HTTP/2+HTTP/3, and the cost-conscious `PriceClass_100` default rather than enabling a global edge footprint before production traffic requires it.
+- Added configurable catalogue object `Cache-Control` metadata with a one-day browser TTL and seven-day shared-cache TTL; intentionally avoided `immutable`/one-year browser caching until product object names are content-addressed or versioned.
+- Added `shop:check-public-media` for configuration validation and an explicit `--probe` mode that writes one temporary private S3 object, reads it through the configured CDN URL, validates the content, and cleans up the origin object.
+- Added Terraform outputs for the CloudFront domain/public media URL plus a guarded cutover runbook covering Terraform deployment, CDN probe, dry-run/copy, real-object verification, description rewrite, live disk switch, and rollback.
+- Added focused application and infrastructure coverage for direct-S3 URL rejection, private visibility/cache TTL requirements, successful/failed CDN probes, OAC signing, bucket public-access blocking, and the PriceClass_100 MVP default.

@@ -9,6 +9,11 @@ $publicLocalDisk = [
     'report' => false,
 ];
 
+$publicS3CacheControl = trim((string) env(
+    'PUBLIC_FILESYSTEM_CACHE_CONTROL',
+    'public,max-age=86400,s-maxage=604800'
+));
+
 $publicS3Disk = [
     'driver' => 's3',
     'key' => env('AWS_ACCESS_KEY_ID'),
@@ -21,6 +26,9 @@ $publicS3Disk = [
     'visibility' => env('PUBLIC_FILESYSTEM_VISIBILITY', 'private'),
     'throw' => env('PUBLIC_FILESYSTEM_THROW', false),
     'report' => env('PUBLIC_FILESYSTEM_REPORT', false),
+    'options' => $publicS3CacheControl !== '' ? [
+        'CacheControl' => $publicS3CacheControl,
+    ] : [],
 ];
 
 $publicDisk = env('PUBLIC_FILESYSTEM_DRIVER', 'local') === 's3'

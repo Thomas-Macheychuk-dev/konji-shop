@@ -34,6 +34,9 @@ rds_skip_final_snapshot   = true
 # Optional exact bucket name. Must be globally unique.
 # s3_bucket_name = "konji-shop-staging-uploads-123456789012"
 
+# Cost-conscious CDN default for a Poland/European MVP. Expand only when traffic requires it.
+cloudfront_price_class = "PriceClass_100"
+
 # Optional Route 53 DNS record.
 # route53_zone_id = "Z123456789ABCDEFG"
 # domain_name     = "staging.example.pl"

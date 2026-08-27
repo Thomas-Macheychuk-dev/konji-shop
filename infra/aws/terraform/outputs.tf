@@ -53,3 +53,13 @@ output "route53_record" {
   description = "Route 53 record created for the app, if configured."
   value       = var.route53_zone_id != "" && var.domain_name != "" ? var.domain_name : null
 }
+
+output "product_media_cloudfront_domain" {
+  description = "CloudFront distribution domain for public product media."
+  value       = aws_cloudfront_distribution.product_media.domain_name
+}
+
+output "product_media_url" {
+  description = "Laravel PUBLIC_FILESYSTEM_URL value for the private-S3/CloudFront product media path."
+  value       = "https://${aws_cloudfront_distribution.product_media.domain_name}"
+}

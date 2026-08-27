@@ -6,6 +6,7 @@ This Terraform stack creates the first AWS staging/production-style environment 
 - Ubuntu 24.04 EC2 Docker host with Elastic IP
 - RDS MySQL
 - private S3 uploads bucket with encryption, versioning and public access block
+- CloudFront product-media distribution using Origin Access Control (OAC) against the private S3 bucket
 - EC2 IAM role for S3 uploads and AWS Systems Manager
 - optional Route 53 A record
 
@@ -64,6 +65,7 @@ Useful outputs:
 terraform output app_public_ip
 terraform output rds_endpoint
 terraform output s3_bucket
+terraform output product_media_url
 terraform output -raw db_password
 ```
 
@@ -110,6 +112,11 @@ DB_PASSWORD=<terraform output -raw db_password>
 AWS_DEFAULT_REGION=<terraform output s3_region>
 AWS_BUCKET=<terraform output s3_bucket>
 FILESYSTEM_DISK=s3
+PUBLIC_FILESYSTEM_DRIVER=local
+PUBLIC_FILESYSTEM_BUCKET=<terraform output s3_bucket>
+PUBLIC_FILESYSTEM_URL=<terraform output product_media_url>
+PUBLIC_FILESYSTEM_VISIBILITY=private
+PUBLIC_FILESYSTEM_CACHE_CONTROL=public,max-age=86400,s-maxage=604800
 
 CACHE_STORE=redis
 QUEUE_CONNECTION=redis
@@ -117,6 +124,10 @@ SESSION_DRIVER=redis
 ```
 
 For S3 on EC2, you can normally leave `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` empty because the EC2 instance role has S3 access.
+
+Keep `PUBLIC_FILESYSTEM_DRIVER=local` until the catalogue copy and CDN probe have passed. Follow `docs/deployment/product-media-cloudfront-cutover.md`, then switch it to `s3`.
+
+The product-media distribution defaults to `PriceClass_100` to keep the MVP edge footprint cost-conscious for a primarily European audience. Expand the price class only when real traffic requires it.
 
 ## 5. Deploy the app
 

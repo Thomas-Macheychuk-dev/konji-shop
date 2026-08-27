@@ -143,6 +143,17 @@ variable "s3_bucket_name" {
   default     = null
 }
 
+variable "cloudfront_price_class" {
+  description = "CloudFront price class for public catalogue media. PriceClass_100 keeps the MVP edge footprint to North America and Europe/Israel."
+  type        = string
+  default     = "PriceClass_100"
+
+  validation {
+    condition     = contains(["PriceClass_100", "PriceClass_200", "PriceClass_All"], var.cloudfront_price_class)
+    error_message = "cloudfront_price_class must be PriceClass_100, PriceClass_200, or PriceClass_All."
+  }
+}
+
 variable "route53_zone_id" {
   description = "Optional Route 53 hosted zone ID. When set with domain_name, Terraform creates an A record to the EC2 Elastic IP."
   type        = string

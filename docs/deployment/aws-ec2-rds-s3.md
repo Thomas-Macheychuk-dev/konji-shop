@@ -12,8 +12,10 @@ Internet / DNS
           -> queue worker container
           -> scheduler container
           -> Redis container, internal only
+  -> CloudFront product-media CDN
+      -> private S3 bucket through Origin Access Control
   -> RDS MySQL
-  -> S3 bucket for files, product images, shipment labels and protocols
+  -> S3 bucket for application files, product media, shipment labels and protocols
 ```
 
 Use this first because it matches the local Docker Compose setup and keeps the operational surface small. Move Redis to ElastiCache and the web tier to ECS/Fargate later if traffic requires it.
@@ -25,14 +27,15 @@ Create these resources before deploying:
 1. EC2 Ubuntu 24.04 LTS instance, normally `t3.small` or `t3.medium` for the first launch.
 2. Elastic IP attached to EC2, unless an Application Load Balancer is used.
 3. RDS MySQL 8.x instance in private subnets.
-4. S3 bucket for production application files.
-5. IAM user or instance role with the minimum S3 permissions the app needs.
-6. Security groups:
+4. Private S3 bucket for production application files.
+5. CloudFront distribution with Origin Access Control for public catalogue media reads.
+6. IAM user or instance role with the minimum S3 permissions the app needs.
+7. Security groups:
    - EC2: allow 22 from your IP, 80/443 from the internet or from the load balancer only.
    - RDS: allow 3306 from the EC2 security group only.
    - Redis container: no public port, internal Docker network only.
-7. DNS record pointing the shop domain to the Elastic IP or load balancer.
-8. TLS certificate: terminate HTTPS at the load balancer, CloudFront, or a host-level reverse proxy.
+8. DNS record pointing the shop domain to the Elastic IP or load balancer.
+9. TLS certificate: terminate HTTPS at the load balancer, CloudFront, or a host-level reverse proxy.
 
 ## First EC2 bootstrap
 
@@ -77,6 +80,11 @@ CACHE_STORE=redis
 QUEUE_CONNECTION=redis
 SESSION_DRIVER=redis
 FILESYSTEM_DISK=s3
+PUBLIC_FILESYSTEM_DRIVER=local
+PUBLIC_FILESYSTEM_BUCKET=<terraform s3_bucket output>
+PUBLIC_FILESYSTEM_URL=<terraform product_media_url output>
+PUBLIC_FILESYSTEM_VISIBILITY=private
+PUBLIC_FILESYSTEM_CACHE_CONTROL=public,max-age=86400,s-maxage=604800
 POLKURIER_LABEL_DISK=s3
 POLKURIER_PROTOCOL_DISK=s3
 PAYNOW_SANDBOX=false
@@ -84,6 +92,8 @@ SESSION_SECURE_COOKIE=true
 ```
 
 Set `APP_URL` to the final HTTPS domain, not the EC2 IP.
+
+Keep `PUBLIC_FILESYSTEM_DRIVER=local` until `docs/deployment/product-media-cloudfront-cutover.md` has been completed and the CDN probe passes.
 
 ## Deploy
 
