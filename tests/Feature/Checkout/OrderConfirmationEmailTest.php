@@ -34,7 +34,8 @@ beforeEach(function (): void {
 
     app()->singleton(PaymentGatewayRegistry::class, function (): PaymentGatewayRegistry {
         return new PaymentGatewayRegistry([
-            new class implements PaymentGateway {
+            new class implements PaymentGateway
+            {
                 public function providerKey(): string
                 {
                     return 'test';
@@ -586,4 +587,78 @@ test('guest checkout stores accepted legal policy versions', function (): void {
         'type' => 'legal_terms_accepted',
         'description' => 'Zaakceptowano warunki prawne kasy.',
     ]);
+});
+
+test('guest checkout keeps the order recoverable and sends its confirmation when payment initialization fails', function (): void {
+    [$product, $variant] = createTestProductAndVariant('Retry Product', 'RETRY-SKU-001');
+
+    app()->forgetInstance(PaymentGatewayRegistry::class);
+    app()->singleton(PaymentGatewayRegistry::class, function (): PaymentGatewayRegistry {
+        return new PaymentGatewayRegistry([
+            new class implements PaymentGateway
+            {
+                public function providerKey(): string
+                {
+                    return 'test';
+                }
+
+                public function initialize(Order $order, Payment $payment): PaymentInitializationResult
+                {
+                    throw new RuntimeException('temporary provider outage');
+                }
+
+                public function parseNotification(array $payload): PaymentNotificationData
+                {
+                    return new PaymentNotificationData('', false, 'ERROR', $payload);
+                }
+
+                public function verifyNotification(Payment $payment, array $payload, ?string $rawBody = null): bool
+                {
+                    return true;
+                }
+            },
+        ]);
+    });
+
+    $guestToken = (string) str()->uuid();
+
+    $cart = Cart::query()->create([
+        'guest_token' => $guestToken,
+        'status' => CartStatus::Active,
+        'currency' => Currency::PLN->value,
+    ]);
+
+    $cart->items()->create([
+        'product_id' => $product->id,
+        'product_variant_id' => $variant->id,
+        'quantity' => 1,
+        'unit_price' => $variant->grossPriceAmount(),
+        'currency' => Currency::PLN->value,
+        'meta' => null,
+    ]);
+
+    $response = $this
+        ->withSession(['_token' => 'test-csrf-token'])
+        ->withCookie(CartGuestTokenResolver::COOKIE_NAME, $guestToken)
+        ->post(route('checkout.place'), validCheckoutPayload('retry@gmail.com'));
+
+    $response->assertSessionHasNoErrors();
+
+    $order = Order::query()->with('payments')->firstOrFail();
+    $payment = $order->payments->firstOrFail();
+
+    $response
+        ->assertRedirect(route('checkout.success'))
+        ->assertSessionHas('error');
+
+    expect($order->status)->toBe(OrderStatus::PENDING_PAYMENT)
+        ->and($order->payment_status)->toBe(PaymentStatus::UNPAID)
+        ->and($payment->status)->toBe(PaymentStatus::UNPAID)
+        ->and($payment->provider_reference)->toBeNull()
+        ->and($order->canRetryPaymentInitialization())->toBeTrue();
+
+    Mail::assertSent(OrderConfirmationMail::class, function (OrderConfirmationMail $mail) use ($order): bool {
+        return $mail->hasTo('retry@gmail.com')
+            && $mail->order->is($order);
+    });
 });

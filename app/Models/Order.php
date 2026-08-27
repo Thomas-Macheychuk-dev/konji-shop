@@ -210,6 +210,14 @@ class Order extends Model
         return $this->placed_at !== null;
     }
 
+    public function canRetryPaymentInitialization(): bool
+    {
+        return $this->isPlaced()
+            && $this->status->isPendingPayment()
+            && $this->payment_status->isUnpaid()
+            && $this->fulfilment_status->isUnfulfilled();
+    }
+
     public function canBeCancelled(): bool
     {
         return $this->isPlaced()
@@ -541,7 +549,6 @@ class Order extends Model
                 : []
         );
     }
-
 
     public function markPaymentAsRefunded(int $refundAmount, bool $fullyRefunded): void
     {

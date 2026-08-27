@@ -59,7 +59,9 @@ class PaymentReturnController
         }
 
         if ($payment) {
-            $isFailure = in_array($statusFromPaynow, ['ERROR', 'REJECTED', 'CANCELED'], true);
+            $isFailure = in_array($statusFromPaynow, ['ERROR', 'REJECTED', 'CANCELED'], true)
+                || $payment->status->isFailed()
+                || $payment->status->isUnpaid();
 
             $isSuccess = ! $isFailure;
         } else {
@@ -68,7 +70,9 @@ class PaymentReturnController
 
         $message = $isSuccess
             ? 'Dziękujemy za zakupy! Status płatności zostanie zaktualizowany po potwierdzeniu operatora płatności.'
-            : 'Płatność nie została zakończona pomyślnie. Spróbuj ponownie lub skontaktuj się z nami.';
+            : ($payment?->status->isUnpaid()
+                ? 'Zamówienie zostało zapisane, ale płatność nie została rozpoczęta. Możesz bezpiecznie ponowić płatność poniżej.'
+                : 'Płatność nie została zakończona pomyślnie. Spróbuj ponownie lub skontaktuj się z nami.');
 
         return view('pages.checkout.return', [
             'isSuccess' => $isSuccess,

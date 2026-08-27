@@ -5,6 +5,8 @@ use App\Http\Controllers\Account\AccountDetailsUpdateController;
 use App\Http\Controllers\Account\OrderCancelController;
 use App\Http\Controllers\Account\OrderIndexController;
 use App\Http\Controllers\Account\OrderShowController;
+use App\Http\Controllers\Account\OrderWithdrawalCreateController;
+use App\Http\Controllers\Account\OrderWithdrawalStoreController;
 use App\Http\Controllers\Admin\Categories\AdminCategoryArchiveController;
 use App\Http\Controllers\Admin\Categories\AdminCategoryCreateController;
 use App\Http\Controllers\Admin\Categories\AdminCategoryDestroyController;
@@ -41,6 +43,8 @@ use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpda
 use App\Http\Controllers\Admin\Products\AdminProductVariantPricesUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantStockStatusUpdateController;
 use App\Http\Controllers\Admin\Shop\AdminShopReadinessController;
+use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalIndexController;
+use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalShowController;
 use App\Http\Controllers\CartItemDestroyController;
 use App\Http\Controllers\CartItemStoreController;
 use App\Http\Controllers\CartItemUpdateController;
@@ -55,21 +59,18 @@ use App\Http\Controllers\GuestOrderCancelController;
 use App\Http\Controllers\GuestOrderShowController;
 use App\Http\Controllers\GuestOrderTrackLookupController;
 use App\Http\Controllers\GuestOrderTrackShowController;
+use App\Http\Controllers\GuestOrderWithdrawalCreateController;
+use App\Http\Controllers\GuestOrderWithdrawalStoreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HumanChallengeController;
+use App\Http\Controllers\Payments\PaymentRetryController;
 use App\Http\Controllers\Payments\PaymentReturnController;
 use App\Http\Controllers\Payments\PaynowNotificationController;
 use App\Http\Controllers\ProductShowController;
+use App\Http\Controllers\RobotsTxtController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SitemapController;
-use App\Http\Controllers\RobotsTxtController;
-use App\Http\Controllers\Account\OrderWithdrawalCreateController;
-use App\Http\Controllers\Account\OrderWithdrawalStoreController;
-use App\Http\Controllers\GuestOrderWithdrawalCreateController;
-use App\Http\Controllers\GuestOrderWithdrawalStoreController;
-use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalIndexController;
-use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalShowController;
 
 Route::get('/human-check', [HumanChallengeController::class, 'show'])
     ->name('traffic.challenge');
@@ -97,6 +98,9 @@ Route::get('/checkout', CheckoutShowController::class)->name('checkout.show');
 Route::post('/checkout', CheckoutPlaceOrderController::class)->name('checkout.place');
 Route::get('/checkout/success', PaymentReturnController::class)
     ->name('checkout.success');
+Route::post('/orders/{order}/payment/retry', PaymentRetryController::class)
+    ->middleware('throttle:10,1')
+    ->name('payments.retry');
 Route::get('/checkout/inpost-parcel-lockers', InPostParcelLockerSearchController::class)
     ->name('checkout.inpost-parcel-lockers');
 Route::post('/checkout/shipping-quote', CheckoutShippingQuoteController::class)
@@ -315,25 +319,25 @@ if (! Route::has('admin.categories.index')) {
         ->prefix('admin')
         ->name('admin.')
         ->group(function (): void {
-            Route::get('/categories', \App\Http\Controllers\Admin\Categories\AdminCategoryIndexController::class)
+            Route::get('/categories', AdminCategoryIndexController::class)
                 ->name('categories.index');
 
-            Route::get('/categories/create', \App\Http\Controllers\Admin\Categories\AdminCategoryCreateController::class)
+            Route::get('/categories/create', AdminCategoryCreateController::class)
                 ->name('categories.create');
 
-            Route::post('/categories', \App\Http\Controllers\Admin\Categories\AdminCategoryStoreController::class)
+            Route::post('/categories', AdminCategoryStoreController::class)
                 ->name('categories.store');
 
-            Route::get('/categories/{category}/edit', \App\Http\Controllers\Admin\Categories\AdminCategoryEditController::class)
+            Route::get('/categories/{category}/edit', AdminCategoryEditController::class)
                 ->name('categories.edit');
 
-            Route::patch('/categories/{category}', \App\Http\Controllers\Admin\Categories\AdminCategoryUpdateController::class)
+            Route::patch('/categories/{category}', AdminCategoryUpdateController::class)
                 ->name('categories.update');
 
-            Route::patch('/categories/{category}/archive', \App\Http\Controllers\Admin\Categories\AdminCategoryArchiveController::class)
+            Route::patch('/categories/{category}/archive', AdminCategoryArchiveController::class)
                 ->name('categories.archive');
 
-            Route::delete('/categories/{category}', \App\Http\Controllers\Admin\Categories\AdminCategoryDestroyController::class)
+            Route::delete('/categories/{category}', AdminCategoryDestroyController::class)
                 ->name('categories.destroy');
         });
 }
@@ -341,7 +345,7 @@ if (! Route::has('admin.categories.index')) {
 if (! Route::has('admin.shop.readiness.update')) {
     Route::patch(
         '/admin/production-readiness',
-        [\App\Http\Controllers\Admin\Shop\AdminShopReadinessController::class, 'update']
+        [AdminShopReadinessController::class, 'update']
     )
         ->middleware(['auth', 'admin'])
         ->name('admin.shop.readiness.update');

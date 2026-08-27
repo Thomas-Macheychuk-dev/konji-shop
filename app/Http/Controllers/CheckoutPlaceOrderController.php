@@ -38,6 +38,11 @@ class CheckoutPlaceOrderController extends Controller
                 $request->user()
             );
 
+            // The order is already durable at this point. Dispatch the order notification
+            // even if the payment provider is temporarily unavailable so the customer
+            // still receives the order number and can resume payment later.
+            OrderPlaced::dispatch($order);
+
             $payment = $order->payments()->oldest('id')->first();
 
             if (! $payment) {
@@ -80,7 +85,6 @@ class CheckoutPlaceOrderController extends Controller
                 ->with('error', 'Nie udało się rozpocząć płatności. Spróbuj ponownie.');
         }
 
-        OrderPlaced::dispatch($order);
         $request->session()->put('checkout.last_order_id', $order->id);
 
         return redirect()->away($paymentInitialization->redirectUrl);
