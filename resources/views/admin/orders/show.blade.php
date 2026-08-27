@@ -62,11 +62,30 @@
             $withdrawalRefundAmount = (int) $refundableWithdrawalRequests
                 ->sum(fn ($withdrawalRequest) => $withdrawalRequest->refundAmount());
 
+            $hasRefundablePaynowPayment = $order->payments->contains(
+                fn ($payment) => $payment->provider === 'paynow'
+                    && in_array($payment->status, [
+                        \App\Enums\PaymentStatus::PAID,
+                        \App\Enums\PaymentStatus::PARTIALLY_REFUNDED,
+                    ], true)
+                    && strtoupper(trim((string) $payment->external_status)) === 'CONFIRMED'
+                    && trim((string) $payment->provider_reference) !== ''
+            );
+
             $canRefundWithdrawal = $refundableWithdrawalRequests->isNotEmpty()
                 && in_array($order->payment_status, [
                     \App\Enums\PaymentStatus::PAID,
                     \App\Enums\PaymentStatus::PARTIALLY_REFUNDED,
-                ], true);
+                ], true)
+                && $hasRefundablePaynowPayment;
+
+            $hasPendingWithdrawalRefund = $refundableWithdrawalRequests
+                ->contains(fn ($withdrawalRequest) => $withdrawalRequest->status === \App\Enums\WithdrawalStatus::REFUND_PENDING);
+
+            $activePaymentRefund = $order->paymentRefunds
+                ->filter(fn ($refund) => $refund->provider === 'paynow' && $refund->requiresReconciliation())
+                ->sortBy('id')
+                ->first();
         @endphp
 
         <div class="grid gap-6 lg:grid-cols-3">
@@ -110,24 +129,33 @@
                                 Szacowana kwota zwrotu za wybrane pozycje odstąpienia:
                                 <strong>{{ number_format($withdrawalRefundAmount / 100, 2, '.', '') }} {{ $order->currency }}</strong>.
                             </p>
+
+                            @if ($activePaymentRefund)
+                                <p class="mt-1">
+                                    Paynow: <strong>{{ strtoupper($activePaymentRefund->status->value) }}</strong>
+                                    @if ($activePaymentRefund->provider_refund_id)
+                                        · {{ $activePaymentRefund->provider_refund_id }}
+                                    @endif
+                                </p>
+                            @endif
                         </div>
 
                         @if ($canRefundWithdrawal)
                             <form
                                 method="POST"
                                 action="{{ route('admin.orders.fulfilment.update', [$order, 'refund']) }}"
-                                onsubmit="return confirm('Oznaczyć odstąpienie jako zwrócone i wysłać e-mail do klienta?')"
+                                onsubmit="return confirm('Zlecić lub sprawdzić zwrot w Paynow? Klient zostanie powiadomiony dopiero po potwierdzeniu przekazania środków przez operatora.')"
                             >
                                 @csrf
                                 @method('PATCH')
 
                                 <button class="rounded-xl bg-purple-700 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-600">
-                                    Zwrot środków
+                                    {{ $hasPendingWithdrawalRefund ? 'Sprawdź status zwrotu' : 'Zleć zwrot środków' }}
                                 </button>
                             </form>
                         @else
                             <p class="w-full text-sm text-zinc-500">
-                                Zwrot środków jest dostępny tylko wtedy, gdy płatność zamówienia jest opłacona lub częściowo zwrócona.
+                                Zwrot środków wymaga potwierdzonej płatności Paynow w statusie CONFIRMED.
                             </p>
                         @endif
                     @endif

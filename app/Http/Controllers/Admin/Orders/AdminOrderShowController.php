@@ -23,6 +23,7 @@ final class AdminOrderShowController extends Controller
             'items.product',
             'items.variant',
             'payments',
+            'paymentRefunds',
             'shipments',
             'withdrawalRequests.items',
             'events',

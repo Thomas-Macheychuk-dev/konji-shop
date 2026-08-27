@@ -25,3 +25,12 @@
 - Map terminal Paynow failures back to a retryable unpaid order while preserving the failed payment attempt; the next customer retry creates a fresh local payment row and therefore a fresh Paynow idempotency key.
 - Made payment/order pending/paid/failed transitions idempotent and changed the Paynow notification endpoint to return the empty `200 OK` response expected by the provider.
 - Added focused coverage for all Paynow statuses, replay/out-of-order delivery, provider isolation, external ID mismatch, signature failure, empty webhook acknowledgement, and retry after provider-declared failure.
+
+## 2026-08-27 — Paynow provider-backed withdrawal refunds
+
+- Replaced the local-only withdrawal refund action with a Paynow v3 refund workflow backed by a durable `payment_refunds` ledger.
+- Use a stable refund idempotency key across ambiguous transport retries, persist Paynow `refundId` and provider status, and create a fresh attempt only after Paynow definitively reports `FAILED` or `CANCELLED`.
+- Keep withdrawals in `refund_pending` while Paynow reports `NEW`/`PENDING`; payment/order refund state and the customer refund email are finalized only after Paynow reports `SUCCESSFUL`.
+- Added provider-status reconciliation through `paynow:reconcile-refunds`, scheduled every fifteen minutes, including recovery of a provider-successful refund whose local finalization was interrupted.
+- Preserve prior withdrawal statuses when a provider refund fails, prevent cumulative refunds from exceeding the captured Paynow payment, and require the source Paynow payment to be locally paid with external status `CONFIRMED`.
+- Added admin feedback for pending Paynow refunds plus focused coverage for request signing, status polling, immediate success, pending-to-success reconciliation, terminal provider failure/new attempt behavior, ambiguous connection retry/idempotency, and scheduled reconciliation.

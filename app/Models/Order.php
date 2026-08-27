@@ -111,6 +111,11 @@ class Order extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function paymentRefunds(): HasMany
+    {
+        return $this->hasMany(PaymentRefund::class);
+    }
+
     public function events(): HasMany
     {
         return $this->hasMany(OrderEvent::class)->latest();

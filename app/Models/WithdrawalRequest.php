@@ -84,14 +84,50 @@ class WithdrawalRequest extends Model
         ]);
     }
 
-    public function markAsRefunded(): void
+    public function markRefundPending(PaymentRefund $refund): void
+    {
+        $meta = $this->meta ?? [];
+        $meta['refund_pending'] = [
+            'payment_refund_id' => $refund->id,
+            'amount' => $this->refundAmount(),
+            'requested_at' => now()->toISOString(),
+        ];
+
+        $this->update([
+            'status' => WithdrawalStatus::REFUND_PENDING,
+            'meta' => $meta,
+        ]);
+    }
+
+    public function restoreStatusAfterFailedRefund(WithdrawalStatus $status, PaymentRefund $refund): void
+    {
+        $meta = $this->meta ?? [];
+        $meta['refund_failure'] = [
+            'payment_refund_id' => $refund->id,
+            'provider_refund_id' => $refund->provider_refund_id,
+            'status' => $refund->status->value,
+            'failure_reason' => $refund->failure_reason,
+            'recorded_at' => now()->toISOString(),
+        ];
+        unset($meta['refund_pending']);
+
+        $this->update([
+            'status' => $status,
+            'meta' => $meta,
+        ]);
+    }
+
+    public function markAsRefunded(?PaymentRefund $refund = null): void
     {
         $meta = $this->meta ?? [];
 
         $meta['refund'] = [
             'amount' => $this->refundAmount(),
             'processed_at' => now()->toISOString(),
+            'payment_refund_id' => $refund?->id,
+            'provider_refund_id' => $refund?->provider_refund_id,
         ];
+        unset($meta['refund_pending']);
 
         $this->update([
             'status' => WithdrawalStatus::REFUNDED,

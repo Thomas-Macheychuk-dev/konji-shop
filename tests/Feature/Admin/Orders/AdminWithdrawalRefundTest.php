@@ -3,6 +3,7 @@
 use App\Enums\Currency;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
+use App\Enums\PaymentRefundStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
@@ -13,11 +14,14 @@ use App\Mail\WithdrawalRefundedMail;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
+use App\Models\PaymentRefund;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
 use App\Models\WithdrawalRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
 uses(RefreshDatabase::class);
@@ -35,12 +39,20 @@ it('shows a refund action on the admin order page when an order has a refundable
         ->assertOk()
         ->assertSee('Zgłoszono zwrot środków z odstąpienia')
         ->assertSee($withdrawalRequest->number)
-        ->assertSee('Zwrot środków')
+        ->assertSee('Zleć zwrot środków')
         ->assertSee(route('admin.orders.fulfilment.update', [$order, 'refund']), false);
 });
 
-it('processes a withdrawal refund and emails the customer', function (): void {
+it('finalizes a withdrawal refund and emails the customer only after Paynow confirms success', function (): void {
     Mail::fake();
+    configurePaynowRefundTest();
+
+    Http::fake([
+        'https://api.sandbox.paynow.pl/v3/payments/*/refunds' => Http::response([
+            'refundId' => 'REFU-123-ABC-456',
+            'status' => 'SUCCESSFUL',
+        ], 201),
+    ]);
 
     $admin = User::factory()->create([
         'is_admin' => true,
@@ -52,7 +64,7 @@ it('processes a withdrawal refund and emails the customer', function (): void {
         ->actingAs($admin)
         ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
         ->assertRedirect()
-        ->assertSessionHas('success', 'Zwrot z odstąpienia został przetworzony, a klient powiadomiony.');
+        ->assertSessionHas('success', 'Paynow potwierdził wykonanie zwrotu. Klient został powiadomiony.');
 
     expect($withdrawalRequest->refresh())
         ->status->toBe(WithdrawalStatus::REFUNDED)
@@ -60,6 +72,13 @@ it('processes a withdrawal refund and emails the customer', function (): void {
 
     expect($order->refresh()->payment_status)->toBe(PaymentStatus::REFUNDED);
     expect($payment->refresh()->status)->toBe(PaymentStatus::REFUNDED);
+
+    $refund = PaymentRefund::query()->sole();
+
+    expect($refund)
+        ->status->toBe(PaymentRefundStatus::SUCCESSFUL)
+        ->provider_refund_id->toBe('REFU-123-ABC-456')
+        ->completed_at->not->toBeNull();
 
     $this->assertDatabaseHas('order_events', [
         'order_id' => $order->id,
@@ -70,6 +89,187 @@ it('processes a withdrawal refund and emails the customer', function (): void {
         return $mail->withdrawalRequest->is($withdrawalRequest)
             && $mail->withdrawalRequest->customer_email === 'refund-customer@example.test';
     });
+});
+
+it('keeps the withdrawal pending until Paynow reports the refund as successful', function (): void {
+    Mail::fake();
+    configurePaynowRefundTest();
+
+    Http::fake([
+        'https://api.sandbox.paynow.pl/v3/payments/*/refunds' => Http::response([
+            'refundId' => 'REFU-123-ABC-456',
+            'status' => 'PENDING',
+        ], 201),
+    ]);
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    [$order, $withdrawalRequest, $payment] = adminOrderWithdrawalRefundFixture();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Zwrot został zlecony w Paynow i oczekuje na potwierdzenie. Klient nie został jeszcze powiadomiony.');
+
+    expect($withdrawalRequest->refresh())
+        ->status->toBe(WithdrawalStatus::REFUND_PENDING)
+        ->refunded_at->toBeNull();
+
+    expect($order->refresh()->payment_status)->toBe(PaymentStatus::PAID);
+    expect($payment->refresh()->status)->toBe(PaymentStatus::PAID);
+
+    $refund = PaymentRefund::query()->sole();
+
+    expect($refund)
+        ->status->toBe(PaymentRefundStatus::PENDING)
+        ->provider_refund_id->toBe('REFU-123-ABC-456')
+        ->completed_at->toBeNull();
+
+    Mail::assertNothingSent();
+
+    Http::fake([
+        'https://api.sandbox.paynow.pl/v3/refunds/REFU-123-ABC-456/status' => Http::response([
+            'refundId' => 'REFU-123-ABC-456',
+            'status' => 'SUCCESSFUL',
+        ]),
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Paynow potwierdził wykonanie zwrotu. Klient został powiadomiony.');
+
+    expect($withdrawalRequest->refresh()->status)->toBe(WithdrawalStatus::REFUNDED);
+    expect($refund->refresh())
+        ->status->toBe(PaymentRefundStatus::SUCCESSFUL)
+        ->completed_at->not->toBeNull();
+
+    Mail::assertSent(WithdrawalRefundedMail::class, 1);
+});
+
+it('restores the withdrawal for a fresh attempt when Paynow reports a failed refund', function (): void {
+    Mail::fake();
+    configurePaynowRefundTest();
+
+    Http::fakeSequence()
+        ->push([
+            'refundId' => 'REFU-123-ABC-456',
+            'status' => 'PENDING',
+        ], 201)
+        ->push([
+            'refundId' => 'REFU-123-ABC-456',
+            'status' => 'FAILED',
+            'failureReason' => 'OTHER',
+        ], 200)
+        ->push([
+            'refundId' => 'REFU-987-XYZ-654',
+            'status' => 'SUCCESSFUL',
+        ], 201);
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    [$order, $withdrawalRequest, $payment] = adminOrderWithdrawalRefundFixture();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
+        ->assertRedirect();
+
+    $firstRefund = PaymentRefund::query()->sole();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
+        ->assertRedirect()
+        ->assertSessionHas('error', 'Zwrot Paynow nie powiódł się. Środki nie zostały oznaczone jako zwrócone.');
+
+    expect($firstRefund->refresh())
+        ->status->toBe(PaymentRefundStatus::FAILED)
+        ->failure_reason->toBe('OTHER')
+        ->completed_at->toBeNull();
+
+    expect($withdrawalRequest->refresh())
+        ->status->toBe(WithdrawalStatus::ACKNOWLEDGED)
+        ->refunded_at->toBeNull();
+
+    expect($order->refresh()->payment_status)->toBe(PaymentStatus::PAID);
+    expect($payment->refresh()->status)->toBe(PaymentStatus::PAID);
+    Mail::assertNothingSent();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Paynow potwierdził wykonanie zwrotu. Klient został powiadomiony.');
+
+    expect(PaymentRefund::query()->count())->toBe(2);
+    expect(PaymentRefund::query()->latest('id')->first())
+        ->status->toBe(PaymentRefundStatus::SUCCESSFUL)
+        ->idempotency_key->not->toBe($firstRefund->idempotency_key);
+
+    expect($withdrawalRequest->refresh()->status)->toBe(WithdrawalStatus::REFUNDED);
+    Mail::assertSent(WithdrawalRefundedMail::class, 1);
+});
+
+it('retries an ambiguous Paynow connection failure with the same refund ledger and idempotency key', function (): void {
+    Mail::fake();
+    configurePaynowRefundTest();
+
+    $providerAttempt = 0;
+
+    Http::fake(function () use (&$providerAttempt) {
+        $providerAttempt++;
+
+        if ($providerAttempt === 1) {
+            throw new ConnectionException('provider socket timeout');
+        }
+
+        return Http::response([
+            'refundId' => 'REFU-123-ABC-456',
+            'status' => 'SUCCESSFUL',
+        ], 201);
+    });
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    [$order, $withdrawalRequest] = adminOrderWithdrawalRefundFixture();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
+        ->assertRedirect()
+        ->assertSessionHas('error', 'Paynow jest tymczasowo niedostępny. Zwrot pozostaje oczekujący i może zostać bezpiecznie ponowiony.');
+
+    $refund = PaymentRefund::query()->sole();
+    $idempotencyKey = $refund->idempotency_key;
+
+    expect($refund)
+        ->status->toBe(PaymentRefundStatus::REQUESTED)
+        ->provider_refund_id->toBeNull();
+    expect($withdrawalRequest->refresh()->status)->toBe(WithdrawalStatus::REFUND_PENDING);
+    Mail::assertNothingSent();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
+        ->assertRedirect()
+        ->assertSessionHas('success', 'Paynow potwierdził wykonanie zwrotu. Klient został powiadomiony.');
+
+    expect(PaymentRefund::query()->count())->toBe(1);
+    expect($refund->refresh())
+        ->idempotency_key->toBe($idempotencyKey)
+        ->status->toBe(PaymentRefundStatus::SUCCESSFUL)
+        ->completed_at->not->toBeNull();
+    expect($withdrawalRequest->refresh()->status)->toBe(WithdrawalStatus::REFUNDED);
+    Mail::assertSent(WithdrawalRefundedMail::class, 1);
 });
 
 /**
@@ -119,7 +319,8 @@ function adminOrderWithdrawalRefundFixture(): array
         ->paid()
         ->create([
             'provider' => 'paynow',
-            'provider_reference' => 'refund-payment-reference',
+            'provider_reference' => 'PAYM-123-ABC-456',
+            'external_status' => 'CONFIRMED',
             'amount' => 12300,
             'currency' => Currency::PLN->value,
         ]);
@@ -177,4 +378,13 @@ function adminOrderWithdrawalRefundFixture(): array
     ]);
 
     return [$order, $withdrawalRequest->load(['order', 'items']), $payment];
+}
+
+function configurePaynowRefundTest(): void
+{
+    config()->set('payments.providers.paynow.api_key', 'paynow-test-api-key');
+    config()->set('payments.providers.paynow.signature_key', 'paynow-test-signature-key');
+    config()->set('payments.providers.paynow.sandbox', true);
+    config()->set('payments.providers.paynow.connect_timeout', 2);
+    config()->set('payments.providers.paynow.timeout', 5);
 }

@@ -10,6 +10,7 @@ use App\Enums\FulfilmentStatus;
 use App\Enums\ShipmentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Shipment;
 use App\Services\Delivery\Polkurier\PolkurierCarrierAvailabilityGuard;
 use App\Services\Withdrawals\ProcessWithdrawalRefundService;
 use DomainException;
@@ -17,7 +18,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use RuntimeException;
-use App\Models\Shipment;
 
 final class OrderFulfilmentController extends Controller
 {
@@ -30,6 +30,17 @@ final class OrderFulfilmentController extends Controller
     public function __invoke(Request $request, Order $order, string $action): RedirectResponse
     {
         try {
+            if ($action === 'refund') {
+                $refund = $this->processWithdrawalRefundService->process($order);
+
+                return back()->with(
+                    'success',
+                    $refund->isCompleted()
+                        ? 'Paynow potwierdził wykonanie zwrotu. Klient został powiadomiony.'
+                        : 'Zwrot został zlecony w Paynow i oczekuje na potwierdzenie. Klient nie został jeszcze powiadomiony.',
+                );
+            }
+
             match ($action) {
                 'processing' => $order->markFulfilmentAsProcessing(),
 
@@ -41,8 +52,6 @@ final class OrderFulfilmentController extends Controller
 
                 'completed' => $order->complete(),
 
-                'refund' => $this->processWithdrawalRefundService->process($order),
-
                 default => throw new DomainException(
                     'Nieobsługiwana akcja realizacji.'
                 ),
@@ -53,9 +62,7 @@ final class OrderFulfilmentController extends Controller
 
         return back()->with(
             'success',
-            $action === 'refund'
-                ? 'Zwrot z odstąpienia został przetworzony, a klient powiadomiony.'
-                : 'Status realizacji zamówienia został zaktualizowany.'
+            'Status realizacji zamówienia został zaktualizowany.'
         );
     }
 
@@ -265,7 +272,7 @@ final class OrderFulfilmentController extends Controller
     }
 
     /**
-     * @param array<string, mixed> $fieldDefinition
+     * @param  array<string, mixed>  $fieldDefinition
      * @return array<int, string>
      */
     private function additionalFieldOptionValues(array $fieldDefinition): array
