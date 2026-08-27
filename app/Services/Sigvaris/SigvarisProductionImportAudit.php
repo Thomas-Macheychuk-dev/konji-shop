@@ -8,6 +8,7 @@ use App\Enums\ProductStatus;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
+use App\Support\Storage\PublicFilesystemUrl;
 use Illuminate\Support\Facades\Storage;
 
 final class SigvarisProductionImportAudit
@@ -15,8 +16,8 @@ final class SigvarisProductionImportAudit
     private const SOURCE = 'sigvaris';
 
     /**
-     * @param list<array<string, mixed>> $selected
-     * @param array{products:int, variants:int, images:int} $expectedPost
+     * @param  list<array<string, mixed>>  $selected
+     * @param  array{products:int, variants:int, images:int}  $expectedPost
      * @return array<string, mixed>
      */
     public function inspect(array $selected, array $expectedPost): array
@@ -166,11 +167,13 @@ final class SigvarisProductionImportAudit
 
                 if ($variantId === null) {
                     $errors[] = $name.': imported variant has no external ID.';
+
                     continue;
                 }
 
                 if (isset($actualVariantsById[$variantId])) {
                     $errors[] = $name.': duplicate imported variant external ID '.$variantId.'.';
+
                     continue;
                 }
 
@@ -270,6 +273,7 @@ final class SigvarisProductionImportAudit
             foreach ($actualImages as $image) {
                 if ($image->disk !== 'public') {
                     $errors[] = $name.': image '.$image->id.' is not stored on the public disk.';
+
                     continue;
                 }
 
@@ -300,20 +304,21 @@ final class SigvarisProductionImportAudit
 
                 if ($href === null) {
                     $errors[] = $name.': description is missing local GPSR document '.$label.'.';
+
                     continue;
                 }
 
-                $path = parse_url($href, PHP_URL_PATH);
+                $storagePath = PublicFilesystemUrl::path($href);
 
-                if (! is_string($path) || ! str_starts_with($path, '/storage/')) {
+                if ($storagePath === null || ! str_starts_with($storagePath, 'products/sigvaris/')) {
                     $errors[] = $name.': local GPSR document has an invalid href '.$href.'.';
+
                     continue;
                 }
-
-                $storagePath = substr($path, strlen('/storage/'));
 
                 if (! Storage::disk('public')->exists($storagePath)) {
                     $errors[] = $name.': local GPSR document file is missing from storage: '.$storagePath.'.';
+
                     continue;
                 }
 
@@ -381,13 +386,14 @@ final class SigvarisProductionImportAudit
         );
 
         $expectedLabel = $this->normalizeLabel($label);
-        $prefix = '/storage/products/sigvaris/'.$externalId.'/documents/';
+        $prefix = 'products/sigvaris/'.$externalId.'/documents/';
 
         foreach ($matches as $match) {
             $href = html_entity_decode((string) ($match[1] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8');
             $anchorLabel = $this->normalizeLabel((string) ($match[2] ?? ''));
+            $storagePath = PublicFilesystemUrl::path($href);
 
-            if ($anchorLabel === $expectedLabel && str_starts_with($href, $prefix)) {
+            if ($anchorLabel === $expectedLabel && $storagePath !== null && str_starts_with($storagePath, $prefix)) {
                 return $href;
             }
         }

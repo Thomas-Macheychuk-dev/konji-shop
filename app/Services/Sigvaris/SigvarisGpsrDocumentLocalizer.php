@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Sigvaris;
 
+use App\Support\Storage\PublicFilesystemUrl;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
@@ -64,6 +65,7 @@ final class SigvarisGpsrDocumentLocalizer
                     'path' => $preserved['path'],
                 ];
                 $reused++;
+
                 continue;
             }
 
@@ -107,7 +109,7 @@ final class SigvarisGpsrDocumentLocalizer
             $resources[] = [
                 'source_url' => $sourceUrl,
                 'label' => $label,
-                'href' => '/storage/'.$path,
+                'href' => PublicFilesystemUrl::url($path),
                 'path' => $path,
             ];
         }
@@ -167,25 +169,20 @@ final class SigvarisGpsrDocumentLocalizer
         );
 
         $expectedLabel = $this->normalizeLabel($label);
-        $prefix = '/storage/products/sigvaris/'.$externalId.'/documents/';
+        $prefix = 'products/sigvaris/'.$externalId.'/documents/';
 
         foreach ($matches as $match) {
             $href = html_entity_decode((string) ($match[1] ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8');
             $anchorLabel = $this->normalizeLabel((string) ($match[2] ?? ''));
+            $path = PublicFilesystemUrl::path($href);
 
-            if ($anchorLabel !== $expectedLabel || ! str_starts_with($href, $prefix)) {
-                continue;
-            }
-
-            $path = parse_url($href, PHP_URL_PATH);
-
-            if (! is_string($path) || ! str_starts_with($path, '/storage/')) {
+            if ($anchorLabel !== $expectedLabel || $path === null || ! str_starts_with($path, $prefix)) {
                 continue;
             }
 
             return [
                 'href' => $href,
-                'path' => substr($path, strlen('/storage/')),
+                'path' => $path,
             ];
         }
 

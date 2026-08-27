@@ -34,3 +34,12 @@
 - Added provider-status reconciliation through `paynow:reconcile-refunds`, scheduled every fifteen minutes, including recovery of a provider-successful refund whose local finalization was interrupted.
 - Preserve prior withdrawal statuses when a provider refund fails, prevent cumulative refunds from exceeding the captured Paynow payment, and require the source Paynow payment to be locally paid with external status `CONFIRMED`.
 - Added admin feedback for pending Paynow refunds plus focused coverage for request signing, status polling, immediate success, pending-to-success reconciliation, terminal provider failure/new attempt behavior, ambiguous connection retry/idempotency, and scheduled reconciliation.
+
+## 2026-08-27 — Durable public product media storage boundary
+
+- Kept the logical Laravel `public` disk stable for existing database rows and supplier importers while allowing production to back that disk with private S3 via `PUBLIC_FILESYSTEM_DRIVER=s3`.
+- Added explicit `public-local` and `public-s3` migration endpoints so existing catalogue assets can be copied from the EC2/Docker public volume to S3 without changing product-image disk identifiers or deleting the rollback source.
+- Added `shop:migrate-public-media` with dry-run-by-default behavior, streamed writes, post-copy size verification, resumable/idempotent copying, optional legacy description-link rewriting, and a hard requirement for an HTTPS public/CDN URL before database HTML is rewritten.
+- Made localized ARmedical/Sigvaris documents, Sigvaris size charts, and Timago inline images use the logical public filesystem URL so the same importer output works locally and behind S3/CloudFront.
+- Preserved legacy `/storage/...` URL recognition for already-imported content while allowing the same parsers/audits to recognize future object-storage/CDN URLs.
+- Added focused coverage for dry-run/write migration behavior, source retention, description rewriting, HTTPS URL gating, and public URL/path compatibility.

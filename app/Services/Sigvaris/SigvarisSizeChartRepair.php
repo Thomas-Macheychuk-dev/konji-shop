@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Sigvaris;
 
 use App\Models\Product;
+use App\Support\Storage\PublicFilesystemUrl;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -75,7 +76,7 @@ final class SigvarisSizeChartRepair
             return [
                 'action' => 'reused',
                 'path' => $existingPath,
-                'href' => '/storage/'.$existingPath,
+                'href' => PublicFilesystemUrl::url($existingPath),
             ];
         }
 
@@ -111,7 +112,7 @@ final class SigvarisSizeChartRepair
             throw new InvalidArgumentException('Unable to store Sigvaris size-chart image.');
         }
 
-        $href = '/storage/'.$path;
+        $href = PublicFilesystemUrl::url($path);
         $description = $this->injectAnchor((string) $product->description, $href);
         $product->update(['description' => $description]);
 
@@ -196,14 +197,18 @@ final class SigvarisSizeChartRepair
     private function existingLocalChartPath(string $description): ?string
     {
         if (preg_match(
-            '#<a\b(?=[^>]*data-sigvaris-size-chart=["\']1["\'])[^>]*href=["\'](/storage/products/sigvaris/[^"\']+/size-chart/[^"\']+)["\']#isu',
+            '#<a\b(?=[^>]*data-sigvaris-size-chart=["\']1["\'])[^>]*href=["\']([^"\']+)["\']#isu',
             $description,
             $matches,
         ) !== 1) {
             return null;
         }
 
-        return ltrim(substr(html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8'), strlen('/storage/')), '/');
+        $path = PublicFilesystemUrl::path((string) ($matches[1] ?? ''));
+
+        return $path !== null && str_starts_with($path, 'products/sigvaris/') && str_contains($path, '/size-chart/')
+            ? $path
+            : null;
     }
 
     private function safeSigvarisImageUrl(mixed $value): ?string

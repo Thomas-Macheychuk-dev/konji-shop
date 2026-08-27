@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Storage\PublicFilesystemUrl;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -636,6 +637,7 @@ final class SigvarisProductImporter
 
             if ($url === null || ! $this->isSigvarisUrl($url)) {
                 $this->warnings[] = 'Image skipped because its host is not Sigvaris: '.($url ?? '[missing URL]');
+
                 continue;
             }
 
@@ -815,8 +817,8 @@ final class SigvarisProductImporter
     }
 
     /**
-     * @param array<string, mixed> $mapped
-     * @param list<array{source_url:string,label:string,href:string,path:string}> $localizedDownloads
+     * @param  array<string, mixed>  $mapped
+     * @param  list<array{source_url:string,label:string,href:string,path:string}>  $localizedDownloads
      */
     private function productDescriptionHtml(array $mapped, ?string $existingDescription = null, array $localizedDownloads = []): ?string
     {
@@ -834,7 +836,9 @@ final class SigvarisProductImporter
             $href = $this->stringOrNull($download['href'] ?? null);
             $label = $this->stringOrNull($download['label'] ?? null) ?: 'Instrukcja / dokument PDF';
 
-            if ($href === null || ! str_starts_with($href, '/storage/products/sigvaris/')) {
+            $storagePath = $href !== null ? PublicFilesystemUrl::path($href) : null;
+
+            if ($href === null || $storagePath === null || ! str_starts_with($storagePath, 'products/sigvaris/')) {
                 continue;
             }
 
@@ -892,7 +896,9 @@ final class SigvarisProductImporter
 
         $href = html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
-        if (! str_starts_with($href, '/storage/products/sigvaris/')) {
+        $storagePath = PublicFilesystemUrl::path($href);
+
+        if ($storagePath === null || ! str_starts_with($storagePath, 'products/sigvaris/')) {
             return null;
         }
 

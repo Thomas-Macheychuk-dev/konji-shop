@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Armedical;
 
+use App\Support\Storage\PublicFilesystemUrl;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
@@ -58,6 +59,7 @@ final class ArmedicalDocumentLocalizer
                 $sourceUrl = $this->validatedSourceUrl($document['source_url'] ?? null);
             } catch (Throwable $exception) {
                 $failures[] = $exception->getMessage();
+
                 continue;
             }
 
@@ -79,6 +81,7 @@ final class ArmedicalDocumentLocalizer
                     'path' => $preserved['path'],
                 ];
                 $reused++;
+
                 continue;
             }
 
@@ -129,7 +132,7 @@ final class ArmedicalDocumentLocalizer
                     'source_url' => $sourceUrl,
                     'label' => $label,
                     'type' => $type,
-                    'href' => '/storage/'.$path,
+                    'href' => PublicFilesystemUrl::url($path),
                     'path' => $path,
                 ];
             } catch (Throwable $exception) {
@@ -194,21 +197,16 @@ final class ArmedicalDocumentLocalizer
                 continue;
             }
 
-            $prefix = '/storage/products/armedical/'.$externalId.'/documents/';
+            $path = PublicFilesystemUrl::path($href);
+            $prefix = 'products/armedical/'.$externalId.'/documents/';
 
-            if (! str_starts_with($href, $prefix)) {
-                continue;
-            }
-
-            $path = parse_url($href, PHP_URL_PATH);
-
-            if (! is_string($path) || ! str_starts_with($path, '/storage/')) {
+            if ($path === null || ! str_starts_with($path, $prefix)) {
                 continue;
             }
 
             return [
                 'href' => $href,
-                'path' => substr($path, strlen('/storage/')),
+                'path' => $path,
             ];
         }
 

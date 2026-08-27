@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Storage\PublicFilesystemUrl;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
@@ -25,6 +26,7 @@ use Throwable;
 final class TimagoProductImporter
 {
     private const MAX_DATABASE_STRING_LENGTH = 190;
+
     private const MAX_PRODUCT_ATTRIBUTE_VALUE_LENGTH = 190;
 
     /**
@@ -613,7 +615,6 @@ final class TimagoProductImporter
         return trim(strip_tags($html)) === '' && ! str_contains($html, '<img') ? null : $html;
     }
 
-
     private function removeImageTags(string $html): string
     {
         return preg_replace('#<img\b[^>]*>#isu', '', $html) ?? $html;
@@ -659,7 +660,7 @@ final class TimagoProductImporter
 
                 $alt = $this->imageAttribute($attributes, 'alt') ?: '';
 
-                return '<img src="'.e('/storage/'.$imported['path']).'" alt="'.e($alt).'">';
+                return '<img src="'.e(PublicFilesystemUrl::url((string) $imported['path'])).'" alt="'.e($alt).'">';
             },
             $html,
         ) ?? $html;
