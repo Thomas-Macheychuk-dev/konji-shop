@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: app
+      target: app-production
     image: ${APP_IMAGE:-konji-shop-app:prod}
     restart: unless-stopped
     env_file:
@@ -66,7 +66,7 @@ services:
         condition: service_started
       redis:
         condition: service_started
-    command: php artisan queue:work redis --sleep=3 --tries=3 --timeout=120 --max-time=3600
+    command: php artisan queue:work redis --sleep=1 --tries=3 --timeout=120 --max-time=3600 --max-jobs=1000 --memory=256
     networks:
       - konji
     volumes:
@@ -86,7 +86,7 @@ services:
         condition: service_started
       redis:
         condition: service_started
-    command: sh -c "while true; do php artisan schedule:run --verbose --no-interaction; sleep 60; done"
+    command: php artisan schedule:work --no-interaction
     networks:
       - konji
     volumes:
@@ -95,7 +95,7 @@ services:
   redis:
     image: redis:7-alpine
     restart: unless-stopped
-    command: redis-server --appendonly yes --maxmemory ${REDIS_MAXMEMORY:-256mb} --maxmemory-policy allkeys-lru
+    command: redis-server --appendonly yes --maxmemory ${REDIS_MAXMEMORY:-256mb} --maxmemory-policy volatile-lru
     networks:
       - konji
     volumes:

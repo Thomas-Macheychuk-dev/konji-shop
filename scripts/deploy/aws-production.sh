@@ -34,8 +34,13 @@ ${COMPOSE} exec -T app php artisan optimize:clear
 ${COMPOSE} exec -T app php artisan config:cache
 ${COMPOSE} exec -T app php artisan route:cache
 ${COMPOSE} exec -T app php artisan view:cache
-${COMPOSE} exec -T app php artisan event:cache || true
+${COMPOSE} exec -T app php artisan event:cache
 ${COMPOSE} exec -T app php artisan storage:link || true
+
+# This gate is intentionally blocking: an unoptimized PHP/Laravel runtime raises
+# TTFB and the EC2 size needed for the same storefront traffic.
+echo "Checking production runtime optimization..."
+${COMPOSE} exec -T app php artisan shop:check-runtime --json
 
 echo "Starting web, queue and scheduler..."
 ${COMPOSE} up -d --remove-orphans web queue scheduler

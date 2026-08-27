@@ -17,7 +17,8 @@ RUN composer install \
     --no-dev \
     --prefer-dist \
     --no-interaction \
-    --optimize-autoloader
+    --optimize-autoloader \
+    --classmap-authoritative
 
 FROM node:20-alpine AS frontend
 
@@ -94,6 +95,14 @@ EXPOSE 9000
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["php-fpm"]
+
+FROM app AS app-production
+
+USER root
+COPY docker/php/production.ini /usr/local/etc/php/conf.d/zz-production.ini
+COPY docker/php-fpm/zz-production.conf /usr/local/etc/php-fpm.d/zz-production.conf
+USER www-data
+
 FROM nginx:1.27-alpine AS web
 
 WORKDIR /var/www/html

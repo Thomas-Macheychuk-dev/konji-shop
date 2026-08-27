@@ -69,3 +69,12 @@
 - Cached editable shop configuration as one dataset instead of querying individual settings repeatedly during SEO/legal rendering and application boot.
 - Kept the existing local Redis container as the recommended MVP cache store; no managed ElastiCache dependency is introduced.
 - Added regression coverage for namespace reuse/invalidation, category subtree cache hits, product invalidation, and shop-configuration cache behavior.
+
+## 2026-08-27 — Laravel production runtime efficiency baseline
+
+- Added a dedicated immutable production PHP/OPcache profile and bounded on-demand PHP-FPM pool.
+- Production images now use authoritative Composer autoloading after application sources are present.
+- Laravel deployment and long-running worker containers build the framework optimization caches.
+- Added a blocking `shop:check-runtime` gate for production cache/OPcache/Redis/logging invariants.
+- Reduced idle queue/scheduler CPU work and protected non-expiring Redis queue keys from cache eviction.
+- Added low-risk Nginx file/FastCGI runtime tuning without caching personalized or SEO-sensitive HTML.
