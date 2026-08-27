@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\Services\Shop;
 
 use App\Models\ShopConfigurationValue;
+use App\Services\Storefront\StorefrontCache;
 use Illuminate\Support\Facades\Schema;
 use Throwable;
 
 final class ShopConfiguration
 {
+    public function __construct(
+        private readonly StorefrontCache $cache,
+    ) {}
+
     /**
      * @return array<string, array{
      *     category: string,
@@ -108,7 +113,7 @@ final class ShopConfiguration
     }
 
     /**
-     * @param array<string, mixed> $values
+     * @param  array<string, mixed>  $values
      */
     public function updateFromForm(array $values): void
     {
@@ -121,24 +126,16 @@ final class ShopConfiguration
             );
         }
 
+        $this->cache->bump(StorefrontCache::NAMESPACE_SHOP_CONFIGURATION);
         $this->applyConfigOverrides();
     }
 
     public function get(string $configKey, string $default = ''): string
     {
-        try {
-            if ($this->settingsTableExists()) {
-                $setting = ShopConfigurationValue::query()
-                    ->where('key', $configKey)
-                    ->first(['value']);
+        $overrides = $this->cachedOverrides();
 
-                if ($setting !== null) {
-                    return trim((string) $setting->value);
-                }
-            }
-        } catch (Throwable) {
-            // During first install, tests before migrations, or config-cache warmups the table
-            // may not be available yet. In that case, keep using normal Laravel config.
+        if (array_key_exists($configKey, $overrides)) {
+            return trim((string) $overrides[$configKey]);
         }
 
         return trim((string) config($configKey, $default));
@@ -146,24 +143,41 @@ final class ShopConfiguration
 
     public function applyConfigOverrides(): void
     {
+        foreach ($this->cachedOverrides() as $key => $value) {
+            config()->set($key, trim((string) $value));
+        }
+    }
+
+    /**
+     * Load all editable database overrides in one query and reuse them across
+     * requests. The short TTL is a fallback safety net; normal admin updates
+     * invalidate this namespace immediately.
+     *
+     * @return array<string, string>
+     */
+    private function cachedOverrides(): array
+    {
         try {
-            if (! $this->settingsTableExists()) {
-                return;
-            }
+            return $this->cache->rememberVersioned(
+                StorefrontCache::NAMESPACE_SHOP_CONFIGURATION,
+                'editable-values.v1',
+                function (): array {
+                    $editableConfigKeys = collect($this->editableFields())
+                        ->pluck('config_key')
+                        ->all();
 
-            $editableConfigKeys = collect($this->editableFields())
-                ->pluck('config_key')
-                ->all();
-
-            ShopConfigurationValue::query()
-                ->whereIn('key', $editableConfigKeys)
-                ->get(['key', 'value'])
-                ->each(function (ShopConfigurationValue $setting): void {
-                    config()->set($setting->key, trim((string) $setting->value));
-                });
+                    return ShopConfigurationValue::query()
+                        ->whereIn('key', $editableConfigKeys)
+                        ->pluck('value', 'key')
+                        ->map(fn (mixed $value): string => trim((string) $value))
+                        ->all();
+                },
+                $this->cache->shopConfigurationTtlSeconds(),
+            );
         } catch (Throwable) {
-            // Configuration overrides are optional at boot. The app must still boot while
-            // migrations are pending or the database is temporarily unavailable.
+            // First install, migrations, or a temporarily unavailable cache/DB
+            // must not prevent the application from booting with config values.
+            return [];
         }
     }
 

@@ -21,7 +21,7 @@ beforeEach(function (): void {
     Cache::store('array')->flush();
 });
 
-it('caches active product page data until the product cache version changes', function (): void {
+it('caches active product page data and invalidates it after a product mutation', function (): void {
     $product = Product::query()->create([
         'name' => 'Cached Knee Brace',
         'slug' => 'cached-knee-brace',
@@ -49,30 +49,16 @@ it('caches active product page data until the product cache version changes', fu
 
     Product::withoutTimestamps(function () use ($product): void {
         $product->update([
-            'name' => 'Changed Without Version Bump',
-            'description' => '<p>Changed without version bump.</p>',
+            'name' => 'Changed Product',
+            'description' => '<p>Changed product description.</p>',
         ]);
     });
 
     $this
         ->get(route('products.show', $product->slug))
         ->assertOk()
-        ->assertSee('Cached Knee Brace')
-        ->assertSee('Original cached description', false)
-        ->assertDontSee('Changed Without Version Bump')
-        ->assertDontSee('Changed without version bump', false);
-
-    $product->forceFill([
-        'name' => 'Changed With Version Bump',
-        'description' => '<p>Changed with version bump.</p>',
-        'updated_at' => now()->addMinute(),
-    ])->save();
-
-    $this
-        ->get(route('products.show', $product->slug))
-        ->assertOk()
-        ->assertSee('Changed With Version Bump')
-        ->assertSee('Changed with version bump', false)
+        ->assertSee('Changed Product')
+        ->assertSee('Changed product description', false)
         ->assertDontSee('Cached Knee Brace')
         ->assertDontSee('Original cached description', false);
 });

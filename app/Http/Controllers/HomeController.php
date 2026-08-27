@@ -10,6 +10,7 @@ use App\Enums\ProductVariantStatus;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Shop\ShopSettings;
+use App\Services\Storefront\StorefrontCache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,28 +20,39 @@ class HomeController extends Controller
 {
     public function __construct(
         private readonly ShopSettings $shopSettings,
+        private readonly StorefrontCache $cache,
     ) {}
 
     public function __invoke(Request $request): View
     {
         $searchQuery = trim($request->string('q')->toString());
 
-        $categories = Category::query()
-            ->whereNull('parent_id')
-            ->where('status', CategoryStatus::ACTIVE->value)
-            ->whereNotNull('slug')
-            ->withCount([
-                'products as active_products_count' => fn (Builder $query): Builder => $query
-                    ->where('products.status', ProductStatus::ACTIVE->value),
-            ])
-            ->orderBy('name')
-            ->get(['id', 'name', 'slug', 'description']);
+        $categories = $this->cache->rememberVersioned(
+            StorefrontCache::NAMESPACE_CATALOGUE,
+            'home.root-categories.v1',
+            fn () => Category::query()
+                ->whereNull('parent_id')
+                ->where('status', CategoryStatus::ACTIVE->value)
+                ->whereNotNull('slug')
+                ->withCount([
+                    'products as active_products_count' => fn (Builder $query): Builder => $query
+                        ->where('products.status', ProductStatus::ACTIVE->value),
+                ])
+                ->orderBy('name')
+                ->get(['id', 'name', 'slug', 'description']),
+            $this->cache->homePageTtlSeconds(),
+        );
 
-        $featuredProducts = $this->productCardQuery()
-            ->orderByDesc('published_at')
-            ->orderByDesc('id')
-            ->limit(8)
-            ->get();
+        $featuredProducts = $this->cache->rememberVersioned(
+            StorefrontCache::NAMESPACE_CATALOGUE,
+            'home.featured-products.v1',
+            fn () => $this->productCardQuery()
+                ->orderByDesc('published_at')
+                ->orderByDesc('id')
+                ->limit(8)
+                ->get(),
+            $this->cache->homePageTtlSeconds(),
+        );
 
         $searchResults = collect();
 

@@ -10,6 +10,7 @@ use App\Enums\ProductVariantStatus;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Storefront\ActiveCategorySubtree;
+use App\Services\Storefront\StorefrontCache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 
@@ -17,6 +18,7 @@ final class CategoryProductIndexController extends Controller
 {
     public function __construct(
         private readonly ActiveCategorySubtree $activeCategorySubtree,
+        private readonly StorefrontCache $cache,
     ) {}
 
     public function __invoke(Category $category): View
@@ -33,25 +35,33 @@ final class CategoryProductIndexController extends Controller
 
         $categoryIds = $this->activeCategorySubtree->ids($category);
 
-        $products = Product::query()
-            ->where('status', ProductStatus::ACTIVE->value)
-            ->whereHas('categories', function ($query) use ($categoryIds): void {
-                $query->whereIn('categories.id', $categoryIds);
-            })
-            ->with([
-                'images',
-                'attributeValueImages',
-                'categories:id,name,slug',
-                'variants' => function ($query): void {
-                    $query
-                        ->where('status', ProductVariantStatus::ACTIVE->value)
-                        ->orderByDesc('is_default')
-                        ->orderBy('id');
-                },
-            ])
-            ->orderBy('name')
-            ->paginate(24)
-            ->withQueryString();
+        $page = max(1, request()->integer('page', 1));
+
+        $products = $this->cache->rememberVersioned(
+            StorefrontCache::NAMESPACE_CATALOGUE,
+            sprintf('category.%d.page.%d.v1', $category->getKey(), $page),
+            fn () => Product::query()
+                ->where('status', ProductStatus::ACTIVE->value)
+                ->whereHas('categories', function ($query) use ($categoryIds): void {
+                    $query->whereIn('categories.id', $categoryIds);
+                })
+                ->with([
+                    'images',
+                    'attributeValueImages',
+                    'categories:id,name,slug',
+                    'variants' => function ($query): void {
+                        $query
+                            ->where('status', ProductVariantStatus::ACTIVE->value)
+                            ->orderByDesc('is_default')
+                            ->orderBy('id');
+                    },
+                ])
+                ->orderBy('name')
+                ->paginate(24),
+            $this->cache->categoryPageTtlSeconds(),
+        );
+
+        $products->withQueryString();
 
         $seoTitle = $this->limitText($category->seo_title ?: $category->name, 70);
         $seoDescription = $this->seoDescription($category);

@@ -60,3 +60,12 @@
 - Removed the redundant `mainImage` eager-load query from home, category and product-page catalogue reads; when `images` are already loaded, the product now resolves the main image directly from that collection without an extra query.
 - Added composite indexes aligned with the actual storefront predicates/orderings for active category trees/navigation, product listing/featured reads, active/default variants and ordered product media.
 - Added focused performance regression coverage for one-query cache-version discovery, one-query category subtree resolution, zero-query loaded-image selection and presence of the storefront composite indexes.
+
+## 2026-08-27 — Storefront catalogue/application cache baseline
+
+- Added cache namespaces with event-driven invalidation for public catalogue and navigation data.
+- Cached homepage category/featured-product datasets, category result pages, category subtrees, and navigation trees while leaving search, carts, checkout, payment, stock mutations, and admin responses uncached.
+- Removed the per-request product cache-version database lookup from the live product-page path; model mutations now invalidate the catalogue namespace immediately, with TTLs as a bounded fallback.
+- Cached editable shop configuration as one dataset instead of querying individual settings repeatedly during SEO/legal rendering and application boot.
+- Kept the existing local Redis container as the recommended MVP cache store; no managed ElastiCache dependency is introduced.
+- Added regression coverage for namespace reuse/invalidation, category subtree cache hits, product invalidation, and shop-configuration cache behavior.

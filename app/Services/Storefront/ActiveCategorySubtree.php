@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 final class ActiveCategorySubtree
 {
+    public function __construct(
+        private readonly StorefrontCache $cache,
+    ) {}
+
     /**
      * Return the requested category and all active descendants with one query,
      * regardless of tree depth.
@@ -17,6 +21,19 @@ final class ActiveCategorySubtree
      * @return list<int>
      */
     public function ids(Category $category): array
+    {
+        return $this->cache->rememberVersioned(
+            StorefrontCache::NAMESPACE_NAVIGATION,
+            sprintf('category-subtree.%d.v1', $category->getKey()),
+            fn (): array => $this->queryIds($category),
+            $this->cache->categorySidebarTtlSeconds(),
+        );
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function queryIds(Category $category): array
     {
         $rows = DB::select(
             <<<'SQL'

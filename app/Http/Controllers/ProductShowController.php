@@ -15,7 +15,6 @@ use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Shop\ShopSettings;
-use App\Services\Storefront\ProductPageCacheVersion;
 use App\Services\Storefront\StorefrontCache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -27,7 +26,6 @@ class ProductShowController extends Controller
     public function __construct(
         private readonly ShopSettings $shopSettings,
         private readonly StorefrontCache $cache,
-        private readonly ProductPageCacheVersion $cacheVersion,
     ) {}
 
     public function __invoke(Product $product): View
@@ -39,9 +37,11 @@ class ProductShowController extends Controller
 
         $viewData = $isAdminPreview
             ? $this->buildViewData($product, true)
-            : $this->cache->remember(
+            : $this->cache->rememberVersioned(
+                StorefrontCache::NAMESPACE_CATALOGUE,
                 $this->productPageCacheKey($product),
                 fn (): array => $this->buildViewData($product->fresh() ?? $product, false),
+                $this->cache->productPageTtlSeconds(),
             );
 
         return view('pages.products.show', $viewData);
@@ -120,19 +120,7 @@ class ProductShowController extends Controller
 
     private function productPageCacheKey(Product $product): string
     {
-        return sprintf(
-            'storefront.product-page.v1.%d.%s',
-            $product->getKey(),
-            sha1(json_encode($this->productPageCacheVersion($product), JSON_THROW_ON_ERROR)),
-        );
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function productPageCacheVersion(Product $product): array
-    {
-        return $this->cacheVersion->for($product);
+        return sprintf('product-page.v2.%d', $product->getKey());
     }
 
     private function currentUserCanPreviewInactiveProducts(): bool
