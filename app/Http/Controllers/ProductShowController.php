@@ -15,11 +15,11 @@ use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Shop\ShopSettings;
+use App\Services\Storefront\ProductPageCacheVersion;
 use App\Services\Storefront\StorefrontCache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductShowController extends Controller
@@ -27,6 +27,7 @@ class ProductShowController extends Controller
     public function __construct(
         private readonly ShopSettings $shopSettings,
         private readonly StorefrontCache $cache,
+        private readonly ProductPageCacheVersion $cacheVersion,
     ) {}
 
     public function __invoke(Product $product): View
@@ -52,7 +53,6 @@ class ProductShowController extends Controller
     private function buildViewData(Product $product, bool $isAdminPreview): array
     {
         $product->load([
-            'mainImage',
             'images',
             'attributeValues.attribute',
             'categories' => fn ($query) => $query
@@ -132,99 +132,7 @@ class ProductShowController extends Controller
      */
     private function productPageCacheVersion(Product $product): array
     {
-        $productId = (int) $product->getKey();
-        $variantIds = DB::table('product_variants')
-            ->where('product_id', $productId)
-            ->pluck('id');
-        $productAttributeValueIds = DB::table('product_attribute_value')
-            ->where('product_id', $productId)
-            ->pluck('attribute_value_id');
-
-        return [
-            'product' => $this->timestampForCache($product->updated_at),
-            'product_deleted' => $this->timestampForCache($product->deleted_at),
-            'images' => $this->timestampForCache($product->images()->max('updated_at')),
-            'attribute_value_images' => $this->timestampForCache($product->attributeValueImages()->max('updated_at')),
-            'product_attribute_value_pivot' => $this->timestampForCache(
-                DB::table('product_attribute_value')
-                    ->where('product_id', $productId)
-                    ->max('updated_at'),
-            ),
-            'product_attribute_values' => $this->timestampForCache($productAttributeValueIds->isEmpty()
-                ? null
-                : DB::table('attribute_values')
-                    ->whereIn('id', $productAttributeValueIds)
-                    ->max('updated_at')),
-            'product_attributes' => $this->timestampForCache($productAttributeValueIds->isEmpty()
-                ? null
-                : DB::table('attributes')
-                    ->whereIn('id', function ($query) use ($productAttributeValueIds): void {
-                        $query
-                            ->select('attribute_id')
-                            ->from('attribute_values')
-                            ->whereIn('id', $productAttributeValueIds);
-                    })
-                    ->max('updated_at')),
-            'variants' => $this->timestampForCache(
-                ProductVariant::withTrashed()
-                    ->where('product_id', $productId)
-                    ->max('updated_at'),
-            ),
-            'variant_values' => $this->timestampForCache($variantIds->isEmpty()
-                ? null
-                : DB::table('product_variant_attribute_value')
-                    ->whereIn('product_variant_id', $variantIds)
-                    ->max('updated_at')),
-            'attribute_values' => $this->timestampForCache($variantIds->isEmpty()
-                ? null
-                : DB::table('attribute_values')
-                    ->whereIn('id', function ($query) use ($variantIds): void {
-                        $query
-                            ->select('attribute_value_id')
-                            ->from('product_variant_attribute_value')
-                            ->whereIn('product_variant_id', $variantIds);
-                    })
-                    ->max('updated_at')),
-            'attributes' => $this->timestampForCache($variantIds->isEmpty()
-                ? null
-                : DB::table('attributes')
-                    ->whereIn('id', function ($query) use ($variantIds): void {
-                        $query
-                            ->select('attribute_id')
-                            ->from('attribute_values')
-                            ->whereIn('id', function ($nestedQuery) use ($variantIds): void {
-                                $nestedQuery
-                                    ->select('attribute_value_id')
-                                    ->from('product_variant_attribute_value')
-                                    ->whereIn('product_variant_id', $variantIds);
-                            });
-                    })
-                    ->max('updated_at')),
-            'category_product' => $this->timestampForCache(
-                DB::table('category_product')
-                    ->where('product_id', $productId)
-                    ->max('updated_at'),
-            ),
-            'categories' => $this->timestampForCache(
-                DB::table('categories')
-                    ->whereIn('id', function ($query) use ($productId): void {
-                        $query
-                            ->select('category_id')
-                            ->from('category_product')
-                            ->where('product_id', $productId);
-                    })
-                    ->max('updated_at'),
-            ),
-        ];
-    }
-
-    private function timestampForCache(mixed $value): ?string
-    {
-        if ($value instanceof \DateTimeInterface) {
-            return $value->format('U.u');
-        }
-
-        return $value === null ? null : (string) $value;
+        return $this->cacheVersion->for($product);
     }
 
     private function currentUserCanPreviewInactiveProducts(): bool

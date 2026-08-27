@@ -8,14 +8,15 @@ use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use SoftDeletes;
 
     public const DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE = 'product_image';
+
     public const DEFAULT_IMAGE_TYPE_ATTRIBUTE_VALUE_IMAGE = 'attribute_value_image';
 
     /**
@@ -91,7 +92,6 @@ class Product extends Model
             ->orderBy('id');
     }
 
-
     public function selectedDefaultImage(): ProductImage|ProductAttributeValueImage|null
     {
         $configuredImage = match ($this->default_image_type) {
@@ -105,8 +105,11 @@ class Product extends Model
 
     public function fallbackDefaultImage(): ProductImage|ProductAttributeValueImage|null
     {
-        return $this->mainImage
-            ?? $this->images->first()
+        $productImage = $this->relationLoaded('images')
+            ? ($this->images->firstWhere('is_main', true) ?? $this->images->first())
+            : ($this->mainImage ?? $this->images()->first());
+
+        return $productImage
             ?? $this->attributeValueImages->first();
     }
 

@@ -88,7 +88,6 @@ class HomeController extends Controller
             ->where('status', ProductStatus::ACTIVE->value)
             ->whereNotNull('slug')
             ->with([
-                'mainImage',
                 'images',
                 'attributeValueImages',
                 'categories:id,name,slug',

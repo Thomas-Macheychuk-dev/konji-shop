@@ -9,11 +9,16 @@ use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\Storefront\ActiveCategorySubtree;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 
 final class CategoryProductIndexController extends Controller
 {
+    public function __construct(
+        private readonly ActiveCategorySubtree $activeCategorySubtree,
+    ) {}
+
     public function __invoke(Category $category): View
     {
         abort_unless($category->status->isActive(), 404);
@@ -26,7 +31,7 @@ final class CategoryProductIndexController extends Controller
             },
         ]);
 
-        $categoryIds = $this->categoryAndActiveDescendantIds($category);
+        $categoryIds = $this->activeCategorySubtree->ids($category);
 
         $products = Product::query()
             ->where('status', ProductStatus::ACTIVE->value)
@@ -34,7 +39,6 @@ final class CategoryProductIndexController extends Controller
                 $query->whereIn('categories.id', $categoryIds);
             })
             ->with([
-                'mainImage',
                 'images',
                 'attributeValueImages',
                 'categories:id,name,slug',
@@ -63,35 +67,6 @@ final class CategoryProductIndexController extends Controller
             'openGraphDescription' => $seoDescription,
             'openGraphType' => 'website',
         ]);
-    }
-
-    /**
-     * @return list<int>
-     */
-    private function categoryAndActiveDescendantIds(Category $category): array
-    {
-        $categoryIds = [(int) $category->id];
-        $pendingParentIds = $categoryIds;
-
-        while ($pendingParentIds !== []) {
-            $childIds = Category::query()
-                ->whereIn('parent_id', $pendingParentIds)
-                ->where('status', CategoryStatus::ACTIVE->value)
-                ->pluck('id')
-                ->map(fn ($id): int => (int) $id)
-                ->reject(fn (int $id): bool => in_array($id, $categoryIds, true))
-                ->values()
-                ->all();
-
-            if ($childIds === []) {
-                break;
-            }
-
-            $categoryIds = [...$categoryIds, ...$childIds];
-            $pendingParentIds = $childIds;
-        }
-
-        return $categoryIds;
     }
 
     private function seoDescription(Category $category): ?string

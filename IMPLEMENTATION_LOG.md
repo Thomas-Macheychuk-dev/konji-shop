@@ -52,3 +52,11 @@
 - Added `shop:check-public-media` for configuration validation and an explicit `--probe` mode that writes one temporary private S3 object, reads it through the configured CDN URL, validates the content, and cleans up the origin object.
 - Added Terraform outputs for the CloudFront domain/public media URL plus a guarded cutover runbook covering Terraform deployment, CDN probe, dry-run/copy, real-object verification, description rewrite, live disk switch, and rollback.
 - Added focused application and infrastructure coverage for direct-S3 URL rejection, private visibility/cache TTL requirements, successful/failed CDN probes, OAC signing, bucket public-access blocking, and the PriceClass_100 MVP default.
+
+## 2026-08-27 — Storefront database/query cost baseline
+
+- Collapsed product-page cache-version discovery from many independent aggregate queries into one correlated aggregate query, so cached product-page requests no longer pay repeated RDS round trips merely to validate the cache key.
+- Replaced depth-by-depth category descendant discovery with one recursive CTE while preserving the active-only subtree semantics used by public category listings.
+- Removed the redundant `mainImage` eager-load query from home, category and product-page catalogue reads; when `images` are already loaded, the product now resolves the main image directly from that collection without an extra query.
+- Added composite indexes aligned with the actual storefront predicates/orderings for active category trees/navigation, product listing/featured reads, active/default variants and ordered product media.
+- Added focused performance regression coverage for one-query cache-version discovery, one-query category subtree resolution, zero-query loaded-image selection and presence of the storefront composite indexes.
