@@ -112,13 +112,37 @@ final class PaynowGateway implements PaymentGateway
 
     public function parseNotification(array $payload): PaymentNotificationData
     {
-        $status = $payload['status'] ?? 'ERROR';
+        $providerReference = trim((string) ($payload['paymentId'] ?? ''));
+        $externalId = trim((string) ($payload['externalId'] ?? ''));
+        $status = strtoupper(trim((string) ($payload['status'] ?? '')));
+        $modifiedAt = trim((string) ($payload['modifiedAt'] ?? ''));
+
+        $supportedStatuses = [
+            'NEW',
+            'PENDING',
+            'CONFIRMED',
+            'REJECTED',
+            'ERROR',
+            'EXPIRED',
+            'ABANDONED',
+        ];
+
+        if (
+            $providerReference === ''
+            || $externalId === ''
+            || $modifiedAt === ''
+            || ! in_array($status, $supportedStatuses, true)
+        ) {
+            throw new RuntimeException('Malformed or unsupported Paynow notification.');
+        }
 
         return new PaymentNotificationData(
-            providerReference: $payload['paymentId'] ?? '',
+            providerReference: $providerReference,
             isSuccessful: $status === 'CONFIRMED',
             externalStatus: $status,
             payload: $payload,
+            externalId: $externalId,
+            modifiedAt: $modifiedAt,
         );
     }
 

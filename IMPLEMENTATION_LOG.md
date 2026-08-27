@@ -16,3 +16,12 @@
 - Added retry UI to checkout return, account order, and guest order pages only while the order remains eligible for initialization recovery.
 - Dispatch the order confirmation event as soon as the order is durably created, so a temporary payment-provider outage does not prevent the customer from receiving the order number.
 - Added focused recovery coverage for successful retry, duplicate retry prevention, access isolation, order/payment amount integrity, checkout recovery UI, and provider-initialization failure behavior.
+
+## 2026-08-27 — Paynow webhook lifecycle hardening
+
+- Added explicit Paynow v3 notification handling for `NEW`, `PENDING`, `CONFIRMED`, `REJECTED`, `ERROR`, `EXPIRED`, and `ABANDONED`.
+- Scope notification lookup by provider plus Paynow `paymentId`, verify the signed payload, and require `externalId` to match the local order before applying any state transition.
+- Use Paynow `modifiedAt` to ignore exact replays and stale out-of-order notifications without generating duplicate payment/order events, and prevent paid/refunded local state from regressing on later failure notifications.
+- Map terminal Paynow failures back to a retryable unpaid order while preserving the failed payment attempt; the next customer retry creates a fresh local payment row and therefore a fresh Paynow idempotency key.
+- Made payment/order pending/paid/failed transitions idempotent and changed the Paynow notification endpoint to return the empty `200 OK` response expected by the provider.
+- Added focused coverage for all Paynow statuses, replay/out-of-order delivery, provider isolation, external ID mismatch, signature failure, empty webhook acknowledgement, and retry after provider-declared failure.

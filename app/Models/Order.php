@@ -378,12 +378,31 @@ class Order extends Model
 
     public function markPaymentAsPending(): void
     {
+        if ($this->payment_status->isPending()) {
+            return;
+        }
+
         if (! $this->payment_status->isUnpaid()) {
             throw new DomainException('Tylko nieopłacone zamówienia mogą oczekiwać na płatność.');
         }
 
         $this->update([
             'payment_status' => PaymentStatus::PENDING,
+        ]);
+    }
+
+    public function markPaymentAsUnpaid(): void
+    {
+        if ($this->payment_status->isUnpaid()) {
+            return;
+        }
+
+        if (! $this->payment_status->isPending()) {
+            throw new DomainException('Tylko oczekujące zamówienia mogą wrócić do statusu nieopłaconego.');
+        }
+
+        $this->update([
+            'payment_status' => PaymentStatus::UNPAID,
         ]);
     }
 

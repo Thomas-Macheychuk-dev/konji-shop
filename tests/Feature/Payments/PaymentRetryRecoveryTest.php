@@ -3,7 +3,6 @@
 use App\Contracts\Payments\PaymentGateway;
 use App\Data\Payments\PaymentInitializationResult;
 use App\Data\Payments\PaymentNotificationData;
-use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Order;
 use App\Models\Payment;
@@ -231,4 +230,36 @@ it('does not show retry UI for a paid order', function (): void {
         ->get(route('checkout.success'))
         ->assertOk()
         ->assertDontSee('Ponów płatność');
+});
+
+it('creates a fresh local payment attempt after a provider-declared terminal failure', function (): void {
+    $order = Order::factory()->guest('retry@example.test')->unpaid()->create([
+        'total_amount' => 12345,
+        'currency' => 'PLN',
+    ]);
+
+    $failedPayment = Payment::factory()->forOrder($order)->create([
+        'provider' => 'test',
+        'provider_reference' => 'failed-provider-payment',
+        'status' => PaymentStatus::FAILED,
+        'amount' => 12345,
+        'currency' => 'PLN',
+        'external_status' => 'REJECTED',
+    ]);
+
+    $this->withSession(['checkout.last_order_id' => $order->id])
+        ->post(route('payments.retry', $order))
+        ->assertRedirect();
+
+    $order->refresh();
+    $payments = $order->payments()->orderBy('id')->get();
+
+    expect($this->retryGateway->initializeCalls)->toBe(1)
+        ->and($payments)->toHaveCount(2)
+        ->and($payments->first()->id)->toBe($failedPayment->id)
+        ->and($payments->first()->status)->toBe(PaymentStatus::FAILED)
+        ->and($payments->last()->status)->toBe(PaymentStatus::PENDING)
+        ->and($payments->last()->provider_reference)->toBe('retry-payment-'.$payments->last()->id)
+        ->and($payments->last()->id)->not->toBe($failedPayment->id)
+        ->and($order->payment_status)->toBe(PaymentStatus::PENDING);
 });

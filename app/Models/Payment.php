@@ -57,9 +57,13 @@ class Payment extends Model
 
     public function markAsPaid(): void
     {
+        if ($this->status->isPaid()) {
+            return;
+        }
+
         $this->update([
             'status' => PaymentStatus::PAID,
-            'paid_at' => now(),
+            'paid_at' => $this->paid_at ?? now(),
         ]);
 
         $this->order->events()->create([
@@ -70,6 +74,10 @@ class Payment extends Model
 
     public function markAsFailed(): void
     {
+        if ($this->status->isFailed()) {
+            return;
+        }
+
         $this->update([
             'status' => PaymentStatus::FAILED,
         ]);
@@ -79,7 +87,6 @@ class Payment extends Model
             'description' => 'Płatność nie powiodła się.',
         ]);
     }
-
 
     public function markAsRefunded(int $refundAmount, bool $fullyRefunded): void
     {
@@ -117,6 +124,10 @@ class Payment extends Model
 
     public function markAsPending(): void
     {
+        if ($this->status->isPending()) {
+            return;
+        }
+
         $this->update([
             'status' => PaymentStatus::PENDING,
         ]);

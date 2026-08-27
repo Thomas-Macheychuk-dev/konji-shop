@@ -239,3 +239,46 @@ it('fails fast when Paynow credentials are missing', function (): void {
 
     (new PaynowGateway)->initialize($order, $payment);
 })->throws(RuntimeException::class, 'Paynow is not configured for payment initialization.');
+
+it('parses every supported Paynow v3 notification status', function (string $status): void {
+    $payload = [
+        'paymentId' => 'PBLX-NOTIFICATION',
+        'externalId' => '123',
+        'status' => $status,
+        'modifiedAt' => '2026-08-27T00:00:00+00:00',
+    ];
+
+    $notification = (new PaynowGateway)->parseNotification($payload);
+
+    expect($notification->providerReference)->toBe('PBLX-NOTIFICATION')
+        ->and($notification->externalId)->toBe('123')
+        ->and($notification->externalStatus)->toBe($status)
+        ->and($notification->modifiedAt)->toBe('2026-08-27T00:00:00+00:00')
+        ->and($notification->isSuccessful)->toBe($status === 'CONFIRMED');
+})->with(['NEW', 'PENDING', 'CONFIRMED', 'REJECTED', 'ERROR', 'EXPIRED', 'ABANDONED']);
+
+it('rejects malformed or unsupported Paynow notifications', function (array $payload): void {
+    (new PaynowGateway)->parseNotification($payload);
+})->with([
+    'missing payment id' => [[
+        'externalId' => '123',
+        'status' => 'CONFIRMED',
+        'modifiedAt' => '2026-08-27T00:00:00+00:00',
+    ]],
+    'missing external id' => [[
+        'paymentId' => 'PBLX-NOTIFICATION',
+        'status' => 'CONFIRMED',
+        'modifiedAt' => '2026-08-27T00:00:00+00:00',
+    ]],
+    'missing modified at' => [[
+        'paymentId' => 'PBLX-NOTIFICATION',
+        'externalId' => '123',
+        'status' => 'CONFIRMED',
+    ]],
+    'unsupported status' => [[
+        'paymentId' => 'PBLX-NOTIFICATION',
+        'externalId' => '123',
+        'status' => 'SOMETHING_NEW',
+        'modifiedAt' => '2026-08-27T00:00:00+00:00',
+    ]],
+])->throws(RuntimeException::class, 'Malformed or unsupported Paynow notification.');
