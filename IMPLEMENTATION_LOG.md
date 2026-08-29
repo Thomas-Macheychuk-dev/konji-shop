@@ -78,3 +78,31 @@
 - Added a blocking `shop:check-runtime` gate for production cache/OPcache/Redis/logging invariants.
 - Reduced idle queue/scheduler CPU work and protected non-expiring Redis queue keys from cache eviction.
 - Added low-risk Nginx file/FastCGI runtime tuning without caching personalized or SEO-sensitive HTML.
+
+## 2026-08-27 — AWS production MVP cost baseline
+
+- Preserved the single-EC2/private-RDS topology with no NAT Gateway, ALB, ElastiCache, or OpenSearch requirement and changed the default x86 compute class from `t3.small` to lower-cost `t3a.small`.
+- Added a no-additional-charge S3 Gateway VPC endpoint so application S3 traffic has a direct AWS-network route without introducing paid interface endpoints or NAT.
+- Made RDS CloudWatch exports configurable, defaulted to the error log only, and Terraform-manages a 14-day retention policy instead of indefinite log storage.
+- Tightened S3 lifecycle cost controls to keep noncurrent versions for 30 days, abort incomplete multipart uploads after 7 days, and remove expired delete markers.
+- Added optional monthly AWS Budget notifications at 80%, 100%, and forecasted 100% thresholds plus a cost-conscious production tfvars example.
+- Added bounded Docker json-file log rotation to protect the EC2 EBS volume from unbounded container logs.
+- Documented production scale triggers and the explicit rule that additional managed AWS services are introduced only when metrics justify their recurring cost.
+
+## 2026-08-29 — NeoxMed catalogue crawler and scraper
+
+- Added a crawl/scrape-only NeoxMed supplier integration; no product/database import path is enabled in this patch.
+- Discover the seven public NeoxMed catalogue category pages from the WordPress navigation and normalize `www`/query/fragment URL variants to canonical `https://neoxmed.com/.../` URLs.
+- Scrape products directly from category-page `h2` sections because NeoxMed does not expose dedicated product-detail URLs; use the published Neox product code as the stable external identity/SKU.
+- Deduplicate repeated responsive product blocks and merge the same product code when it appears in multiple NeoxMed categories while preserving all source category paths.
+- Extract descriptions, NFZ codes, matching product images and visual size-chart images; leave price/currency/availability unset because the manufacturer catalogue does not publish retail commercial data.
+- Preserve visual-only size information as review-required metadata rather than synthesizing variants, and stop early on HTTP 429 after bounded retries/delays.
+- Added `neoxmed:categories` and `neoxmed:crawl-product-data`, scraper documentation, command persistence support and focused category/product/crawler regression coverage.
+
+## 2026-08-29 — NeoxMed scraper source-identity and media quality hardening
+
+- Preserve whitespace across HTML line-break/inline markup in NeoxMed product headings so titles such as `Stabilizator nadgarstka i kciuka` and `Kołnierz ortopedyczny typ Schanza` are stored correctly.
+- Stop collapsing genuinely distinct NeoxMed products that reuse a base source code: derive stable external IDs/SKUs for `(21)/(24)/(30)` P-30 heights and `Short` wrist-brace models while retaining the original manufacturer code in `source_code`.
+- Keep responsive duplicate blocks deduplicated by the derived product identity and propagate only shared NFZ codes across sibling products that reuse the same source code.
+- Treat NeoxMed `*_resize` neck-brace assets as product images instead of generic underscore-based size-chart images.
+- Added focused regression coverage for reused source codes, P-30 height separation, heading whitespace normalization, shared NFZ metadata, and SZ-01/SZ-02 product-image classification.
