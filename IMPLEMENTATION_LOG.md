@@ -135,3 +135,13 @@
 - Support multi-category placement for wrist+thumb products and T-03 Neurotemblak while retaining one deterministic mapping strategy per source identity.
 - Database audit now requires every target slug to resolve to an active, non-deleted Konji category and blocks future import implementation when a required taxonomy destination is unavailable.
 - Added focused regression coverage for NeoxMed code-family taxonomy rules, supplier-specific category avoidance, source-category provenance, and active-category database gating.
+
+## 2026-08-29 — NeoxMed explicit commercial approvals and priced-map gate
+
+- Added `neoxmed:priced-map` as a zero-write commercial approval boundary after the frozen structural NeoxMed import map.
+- Added a 77-row approval-template mode carrying the exact import-map SHA-256 so stale commercial data cannot be reused against a changed catalogue/map.
+- Require explicit positive PLN net/gross prices and explicit supported Konji VAT (`0/5/8/23`) per product; no prices or VAT are inferred from NFZ, medical-device status, competitors, or web search.
+- Validate gross price using the application `VatRate` rounding rules and fail on mismatches rather than silently normalizing approved money.
+- Preserve the structural database audit and keep `database_writes=false` throughout this stage.
+- Require an explicit approved HTTPS media override for mapped products with no normal source product image, currently K-01.
+- Priced-map readiness is only possible when commercial rows fully cover the frozen catalogue, all price/VAT/media blockers are resolved, and the structural database audit is safe.

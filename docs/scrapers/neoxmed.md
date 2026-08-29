@@ -188,3 +188,51 @@ The resolver uses category **slugs**, never database IDs, so local and productio
 | `T-03` | slings + shoulder stabilizers |
 
 The database audit treats every resolved target slug as required. A missing, archived or soft-deleted target category is a hard database-audit error and blocks future import implementation. Raw source slug `temblaki` is intentionally not used because it currently belongs to a supplier-specific category branch in the existing catalogue.
+
+## Commercial approval / priced-map boundary
+
+NeoxMed does not publish approved Konji Shop selling prices or VAT rates in the scraped catalogue. Do not derive commercial values from NFZ eligibility, medical-device status, competitor shops, or search results.
+
+After the structural `neoxmed:import-map` is green, generate a human-editable approvals template from that exact frozen map:
+
+```bash
+docker compose exec app php artisan neoxmed:priced-map \
+  --from=scrapers/neoxmed/import-map.json \
+  --approvals=scrapers/neoxmed/commercial-approvals.json \
+  --write-template
+```
+
+The generated JSON contains one row per frozen NeoxMed product and records the SHA-256 of the exact structural import map. The command refuses to overwrite an existing approvals file unless `--overwrite-template` is supplied.
+
+For every product, explicitly populate:
+
+- `net_amount_pln` using a positive PLN decimal with at most two decimals;
+- `gross_amount_pln` using a positive PLN decimal with at most two decimals;
+- `vat_rate` using a supported Konji VAT value: `0`, `5`, `8`, or `23`;
+- for products with no normal source image (currently `K-01`), an approved HTTPS `media_override_url` and optional alt text.
+
+`approval_reference`, `approved_by`, and `approved_at` are audit metadata. They are not used to derive prices, but should be completed before production use.
+
+Validate the completed approvals into the priced map:
+
+```bash
+docker compose exec app php artisan neoxmed:priced-map \
+  --from=scrapers/neoxmed/import-map.json \
+  --approvals=scrapers/neoxmed/commercial-approvals.json \
+  --save=scrapers/neoxmed/priced-map.json \
+  --show-review
+```
+
+The priced-map command:
+
+- performs no database writes and downloads no images;
+- requires the approval file to reference the exact import-map SHA-256;
+- requires exactly matching external product IDs, planned SKUs, and names;
+- converts decimal PLN amounts to integer minor units;
+- verifies gross price using Konji's VAT rounding rules;
+- rejects unsupported VAT values and gross/VAT mismatches;
+- carries the passing read-only database audit forward;
+- requires approved media for any product whose structural map has no normal source image;
+- leaves `ready_for_database_write=false` until all pricing, VAT, and required media blockers are resolved.
+
+Only a priced map reporting zero missing prices, zero missing VAT, zero gross/VAT mismatches, zero required-media gaps, zero hard errors, and `Ready for database write: YES` may be used as input to a later local product-write implementation patch.
