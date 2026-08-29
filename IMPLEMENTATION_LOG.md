@@ -119,3 +119,19 @@
 - Does not invent selling prices, VAT or source availability; price and VAT remain blocking review prerequisites.
 - Added a read-only database audit for source-scoped external-ID overlaps, global slug/SKU collisions and exact category slug matches.
 - Added frozen-count gates for 75 products, 76 product images and 80 size-chart images.
+
+## 2026-08-29 — NeoxMed combined-code catalogue completeness fix
+
+- Added support for NeoxMed headings that publish multiple manufacturer codes in one product section, including `K-01, K-02 Stabilizator stawu kolanowego`.
+- Preserve K-01 and K-02 as separate source product identities while sharing the section description/size chart and matching product media only to the code actually represented by the source asset.
+- K-01 intentionally remains without a normal source product image because NeoxMed publishes only the shared size chart and the K-02 product photo; missing source media is now a blocking review item rather than a structural mapping error.
+- Updated frozen NeoxMed import-map expectations to 77 products, 77 normal product-image associations and 81 size-chart associations.
+
+## 2026-08-29 — NeoxMed deterministic Konji taxonomy mapping
+
+- Replaced raw NeoxMed source-category slug matching with deterministic product-level target-category resolution based on manufacturer code families.
+- Preserve original NeoxMed category paths separately as source provenance while exposing only canonical Konji target slugs to the future importer.
+- Route all products into the generic Produkty ortopedyczne taxonomy and deliberately avoid Pani Teresa/Sigvaris/Mobilis supplier-specific branches, including the ambiguous raw `temblaki` slug.
+- Support multi-category placement for wrist+thumb products and T-03 Neurotemblak while retaining one deterministic mapping strategy per source identity.
+- Database audit now requires every target slug to resolve to an active, non-deleted Konji category and blocks future import implementation when a required taxonomy destination is unavailable.
+- Added focused regression coverage for NeoxMed code-family taxonomy rules, supplier-specific category avoidance, source-category provenance, and active-category database gating.

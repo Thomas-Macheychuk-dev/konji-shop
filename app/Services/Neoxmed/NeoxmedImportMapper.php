@@ -14,6 +14,10 @@ final class NeoxmedImportMapper
 
     private const MANUFACTURER = 'Neox s.c.';
 
+    public function __construct(
+        private readonly NeoxmedCategoryResolver $categoryResolver,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $catalogue
      * @return array<string, mixed>
@@ -30,6 +34,7 @@ final class NeoxmedImportMapper
         $seenVariantIds = [];
         $seenSkus = [];
         $categoryPaths = [];
+        $targetCategorySlugs = [];
         $productImageCount = 0;
         $sizeChartImageCount = 0;
         $productsWithNfz = 0;
@@ -66,10 +71,17 @@ final class NeoxmedImportMapper
                 $seenProductIds[$externalId] = true;
             }
 
-            foreach ($mapped['categories'] as $category) {
+            foreach ($mapped['source_categories'] as $category) {
                 $path = is_array($category['path'] ?? null) ? $category['path'] : [];
                 if ($path !== []) {
                     $categoryPaths[implode(' > ', $path)] = true;
+                }
+            }
+
+            foreach ($mapped['categories'] as $category) {
+                $targetSlug = $this->stringOrNull($category['target_slug'] ?? null);
+                if ($targetSlug !== null) {
+                    $targetCategorySlugs[$targetSlug] = true;
                 }
             }
 
@@ -157,6 +169,8 @@ final class NeoxmedImportMapper
                 'unique_planned_skus' => count($seenSkus),
                 'distinct_category_paths' => count($categoryPaths),
                 'category_paths' => array_keys($categoryPaths),
+                'distinct_target_categories' => count($targetCategorySlugs),
+                'target_category_slugs' => array_keys($targetCategorySlugs),
                 'product_images' => $productImageCount,
                 'size_chart_images' => $sizeChartImageCount,
                 'products_with_nfz_codes' => $productsWithNfz,
@@ -199,7 +213,8 @@ final class NeoxmedImportMapper
         $name = $this->stringOrNull($source['name'] ?? null);
         $sourceSlug = $this->stringOrNull($source['slug'] ?? null);
         $slug = $sourceSlug !== null ? 'neox-'.$sourceSlug : ($name !== null && $externalId !== null ? Str::slug('neox '.$externalId.' '.$name) : null);
-        $categories = $this->categories($source);
+        $sourceCategories = $this->sourceCategories($source);
+        $categories = $this->categoryResolver->resolve($source);
         $images = $this->images($source['images'] ?? []);
         $sizeChartImages = $this->images($source['size_chart_images'] ?? [], 'size_chart');
         $nfzCodes = $this->stringList($source['nfz_codes'] ?? []);
@@ -232,12 +247,16 @@ final class NeoxmedImportMapper
             $errors[] = 'product description is missing.';
         }
 
+        if ($sourceCategories === []) {
+            $errors[] = 'no NeoxMed source category path is preserved.';
+        }
+
         if ($categories === []) {
-            $errors[] = 'no NeoxMed category path is mapped.';
+            $errors[] = 'no deterministic Konji target category mapping is resolved.';
         }
 
         if ($images === []) {
-            $errors[] = 'no product image is mapped.';
+            $blockingReviewItems[] = 'NeoxMed does not publish a normal product image for this source product; supply or approve product media before any database write.';
         }
 
         if (! $medicalDevice) {
@@ -290,6 +309,7 @@ final class NeoxmedImportMapper
                 'planned_stock_status' => 'out_of_stock',
                 'requires_review' => true,
             ],
+            'source_categories' => $sourceCategories,
             'categories' => $categories,
             'sizing' => [
                 'size_note' => $sizeNote,
@@ -319,7 +339,7 @@ final class NeoxmedImportMapper
     }
 
     /** @param array<string, mixed> $source */
-    private function categories(array $source): array
+    private function sourceCategories(array $source): array
     {
         $paths = $this->records($source['source_category_paths'] ?? []);
         $normalized = [];

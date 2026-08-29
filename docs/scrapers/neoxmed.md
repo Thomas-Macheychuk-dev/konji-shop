@@ -126,7 +126,7 @@ Only after the live crawl output is reviewed should a separate patch add mapping
 
 ## Import mapping dry-run
 
-After the 75-product catalogue crawl has been reviewed, build a read-only import map:
+After the corrected 77-product catalogue crawl has been reviewed, build a read-only import map:
 
 ```bash
 php artisan neoxmed:import-map \
@@ -140,9 +140,9 @@ The command deliberately does **not** create or update products, variants, categ
 
 Frozen catalogue expectations:
 
-- 75 distinct NeoxMed products;
-- 76 normal product images;
-- 80 size-chart images;
+- 77 distinct NeoxMed products;
+- 77 normal product-image associations; K-01 has no normal source product image and remains a blocking media review item;
+- 81 size-chart image associations;
 - one safe draft placeholder variant per distinct source product;
 - globally prefixed planned variant SKUs such as `NEOX-B-01`, `NEOX-N-03-SHORT` and `NEOX-P-30-21`;
 - source sizing remains informational and is not converted into inferred variants;
@@ -150,6 +150,8 @@ Frozen catalogue expectations:
 - product status remains `draft` and planned stock remains `out_of_stock`;
 - catalogue price, VAT and availability are not invented.
 - legacy `http://neoxmed.com` / `http://www.neoxmed.com` media URLs are canonicalized to the same NeoxMed-owned HTTPS path during mapping; third-party/non-NeoxMed HTTP URLs are rejected.
+
+The scraper also expands comma-separated source-code headings such as `K-01, K-02 Stabilizator stawu kolanowego` into distinct source products instead of silently dropping the heading.
 
 The mapping performs a read-only current-database audit for:
 
@@ -160,3 +162,29 @@ The mapping performs a read-only current-database audit for:
 - exact existing category slug matches and unmatched source category slugs.
 
 Price and VAT remain explicit blockers. A structurally valid map can therefore report `PASS WITH REVIEW`, but `ready_for_database_write` remains false until approved commercial pricing and VAT are supplied in a later pricing/preflight stage.
+
+## Deterministic Konji taxonomy mapping
+
+The import map does not attach NeoxMed source category slugs directly to Konji categories. Source category paths are preserved separately as provenance, while target categories are resolved by NeoxMed manufacturer-code family into the generic Konji `Produkty ortopedyczne` taxonomy.
+
+The resolver uses category **slugs**, never database IDs, so local and production IDs may differ safely. It deliberately avoids supplier-specific Pani Teresa and Sigvaris/Mobilis category branches.
+
+| NeoxMed code/product family | Konji target slug(s) |
+| --- | --- |
+| `B-*` | `produkty-ortopedyczne-bark-stabilizatory-ortopedyczne` |
+| `K-*`, `EK-*` | `produkty-ortopedyczne-stabilizatory-ortopedyczne-staw-kolanowy` |
+| `S-01..S-04`, `ES-*` | `produkty-ortopedyczne-stabilizatory-ortopedyczne-staw-skokowy` |
+| `S-05`, `S-06` | `walkery` |
+| `C-01`, `U-01` | `stabilizatory-ortopedyczne` |
+| `L-*`, `EL-*` | `produkty-ortopedyczne-stabilizatory-ortopedyczne-lokiec` |
+| normal `N-*`, `EN-*` | `produkty-ortopedyczne-stabilizatory-ortopedyczne-nadgarstek` |
+| `N-02`, `N-04`, `N-07` | wrist + `kciuk` |
+| `N-09` | `kciuk` |
+| `N-10` | `stabilizatory-ortopedyczne` fallback |
+| `P-05`, `P-06`, `P-13`, `P-30-*` | `brzuch` |
+| remaining `P-*` | `produkty-ortopedyczne-stabilizatory-ortopedyczne-kregoslup` |
+| `SZ-*` | `kregoslup-szyjny` |
+| `T-*` | `produkty-ortopedyczne-stabilizatory-ortopedyczne-temblaki` |
+| `T-03` | slings + shoulder stabilizers |
+
+The database audit treats every resolved target slug as required. A missing, archived or soft-deleted target category is a hard database-audit error and blocks future import implementation. Raw source slug `temblaki` is intentionally not used because it currently belongs to a supplier-specific category branch in the existing catalogue.

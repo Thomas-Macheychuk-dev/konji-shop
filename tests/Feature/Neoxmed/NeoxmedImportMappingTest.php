@@ -53,10 +53,29 @@ it('maps a NeoxMed product to one safe draft placeholder variant without inventi
         ->and($mapped['sizing']['variant_generation_allowed'])->toBeFalse()
         ->and($mapped['sizing']['size_chart_images'])->toHaveCount(1)
         ->and($mapped['nfz']['codes'])->toBe(['J.06.01.00', 'J.06.01.01'])
-        ->and($mapped['categories'][0]['path'])->toBe(['Ortezy barku'])
+        ->and($mapped['source_categories'][0]['path'])->toBe(['Ortezy barku'])
+        ->and($mapped['categories'][0]['target_slug'])->toBe('produkty-ortopedyczne-bark-stabilizatory-ortopedyczne')
         ->and($mapped['images'])->toHaveCount(1)
         ->and($mapped['images'][0]['source_url'])->toBe('https://neoxmed.com/wp-content/uploads/B-01_resize-300x225.jpg')
         ->and($mapped['blocking_review_items'])->toBe([]);
+});
+
+it('treats a genuinely missing source product image as a blocking review item rather than a structural mapping failure', function (): void {
+    $product = neoxmedImportProduct();
+    $product['external_product_id'] = 'K-01';
+    $product['sku'] = 'K-01';
+    $product['source_code'] = 'K-01';
+    $product['slug'] = 'k-01-stabilizator-stawu-kolanowego';
+    $product['name'] = 'Stabilizator stawu kolanowego';
+    $product['images'] = [];
+
+    $mapped = app(NeoxmedImportMapper::class)->mapProduct($product);
+
+    expect($mapped['errors'])->toBe([])
+        ->and($mapped['images'])->toBe([])
+        ->and($mapped['blocking_review_items'])->toContain(
+            'NeoxMed does not publish a normal product image for this source product; supply or approve product media before any database write.',
+        );
 });
 
 it('preserves qualified NeoxMed source identities as globally prefixed planned SKUs', function (): void {
@@ -154,8 +173,8 @@ it('audits current database collisions and category matches without modifying ex
     ]);
 
     Category::query()->create([
-        'name' => 'Ortezy barku',
-        'slug' => 'ortezy-barku',
+        'name' => 'Stabilizatory ortopedyczne',
+        'slug' => 'produkty-ortopedyczne-bark-stabilizatory-ortopedyczne',
         'status' => 'active',
     ]);
 
@@ -186,6 +205,41 @@ it('audits current database collisions and category matches without modifying ex
             ProductVariant::withTrashed()->count(),
             Category::withTrashed()->count(),
         ])->toBe($before);
+});
+
+it('blocks future import implementation when a required target category is missing archived or soft-deleted', function (): void {
+    $map = app(NeoxmedImportMapper::class)->mapCatalogue([
+        'source' => 'neoxmed',
+        'products' => [neoxmedImportProduct()],
+    ]);
+
+    $audit = app(NeoxmedImportDatabaseAudit::class)->audit($map);
+
+    expect($audit['summary']['matched_category_slugs'])->toBe(0)
+        ->and($audit['summary']['unmatched_category_slugs'])->toBe(1)
+        ->and($audit['unmatched_category_slugs'])->toBe([
+            'produkty-ortopedyczne-bark-stabilizatory-ortopedyczne',
+        ])
+        ->and($audit['safe_for_future_import_implementation'])->toBeFalse()
+        ->and($audit['errors'])->toContain(
+            'Required active Konji target categories are missing, archived, or soft-deleted.',
+        );
+
+    $archived = Category::query()->create([
+        'name' => 'Archived shoulder stabilizers',
+        'slug' => 'produkty-ortopedyczne-bark-stabilizatory-ortopedyczne',
+        'status' => 'archived',
+    ]);
+
+    $archivedAudit = app(NeoxmedImportDatabaseAudit::class)->audit($map);
+    expect($archivedAudit['summary']['matched_category_slugs'])->toBe(0);
+
+    $archived->update(['status' => 'active']);
+    $activeAudit = app(NeoxmedImportDatabaseAudit::class)->audit($map);
+
+    expect($activeAudit['summary']['matched_category_slugs'])->toBe(1)
+        ->and($activeAudit['summary']['unmatched_category_slugs'])->toBe(0)
+        ->and($activeAudit['safe_for_future_import_implementation'])->toBeTrue();
 });
 
 function neoxmedImportProduct(): array

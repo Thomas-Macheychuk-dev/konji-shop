@@ -43,9 +43,9 @@ final class NeoxmedImportDatabaseAudit
             }
 
             foreach (array_values(array_filter($mapped['categories'] ?? [], 'is_array')) as $category) {
-                $leafSlug = $this->stringOrNull($category['leaf_slug'] ?? null);
-                if ($leafSlug !== null) {
-                    $categorySlugs[] = $leafSlug;
+                $targetSlug = $this->stringOrNull($category['target_slug'] ?? null);
+                if ($targetSlug !== null) {
+                    $categorySlugs[] = $targetSlug;
                 }
             }
         }
@@ -118,17 +118,23 @@ final class NeoxmedImportDatabaseAudit
         $categoryMatches = $categorySlugs === [] ? [] : Category::withTrashed()
             ->whereIn('slug', $categorySlugs)
             ->orderBy('slug')
-            ->get(['id', 'parent_id', 'name', 'slug', 'deleted_at'])
+            ->get(['id', 'parent_id', 'name', 'slug', 'status', 'deleted_at'])
             ->map(fn (Category $category): array => [
                 'id' => $category->id,
                 'parent_id' => $category->parent_id,
                 'name' => $category->name,
                 'slug' => $category->slug,
+                'status' => $category->status?->value,
                 'trashed' => $category->trashed(),
+                'usable' => ! $category->trashed() && $category->status?->value === 'active',
             ])
             ->all();
 
-        $matchedCategorySlugs = array_values(array_unique(array_filter(array_column($categoryMatches, 'slug'), 'is_string')));
+        $usableCategoryMatches = array_values(array_filter(
+            $categoryMatches,
+            static fn (array $category): bool => ($category['usable'] ?? false) === true,
+        ));
+        $matchedCategorySlugs = array_values(array_unique(array_filter(array_column($usableCategoryMatches, 'slug'), 'is_string')));
         $unmatchedCategorySlugs = array_values(array_diff($categorySlugs, $matchedCategorySlugs));
         $errors = [];
 
@@ -140,12 +146,17 @@ final class NeoxmedImportDatabaseAudit
             $errors[] = 'Non-NeoxMed variant SKU collisions exist.';
         }
 
+        if ($unmatchedCategorySlugs !== []) {
+            $errors[] = 'Required active Konji target categories are missing, archived, or soft-deleted.';
+        }
+
         return [
             'database_writes' => false,
             'existing_neoxmed_products' => $existingNeoxmedProducts,
             'external_id_overlaps_other_sources' => $externalIdOverlaps,
             'slug_collisions' => $slugCollisions,
             'variant_sku_collisions' => $skuCollisions,
+            'required_target_category_slugs' => $categorySlugs,
             'category_matches' => $categoryMatches,
             'unmatched_category_slugs' => $unmatchedCategorySlugs,
             'summary' => [

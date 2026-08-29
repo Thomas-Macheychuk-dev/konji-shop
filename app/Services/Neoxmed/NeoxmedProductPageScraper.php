@@ -103,7 +103,7 @@ final class NeoxmedProductPageScraper
         $warnings = [];
 
         foreach ($headings as $index => $heading) {
-            $sectionEnd = $headings[$index + 1]['start'] ?? strlen($html);
+            $sectionEnd = $heading['section_end'] ?? ($headings[$index + 1]['start'] ?? strlen($html));
             $sectionHtml = substr($html, (int) $heading['end'], max(0, $sectionEnd - (int) $heading['end']));
             $sectionHtml = $this->trimSectionAtFooter($sectionHtml);
             $sourceCode = (string) $heading['code'];
@@ -228,7 +228,7 @@ final class NeoxmedProductPageScraper
     }
 
     /**
-     * @return array<int, array{start:int,end:int,code:string,name:string}>
+     * @return array<int, array{start:int,end:int,section_end:int,code:string,name:string}>
      */
     private function productHeadings(string $html): array
     {
@@ -238,7 +238,7 @@ final class NeoxmedProductPageScraper
             return [];
         }
 
-        $headings = [];
+        $rawHeadings = [];
 
         foreach ($matches[0] as $index => $fullMatch) {
             $headingText = $this->normalizeText((string) ($matches[1][$index][0] ?? ''));
@@ -251,34 +251,60 @@ final class NeoxmedProductPageScraper
             $rawHeading = (string) $fullMatch[0];
             $start = (int) $fullMatch[1];
 
-            $headings[] = [
+            $rawHeadings[] = [
                 'start' => $start,
                 'end' => $start + strlen($rawHeading),
-                'code' => $parsed['code'],
+                'codes' => $parsed['codes'],
                 'name' => $parsed['name'],
             ];
+        }
+
+        $headings = [];
+
+        foreach ($rawHeadings as $index => $heading) {
+            $sectionEnd = (int) ($rawHeadings[$index + 1]['start'] ?? strlen($html));
+
+            foreach ($heading['codes'] as $code) {
+                $headings[] = [
+                    'start' => (int) $heading['start'],
+                    'end' => (int) $heading['end'],
+                    'section_end' => $sectionEnd,
+                    'code' => $code,
+                    'name' => (string) $heading['name'],
+                ];
+            }
         }
 
         return $headings;
     }
 
     /**
-     * @return array{code:string,name:string}|null
+     * @return array{codes:list<string>,name:string}|null
      */
     private function parseProductHeading(string $heading): ?array
     {
-        if (preg_match('/^([A-ZĄĆĘŁŃÓŚŹŻ]{1,5}\s*[-–]\s*\d{1,3}[A-Z]?)\s+(.+)$/u', $heading, $matches) !== 1) {
+        $code = '[A-ZĄĆĘŁŃÓŚŹŻ]{1,5}\s*[-–]\s*\d{1,3}[A-Z]?';
+
+        if (preg_match('/^((?:'.$code.')(?:\s*,\s*(?:'.$code.'))*)\s+(.+)$/u', $heading, $matches) !== 1) {
             return null;
         }
 
-        $code = strtoupper((string) preg_replace('/\s+/u', '', str_replace('–', '-', $matches[1])));
+        $codes = [];
+        foreach (preg_split('/\s*,\s*/u', (string) $matches[1]) ?: [] as $rawCode) {
+            $normalized = strtoupper((string) preg_replace('/\s+/u', '', str_replace('–', '-', $rawCode)));
+            if ($normalized !== '') {
+                $codes[] = $normalized;
+            }
+        }
+
+        $codes = array_values(array_unique($codes));
         $name = trim((string) preg_replace('/\s+/u', ' ', $matches[2]));
 
-        if ($name === '') {
+        if ($codes === [] || $name === '') {
             return null;
         }
 
-        return ['code' => $code, 'name' => $name];
+        return ['codes' => $codes, 'name' => $name];
     }
 
     /**

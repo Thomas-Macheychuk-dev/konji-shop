@@ -256,3 +256,50 @@ function neoxmedNeckBraceFixture(): string
         </main></body></html>
         HTML;
 }
+
+it('splits comma-separated NeoxMed source codes that share one catalogue heading', function (): void {
+    $result = app(NeoxmedProductPageScraper::class)->extract(
+        neoxmedCombinedKneeCodeFixture(),
+        'https://neoxmed.com/ortezy-konczyn-dolnych/',
+    );
+
+    $products = collect($result['products'])->keyBy('external_product_id');
+
+    expect($result['product_count'])->toBe(3)
+        ->and($products->keys()->all())->toBe(['K-01', 'K-02', 'K-30'])
+        ->and($products['K-01']['name'])->toBe('Stabilizator stawu kolanowego')
+        ->and($products['K-02']['name'])->toBe('Stabilizator stawu kolanowego')
+        ->and($products['K-01']['size_chart_images'])->toContain([
+            'url' => 'https://neoxmed.com/wp2015/wp-content/uploads/2025/06/K_01.jpg',
+            'alt' => 'K_01',
+        ])
+        ->and($products['K-02']['size_chart_images'])->toContain([
+            'url' => 'https://neoxmed.com/wp2015/wp-content/uploads/2025/06/K_01.jpg',
+            'alt' => 'K_01',
+        ])
+        ->and($products['K-01']['images'])->toBe([])
+        ->and($products['K-01']['warnings'])->toContain('No product image matching the NeoxMed product code was found.')
+        ->and($products['K-02']['images'])->toContain([
+            'url' => 'https://neoxmed.com/wp2015/wp-content/uploads/2015/12/K-02-217x300.jpg',
+            'alt' => 'K-02',
+        ])
+        ->and($products['K-30']['name'])->toBe('Aparat szynowo-opaskowy na goleń i udo');
+});
+
+function neoxmedCombinedKneeCodeFixture(): string
+{
+    return <<<'HTML'
+        <!doctype html><html lang="pl"><body><main>
+        <h1>Ortezy kończyn dolnych</h1>
+        <h2>K-01, K-02 Stabilizator stawu kolanowego</h2>
+        <p>– termoaktywny neopren 3mm</p>
+        <p>– nie krępuje ruchów przy zachowaniu pełnej amplitudy ruchu kolana</p>
+        <p>Uwaga K-01 nie posiada otworu stabilizującego rzepkę!</p>
+        <p>Dostępne rozmiary (obwód wokół rzepki):</p>
+        <img src="/wp2015/wp-content/uploads/2025/06/K_01.jpg" alt="K_01">
+        <img src="/wp2015/wp-content/uploads/2015/12/K-02-217x300.jpg" alt="K-02">
+        <h2>K-30 Aparat szynowo-opaskowy na goleń i udo</h2>
+        <p>Opis K-30</p><img src="/wp-content/uploads/K-30.jpg" alt="K-30">
+        </main></body></html>
+        HTML;
+}

@@ -14,9 +14,9 @@ final class MapNeoxmedImportCommand extends Command
 {
     protected $signature = 'neoxmed:import-map
         {--from=scrapers/neoxmed/product-data.json : Frozen NeoxMed product-data JSON on the local filesystem disk.}
-        {--expected-products=75 : Expected source product count.}
-        {--expected-product-images=76 : Expected normal product image count.}
-        {--expected-size-charts=80 : Expected size-chart image count.}
+        {--expected-products=77 : Expected source product count.}
+        {--expected-product-images=77 : Expected normal product image count.}
+        {--expected-size-charts=81 : Expected size-chart image count.}
         {--limit= : Maximum number of products to map.}
         {--offset=0 : Number of products to skip before mapping.}
         {--save=scrapers/neoxmed/import-map.json : Save import mapping JSON on the local filesystem disk.}
@@ -166,6 +166,7 @@ final class MapNeoxmedImportCommand extends Command
         $this->line('Products without source price: '.($summary['products_without_price'] ?? 0));
         $this->line('Products without source VAT: '.($summary['products_without_vat'] ?? 0));
         $this->line('Distinct source category paths: '.($summary['distinct_category_paths'] ?? 0));
+        $this->line('Distinct Konji target categories: '.($summary['distinct_target_categories'] ?? 0));
         $this->line('Hard mapping errors: '.count($result['errors'] ?? []));
         $this->line('Blocking review items: '.count($result['blocking_review_items'] ?? []));
         $this->line('Ready for database write: NO');
@@ -177,8 +178,8 @@ final class MapNeoxmedImportCommand extends Command
             $this->line('Cross-source external ID overlaps: '.($database['external_id_overlaps_other_sources'] ?? 0));
             $this->line('Slug collisions: '.($database['slug_collisions'] ?? 0));
             $this->line('Variant SKU collisions: '.($database['variant_sku_collisions'] ?? 0));
-            $this->line('Matched category slugs: '.($database['matched_category_slugs'] ?? 0));
-            $this->line('Unmatched category slugs: '.($database['unmatched_category_slugs'] ?? 0));
+            $this->line('Matched target category slugs: '.($database['matched_category_slugs'] ?? 0));
+            $this->line('Unmatched target category slugs: '.($database['unmatched_category_slugs'] ?? 0));
         }
 
         if ((bool) $this->option('show-products')) {
@@ -233,7 +234,7 @@ final class MapNeoxmedImportCommand extends Command
             $audit = $result['database_audit'];
             $this->newLine();
             $this->info('Database audit details:');
-            foreach (['external_id_overlaps_other_sources', 'slug_collisions', 'variant_sku_collisions', 'unmatched_category_slugs'] as $key) {
+            foreach (['external_id_overlaps_other_sources', 'slug_collisions', 'variant_sku_collisions', 'required_target_category_slugs', 'unmatched_category_slugs'] as $key) {
                 $this->line($key.': '.json_encode($audit[$key] ?? [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
             }
         }
