@@ -4,5 +4,6 @@ terraform.tfstate
 terraform.tfstate.*
 *.tfvars
 !terraform.tfvars.example
+!production.tfvars.example
 crash.log
 crash.*.log

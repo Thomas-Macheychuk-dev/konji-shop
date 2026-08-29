@@ -63,3 +63,13 @@ output "product_media_url" {
   description = "Laravel PUBLIC_FILESYSTEM_URL value for the private-S3/CloudFront product media path."
   value       = "https://${aws_cloudfront_distribution.product_media.domain_name}"
 }
+
+output "s3_gateway_endpoint_id" {
+  description = "No-additional-charge S3 gateway endpoint used by the application VPC."
+  value       = aws_vpc_endpoint.s3.id
+}
+
+output "monthly_cost_budget_name" {
+  description = "AWS monthly cost budget name when cost_budget_notification_email is configured."
+  value       = try(aws_budgets_budget.monthly_cost[0].name, null)
+}

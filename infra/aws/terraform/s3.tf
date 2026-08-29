@@ -48,6 +48,8 @@ resource "aws_s3_bucket_versioning" "uploads" {
 resource "aws_s3_bucket_lifecycle_configuration" "uploads" {
   bucket = aws_s3_bucket.uploads.id
 
+  depends_on = [aws_s3_bucket_versioning.uploads]
+
   rule {
     id     = "expire-old-noncurrent-versions"
     status = "Enabled"
@@ -57,7 +59,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "uploads" {
     }
 
     noncurrent_version_expiration {
-      noncurrent_days = 90
+      noncurrent_days = var.s3_noncurrent_version_retention_days
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = var.s3_abort_incomplete_multipart_days
+    }
+
+    expiration {
+      expired_object_delete_marker = true
     }
   }
 }

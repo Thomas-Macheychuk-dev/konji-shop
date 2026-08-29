@@ -1,7 +1,14 @@
 name: konji-shop-prod
 
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "${DOCKER_LOG_MAX_SIZE:-10m}"
+    max-file: "${DOCKER_LOG_MAX_FILES:-3}"
+
 services:
   app:
+    logging: *default-logging
     build:
       context: .
       dockerfile: Dockerfile
@@ -32,6 +39,7 @@ services:
       start_period: 60s
 
   web:
+    logging: *default-logging
     build:
       context: .
       dockerfile: Dockerfile
@@ -53,6 +61,7 @@ services:
     command: sh -c "ln -sfn /var/www/html/storage/app/public /var/www/html/public/storage && nginx -g 'daemon off;'"
 
   queue:
+    logging: *default-logging
     image: ${APP_IMAGE:-konji-shop-app:prod}
     restart: unless-stopped
     env_file:
@@ -73,6 +82,7 @@ services:
       - app_storage:/var/www/html/storage
 
   scheduler:
+    logging: *default-logging
     image: ${APP_IMAGE:-konji-shop-app:prod}
     restart: unless-stopped
     env_file:
@@ -93,6 +103,7 @@ services:
       - app_storage:/var/www/html/storage
 
   redis:
+    logging: *default-logging
     image: redis:7-alpine
     restart: unless-stopped
     command: redis-server --appendonly yes --maxmemory ${REDIS_MAXMEMORY:-256mb} --maxmemory-policy volatile-lru

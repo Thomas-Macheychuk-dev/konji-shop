@@ -1,0 +1,45 @@
+project_name = "konji-shop"
+environment  = "production"
+aws_region   = "eu-central-1"
+
+# Restrict SSH to your actual admin IP, or leave ssh_key_name null and use SSM Session Manager.
+ssh_cidr_blocks = ["YOUR_PUBLIC_IP/32"]
+web_cidr_blocks = ["0.0.0.0/0"]
+ssh_key_name    = null
+
+# Cost baseline: x86-compatible AMD EC2 and the smallest Graviton RDS class.
+# Scale only after production metrics justify it.
+instance_type       = "t3a.small"
+root_volume_size_gb = 30
+
+rds_instance_class           = "db.t4g.micro"
+rds_allocated_storage_gb     = 20
+rds_max_allocated_storage_gb = 50
+rds_engine_version           = "8.0"
+db_name                      = "konji_shop"
+db_username                  = "konji_shop"
+
+rds_backup_retention_days  = 7
+rds_deletion_protection    = true
+rds_skip_final_snapshot    = false
+rds_cloudwatch_log_exports = ["error"]
+cloudwatch_log_retention_days = 14
+
+s3_noncurrent_version_retention_days = 30
+s3_abort_incomplete_multipart_days    = 7
+cloudfront_price_class                 = "PriceClass_100"
+
+# Set this before production apply so AWS creates free monthly budget alerts.
+monthly_cost_budget_usd         = 60
+cost_budget_notification_email = "" # Set to your real operations email before production apply.
+
+# Optional exact bucket name. Must be globally unique.
+# s3_bucket_name = "konji-shop-production-uploads-123456789012"
+
+# Optional Route 53 DNS record.
+# route53_zone_id = "Z123456789ABCDEFG"
+# domain_name     = "shop.example.pl"
+
+extra_tags = {
+  Owner = "konji-shop"
+}

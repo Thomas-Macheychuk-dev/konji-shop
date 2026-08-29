@@ -5,7 +5,7 @@ resource "random_password" "db_password" {
 }
 
 resource "aws_db_instance" "mysql" {
-  identifier = "${local.name_prefix}-mysql"
+  identifier = local.rds_identifier
 
   engine         = "mysql"
   engine_version = var.rds_engine_version
@@ -34,7 +34,9 @@ resource "aws_db_instance" "mysql" {
   skip_final_snapshot        = var.rds_skip_final_snapshot
   final_snapshot_identifier  = var.rds_skip_final_snapshot ? null : "${local.name_prefix}-mysql-final-snapshot"
 
-  enabled_cloudwatch_logs_exports = ["error", "slowquery"]
+  enabled_cloudwatch_logs_exports = var.rds_cloudwatch_log_exports
+
+  depends_on = [aws_cloudwatch_log_group.rds]
 
   tags = {
     Name = "${local.name_prefix}-mysql"

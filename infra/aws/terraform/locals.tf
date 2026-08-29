@@ -1,7 +1,8 @@
 locals {
   name_prefix = "${var.project_name}-${var.environment}"
 
-  db_password = var.db_password != null && var.db_password != "" ? var.db_password : random_password.db_password.result
+  db_password    = var.db_password != null && var.db_password != "" ? var.db_password : random_password.db_password.result
+  rds_identifier = "${local.name_prefix}-mysql"
 
   common_tags = merge(
     {

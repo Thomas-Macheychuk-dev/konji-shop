@@ -63,6 +63,17 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id            = aws_vpc.this.id
+  service_name      = "com.amazonaws.${var.aws_region}.s3"
+  vpc_endpoint_type = "Gateway"
+  route_table_ids   = [aws_route_table.public.id]
+
+  tags = {
+    Name = "${local.name_prefix}-s3-gateway"
+  }
+}
+
 resource "aws_db_subnet_group" "this" {
   name       = "${local.name_prefix}-db-subnets"
   subnet_ids = aws_subnet.private_db[*].id
