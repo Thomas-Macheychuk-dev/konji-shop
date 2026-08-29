@@ -106,3 +106,16 @@
 - Keep responsive duplicate blocks deduplicated by the derived product identity and propagate only shared NFZ codes across sibling products that reuse the same source code.
 - Treat NeoxMed `*_resize` neck-brace assets as product images instead of generic underscore-based size-chart images.
 - Added focused regression coverage for reused source codes, P-30 height separation, heading whitespace normalization, shared NFZ metadata, and SZ-01/SZ-02 product-image classification.
+
+## 2026-08-29 - NeoxMed read-only import mapping
+
+- Added `neoxmed:import-map` for the frozen 75-product NeoxMed catalogue.
+- Mapping is explicitly `database_writes=false` and `images_downloaded=false`.
+- Preserves NeoxMed source identities including SHORT products and qualified P-30 heights.
+- Plans one safe draft/out-of-stock placeholder variant per distinct source product; visual/textual size information is retained but never converted into inferred variants.
+- Preserves NFZ codes, descriptions, product images and size-chart images.
+- Canonicalizes legacy NeoxMed-owned HTTP media URLs to HTTPS during mapping so valid frozen catalogue images are not discarded; non-NeoxMed HTTP media remains rejected.
+- Import-map summaries report source and successfully mapped media counts separately to prevent source-count checks from masking mapping loss.
+- Does not invent selling prices, VAT or source availability; price and VAT remain blocking review prerequisites.
+- Added a read-only database audit for source-scoped external-ID overlaps, global slug/SKU collisions and exact category slug matches.
+- Added frozen-count gates for 75 products, 76 product images and 80 size-chart images.

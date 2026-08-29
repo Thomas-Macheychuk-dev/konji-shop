@@ -123,3 +123,40 @@ Only after the live crawl output is reviewed should a separate patch add mapping
 - category mapping into Konji Shop
 - image/download policy
 - duplicate/reused manufacturer codes, preserving cross-category duplicates as one product while keeping distinct source headings such as P-30 heights and Short models separate
+
+## Import mapping dry-run
+
+After the 75-product catalogue crawl has been reviewed, build a read-only import map:
+
+```bash
+php artisan neoxmed:import-map \
+  --from=scrapers/neoxmed/product-data.json \
+  --save=scrapers/neoxmed/import-map.json \
+  --show-review \
+  --show-database
+```
+
+The command deliberately does **not** create or update products, variants, categories, media or pricing. It also does not download images.
+
+Frozen catalogue expectations:
+
+- 75 distinct NeoxMed products;
+- 76 normal product images;
+- 80 size-chart images;
+- one safe draft placeholder variant per distinct source product;
+- globally prefixed planned variant SKUs such as `NEOX-B-01`, `NEOX-N-03-SHORT` and `NEOX-P-30-21`;
+- source sizing remains informational and is not converted into inferred variants;
+- source NFZ codes are preserved as metadata;
+- product status remains `draft` and planned stock remains `out_of_stock`;
+- catalogue price, VAT and availability are not invented.
+- legacy `http://neoxmed.com` / `http://www.neoxmed.com` media URLs are canonicalized to the same NeoxMed-owned HTTPS path during mapping; third-party/non-NeoxMed HTTP URLs are rejected.
+
+The mapping performs a read-only current-database audit for:
+
+- existing NeoxMed products;
+- cross-source external product ID overlaps (informational because product identity is source-scoped);
+- product slug collisions;
+- globally unique planned variant SKU collisions;
+- exact existing category slug matches and unmatched source category slugs.
+
+Price and VAT remain explicit blockers. A structurally valid map can therefore report `PASS WITH REVIEW`, but `ready_for_database_write` remains false until approved commercial pricing and VAT are supplied in a later pricing/preflight stage.
