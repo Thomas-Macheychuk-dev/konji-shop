@@ -145,3 +145,19 @@
 - Preserve the structural database audit and keep `database_writes=false` throughout this stage.
 - Require an explicit approved HTTPS media override for mapped products with no normal source product image, currently K-01.
 - Priced-map readiness is only possible when commercial rows fully cover the frozen catalogue, all price/VAT/media blockers are resolved, and the structural database audit is safe.
+
+## 2026-09-07 — Antar supplier price update planning baseline
+
+- Frozen the Antar supplier XLSX effective 1 September 2026 into a normalized, SHA-bound reference without changing supplier data.
+- Added a read-only `antar:price-update-plan` workflow that matches existing Antar products by `external_parent_sku`, compares the current default variant price/VAT/currency, and performs no catalogue writes.
+- The supplier reference contains 995 priced rows, 940 normalized codes, 930 deterministic price codes and 10 intentionally ambiguous codes that are never auto-selected.
+- Supplier net/gross/VAT arithmetic is fully reconciled; VAT rates present are 5%, 8% and 23%.
+- A controlled database price-write stage remains intentionally out of scope until the real database plan is reviewed.
+
+## 2026-09-07 — Antar commercial price reconciliation
+
+- Added a read-only Antar catalogue-to-supplier-price reconciliation boundary for the supplier price list effective 2026-09-01.
+- Reconciliation uses exact supplier codes plus a finite reviewed alias/recovery manifest; fuzzy/name substring price matching is explicitly forbidden.
+- Split the scraped catalogue into `eligible_priced_products`, `manual_price_review`, and `excluded_unpriced_products` so unresolved products cannot silently receive guessed prices.
+- Correctly distinguishes the AT03107 mattress from `TORBA-AT03107` (the mattress bag, 23% VAT) and keeps suffix/multi-code/ambiguous products outside the eligible cohort.
+- The command records the crawled product-data SHA-256 and performs no database writes or network requests; a later importer must consume only frozen eligible reconciliation evidence.
