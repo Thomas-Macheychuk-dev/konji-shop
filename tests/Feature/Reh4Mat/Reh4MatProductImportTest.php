@@ -181,7 +181,6 @@ it('preserves safe YouTube iframes and removes unsafe iframe embeds', function (
         ->and($product->description)->not->toContain('onload=');
 });
 
-
 it('imports BodyMap gallery images from allowed BodyMap hosts', function (): void {
     Storage::fake('public');
     Http::fake([

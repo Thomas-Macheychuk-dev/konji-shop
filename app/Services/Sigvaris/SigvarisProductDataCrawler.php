@@ -9,19 +9,54 @@ use Closure;
 final class SigvarisProductDataCrawler
 {
     private ?Closure $progressCallback = null;
+
     private int $timeoutSeconds = 20;
+
     private int $attempts = 3;
+
     private int $retryDelayMilliseconds = 1500;
+
     private int $requestDelayMilliseconds = 500;
+
     private bool $verifyTls = true;
 
     public function __construct(private readonly SigvarisProductScraper $scraper) {}
 
-    public function withProgressCallback(?Closure $callback): self { $this->progressCallback = $callback; return $this; }
-    public function withTimeout(int $seconds): self { $this->timeoutSeconds = max(1, $seconds); return $this; }
-    public function withMaxAttempts(int $attempts, int $retryDelayMilliseconds): self { $this->attempts = max(1, $attempts); $this->retryDelayMilliseconds = max(0, $retryDelayMilliseconds); return $this; }
-    public function withRequestDelayMilliseconds(int $milliseconds): self { $this->requestDelayMilliseconds = max(0, $milliseconds); return $this; }
-    public function withTlsVerification(bool $verify): self { $this->verifyTls = $verify; return $this; }
+    public function withProgressCallback(?Closure $callback): self
+    {
+        $this->progressCallback = $callback;
+
+        return $this;
+    }
+
+    public function withTimeout(int $seconds): self
+    {
+        $this->timeoutSeconds = max(1, $seconds);
+
+        return $this;
+    }
+
+    public function withMaxAttempts(int $attempts, int $retryDelayMilliseconds): self
+    {
+        $this->attempts = max(1, $attempts);
+        $this->retryDelayMilliseconds = max(0, $retryDelayMilliseconds);
+
+        return $this;
+    }
+
+    public function withRequestDelayMilliseconds(int $milliseconds): self
+    {
+        $this->requestDelayMilliseconds = max(0, $milliseconds);
+
+        return $this;
+    }
+
+    public function withTlsVerification(bool $verify): self
+    {
+        $this->verifyTls = $verify;
+
+        return $this;
+    }
 
     /** @param array<string,mixed> $discovery @return array<string,mixed> */
     public function crawlFromProductLinkDiscovery(array $discovery, ?int $limit = null, int $offset = 0): array
@@ -37,6 +72,7 @@ final class SigvarisProductDataCrawler
                 $records[$url] ??= ['url' => $url, 'category_paths' => [], 'category_urls' => []];
             }
         }
+
         return $this->crawlRecords(array_values($records), $limit, $offset);
     }
 
@@ -44,6 +80,7 @@ final class SigvarisProductDataCrawler
     public function crawlProductUrls(array $urls, ?int $limit = null, int $offset = 0): array
     {
         $records = array_map(static fn (string $url): array => ['url' => $url, 'category_paths' => [], 'category_urls' => []], $urls);
+
         return $this->crawlRecords($records, $limit, $offset);
     }
 
@@ -75,6 +112,7 @@ final class SigvarisProductDataCrawler
             $product = $this->scraper->scrape($url);
             if ($product === null) {
                 $failed[$url] = 'Product request failed.';
+
                 continue;
             }
             $product['source_category_paths'] = array_values(is_array($record['category_paths'] ?? null) ? $record['category_paths'] : []);

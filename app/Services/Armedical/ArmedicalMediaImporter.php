@@ -178,6 +178,7 @@ final class ArmedicalMediaImporter
             if ($url === null) {
                 $this->warnings[] = 'Image skipped because the ARmedical source URL is not approved: '.($this->stringOrNull($imageData['source_url'] ?? null) ?? '[missing URL]');
                 $this->stats['images_failed']++;
+
                 continue;
             }
 
@@ -202,6 +203,7 @@ final class ArmedicalMediaImporter
                     $primaryId = $existing->id;
                 }
                 $this->stats['images_reused']++;
+
                 continue;
             }
 
@@ -224,6 +226,7 @@ final class ArmedicalMediaImporter
             } catch (Throwable $exception) {
                 $this->warnings[] = 'Image skipped: '.$url.' — '.$exception->getMessage();
                 $this->stats['images_failed']++;
+
                 continue;
             }
 
@@ -270,6 +273,7 @@ final class ArmedicalMediaImporter
 
         if ($successfulIds === []) {
             $this->warnings[] = 'All selected ARmedical image downloads failed; existing images were preserved.';
+
             return;
         }
 

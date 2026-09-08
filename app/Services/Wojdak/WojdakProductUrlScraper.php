@@ -14,8 +14,7 @@ final class WojdakProductUrlScraper
 
     public function __construct(
         private readonly WojdakCategoryUrlScraper $categoryUrlScraper,
-    ) {
-    }
+    ) {}
 
     /**
      * Convenience wrapper for callers/tests that only need product URLs.
@@ -23,7 +22,7 @@ final class WojdakProductUrlScraper
      * When no category URLs are passed, the hard-coded Wojdak shop categories are used.
      *
      * @param  array<int, string>  $categoryUrls
-     * @param  array<int, string>  $rootCategoryUrls Backwards-compatible alias for category URLs.
+     * @param  array<int, string>  $rootCategoryUrls  Backwards-compatible alias for category URLs.
      * @return array<int, string>
      */
     public function discover(
@@ -44,7 +43,7 @@ final class WojdakProductUrlScraper
 
     /**
      * @param  array<int, string>  $categoryUrls
-     * @param  array<int, string>  $rootCategoryUrls Backwards-compatible alias for category URLs.
+     * @param  array<int, string>  $rootCategoryUrls  Backwards-compatible alias for category URLs.
      * @return array{
      *     product_urls: array<int, string>,
      *     category_urls: array<int, string>,

@@ -5,7 +5,6 @@ use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Enums\VatRate;
-use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;

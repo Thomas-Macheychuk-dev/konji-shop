@@ -373,6 +373,7 @@ final class ArmedicalImportMapper
 
             if ($label === null || $value === null) {
                 $errors[] = 'source option row '.($index + 1).' is missing label or value.';
+
                 continue;
             }
 
@@ -380,6 +381,7 @@ final class ArmedicalImportMapper
 
             if (isset($seenTuples[$tuple])) {
                 $errors[] = 'duplicate exact source option tuple '.$label.' = '.$value.'.';
+
                 continue;
             }
 

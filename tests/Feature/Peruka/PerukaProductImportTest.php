@@ -131,8 +131,6 @@ it('updates existing Peruka products by external ID instead of duplicating them'
         ->and($variant->status)->toBe(ProductVariantStatus::ACTIVE);
 });
 
-
-
 it('strips anchor tags from Peruka descriptions during import', function (): void {
     writePerukaImportFixture('scrapers/peruka/test-product-data.json', [
         perukaImportProductPayload([
@@ -156,8 +154,6 @@ it('strips anchor tags from Peruka descriptions during import', function (): voi
         ->and($product->description)->not->toContain('<a ')
         ->and($product->short_description)->not->toContain('<a ');
 });
-
-
 
 it('adjusts already imported Peruka product prices from source JSON without compounding the reduction', function (): void {
     writePerukaImportFixture('scrapers/peruka/test-product-data.json', [perukaImportProductPayload()]);

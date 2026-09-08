@@ -11,7 +11,7 @@ enum CategoryStatus: string
 
     public function translationKey(): string
     {
-        return 'enums.category_status.' . $this->value;
+        return 'enums.category_status.'.$this->value;
     }
 
     public function label(): string

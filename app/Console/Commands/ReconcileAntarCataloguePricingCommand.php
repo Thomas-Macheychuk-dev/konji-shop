@@ -66,6 +66,7 @@ final class ReconcileAntarCataloguePricingCommand extends Command
         $this->line('  Exact supplier-code matches: '.($summary['exact_price_matches'] ?? 0));
         $this->line('  Explicit approved SKU aliases: '.($summary['explicit_sku_alias_matches'] ?? 0));
         $this->line('  Explicit approved URL recoveries: '.($summary['explicit_url_recovery_matches'] ?? 0));
+        $this->line('  Explicit supplier-row overrides: '.($summary['explicit_supplier_row_override_matches'] ?? 0));
         $this->line('Manual price review: '.($summary['manual_price_review'] ?? 0));
         $this->line('  Ambiguous supplier prices: '.($summary['ambiguous_supplier_price_products'] ?? 0));
         $this->line('  Explicit suffix/variant reviews: '.($summary['explicit_manual_review_products'] ?? 0));

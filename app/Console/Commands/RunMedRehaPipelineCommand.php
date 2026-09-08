@@ -377,9 +377,6 @@ final class RunMedRehaPipelineCommand extends Command
         $this->printFailures('Product data crawl failures', $productData['failed_urls'] ?? []);
     }
 
-    /**
-     * @param  mixed  $failures
-     */
     private function printFailures(string $title, mixed $failures): void
     {
         if (! is_array($failures) || $failures === []) {

@@ -8,10 +8,10 @@ use App\Enums\StockStatus;
 use App\Enums\VatRate;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
-use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
@@ -71,7 +71,6 @@ it('renders product SEO metadata and structured data', function (): void {
     expect($response->getContent())
         ->toContain('"url": "'.$productUrl.'"');
 });
-
 
 it('renders category breadcrumbs above the product configurator and in structured data', function (): void {
     Config::set('app.name', 'Konji Shop');
@@ -225,7 +224,6 @@ it('renders product Open Graph and Twitter image metadata when a main image exis
         ->assertSee('"image": [', false)
         ->assertSee('"'.$imageUrl.'"', false);
 });
-
 
 it('does not render inactive products publicly', function (): void {
     $product = Product::query()->create([

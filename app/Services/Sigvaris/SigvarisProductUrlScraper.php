@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services\Sigvaris;
 
-use DOMElement;
 use Symfony\Component\DomCrawler\Crawler;
 
 final class SigvarisProductUrlScraper extends SigvarisHttpClient
 {
     /**
-     * @param array<string, mixed>|null $categoryDiscovery
+     * @param  array<string, mixed>|null  $categoryDiscovery
      * @return array<string, mixed>
      */
     public function scrape(?array $categoryDiscovery = null, ?int $categoryLimit = null, ?int $pageLimit = null): array
@@ -90,6 +89,7 @@ final class SigvarisProductUrlScraper extends SigvarisHttpClient
                         break;
                     }
                     $page++;
+
                     continue;
                 }
 
@@ -216,6 +216,7 @@ final class SigvarisProductUrlScraper extends SigvarisHttpClient
         if (preg_match('#^/(\d+)(?:-(\d+))?-([^/]+)\.html$#u', $path, $m) !== 1) {
             return null;
         }
+
         return [
             'url' => 'https://'.self::CANONICAL_HOST.$path,
             'external_product_id' => $m[1],
@@ -234,6 +235,7 @@ final class SigvarisProductUrlScraper extends SigvarisHttpClient
         if (preg_match('#^/\d+-[^/]+/?$#u', $path) !== 1) {
             return null;
         }
+
         return 'https://'.self::CANONICAL_HOST.rtrim($path, '/');
     }
 
@@ -248,6 +250,7 @@ final class SigvarisProductUrlScraper extends SigvarisHttpClient
         if (preg_match('/Pokazano\s+\d+\s*[-–]\s*\d+\s+z\s+(\d+)\s+pozycji/ui', $text, $m) === 1) {
             return max(1, (int) ceil(((int) $m[1]) / 12));
         }
+
         return null;
     }
 
@@ -263,12 +266,14 @@ final class SigvarisProductUrlScraper extends SigvarisHttpClient
                 return $this->normalizeSiteUrl($href, $baseUrl);
             }
         }
+
         return null;
     }
 
     private function pageNumber(string $url): ?int
     {
         parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+
         return isset($query['page']) && is_numeric($query['page']) ? max(1, (int) $query['page']) : null;
     }
 }

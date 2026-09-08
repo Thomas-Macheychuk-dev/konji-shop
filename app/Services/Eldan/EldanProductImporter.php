@@ -22,8 +22,7 @@ class EldanProductImporter
 {
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
-    ) {
-    }
+    ) {}
 
     public function import(array $normalized): Product
     {

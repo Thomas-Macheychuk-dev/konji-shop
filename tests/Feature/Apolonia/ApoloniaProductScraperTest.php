@@ -77,7 +77,6 @@ it('extracts Apolonia product details from an IdoSell product page', function ()
         ]);
 });
 
-
 it('extracts Apolonia clothing sizes from product_data with the selected colour and fabric variant', function (): void {
     $result = app(ApoloniaProductScraper::class)->extract(
         apoloniaClothingProductDataFixture(),
@@ -314,7 +313,6 @@ function apoloniaProductPageFixture(): string
         </html>
         HTML;
 }
-
 
 function apoloniaClothingProductDataFixture(): string
 {

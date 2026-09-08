@@ -13,7 +13,7 @@ enum VatRate: int
 
     public function translationKey(): string
     {
-        return 'enums.vat_rate.' . $this->value;
+        return 'enums.vat_rate.'.$this->value;
     }
 
     public function label(): string

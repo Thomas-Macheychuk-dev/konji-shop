@@ -6,6 +6,4 @@ namespace App\Exceptions\Delivery;
 
 use RuntimeException;
 
-final class PolkurierCarrierAvailabilityException extends RuntimeException
-{
-}
+final class PolkurierCarrierAvailabilityException extends RuntimeException {}

@@ -82,6 +82,7 @@ final class MapSigvarisImportCommand extends Command
     private function limit(): ?int
     {
         $value = $this->option('limit');
+
         return $value === null || $value === '' ? null : max(1, (int) $value);
     }
 
@@ -95,6 +96,7 @@ final class MapSigvarisImportCommand extends Command
         if (! is_array($decoded) || ! is_array($decoded['products'] ?? null)) {
             throw new JsonException('Sigvaris '.$label.' JSON does not contain a products array.');
         }
+
         return $decoded;
     }
 
@@ -172,6 +174,7 @@ final class MapSigvarisImportCommand extends Command
     private function resolvePath(string $path): string
     {
         $path = trim($path);
+
         return str_starts_with($path, '/') ? $path : storage_path('app/'.ltrim($path, '/'));
     }
 
@@ -198,6 +201,7 @@ final class MapSigvarisImportCommand extends Command
         if (! is_string($encoded)) {
             throw new RuntimeException('Unable to encode Sigvaris import mapping JSON.');
         }
+
         return $encoded;
     }
 }

@@ -71,7 +71,6 @@ final class DiscoverMobilexCategoriesCommand extends Command
         return $categoryUrls === [] ? self::FAILURE : self::SUCCESS;
     }
 
-
     private function requestDelayMilliseconds(): int
     {
         $value = $this->option('request-delay-ms');

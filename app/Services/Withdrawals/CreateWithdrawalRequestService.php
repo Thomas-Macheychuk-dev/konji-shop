@@ -16,7 +16,7 @@ use Random\RandomException;
 final class CreateWithdrawalRequestService
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      *
      * @throws RandomException
      */
@@ -98,7 +98,6 @@ final class CreateWithdrawalRequestService
     }
 
     /**
-     * @param mixed $requestedItems
      * @return list<array{order_item: OrderItem, quantity_requested: int}>
      */
     private function normaliseRequestedItems(Order $order, mixed $requestedItems): array

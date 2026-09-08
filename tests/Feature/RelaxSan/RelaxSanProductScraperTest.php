@@ -165,7 +165,7 @@ function relaxSanProductPageDataFixture(
     }
 
     $breadcrumbs .= '<span>'.$name.'</span>';
-    $options = $withOptions ? <<<HTML
+    $options = $withOptions ? <<<'HTML'
         <div class="stocks">
             <label for="option_7" class="label">* Rozmiar:</label>
             <div class="stock-options"><div class="option_select option_truestock option_required">

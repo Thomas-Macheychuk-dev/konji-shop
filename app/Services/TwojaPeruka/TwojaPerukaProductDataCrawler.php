@@ -268,7 +268,6 @@ final class TwojaPerukaProductDataCrawler
     }
 
     /**
-     * @param  mixed  $values
      * @return array<int, string>
      */
     private function stringList(mixed $values): array
@@ -284,7 +283,6 @@ final class TwojaPerukaProductDataCrawler
     }
 
     /**
-     * @param  mixed  $values
      * @return array<string, string>
      */
     private function stringMap(mixed $values): array

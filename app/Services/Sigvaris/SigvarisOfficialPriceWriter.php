@@ -9,6 +9,7 @@ use App\Enums\ProductStatus;
 use App\Enums\VatRate;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
@@ -25,7 +26,6 @@ final class SigvarisOfficialPriceWriter
     public const EXPECTED_UNMATCHED_PRODUCT_COUNT = 5;
 
     public const EXPECTED_UNMATCHED_VARIANT_COUNT = 27;
-
 
     /** @var array<string, string> */
     private const EXPECTED_SOURCE_FINGERPRINTS = [
@@ -47,7 +47,7 @@ final class SigvarisOfficialPriceWriter
     ];
 
     /**
-     * @param array<string, mixed> $plan
+     * @param  array<string, mixed>  $plan
      * @return array<string, mixed>
      */
     public function preflight(array $plan): array
@@ -117,7 +117,7 @@ final class SigvarisOfficialPriceWriter
     }
 
     /**
-     * @param array<string, mixed> $plan
+     * @param  array<string, mixed>  $plan
      * @return array<string, mixed>
      */
     public function apply(array $plan, ?callable $progress = null): array
@@ -183,8 +183,8 @@ final class SigvarisOfficialPriceWriter
     }
 
     /**
-     * @param array<string, mixed> $plan
-     * @param array<string, array{price_net_amount:?int,price_gross_amount:?int,vat_rate:?int,currency:?string}>|null $expectedUnmatchedSnapshot
+     * @param  array<string, mixed>  $plan
+     * @param  array<string, array{price_net_amount:?int,price_gross_amount:?int,vat_rate:?int,currency:?string}>|null  $expectedUnmatchedSnapshot
      * @return array<string, mixed>
      */
     public function audit(array $plan, ?array $expectedUnmatchedSnapshot = null): array
@@ -211,6 +211,7 @@ final class SigvarisOfficialPriceWriter
                         $variant->vat_rate?->value === null ? 'NULL' : (string) $variant->vat_rate->value,
                         $variant->currency?->value ?? 'NULL',
                     );
+
                     continue;
                 }
 
@@ -238,7 +239,7 @@ final class SigvarisOfficialPriceWriter
     }
 
     /**
-     * @param array<string, mixed> $plan
+     * @param  array<string, mixed>  $plan
      * @return list<string>
      */
     private function validatePlan(array $plan): array
@@ -326,6 +327,7 @@ final class SigvarisOfficialPriceWriter
             foreach (['product_external_id', 'external_variant_id', 'sku', 'base_net_minor', 'selling_net_minor', 'selling_gross_minor', 'vat_rate', 'currency', 'source_file', 'source_label'] as $required) {
                 if (! array_key_exists($required, $row)) {
                     $errors[] = sprintf('Price plan variant row %d is missing %s.', $index, $required);
+
                     continue 2;
                 }
             }
@@ -393,8 +395,8 @@ final class SigvarisOfficialPriceWriter
     }
 
     /**
-     * @param array<string, mixed> $catalogue
-     * @param array<string, mixed> $plan
+     * @param  array<string, mixed>  $catalogue
+     * @param  array<string, mixed>  $plan
      * @return list<string>
      */
     private function validateCatalogue(array $catalogue, array $plan): array
@@ -426,6 +428,7 @@ final class SigvarisOfficialPriceWriter
 
             if (! $variant instanceof ProductVariant) {
                 $errors[] = 'Planned Sigvaris variant is missing from the database: '.$externalVariantId.'.';
+
                 continue;
             }
 
@@ -447,6 +450,7 @@ final class SigvarisOfficialPriceWriter
             $productExternalId = (string) $variant->product->external_id;
             if (! in_array($productExternalId, self::UNMATCHED_PRODUCT_IDS, true)) {
                 $errors[] = 'Database variant '.$externalVariantId.' is not in the price plan and does not belong to an explicitly unmatched product.';
+
                 continue;
             }
 
@@ -467,7 +471,7 @@ final class SigvarisOfficialPriceWriter
     }
 
     /**
-     * @return array{products:\Illuminate\Support\Collection<int, Product>,product_count:int,variant_count:int,variants_by_external_id:array<string, ProductVariant>}
+     * @return array{products:Collection<int, Product>,product_count:int,variant_count:int,variants_by_external_id:array<string, ProductVariant>}
      */
     private function catalogueSnapshot(): array
     {
@@ -524,7 +528,7 @@ final class SigvarisOfficialPriceWriter
     }
 
     /**
-     * @param array<string, mixed> $plan
+     * @param  array<string, mixed>  $plan
      * @return list<array{product_external_id:string,external_variant_id:string,sku:string,base_net_minor:int,selling_net_minor:int,selling_gross_minor:int,vat_rate:int,currency:string,source_file:string,source_label:string}>
      */
     private function planVariants(array $plan, bool $strict = true): array
@@ -536,6 +540,7 @@ final class SigvarisOfficialPriceWriter
                 if ($strict) {
                     throw new InvalidArgumentException('Price plan variants must contain only objects.');
                 }
+
                 continue;
             }
 
@@ -557,7 +562,7 @@ final class SigvarisOfficialPriceWriter
     }
 
     /**
-     * @param array{selling_net_minor:int,selling_gross_minor:int,vat_rate:int,currency:string} $row
+     * @param  array{selling_net_minor:int,selling_gross_minor:int,vat_rate:int,currency:string}  $row
      */
     private function variantMatchesPlan(ProductVariant $variant, array $row): bool
     {

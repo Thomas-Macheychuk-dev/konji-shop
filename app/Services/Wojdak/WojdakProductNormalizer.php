@@ -10,8 +10,7 @@ final class WojdakProductNormalizer
 {
     public function __construct(
         private readonly WojdakVariantBuilder $variantBuilder,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $payload
@@ -83,7 +82,6 @@ final class WojdakProductNormalizer
 
         return $blocks === [] ? null : implode('', $blocks);
     }
-
 
     private function ensureWojdakSuffix(string $name): string
     {

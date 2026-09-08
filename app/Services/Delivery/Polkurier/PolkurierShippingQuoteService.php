@@ -18,8 +18,8 @@ final class PolkurierShippingQuoteService
     ) {}
 
     /**
-     * @param array<string, mixed> $shippingAddress
-     * @param array<int, array<string, int|float|string>> $packs
+     * @param  array<string, mixed>  $shippingAddress
+     * @param  array<int, array<string, int|float|string>>  $packs
      */
     public function quote(
         DeliveryProvider $provider,
@@ -116,7 +116,7 @@ final class PolkurierShippingQuoteService
     }
 
     /**
-     * @param array<string, mixed> $context
+     * @param  array<string, mixed>  $context
      */
     private function fallbackQuote(
         DeliveryProvider $provider,
@@ -147,8 +147,8 @@ final class PolkurierShippingQuoteService
     }
 
     /**
-     * @param array<string, mixed> $shippingAddress
-     * @param array<int, array<string, int|float|string>> $packs
+     * @param  array<string, mixed>  $shippingAddress
+     * @param  array<int, array<string, int|float|string>>  $packs
      * @return array<string, mixed>
      */
     private function valuationRequest(string $courierCode, array $shippingAddress, array $packs = []): array
@@ -181,7 +181,7 @@ final class PolkurierShippingQuoteService
     }
 
     /**
-     * @param array<int, array<string, int|float|string>> $packs
+     * @param  array<int, array<string, int|float|string>>  $packs
      * @return array<int, array<string, int|float|string>>
      */
     private function normalizePacks(array $packs): array
@@ -227,7 +227,7 @@ final class PolkurierShippingQuoteService
     }
 
     /**
-     * @param array<int, array<string, mixed>> $valuations
+     * @param  array<int, array<string, mixed>>  $valuations
      * @return array<string, mixed>
      */
     private function selectValuation(array $valuations, string $courierCode): array

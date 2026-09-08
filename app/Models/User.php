@@ -79,7 +79,7 @@ class User extends Authenticatable
      */
     public function initials(): string
     {
-        return Str::of(trim(($this->first_name ?? '') . ' ' . ($this->last_name ?? '')))
+        return Str::of(trim(($this->first_name ?? '').' '.($this->last_name ?? '')))
             ->explode(' ')
             ->filter()
             ->take(2)

@@ -388,7 +388,6 @@ final class Reh4MatProductDataCrawler
     }
 
     /**
-     * @param  mixed  $values
      * @return array<int, string>
      */
     private function stringList(mixed $values): array
@@ -404,7 +403,6 @@ final class Reh4MatProductDataCrawler
     }
 
     /**
-     * @param  mixed  $values
      * @return array<string, string>
      */
     private function stringMap(mixed $values): array

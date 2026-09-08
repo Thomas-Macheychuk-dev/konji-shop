@@ -65,8 +65,8 @@ final class PerukaProductUrlScraper
      * Product links are expected in anchors such as:
      * <a href="/orbit-chocolate-mix.html" class="product_name">...</a>
      *
-     * @param  array<int, string>  $categoryUrls Explicit Peruka category URLs to scan. If empty, categories are discovered from $startUrls.
-     * @param  array<int, string>  $startUrls Peruka pages used for category discovery when $categoryUrls is empty.
+     * @param  array<int, string>  $categoryUrls  Explicit Peruka category URLs to scan. If empty, categories are discovered from $startUrls.
+     * @param  array<int, string>  $startUrls  Peruka pages used for category discovery when $categoryUrls is empty.
      * @return array{
      *     product_urls: array<int, string>,
      *     products: array<int, array{url: string, name: string, category_name: string|null, category_url: string}>,

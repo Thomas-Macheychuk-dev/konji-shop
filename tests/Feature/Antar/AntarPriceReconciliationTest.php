@@ -62,6 +62,32 @@ it('recovers the exact Torba AT03107 supplier row and does not use the mattress 
         ]);
 });
 
+it('uses the exact supplier spreadsheet row for the Opti-Comfort replacement handle instead of the crutch price', function (): void {
+    $result = app(AntarPriceReconciliation::class)->build(antarReconciliationSource([
+        antarReconciliationProduct('OPTI-COMFORT', 'Kula łokciowa OPTI-COMFORT', 'https://antar.net/produkt/kula-lokciowa-opti-comfort/'),
+        antarReconciliationProduct('OPTI-COMFORT', 'Uchwyt/podparcie do kul Opti-comfort', 'https://antar.net/produkt/uchywty-poparcia-do-kul-comfort/'),
+    ]));
+
+    expect($result['summary']['eligible_priced_products'])->toBe(2)
+        ->and($result['summary']['exact_price_matches'])->toBe(1)
+        ->and($result['summary']['explicit_supplier_row_override_matches'])->toBe(1)
+        ->and($result['eligible_priced_products'][0]['proposed'])->toBe([
+            'price_net_amount' => 4284,
+            'price_gross_amount' => 4627,
+            'vat_rate' => 8,
+            'currency' => 'PLN',
+        ])
+        ->and($result['eligible_priced_products'][1]['match_method'])->toBe('explicit_supplier_row_override')
+        ->and($result['eligible_priced_products'][1]['approved_catalogue_sku'])->toBe('OPTI-COMFORT')
+        ->and($result['eligible_priced_products'][1]['supplier']['source_rows'])->toBe([805])
+        ->and($result['eligible_priced_products'][1]['proposed'])->toBe([
+            'price_net_amount' => 1591,
+            'price_gross_amount' => 1957,
+            'vat_rate' => 23,
+            'currency' => 'PLN',
+        ]);
+});
+
 it('does not infer a supplier SKU from a number embedded in a product name or URL', function (): void {
     $result = app(AntarPriceReconciliation::class)->build(antarReconciliationSource([
         antarReconciliationProduct(null, 'Uchwyt specjalny 150°', 'https://antar.net/produkt/uchwyt-specjalny-150/'),

@@ -40,7 +40,6 @@ it('discovers product urls through Eldan category links and pagination', functio
     ]);
 });
 
-
 it('discovers Eldan product urls from XML sitemaps before crawling category pages', function (): void {
     Http::fake([
         'https://eldan.pl/sitemap.xml' => Http::response(<<<'XML'
@@ -73,7 +72,6 @@ it('discovers Eldan product urls from XML sitemaps before crawling category page
         'https://eldan.pl/kd-med-57-wygodne-skorzane-buty-medyczne-kd-med-57',
     ]);
 });
-
 
 it('does not classify Eldan category slugs as product urls', function (): void {
     Http::fake([
@@ -128,7 +126,6 @@ it('discovers product urls exposed as url keys inside category payloads', functi
         'https://eldan.pl/kd-med-57-wygodne-skorzane-buty-medyczne-kd-med-57',
     ]);
 });
-
 
 it('ignores raw postal codes dates and short ids when a sitemap endpoint returns html', function (): void {
     Http::fake([

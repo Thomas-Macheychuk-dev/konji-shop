@@ -14,8 +14,7 @@ class MergeGuestCartAfterLogin
     public function __construct(
         private readonly Request $request,
         private readonly CartService $cartService,
-    ) {
-    }
+    ) {}
 
     public function handle(Login $event): void
     {

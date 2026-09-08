@@ -351,11 +351,13 @@ final class ZamstImportMapper
 
             if ($sourceId === null) {
                 $errors[] = 'variant '.($index + 1).' has no external variant ID.';
+
                 continue;
             }
 
             if (isset($seen[$sourceId])) {
                 $errors[] = 'duplicate source variant ID '.$sourceId.'.';
+
                 continue;
             }
 

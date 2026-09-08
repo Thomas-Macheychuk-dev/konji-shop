@@ -240,7 +240,7 @@ final class SigvarisOfficialPricePlanner
     ];
 
     /**
-     * @param array<string, mixed> $map
+     * @param  array<string, mixed>  $map
      * @return array<string, mixed>
      */
     public function build(array $map): array
@@ -380,7 +380,7 @@ final class SigvarisOfficialPricePlanner
     }
 
     /**
-     * @param array<string, mixed> $variant
+     * @param  array<string, mixed>  $variant
      * @return array{base_net_minor:int,vat_rate:int,source_file:string,source_label:string}|null
      */
     private function ruleForVariant(string $productExternalId, array $variant): ?array

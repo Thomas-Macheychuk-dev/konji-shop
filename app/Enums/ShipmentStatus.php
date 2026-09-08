@@ -17,7 +17,7 @@ enum ShipmentStatus: string
 
     public function translationKey(): string
     {
-        return 'enums.shipment_status.' . $this->value;
+        return 'enums.shipment_status.'.$this->value;
     }
 
     public function label(): string

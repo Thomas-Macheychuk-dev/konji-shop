@@ -37,8 +37,7 @@ final class EldanProductUrlScraper
 
     public function __construct(
         private readonly EldanProductPayloadExtractor $payloadExtractor,
-    ) {
-    }
+    ) {}
 
     /**
      * Convenience wrapper for callers/tests that only need product URLs.
@@ -426,7 +425,6 @@ final class EldanProductUrlScraper
     }
 
     /**
-     * @param  mixed  $payload
      * @return array<int, string>
      */
     private function extractProductUrlsFromApiPayload(mixed $payload, string $baseUrl): array
@@ -439,7 +437,6 @@ final class EldanProductUrlScraper
     }
 
     /**
-     * @param  mixed  $value
      * @param  array<string, bool>  $urls
      */
     private function scanApiPayloadForProductUrls(mixed $value, array &$urls, string $baseUrl): void
@@ -449,13 +446,13 @@ final class EldanProductUrlScraper
         }
 
         foreach ([
-                     'url',
-                     'href',
-                     'product_url',
-                     'canonical_url',
-                     'url_key',
-                     'slug',
-                 ] as $key) {
+            'url',
+            'href',
+            'product_url',
+            'canonical_url',
+            'url_key',
+            'slug',
+        ] as $key) {
             if (! isset($value[$key]) || ! is_scalar($value[$key])) {
                 continue;
             }

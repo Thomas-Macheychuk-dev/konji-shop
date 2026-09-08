@@ -306,13 +306,13 @@ class EldanProductNormalizer
 
         if (is_array($image)) {
             foreach ([
-                         'original_image_url',
-                         'large_image_url',
-                         'medium_image_url',
-                         'small_image_url',
-                         'url',
-                         'path',
-                     ] as $key) {
+                'original_image_url',
+                'large_image_url',
+                'medium_image_url',
+                'small_image_url',
+                'url',
+                'path',
+            ] as $key) {
                 if (! empty($image[$key]) && is_string($image[$key])) {
                     $candidates[] = $image[$key];
                 }
@@ -401,6 +401,6 @@ class EldanProductNormalizer
             return false;
         }
 
-        return !in_array($plainText, ['0', '-', '.'], true);
+        return ! in_array($plainText, ['0', '-', '.'], true);
     }
 }

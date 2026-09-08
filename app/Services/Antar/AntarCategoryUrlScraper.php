@@ -491,7 +491,6 @@ final class AntarCategoryUrlScraper
         return 'https://'.self::ANTAR_HOST.'/produkty/'.implode('/', $segments).'/';
     }
 
-
     private function fetch(string $url): Response
     {
         $lastException = null;

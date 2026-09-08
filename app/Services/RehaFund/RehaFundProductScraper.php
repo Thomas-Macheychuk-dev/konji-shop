@@ -894,7 +894,6 @@ final class RehaFundProductScraper
         ];
     }
 
-
     /**
      * @param  array<string, array{url: string, alt: string|null, sort_order: int}>  $images
      * @return array<int, array{url: string, alt: string|null, sort_order: int}>

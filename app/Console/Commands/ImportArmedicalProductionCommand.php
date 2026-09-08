@@ -20,23 +20,39 @@ use Throwable;
 final class ImportArmedicalProductionCommand extends Command
 {
     public const APPROVED_PRICED_MAP_SHA256 = '9617b3d1a5d549c7b590ea6c252cd0ded430cf1a31571bb8853c6dbe20a2ad20';
+
     public const CONFIRMATION_TOKEN = 'ARMEDICAL-PRODUCTION-187-459-9617B3D1';
 
     private const APPROVED_PRODUCT_DATA_SHA256 = '05e939acaa6251e8c9e5abfd14383a2b85d5b471db556868b5040b631c434da8';
+
     private const APPROVED_SUPPLIER_XLS_SHA256 = 'ac97003ad885025e665961d05afe1ed2d74d88a53b4aa9b413896f292a282893';
+
     private const SOURCE_PRODUCTS = 200;
+
     private const PLANNED_VARIANTS = 506;
+
     private const ELIGIBLE_PRODUCTS = 187;
+
     private const ELIGIBLE_VARIANTS = 459;
+
     private const EXCLUDED_PRODUCTS = 13;
+
     private const UNMATCHED_VARIANTS = 47;
+
     private const ELIGIBLE_IMAGES = 923;
+
     private const ELIGIBLE_DOCUMENTS = 318;
+
     private const VAT_8_VARIANTS = 451;
+
     private const VAT_23_VARIANTS = 8;
+
     private const REVIEW_ITEMS = 6;
+
     private const BLOCKING_REVIEW_ITEMS = 1;
+
     private const SUPPLIER_ROWS = 245;
+
     private const SUPPLIER_UNIQUE_CODES = 241;
 
     protected $signature = 'armedical:production-import

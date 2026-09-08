@@ -426,7 +426,6 @@ final class WojdakVariantBuilder
         return str_contains($text, 'spodnica') || str_contains($text, 'spódnica') || str_contains($text, 'spodnice') || str_contains($text, 'spódnice');
     }
 
-
     /**
      * Read Wojdak config, falling back to config/wojdak.php if Laravel's
      * configuration repository is stale or cached without the new file.

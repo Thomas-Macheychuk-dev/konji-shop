@@ -7,7 +7,7 @@ namespace App\Data\Payments;
 final readonly class PaymentInitializationResult
 {
     /**
-     * @param array<string, mixed> $payload
+     * @param  array<string, mixed>  $payload
      */
     public function __construct(
         public string $provider,

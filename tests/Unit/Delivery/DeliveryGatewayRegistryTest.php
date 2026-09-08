@@ -16,7 +16,8 @@ final class DeliveryGatewayRegistryTest extends TestCase
 {
     public function test_it_returns_the_registered_gateway_for_a_provider(): void
     {
-        $gateway = new class implements DeliveryGateway {
+        $gateway = new class implements DeliveryGateway
+        {
             public function providerKey(): string
             {
                 return 'inpost';

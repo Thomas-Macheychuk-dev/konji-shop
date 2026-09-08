@@ -140,6 +140,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 'combination_id' => isset($m[2]) && $m[2] !== '' ? $m[2] : null,
             ];
         }
+
         return ['product_id' => sha1($url), 'combination_id' => null];
     }
 
@@ -152,6 +153,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 return $this->normalizeSiteUrl($href, $fallback) ?? $fallback;
             }
         }
+
         return preg_replace('/\?.*$/', '', $fallback) ?: $fallback;
     }
 
@@ -168,6 +170,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 return $value;
             }
         }
+
         return null;
     }
 
@@ -190,6 +193,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 return $parsed;
             }
         }
+
         return null;
     }
 
@@ -234,6 +238,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
         if (preg_match('/-?\d+(?:\.\d+)?/', $value, $m) !== 1) {
             return null;
         }
+
         return (float) $m[0];
     }
 
@@ -242,6 +247,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
         if (preg_match('/W\s+magazynie\s+(\d+)\s+(?:Przedmioty|Przedmiotów|szt)/ui', $text, $m) === 1) {
             return (int) $m[1];
         }
+
         return null;
     }
 
@@ -261,6 +267,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
         if (preg_match('/\bIndeks\s+([A-Za-z0-9._\/-]+?)(?=W\s+magazynie\b|\s|$)/u', $bodyText, $m) === 1) {
             return $m[1];
         }
+
         return null;
     }
 
@@ -320,6 +327,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 'selected' => $selected,
             ];
         });
+
         return $attributes;
     }
 
@@ -348,6 +356,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 }
             }
         }
+
         return $features;
     }
 
@@ -378,6 +387,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 }
             });
         }
+
         return array_values($images);
     }
 
@@ -411,6 +421,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 $downloads[$url] = ['url' => $url, 'label' => $label !== '' ? $label : null];
             });
         }
+
         return array_values($downloads);
     }
 
@@ -495,6 +506,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
                 return $html;
             }
         }
+
         return null;
     }
 
@@ -503,6 +515,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
         if (preg_match('/Producent\s*\/\s*Importer\s+(.+?)\s+Ulica:/ui', $bodyText, $m) === 1) {
             return $this->normalizeText($m[1]);
         }
+
         return null;
     }
 
@@ -522,6 +535,7 @@ final class SigvarisProductScraper extends SigvarisHttpClient
         if (! is_array($parts) || ! isset($parts['scheme'], $parts['host'])) {
             return null;
         }
+
         return $parts['scheme'].'://'.$parts['host'].'/'.ltrim($raw, '/');
     }
 }

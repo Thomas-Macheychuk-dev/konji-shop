@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Timago;
 
 use Closure;
-use DOMDocument;
 use DOMElement;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;

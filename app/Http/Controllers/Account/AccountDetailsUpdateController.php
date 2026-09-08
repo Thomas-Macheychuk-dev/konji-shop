@@ -19,7 +19,7 @@ final class AccountDetailsUpdateController
         $user->fill([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
-            'name' => trim($validated['first_name'] . ' ' . $validated['last_name']),
+            'name' => trim($validated['first_name'].' '.$validated['last_name']),
             'email' => $validated['email'],
             'street' => $validated['street'],
             'house_number' => $validated['house_number'],

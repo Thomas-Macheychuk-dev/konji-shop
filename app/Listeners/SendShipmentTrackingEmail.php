@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Listeners;
 
-use App\Events\ShipmentTrackingAvailable;use App\Mail\ShipmentTrackingMail;
+use App\Events\ShipmentTrackingAvailable;
+use App\Mail\ShipmentTrackingMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -13,7 +14,8 @@ class SendShipmentTrackingEmail implements ShouldQueue
 {
     use InteractsWithQueue;
 
-    public function handle(ShipmentTrackingAvailable $event): void    {
+    public function handle(ShipmentTrackingAvailable $event): void
+    {
         $shipment = $event->shipment->loadMissing([
             'order.user',
             'order.shippingAddress',

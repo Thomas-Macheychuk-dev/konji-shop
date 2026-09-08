@@ -65,7 +65,6 @@ it('imports a fully priced ARmedical product as a draft with exact per-variant p
         ->and($small?->attributeValues()->first()?->value)->toBe('S');
 });
 
-
 it('preserves another supplier product and deterministically resolves an ARmedical product slug collision', function (): void {
     $existing = Product::query()->create([
         'name' => 'Existing supplier product',

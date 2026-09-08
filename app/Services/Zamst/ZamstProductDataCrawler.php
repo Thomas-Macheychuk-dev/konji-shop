@@ -146,6 +146,7 @@ final class ZamstProductDataCrawler
                     'canonical_url' => $canonicalUrl,
                     'kept_url' => $canonicalUrls[$canonicalUrl],
                 ];
+
                 continue;
             }
 
@@ -155,6 +156,7 @@ final class ZamstProductDataCrawler
                     'url' => $sourceUrl,
                     'kept_url' => $externalIds[$externalId],
                 ];
+
                 continue;
             }
 

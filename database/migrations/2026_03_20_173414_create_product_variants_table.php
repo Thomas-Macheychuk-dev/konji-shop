@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Enums\Currency;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
-use App\Enums\VatRate;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

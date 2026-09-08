@@ -38,7 +38,7 @@ class OrderAddress extends Model
 
     public function fullName(): string
     {
-        return trim($this->first_name . ' ' . $this->last_name);
+        return trim($this->first_name.' '.$this->last_name);
     }
 
     public function formattedLines(): array
@@ -48,7 +48,7 @@ class OrderAddress extends Model
             $this->company,
             $this->address_line_1,
             $this->address_line_2,
-            trim($this->postcode . ' ' . $this->city),
+            trim($this->postcode.' '.$this->city),
             $this->countryName(),
         ]));
     }

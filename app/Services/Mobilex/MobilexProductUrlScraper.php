@@ -275,7 +275,6 @@ final class MobilexProductUrlScraper
         return $response->body();
     }
 
-
     private function pauseBeforeRequest(): void
     {
         if ($this->requestDelayMilliseconds <= 0) {

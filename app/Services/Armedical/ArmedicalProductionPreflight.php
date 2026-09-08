@@ -25,9 +25,7 @@ final class ArmedicalProductionPreflight
     /** @var list<string> */
     private const ALLOWED_MEDIA_HOSTS = ['armedical.pl', 'www.armedical.pl'];
 
-    public function __construct(private readonly ArmedicalProductImporter $productImporter)
-    {
-    }
+    public function __construct(private readonly ArmedicalProductImporter $productImporter) {}
 
     /**
      * @param  array<string,mixed>  $map
@@ -350,6 +348,7 @@ final class ArmedicalProductionPreflight
             $this->hardCheck($checks, $errors, 'database.connection', true, 'Database connection succeeded.');
         } catch (Throwable $exception) {
             $this->hardCheck($checks, $errors, 'database.connection', false, 'Database connection failed: '.$exception->getMessage());
+
             return;
         }
 
@@ -478,6 +477,7 @@ final class ArmedicalProductionPreflight
 
         if (! is_string($root) || trim($root) === '') {
             $this->hardCheck($checks, $errors, 'storage.public_root', false, 'Public local disk root is missing.');
+
             return;
         }
 
@@ -518,6 +518,7 @@ final class ArmedicalProductionPreflight
         $path = base_path('docker-compose.prod.yml');
         if (! is_file($path)) {
             $this->hardCheck($checks, $errors, 'deployment.shared_storage', false, 'docker-compose.prod.yml is unavailable for shared-storage verification.');
+
             return;
         }
 
@@ -534,6 +535,7 @@ final class ArmedicalProductionPreflight
         $selected = $this->probeSelection($urls, $count);
         if ($selected === []) {
             $this->hardCheck($checks, $errors, 'network.image_probe', false, 'No eligible ARmedical image URLs are available for probing.');
+
             return;
         }
 
@@ -560,6 +562,7 @@ final class ArmedicalProductionPreflight
         $selected = $this->probeSelection($urls, $count);
         if ($selected === []) {
             $this->hardCheck($checks, $errors, 'network.document_probe', false, 'No eligible ARmedical document URLs are available for probing.');
+
             return;
         }
 
@@ -625,6 +628,7 @@ final class ArmedicalProductionPreflight
             return false;
         }
         $parts = parse_url(html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+
         return strtolower((string) ($parts['scheme'] ?? '')) === 'https'
             && in_array(strtolower((string) ($parts['host'] ?? '')), self::ALLOWED_MEDIA_HOSTS, true)
             && str_starts_with((string) ($parts['path'] ?? ''), '/wp-content/uploads/');
@@ -650,6 +654,7 @@ final class ArmedicalProductionPreflight
         if (isset($parts['fragment'])) {
             $result .= '#'.$parts['fragment'];
         }
+
         return $result;
     }
 
@@ -682,6 +687,7 @@ final class ArmedicalProductionPreflight
         if (! is_array($value)) {
             return [];
         }
+
         return array_values(array_filter(array_map(static fn (mixed $item): string => is_string($item) ? trim($item) : '', $value), static fn (string $item): bool => $item !== ''));
     }
 
@@ -691,6 +697,7 @@ final class ArmedicalProductionPreflight
             return null;
         }
         $value = trim((string) $value);
+
         return $value !== '' ? $value : null;
     }
 
@@ -700,6 +707,7 @@ final class ArmedicalProductionPreflight
             return null;
         }
         $value = (int) $value;
+
         return $value > 0 ? $value : null;
     }
 }

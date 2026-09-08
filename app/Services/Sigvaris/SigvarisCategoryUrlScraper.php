@@ -154,6 +154,7 @@ final class SigvarisCategoryUrlScraper extends SigvarisHttpClient
         if (preg_match('#^/(\d+)-([^/]+?)/?$#u', $path, $m) !== 1) {
             return null;
         }
+
         return ['id' => $m[1], 'slug' => trim($m[2], '/')];
     }
 
@@ -191,6 +192,7 @@ final class SigvarisCategoryUrlScraper extends SigvarisHttpClient
         if (end($names) !== $fallbackName) {
             $names[] = $fallbackName;
         }
+
         return $names;
     }
 

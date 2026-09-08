@@ -1437,7 +1437,6 @@ final class Reh4MatProductImporter
     }
 
     /**
-     * @param  mixed  $values
      * @return list<string>
      */
     private function stringList(mixed $values): array

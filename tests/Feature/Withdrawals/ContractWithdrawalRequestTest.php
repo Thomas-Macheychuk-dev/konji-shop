@@ -14,9 +14,9 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
+use App\Models\WithdrawalRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
-use App\Models\WithdrawalRequest;
 
 uses(RefreshDatabase::class);
 

@@ -161,3 +161,30 @@
 - Split the scraped catalogue into `eligible_priced_products`, `manual_price_review`, and `excluded_unpriced_products` so unresolved products cannot silently receive guessed prices.
 - Correctly distinguishes the AT03107 mattress from `TORBA-AT03107` (the mattress bag, 23% VAT) and keeps suffix/multi-code/ambiguous products outside the eligible cohort.
 - The command records the crawled product-data SHA-256 and performs no database writes or network requests; a later importer must consume only frozen eligible reconciliation evidence.
+
+## 2026-09-07 — Antar selective priced local draft import
+
+- Added `antar:import-priced` as a fail-closed local/testing-only write boundary for the deterministic Antar priced cohort.
+- Rebuilds and compares the frozen reconciliation before writes, including product-data and supplier-price fingerprints.
+- Imports only eligible priced rows as draft products/variants; manual-review and excluded products never reach the importer.
+- Added exact approved net/gross/VAT override support to `AntarProductImporter` while preserving legacy raw-import behaviour when no approved pricing is supplied.
+- Preserves scraped SKU identity separately from the supplier price-list reconciliation code.
+- Blocks existing Antar records outside the eligible cohort and cross-source scraped-SKU collisions.
+- Added regression coverage for read-only preflight, selective writes, 23% AT03107 bag pricing, source drift and reconciliation tampering.
+
+## 2026-09-08 — Antar priced import SKU collision resolution
+
+- Corrected the shared `OPTI-COMFORT` website SKU: the crutch keeps the deterministic `OPTI-COMFORT` price, while the replacement handle is pinned to supplier spreadsheet row 805 (`Rączka do kuli FDI Opti-Comfort`, 15.91 PLN net / 19.57 PLN gross / 23% VAT).
+- Selective priced imports now separate canonical Antar catalogue identity from the globally unique variant storage SKU.
+- Cross-source SKU overlaps are resolved with deterministic `ANTAR-...-<hash>` storage SKUs instead of blocking the import.
+- Intra-Antar duplicated scraped SKUs are namespaced deterministically and still retain explicit source/commercial evidence.
+- Selective imports persist the approved canonical supplier catalogue SKU on `products.external_parent_sku`, so later price planning uses the approved commercial identity rather than a stale alias.
+- The Antar price-update planner has an exact product/row override for the Opti-Comfort replacement handle so it cannot regress to the crutch price.
+- All changes remain preflight-first and fail closed on unresolved final storage-SKU collisions.
+
+## 2026-09-08 — Antar reviewed AT51049 public slug correction
+
+- Preserve Antar's stable source identity `umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2` for the AT51049 product because that is the supplier's canonical WordPress product identity.
+- Override only the Konji public product slug to `wanna-pneumatyczna-dla-osob-niepelnosprawnych-at51049`, preventing the supplier's stale AT51033-2 URL fragment from leaking into the storefront URL.
+- Keep media/document storage paths bound to the stable external ID; no file moves, product duplication, price changes or source-identity rewrites are performed.
+- Added focused regression coverage proving the reviewed slug override does not change the external ID, approved SKU or product name.

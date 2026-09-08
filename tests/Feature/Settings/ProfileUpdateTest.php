@@ -1,9 +1,10 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 test('profile page is displayed', function () {
     $this->actingAs($user = User::factory()->create());
@@ -13,8 +14,8 @@ test('profile page is displayed', function () {
 
 test('profile information can be updated', function () {
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->actingAs($user);
 
@@ -34,8 +35,8 @@ test('profile information can be updated', function () {
 
 test('email verification status is unchanged when email address is unchanged', function () {
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->actingAs($user);
 
@@ -51,8 +52,8 @@ test('email verification status is unchanged when email address is unchanged', f
 
 test('user can delete their account', function () {
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->actingAs($user);
 
@@ -70,8 +71,8 @@ test('user can delete their account', function () {
 
 test('correct password must be provided to delete account', function () {
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->actingAs($user);
 

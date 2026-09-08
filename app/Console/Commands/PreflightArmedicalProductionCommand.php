@@ -12,7 +12,9 @@ use JsonException;
 final class PreflightArmedicalProductionCommand extends Command
 {
     public const APPROVED_PRICED_MAP_SHA256 = '9617b3d1a5d549c7b590ea6c252cd0ded430cf1a31571bb8853c6dbe20a2ad20';
+
     public const APPROVED_PRODUCT_DATA_SHA256 = '05e939acaa6251e8c9e5abfd14383a2b85d5b471db556868b5040b631c434da8';
+
     public const APPROVED_SUPPLIER_XLS_SHA256 = 'ac97003ad885025e665961d05afe1ed2d74d88a53b4aa9b413896f292a282893';
 
     protected $signature = 'armedical:production-preflight
@@ -58,6 +60,7 @@ final class PreflightArmedicalProductionCommand extends Command
     {
         if (! app()->environment('production', 'testing') && ! (bool) $this->option('allow-non-production')) {
             $this->error('BLOCKED: armedical:production-preflight is intended for production. Use --allow-non-production only for a rehearsal.');
+
             return self::FAILURE;
         }
 
@@ -70,6 +73,7 @@ final class PreflightArmedicalProductionCommand extends Command
         $sha256 = hash_file('sha256', $path);
         if (! is_string($sha256) || $sha256 === '') {
             $this->error('Unable to calculate ARmedical priced-map SHA-256: '.$path);
+
             return self::FAILURE;
         }
 
@@ -171,11 +175,13 @@ final class PreflightArmedicalProductionCommand extends Command
             $directory = dirname($savePath);
             if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) {
                 $this->error('Unable to create ARmedical preflight report directory: '.$directory);
+
                 return self::FAILURE;
             }
             $payload = json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR).PHP_EOL;
             if (file_put_contents($savePath, $payload) === false) {
                 $this->error('Unable to save ARmedical preflight report: '.$savePath);
+
                 return self::FAILURE;
             }
             $this->line('Saved evidence report to '.$savePath);
@@ -183,10 +189,12 @@ final class PreflightArmedicalProductionCommand extends Command
 
         if ($errors === []) {
             $this->info('PASS: ARmedical production preflight is ready for the controlled production execution patch. No catalogue or media writes were performed.');
+
             return self::SUCCESS;
         }
 
         $this->error('FAIL: ARmedical production preflight has hard errors. Do not perform production ARmedical writes.');
+
         return self::FAILURE;
     }
 
@@ -195,18 +203,22 @@ final class PreflightArmedicalProductionCommand extends Command
     {
         if (! is_file($path)) {
             $this->error('ARmedical priced import-map not found: '.$path);
+
             return null;
         }
         try {
             $decoded = json_decode((string) file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $exception) {
             $this->error('Invalid ARmedical priced import-map JSON: '.$exception->getMessage());
+
             return null;
         }
         if (! is_array($decoded) || ($decoded['source'] ?? null) !== 'armedical') {
             $this->error('ARmedical priced import-map root/source is invalid.');
+
             return null;
         }
+
         return $decoded;
     }
 
@@ -235,6 +247,7 @@ final class PreflightArmedicalProductionCommand extends Command
     private function nonNegativeInt(string $name, int $default): int
     {
         $value = $this->option($name);
+
         return is_numeric($value) ? max(0, (int) $value) : $default;
     }
 
@@ -244,6 +257,7 @@ final class PreflightArmedicalProductionCommand extends Command
             return null;
         }
         $value = trim((string) $value);
+
         return $value !== '' ? $value : null;
     }
 }

@@ -20,7 +20,7 @@ it('throws for an unsupported provider', function (): void {
         app(Przelewy24Gateway::class),
     ]);
 
-    $this->expectException(\InvalidArgumentException::class);
+    $this->expectException(InvalidArgumentException::class);
     $this->expectExceptionMessage('Unsupported payment provider [stripe].');
 
     $registry->for('stripe');

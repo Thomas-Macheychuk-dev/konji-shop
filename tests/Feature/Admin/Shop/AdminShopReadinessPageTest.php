@@ -58,7 +58,6 @@ it('shows the production readiness page to admins', function (): void {
         ->assertSee('php artisan shop:check');
 });
 
-
 it('allows admins to update editable production readiness settings', function (): void {
     $admin = User::factory()->create([
         'is_admin' => true,

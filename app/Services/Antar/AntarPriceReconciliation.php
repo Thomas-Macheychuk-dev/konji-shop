@@ -112,6 +112,23 @@ final class AntarPriceReconciliation
     ];
 
     /**
+     * Exact supplier-price rows for products whose website catalogue code is
+     * reused for a different commercial item in the spreadsheet. These rules
+     * must run before direct SKU matching.
+     *
+     * @var array<string, array{source_row: int, approved_catalogue_sku: string, expected_code: string, expected_description: string, evidence: string}>
+     */
+    private const SAFE_PRODUCT_PATH_ROW_OVERRIDES = [
+        '/produkt/uchywty-poparcia-do-kul-comfort/' => [
+            'source_row' => 805,
+            'approved_catalogue_sku' => 'OPTI-COMFORT',
+            'expected_code' => 'AKCESORIA',
+            'expected_description' => 'Rączka do kuli FDI Opti-Comfort',
+            'evidence' => 'Antar reuses OPTI-COMFORT on the replacement handle page; supplier spreadsheet row 805 explicitly prices Rączka do kuli FDI Opti-Comfort.',
+        ],
+    ];
+
+    /**
      * Explicitly known relationships that still require human review before a
      * commercial price can be attached. Keeping them here prevents a future
      * implementation from silently stripping suffixes or collapsing variants.
@@ -174,6 +191,7 @@ final class AntarPriceReconciliation
         $exactMatches = 0;
         $skuAliasMatches = 0;
         $urlRecoveryMatches = 0;
+        $supplierRowOverrideMatches = 0;
         $ambiguousMatches = 0;
         $explicitManualReviews = 0;
         $withSku = 0;
@@ -198,6 +216,44 @@ final class AntarPriceReconciliation
 
             if ($normalizedSku !== null) {
                 $withSku++;
+            }
+
+            $productPath = $this->productPath($identity['source_url']);
+
+            if ($productPath !== null && isset(self::SAFE_PRODUCT_PATH_ROW_OVERRIDES[$productPath])) {
+                $rule = self::SAFE_PRODUCT_PATH_ROW_OVERRIDES[$productPath];
+                $supplierRow = $this->supplierRowByNumber($priceList['rows'], $rule['source_row']);
+                $rowCode = $this->supplierPriceList->normalizeCode($supplierRow['normalized_code'] ?? $supplierRow['code'] ?? null);
+                $description = trim((string) ($supplierRow['description'] ?? ''));
+
+                if ($rowCode !== $rule['expected_code'] || $description !== $rule['expected_description']) {
+                    $hardErrors[] = sprintf('%s: approved supplier-row override %d no longer matches its frozen code/description evidence.', $identity['name'], $rule['source_row']);
+                    $excluded[] = $this->excludedRow($identity, $normalizedSku, 'stale_supplier_row_override', $rule['evidence']);
+
+                    continue;
+                }
+
+                $eligible[] = $this->eligibleRow(
+                    $identity,
+                    $normalizedSku,
+                    $rowCode,
+                    'explicit_supplier_row_override',
+                    $rule['evidence'],
+                    [
+                        'supplier_code' => (string) ($supplierRow['code'] ?? $rowCode),
+                        'source_rows' => [(int) $supplierRow['source_row']],
+                        'descriptions' => [$description],
+                        'net_minor' => (int) $supplierRow['net_minor'],
+                        'gross_minor' => (int) $supplierRow['gross_minor'],
+                        'vat_rate' => (int) $supplierRow['vat_rate'],
+                        'currency' => (string) $supplierRow['currency'],
+                    ],
+                    $rule['approved_catalogue_sku'],
+                );
+                $supplierRowOverrideMatches++;
+                $this->incrementVat($vatBreakdown, (int) $supplierRow['vat_rate']);
+
+                continue;
             }
 
             if ($normalizedSku !== null && isset($safeIndex[$normalizedSku])) {
@@ -259,8 +315,6 @@ final class AntarPriceReconciliation
 
                 continue;
             }
-
-            $productPath = $this->productPath($identity['source_url']);
 
             if ($productPath !== null && isset(self::SAFE_PRODUCT_PATH_RECOVERIES[$productPath])) {
                 $rule = self::SAFE_PRODUCT_PATH_RECOVERIES[$productPath];
@@ -357,6 +411,7 @@ final class AntarPriceReconciliation
                 'exact_price_matches' => $exactMatches,
                 'explicit_sku_alias_matches' => $skuAliasMatches,
                 'explicit_url_recovery_matches' => $urlRecoveryMatches,
+                'explicit_supplier_row_override_matches' => $supplierRowOverrideMatches,
                 'manual_price_review' => count($manual),
                 'ambiguous_supplier_price_products' => $ambiguousMatches,
                 'explicit_manual_review_products' => $explicitManualReviews,
@@ -385,10 +440,12 @@ final class AntarPriceReconciliation
         string $matchMethod,
         string $matchEvidence,
         array $supplier,
+        ?string $approvedCatalogueSku = null,
     ): array {
         return $identity + [
             'normalized_scraped_sku' => $normalizedScrapedSku,
             'normalized_supplier_code' => $supplierCode,
+            'approved_catalogue_sku' => $approvedCatalogueSku ?? $supplierCode,
             'match_method' => $matchMethod,
             'match_evidence' => $matchEvidence,
             'proposed' => [
@@ -535,6 +592,18 @@ final class AntarPriceReconciliation
     }
 
     /** @param array<int, int> $vatBreakdown */
+    /** @param list<array<string, mixed>> $rows */
+    private function supplierRowByNumber(array $rows, int $sourceRow): array
+    {
+        foreach ($rows as $row) {
+            if (is_array($row) && (int) ($row['source_row'] ?? 0) === $sourceRow) {
+                return $row;
+            }
+        }
+
+        throw new \RuntimeException('Approved Antar supplier source row '.$sourceRow.' is missing from the frozen price reference.');
+    }
+
     private function incrementVat(array &$vatBreakdown, int $vatRate): void
     {
         $vatBreakdown[$vatRate] = ($vatBreakdown[$vatRate] ?? 0) + 1;

@@ -78,6 +78,7 @@ final class ArmedicalPricingPreflight
                         'source_option_value' => $this->stringOrNull($variant['source_option_value'] ?? null),
                         'source_external_variant_id' => $this->normalizeCode($variant['source_external_variant_id'] ?? null),
                     ];
+
                     continue;
                 }
 

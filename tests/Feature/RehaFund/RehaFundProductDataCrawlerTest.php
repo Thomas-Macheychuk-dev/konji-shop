@@ -2,8 +2,8 @@
 
 use App\Services\RehaFund\RehaFundProductDataCrawler;
 use App\Services\RehaFund\RehaFundProductScraper;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Http;
 
 it('extracts RehaFund product details from a product page', function (): void {
     $html = <<<'HTML'
@@ -108,8 +108,6 @@ it('extracts RehaFund product details from a product page', function (): void {
         ->and($product['warnings'])->toBe([]);
 });
 
-
-
 it('does not treat RehaFund free delivery thresholds as product prices', function (): void {
     $html = <<<'HTML'
         <html>
@@ -197,7 +195,6 @@ it('extracts explicit RehaFund product prices when they are visible in the produ
 
     expect($product['price_gross_amount'])->toBe('349.99');
 });
-
 
 it('extracts RehaFund product images from Comarch data-lazy gallery attributes without size folders', function (): void {
     $html = <<<'HTML'
@@ -379,7 +376,6 @@ it('extracts RehaFund product images from full page HTML when product scope only
         ])
         ->and($product['warnings'])->toBe([]);
 });
-
 
 it('filters unrelated RehaFund recommendation images from full page HTML', function (): void {
     $html = <<<'HTML'

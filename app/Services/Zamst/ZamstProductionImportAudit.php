@@ -15,8 +15,8 @@ final class ZamstProductionImportAudit
     private const SOURCE = 'zamst';
 
     /**
-     * @param list<array<string, mixed>> $selected
-     * @param array{products:int, variants:int, images:int} $expectedPost
+     * @param  list<array<string, mixed>>  $selected
+     * @param  array{products:int, variants:int, images:int}  $expectedPost
      * @return array<string, mixed>
      */
     public function inspect(array $selected, array $expectedPost): array
@@ -141,11 +141,13 @@ final class ZamstProductionImportAudit
 
                 if ($variantId === null) {
                     $errors[] = $name.': imported variant has no external ID.';
+
                     continue;
                 }
 
                 if (isset($actualVariantsById[$variantId])) {
                     $errors[] = $name.': duplicate imported variant external ID '.$variantId.'.';
+
                     continue;
                 }
 
@@ -218,6 +220,7 @@ final class ZamstProductionImportAudit
             foreach ($actualImages as $image) {
                 if ($image->disk !== 'public') {
                     $errors[] = $name.': image '.$image->id.' is not stored on the public disk.';
+
                     continue;
                 }
 

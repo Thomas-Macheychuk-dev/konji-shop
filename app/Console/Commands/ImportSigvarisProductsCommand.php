@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Enums\ProductStatus;
 use App\Models\Product;
 use App\Services\Sigvaris\SigvarisProductImporter;
 use Illuminate\Console\Command;
@@ -290,7 +291,7 @@ final class ImportSigvarisProductsCommand extends Command
         $this->newLine();
         $this->info('=== SELECTED DATABASE AUDIT ===');
         $this->line('Imported product rows: '.$products->count());
-        $this->line('Draft product rows: '.$products->where('status', \App\Enums\ProductStatus::DRAFT)->count());
+        $this->line('Draft product rows: '.$products->where('status', ProductStatus::DRAFT)->count());
         $this->line('Variant rows: '.$products->sum('variants_count'));
         $this->line('Image rows: '.$products->sum('images_count'));
         $this->line('Category assignments: '.$products->sum('categories_count'));

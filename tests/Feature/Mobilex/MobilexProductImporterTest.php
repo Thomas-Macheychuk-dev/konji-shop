@@ -90,7 +90,6 @@ it('imports Mobilex inspected JSON as active products with categories producer m
     expect($product->images()->count())->toBe(0);
 });
 
-
 it('does not import description-derived product attributes as selectable attributes', function (): void {
     $path = storage_path('app/mobilex/test-long-attribute-product-data.json');
 
@@ -188,7 +187,6 @@ it('imports products without variant candidates with a single default variant', 
         ->and($product->variants()->first()->vat_rate)->toBe(VatRate::VAT_23)
         ->and($product->variants()->first()->price_net_amount)->toBe(VatRate::VAT_23->netFromGross(39900));
 });
-
 
 it('does not append Mobilex to imported product names', function (): void {
     $path = storage_path('app/mobilex/test-mobilex-product-name-data.json');

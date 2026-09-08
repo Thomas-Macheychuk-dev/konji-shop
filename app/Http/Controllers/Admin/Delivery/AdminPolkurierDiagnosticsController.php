@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\Delivery;
 
 use App\Http\Controllers\Controller;
+use App\Services\Delivery\Polkurier\PolkurierAvailableCarriersService;
 use App\Services\Delivery\Polkurier\PolkurierReadinessCheck;
 use Illuminate\Contracts\View\View;
-use App\Services\Delivery\Polkurier\PolkurierAvailableCarriersService;
 
 final class AdminPolkurierDiagnosticsController extends Controller
 {

@@ -105,7 +105,6 @@ it('fails ARmedical production preflight on non-ARmedical external ID SKU and ex
     }
 });
 
-
 it('passes ARmedical production preflight when only a non-ARmedical base product slug collides', function (): void {
     Storage::fake('public');
     Product::query()->create([

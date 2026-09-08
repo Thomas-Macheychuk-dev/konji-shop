@@ -12,7 +12,7 @@ enum StockStatus: string
 
     public function translationKey(): string
     {
-        return 'enums.stock_status.' . $this->value;
+        return 'enums.stock_status.'.$this->value;
     }
 
     public function label(): string

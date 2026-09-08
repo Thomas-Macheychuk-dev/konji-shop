@@ -7,8 +7,8 @@ namespace App\Services\Antar;
 use Closure;
 use DOMDocument;
 use DOMElement;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 use Throwable;
 

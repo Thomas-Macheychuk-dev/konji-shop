@@ -17,7 +17,8 @@ uses(RefreshDatabase::class);
 
 function fakeDeliveryGateway(): DeliveryGateway
 {
-    return new class implements DeliveryGateway {
+    return new class implements DeliveryGateway
+    {
         public function providerKey(): string
         {
             return DeliveryProvider::POLKURIER->value;
@@ -40,7 +41,8 @@ function fakeDeliveryGateway(): DeliveryGateway
 
 function failingDeliveryGateway(): DeliveryGateway
 {
-    return new class implements DeliveryGateway {
+    return new class implements DeliveryGateway
+    {
         public function providerKey(): string
         {
             return DeliveryProvider::POLKURIER->value;

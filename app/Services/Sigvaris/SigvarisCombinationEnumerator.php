@@ -417,6 +417,7 @@ final class SigvarisCombinationEnumerator extends SigvarisHttpClient
     private function selectionSignature(array $selection): string
     {
         ksort($selection, SORT_NUMERIC);
+
         return implode('|', array_map(
             static fn (string $groupId, string $attributeId): string => $groupId.'='.$attributeId,
             array_keys($selection),
@@ -434,6 +435,7 @@ final class SigvarisCombinationEnumerator extends SigvarisHttpClient
                 'combination_id' => isset($m[2]) && $m[2] !== '' ? $m[2] : null,
             ];
         }
+
         return ['product_id' => sha1($url), 'combination_id' => null];
     }
 
@@ -450,6 +452,7 @@ final class SigvarisCombinationEnumerator extends SigvarisHttpClient
                 return $value;
             }
         }
+
         return null;
     }
 
@@ -465,6 +468,7 @@ final class SigvarisCombinationEnumerator extends SigvarisHttpClient
                 return $m[1];
             }
         }
+
         return null;
     }
 
@@ -474,6 +478,7 @@ final class SigvarisCombinationEnumerator extends SigvarisHttpClient
         if (preg_match('/W\s+magazynie\s+(\d+)\s+(?:Przedmioty|Przedmiotów|szt)/ui', $text, $m) === 1) {
             return (int) $m[1];
         }
+
         return null;
     }
 
@@ -490,6 +495,7 @@ final class SigvarisCombinationEnumerator extends SigvarisHttpClient
         if (preg_match('/brak\s+w\s+magazynie|niedostępny/ui', $text) === 1) {
             return 'out_of_stock';
         }
+
         return 'unknown';
     }
 
@@ -507,6 +513,7 @@ final class SigvarisCombinationEnumerator extends SigvarisHttpClient
                 return $parsed;
             }
         }
+
         return null;
     }
 
@@ -517,6 +524,7 @@ final class SigvarisCombinationEnumerator extends SigvarisHttpClient
         if (preg_match('/-?\d+(?:\.\d+)?/', $value, $m) !== 1) {
             return null;
         }
+
         return (float) $m[0];
     }
 }

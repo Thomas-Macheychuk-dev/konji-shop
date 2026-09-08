@@ -176,11 +176,11 @@ it('can save RehaFund product link discovery output from a saved category discov
     ]);
 
     $this->artisan('rehafund:product-links', [
-            '--categories-from' => 'scrapers/rehafund/test-categories.json',
-            '--save' => 'scrapers/rehafund/test-product-links.json',
-            '--no-progress' => true,
-            '--request-delay-ms' => '0',
-        ])
+        '--categories-from' => 'scrapers/rehafund/test-categories.json',
+        '--save' => 'scrapers/rehafund/test-product-links.json',
+        '--no-progress' => true,
+        '--request-delay-ms' => '0',
+    ])
         ->assertExitCode(0);
 
     expect(is_file($productLinksJsonPath))->toBeTrue();

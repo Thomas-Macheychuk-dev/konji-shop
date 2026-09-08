@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Services\Eldan\EldanProductImporter;
+use App\Services\Eldan\EldanProductNormalizer;
+use App\Services\Eldan\EldanProductPayloadExtractor;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
-use App\Services\Eldan\EldanProductPayloadExtractor;
-use App\Services\Eldan\EldanProductNormalizer;
-use App\Services\Eldan\EldanProductImporter;
 
 class InspectEldanProduct extends Command
 {
@@ -16,6 +16,7 @@ class InspectEldanProduct extends Command
         {--save-html : Save fetched HTML to storage/app/eldan-inspect.html}
         {--import : Import product without asking for confirmation}
         {--no-dump : Do not print the full extracted JSON payload}';
+
     protected $description = 'Inspect a single Eldan product page and dump extracted fields';
 
     public function handle(): int
@@ -50,7 +51,7 @@ class InspectEldanProduct extends Command
             $this->info('Saved raw HTML to storage/app/eldan-inspect.html');
         }
 
-        $this->line('Downloaded HTML size: ' . strlen($html) . ' bytes');
+        $this->line('Downloaded HTML size: '.strlen($html).' bytes');
 
         $crawler = new Crawler($html);
 

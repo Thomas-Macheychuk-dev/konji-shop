@@ -59,17 +59,20 @@ final class AntarProductImporter
         bool $importImages = true,
         ?int $imageLimit = 10,
         bool $importDocuments = true,
+        ?array $approvedPricing = null,
+        ?string $approvedParentSku = null,
+        ?string $approvedStorageSku = null,
     ): array {
         $this->warnings = [];
         $externalId = $this->externalProductId($scraped);
         $documentContext = $this->documentContext($scraped, $externalId, $importDocuments);
 
-        $product = DB::transaction(function () use ($scraped, $externalId, $status, $importImages, $imageLimit, $documentContext): Product {
-            $product = $this->resolveProduct($scraped, $externalId, $status, $documentContext);
+        $product = DB::transaction(function () use ($scraped, $externalId, $status, $importImages, $imageLimit, $documentContext, $approvedPricing, $approvedParentSku, $approvedStorageSku): Product {
+            $product = $this->resolveProduct($scraped, $externalId, $status, $documentContext, $approvedParentSku);
 
             $this->syncCategories($product, $scraped);
             $this->syncProductAttributes($product, $scraped);
-            $this->syncDefaultVariant($product, $scraped, $status);
+            $this->syncDefaultVariant($product, $scraped, $status, $approvedPricing, $approvedStorageSku);
 
             if ($importImages) {
                 $this->syncImages($product, $scraped, $imageLimit);
@@ -93,17 +96,18 @@ final class AntarProductImporter
      * @param  array<string, mixed>  $scraped
      * @param  array<string, mixed>  $documentContext
      */
-    private function resolveProduct(array $scraped, string $externalId, ProductStatus $status, array $documentContext): Product
+    private function resolveProduct(array $scraped, string $externalId, ProductStatus $status, array $documentContext, ?string $approvedParentSku = null): Product
     {
         $product = Product::withTrashed()
             ->where('external_source', 'antar')
             ->where('external_id', $externalId)
             ->first();
 
-        $baseSlug = $this->stringOrNull($scraped['slug'] ?? null)
-            ?: $this->slugFromUrl($this->stringOrNull($scraped['canonical_url'] ?? null))
-                ?: $this->slugFromUrl($this->stringOrNull($scraped['source_url'] ?? null))
-                    ?: Str::slug((string) ($scraped['name'] ?? 'antar-product-'.$externalId));
+        $baseSlug = $this->reviewedPublicSlugOverride($externalId)
+            ?: $this->stringOrNull($scraped['slug'] ?? null)
+                ?: $this->slugFromUrl($this->stringOrNull($scraped['canonical_url'] ?? null))
+                    ?: $this->slugFromUrl($this->stringOrNull($scraped['source_url'] ?? null))
+                        ?: Str::slug((string) ($scraped['name'] ?? 'antar-product-'.$externalId));
 
         if ($baseSlug === '') {
             $baseSlug = 'antar-product-'.$externalId;
@@ -123,7 +127,7 @@ final class AntarProductImporter
             'status' => $status,
             'external_source' => 'antar',
             'external_id' => $externalId,
-            'external_parent_sku' => $this->parentSku($scraped),
+            'external_parent_sku' => $approvedParentSku === null ? $this->parentSku($scraped) : $this->normaliseSku($approvedParentSku),
         ];
 
         if ($product !== null) {
@@ -259,11 +263,19 @@ final class AntarProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function syncDefaultVariant(Product $product, array $scraped, ProductStatus $status): void
-    {
+    private function syncDefaultVariant(
+        Product $product,
+        array $scraped,
+        ProductStatus $status,
+        ?array $approvedPricing,
+        ?string $approvedStorageSku = null,
+    ): void {
         $externalVariantId = $this->limitDatabaseString('antar-'.$product->external_id.'-default');
-        $grossAmount = $this->moneyToMinorUnits($scraped['price_gross_amount'] ?? null);
-        $vatRate = $this->vatRateForProduct($scraped);
+        $commercial = $approvedPricing === null ? null : $this->approvedCommercialPricing($approvedPricing);
+        $grossAmount = $commercial['price_gross_amount'] ?? $this->moneyToMinorUnits($scraped['price_gross_amount'] ?? null);
+        $netAmount = $commercial['price_net_amount'] ?? null;
+        $vatRate = $commercial['vat_rate'] ?? $this->vatRateForProduct($scraped);
+        $currency = $commercial['currency'] ?? Currency::PLN;
 
         $variant = ProductVariant::withTrashed()
             ->where('product_id', $product->id)
@@ -273,11 +285,13 @@ final class AntarProductImporter
         $attributes = [
             'product_id' => $product->id,
             'external_variant_id' => $externalVariantId,
-            'sku' => $this->uniqueNullableSku($this->stringOrNull($scraped['sku'] ?? null), $product->id, $externalVariantId),
+            'sku' => $this->uniqueNullableSku($approvedStorageSku ?? $this->stringOrNull($scraped['sku'] ?? null), $product->id, $externalVariantId),
             'status' => $this->variantStatusForProductStatus($status),
-            'price_net_amount' => $grossAmount === null ? null : $vatRate->netFromGross($grossAmount),
+            'price_net_amount' => $commercial === null
+                ? ($grossAmount === null ? null : $vatRate->netFromGross($grossAmount))
+                : $netAmount,
             'price_gross_amount' => $grossAmount,
-            'currency' => Currency::PLN,
+            'currency' => $currency,
             'vat_rate' => $vatRate,
             'stock_status' => $this->stockStatus($scraped),
             'is_default' => true,
@@ -308,6 +322,7 @@ final class AntarProductImporter
     {
         $imageRows = [];
         $seenUrls = [];
+        $hadUnresolvedImageFailure = false;
         $maxImages = $imageLimit !== null && $imageLimit > 0 ? $imageLimit : null;
 
         foreach (($scraped['images'] ?? []) as $imageData) {
@@ -335,9 +350,14 @@ final class AntarProductImporter
                     self::REMOTE_ASSET_ALLOWED_HOSTS,
                 );
             } catch (Throwable $exception) {
-                $this->warnings[] = 'Image skipped for Antar product '.$product->external_id.': '.$url.' — '.$exception->getMessage();
+                $imported = $this->reviewedOversizedImageRescue($product, $url, $exception);
 
-                continue;
+                if ($imported === null) {
+                    $hadUnresolvedImageFailure = true;
+                    $this->warnings[] = 'Image skipped for Antar product '.$product->external_id.': '.$url.' — '.$exception->getMessage();
+
+                    continue;
+                }
             }
 
             $alt = $this->stringOrNull($imageData['alt'] ?? null) ?: $product->name;
@@ -358,14 +378,16 @@ final class AntarProductImporter
 
         $paths = array_column($imageRows, 'path');
 
-        ProductImage::query()
-            ->where('product_id', $product->id)
-            ->when(
-                $paths !== [],
-                fn ($query) => $query->whereNotIn('path', $paths),
-                fn ($query) => $query,
-            )
-            ->delete();
+        if ($this->shouldPruneStaleImages($hadUnresolvedImageFailure)) {
+            ProductImage::query()
+                ->where('product_id', $product->id)
+                ->when(
+                    $paths !== [],
+                    fn ($query) => $query->whereNotIn('path', $paths),
+                    fn ($query) => $query,
+                )
+                ->delete();
+        }
 
         foreach ($imageRows as $row) {
             ProductImage::updateOrCreate(
@@ -386,6 +408,96 @@ final class AntarProductImporter
                 ],
             );
         }
+    }
+
+    private function shouldPruneStaleImages(bool $hadUnresolvedImageFailure): bool
+    {
+        return ! $hadUnresolvedImageFailure;
+    }
+
+    /**
+     * Use only reviewed local derivatives for the exact Antar originals that
+     * are too large for the shared RemoteImageImporter decoded-memory guard.
+     *
+     * The shared importer limits are intentionally not relaxed. The local
+     * derivatives are prepared once during patch application and are then
+     * committed with the application for deterministic production imports.
+     *
+     * @return array{disk: string, path: string, source_url: string, mime_type: string, file_size: int, sha256: string}|null
+     */
+    private function reviewedOversizedImageRescue(Product $product, string $sourceUrl, Throwable $exception): ?array
+    {
+        if (! str_contains($exception->getMessage(), 'Image dimensions too large to process safely')) {
+            return null;
+        }
+
+        $relativePath = $this->reviewedOversizedImageRescueRelativePath($product, $sourceUrl);
+
+        if ($relativePath === null) {
+            return null;
+        }
+
+        $absolutePath = resource_path($relativePath);
+        $contents = @file_get_contents($absolutePath);
+
+        if (! is_string($contents) || $contents === '') {
+            $this->warnings[] = 'Reviewed Antar rescue image is missing or empty for '.$product->external_id.': '.$relativePath;
+
+            return null;
+        }
+
+        if (strlen($contents) > 10 * 1024 * 1024) {
+            $this->warnings[] = 'Reviewed Antar rescue image exceeds 10 MiB for '.$product->external_id.': '.$relativePath;
+
+            return null;
+        }
+
+        $imageSize = @getimagesizefromstring($contents);
+
+        if (! is_array($imageSize)) {
+            $this->warnings[] = 'Reviewed Antar rescue image cannot be decoded for '.$product->external_id.': '.$relativePath;
+
+            return null;
+        }
+
+        $width = isset($imageSize[0]) ? (int) $imageSize[0] : 0;
+        $height = isset($imageSize[1]) ? (int) $imageSize[1] : 0;
+        $mimeType = is_string($imageSize['mime'] ?? null) ? strtolower($imageSize['mime']) : null;
+
+        if ($width <= 0 || $height <= 0 || max($width, $height) > 2200 || $mimeType !== 'image/jpeg') {
+            $this->warnings[] = 'Reviewed Antar rescue image violates normalized-image constraints for '.$product->external_id.': '.$relativePath;
+
+            return null;
+        }
+
+        $sha256 = hash('sha256', $contents);
+        $path = 'products/antar/'.$product->external_id.'/gallery/'.$sha256.'.jpg';
+
+        if (! Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->put($path, $contents);
+        }
+
+        return [
+            'disk' => 'public',
+            'path' => $path,
+            'source_url' => $sourceUrl,
+            'mime_type' => 'image/jpeg',
+            'file_size' => strlen($contents),
+            'sha256' => $sha256,
+        ];
+    }
+
+    private function reviewedOversizedImageRescueRelativePath(Product $product, string $sourceUrl): ?string
+    {
+        return match ($product->external_id.'|'.$sourceUrl) {
+            'lawka-wannowa-obrotowa-at51053|https://antar.net/wp-content/uploads/2025/10/AT51053-1.jpg' => 'import-data/antar/media-rescue/AT51053-1.jpg',
+            'lawka-wannowa-obrotowa-at51053|https://antar.net/wp-content/uploads/2025/10/AT51053-2.jpg' => 'import-data/antar/media-rescue/AT51053-2.jpg',
+            'lawka-wannowa-obrotowa-at51053|https://antar.net/wp-content/uploads/2025/10/AT51053-3.jpg' => 'import-data/antar/media-rescue/AT51053-3.jpg',
+            'rotor-rehabilitacyjny-elektryczny-at51125|https://antar.net/wp-content/uploads/2023/12/AT51125-4.jpg' => 'import-data/antar/media-rescue/AT51125-4.jpg',
+            'rotor-rehabilitacyjny-elektryczny-at51125|https://antar.net/wp-content/uploads/2023/12/AT51125-.jpg' => 'import-data/antar/media-rescue/AT51125-unnumbered.jpg',
+            'umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2|https://antar.net/wp-content/uploads/2024/06/at51049-ZESTAW-.png' => 'import-data/antar/media-rescue/AT51049-ZESTAW.jpg',
+            default => null,
+        };
     }
 
     /**
@@ -594,11 +706,11 @@ final class AntarProductImporter
             $label = $this->stringOrNull($document['label'] ?? null) ?: 'Dokument';
             $url = $this->stringOrNull($document['local_url'] ?? null);
 
-            if ($url !== null) {
-                $items[] = '<li><a href="'.e($url).'" target="_blank" rel="noopener">'.e($label).'</a></li>';
-            } else {
-                $items[] = '<li><span class="antar-pending-document">'.e($label).'</span></li>';
+            if ($url === null) {
+                continue;
             }
+
+            $items[] = '<li><a href="'.e($url).'" target="_blank" rel="noopener">'.e($label).'</a></li>';
         }
 
         if ($items === []) {
@@ -895,6 +1007,40 @@ final class AntarProductImporter
     }
 
     /**
+     * @param  array<string, mixed>  $pricing
+     * @return array{price_net_amount: int, price_gross_amount: int, vat_rate: VatRate, currency: Currency}
+     */
+    private function approvedCommercialPricing(array $pricing): array
+    {
+        $net = $pricing['price_net_amount'] ?? null;
+        $gross = $pricing['price_gross_amount'] ?? null;
+        $vat = $pricing['vat_rate'] ?? null;
+        $currency = $pricing['currency'] ?? null;
+
+        if (! is_int($net) || $net <= 0 || ! is_int($gross) || $gross <= 0 || ! is_int($vat) || ! is_string($currency)) {
+            throw new \InvalidArgumentException('Approved Antar pricing must contain positive integer net/gross amounts, an integer VAT rate, and currency.');
+        }
+
+        $vatRate = VatRate::tryFrom($vat);
+        $currencyEnum = Currency::tryFrom(strtoupper(trim($currency)));
+
+        if ($vatRate === null || $currencyEnum !== Currency::PLN) {
+            throw new \InvalidArgumentException('Approved Antar pricing must use a supported VAT rate and PLN currency.');
+        }
+
+        if ($vatRate->grossFromNet($net) !== $gross) {
+            throw new \InvalidArgumentException('Approved Antar pricing has inconsistent net/gross/VAT arithmetic.');
+        }
+
+        return [
+            'price_net_amount' => $net,
+            'price_gross_amount' => $gross,
+            'vat_rate' => $vatRate,
+            'currency' => $currencyEnum,
+        ];
+    }
+
+    /**
      * @param  array<string, mixed>  $scraped
      */
     private function vatRateForProduct(array $scraped): VatRate
@@ -1032,6 +1178,14 @@ final class AntarProductImporter
         }
 
         return $candidate;
+    }
+
+    private function reviewedPublicSlugOverride(string $externalId): ?string
+    {
+        return match ($externalId) {
+            'umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2' => 'wanna-pneumatyczna-dla-osob-niepelnosprawnych-at51049',
+            default => null,
+        };
     }
 
     private function productSlugExists(string $slug, ?int $currentProductId): bool

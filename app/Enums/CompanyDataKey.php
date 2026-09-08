@@ -21,7 +21,7 @@ enum CompanyDataKey: string
 
     public function translationKey(): string
     {
-        return 'enums.company_data_key.' . $this->value;
+        return 'enums.company_data_key.'.$this->value;
     }
 
     public function label(): string

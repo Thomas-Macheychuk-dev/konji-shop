@@ -7,7 +7,6 @@ namespace App\Services\Sigvaris;
 use Closure;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use RuntimeException;
 use Throwable;
 
 abstract class SigvarisHttpClient
@@ -15,45 +14,56 @@ abstract class SigvarisHttpClient
     protected const CANONICAL_HOST = 'www.sklep-sigvaris.com';
 
     protected ?Closure $progressCallback = null;
+
     protected int $timeoutSeconds = 20;
+
     protected int $attempts = 3;
+
     protected int $retryDelayMilliseconds = 1500;
+
     protected int $requestDelayMilliseconds = 500;
+
     protected bool $verifyTls = true;
 
     public function withProgressCallback(?Closure $callback): static
     {
         $this->progressCallback = $callback;
+
         return $this;
     }
 
     public function withTimeout(int $seconds): static
     {
         $this->timeoutSeconds = max(1, $seconds);
+
         return $this;
     }
 
     public function withAttempts(int $attempts): static
     {
         $this->attempts = max(1, $attempts);
+
         return $this;
     }
 
     public function withRetryDelayMilliseconds(int $milliseconds): static
     {
         $this->retryDelayMilliseconds = max(0, $milliseconds);
+
         return $this;
     }
 
     public function withRequestDelayMilliseconds(int $milliseconds): static
     {
         $this->requestDelayMilliseconds = max(0, $milliseconds);
+
         return $this;
     }
 
     public function withTlsVerification(bool $verify): static
     {
         $this->verifyTls = $verify;
+
         return $this;
     }
 
@@ -95,6 +105,7 @@ abstract class SigvarisHttpClient
         }
 
         $failedUrls[$url] = $lastError ?? 'Unknown HTTP failure';
+
         return null;
     }
 
@@ -140,6 +151,7 @@ abstract class SigvarisHttpClient
     protected function normalizeText(string $value): string
     {
         $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
         return trim(preg_replace('/\s+/u', ' ', $value) ?? $value);
     }
 

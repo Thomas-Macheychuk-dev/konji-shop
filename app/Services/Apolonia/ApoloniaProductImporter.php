@@ -627,7 +627,6 @@ final class ApoloniaProductImporter
             $sections[] = '<section class="apolonia-details"><h2>Dane produktu</h2><table><tbody>'.implode('', $detailsRows).'</tbody></table></section>';
         }
 
-
         return $sections !== [] ? implode("\n", $sections) : null;
     }
 

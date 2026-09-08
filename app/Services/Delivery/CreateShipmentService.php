@@ -20,8 +20,8 @@ final class CreateShipmentService implements CreatesShipments
     ) {}
 
     /**
-     * @param array<string, mixed>|null $pickup
-     * @param array<string, string> $additionalFields
+     * @param  array<string, mixed>|null  $pickup
+     * @param  array<string, string>  $additionalFields
      */
     public function create(
         Order $order,
@@ -50,8 +50,8 @@ final class CreateShipmentService implements CreatesShipments
 
             $result = $gateway->createShipment($order, $shipment, [
                 'pickup' => $pickup ?? [
-                        'nocourierorder' => true,
-                    ],
+                    'nocourierorder' => true,
+                ],
                 'additional_fields' => $additionalFields,
             ]);
 

@@ -337,7 +337,6 @@ final class ExecuteZamstProductionImportCommand extends Command
         $this->line('Selected mapped images: '.$images);
     }
 
-    /** @param mixed $checks */
     private function printChecks(mixed $checks): void
     {
         if (! is_array($checks)) {

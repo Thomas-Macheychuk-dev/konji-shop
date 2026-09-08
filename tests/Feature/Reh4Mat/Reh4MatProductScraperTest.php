@@ -99,7 +99,6 @@ it('extracts StabiloBed-style pictograms and tab downloads when the page contain
         ]);
 });
 
-
 it('scrapes BodyMap product page gallery images from the top product content gallery', function (): void {
     Http::fake([
         'https://bodymapsystem.pl/p/zaglowek-motylkowy-bodymap-dx/' => Http::response(reh4MatBodyMapProductPageFixture()),
@@ -264,7 +263,6 @@ function reh4MatProductPageFixture(): string
         </html>
     HTML;
 }
-
 
 function reh4MatBodyMapProductPageFixture(): string
 {

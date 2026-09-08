@@ -11,8 +11,8 @@ final class SigvarisImportMapper
     private const SOURCE = 'sigvaris';
 
     /**
-     * @param array<string,mixed> $productCatalogue
-     * @param array<string,mixed> $combinationCatalogue
+     * @param  array<string,mixed>  $productCatalogue
+     * @param  array<string,mixed>  $combinationCatalogue
      * @return array<string,mixed>
      */
     public function mapCatalogue(array $productCatalogue, array $combinationCatalogue, ?int $limit = null, int $offset = 0): array
@@ -27,10 +27,12 @@ final class SigvarisImportMapper
             $id = $this->stringOrNull($record['external_product_id'] ?? null);
             if ($id === null) {
                 $errors[] = 'Combination catalogue contains a product without external_product_id.';
+
                 continue;
             }
             if (isset($combinationByProductId[$id])) {
                 $errors[] = 'Combination catalogue contains duplicate product ID '.$id.'.';
+
                 continue;
             }
             $combinationByProductId[$id] = $record;
@@ -302,6 +304,7 @@ final class SigvarisImportMapper
 
         if ($combinations === []) {
             $grossMinor = $productGross !== null ? $this->moneyToMinorUnits($productGross) : null;
+
             return [[
                 'source_external_variant_id' => null,
                 'external_variant_id' => 'sigvaris-'.$productId.'-default',
@@ -328,10 +331,12 @@ final class SigvarisImportMapper
             $sourceId = $this->stringOrNull($combination['external_variant_id'] ?? null);
             if ($sourceId === null) {
                 $errors[] = 'concrete combination without external_variant_id.';
+
                 continue;
             }
             if (isset($seen[$sourceId])) {
                 $errors[] = 'duplicate concrete combination ID '.$sourceId.'.';
+
                 continue;
             }
             $seen[$sourceId] = true;
@@ -392,6 +397,7 @@ final class SigvarisImportMapper
         if (! $hasDefault && $variants !== []) {
             $variants[0]['is_default'] = true;
         }
+
         return $variants;
     }
 
@@ -439,6 +445,7 @@ final class SigvarisImportMapper
             if (isset($attribute['values']) && is_array($attribute['values'])) {
                 $attribute['values'] = array_values($attribute['values']);
             }
+
             return $attribute;
         }, $attributes));
     }
@@ -455,6 +462,7 @@ final class SigvarisImportMapper
         }
         $paths = array_values($unique);
         usort($paths, static fn (array $a, array $b): int => count($b) <=> count($a));
+
         return array_values(array_map(static fn (array $path, int $index): array => [
             'path' => $path,
             'path_label' => implode(' > ', $path),
@@ -549,6 +557,7 @@ final class SigvarisImportMapper
                 'label' => $this->stringOrNull($download['label'] ?? null),
             ];
         }
+
         return array_values($downloads);
     }
 
@@ -574,12 +583,14 @@ final class SigvarisImportMapper
     private function attributeCode(string $label, ?string $groupId): string
     {
         $slug = Str::slug($label, '_');
+
         return $slug !== '' ? $slug : 'sigvaris_group_'.($groupId ?? substr(sha1($label), 0, 8));
     }
 
     private function availability(mixed $value): string
     {
         $value = mb_strtolower(trim((string) $value));
+
         return match ($value) {
             'in_stock', 'instock', 'available' => 'in_stock',
             'out_of_stock', 'outofstock', 'unavailable' => 'out_of_stock',
@@ -605,6 +616,7 @@ final class SigvarisImportMapper
             return null;
         }
         $text = trim(preg_replace('/\s+/u', ' ', strip_tags($html)) ?? strip_tags($html));
+
         return $text !== '' ? Str::limit($text, 160, '') : null;
     }
 
@@ -627,6 +639,7 @@ final class SigvarisImportMapper
                 $items[] = $item;
             }
         }
+
         return $items;
     }
 
@@ -636,6 +649,7 @@ final class SigvarisImportMapper
             return null;
         }
         $value = trim((string) $value);
+
         return $value !== '' ? $value : null;
     }
 

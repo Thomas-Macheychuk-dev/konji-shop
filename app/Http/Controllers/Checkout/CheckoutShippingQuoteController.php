@@ -41,7 +41,7 @@ final class CheckoutShippingQuoteController extends Controller
             'amount' => $quote->amount,
             'formatted' => $quote->amount === 0
                 ? __('Free')
-                : number_format($quote->amount / 100, 2, ',', ' ') . ' ' . $quote->currency,
+                : number_format($quote->amount / 100, 2, ',', ' ').' '.$quote->currency,
             'currency' => $quote->currency,
             'provider' => $quote->provider,
             'carrier' => $quote->carrier,

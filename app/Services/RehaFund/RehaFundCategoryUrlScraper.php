@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\RehaFund;
 
 use Closure;
-use DOMElement;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;

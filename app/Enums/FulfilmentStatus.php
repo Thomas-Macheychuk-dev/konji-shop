@@ -15,7 +15,7 @@ enum FulfilmentStatus: string
 
     public function translationKey(): string
     {
-        return 'enums.fulfilment_status.' . $this->value;
+        return 'enums.fulfilment_status.'.$this->value;
     }
 
     public function label(): string

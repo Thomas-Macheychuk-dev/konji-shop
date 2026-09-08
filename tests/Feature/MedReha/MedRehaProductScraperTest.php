@@ -66,7 +66,6 @@ it('extracts MedReha product details from a Shoper product page', function (): v
         ->and($result['warnings'])->toBe([]);
 });
 
-
 it('prefers the visible MedReha availability label over hidden unavailable page text', function (): void {
     $html = medRehaProductPageDataFixture(
         canonicalUrl: 'https://sklep.medreha.pl/ortezy-stabilizatory/pas-ledzwiowy-gorset',

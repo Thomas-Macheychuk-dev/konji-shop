@@ -13,7 +13,7 @@ enum AttributeDisplayType: string
 
     public function translationKey(): string
     {
-        return 'enums.attribute_display_type.' . $this->value;
+        return 'enums.attribute_display_type.'.$this->value;
     }
 
     public function label(): string

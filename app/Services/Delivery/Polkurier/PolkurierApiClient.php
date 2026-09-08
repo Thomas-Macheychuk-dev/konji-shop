@@ -47,8 +47,8 @@ final class PolkurierApiClient
     }
 
     /**
-     * @param array<int, string> $couriers
-     * @param array<int, string> $functions
+     * @param  array<int, string>  $couriers
+     * @param  array<int, string>  $functions
      * @return array<int, array<string, mixed>>
      */
     public function courierPoints(

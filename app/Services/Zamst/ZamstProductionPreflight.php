@@ -20,8 +20,8 @@ final class ZamstProductionPreflight
         .'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36';
 
     /**
-     * @param array<string, mixed> $map
-     * @param array<string, int|string|null> $expected
+     * @param  array<string, mixed>  $map
+     * @param  array<string, int|string|null>  $expected
      * @return array<string, mixed>
      */
     public function inspect(
@@ -141,7 +141,7 @@ final class ZamstProductionPreflight
     }
 
     /**
-     * @param list<array<string, mixed>> $products
+     * @param  list<array<string, mixed>>  $products
      * @return array<string, mixed>
      */
     private function catalogueMetrics(array $products): array

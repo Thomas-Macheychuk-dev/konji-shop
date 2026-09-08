@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Events\OrderPlaced;
+use App\Events\ShipmentTrackingAvailable;
+use App\Events\WithdrawalRequestRefunded;
+use App\Events\WithdrawalRequestSubmitted;
 use App\Listeners\MergeGuestCartAfterLogin;
 use App\Listeners\SendOrderConfirmationEmail;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use App\Events\ShipmentTrackingAvailable;
 use App\Listeners\SendShipmentTrackingEmail;
-use App\Events\WithdrawalRequestSubmitted;
-use App\Events\WithdrawalRequestRefunded;
 use App\Listeners\SendWithdrawalAcknowledgementEmail;
 use App\Listeners\SendWithdrawalRefundedEmail;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {

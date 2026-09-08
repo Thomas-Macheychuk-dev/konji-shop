@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\Products;
 
 use App\Enums\AttributeDisplayType;
-use App\Enums\Currency;
 use App\Enums\VatRate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProductRequest;

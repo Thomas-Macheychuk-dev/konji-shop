@@ -362,7 +362,6 @@ final class ApoloniaProductScraper
         return trim($html);
     }
 
-
     /**
      * @return array<string, mixed>|null
      */
@@ -1197,7 +1196,6 @@ final class ApoloniaProductScraper
             || str_contains($path, 'apple.svg');
     }
 
-
     private function bestSrcSetCandidate(string $src): string
     {
         $src = trim($src);
@@ -1380,11 +1378,13 @@ final class ApoloniaProductScraper
             if ($quote !== null) {
                 if ($escaped) {
                     $escaped = false;
+
                     continue;
                 }
 
                 if ($char === '\\') {
                     $escaped = true;
+
                     continue;
                 }
 
@@ -1397,6 +1397,7 @@ final class ApoloniaProductScraper
 
             if ($char === '"' || $char === "'") {
                 $quote = $char;
+
                 continue;
             }
 
@@ -1432,11 +1433,13 @@ final class ApoloniaProductScraper
             if ($quote !== null) {
                 if ($escaped) {
                     $escaped = false;
+
                     continue;
                 }
 
                 if ($char === '\\') {
                     $escaped = true;
+
                     continue;
                 }
 
@@ -1449,6 +1452,7 @@ final class ApoloniaProductScraper
 
             if ($char === '"' || $char === "'") {
                 $quote = $char;
+
                 continue;
             }
 

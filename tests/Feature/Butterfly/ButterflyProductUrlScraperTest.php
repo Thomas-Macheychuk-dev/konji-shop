@@ -1,6 +1,5 @@
 <?php
 
-use App\Services\Butterfly\ButterflyCategoryUrlScraper;
 use App\Services\Butterfly\ButterflyProductUrlScraper;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;

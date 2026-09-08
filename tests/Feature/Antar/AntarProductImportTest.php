@@ -5,7 +5,6 @@ use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Enums\VatRate;
-use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
@@ -168,6 +167,38 @@ it('can import Antar products as active products', function (): void {
 
     expect($product->status)->toBe(ProductStatus::ACTIVE)
         ->and($variant->status)->toBe(ProductVariantStatus::ACTIVE);
+});
+
+it('keeps the Antar source identity while overriding the reviewed AT51049 public slug', function (): void {
+    writeAntarImportFixture('scrapers/antar/test-at51049-product-data.json', [antarImportProductPayload([
+        'external_product_id' => 'umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2',
+        'source_product_external_id' => 'umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2',
+        'source_product_slug' => 'umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2',
+        'slug' => 'umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2',
+        'source_url' => 'https://antar.net/produkt/umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2/',
+        'canonical_url' => 'https://antar.net/produkt/umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2/',
+        'source_product_url' => 'https://antar.net/produkt/umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2/',
+        'name' => 'Wanna pneumatyczna dla osób niepełnosprawnych AT51049',
+        'sku' => 'AT51049',
+        'images' => [],
+        'documents' => [],
+    ])]);
+
+    $this->artisan('antar:import', [
+        '--from' => 'scrapers/antar/test-at51049-product-data.json',
+        '--no-images' => true,
+        '--no-documents' => true,
+    ])->assertSuccessful();
+
+    $product = Product::query()
+        ->where('external_source', 'antar')
+        ->where('external_id', 'umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2')
+        ->firstOrFail();
+
+    expect($product->external_id)->toBe('umywalka-do-mycia-glowy-dla-niepelnosprawnych-z-prysznicem-at51033-2')
+        ->and($product->external_parent_sku)->toBe('AT51049')
+        ->and($product->name)->toBe('Wanna pneumatyczna dla osób niepełnosprawnych AT51049')
+        ->and($product->slug)->toBe('wanna-pneumatyczna-dla-osob-niepelnosprawnych-at51049');
 });
 
 it('updates existing Antar products by external ID instead of duplicating them', function (): void {

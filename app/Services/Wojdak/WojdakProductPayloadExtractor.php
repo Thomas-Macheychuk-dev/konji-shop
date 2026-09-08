@@ -11,6 +11,7 @@ use Throwable;
 final class WojdakProductPayloadExtractor
 {
     private const WOJDAK_SHOP_HOST = 'sklep.wojdak.pl';
+
     private const LEGACY_WOJDAK_HOST = 'wojdak.pl';
 
     /**

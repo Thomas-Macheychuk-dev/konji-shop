@@ -6,8 +6,8 @@ namespace App\Services\Zamst;
 
 use Closure;
 use DOMElement;
-use JsonException;
 use Illuminate\Support\Facades\Http;
+use JsonException;
 use Symfony\Component\DomCrawler\Crawler;
 use Throwable;
 
@@ -1079,6 +1079,7 @@ final class ZamstProductScraper
 
             if ($segment === '..') {
                 array_pop($segments);
+
                 continue;
             }
 
@@ -1262,7 +1263,7 @@ final class ZamstProductScraper
      */
     private function addImage(array &$images, ?string $url, ?string $alt, ?string $title): void
     {
-        if ($url === null || !$this->looksLikeImage($url)) {
+        if ($url === null || ! $this->looksLikeImage($url)) {
             return;
         }
 
@@ -1350,6 +1351,7 @@ final class ZamstProductScraper
 
             if ($attempt < $this->maxAttempts && ($response->status() === 429 || $response->serverError())) {
                 $this->pauseBeforeRetry();
+
                 continue;
             }
 

@@ -745,7 +745,6 @@ final class RehaFundProductImporter
         return $html === '' ? null : $html;
     }
 
-
     private function unwrapAnchorTags(string $html): string
     {
         $html = preg_replace('/<a\b[^>]*>/isu', '', $html) ?? $html;
@@ -991,7 +990,6 @@ final class RehaFundProductImporter
 
         return $this->stringOrNull($brand);
     }
-
 
     private function isGeneratedMetaLabel(string $label): bool
     {

@@ -10,7 +10,7 @@ enum Currency: string
 
     public function translationKey(): string
     {
-        return 'enums.currency.' . $this->value;
+        return 'enums.currency.'.$this->value;
     }
 
     public function label(): string

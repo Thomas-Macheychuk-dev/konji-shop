@@ -10,7 +10,7 @@ use InvalidArgumentException;
 final class DeliveryGatewayRegistry
 {
     /**
-     * @param iterable<DeliveryGateway> $gateways
+     * @param  iterable<DeliveryGateway>  $gateways
      */
     public function __construct(
         private readonly iterable $gateways,

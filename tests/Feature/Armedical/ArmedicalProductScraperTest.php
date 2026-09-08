@@ -193,7 +193,6 @@ it('separates size-table rows from specifications and warns about inconsistent s
         );
 });
 
-
 it('parses horizontal ARmedical size matrices as individual size options', function (): void {
     $ar060 = app(ArmedicalProductScraper::class)->extract(<<<'HTML'
         <!doctype html>

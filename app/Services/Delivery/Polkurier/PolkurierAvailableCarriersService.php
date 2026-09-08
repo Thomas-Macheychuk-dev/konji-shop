@@ -139,7 +139,7 @@ final class PolkurierAvailableCarriersService
     }
 
     /**
-     * @param array<string, mixed> $carrier
+     * @param  array<string, mixed>  $carrier
      * @return array<int, string>
      */
     private function requiredAdditionalFields(array $carrier): array

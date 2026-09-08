@@ -400,7 +400,6 @@ final class MediProductUrlScraper
     }
 
     /**
-     * @param  mixed  $value
      * @return array<string, string>
      */
     private function actionableFailedUrls(mixed $value): array

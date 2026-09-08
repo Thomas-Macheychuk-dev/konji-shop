@@ -117,6 +117,7 @@ final class PerukaProductDataCrawler
 
             if (isset($scrapedUrls[$normalizedUrl])) {
                 $skippedDuplicateUrls[$normalizedUrl] = true;
+
                 continue;
             }
 
@@ -126,6 +127,7 @@ final class PerukaProductDataCrawler
                 $product = $this->productScraper->scrape($normalizedUrl);
             } catch (Throwable $exception) {
                 $failedUrls[$normalizedUrl] = $exception->getMessage();
+
                 continue;
             }
 
@@ -135,6 +137,7 @@ final class PerukaProductDataCrawler
 
             if ($externalProductId !== null && isset($scrapedExternalIds[$externalProductId])) {
                 $skippedDuplicateExternalIds[$normalizedUrl] = $externalProductId;
+
                 continue;
             }
 
@@ -159,6 +162,7 @@ final class PerukaProductDataCrawler
 
                 if (isset($scrapedUrls[$normalizedVariantUrl]) || isset($queuedUrls[$normalizedVariantUrl])) {
                     $skippedDuplicateUrls[$normalizedVariantUrl] = true;
+
                     continue;
                 }
 

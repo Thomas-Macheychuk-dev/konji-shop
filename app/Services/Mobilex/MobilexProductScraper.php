@@ -12,6 +12,7 @@ use Throwable;
 final class MobilexProductScraper
 {
     private const MOBILEX_HOST = 'mobilex.pl';
+
     private const GALERIA_ZDROWIA_HOST = 'galeriazdrowia.pl';
 
     /**
@@ -146,7 +147,6 @@ final class MobilexProductScraper
             'warnings' => $warnings,
         ];
     }
-
 
     private function extractGaleriaZdrowiaProductUrl(string $html, string $baseUrl): ?string
     {
@@ -1244,7 +1244,7 @@ final class MobilexProductScraper
             return $url;
         }
 
-        return $parts['scheme'] . '://' . mb_strtolower((string) $parts['host']) . $originalPath;
+        return $parts['scheme'].'://'.mb_strtolower((string) $parts['host']).$originalPath;
     }
 
     /**
@@ -1787,7 +1787,7 @@ final class MobilexProductScraper
             return $label;
         }
 
-        return mb_strtoupper(mb_substr($label, 0, 1, 'UTF-8'), 'UTF-8') . mb_substr($label, 1, null, 'UTF-8');
+        return mb_strtoupper(mb_substr($label, 0, 1, 'UTF-8'), 'UTF-8').mb_substr($label, 1, null, 'UTF-8');
     }
 
     /**

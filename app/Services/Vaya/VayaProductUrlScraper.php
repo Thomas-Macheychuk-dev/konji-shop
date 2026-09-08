@@ -463,6 +463,7 @@ final class VayaProductUrlScraper
 
                 if ($attempt < $this->maxAttempts) {
                     $this->pauseBeforeRetry();
+
                     continue;
                 }
 
@@ -479,6 +480,7 @@ final class VayaProductUrlScraper
 
             if ($attempt < $this->maxAttempts && $this->shouldRetry($response)) {
                 $this->pauseBeforeRetry();
+
                 continue;
             }
 
@@ -710,7 +712,6 @@ final class VayaProductUrlScraper
     }
 
     /**
-     * @param  mixed  $value
      * @return array<string, string>
      */
     private function stringMap(mixed $value): array

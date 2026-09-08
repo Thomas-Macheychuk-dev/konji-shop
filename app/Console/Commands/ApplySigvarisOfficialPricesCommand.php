@@ -47,11 +47,13 @@ final class ApplySigvarisOfficialPricesCommand extends Command
 
         if ($expectedPlanSha === null) {
             $this->error('BLOCKED: --expected-plan-sha256 must be a 64-character SHA-256 fingerprint.');
+
             return self::FAILURE;
         }
 
         if (! is_file($planPath) || ! is_readable($planPath)) {
             $this->error('Unable to read Sigvaris official price plan: '.$planPath);
+
             return self::FAILURE;
         }
 
@@ -59,6 +61,7 @@ final class ApplySigvarisOfficialPricesCommand extends Command
 
         if (! is_string($actualPlanSha)) {
             $this->error('Unable to calculate official price-plan SHA-256.');
+
             return self::FAILURE;
         }
 
@@ -69,6 +72,7 @@ final class ApplySigvarisOfficialPricesCommand extends Command
             $this->error('BLOCKED: official price-plan SHA-256 mismatch.');
             $this->line('Expected: '.$expectedPlanSha);
             $this->line('Actual:   '.$actualPlanSha);
+
             return self::FAILURE;
         }
 
@@ -80,6 +84,7 @@ final class ApplySigvarisOfficialPricesCommand extends Command
 
         if (($plan['import_map_sha256'] ?? null) !== SigvarisOfficialPricePlanner::IMPORT_MAP_SHA256) {
             $this->error('BLOCKED: price plan is not tied to the approved Sigvaris import map.');
+
             return self::FAILURE;
         }
 
@@ -122,27 +127,32 @@ final class ApplySigvarisOfficialPricesCommand extends Command
         if (! ($preflight['passed'] ?? false)) {
             $this->saveEvidence($plan, $actualPlanSha, $preflight, null);
             $this->error('FAIL: official Sigvaris price preflight failed. No prices were changed.');
+
             return self::FAILURE;
         }
 
         if (! $write) {
             $this->saveEvidence($plan, $actualPlanSha, $preflight, null);
             $this->info('PASS: read-only price-write preflight passed. No catalogue writes were performed.');
+
             return self::SUCCESS;
         }
 
         if (! app()->environment(['local', 'testing'])) {
             $this->error('BLOCKED: this command intentionally permits writes only in local/testing. Use the separate production execution gate after local validation.');
+
             return self::FAILURE;
         }
 
         if ((string) ($this->option('confirm-write') ?? '') !== self::WRITE_CONFIRMATION) {
             $this->error('BLOCKED: --confirm-write must equal '.self::WRITE_CONFIRMATION.'.');
+
             return self::FAILURE;
         }
 
         if ((string) ($this->option('acknowledge-unmatched') ?? '') !== self::UNMATCHED_ACKNOWLEDGEMENT) {
             $this->error('BLOCKED: explicitly acknowledge that the five unmatched products remain unchanged with --acknowledge-unmatched='.self::UNMATCHED_ACKNOWLEDGEMENT.'.');
+
             return self::FAILURE;
         }
 
@@ -165,6 +175,7 @@ final class ApplySigvarisOfficialPricesCommand extends Command
             );
         } catch (\Throwable $exception) {
             $this->error('Price write failed: '.$exception->getMessage());
+
             return self::FAILURE;
         }
 
@@ -187,6 +198,7 @@ final class ApplySigvarisOfficialPricesCommand extends Command
 
         if (! ($result['passed'] ?? false) || ! ($audit['passed'] ?? false)) {
             $this->error('FAIL: Sigvaris price write did not pass the post-write audit.');
+
             return self::FAILURE;
         }
 
@@ -201,6 +213,7 @@ final class ApplySigvarisOfficialPricesCommand extends Command
         if ($value === '') {
             return storage_path('app/scrapers/sigvaris/official-price-plan-2026-01-21.json');
         }
+
         return str_starts_with($value, '/') ? $value : storage_path('app/'.ltrim($value, '/'));
     }
 
@@ -211,11 +224,13 @@ final class ApplySigvarisOfficialPricesCommand extends Command
             $decoded = json_decode((string) file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $exception) {
             $this->error('Invalid JSON in official price plan: '.$exception->getMessage());
+
             return null;
         }
 
         if (! is_array($decoded)) {
             $this->error('Official price-plan root must be a JSON object.');
+
             return null;
         }
 
@@ -223,9 +238,9 @@ final class ApplySigvarisOfficialPricesCommand extends Command
     }
 
     /**
-     * @param array<string, mixed> $plan
-     * @param array<string, mixed> $preflight
-     * @param array<string, mixed>|null $result
+     * @param  array<string, mixed>  $plan
+     * @param  array<string, mixed>  $preflight
+     * @param  array<string, mixed>|null  $result
      */
     private function saveEvidence(array $plan, string $planSha, array $preflight, ?array $result): void
     {
@@ -239,6 +254,7 @@ final class ApplySigvarisOfficialPricesCommand extends Command
 
         if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) {
             $this->warn('Unable to create evidence directory: '.$directory);
+
             return;
         }
 
@@ -258,11 +274,13 @@ final class ApplySigvarisOfficialPricesCommand extends Command
             $json = json_encode($evidence, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
         } catch (JsonException $exception) {
             $this->warn('Unable to encode evidence JSON: '.$exception->getMessage());
+
             return;
         }
 
         if (! is_string($json) || file_put_contents($path, $json.PHP_EOL) === false) {
             $this->warn('Unable to save evidence JSON: '.$path);
+
             return;
         }
 
@@ -272,6 +290,7 @@ final class ApplySigvarisOfficialPricesCommand extends Command
     private function normalizedSha256(string $value): ?string
     {
         $value = strtolower(trim($value));
+
         return preg_match('/^[a-f0-9]{64}$/', $value) === 1 ? $value : null;
     }
 }

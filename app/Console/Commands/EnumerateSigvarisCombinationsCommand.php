@@ -38,7 +38,7 @@ final class EnumerateSigvarisCombinationsCommand extends Command
     {
         $json = (bool) $this->option('json');
         $this->enumerator
-            ->withTlsVerification(!(bool) $this->option('insecure'))
+            ->withTlsVerification(! (bool) $this->option('insecure'))
             ->withTimeout($this->intOption('timeout', 30, 1))
             ->withAttempts($this->intOption('attempts', 5, 1))
             ->withRetryDelayMilliseconds($this->intOption('retry-delay-ms', 3000, 0))
@@ -77,6 +77,7 @@ final class EnumerateSigvarisCombinationsCommand extends Command
 
             if ($result === null) {
                 $failedProducts[$url] = 'Initial product request failed.';
+
                 continue;
             }
 
@@ -197,12 +198,14 @@ final class EnumerateSigvarisCombinationsCommand extends Command
     private function intOption(string $name, int $default, int $min): int
     {
         $value = $this->option($name);
+
         return is_numeric($value) ? max($min, (int) $value) : $default;
     }
 
     private function limit(): ?int
     {
         $value = $this->option('limit');
+
         return $value === null || $value === '' ? null : max(1, (int) $value);
     }
 
@@ -217,6 +220,7 @@ final class EnumerateSigvarisCombinationsCommand extends Command
         if (! is_array($decoded)) {
             throw new JsonException('Sigvaris JSON must contain an object.');
         }
+
         return $decoded;
     }
 
@@ -246,6 +250,7 @@ final class EnumerateSigvarisCombinationsCommand extends Command
         if (! is_string($json)) {
             throw new RuntimeException('Unable to encode Sigvaris JSON.');
         }
+
         return $json;
     }
 }

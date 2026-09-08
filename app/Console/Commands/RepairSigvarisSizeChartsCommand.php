@@ -119,6 +119,7 @@ final class RepairSigvarisSizeChartsCommand extends Command
 
             if ($externalId === '' || $sourceUrl === '') {
                 $failures[] = ['external_id' => $externalId, 'name' => $name, 'error' => 'Missing mapped external ID or source URL.'];
+
                 continue;
             }
 
@@ -126,12 +127,14 @@ final class RepairSigvarisSizeChartsCommand extends Command
                 $chart = $this->repair->discover($sourceUrl);
             } catch (Throwable $exception) {
                 $failures[] = ['external_id' => $externalId, 'name' => $name, 'error' => $exception->getMessage()];
+
                 continue;
             }
 
             if ($chart === null) {
                 $missing[] = ['external_id' => $externalId, 'name' => $name, 'source_url' => $sourceUrl];
                 $evidence[] = ['external_id' => $externalId, 'name' => $name, 'source_url' => $sourceUrl, 'status' => 'no_linked_image'];
+
                 continue;
             }
 
@@ -152,11 +155,13 @@ final class RepairSigvarisSizeChartsCommand extends Command
 
                 if (! $product instanceof Product) {
                     $failures[] = ['external_id' => $externalId, 'name' => $name, 'error' => 'Production/local Sigvaris product row not found.'];
+
                     continue;
                 }
 
                 if ($product->status !== ProductStatus::DRAFT || $product->published_at !== null) {
                     $failures[] = ['external_id' => $externalId, 'name' => $name, 'error' => 'Size-chart repair refuses non-draft or published Sigvaris products.'];
+
                     continue;
                 }
 

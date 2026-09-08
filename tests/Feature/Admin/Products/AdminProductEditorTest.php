@@ -146,8 +146,6 @@ it('shows the admin product index', function (): void {
         ->assertSee('1 z brakującą wagą/wymiarami');
 });
 
-
-
 it('shows a create product button on the admin product index', function (): void {
     $admin = User::factory()->create([
         'is_admin' => true,
@@ -293,8 +291,6 @@ it('allows an admin to create a product with variants and attributes', function 
         ->and($variants[1]->attributeValues->first()?->value)->toBe('S');
 });
 
-
-
 it('allows an admin to create a product with more variants than the old fixed create form showed', function (): void {
     $admin = User::factory()->create([
         'is_admin' => true,
@@ -336,7 +332,6 @@ it('allows an admin to create a product with more variants than the old fixed cr
     expect($product->variants)->toHaveCount(12)
         ->and($product->variants()->where('sku', 'MANY-VARIANTS-12')->firstOrFail()->is_default)->toBeTrue();
 });
-
 
 it('allows an admin to upload product images while creating a product', function (): void {
     Storage::fake('public');
@@ -395,7 +390,6 @@ it('allows an admin to upload product images while creating a product', function
         Storage::disk('public')->assertExists($image->path);
     }
 });
-
 
 it('validates product creation when no variant is provided', function (): void {
     $admin = User::factory()->create([
@@ -596,7 +590,6 @@ it('validates the product category when updating product details', function (): 
     expect($product->refresh()->categories()->count())->toBe(0);
 });
 
-
 it('shows selectable product and variant images on the admin product edit page', function (): void {
     $admin = User::factory()->create([
         'is_admin' => true,
@@ -785,7 +778,6 @@ it('does not allow an admin to choose an image from another product as the defau
         ->default_image_type->toBeNull()
         ->default_image_id->toBeNull();
 });
-
 
 it('allows an admin to apply a price to all product variants', function (): void {
     $admin = User::factory()->create([
@@ -1243,7 +1235,6 @@ it('validates product status when updating product details', function (): void {
 
     expect($product->refresh()->status)->toBe(ProductStatus::ACTIVE);
 });
-
 
 it('warns admins when priced variants are still draft', function (): void {
     $admin = User::factory()->create([

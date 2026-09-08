@@ -133,7 +133,7 @@ final class PolkurierCarrierAvailabilityGuard
     }
 
     /**
-     * @param array<string, mixed> $additionalFields
+     * @param  array<string, mixed>  $additionalFields
      */
     public function ensureCanCreateShipment(Order $order, array $additionalFields = []): void
     {
@@ -228,7 +228,7 @@ final class PolkurierCarrierAvailabilityGuard
     }
 
     /**
-     * @param array<string, mixed> $carrier
+     * @param  array<string, mixed>  $carrier
      */
     private function shipmentTypeExplicitlyUnavailable(array $carrier, string $shipmentType): bool
     {
@@ -240,7 +240,7 @@ final class PolkurierCarrierAvailabilityGuard
     }
 
     /**
-     * @param array<string, mixed> $carrier
+     * @param  array<string, mixed>  $carrier
      * @return array<int, array<string, mixed>>
      */
     private function additionalFieldDefinitionsForCarrier(array $carrier): array
@@ -315,7 +315,7 @@ final class PolkurierCarrierAvailabilityGuard
     }
 
     /**
-     * @param array<int, array<string, mixed>> $additionalFieldDefinitions
+     * @param  array<int, array<string, mixed>>  $additionalFieldDefinitions
      * @return array<int, string>
      */
     private function requiredAdditionalFieldNames(array $additionalFieldDefinitions): array
@@ -338,8 +338,8 @@ final class PolkurierCarrierAvailabilityGuard
     }
 
     /**
-     * @param array<int, array<string, mixed>> $additionalFieldDefinitions
-     * @param array<string, mixed> $additionalFields
+     * @param  array<int, array<string, mixed>>  $additionalFieldDefinitions
+     * @param  array<string, mixed>  $additionalFields
      * @return array<int, string>
      */
     private function missingRequiredAdditionalFields(array $additionalFieldDefinitions, array $additionalFields): array

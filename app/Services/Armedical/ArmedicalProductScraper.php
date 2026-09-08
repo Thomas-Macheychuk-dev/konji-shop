@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Armedical;
 
 use Closure;
-use DOMDocument;
-use DOMElement;
-use DOMXPath;
 use Symfony\Component\DomCrawler\Crawler;
 use Throwable;
 

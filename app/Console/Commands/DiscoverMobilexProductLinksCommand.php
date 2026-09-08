@@ -98,7 +98,6 @@ final class DiscoverMobilexProductLinksCommand extends Command
         return $limit > 0 ? $limit : null;
     }
 
-
     private function categoryLimit(): ?int
     {
         $value = $this->option('category-limit');
@@ -124,7 +123,6 @@ final class DiscoverMobilexProductLinksCommand extends Command
 
         return $timeout > 0 ? $timeout : 15;
     }
-
 
     private function requestDelayMilliseconds(): int
     {
@@ -164,7 +162,6 @@ final class DiscoverMobilexProductLinksCommand extends Command
             $this->line($productUrl);
         }
     }
-
 
     /**
      * @param  array<string, mixed>  $result

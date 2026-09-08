@@ -116,7 +116,7 @@ it('keeps products without an explicit official price out of the write-ready pla
 });
 
 /**
- * @param list<array<string, mixed>> $variants
+ * @param  list<array<string, mixed>>  $variants
  * @return array<string, mixed>
  */
 function sigvarisOfficialPriceMappedProduct(string $externalId, string $name, array $variants): array
@@ -132,7 +132,7 @@ function sigvarisOfficialPriceMappedProduct(string $externalId, string $name, ar
 }
 
 /**
- * @param list<array<string, mixed>> $attributes
+ * @param  list<array<string, mixed>>  $attributes
  * @return array<string, mixed>
  */
 function sigvarisOfficialPriceVariant(

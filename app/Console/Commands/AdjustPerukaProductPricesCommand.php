@@ -126,6 +126,7 @@ final class AdjustPerukaProductPricesCommand extends Command
 
             if ($currentGrossAmount === $targetGrossAmount && $currentNetAmount === $targetNetAmount) {
                 $unchanged++;
+
                 continue;
             }
 

@@ -2,10 +2,11 @@
 
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Fortify\Features;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->skipUnlessFortifyFeature(Features::resetPasswords());
@@ -21,8 +22,8 @@ test('reset password link can be requested', function () {
     Notification::fake();
 
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->post(route('password.request'), ['email' => $user->email]);
 
@@ -33,8 +34,8 @@ test('reset password screen can be rendered', function () {
     Notification::fake();
 
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->post(route('password.request'), ['email' => $user->email]);
 
@@ -51,8 +52,8 @@ test('password can be reset with valid token', function () {
     Notification::fake();
 
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->post(route('password.request'), ['email' => $user->email]);
 

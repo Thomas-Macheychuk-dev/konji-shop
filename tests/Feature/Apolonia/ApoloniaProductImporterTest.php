@@ -32,7 +32,6 @@ it('keeps Apolonia variant SKUs stable when the same product is imported repeate
         ->and(Product::query()->where('external_source', 'apolonia')->where('external_id', '2970')->count())->toBe(1);
 });
 
-
 it('qualifies Apolonia variant SKUs with the external product ID across colour products', function (): void {
     $importer = app(ApoloniaProductImporter::class);
 
@@ -103,7 +102,6 @@ it('qualifies Apolonia variant SKUs with the external product ID across colour p
         ->and($second->variants()->orderBy('external_variant_id')->pluck('sku')->all())
         ->toBe(['BL60-2977-XS', 'BL60-2977-S', 'BL60-2977-M']);
 });
-
 
 it('does not append Apolonia source notice to product descriptions', function (): void {
     $product = app(ApoloniaProductImporter::class)

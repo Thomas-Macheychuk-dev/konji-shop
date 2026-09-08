@@ -66,7 +66,7 @@ final class AdminPolkurierPickupTimesController extends Controller
     }
 
     /**
-     * @param array<int, array<string, mixed>> $pickupTimes
+     * @param  array<int, array<string, mixed>>  $pickupTimes
      * @return array<int, array{date: string, time_from: string|null, time_to: string|null, label: string}>
      */
     private function normalizePickupTimes(array $pickupTimes): array

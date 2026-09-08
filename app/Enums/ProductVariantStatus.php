@@ -12,7 +12,7 @@ enum ProductVariantStatus: string
 
     public function translationKey(): string
     {
-        return 'enums.product_variant_status.' . $this->value;
+        return 'enums.product_variant_status.'.$this->value;
     }
 
     public function label(): string

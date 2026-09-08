@@ -15,6 +15,7 @@ use Throwable;
 final class SigvarisProductionPreflight
 {
     private const SOURCE = 'sigvaris';
+
     private const IMAGE_BROWSER_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36';
 
     /** @param array<string,mixed> $map @param array<string,int|string|null> $expected @return array<string,mixed> */
@@ -187,6 +188,7 @@ final class SigvarisProductionPreflight
                 }
                 if ($variantId === null || $sku === null) {
                     $failures[] = $name.': variant missing external ID or SKU.';
+
                     continue;
                 }
                 if (($variant['status'] ?? null) !== 'draft') {
@@ -210,6 +212,7 @@ final class SigvarisProductionPreflight
                 $url = $this->stringOrNull($image['source_url'] ?? null);
                 if ($url === null) {
                     $failures[] = $name.': image source URL is missing.';
+
                     continue;
                 }
                 $imageUrls[$url] = true;
@@ -297,6 +300,7 @@ final class SigvarisProductionPreflight
             $fallback = is_string($externalId) && $externalId !== '' ? $slug.'-sigvaris-'.$externalId : null;
             if ($fallback === null) {
                 $unsafeSlugCollisions[] = $slug;
+
                 continue;
             }
 
@@ -307,6 +311,7 @@ final class SigvarisProductionPreflight
 
             if ($occupant !== null && ! $matchingSigvarisOccupant) {
                 $unsafeSlugCollisions[] = $slug.' -> '.$fallback;
+
                 continue;
             }
 

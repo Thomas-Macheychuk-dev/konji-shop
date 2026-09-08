@@ -71,6 +71,26 @@ it('refuses to guess among conflicting supplier prices for one Antar code', func
         ->and($plan['review_items'][0])->toContain('do not guess a price');
 });
 
+it('uses the exact supplier row override for the Opti-Comfort replacement handle', function (): void {
+    [$product, $variant] = createAntarPricedProduct('OPTI-COMFORT');
+    $product->update([
+        'external_id' => 'uchywty-poparcia-do-kul-comfort',
+        'external_parent_sku' => 'OPTI-COMFORT',
+    ]);
+
+    $plan = app(AntarPriceUpdatePlanner::class)->build();
+    $row = collect($plan['products'])->firstWhere('product_id', $product->id);
+
+    expect($row['supplier']['source_rows'])->toBe([805])
+        ->and($row['supplier']['match_method'])->toBe('explicit_supplier_row_override')
+        ->and($row['proposed'])->toBe([
+            'price_net_amount' => 1591,
+            'price_gross_amount' => 1957,
+            'vat_rate' => 23,
+            'currency' => 'PLN',
+        ]);
+});
+
 it('fails closed when an Antar product does not have exactly one live default variant', function (): void {
     $product = Product::query()->create([
         'name' => 'Broken Antar product',

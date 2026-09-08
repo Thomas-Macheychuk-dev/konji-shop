@@ -1,11 +1,12 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Features;
 use Livewire\Livewire;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->skipUnlessFortifyFeature(Features::twoFactorAuthentication());
@@ -18,8 +19,8 @@ beforeEach(function () {
 
 test('security settings page can be rendered', function () {
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
@@ -31,8 +32,8 @@ test('security settings page can be rendered', function () {
 
 test('security settings page requires password confirmation when enabled', function () {
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $response = $this->actingAs($user)
         ->get(route('security.edit'));
@@ -44,8 +45,8 @@ test('security settings page renders without two factor when feature is disabled
     config(['fortify.features' => []]);
 
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $this->actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
@@ -57,8 +58,8 @@ test('security settings page renders without two factor when feature is disabled
 
 test('two factor authentication disabled when confirmation abandoned between requests', function () {
     $user = User::factory()->create([
-    'is_admin' => true,
-]);
+        'is_admin' => true,
+    ]);
 
     $user->forceFill([
         'two_factor_secret' => encrypt('test-secret'),

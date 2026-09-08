@@ -10,6 +10,10 @@ use App\Models\ProductVariant;
 
 final class AntarPriceUpdatePlanner
 {
+    private const PRODUCT_EXTERNAL_ID_SOURCE_ROW_OVERRIDES = [
+        'uchywty-poparcia-do-kul-comfort' => 805,
+    ];
+
     public function __construct(
         private readonly AntarSupplierPriceList $supplierPriceList,
     ) {}
@@ -58,6 +62,36 @@ final class AntarPriceUpdatePlanner
             }
 
             $defaultVariants++;
+            $overrideSupplier = $this->supplierRowOverride($product, $priceList['rows']);
+
+            if ($overrideSupplier !== null) {
+                $matched++;
+                $currentCurrency = $defaultVariant->currency?->value;
+                $currentVat = $defaultVariant->vat_rate?->value;
+                $isChanged = $defaultVariant->price_net_amount !== $overrideSupplier['net_minor']
+                    || $defaultVariant->price_gross_amount !== $overrideSupplier['gross_minor']
+                    || $currentVat !== $overrideSupplier['vat_rate']
+                    || $currentCurrency !== Currency::PLN->value;
+
+                $isChanged ? $changed++ : $unchanged++;
+                $plan = $this->basePlan($product, $defaultVariant, $isChanged ? 'change' : 'unchanged', 'AKCESORIA');
+                $plan['supplier'] = [
+                    'source_rows' => [$overrideSupplier['source_row']],
+                    'descriptions' => [$overrideSupplier['description']],
+                    'effective_from' => AntarSupplierPriceList::EFFECTIVE_FROM,
+                    'match_method' => 'explicit_supplier_row_override',
+                ];
+                $plan['proposed'] = [
+                    'price_net_amount' => $overrideSupplier['net_minor'],
+                    'price_gross_amount' => $overrideSupplier['gross_minor'],
+                    'vat_rate' => $overrideSupplier['vat_rate'],
+                    'currency' => Currency::PLN->value,
+                ];
+                $plans[] = $plan;
+
+                continue;
+            }
+
             $normalizedCode = $this->supplierPriceList->normalizeCode($product->external_parent_sku);
 
             if ($normalizedCode === null) {
@@ -152,6 +186,39 @@ final class AntarPriceUpdatePlanner
             'ready_for_price_write' => $ready,
             'products' => $plans,
         ];
+    }
+
+    /** @param list<array<string, mixed>> $rows */
+    private function supplierRowOverride(Product $product, array $rows): ?array
+    {
+        $sourceRow = self::PRODUCT_EXTERNAL_ID_SOURCE_ROW_OVERRIDES[(string) $product->external_id] ?? null;
+
+        if ($sourceRow === null) {
+            return null;
+        }
+
+        foreach ($rows as $row) {
+            if (! is_array($row) || (int) ($row['source_row'] ?? 0) !== $sourceRow) {
+                continue;
+            }
+
+            $code = $this->supplierPriceList->normalizeCode($row['normalized_code'] ?? $row['code'] ?? null);
+            $description = trim((string) ($row['description'] ?? ''));
+
+            if ($code !== 'AKCESORIA' || $description !== 'Rączka do kuli FDI Opti-Comfort') {
+                return null;
+            }
+
+            return [
+                'source_row' => $sourceRow,
+                'description' => $description,
+                'net_minor' => (int) $row['net_minor'],
+                'gross_minor' => (int) $row['gross_minor'],
+                'vat_rate' => (int) $row['vat_rate'],
+            ];
+        }
+
+        return null;
     }
 
     /** @return array<string, mixed> */

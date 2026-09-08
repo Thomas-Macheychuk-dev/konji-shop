@@ -328,7 +328,6 @@ it('filters generated thumbnails and extracts structured attributes and variant 
         ]);
 });
 
-
 it('ignores internal producer medical-info classes and infers variants from tables with empty headers', function (): void {
     $html = <<<'HTML'
         <html><body>

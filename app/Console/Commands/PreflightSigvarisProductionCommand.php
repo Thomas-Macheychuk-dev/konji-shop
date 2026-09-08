@@ -11,7 +11,9 @@ use JsonException;
 final class PreflightSigvarisProductionCommand extends Command
 {
     private const APPROVED_IMPORT_MAP_SHA256 = '7f270865aebbab63c441f82c63d4075451f5c13fdbd49d735f43f00b427635aa';
+
     private const APPROVED_PRODUCT_DATA_SHA256 = '6d35626f3013e229e60b03910dc9e5a1807d006ad87f366862f36e4759c76df4';
+
     private const APPROVED_COMBINATIONS_SHA256 = '25f6bdc91f26cd0eb80e1d9b3146e2958ed28817f78e7747c320836c0f176ba0';
 
     protected $signature = 'sigvaris:production-preflight

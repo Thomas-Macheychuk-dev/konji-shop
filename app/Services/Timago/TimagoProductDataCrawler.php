@@ -271,7 +271,6 @@ final class TimagoProductDataCrawler
     }
 
     /**
-     * @param  mixed  $value
      * @return array<int, string>
      */
     private function stringList(mixed $value): array
@@ -292,7 +291,6 @@ final class TimagoProductDataCrawler
     }
 
     /**
-     * @param  mixed  $value
      * @return array<string, string>
      */
     private function stringMap(mixed $value): array

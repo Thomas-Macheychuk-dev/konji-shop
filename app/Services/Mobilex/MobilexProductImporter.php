@@ -25,6 +25,7 @@ use Throwable;
 final class MobilexProductImporter
 {
     private const MAX_SHORT_ATTRIBUTE_VALUE_LENGTH = 190;
+
     private const MAX_DATABASE_STRING_LENGTH = 190;
 
     /**
@@ -34,8 +35,7 @@ final class MobilexProductImporter
 
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $normalized
@@ -132,7 +132,6 @@ final class MobilexProductImporter
         return $this->appendNameSuffix($name, $producer);
     }
 
-
     private function isMobilexProducer(string $producer): bool
     {
         return Str::of($producer)->lower()->ascii()->replaceMatches('/\s+/', ' ')->trim()->value() === 'mobilex';
@@ -205,7 +204,6 @@ final class MobilexProductImporter
         return in_array($code, ['producent', 'producer', 'manufacturer'], true)
             || in_array($normalizedLabel, ['producent', 'producer', 'manufacturer'], true);
     }
-
 
     private function appendNameSuffix(string $name, string $suffix): string
     {

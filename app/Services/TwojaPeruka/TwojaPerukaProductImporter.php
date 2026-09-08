@@ -30,8 +30,7 @@ final class TwojaPerukaProductImporter
 
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $scraped

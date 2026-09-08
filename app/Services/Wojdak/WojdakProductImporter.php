@@ -25,8 +25,7 @@ final class WojdakProductImporter
 {
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $normalized
@@ -347,7 +346,6 @@ final class WojdakProductImporter
 
         $query->whereNotIn('external_variant_id', $incomingExternalVariantIds)->delete();
     }
-
 
     private function variantStatus(mixed $value): ProductVariantStatus
     {

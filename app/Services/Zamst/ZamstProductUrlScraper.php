@@ -593,6 +593,7 @@ final class ZamstProductUrlScraper
 
             if ($segment === '..') {
                 array_pop($segments);
+
                 continue;
             }
 

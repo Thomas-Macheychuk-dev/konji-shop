@@ -36,7 +36,7 @@ final class InPostParcelLockerSearchController extends Controller
     }
 
     /**
-     * @param array<string, mixed> $locker
+     * @param  array<string, mixed>  $locker
      */
     private function isSelectableParcelLocker(array $locker): bool
     {
@@ -66,7 +66,7 @@ final class InPostParcelLockerSearchController extends Controller
     }
 
     /**
-     * @param array<string, mixed> $locker
+     * @param  array<string, mixed>  $locker
      * @return array{code: string, label: string}
      */
     private function toSearchResult(array $locker): array
@@ -81,7 +81,7 @@ final class InPostParcelLockerSearchController extends Controller
     }
 
     /**
-     * @param array<string, mixed> $locker
+     * @param  array<string, mixed>  $locker
      */
     private function formatAddress(array $locker): string
     {

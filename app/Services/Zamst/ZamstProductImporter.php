@@ -609,6 +609,7 @@ final class ZamstProductImporter
 
             if ($url === null || ! $this->isZamstUrl($url)) {
                 $this->warnings[] = 'Image skipped because its host is not Zamst: '.($url ?? '[missing URL]');
+
                 continue;
             }
 

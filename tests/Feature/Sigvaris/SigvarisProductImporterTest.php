@@ -386,7 +386,6 @@ it('runs Sigvaris import-products read-only by default and pins writes to the ap
     }
 });
 
-
 it('repairs a plain Sigvaris TABELA ROZMIARÓW string to a local linked image and preserves it on importer reruns', function (): void {
     Storage::fake('public');
     $mapped = sigvarisImporterMappedProduct();

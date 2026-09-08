@@ -312,7 +312,6 @@ final class AntarProductUrlScraper
     }
 
     /**
-     * @param  mixed  $value
      * @return array<string, string>
      */
     private function stringMap(mixed $value): array
@@ -539,7 +538,6 @@ final class AntarProductUrlScraper
     {
         return $this->productSlugFromUrl($url);
     }
-
 
     private function fetch(string $url): Response
     {
