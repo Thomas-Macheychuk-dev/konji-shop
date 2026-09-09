@@ -8,6 +8,8 @@ use App\Enums\VatRate;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Services\Antar\AntarPriceReconciliation;
+use App\Services\Antar\AntarProductionPreflight;
+use App\Services\Antar\AntarSelectivePricedImportPlan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 
@@ -212,6 +214,177 @@ it('fails closed when saved reconciliation pricing is tampered with', function (
         ->assertFailed();
 
     expect(Product::query()->count())->toBe(0);
+});
+
+it('allows only explicitly reviewed production baseline rows and a reviewed legacy identity collision', function (): void {
+    Storage::fake('local');
+
+    writeAntarSelectivePricedFixture(antarSelectivePricedProducts());
+
+    $legacy = Product::query()->create([
+        'name' => 'Legacy AT01001',
+        'slug' => 'legacy-at01001',
+        'status' => ProductStatus::DRAFT,
+        'external_source' => 'antar',
+        'external_id' => 'legacy-at01001',
+        'external_parent_sku' => 'AT01001',
+    ]);
+    ProductVariant::query()->create([
+        'product_id' => $legacy->id,
+        'sku' => 'AT01001',
+        'status' => ProductVariantStatus::DRAFT,
+        'price_net_amount' => null,
+        'price_gross_amount' => null,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_8,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+        'external_variant_id' => 'antar-legacy-at01001-default',
+    ]);
+
+    $outside = Product::query()->create([
+        'name' => 'Reviewed outside cohort',
+        'slug' => 'reviewed-outside-cohort',
+        'status' => ProductStatus::DRAFT,
+        'external_source' => 'antar',
+        'external_id' => 'reviewed-outside-cohort',
+    ]);
+    ProductVariant::query()->create([
+        'product_id' => $outside->id,
+        'sku' => 'OUTSIDE-1',
+        'status' => ProductVariantStatus::DRAFT,
+        'price_net_amount' => null,
+        'price_gross_amount' => null,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_8,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+        'external_variant_id' => 'antar-reviewed-outside-default',
+    ]);
+
+    $sourceRaw = Storage::disk('local')->get('scrapers/antar/product-data.json');
+    $reconciliationRaw = Storage::disk('local')->get('scrapers/antar/price-reconciliation-2026-09-01.json');
+    $source = json_decode($sourceRaw, true, 512, JSON_THROW_ON_ERROR);
+    $reconciliation = json_decode($reconciliationRaw, true, 512, JSON_THROW_ON_ERROR);
+
+    $plan = app(AntarSelectivePricedImportPlan::class)->build(
+        $source,
+        hash('sha256', $sourceRaw),
+        $reconciliation,
+        hash('sha256', $reconciliationRaw),
+        [
+            'legacy_external_id_aliases' => [
+                'at01001' => 'legacy-at01001',
+            ],
+            'allowed_existing_outside_eligible_external_ids' => [
+                'legacy-at01001',
+                'reviewed-outside-cohort',
+            ],
+        ],
+    );
+
+    $at01001 = collect($plan['eligible_import_rows'])
+        ->firstWhere('external_id', 'at01001');
+
+    expect($plan['hard_errors'])->toBe([])
+        ->and($plan['ready_for_local_draft_import'])->toBeTrue()
+        ->and($plan['summary']['existing_antar_products'])->toBe(2)
+        ->and($plan['summary']['existing_antar_products_outside_eligible_cohort'])->toBe(2)
+        ->and($at01001['storage_sku'] ?? null)->toBe('AT01001');
+});
+
+it('builds a fail-closed production topology report without writes', function (): void {
+    Storage::fake('local');
+
+    writeAntarSelectivePricedFixture(antarSelectivePricedProducts());
+
+    $make = function (string $externalId, ?string $sku = null): Product {
+        $product = Product::query()->create([
+            'name' => $externalId,
+            'slug' => $externalId,
+            'status' => ProductStatus::DRAFT,
+            'external_source' => 'antar',
+            'external_id' => $externalId,
+            'external_parent_sku' => $sku,
+        ]);
+        ProductVariant::query()->create([
+            'product_id' => $product->id,
+            'sku' => $sku,
+            'status' => ProductVariantStatus::DRAFT,
+            'price_net_amount' => null,
+            'price_gross_amount' => null,
+            'currency' => Currency::PLN,
+            'vat_rate' => VatRate::VAT_8,
+            'stock_status' => StockStatus::IN_STOCK,
+            'is_default' => true,
+            'external_variant_id' => 'antar-'.$externalId.'-default',
+        ]);
+
+        return $product;
+    };
+
+    $legacy = $make('legacy-at01001', 'AT01001');
+    $make('laweczka-nawannowa-snw-500', 'SNW500');
+    $make('torba-na-materac-rehabilitacyjny-trojdzielny-at03107', 'TORBA-AT03107');
+    $make('lozko-elektryczne-at52201', 'AT52201');
+    $make('chodzik-stalowy-trzykolowy-at51004', 'AT51004');
+    $obsolete = $make('obsolete-antar-row', 'OLD-1');
+
+    $sourceRaw = Storage::disk('local')->get('scrapers/antar/product-data.json');
+    $reconciliationRaw = Storage::disk('local')->get('scrapers/antar/price-reconciliation-2026-09-01.json');
+    $source = json_decode($sourceRaw, true, 512, JSON_THROW_ON_ERROR);
+    $reconciliation = json_decode($reconciliationRaw, true, 512, JSON_THROW_ON_ERROR);
+
+    $report = app(AntarProductionPreflight::class)->inspect(
+        $source,
+        hash('sha256', $sourceRaw),
+        $reconciliation,
+        hash('sha256', $reconciliationRaw),
+        [
+            'source_products' => 5,
+            'approved_products' => 3,
+            'production_products' => 6,
+            'production_variants' => 6,
+            'production_live_products' => 6,
+            'production_live_variants' => 6,
+            'production_drafts' => 6,
+            'production_variant_drafts' => 6,
+            'production_unpriced_variants' => 6,
+            'approved_exact_existing' => 2,
+            'approved_missing_current_ids' => 1,
+            'current_source_missing_from_production' => 1,
+            'production_not_in_current_source' => 2,
+            'current_non_approved' => 2,
+            'current_non_approved_existing' => 2,
+            'existing_outside_approved' => 4,
+            'cross_source_base_sku_collisions' => 0,
+            'duplicate_source_sku_groups' => 0,
+            'namespaced_storage_skus' => 0,
+            'approved_missing_external_ids' => ['at01001'],
+            'current_missing_external_ids' => ['at01001'],
+            'production_not_current_external_ids' => ['legacy-at01001', 'obsolete-antar-row'],
+            'create_external_ids' => [],
+            'legacy_aliases' => [
+                'at01001' => [
+                    'external_id' => 'legacy-at01001',
+                    'product_id' => $legacy->id,
+                    'sku' => 'AT01001',
+                ],
+            ],
+            'obsolete_external_ids' => ['obsolete-antar-row'],
+            'obsolete_rows' => [
+                'obsolete-antar-row' => ['product_id' => $obsolete->id],
+            ],
+            'rescue_files' => [],
+            'minimum_free_mib' => 0,
+        ],
+    );
+
+    expect($report['errors'])->toBe([])
+        ->and($report['ready_for_production_reconciliation'])->toBeTrue()
+        ->and($report['database_writes'])->toBeFalse()
+        ->and($report['filesystem_writes'])->toBeFalse()
+        ->and($report['network_requests'])->toBeFalse();
 });
 
 /**

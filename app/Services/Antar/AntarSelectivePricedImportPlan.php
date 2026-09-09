@@ -26,6 +26,7 @@ final class AntarSelectivePricedImportPlan
         string $sourceSha256,
         array $savedReconciliation,
         string $savedReconciliationSha256,
+        array $databasePolicy = [],
     ): array {
         $current = $this->reconciliation->build($source, $sourceSha256);
         $errors = [];
@@ -112,7 +113,18 @@ final class AntarSelectivePricedImportPlan
             ];
         }
 
-        $storageResolution = $this->resolveStorageSkus($importRows, $baseStorageSkuCounts);
+        $legacyExternalIdAliases = $this->normaliseLegacyExternalIdAliases(
+            $databasePolicy['legacy_external_id_aliases'] ?? [],
+        );
+        $allowedExistingOutsideEligibleExternalIds = $this->normaliseExternalIdList(
+            $databasePolicy['allowed_existing_outside_eligible_external_ids'] ?? [],
+        );
+
+        $storageResolution = $this->resolveStorageSkus(
+            $importRows,
+            $baseStorageSkuCounts,
+            $legacyExternalIdAliases,
+        );
         $importRows = $storageResolution['rows'];
 
         foreach ($storageResolution['hard_errors'] as $error) {
@@ -120,7 +132,10 @@ final class AntarSelectivePricedImportPlan
         }
 
         ksort($vatBreakdown);
-        $databaseAudit = $this->databaseAudit(array_keys($eligibleExternalIds));
+        $databaseAudit = $this->databaseAudit(
+            array_keys($eligibleExternalIds),
+            $allowedExistingOutsideEligibleExternalIds,
+        );
 
         foreach ($databaseAudit['hard_errors'] as $error) {
             $errors[] = $error;
@@ -258,9 +273,10 @@ final class AntarSelectivePricedImportPlan
 
     /**
      * @param  list<string>  $eligibleExternalIds
+     * @param  list<string>  $allowedExistingOutsideEligibleExternalIds
      * @return array{existing_antar_products: int, existing_antar_products_outside_eligible_cohort: int, hard_errors: list<string>}
      */
-    private function databaseAudit(array $eligibleExternalIds): array
+    private function databaseAudit(array $eligibleExternalIds, array $allowedExistingOutsideEligibleExternalIds = []): array
     {
         $existingAntar = Product::withTrashed()
             ->where('external_source', 'antar')
@@ -270,13 +286,20 @@ final class AntarSelectivePricedImportPlan
         $outside = $existingAntar
             ->filter(fn (Product $product): bool => ! isset($eligibleExternalIdSet[(string) $product->external_id]));
 
+        $allowedOutsideSet = array_fill_keys($allowedExistingOutsideEligibleExternalIds, true);
         $errors = [];
 
         foreach ($outside as $product) {
+            $externalId = (string) $product->external_id;
+
+            if (isset($allowedOutsideSet[$externalId])) {
+                continue;
+            }
+
             $errors[] = sprintf(
                 'Existing Antar product ID %d (%s) is outside the frozen eligible priced cohort.',
                 $product->id,
-                (string) $product->external_id,
+                $externalId,
             );
         }
 
@@ -290,9 +313,10 @@ final class AntarSelectivePricedImportPlan
     /**
      * @param  list<array<string, mixed>>  $rows
      * @param  array<string, int>  $baseCounts
+     * @param  array<string, string>  $legacyExternalIdAliases
      * @return array{rows: list<array<string, mixed>>, cross_source_base_sku_collisions: int, duplicate_source_sku_groups_resolved: int, namespaced_storage_skus: int, hard_errors: list<string>}
      */
-    private function resolveStorageSkus(array $rows, array $baseCounts): array
+    private function resolveStorageSkus(array $rows, array $baseCounts, array $legacyExternalIdAliases = []): array
     {
         $baseSkus = array_values(array_unique(array_map(static fn (array $row): string => (string) $row['base_storage_sku'], $rows)));
         $crossSource = DB::table('product_variants')
@@ -348,13 +372,21 @@ final class AntarSelectivePricedImportPlan
 
         $allowedBySku = [];
         foreach ($resolved as $row) {
-            $allowedBySku[(string) $row['storage_sku']] = (string) $row['external_id'];
+            $externalId = (string) $row['external_id'];
+            $allowedExternalIds = [$externalId];
+            $legacyExternalId = $legacyExternalIdAliases[$externalId] ?? null;
+
+            if (is_string($legacyExternalId) && $legacyExternalId !== '') {
+                $allowedExternalIds[] = $legacyExternalId;
+            }
+
+            $allowedBySku[(string) $row['storage_sku']] = array_values(array_unique($allowedExternalIds));
         }
 
         foreach ($existingFinals as $variant) {
             $sku = (string) $variant->sku;
-            $allowedExternalId = $allowedBySku[$sku] ?? null;
-            if ((string) ($variant->external_source ?? '') === 'antar' && $allowedExternalId !== null && (string) $variant->external_id === $allowedExternalId) {
+            $allowedExternalIds = $allowedBySku[$sku] ?? [];
+            if ((string) ($variant->external_source ?? '') === 'antar' && in_array((string) $variant->external_id, $allowedExternalIds, true)) {
                 continue;
             }
             $errors[] = sprintf('Resolved Antar storage SKU %s still collides with existing product source %s external ID %s.', $sku, (string) ($variant->external_source ?? 'manual'), (string) ($variant->external_id ?? 'unknown'));
@@ -367,6 +399,47 @@ final class AntarSelectivePricedImportPlan
             'namespaced_storage_skus' => $namespaced,
             'hard_errors' => array_values(array_unique($errors)),
         ];
+    }
+
+    /** @return list<string> */
+    private function normaliseExternalIdList(mixed $value): array
+    {
+        if (! is_array($value)) {
+            return [];
+        }
+
+        $resolved = [];
+
+        foreach ($value as $externalId) {
+            $externalId = $this->stringOrNull($externalId);
+
+            if ($externalId !== null) {
+                $resolved[$externalId] = true;
+            }
+        }
+
+        return array_keys($resolved);
+    }
+
+    /** @return array<string, string> */
+    private function normaliseLegacyExternalIdAliases(mixed $value): array
+    {
+        if (! is_array($value)) {
+            return [];
+        }
+
+        $resolved = [];
+
+        foreach ($value as $currentExternalId => $legacyExternalId) {
+            $currentExternalId = $this->stringOrNull($currentExternalId);
+            $legacyExternalId = $this->stringOrNull($legacyExternalId);
+
+            if ($currentExternalId !== null && $legacyExternalId !== null && $currentExternalId !== $legacyExternalId) {
+                $resolved[$currentExternalId] = $legacyExternalId;
+            }
+        }
+
+        return $resolved;
     }
 
     /** @param array<string, mixed> $product */
