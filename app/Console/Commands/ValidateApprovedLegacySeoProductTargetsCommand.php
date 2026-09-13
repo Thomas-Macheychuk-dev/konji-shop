@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Services\Security\HumanVerificationCookie;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Encryption\Encrypter;
+use Illuminate\Cookie\CookieValuePrefix;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Request as StorefrontRequest;
 use Illuminate\Support\Facades\Http;
 use JsonException;
 use RuntimeException;
@@ -44,11 +49,12 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
             /** @var array<string, mixed> $manifest */
             $manifest = json_decode($rawManifest, true, flags: JSON_THROW_ON_ERROR);
             $targets = $this->approvedTargets($manifest);
+            $humanVerificationCookie = $this->humanVerificationCookieForBaseUrl($baseUrl);
 
             $records = [];
 
             foreach ($targets as $target) {
-                $records[] = $this->validateTarget($baseUrl, $target, $timeout);
+                $records[] = $this->validateTarget($baseUrl, $target, $timeout, $humanVerificationCookie);
             }
 
             $summary = $this->summary($targets, $records);
@@ -62,13 +68,20 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
                 'manifest_sha256' => hash('sha256', $rawManifest),
                 'base_url' => $baseUrl,
                 'redirects_enabled_by_this_command' => false,
+                'human_verification_cookie_used' => $humanVerificationCookie !== null,
+                'human_verification_cookie_name' => $humanVerificationCookie['name'] ?? null,
                 'summary' => $summary,
                 'result' => $result,
                 'records' => $records,
             ];
 
             $this->writeReport($outputRelative, $report);
-            $this->renderSummary($summary, $result, $outputRelative);
+            $this->renderSummary(
+                $summary,
+                $result,
+                $outputRelative,
+                $humanVerificationCookie !== null,
+            );
 
             return $result === 'PASS' ? self::SUCCESS : self::FAILURE;
         } catch (JsonException|RuntimeException $exception) {
@@ -177,10 +190,15 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
 
     /**
      * @param  array{target_product_id: string, target_product_name: string, target_path: string}  $target
+     * @param  array{name: string, value: string, domain: string}|null  $humanVerificationCookie
      * @return array<string, mixed>
      */
-    private function validateTarget(string $baseUrl, array $target, int $timeout): array
-    {
+    private function validateTarget(
+        string $baseUrl,
+        array $target,
+        int $timeout,
+        ?array $humanVerificationCookie,
+    ): array {
         $url = $baseUrl.$target['target_path'];
         $record = [
             ...$target,
@@ -196,12 +214,21 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         ];
 
         try {
-            $response = Http::withHeaders([
+            $request = Http::withHeaders([
                 'Accept' => 'text/html,application/xhtml+xml',
                 'User-Agent' => 'KonjiShop-SEO-Target-Validator/1.0',
             ])->withOptions([
                 'allow_redirects' => false,
-            ])->timeout($timeout)->get($url);
+            ]);
+
+            if ($humanVerificationCookie !== null) {
+                $request = $request->withCookies(
+                    [$humanVerificationCookie['name'] => $humanVerificationCookie['value']],
+                    $humanVerificationCookie['domain'],
+                );
+            }
+
+            $response = $request->timeout($timeout)->get($url);
         } catch (ConnectionException $exception) {
             $record['failures'][] = 'request_failed: '.$exception->getMessage();
 
@@ -481,8 +508,12 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
     }
 
     /** @param array<string, int> $summary */
-    private function renderSummary(array $summary, string $result, string $outputRelative): void
-    {
+    private function renderSummary(
+        array $summary,
+        string $result,
+        string $outputRelative,
+        bool $humanVerificationCookieUsed,
+    ): void {
         $this->newLine();
         $this->line('Approved target products:       '.$summary['approved_target_products']);
         $this->newLine();
@@ -501,8 +532,58 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         $this->line('Duplicate/conflicting targets:    '.$summary['duplicate_or_conflicting_targets']);
         $this->newLine();
         $this->line('Evidence: '.$outputRelative);
+        $this->line('Human verification cookie used: '.($humanVerificationCookieUsed ? 'YES' : 'NO'));
         $this->line('Redirects enabled by this command: NO');
         $this->line('RESULT: '.$result);
+    }
+
+    /**
+     * @return array{name: string, value: string, domain: string}|null
+     */
+    private function humanVerificationCookieForBaseUrl(string $baseUrl): ?array
+    {
+        if (! (bool) config('traffic_protection.enabled', false)) {
+            return null;
+        }
+
+        $baseHost = parse_url($baseUrl, PHP_URL_HOST);
+        $appUrl = trim((string) config('app.url', ''));
+        $appHost = parse_url($appUrl, PHP_URL_HOST);
+
+        if (! is_string($baseHost) || $baseHost === '' || ! is_string($appHost) || $appHost === '') {
+            throw new RuntimeException(
+                'Traffic protection is enabled, but the configured APP_URL does not contain a valid host.'
+            );
+        }
+
+        if (! hash_equals(strtolower($appHost), strtolower($baseHost))) {
+            throw new RuntimeException(sprintf(
+                'Traffic protection is enabled; --base-url host (%s) must match configured APP_URL host (%s) before a signed human-verification cookie can be sent.',
+                $baseHost,
+                $appHost,
+            ));
+        }
+
+        $storefrontRequest = StorefrontRequest::create($baseUrl.'/', 'GET');
+        $cookie = app(HumanVerificationCookie::class)->make($storefrontRequest);
+        $cookieName = $cookie->getName();
+        $cookieValue = $cookie->getValue();
+
+        if ($cookieName === '' || ! is_string($cookieValue) || $cookieValue === '') {
+            throw new RuntimeException('Unable to mint the signed human-verification cookie for target validation.');
+        }
+
+        $encrypter = app(Encrypter::class);
+        $wireCookieValue = $encrypter->encrypt(
+            CookieValuePrefix::create($cookieName, $encrypter->getKey()).$cookieValue,
+            EncryptCookies::serialized($cookieName),
+        );
+
+        return [
+            'name' => $cookieName,
+            'value' => $wireCookieValue,
+            'domain' => strtolower($baseHost),
+        ];
     }
 
     private function validatedBaseUrl(): string

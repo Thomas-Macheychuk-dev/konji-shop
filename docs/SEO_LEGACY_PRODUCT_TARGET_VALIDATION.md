@@ -21,6 +21,10 @@ php artisan seo:validate-approved-product-targets \
 
 The base URL is deliberately mandatory. The validator never silently falls back to `APP_URL`, which avoids accidentally validating the wrong host during domain cutover work.
 
+If storefront human-traffic protection is enabled, the command reuses the application's existing signed `HumanVerificationCookie` mechanism for its outbound validation requests and applies Laravel's normal `EncryptCookies` encoding before placing the cookie on the wire. This allows the trusted in-container validator to reach the real storefront page without disabling Turnstile/human protection. The signed cookie is only minted and sent when the `--base-url` host exactly matches the configured `APP_URL` host; otherwise the command fails before making any network request. The cookie value is never written to evidence.
+
+The evidence records only whether the verification cookie was used and its configured cookie name.
+
 By default, JSON evidence is written to:
 
 ```text
@@ -63,6 +67,14 @@ RESULT: PASS
 ```
 
 Any non-zero failure count makes the command exit non-zero.
+
+With traffic protection enabled on the validated storefront, a successful run also prints:
+
+```text
+Human verification cookie used: YES
+```
+
+This is not a public bypass: it is an application-signed cookie generated inside the trusted runtime, encrypted exactly as Laravel's web cookie middleware expects, scoped to the configured storefront host, and equivalent to the existing cookie issued after successful human verification.
 
 ## Safety rule
 

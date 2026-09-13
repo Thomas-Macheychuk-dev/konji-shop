@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Contracts\Encryption\Encrypter;
+use Illuminate\Cookie\CookieValuePrefix;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
@@ -62,6 +65,39 @@ function seoTargetValidationHtml(string $name, string $canonical, ?string $robot
         .'</head><body><h1>'.htmlspecialchars($name, ENT_QUOTES).'</h1></body></html>';
 }
 
+function seoTargetValidationDecryptedCookieValue(Request $request, string $name): ?string
+{
+    $cookieHeader = $request->toPsrRequest()->getHeaderLine('Cookie');
+
+    if (preg_match('/(?:^|;\\s*)'.preg_quote($name, '/').'=(?<value>[^;]+)/', $cookieHeader, $matches) !== 1) {
+        return null;
+    }
+
+    $wireValue = rawurldecode(trim((string) $matches['value'], '"'));
+    $encrypter = app(Encrypter::class);
+
+    try {
+        $decrypted = $encrypter->decrypt(
+            $wireValue,
+            EncryptCookies::serialized($name),
+        );
+    } catch (Throwable) {
+        return null;
+    }
+
+    if (! is_string($decrypted)) {
+        return null;
+    }
+
+    return CookieValuePrefix::validate($name, $decrypted, $encrypter->getAllKeys());
+}
+
+beforeEach(function (): void {
+    config([
+        'traffic_protection.enabled' => false,
+    ]);
+});
+
 afterEach(function (): void {
     @unlink(base_path('storage/framework/testing/seo-target-validation-manifest.json'));
     @unlink(base_path('storage/framework/testing/seo-target-validation-report.json'));
@@ -103,6 +139,7 @@ it('passes only when every approved final target is a direct indexable self-cano
         ->and($output)->toContain('Canonical correct:              2')
         ->and($output)->toContain('Indexable:                      2')
         ->and($output)->toContain('Product identity correct:       2')
+        ->and($output)->toContain('Human verification cookie used: NO')
         ->and($output)->toContain('Redirects enabled by this command: NO')
         ->and($output)->toContain('RESULT: PASS');
 
@@ -182,6 +219,98 @@ it('fails 200 responses that are noindex, canonical-mismatched, or the wrong pro
         ->and($output)->toContain('Noindex targets:                 1')
         ->and($output)->toContain('Identity mismatches:              1')
         ->and($output)->toContain('RESULT: FAIL');
+});
+
+it('uses the existing signed human-verification cookie when traffic protection is enabled for the configured storefront host', function (): void {
+    config([
+        'app.key' => 'base64:'.base64_encode(str_repeat('k', 32)),
+        'app.url' => 'https://staging.example.test',
+        'session.domain' => null,
+        'session.secure' => true,
+        'traffic_protection.enabled' => true,
+        'traffic_protection.human_cookie.name' => 'konji_human_verified',
+        'traffic_protection.human_cookie.lifetime_minutes' => 60,
+    ]);
+
+    $manifest = writeSeoTargetValidationManifest(seoTargetValidationManifest([
+        seoTargetValidationRecord('10', 'Produkt Alfa', '/products/produkt-alfa', '/legacy-alfa-id-10'),
+    ]));
+
+    Http::fake(function (Request $request) {
+        $cookieValue = seoTargetValidationDecryptedCookieValue($request, 'konji_human_verified');
+
+        if (! is_string($cookieValue) || ! str_starts_with($cookieValue, 'v1.')) {
+            return Http::response('', 302, [
+                'Location' => 'https://staging.example.test/human-check?return_to=%2Fproducts%2Fprodukt-alfa',
+            ]);
+        }
+
+        return Http::response(
+            seoTargetValidationHtml(
+                'Produkt Alfa',
+                'https://staging.example.test/products/produkt-alfa',
+            ),
+            200,
+            ['Content-Type' => 'text/html'],
+        );
+    });
+
+    $exitCode = Artisan::call('seo:validate-approved-product-targets', [
+        '--manifest' => $manifest,
+        '--base-url' => 'https://staging.example.test',
+        '--output' => 'storage/framework/testing/seo-target-validation-report.json',
+    ]);
+    $output = Artisan::output();
+
+    expect($exitCode)->toBe(0)
+        ->and($output)->toContain('HTTP 200:                       1')
+        ->and($output)->toContain('Human verification cookie used: YES')
+        ->and($output)->toContain('RESULT: PASS');
+
+    $report = json_decode(
+        (string) file_get_contents(base_path('storage/framework/testing/seo-target-validation-report.json')),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect($report['human_verification_cookie_used'])->toBeTrue()
+        ->and($report['human_verification_cookie_name'])->toBe('konji_human_verified');
+
+    Http::assertSent(function (Request $request): bool {
+        $cookieValue = seoTargetValidationDecryptedCookieValue($request, 'konji_human_verified');
+
+        return $request->url() === 'https://staging.example.test/products/produkt-alfa'
+            && is_string($cookieValue)
+            && str_starts_with($cookieValue, 'v1.');
+    });
+});
+
+it('refuses to send a signed human-verification cookie to a host different from configured APP_URL', function (): void {
+    config([
+        'app.key' => 'base64:'.base64_encode(str_repeat('k', 32)),
+        'app.url' => 'https://trusted.example.test',
+        'traffic_protection.enabled' => true,
+    ]);
+
+    Http::fake();
+
+    $manifest = writeSeoTargetValidationManifest(seoTargetValidationManifest([
+        seoTargetValidationRecord('10', 'Produkt Alfa', '/products/produkt-alfa', '/legacy-alfa-id-10'),
+    ]));
+
+    $exitCode = Artisan::call('seo:validate-approved-product-targets', [
+        '--manifest' => $manifest,
+        '--base-url' => 'https://staging.example.test',
+        '--output' => 'storage/framework/testing/seo-target-validation-report.json',
+    ]);
+    $output = Artisan::output();
+
+    expect($exitCode)->toBe(1)
+        ->and($output)->toContain(
+            'Traffic protection is enabled; --base-url host (staging.example.test) must match configured APP_URL host (trusted.example.test) before a signed human-verification cookie can be sent.'
+        );
+
+    Http::assertNothingSent();
 });
 
 it('rejects duplicate target paths before making network requests', function (): void {
