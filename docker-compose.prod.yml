@@ -54,11 +54,13 @@ services:
       - "${HTTPS_PORT:-443}:443"
     networks:
       - konji
+    environment:
+      LEGACY_SEO_REDIRECTS_ENABLED: "${LEGACY_SEO_REDIRECTS_ENABLED:-false}"
     volumes:
       - app_storage:/var/www/html/storage
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/www/certbot:/var/www/certbot:ro
-    command: sh -c "ln -sfn /var/www/html/storage/app/public /var/www/html/public/storage && nginx -g 'daemon off;'"
+    command: sh -c "ln -sfn /var/www/html/storage/app/public /var/www/html/public/storage && exec /usr/local/bin/konji-nginx-start"
 
   queue:
     logging: *default-logging

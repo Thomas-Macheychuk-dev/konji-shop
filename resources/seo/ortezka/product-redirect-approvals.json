@@ -1,0 +1,495 @@
+{
+  "schema_version": 1,
+  "purpose": "Human-approved first product redirect cohort. Evidence only; no runtime redirect behavior is installed by SEO-02D.",
+  "approved_product_count": 23,
+  "approved_source_path_count": 36,
+  "redirects_installed": 0,
+  "review_source": {
+    "product_approval_review_json_sha256": "8074eb2e8249af7f081ef2844d3d4558d0ec29ad08ed951e27f473976ad2c378",
+    "product_approval_review_csv_sha256": "580aaeaf1bf24092481de7fd3c48f3d7e041fc4476caeb724e6f0ba1132c2b8d"
+  },
+  "approval_policy": [
+    "SEO-02B classification is exact_identifier_and_name.",
+    "Legacy identifier equals the matched active target variant SKU.",
+    "Legacy identifier equals the target external parent SKU.",
+    "Variant, parent-SKU, and exact-name evidence point to the same target product.",
+    "Target product is active and storefront reachable.",
+    "Matched target variant is active.",
+    "All known query-free legacy source paths for the approved product point directly to the final target path."
+  ],
+  "records": [
+    {
+      "legacy_product_id": "3137",
+      "legacy_h1": "Taboret toaletowy pod prysznic AT01004",
+      "legacy_index": "AT01004",
+      "target_product_id": "11350",
+      "target_product_name": "Taboret toaletowy pod prysznic AT01004",
+      "target_path": "/products/taboret-toaletowy-pod-prysznic-at01004",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT01004",
+      "matched_variant_id": "28571",
+      "matched_variant_sku": "AT01004",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/taboret-toaletowy-pod-prysznic-at01004-id-3137"
+      ]
+    },
+    {
+      "legacy_product_id": "3142",
+      "legacy_h1": "Poduszka lędźwiowa - AT03003",
+      "legacy_index": "AT03003",
+      "target_product_id": "11229",
+      "target_product_name": "Poduszka lędźwiowa AT03003",
+      "target_path": "/products/poduszka-ledzwiowa-at03003",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT03003",
+      "matched_variant_id": "28450",
+      "matched_variant_sku": "AT03003",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/poduszka-ledzwiowa-at03003-id-3142"
+      ]
+    },
+    {
+      "legacy_product_id": "3143",
+      "legacy_h1": "Poduszka lędźwiowa - AT03004",
+      "legacy_index": "AT03004",
+      "target_product_id": "11230",
+      "target_product_name": "Poduszka lędźwiowa AT03004",
+      "target_path": "/products/poduszka-ledzwiowa-at03004",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT03004",
+      "matched_variant_id": "28451",
+      "matched_variant_sku": "AT03004",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/poduszka-ledzwiowa-at03004-id-3143"
+      ]
+    },
+    {
+      "legacy_product_id": "3148",
+      "legacy_h1": "Poduszka do siedzenia AT03011",
+      "legacy_index": "AT03011",
+      "target_product_id": "11222",
+      "target_product_name": "Poduszka do siedzenia AT03011",
+      "target_path": "/products/poduszka-do-siedzenia-at03011",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT03011",
+      "matched_variant_id": "28443",
+      "matched_variant_sku": "AT03011",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/poduszka-do-siedzenia-at03011-8268-id-3148",
+        "/poduszka-do-siedzenia-at03011-id-3148"
+      ]
+    },
+    {
+      "legacy_product_id": "3149",
+      "legacy_h1": "Poduszka do siedzenia AT03012",
+      "legacy_index": "AT03012",
+      "target_product_id": "11223",
+      "target_product_name": "Poduszka do siedzenia AT03012",
+      "target_path": "/products/poduszka-do-siedzenia-at03012",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT03012",
+      "matched_variant_id": "28444",
+      "matched_variant_sku": "AT03012",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/poduszka-do-siedzenia-at03012-id-3149"
+      ]
+    },
+    {
+      "legacy_product_id": "3150",
+      "legacy_h1": "Pas brzuszny - stomijny AT04603",
+      "legacy_index": "AT04603",
+      "target_product_id": "11169",
+      "target_product_name": "Pas brzuszny – stomijny AT04603",
+      "target_path": "/products/pas-brzuszny-stomijny-at04603",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT04603",
+      "matched_variant_id": "28390",
+      "matched_variant_sku": "AT04603",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/pas-brzuszny---stomijny-at04603-8270-id-3150",
+        "/pas-brzuszny---stomijny-at04603-id-3150"
+      ]
+    },
+    {
+      "legacy_product_id": "3151",
+      "legacy_h1": "Pas brzuszny z pelotą AT04604",
+      "legacy_index": "AT04604",
+      "target_product_id": "11170",
+      "target_product_name": "Pas brzuszny z pelotą AT04604",
+      "target_path": "/products/pas-brzuszny-z-pelota-at04604",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT04604",
+      "matched_variant_id": "28391",
+      "matched_variant_sku": "AT04604",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/pas-brzuszny-z-pelota-at04604-8277-id-3151",
+        "/pas-brzuszny-z-pelota-at04604-id-3151"
+      ]
+    },
+    {
+      "legacy_product_id": "3152",
+      "legacy_h1": "Pas brzuszny AT04605",
+      "legacy_index": "AT04605",
+      "target_product_id": "11166",
+      "target_product_name": "Pas brzuszny AT04605",
+      "target_path": "/products/pas-brzuszny-at04605",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT04605",
+      "matched_variant_id": "28387",
+      "matched_variant_sku": "AT04605",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/pas-brzuszny-at04605-8285-id-3152",
+        "/pas-brzuszny-at04605-id-3152"
+      ]
+    },
+    {
+      "legacy_product_id": "3158",
+      "legacy_h1": "Orteza kręgosłupa AT04501",
+      "legacy_index": "AT04501",
+      "target_product_id": "11062",
+      "target_product_name": "Orteza kręgosłupa AT04501",
+      "target_path": "/products/orteza-kregoslupa-at04501",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT04501",
+      "matched_variant_id": "28283",
+      "matched_variant_sku": "AT04501",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/orteza-kregoslupa-at04501-8308-id-3158",
+        "/orteza-kregoslupa-at04501-id-3158"
+      ]
+    },
+    {
+      "legacy_product_id": "3160",
+      "legacy_h1": "Pas lędźwiowo-krzyżowy AT04503",
+      "legacy_index": "AT04503",
+      "target_product_id": "11172",
+      "target_product_name": "Pas lędźwiowo-krzyżowy AT04503",
+      "target_path": "/products/pas-ledzwiowo-krzyzowy-at04503",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT04503",
+      "matched_variant_id": "28393",
+      "matched_variant_sku": "AT04503",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/pas-ledzwiowo-krzyzowy-at04503-8318-id-3160",
+        "/pas-ledzwiowo-krzyzowy-at04503-id-3160"
+      ]
+    },
+    {
+      "legacy_product_id": "3190",
+      "legacy_h1": "Pas ciążowy - 2062",
+      "legacy_index": "2062",
+      "target_product_id": "11171",
+      "target_product_name": "Pas ciążowy 2062",
+      "target_path": "/products/pas-ciazowy-2062",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "2062",
+      "matched_variant_id": "28392",
+      "matched_variant_sku": "2062",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/pas-ciazowy-2062-8406-id-3190",
+        "/pas-ciazowy-2062-id-3190"
+      ]
+    },
+    {
+      "legacy_product_id": "3193",
+      "legacy_h1": "Pas brzuszny - 2162",
+      "legacy_index": "2162",
+      "target_product_id": "11162",
+      "target_product_name": "Pas brzuszny 2162",
+      "target_path": "/products/pas-brzuszny-2162",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "2162",
+      "matched_variant_id": "28383",
+      "matched_variant_sku": "2162",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/pas-brzuszny---2162-8421-id-3193",
+        "/pas-brzuszny---2162-id-3193"
+      ]
+    },
+    {
+      "legacy_product_id": "3199",
+      "legacy_h1": "Pas brzuszny - 2260",
+      "legacy_index": "2260",
+      "target_product_id": "11163",
+      "target_product_name": "Pas brzuszny 2260",
+      "target_path": "/products/pas-brzuszny-2260",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "2260",
+      "matched_variant_id": "28384",
+      "matched_variant_sku": "2260",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/pas-brzuszny---2260-8453-id-3199",
+        "/pas-brzuszny---2260-id-3199"
+      ]
+    },
+    {
+      "legacy_product_id": "3223",
+      "legacy_h1": "Orteza nadgarstka - 1082",
+      "legacy_index": "1082",
+      "target_product_id": "11091",
+      "target_product_name": "Orteza nadgarstka 1082",
+      "target_path": "/products/orteza-nadgarstka-1082",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "1082",
+      "matched_variant_id": "28312",
+      "matched_variant_sku": "1082",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/orteza-nadgarstka---1082-8544-id-3223",
+        "/orteza-nadgarstka---1082-id-3223"
+      ]
+    },
+    {
+      "legacy_product_id": "3250",
+      "legacy_h1": "Kołnierz ortopedyczny Professional 4098",
+      "legacy_index": "4098",
+      "target_product_id": "10963",
+      "target_product_name": "Kołnierz ortopedyczny Professional 4098",
+      "target_path": "/products/kolnierz-ortopedyczny-professional-4098",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "4098",
+      "matched_variant_id": "28184",
+      "matched_variant_sku": "4098",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/kolnierz-ortopedyczny-professional-4098-id-3250"
+      ]
+    },
+    {
+      "legacy_product_id": "3252",
+      "legacy_h1": "Kołnierz ortopedyczny sztywny Primary 4290",
+      "legacy_index": "4290",
+      "target_product_id": "10967",
+      "target_product_name": "Kołnierz ortopedyczny sztywny Primary 4290",
+      "target_path": "/products/kolnierz-ortopedyczny-sztywny-primary-4290",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "4290",
+      "matched_variant_id": "28188",
+      "matched_variant_sku": "4290",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/kolnierz-ortopedyczny-sztywny-primary-4290-id-3252"
+      ]
+    },
+    {
+      "legacy_product_id": "3297",
+      "legacy_h1": "Orteza stawu barkowego ACCUTEX 2970",
+      "legacy_index": "2970",
+      "target_product_id": "11110",
+      "target_product_name": "Orteza stawu barkowego AccuTex 2970",
+      "target_path": "/products/orteza-stawu-barkowego-accutex-2970",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "2970",
+      "matched_variant_id": "28331",
+      "matched_variant_sku": "2970",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/orteza-stawu-barkowego-accutex-2970-id-3297"
+      ]
+    },
+    {
+      "legacy_product_id": "3303",
+      "legacy_h1": "Kula łokciowa - ERGOTECH",
+      "legacy_index": "ERGOTECH",
+      "target_product_id": "10988",
+      "target_product_name": "Kula łokciowa ERGOTECH",
+      "target_path": "/products/kula-lokciowa-ergotech",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "ERGOTECH",
+      "matched_variant_id": "28209",
+      "matched_variant_sku": "ERGOTECH",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/kula-lokciowa-ergotech-8760-id-3303",
+        "/kula-lokciowa-ergotech-id-3303"
+      ]
+    },
+    {
+      "legacy_product_id": "3330",
+      "legacy_h1": "Stabilizator kolana z zawiasami - 1031",
+      "legacy_index": "1031",
+      "target_product_id": "11295",
+      "target_product_name": "Stabilizator kolana z zawiasami 1031",
+      "target_path": "/products/stabilizator-kolana-z-zawiasami-1031",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "1031",
+      "matched_variant_id": "28516",
+      "matched_variant_sku": "1031",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/stabilizator-kolana-z-zawiasami---1031-8873-id-3330",
+        "/stabilizator-kolana-z-zawiasami---1031-id-3330"
+      ]
+    },
+    {
+      "legacy_product_id": "12506",
+      "legacy_h1": "Orteza nadgarstka ze wzmocnieniem silikonowym AT53044",
+      "legacy_index": "AT53044",
+      "target_product_id": "11097",
+      "target_product_name": "Orteza nadgarstka ze wzmocnieniem silikonowym AT53044",
+      "target_path": "/products/orteza-nadgarstka-ze-wzmocnieniem-silikonowym-at53044",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT53044",
+      "matched_variant_id": "28318",
+      "matched_variant_sku": "AT53044",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/orteza-nadgarstka-ze-wzmocnieniem-silikonowym-at53044-81754-id-12506",
+        "/orteza-nadgarstka-ze-wzmocnieniem-silikonowym-at53044-id-12506"
+      ]
+    },
+    {
+      "legacy_product_id": "12508",
+      "legacy_h1": "Rotor rehabilitacyjny AT51124",
+      "legacy_index": "AT51124",
+      "target_product_id": "11275",
+      "target_product_name": "Rotor rehabilitacyjny AT51124",
+      "target_path": "/products/rotor-rehabilitacyjny-at51124",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT51124",
+      "matched_variant_id": "28496",
+      "matched_variant_sku": "AT51124",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/rotor-rehabilitacyjny-at51124-id-12508"
+      ]
+    },
+    {
+      "legacy_product_id": "12509",
+      "legacy_h1": "Rotor rehabilitacyjny elektryczny AT51125",
+      "legacy_index": "AT51125",
+      "target_product_id": "11276",
+      "target_product_name": "Rotor rehabilitacyjny, elektryczny AT51125",
+      "target_path": "/products/rotor-rehabilitacyjny-elektryczny-at51125",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT51125",
+      "matched_variant_id": "28497",
+      "matched_variant_sku": "AT51125",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/rotor-rehabilitacyjny-elektryczny-at51125-id-12509"
+      ]
+    },
+    {
+      "legacy_product_id": "13138",
+      "legacy_h1": "Chwytak dla osób niepełnosprawnych AT51123",
+      "legacy_index": "AT51123",
+      "target_product_id": "10910",
+      "target_product_name": "Chwytak dla osób niepełnosprawnych AT51123",
+      "target_path": "/products/chwytak-dla-osob-niepelnosprawnych-at51123",
+      "target_external_source": "antar",
+      "target_external_parent_sku": "AT51123",
+      "matched_variant_id": "28131",
+      "matched_variant_sku": "AT51123",
+      "target_product_status": "active",
+      "matched_variant_status": "active",
+      "decision": "APPROVE_301",
+      "decision_reason": "Exact normalized product identity and exact identifier evidence agree; target product and matched variant are active.",
+      "approved": true,
+      "source_paths": [
+        "/chwytak-dla-osob-niepelnosprawnych-at51123-id-13138"
+      ]
+    }
+  ]
+}
