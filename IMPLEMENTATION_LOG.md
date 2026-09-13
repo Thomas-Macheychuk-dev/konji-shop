@@ -188,3 +188,45 @@
 - Override only the Konji public product slug to `wanna-pneumatyczna-dla-osob-niepelnosprawnych-at51049`, preventing the supplier's stale AT51033-2 URL fragment from leaking into the storefront URL.
 - Keep media/document storage paths bound to the stable external ID; no file moves, product duplication, price changes or source-identity rewrites are performed.
 - Added focused regression coverage proving the reviewed slug override does not change the external ID, approved SKU or product name.
+
+## 2026-09-10 — SEO-01 read-only Ortezka legacy URL discovery
+
+- Added `seo:legacy-discover` as the first fail-safe boundary for the `ortezka.pl` old-to-new URL migration.
+- Discovery is read-only with respect to the application database and storefront runtime; it only writes requested JSON/CSV evidence under `storage/app`.
+- Crawls the legacy same-site HTML graph with hard URL limits, configurable polite request delay/retries/timeouts, TLS verification by default, and explicit handling of existing redirects.
+- Probes `robots.txt` and conventional sitemap locations, including sitemap indexes, so unlinked-but-sitemapped pages enter the inventory.
+- Classifies legacy `-id-N` product routes, `-cat-N` category routes, `/content/N-*` CMS pages, content assets/documents, operational URLs, and residual URLs.
+- Captures SEO/matching evidence including status, canonical, title, H1, robots meta, product index/SKU/reference, manufacturer/brand, breadcrumbs, discovery method, referring pages, and network failures.
+- Prevents faceted-navigation crawl explosions by fetching only pagination query variants (`page`/`p`) while still inventorying other linked query variants; common tracking parameters are removed before de-duplication.
+- Content assets and operational URLs are inventoried but not fetched in SEO-01.
+- Added focused regression coverage for sitemap discovery, metadata extraction, query bounding, content-asset/operational boundaries, explicit redirect handling, www-host normalization, and JSON/CSV evidence generation.
+- Added `docs/SEO_LEGACY_DISCOVERY.md` with the authoritative crawl command and the explicit limitation that crawler evidence must later be merged with legacy database, Search Console, and access-log evidence before redirect completeness can be claimed.
+
+## 2026-09-10 — SEO-01R1 bounded-memory export and crawl recovery
+
+- Reworked `seo:legacy-discover` JSON generation so the 50k-record inventory is streamed record-by-record instead of constructing a second full `json_encode(...JSON_PRETTY_PRINT...)` buffer under the 512 MiB PHP memory ceiling.
+- Write CSV before JSON so useful migration evidence is retained independently of JSON export success.
+- Added an append-only JSONL recovery checkpoint and `--resume` support; discovered/fetched URL state is checkpointed continuously and already-completed URLs are not refetched after an interrupted run.
+- Release crawl-only queue/de-duplication structures and the associative record index before final artifact generation to preserve memory headroom.
+- Clear prior network-failure state when a checkpointed URL succeeds on a resumed attempt.
+- Added regression coverage for checkpoint artifact creation and resuming pending URLs without refetching already-completed pages.
+- No application database writes, redirect behavior, storefront runtime behavior, product data, category data, or production infrastructure are changed by this recovery patch.
+
+## 2026-09-13 — SEO-01R3 bounded sitemap reconciliation
+
+- Added `--sitemap-reconcile-only` so sitemap completeness can be proven without recursively restarting broad HTML discovery.
+- Excluded `image:loc`, `video:loc`, and `news:loc` extension namespaces from page URL sitemap parsing.
+- Classified common image/media extensions separately and prevented them from being fetched.
+- In sitemap reconciliation mode, prune non-sitemap query variants and media URLs from the active in-memory set while retaining the append-only checkpoint as recovery/audit evidence.
+- Added summary counters and regression coverage for reconciliation pruning, page-only sitemap parsing, media fetch suppression, and no HTML-link expansion.
+
+## 2026-09-13 — SEO-01R4 bounded checkpoint hydration
+
+- Fixed reconciliation OOM after a 65,000-record checkpoint was loaded before DomCrawler parsing.
+- `--sitemap-reconcile-only --resume` now prunes non-sitemap query variants and all image/media records while streaming the checkpoint, before hydration into the crawler inventory.
+- Preserved distinct pruning counts as reconciliation evidence.
+- Changed the in-crawler safety prune to mutate by reference rather than copying the full records array.
+- Reconciliation HTML parsing no longer collects internal links that will never be followed.
+- Releases the HTTP response wrapper before constructing the DOM tree.
+- Added peak PHP memory to the discovery summary.
+- Added regression coverage for command-level checkpoint pruning, including media incorrectly tagged as sitemap by an earlier parser.
