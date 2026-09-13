@@ -16,6 +16,11 @@ it('serves the staging storefront over HTTPS while keeping ACME renewal availabl
         ->toContain('listen 443 ssl;')
         ->toContain('ssl_certificate /etc/letsencrypt/live/staging.ortezka.pl/fullchain.pem;')
         ->toContain('ssl_certificate_key /etc/letsencrypt/live/staging.ortezka.pl/privkey.pem;')
+        ->toContain('server_name ortezka.pl;')
+        ->toContain('server_name www.ortezka.pl;')
+        ->toContain('ssl_certificate /etc/letsencrypt/live/ortezka.pl/fullchain.pem;')
+        ->toContain('ssl_certificate_key /etc/letsencrypt/live/ortezka.pl/privkey.pem;')
+        ->toContain('return 301 https://ortezka.pl$request_uri;')
         ->toContain('ssl_protocols TLSv1.2 TLSv1.3;')
         ->toContain('fastcgi_param HTTPS on;')
         ->toContain('fastcgi_param HTTP_X_FORWARDED_PROTO https;');

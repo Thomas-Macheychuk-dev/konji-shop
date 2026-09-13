@@ -107,6 +107,7 @@ FROM nginx:1.27-alpine AS web
 
 WORKDIR /var/www/html
 
+COPY docker/nginx/cloudflare-real-ip.conf /etc/nginx/conf.d/01-cloudflare-real-ip.conf
 COPY docker/nginx/production.conf /etc/nginx/conf.d/default.conf
 COPY docker/nginx/generated/legacy-seo-product-map.conf /etc/nginx/conf.d/00-legacy-seo-product-map.conf
 COPY docker/nginx/legacy-seo/available/10-product-redirects-enabled.conf /etc/nginx/legacy-seo/available/10-product-redirects-enabled.conf

@@ -39,7 +39,7 @@ it('keeps the runtime redirect layer disabled by default and conditionally injec
     $startup = (string) file_get_contents(base_path('docker/nginx/start-production.sh'));
     $enabledSnippet = (string) file_get_contents(base_path('docker/nginx/legacy-seo/available/10-product-redirects-enabled.conf'));
 
-    expect(substr_count($productionConfig, 'include /etc/nginx/legacy-seo/runtime/10-product-redirects.conf;'))->toBe(2)
+    expect(substr_count($productionConfig, 'include /etc/nginx/legacy-seo/runtime/10-product-redirects.conf;'))->toBe(5)
         ->and($compose)->toContain('LEGACY_SEO_REDIRECTS_ENABLED: "${LEGACY_SEO_REDIRECTS_ENABLED:-false}"')
         ->and($compose)->toContain('command: sh -c "ln -sfn /var/www/html/storage/app/public /var/www/html/public/storage && exec /usr/local/bin/konji-nginx-start"')
         ->and($environment)->toContain('LEGACY_SEO_REDIRECTS_ENABLED=false')
@@ -48,7 +48,8 @@ it('keeps the runtime redirect layer disabled by default and conditionally injec
         ->and($startup)->toContain('${LEGACY_SEO_REDIRECTS_ENABLED:-false}')
         ->and($startup)->not->toContain('ln -sfn /var/www/html/storage/app/public /var/www/html/public/storage')
         ->and($startup)->toContain('nginx -t')
-        ->and($enabledSnippet)->toContain('return 301 https://$host$legacy_seo_product_redirect_target;');
+        ->and($productionConfig)->toContain('map $host $legacy_seo_redirect_origin {')
+        ->and($enabledSnippet)->toContain('return 301 $legacy_seo_redirect_origin$legacy_seo_product_redirect_target;');
 });
 
 it('keeps approved sources direct and target paths product-only', function (): void {
