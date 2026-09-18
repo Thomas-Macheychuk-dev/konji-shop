@@ -22,7 +22,7 @@ beforeEach(function (): void {
         'sandbox' => true,
         'connect_timeout' => 5,
         'timeout' => 15,
-        'notification_path' => '/api/payments/paynow/notifications',
+        'notification_path' => '/payments/paynow/notifications',
         'return_path' => '/checkout/success',
     ]);
 });

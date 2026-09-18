@@ -18,7 +18,7 @@ return [
             'connect_timeout' => (int) env('PAYNOW_CONNECT_TIMEOUT', 5),
             'timeout' => (int) env('PAYNOW_HTTP_TIMEOUT', 15),
 
-            'notification_path' => env('PAYNOW_NOTIFICATION_PATH', '/api/payments/paynow/notifications'),
+            'notification_path' => env('PAYNOW_NOTIFICATION_PATH', '/payments/paynow/notifications'),
             'return_path' => env('PAYNOW_RETURN_PATH', '/checkout/success'),
         ],
     ],
