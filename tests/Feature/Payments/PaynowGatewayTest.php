@@ -82,6 +82,8 @@ it('creates a Paynow v3 payment in sandbox with a valid v3 signature', function 
             ->and($payload['currency'])->toBe('PLN')
             ->and($payload['externalId'])->toBe((string) $order->id)
             ->and($payload['description'])->toBe('Zamówienie #ORD-PAYNOW-001')
+            ->and($rawBody)->toContain('Zam\\u00f3wienie #ORD-PAYNOW-001')
+            ->and($rawBody)->not->toContain('Zamówienie #ORD-PAYNOW-001')
             ->and($payload['buyer']['email'])->toBe('buyer@example.test')
             ->and($payload['continueUrl'])->toBe('https://shop.example.test/checkout/success');
 

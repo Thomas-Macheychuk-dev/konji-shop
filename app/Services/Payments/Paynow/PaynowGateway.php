@@ -64,7 +64,7 @@ final class PaynowGateway implements PaymentGateway
         try {
             $rawBody = json_encode(
                 $body,
-                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR,
+                JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR,
             );
         } catch (JsonException $exception) {
             throw new RuntimeException('Could not prepare Paynow payment request.', 0, $exception);
