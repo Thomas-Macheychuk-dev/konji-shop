@@ -74,7 +74,11 @@ class AppServiceProvider extends ServiceProvider
         $this->composeStorefrontNavigation();
 
         if (Str::startsWith((string) config('app.url'), 'https://')) {
-            URL::forceRootUrl((string) config('app.url'));
+            // Keep HTTPS generation deterministic, but do not force the
+            // application root to APP_URL for web requests. The same runtime
+            // intentionally serves staging.ortezka.pl and ortezka.pl, so
+            // browser-facing routes and Vite assets must stay on the
+            // hostname that received the request.
             URL::forceScheme('https');
         }
     }

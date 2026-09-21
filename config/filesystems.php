@@ -3,7 +3,10 @@
 $publicLocalDisk = [
     'driver' => 'local',
     'root' => storage_path('app/public'),
-    'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+    // Local product media is served by the same Nginx host as the page.
+    // Keep the URL relative so staging and production can share one runtime
+    // without leaking APP_URL across hosts. S3/CDN delivery remains absolute.
+    'url' => '/storage',
     'visibility' => 'public',
     'throw' => false,
     'report' => false,

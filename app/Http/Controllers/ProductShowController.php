@@ -120,7 +120,11 @@ class ProductShowController extends Controller
 
     private function productPageCacheKey(Product $product): string
     {
-        return sprintf('product-page.v2.%d', $product->getKey());
+        return sprintf(
+            'product-page.v3.%s.%d',
+            Str::lower(request()->getHost()),
+            $product->getKey(),
+        );
     }
 
     private function currentUserCanPreviewInactiveProducts(): bool

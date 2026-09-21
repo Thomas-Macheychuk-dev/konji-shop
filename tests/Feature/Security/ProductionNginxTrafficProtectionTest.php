@@ -23,7 +23,8 @@ it('serves the staging storefront over HTTPS while keeping ACME renewal availabl
         ->toContain('return 301 https://ortezka.pl$request_uri;')
         ->toContain('ssl_protocols TLSv1.2 TLSv1.3;')
         ->toContain('fastcgi_param HTTPS on;')
-        ->toContain('fastcgi_param HTTP_X_FORWARDED_PROTO https;');
+        ->toContain('fastcgi_param HTTP_X_FORWARDED_PROTO https;')
+        ->toContain('add_header X-Robots-Tag "noindex, nofollow, noarchive" always;');
 
     expect($compose)
         ->toContain('${HTTP_PORT:-80}:80')
