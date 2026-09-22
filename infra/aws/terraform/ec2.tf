@@ -7,7 +7,7 @@ resource "aws_eip" "app" {
 }
 
 resource "aws_instance" "app" {
-  ami                         = data.aws_ami.ubuntu_2404.id
+  ami                         = var.ec2_ami_id != null && var.ec2_ami_id != "" ? var.ec2_ami_id : data.aws_ami.ubuntu_2404.id
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public[0].id
   vpc_security_group_ids      = [aws_security_group.app.id]
@@ -32,10 +32,20 @@ resource "aws_instance" "app" {
     volume_type           = "gp3"
     encrypted             = true
     delete_on_termination = true
+    tags                  = local.common_tags
   }
 
   tags = {
     Name = "${local.name_prefix}-app"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+
+    ignore_changes = [
+      user_data,
+      user_data_replace_on_change,
+    ]
   }
 }
 

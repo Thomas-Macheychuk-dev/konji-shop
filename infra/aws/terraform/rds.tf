@@ -1,15 +1,10 @@
-resource "random_password" "db_password" {
-  length           = 32
-  special          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
-}
-
 resource "aws_db_instance" "mysql" {
   identifier = local.rds_identifier
 
-  engine         = "mysql"
-  engine_version = var.rds_engine_version
-  instance_class = var.rds_instance_class
+  engine                   = "mysql"
+  engine_version           = var.rds_engine_version
+  engine_lifecycle_support = var.rds_engine_lifecycle_support
+  instance_class           = var.rds_instance_class
 
   allocated_storage     = var.rds_allocated_storage_gb
   max_allocated_storage = var.rds_max_allocated_storage_gb
@@ -18,7 +13,6 @@ resource "aws_db_instance" "mysql" {
 
   db_name  = var.db_name
   username = var.db_username
-  password = local.db_password
 
   db_subnet_group_name   = aws_db_subnet_group.this.name
   vpc_security_group_ids = [aws_security_group.rds.id]
@@ -40,5 +34,13 @@ resource "aws_db_instance" "mysql" {
 
   tags = {
     Name = "${local.name_prefix}-mysql"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+
+    ignore_changes = [
+      password,
+    ]
   }
 }

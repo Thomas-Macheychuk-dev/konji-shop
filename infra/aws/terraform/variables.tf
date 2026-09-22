@@ -58,6 +58,12 @@ variable "instance_type" {
   default     = "t3a.small"
 }
 
+variable "ec2_ami_id" {
+  description = "Optional exact AMI ID for the existing EC2 host. Leave null to use the latest Ubuntu 24.04 AMI data source."
+  type        = string
+  default     = null
+}
+
 variable "root_volume_size_gb" {
   description = "Root EBS volume size in GB."
   type        = number
@@ -100,6 +106,21 @@ variable "rds_engine_version" {
   default     = "8.0"
 }
 
+variable "rds_engine_lifecycle_support" {
+  description = "RDS open-source engine lifecycle policy."
+  type        = string
+  default     = "open-source-rds-extended-support-disabled"
+
+  validation {
+    condition = contains([
+      "open-source-rds-extended-support",
+      "open-source-rds-extended-support-disabled",
+    ], var.rds_engine_lifecycle_support)
+
+    error_message = "rds_engine_lifecycle_support must be an RDS-supported open-source lifecycle value."
+  }
+}
+
 variable "db_name" {
   description = "Application database name."
   type        = string
@@ -110,13 +131,6 @@ variable "db_username" {
   description = "Application database username."
   type        = string
   default     = "konji_shop"
-}
-
-variable "db_password" {
-  description = "Application database password. If null or empty, Terraform generates one. This value is stored in Terraform state."
-  type        = string
-  default     = null
-  sensitive   = true
 }
 
 variable "rds_backup_retention_days" {
@@ -150,13 +164,28 @@ variable "rds_cloudwatch_log_exports" {
   }
 }
 
+variable "rds_managed_cloudwatch_log_groups" {
+  description = "RDS CloudWatch log groups explicitly managed by Terraform. This may be a subset of exported logs."
+  type        = list(string)
+  default     = ["error"]
+
+  validation {
+    condition = alltrue([
+      for log_name in var.rds_managed_cloudwatch_log_groups :
+      contains(["error", "general", "slowquery"], log_name)
+    ])
+
+    error_message = "rds_managed_cloudwatch_log_groups may contain only error, general, or slowquery."
+  }
+}
+
 variable "cloudwatch_log_retention_days" {
   description = "Retention for Terraform-managed RDS CloudWatch log groups. Avoid CloudWatch's indefinite-retention default."
   type        = number
   default     = 14
 
   validation {
-    condition     = contains([1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1096, 1827, 2192, 2557, 2922, 3288, 3653], var.cloudwatch_log_retention_days)
+    condition     = contains([0, 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1096, 1827, 2192, 2557, 2922, 3288, 3653], var.cloudwatch_log_retention_days)
     error_message = "cloudwatch_log_retention_days must be a CloudWatch Logs supported retention value."
   }
 }
@@ -183,6 +212,18 @@ variable "s3_abort_incomplete_multipart_days" {
   }
 }
 
+variable "s3_abort_incomplete_multipart_enabled" {
+  description = "Whether Terraform configures automatic cleanup of incomplete multipart uploads."
+  type        = bool
+  default     = true
+}
+
+variable "s3_expired_object_delete_marker_enabled" {
+  description = "Whether Terraform removes expired S3 object delete markers."
+  type        = bool
+  default     = true
+}
+
 variable "monthly_cost_budget_usd" {
   description = "Monthly AWS cost budget threshold in USD. A budget is created only when cost_budget_notification_email is set."
   type        = number
@@ -204,6 +245,18 @@ variable "s3_bucket_name" {
   description = "Optional exact S3 bucket name. If null, Terraform creates a name with the current AWS account ID."
   type        = string
   default     = null
+}
+
+variable "enable_s3_gateway_endpoint" {
+  description = "Whether Terraform creates the S3 gateway endpoint."
+  type        = bool
+  default     = true
+}
+
+variable "enable_product_media_cloudfront" {
+  description = "Whether Terraform creates product-media CloudFront, OAC, and S3 policy resources."
+  type        = bool
+  default     = true
 }
 
 variable "cloudfront_price_class" {

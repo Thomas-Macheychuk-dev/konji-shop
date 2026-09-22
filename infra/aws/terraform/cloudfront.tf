@@ -3,6 +3,8 @@ data "aws_cloudfront_cache_policy" "caching_optimized" {
 }
 
 resource "aws_cloudfront_origin_access_control" "product_media" {
+  count = var.enable_product_media_cloudfront ? 1 : 0
+
   name                              = "${local.name_prefix}-product-media-oac"
   description                       = "Private S3 access for Konji Shop catalogue media"
   origin_access_control_origin_type = "s3"
@@ -11,6 +13,8 @@ resource "aws_cloudfront_origin_access_control" "product_media" {
 }
 
 resource "aws_cloudfront_distribution" "product_media" {
+  count = var.enable_product_media_cloudfront ? 1 : 0
+
   enabled         = true
   is_ipv6_enabled = true
   comment         = "${local.name_prefix} product media"
@@ -20,7 +24,7 @@ resource "aws_cloudfront_distribution" "product_media" {
   origin {
     domain_name              = aws_s3_bucket.uploads.bucket_regional_domain_name
     origin_id                = "${local.name_prefix}-product-media-s3"
-    origin_access_control_id = aws_cloudfront_origin_access_control.product_media.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.product_media[0].id
   }
 
   default_cache_behavior {
@@ -48,6 +52,8 @@ resource "aws_cloudfront_distribution" "product_media" {
 }
 
 data "aws_iam_policy_document" "product_media_cloudfront_read" {
+  count = var.enable_product_media_cloudfront ? 1 : 0
+
   statement {
     sid     = "AllowCloudFrontReadOnly"
     effect  = "Allow"
@@ -63,12 +69,14 @@ data "aws_iam_policy_document" "product_media_cloudfront_read" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = [aws_cloudfront_distribution.product_media.arn]
+      values   = [aws_cloudfront_distribution.product_media[0].arn]
     }
   }
 }
 
 resource "aws_s3_bucket_policy" "product_media_cloudfront_read" {
+  count = var.enable_product_media_cloudfront ? 1 : 0
+
   bucket = aws_s3_bucket.uploads.id
-  policy = data.aws_iam_policy_document.product_media_cloudfront_read.json
+  policy = data.aws_iam_policy_document.product_media_cloudfront_read[0].json
 }

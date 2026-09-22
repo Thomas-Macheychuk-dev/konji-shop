@@ -62,12 +62,20 @@ resource "aws_s3_bucket_lifecycle_configuration" "uploads" {
       noncurrent_days = var.s3_noncurrent_version_retention_days
     }
 
-    abort_incomplete_multipart_upload {
-      days_after_initiation = var.s3_abort_incomplete_multipart_days
+    dynamic "abort_incomplete_multipart_upload" {
+      for_each = var.s3_abort_incomplete_multipart_enabled ? [1] : []
+
+      content {
+        days_after_initiation = var.s3_abort_incomplete_multipart_days
+      }
     }
 
-    expiration {
-      expired_object_delete_marker = true
+    dynamic "expiration" {
+      for_each = var.s3_expired_object_delete_marker_enabled ? [1] : []
+
+      content {
+        expired_object_delete_marker = true
+      }
     }
   }
 }

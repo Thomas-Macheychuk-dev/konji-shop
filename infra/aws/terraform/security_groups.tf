@@ -38,6 +38,12 @@ resource "aws_security_group" "app" {
   tags = {
     Name = "${local.name_prefix}-app-sg"
   }
+
+  lifecycle {
+    ignore_changes = [
+      revoke_rules_on_delete,
+    ]
+  }
 }
 
 resource "aws_security_group" "rds" {

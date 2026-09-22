@@ -33,12 +33,6 @@ output "db_username" {
   value       = var.db_username
 }
 
-output "db_password" {
-  description = "Laravel DB_PASSWORD value. Sensitive output; also stored in Terraform state."
-  value       = local.db_password
-  sensitive   = true
-}
-
 output "s3_bucket" {
   description = "Laravel AWS_BUCKET value."
   value       = aws_s3_bucket.uploads.bucket
@@ -56,17 +50,17 @@ output "route53_record" {
 
 output "product_media_cloudfront_domain" {
   description = "CloudFront distribution domain for public product media."
-  value       = aws_cloudfront_distribution.product_media.domain_name
+  value       = try(aws_cloudfront_distribution.product_media[0].domain_name, null)
 }
 
 output "product_media_url" {
   description = "Laravel PUBLIC_FILESYSTEM_URL value for the private-S3/CloudFront product media path."
-  value       = "https://${aws_cloudfront_distribution.product_media.domain_name}"
+  value       = var.enable_product_media_cloudfront ? "https://${aws_cloudfront_distribution.product_media[0].domain_name}" : null
 }
 
 output "s3_gateway_endpoint_id" {
   description = "No-additional-charge S3 gateway endpoint used by the application VPC."
-  value       = aws_vpc_endpoint.s3.id
+  value       = try(aws_vpc_endpoint.s3[0].id, null)
 }
 
 output "monthly_cost_budget_name" {

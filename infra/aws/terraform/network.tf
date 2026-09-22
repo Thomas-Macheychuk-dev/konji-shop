@@ -57,13 +57,15 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public" {
-  count = length(aws_subnet.public)
+  count = length(var.public_subnet_cidrs)
 
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_vpc_endpoint" "s3" {
+  count = var.enable_s3_gateway_endpoint ? 1 : 0
+
   vpc_id            = aws_vpc.this.id
   service_name      = "com.amazonaws.${var.aws_region}.s3"
   vpc_endpoint_type = "Gateway"

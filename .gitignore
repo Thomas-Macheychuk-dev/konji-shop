@@ -39,3 +39,8 @@ Homestead.json
 konji-shop
 konji-shop.pub
 auth.json
+
+# Terraform production-state recovery:
+# commit only this non-secret authoritative input file and provider lockfile.
+!infra/aws/terraform/live.auto.tfvars
+!infra/aws/terraform/.terraform.lock.hcl
