@@ -7,3 +7,7 @@ terraform.tfstate.*
 !production.tfvars.example
 crash.log
 crash.*.log
+
+# Authoritative non-secret Terraform inputs and provider lock.
+!live.auto.tfvars
+!.terraform.lock.hcl

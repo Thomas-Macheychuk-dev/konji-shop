@@ -3,12 +3,16 @@ resource "aws_security_group" "app" {
   description = "Allow SSH, HTTP and HTTPS to Konji Shop EC2 host"
   vpc_id      = aws_vpc.this.id
 
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = var.ssh_cidr_blocks
+  dynamic "ingress" {
+    for_each = toset(var.ssh_cidr_blocks)
+
+    content {
+      description = "SSH"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]
+    }
   }
 
   ingress {
