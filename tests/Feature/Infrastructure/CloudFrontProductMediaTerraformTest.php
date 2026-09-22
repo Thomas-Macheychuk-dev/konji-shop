@@ -9,14 +9,14 @@ it('defines private S3 product-media delivery through CloudFront origin access c
         ->toContain('signing_behavior                  = "always"')
         ->toContain('signing_protocol                  = "sigv4"')
         ->toContain('aws_s3_bucket.uploads.bucket_regional_domain_name')
-        ->toContain('origin_access_control_id = aws_cloudfront_origin_access_control.product_media.id')
+        ->toContain('origin_access_control_id = aws_cloudfront_origin_access_control.product_media[0].id')
         ->toContain('viewer_protocol_policy = "redirect-to-https"')
         ->toContain('data.aws_cloudfront_cache_policy.caching_optimized.id')
         ->toContain('price_class     = var.cloudfront_price_class')
         ->toContain('cloudfront.amazonaws.com')
         ->toContain('${aws_s3_bucket.uploads.arn}/products/*')
         ->toContain('AWS:SourceArn')
-        ->toContain('aws_cloudfront_distribution.product_media.arn')
+        ->toContain('aws_cloudfront_distribution.product_media[0].arn')
         ->and($s3)
         ->toContain('block_public_acls       = true')
         ->toContain('block_public_policy     = true')
@@ -34,5 +34,5 @@ it('keeps the default CloudFront price class cost-conscious for a European MVP',
         ->toContain('default     = "PriceClass_100"')
         ->and($outputs)
         ->toContain('output "product_media_url"')
-        ->toContain('https://${aws_cloudfront_distribution.product_media.domain_name}');
+        ->toContain('https://${aws_cloudfront_distribution.product_media[0].domain_name}');
 });
