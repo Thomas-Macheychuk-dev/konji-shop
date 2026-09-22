@@ -8,9 +8,14 @@ output "app_public_dns" {
   value       = aws_instance.app.public_dns
 }
 
-output "ssh_command" {
-  description = "SSH command for the EC2 app host."
-  value       = "ssh ubuntu@${aws_eip.app.public_ip}"
+output "app_instance_id" {
+  description = "EC2 instance ID for the application host."
+  value       = aws_instance.app.id
+}
+
+output "ssm_start_session_command" {
+  description = "AWS Systems Manager Session Manager command for the application host."
+  value       = "aws ssm start-session --target ${aws_instance.app.id} --region ${var.aws_region}"
 }
 
 output "rds_endpoint" {

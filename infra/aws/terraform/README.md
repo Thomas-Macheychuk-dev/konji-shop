@@ -101,11 +101,13 @@ Do not add NAT Gateway, ALB, ElastiCache, OpenSearch, extra EC2 hosts, or interf
 
 ## 4. Prepare Laravel `.env` on EC2
 
-SSH to the host:
+Open a shell on the host through AWS Systems Manager Session Manager:
 
 ```bash
-ssh ubuntu@$(terraform output -raw app_public_ip)
+$(terraform output -raw ssm_start_session_command)
 ```
+
+Production does not expose inbound SSH on TCP/22.
 
 Go to the app directory:
 
