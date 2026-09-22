@@ -27,8 +27,8 @@ db_name     = "konji_shop"
 db_username = "konji_shop"
 
 rds_backup_retention_days = 7
-rds_deletion_protection   = false
-rds_skip_final_snapshot   = true
+rds_deletion_protection   = true
+rds_skip_final_snapshot   = false
 
 rds_cloudwatch_log_exports        = ["error", "slowquery"]
 rds_managed_cloudwatch_log_groups = ["error"]
