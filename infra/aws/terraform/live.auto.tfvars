@@ -13,7 +13,7 @@ ssh_cidr_blocks = []
 web_cidr_blocks = ["0.0.0.0/0"]
 ssh_key_name    = null
 
-instance_type       = "t3.small"
+instance_type       = "t3a.small"
 ec2_ami_id          = "ami-042dc8681de073ac4"
 root_volume_size_gb = 50
 
