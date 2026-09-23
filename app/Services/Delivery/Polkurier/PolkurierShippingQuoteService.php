@@ -227,11 +227,15 @@ final class PolkurierShippingQuoteService
     }
 
     /**
-     * @param  array<int, array<string, mixed>>  $valuations
+     * @param  array<int, array<string, mixed>>|array<string, mixed>  $valuations
      * @return array<string, mixed>
      */
     private function selectValuation(array $valuations, string $courierCode): array
     {
+        if (array_key_exists('servicecode', $valuations)) {
+            $valuations = [$valuations];
+        }
+
         foreach ($valuations as $valuation) {
             if (
                 is_array($valuation)

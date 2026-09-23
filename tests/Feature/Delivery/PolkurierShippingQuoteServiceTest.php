@@ -54,7 +54,7 @@ it('returns fallback shipping amount when Polkurier valuation is disabled', func
     Http::assertNothingSent();
 });
 
-it('returns Polkurier valuation gross price in grosze when valuation is enabled', function (): void {
+it('returns Polkurier valuation when the API returns a single carrier object', function (): void {
     Config::set('delivery.providers.polkurier.valuation.enabled', true);
     Config::set('delivery.providers.polkurier.sender.postcode', '87-100');
     Config::set('delivery.providers.polkurier.sender.country', 'PL');
@@ -63,15 +63,18 @@ it('returns Polkurier valuation gross price in grosze when valuation is enabled'
         '*' => Http::response([
             'status' => 'success',
             'response' => [
-                [
-                    'servicecode' => 'UPS',
-                    'servicename' => 'UPS - Standard',
-                    'netprice' => 12.19,
-                    'grossprice' => 14.99,
-                    'shipment' => true,
-                    'available' => true,
-                    'unavailable_message' => '',
-                ],
+                'servicecode' => 'UPS',
+                'netprice' => 12.19,
+                'grossprice' => 14.99,
+                'conditional_price_nett' => 0,
+                'conditional_price_gross' => 0,
+                'promotion_nett' => 0,
+                'promotion_gross' => 0,
+                'rebate_nett' => 0,
+                'rebate_gross' => 0,
+                'shipment' => true,
+                'available' => true,
+                'unavailable_message' => '',
             ],
         ]),
     ]);
@@ -89,7 +92,7 @@ it('returns Polkurier valuation gross price in grosze when valuation is enabled'
 
     expect($quote->amount)->toBe(1499)
         ->and($quote->providerServiceCode)->toBe('UPS')
-        ->and($quote->providerServiceName)->toBe('UPS - Standard')
+        ->and($quote->providerServiceName)->toBe('UPS')
         ->and($quote->payload['source'])->toBe('polkurier_order_valuation_v2');
 
     Http::assertSent(fn ($request): bool => $request['apimethod'] === 'order_valuation_v2'
