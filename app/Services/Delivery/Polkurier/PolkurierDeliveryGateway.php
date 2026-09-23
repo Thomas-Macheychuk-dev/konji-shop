@@ -107,18 +107,49 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
             throw new RuntimeException('Order has no shipping address.');
         }
 
+        $streetAddress = $this->splitRecipientStreetAddress(
+            (string) $shippingAddress->address_line_1,
+            (string) ($shippingAddress->address_line_2 ?? ''),
+        );
+
         return [
             'company' => (string) ($shippingAddress->company ?? ''),
             'person' => mb_substr(trim($shippingAddress->first_name.' '.$shippingAddress->last_name), 0, 35),
-            'street' => mb_substr((string) $shippingAddress->address_line_1, 0, 40),
-            'housenumber' => '1',
-            'flatnumber' => mb_substr((string) ($shippingAddress->address_line_2 ?? ''), 0, 5),
+            'street' => $streetAddress['street'],
+            'housenumber' => $streetAddress['housenumber'],
+            'flatnumber' => $streetAddress['flatnumber'],
             'postcode' => (string) $shippingAddress->postcode,
             'city' => mb_substr((string) $shippingAddress->city, 0, 35),
             'email' => (string) ($shippingAddress->email ?? $order->guest_email ?? $order->user?->email ?? ''),
             'phone' => $this->normalizePhone((string) ($shippingAddress->phone ?? '123123123')),
             'country' => (string) ($shippingAddress->country_code ?: 'PL'),
             'point_id' => (string) ($shipment->locker_code ?? ''),
+        ];
+    }
+
+    /**
+     * @return array{street: string, housenumber: string, flatnumber: string}
+     */
+    private function splitRecipientStreetAddress(string $addressLine1, string $addressLine2): array
+    {
+        $addressLine1 = trim($addressLine1);
+        $matches = [];
+
+        if (preg_match('/^(?<street>.+?)\s+(?<house>\d+[\p{L}]?(?:[-\/]\d+[\p{L}]?)*)$/u', $addressLine1, $matches) !== 1) {
+            throw new RuntimeException('Shipping address line 1 must end with a house number.');
+        }
+
+        $street = trim((string) ($matches['street'] ?? ''));
+        $houseNumber = trim((string) ($matches['house'] ?? ''));
+
+        if ($street === '' || $houseNumber === '') {
+            throw new RuntimeException('Shipping address line 1 must contain a street and house number.');
+        }
+
+        return [
+            'street' => mb_substr($street, 0, 40),
+            'housenumber' => $houseNumber,
+            'flatnumber' => mb_substr(trim($addressLine2), 0, 5),
         ];
     }
 

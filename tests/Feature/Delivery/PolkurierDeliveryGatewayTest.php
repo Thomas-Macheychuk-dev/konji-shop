@@ -73,8 +73,8 @@ it('uses Polkurier point_id fields for parcel locker shipments', function (): vo
         'company' => null,
         'phone' => '123456789',
         'email' => 'guest@example.test',
-        'address_line_1' => 'Test Street 1',
-        'address_line_2' => null,
+        'address_line_1' => 'Test Street 12A',
+        'address_line_2' => '7',
         'city' => 'Warszawa',
         'postcode' => '00-001',
         'country_code' => 'PL',
@@ -97,6 +97,9 @@ it('uses Polkurier point_id fields for parcel locker shipments', function (): vo
     Http::assertSent(fn ($request): bool => $request['apimethod'] === 'create_order'
         && $request['data']['courier'] === 'INPOST_PACZKOMAT'
         && $request['data']['recipient']['point_id'] === 'WAW01A'
+        && $request['data']['recipient']['street'] === 'Test Street'
+        && $request['data']['recipient']['housenumber'] === '12A'
+        && $request['data']['recipient']['flatnumber'] === '7'
         && ! array_key_exists('machinename', $request['data']['recipient'])
         && array_key_exists('point_id', $request['data']['sender'])
         && ! array_key_exists('machinename', $request['data']['sender']));
@@ -183,4 +186,84 @@ it('sends Polkurier additional fields in the create order payload', function ():
         && $request['data']['additional_fields'] === [
             'external_transport_security' => 'Foam and cardboard protection',
         ]);
+});
+
+it('keeps a compound house number in the Polkurier recipient payload', function (): void {
+    Http::fake([
+        '*' => Http::response([
+            'status' => 'success',
+            'response' => [
+                'order_number' => '1234-12',
+                'label' => ['TRACK124'],
+                'url_tracktrace' => 'https://example.test/track/TRACK124',
+            ],
+        ]),
+    ]);
+
+    $order = Order::factory()->guest('guest@example.test')->paid()->create([
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => DeliveryService::COURIER->value,
+    ]);
+
+    $order->shippingAddress()->create([
+        'type' => 'shipping',
+        'first_name' => 'Jan',
+        'last_name' => 'Kowalski',
+        'phone' => '123456789',
+        'email' => 'guest@example.test',
+        'address_line_1' => 'Aleja 3 Maja 12/14',
+        'address_line_2' => null,
+        'city' => 'Warszawa',
+        'postcode' => '00-001',
+        'country_code' => 'PL',
+    ]);
+
+    $shipment = Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'status' => ShipmentStatus::PENDING,
+        'service' => DeliveryService::COURIER->value,
+    ]);
+
+    app(PolkurierDeliveryGateway::class)->createShipment($order, $shipment);
+
+    Http::assertSent(fn ($request): bool => $request['data']['recipient']['street'] === 'Aleja 3 Maja'
+        && $request['data']['recipient']['housenumber'] === '12/14'
+        && $request['data']['recipient']['flatnumber'] === '');
+});
+
+it('refuses to create a Polkurier shipment when the recipient house number cannot be parsed safely', function (): void {
+    Http::fake();
+
+    $order = Order::factory()->guest('guest@example.test')->paid()->create([
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::DPD,
+        'delivery_service' => DeliveryService::COURIER->value,
+    ]);
+
+    $order->shippingAddress()->create([
+        'type' => 'shipping',
+        'first_name' => 'Jan',
+        'last_name' => 'Kowalski',
+        'phone' => '123456789',
+        'email' => 'guest@example.test',
+        'address_line_1' => 'Street Without Number',
+        'address_line_2' => null,
+        'city' => 'Warszawa',
+        'postcode' => '00-001',
+        'country_code' => 'PL',
+    ]);
+
+    $shipment = Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'status' => ShipmentStatus::PENDING,
+        'service' => DeliveryService::COURIER->value,
+    ]);
+
+    expect(fn () => app(PolkurierDeliveryGateway::class)->createShipment($order, $shipment))
+        ->toThrow(RuntimeException::class, 'Shipping address line 1 must end with a house number.');
+
+    Http::assertNothingSent();
 });
