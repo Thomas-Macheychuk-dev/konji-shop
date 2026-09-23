@@ -287,3 +287,15 @@ variable "extra_tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "github_actions_repository" {
+  description = "GitHub owner/repository allowed to assume the production deployment role."
+  type        = string
+  default     = "Thomas-Macheychuk-dev/konji-shop"
+}
+
+variable "github_actions_environment" {
+  description = "GitHub Actions environment allowed to assume the production deployment role."
+  type        = string
+  default     = "production"
+}

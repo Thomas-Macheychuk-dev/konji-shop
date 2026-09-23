@@ -6,12 +6,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  id-token: write
+
 concurrency:
   group: deploy-production
   cancel-in-progress: false
 
 jobs:
   test-and-deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production
 
@@ -51,13 +56,75 @@ jobs:
       - name: Run tests
         run: php artisan test
 
-      - name: Deploy over SSH
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
-          host: ${{ secrets.AWS_PROD_HOST }}
-          username: ${{ secrets.AWS_PROD_USER }}
-          key: ${{ secrets.AWS_PROD_SSH_KEY }}
-          script_stop: true
-          script: |
-            cd "${{ secrets.AWS_PROD_PATH }}"
-            APP_PATH="${{ secrets.AWS_PROD_PATH }}" BRANCH="main" ./scripts/deploy/aws-production.sh
+          role-to-assume: ${{ vars.AWS_PROD_DEPLOY_ROLE_ARN }}
+          aws-region: eu-central-1
+          role-session-name: konji-shop-prod-${{ github.run_id }}
+          allowed-account-ids: '628263975265'
+
+      - name: Deploy over SSM
+        env:
+          AWS_REGION: eu-central-1
+          INSTANCE_ID: ${{ vars.AWS_PROD_INSTANCE_ID }}
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          if [ -z "${INSTANCE_ID}" ]; then
+            echo "::error::AWS_PROD_INSTANCE_ID is not configured for the production environment."
+            exit 1
+          fi
+
+          REMOTE_COMMAND="sudo -u ubuntu sh -lc 'cd /var/www/konji-shop && git fetch origin main && git checkout main && git merge --ff-only ${DEPLOY_SHA} && env APP_PATH=/var/www/konji-shop BRANCH=main DEPLOY_SHA=${DEPLOY_SHA} ./scripts/deploy/aws-production.sh'"
+          PARAMETERS="$(jq -cn --arg command "${REMOTE_COMMAND}" '{commands:[$command]}')"
+
+          COMMAND_ID="$(
+            aws ssm send-command               --instance-ids "${INSTANCE_ID}"               --document-name AWS-RunShellScript               --comment "Deploy Konji production ${DEPLOY_SHA}"               --timeout-seconds 1800               --parameters "${PARAMETERS}"               --query 'Command.CommandId'               --output text
+          )"
+
+          echo "SSM command: ${COMMAND_ID}"
+
+          FINAL_STATUS=""
+
+          for ATTEMPT in $(seq 1 120); do
+            INVOCATION="$(
+              aws ssm get-command-invocation                 --command-id "${COMMAND_ID}"                 --instance-id "${INSTANCE_ID}"                 --output json                 2>/dev/null || true
+            )"
+
+            STATUS="$(jq -r '.Status // "Pending"' <<<"${INVOCATION}")"
+            RESPONSE_CODE="$(jq -r '.ResponseCode // -1' <<<"${INVOCATION}")"
+
+            echo "attempt=${ATTEMPT} status=${STATUS} response_code=${RESPONSE_CODE}"
+
+            case "${STATUS}" in
+              Success)
+                jq -r '.StandardOutputContent // empty' <<<"${INVOCATION}"
+
+                STDERR_OUTPUT="$(jq -r '.StandardErrorContent // empty' <<<"${INVOCATION}")"
+                if [ -n "${STDERR_OUTPUT}" ]; then
+                  printf '%s\n' "${STDERR_OUTPUT}" >&2
+                fi
+
+                FINAL_STATUS="Success"
+                break
+                ;;
+              Failed|Cancelled|TimedOut|Cancelling)
+                jq -r '.StandardOutputContent // empty' <<<"${INVOCATION}"
+                jq -r '.StandardErrorContent // empty' <<<"${INVOCATION}" >&2
+                FINAL_STATUS="${STATUS}"
+                break
+                ;;
+            esac
+
+            sleep 15
+          done
+
+          if [ "${FINAL_STATUS}" != "Success" ]; then
+            if [ -z "${FINAL_STATUS}" ]; then
+              echo "::error::SSM deployment did not reach a terminal state within 30 minutes."
+            else
+              echo "::error::SSM deployment finished with status ${FINAL_STATUS}."
+            fi
+
+            exit 1
+          fi

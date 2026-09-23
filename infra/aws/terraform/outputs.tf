@@ -72,3 +72,13 @@ output "monthly_cost_budget_name" {
   description = "AWS monthly cost budget name when cost_budget_notification_email is configured."
   value       = try(aws_budgets_budget.monthly_cost[0].name, null)
 }
+
+output "github_actions_deploy_role_arn" {
+  description = "IAM role ARN assumed by the production GitHub Actions workflow through OIDC."
+  value       = aws_iam_role.github_actions_deploy.arn
+}
+
+output "github_actions_oidc_subject" {
+  description = "Exact GitHub Actions OIDC subject trusted by the production deployment role."
+  value       = local.github_actions_oidc_subject
+}
