@@ -5,7 +5,8 @@ APP_PATH="${APP_PATH:-/var/www/konji-shop}"
 BRANCH="${BRANCH:-main}"
 DEPLOY_SHA="${DEPLOY_SHA:-}"
 COMPOSE="docker compose -f docker-compose.prod.yml"
-HEALTH_URL="${HEALTH_URL:-http://127.0.0.1/up}"
+HEALTH_URL="${HEALTH_URL:-https://ortezka.pl/up}"
+HEALTH_RESOLVE="${HEALTH_RESOLVE:-ortezka.pl:443:127.0.0.1}"
 
 cd "${APP_PATH}"
 
@@ -85,17 +86,30 @@ echo "Running application readiness checks..."
 ${COMPOSE} exec -T app php artisan shop:check --json || true
 ${COMPOSE} exec -T app php artisan polkurier:check --json || true
 
-echo "Checking health endpoint: ${HEALTH_URL}"
+echo "Checking health endpoint: ${HEALTH_URL} via ${HEALTH_RESOLVE}"
 for attempt in {1..20}; do
-  if curl -fsS "${HEALTH_URL}" >/dev/null; then
-    echo "Deployment completed successfully."
+  HEALTH_STATUS="$(
+    curl \
+      --silent \
+      --show-error \
+      --output /dev/null \
+      --write-out '%{http_code}' \
+      --connect-timeout 5 \
+      --max-time 10 \
+      --resolve "${HEALTH_RESOLVE}" \
+      "${HEALTH_URL}" \
+      || true
+  )"
+
+  if [ "${HEALTH_STATUS}" = "200" ]; then
+    echo "Deployment completed successfully with HTTP 200."
     exit 0
   fi
 
   sleep 3
-  echo "Waiting for health endpoint... (${attempt}/20)"
+  echo "Waiting for health endpoint... (${attempt}/20, status=${HEALTH_STATUS:-curl_error})"
 done
 
-echo "Deployment finished, but health endpoint did not respond successfully." >&2
+echo "Deployment finished, but the health endpoint did not return HTTP 200." >&2
 ${COMPOSE} ps >&2
 exit 1
