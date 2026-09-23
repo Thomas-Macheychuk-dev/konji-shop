@@ -82,6 +82,9 @@ ${COMPOSE} up -d --remove-orphans web queue scheduler
 
 ${COMPOSE} exec -T app php artisan queue:restart || true
 
+echo "Refreshing Polkurier available-carriers cache..."
+${COMPOSE} exec -T app php artisan polkurier:refresh-carriers --json || true
+
 echo "Running application readiness checks..."
 ${COMPOSE} exec -T app php artisan shop:check --json || true
 ${COMPOSE} exec -T app php artisan polkurier:check --json || true
