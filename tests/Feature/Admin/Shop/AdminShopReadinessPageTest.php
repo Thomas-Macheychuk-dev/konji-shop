@@ -30,6 +30,11 @@ it('shows the production readiness page to admins', function (): void {
     Config::set('app.debug', false);
 
     Config::set('payments.default', 'paynow');
+    Config::set('payments.providers.paynow.api_key', 'paynow-api-key');
+    Config::set('payments.providers.paynow.signature_key', 'paynow-signature-key');
+    Config::set('payments.providers.paynow.sandbox', false);
+    Config::set('payments.providers.paynow.notification_path', '/payments/paynow/notifications');
+    Config::set('payments.providers.paynow.return_path', '/checkout/success');
     Config::set('mail.from.address', 'shop@example.test');
 
     Config::set('delivery.providers.polkurier.base_url', 'https://api.polkurier.pl');

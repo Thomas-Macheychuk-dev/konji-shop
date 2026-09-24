@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Shop;
 
+use App\Enums\PaymentProvider;
+use Illuminate\Support\Facades\Route;
+
 final class ShopReadinessCheck
 {
     public function __construct(
@@ -32,6 +35,11 @@ final class ShopReadinessCheck
             $this->checkAppUrl(),
             $this->checkAppDebug(),
             $this->checkPaymentDefaultProvider(),
+            $this->checkPaynowApiKey(),
+            $this->checkPaynowSignatureKey(),
+            $this->checkPaynowProductionMode(),
+            $this->checkPaynowNotificationPath(),
+            $this->checkPaynowReturnPath(),
             $this->checkMailFromAddress(),
             $this->checkPolkurierBaseUrl(),
             $this->checkPolkurierLogin(),
@@ -218,12 +226,24 @@ final class ShopReadinessCheck
             );
         }
 
-        if (str_contains($appUrl, 'localhost') || str_contains($appUrl, '127.0.0.1')) {
-            return $this->warning(
+        if (filter_var($appUrl, FILTER_VALIDATE_URL) === false) {
+            return $this->missing(
                 'Aplikacja',
                 'APP_URL',
-                false,
-                'APP_URL wskazuje na adres lokalny. Przed uruchomieniem użyj publicznego adresu produkcyjnego.'
+                true,
+                'APP_URL musi być poprawnym publicznym adresem HTTPS.'
+            );
+        }
+
+        $scheme = strtolower((string) parse_url($appUrl, PHP_URL_SCHEME));
+        $host = strtolower((string) parse_url($appUrl, PHP_URL_HOST));
+
+        if ($scheme !== 'https' || $host === '' || in_array($host, ['localhost', '127.0.0.1', '::1'], true)) {
+            return $this->missing(
+                'Aplikacja',
+                'APP_URL',
+                true,
+                'APP_URL musi wskazywać na publiczny adres HTTPS na produkcji.'
             );
         }
 
@@ -231,7 +251,7 @@ final class ShopReadinessCheck
             'Aplikacja',
             'APP_URL',
             true,
-            'APP_URL jest skonfigurowany.'
+            'APP_URL wskazuje na publiczny adres HTTPS.'
         );
     }
 
@@ -264,12 +284,12 @@ final class ShopReadinessCheck
     {
         $defaultProvider = trim((string) config('payments.default'));
 
-        if ($defaultProvider === '') {
+        if ($defaultProvider !== PaymentProvider::PAYNOW->value) {
             return $this->missing(
                 'Płatności',
                 'Domyślny operator płatności',
                 true,
-                'Domyślny operator płatności musi być skonfigurowany.'
+                'Paynow musi być domyślnym operatorem płatności na produkcji.'
             );
         }
 
@@ -277,8 +297,127 @@ final class ShopReadinessCheck
             'Płatności',
             'Domyślny operator płatności',
             true,
-            'Domyślny operator płatności jest skonfigurowany: '.$defaultProvider.'.'
+            'Paynow jest domyślnym operatorem płatności.'
         );
+    }
+
+    /**
+     * @return array{category: string, name: string, status: string, required: bool, message: string}
+     */
+    private function checkPaynowApiKey(): array
+    {
+        if (trim((string) config('payments.providers.paynow.api_key')) !== '') {
+            return $this->ready(
+                'Płatności',
+                'Paynow API key',
+                true,
+                'Klucz API Paynow jest skonfigurowany.'
+            );
+        }
+
+        return $this->missing(
+            'Płatności',
+            'Paynow API key',
+            true,
+            'Klucz API Paynow musi być skonfigurowany.'
+        );
+    }
+
+    /**
+     * @return array{category: string, name: string, status: string, required: bool, message: string}
+     */
+    private function checkPaynowSignatureKey(): array
+    {
+        if (trim((string) config('payments.providers.paynow.signature_key')) !== '') {
+            return $this->ready(
+                'Płatności',
+                'Paynow signature key',
+                true,
+                'Klucz podpisu Paynow jest skonfigurowany.'
+            );
+        }
+
+        return $this->missing(
+            'Płatności',
+            'Paynow signature key',
+            true,
+            'Klucz podpisu Paynow musi być skonfigurowany.'
+        );
+    }
+
+    /**
+     * @return array{category: string, name: string, status: string, required: bool, message: string}
+     */
+    private function checkPaynowProductionMode(): array
+    {
+        if ((bool) config('payments.providers.paynow.sandbox', true) === false) {
+            return $this->ready(
+                'Płatności',
+                'Paynow tryb produkcyjny',
+                true,
+                'Paynow działa w trybie produkcyjnym.'
+            );
+        }
+
+        return $this->missing(
+            'Płatności',
+            'Paynow tryb produkcyjny',
+            true,
+            'PAYNOW_SANDBOX musi mieć wartość false na produkcji.'
+        );
+    }
+
+    /**
+     * @return array{category: string, name: string, status: string, required: bool, message: string}
+     */
+    private function checkPaynowNotificationPath(): array
+    {
+        return $this->checkPaynowRoutePath(
+            configKey: 'payments.providers.paynow.notification_path',
+            routeName: 'payments.paynow.notifications',
+            itemName: 'Paynow notification path',
+            readyMessage: 'Ścieżka powiadomień Paynow jest zgodna z trasą aplikacji.',
+            missingMessage: 'PAYNOW_NOTIFICATION_PATH musi dokładnie odpowiadać trasie powiadomień Paynow.'
+        );
+    }
+
+    /**
+     * @return array{category: string, name: string, status: string, required: bool, message: string}
+     */
+    private function checkPaynowReturnPath(): array
+    {
+        return $this->checkPaynowRoutePath(
+            configKey: 'payments.providers.paynow.return_path',
+            routeName: 'checkout.success',
+            itemName: 'Paynow return path',
+            readyMessage: 'Ścieżka powrotu Paynow jest zgodna z trasą aplikacji.',
+            missingMessage: 'PAYNOW_RETURN_PATH musi dokładnie odpowiadać trasie powrotu po płatności.'
+        );
+    }
+
+    /**
+     * @return array{category: string, name: string, status: string, required: bool, message: string}
+     */
+    private function checkPaynowRoutePath(
+        string $configKey,
+        string $routeName,
+        string $itemName,
+        string $readyMessage,
+        string $missingMessage,
+    ): array {
+        $configuredPath = trim((string) config($configKey));
+
+        if ($configuredPath === '' || ! Route::has($routeName)) {
+            return $this->missing('Płatności', $itemName, true, $missingMessage);
+        }
+
+        $expectedPath = route($routeName, [], false);
+
+        if ($configuredPath !== $expectedPath) {
+            return $this->missing('Płatności', $itemName, true, $missingMessage);
+        }
+
+        return $this->ready('Płatności', $itemName, true, $readyMessage);
     }
 
     /**
