@@ -78,16 +78,21 @@ it('fails without replacing the carrier cache when Polkurier refresh fails', fun
         ->and(Cache::get(PolkurierAvailableCarriersService::CACHE_KEY))->toBeNull();
 });
 
-it('refreshes the Polkurier carrier cache after deployment cache clearing and before readiness', function (): void {
+it('refreshes the Polkurier carrier cache before blocking application readiness gates', function (): void {
     $deploy = file_get_contents(base_path('scripts/deploy/aws-production.sh'));
 
     $optimizeClear = strpos($deploy, 'php artisan optimize:clear');
     $refreshCarriers = strpos($deploy, 'php artisan polkurier:refresh-carriers --json || true');
-    $readinessCheck = strpos($deploy, 'php artisan polkurier:check --json || true');
+    $shopReadiness = strpos($deploy, 'php artisan shop:check --json');
+    $polkurierReadiness = strpos($deploy, 'php artisan polkurier:check --json');
 
     expect($optimizeClear)->not->toBeFalse()
         ->and($refreshCarriers)->not->toBeFalse()
-        ->and($readinessCheck)->not->toBeFalse()
+        ->and($shopReadiness)->not->toBeFalse()
+        ->and($polkurierReadiness)->not->toBeFalse()
+        ->and($deploy)->not->toContain('php artisan shop:check --json || true')
+        ->and($deploy)->not->toContain('php artisan polkurier:check --json || true')
         ->and($refreshCarriers)->toBeGreaterThan($optimizeClear)
-        ->and($readinessCheck)->toBeGreaterThan($refreshCarriers);
+        ->and($shopReadiness)->toBeGreaterThan($refreshCarriers)
+        ->and($polkurierReadiness)->toBeGreaterThan($shopReadiness);
 });

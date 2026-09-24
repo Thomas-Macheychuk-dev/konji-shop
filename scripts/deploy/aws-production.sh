@@ -86,8 +86,8 @@ echo "Refreshing Polkurier available-carriers cache..."
 ${COMPOSE} exec -T app php artisan polkurier:refresh-carriers --json || true
 
 echo "Running application readiness checks..."
-${COMPOSE} exec -T app php artisan shop:check --json || true
-${COMPOSE} exec -T app php artisan polkurier:check --json || true
+${COMPOSE} exec -T app php artisan shop:check --json
+${COMPOSE} exec -T app php artisan polkurier:check --json
 
 echo "Checking health endpoint: ${HEALTH_URL} via ${HEALTH_RESOLVE}"
 for attempt in {1..20}; do
