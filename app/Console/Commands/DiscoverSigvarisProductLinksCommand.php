@@ -127,6 +127,6 @@ final class DiscoverSigvarisProductLinksCommand extends Command
             throw new RuntimeException('Unable to encode Sigvaris JSON.');
         }
 
-return $json;
+        return $json;
     }
 }

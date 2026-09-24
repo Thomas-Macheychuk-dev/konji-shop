@@ -101,7 +101,7 @@ final class CrawlSigvarisProductDataCommand extends Command
             throw new JsonException('Sigvaris product-link JSON must contain an object.');
         }
 
-return $decoded;
+        return $decoded;
     }
 
     /** @param array<string,mixed> $result */
@@ -128,6 +128,6 @@ return $decoded;
             throw new RuntimeException('Unable to encode Sigvaris JSON.');
         }
 
-return $json;
+        return $json;
     }
 }
