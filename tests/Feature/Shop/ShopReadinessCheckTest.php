@@ -27,6 +27,12 @@ it('reports the shop as not ready when required production settings are missing'
     Config::set('payments.providers.paynow.sandbox', true);
     Config::set('payments.providers.paynow.notification_path', '');
     Config::set('payments.providers.paynow.return_path', '');
+    Config::set('mail.default', 'smtp');
+    Config::set('mail.mailers.smtp.transport', 'smtp');
+    Config::set('mail.mailers.smtp.host', '');
+    Config::set('mail.mailers.smtp.port', 587);
+    Config::set('mail.mailers.smtp.username', '');
+    Config::set('mail.mailers.smtp.password', '');
     Config::set('mail.from.address', '');
 
     Config::set('delivery.providers.polkurier.base_url', '');
@@ -54,6 +60,7 @@ it('reports the shop as not ready when required production settings are missing'
             'Paynow tryb produkcyjny',
             'Paynow notification path',
             'Paynow return path',
+            'Transport e-mail',
             'Adres nadawcy e-mail',
             'Bazowy URL Polkurier',
             'Login Polkurier',
@@ -163,6 +170,36 @@ it('requires the Paynow return path to match the routed checkout endpoint', func
         ->and(app(ShopReadinessCheck::class)->isReady())->toBeFalse();
 });
 
+it('requires a real authenticated SMTP transport when SMTP is the production mailer', function (string $configKey, mixed $value): void {
+    configureProductionReadyShop();
+    Config::set($configKey, $value);
+
+    $item = collect(app(ShopReadinessCheck::class)->items())
+        ->firstWhere('name', 'Transport e-mail');
+
+    expect($item['status'])->toBe('missing')
+        ->and($item['required'])->toBeTrue()
+        ->and(app(ShopReadinessCheck::class)->isReady())->toBeFalse();
+})->with([
+    'missing host' => ['mail.mailers.smtp.host', ''],
+    'development mailpit host' => ['mail.mailers.smtp.host', 'mailpit'],
+    'missing port' => ['mail.mailers.smtp.port', 0],
+    'missing username' => ['mail.mailers.smtp.username', ''],
+    'missing password' => ['mail.mailers.smtp.password', ''],
+]);
+
+it('rejects non-delivery mail transports for production readiness', function (string $transport): void {
+    configureProductionReadyShop();
+    Config::set('mail.mailers.smtp.transport', $transport);
+
+    $item = collect(app(ShopReadinessCheck::class)->items())
+        ->firstWhere('name', 'Transport e-mail');
+
+    expect($item['status'])->toBe('missing')
+        ->and($item['required'])->toBeTrue()
+        ->and(app(ShopReadinessCheck::class)->isReady())->toBeFalse();
+})->with(['array', 'log']);
+
 function configureProductionReadyShop(): void
 {
     Config::set('legal.versions.terms', 'terms-v1');
@@ -189,6 +226,12 @@ function configureProductionReadyShop(): void
     Config::set('payments.providers.paynow.sandbox', false);
     Config::set('payments.providers.paynow.notification_path', '/payments/paynow/notifications');
     Config::set('payments.providers.paynow.return_path', '/checkout/success');
+    Config::set('mail.default', 'smtp');
+    Config::set('mail.mailers.smtp.transport', 'smtp');
+    Config::set('mail.mailers.smtp.host', 'smtp.example.test');
+    Config::set('mail.mailers.smtp.port', 587);
+    Config::set('mail.mailers.smtp.username', 'shop@example.test');
+    Config::set('mail.mailers.smtp.password', 'test-mail-password');
     Config::set('mail.from.address', 'shop@example.test');
 
     Config::set('delivery.providers.polkurier.base_url', 'https://api.polkurier.pl');

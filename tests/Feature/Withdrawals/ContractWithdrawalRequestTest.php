@@ -8,6 +8,8 @@ use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Enums\VatRate;
 use App\Enums\WithdrawalStatus;
+use App\Listeners\SendWithdrawalAcknowledgementEmail;
+use App\Listeners\SendWithdrawalRefundedEmail;
 use App\Mail\WithdrawalAcknowledgementMail;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -15,10 +17,16 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
 use App\Models\WithdrawalRequest;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 
 uses(RefreshDatabase::class);
+
+it('queues withdrawal customer emails outside the request lifecycle', function (): void {
+    expect(is_subclass_of(SendWithdrawalAcknowledgementEmail::class, ShouldQueue::class))->toBeTrue()
+        ->and(is_subclass_of(SendWithdrawalRefundedEmail::class, ShouldQueue::class))->toBeTrue();
+});
 
 it('shows the public withdrawal start page', function (): void {
     $this

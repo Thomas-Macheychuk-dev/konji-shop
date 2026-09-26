@@ -40,6 +40,7 @@ final class ShopReadinessCheck
             $this->checkPaynowProductionMode(),
             $this->checkPaynowNotificationPath(),
             $this->checkPaynowReturnPath(),
+            $this->checkMailTransport(),
             $this->checkMailFromAddress(),
             $this->checkPolkurierBaseUrl(),
             $this->checkPolkurierLogin(),
@@ -418,6 +419,64 @@ final class ShopReadinessCheck
         }
 
         return $this->ready('Płatności', $itemName, true, $readyMessage);
+    }
+
+    /**
+     * @return array{category: string, name: string, status: string, required: bool, message: string}
+     */
+    private function checkMailTransport(): array
+    {
+        $mailerName = trim((string) config('mail.default'));
+        $mailer = $mailerName === '' ? null : config('mail.mailers.'.$mailerName);
+
+        if (! is_array($mailer)) {
+            return $this->missing(
+                'Poczta',
+                'Transport e-mail',
+                true,
+                'Domyślny transport e-mail musi być skonfigurowany.'
+            );
+        }
+
+        $transport = strtolower(trim((string) ($mailer['transport'] ?? '')));
+
+        if ($transport === '' || in_array($transport, ['array', 'log'], true)) {
+            return $this->missing(
+                'Poczta',
+                'Transport e-mail',
+                true,
+                'Produkcja musi używać rzeczywistego transportu e-mail.'
+            );
+        }
+
+        if ($transport === 'smtp') {
+            $host = strtolower(trim((string) ($mailer['host'] ?? '')));
+            $port = (int) ($mailer['port'] ?? 0);
+            $username = trim((string) ($mailer['username'] ?? ''));
+            $password = trim((string) ($mailer['password'] ?? ''));
+
+            if (
+                $host === ''
+                || in_array($host, ['localhost', '127.0.0.1', 'mailpit'], true)
+                || $port <= 0
+                || $username === ''
+                || $password === ''
+            ) {
+                return $this->missing(
+                    'Poczta',
+                    'Transport e-mail',
+                    true,
+                    'SMTP wymaga produkcyjnego hosta, portu, użytkownika i hasła.'
+                );
+            }
+        }
+
+        return $this->ready(
+            'Poczta',
+            'Transport e-mail',
+            true,
+            'Produkcja ma skonfigurowany rzeczywisty transport e-mail.'
+        );
     }
 
     /**

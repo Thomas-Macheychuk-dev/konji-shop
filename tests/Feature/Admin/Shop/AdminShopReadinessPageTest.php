@@ -35,6 +35,12 @@ it('shows the production readiness page to admins', function (): void {
     Config::set('payments.providers.paynow.sandbox', false);
     Config::set('payments.providers.paynow.notification_path', '/payments/paynow/notifications');
     Config::set('payments.providers.paynow.return_path', '/checkout/success');
+    Config::set('mail.default', 'smtp');
+    Config::set('mail.mailers.smtp.transport', 'smtp');
+    Config::set('mail.mailers.smtp.host', 'smtp.example.test');
+    Config::set('mail.mailers.smtp.port', 587);
+    Config::set('mail.mailers.smtp.username', 'shop@example.test');
+    Config::set('mail.mailers.smtp.password', 'test-mail-password');
     Config::set('mail.from.address', 'shop@example.test');
 
     Config::set('delivery.providers.polkurier.base_url', 'https://api.polkurier.pl');
