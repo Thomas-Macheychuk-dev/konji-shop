@@ -41,7 +41,7 @@ s3_abort_incomplete_multipart_enabled   = false
 s3_expired_object_delete_marker_enabled = false
 
 enable_s3_gateway_endpoint      = false
-enable_product_media_cloudfront = false
+enable_product_media_cloudfront = true
 
 extra_tags = {
   Owner = "konji-shop"

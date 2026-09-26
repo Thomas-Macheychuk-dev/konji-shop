@@ -17,7 +17,7 @@ Laravel/importers
 
 The application keeps using the logical Laravel disk name `public`. Only the physical backing driver changes.
 
-CloudFront is granted S3 read access only to `products/*`. Shipment labels, protocols, and other private application objects in the shared bucket are not exposed through the CDN.
+CloudFront is granted S3 read access only to the public catalogue prefixes `products/*` and `swatches/*`. Shipment labels, protocols, and other private application objects in the shared bucket are not exposed through the CDN.
 
 ## Cost-conscious MVP defaults
 

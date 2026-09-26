@@ -59,7 +59,10 @@ data "aws_iam_policy_document" "product_media_cloudfront_read" {
     effect  = "Allow"
     actions = ["s3:GetObject"]
 
-    resources = ["${aws_s3_bucket.uploads.arn}/products/*"]
+    resources = [
+      "${aws_s3_bucket.uploads.arn}/products/*",
+      "${aws_s3_bucket.uploads.arn}/swatches/*",
+    ]
 
     principals {
       type        = "Service"
