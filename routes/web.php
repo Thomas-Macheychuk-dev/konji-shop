@@ -53,6 +53,7 @@ use App\Http\Controllers\CartSummaryController;
 use App\Http\Controllers\CategoryProductIndexController;
 use App\Http\Controllers\Checkout\CheckoutShippingQuoteController;
 use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
+use App\Http\Controllers\Checkout\PolkurierMapTokenController;
 use App\Http\Controllers\CheckoutPlaceOrderController;
 use App\Http\Controllers\CheckoutShowController;
 use App\Http\Controllers\GuestOrderCancelController;
@@ -103,6 +104,9 @@ Route::post('/orders/{order}/payment/retry', PaymentRetryController::class)
     ->name('payments.retry');
 Route::get('/checkout/inpost-parcel-lockers', InPostParcelLockerSearchController::class)
     ->name('checkout.inpost-parcel-lockers');
+Route::get('/checkout/polkurier-map-token', PolkurierMapTokenController::class)
+    ->middleware('throttle:30,1')
+    ->name('checkout.polkurier-map-token');
 Route::post('/checkout/shipping-quote', CheckoutShippingQuoteController::class)
     ->name('checkout.shipping-quote');
 
