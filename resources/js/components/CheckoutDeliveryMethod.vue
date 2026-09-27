@@ -77,64 +77,112 @@
                 </span>
             </div>
 
-            <div class="relative mt-2">
-                <input
-                    v-model="query"
-                    type="text"
-                    autocomplete="off"
-                    class="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 pr-24 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
-                    placeholder="Szukaj po mieście, ulicy, kodzie pocztowym lub kodzie paczkomatu..."
-                    @input="search"
-                >
-
-                <button
-                    v-if="query || lockerCode"
-                    type="button"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg px-2 py-1 text-xs font-medium text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
-                    @click="clearLocker"
-                >
-                    Wyczyść
-                </button>
-            </div>
-
-            <div v-if="loading" class="mt-2 text-sm text-zinc-500">
-                Wyszukiwanie paczkomatów...
-            </div>
-
             <div
-                v-if="showResults"
-                class="mt-2 max-h-80 overflow-y-auto rounded-2xl border border-zinc-200 bg-white shadow-xl"
+                v-if="lockerCode"
+                class="mt-2 rounded-2xl border border-green-200 bg-green-50 p-4"
             >
-                <button
-                    v-for="locker in lockers"
-                    :key="locker.code"
-                    type="button"
-                    class="block w-full border-b border-zinc-100 px-4 py-3 text-left transition hover:bg-zinc-50 last:border-b-0"
-                    @click="selectLocker(locker)"
-                >
-                    <div class="font-medium text-zinc-900">
-                        {{ locker.code }}
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <p class="text-sm font-semibold text-green-900">
+                            {{ lockerCode }}
+                        </p>
+                        <p v-if="selectedLockerLabel" class="mt-1 text-sm text-green-800">
+                            {{ selectedLockerLabel }}
+                        </p>
                     </div>
 
-                    <div class="mt-1 text-xs text-zinc-500">
-                        {{ lockerAddress(locker) }}
-                    </div>
-                </button>
-
-                <div
-                    v-if="!loading && lockers.length === 0"
-                    class="px-4 py-6 text-center text-sm text-zinc-500"
-                >
-                    Nie znaleziono paczkomatów.
+                    <button
+                        type="button"
+                        class="shrink-0 text-xs font-medium text-green-800 underline underline-offset-2 hover:text-green-950"
+                        @click="clearLocker"
+                    >
+                        Usuń
+                    </button>
                 </div>
             </div>
 
-            <p v-if="lockerCode" class="mt-2 text-xs text-green-700">
-                Wybrany paczkomat zostanie użyty do dostawy.
+            <button
+                type="button"
+                class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800 disabled:cursor-wait disabled:opacity-60"
+                :disabled="mapLoading"
+                @click="openLockerMap"
+            >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z" />
+                    <circle cx="12" cy="10" r="2.2" stroke-width="1.8" />
+                </svg>
+                {{ lockerCode ? 'Zmień Paczkomat na mapie' : 'Wybierz Paczkomat na mapie' }}
+            </button>
+
+            <p v-if="mapError" class="mt-2 text-sm text-red-600">
+                {{ mapError }}
             </p>
 
             <p v-else class="mt-2 text-xs text-zinc-500">
-                Wybierz jeden wynik przed złożeniem zamówienia.
+                Otworzymy mapę punktów InPost. Wyszukaj miejscowość lub ulicę i kliknij „Wybierz”.
+            </p>
+
+            <details class="mt-4 rounded-xl border border-zinc-200 bg-zinc-50">
+                <summary class="cursor-pointer px-4 py-3 text-sm font-medium text-zinc-700">
+                    Nie możesz użyć mapy? Wyszukaj Paczkomat z listy
+                </summary>
+
+                <div class="border-t border-zinc-200 p-4">
+                    <div class="relative">
+                        <input
+                            v-model="query"
+                            type="text"
+                            autocomplete="off"
+                            class="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 pr-24 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
+                            placeholder="Miasto, ulica, kod pocztowy lub kod Paczkomatu..."
+                            @input="search"
+                        >
+
+                        <button
+                            v-if="query"
+                            type="button"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg px-2 py-1 text-xs font-medium text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
+                            @click="clearSearch"
+                        >
+                            Wyczyść
+                        </button>
+                    </div>
+
+                    <div v-if="loading" class="mt-2 text-sm text-zinc-500">
+                        Wyszukiwanie paczkomatów...
+                    </div>
+
+                    <div
+                        v-if="showResults"
+                        class="mt-2 max-h-64 overflow-y-auto rounded-xl border border-zinc-200 bg-white"
+                    >
+                        <button
+                            v-for="locker in lockers"
+                            :key="locker.code"
+                            type="button"
+                            class="block w-full border-b border-zinc-100 px-4 py-3 text-left transition hover:bg-zinc-50 last:border-b-0"
+                            @click="selectLocker(locker)"
+                        >
+                            <div class="font-medium text-zinc-900">
+                                {{ locker.code }}
+                            </div>
+                            <div class="mt-1 text-xs text-zinc-500">
+                                {{ lockerAddress(locker) }}
+                            </div>
+                        </button>
+
+                        <div
+                            v-if="!loading && lockers.length === 0"
+                            class="px-4 py-6 text-center text-sm text-zinc-500"
+                        >
+                            Nie znaleziono paczkomatów.
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <p v-if="!lockerCode" class="mt-2 text-xs text-zinc-500">
+                Wybór Paczkomatu jest wymagany przed złożeniem zamówienia.
             </p>
         </div>
 
@@ -181,6 +229,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    polkurierMapTokenUrl: {
+        type: String,
+        default: '',
+    },
     currency: {
         type: String,
         default: 'PLN',
@@ -217,6 +269,8 @@ const query = ref(props.initialLockerCode || '');
 const lockers = ref([]);
 const loading = ref(false);
 const showResults = ref(false);
+const mapLoading = ref(false);
+const mapError = ref('');
 
 const quote = ref(null);
 const quoteLoading = ref(false);
@@ -225,6 +279,18 @@ const quoteError = ref('');
 let timeout = null;
 let quoteTimeout = null;
 let quoteRequestId = 0;
+let pointsMap = null;
+let mapAssetsPromise = null;
+
+const selectedLockerLabel = computed(() => {
+    if (!selectedLocker.value) {
+        return query.value && query.value !== lockerCode.value
+            ? lockerAddress({ code: lockerCode.value, label: query.value })
+            : '';
+    }
+
+    return lockerAddress(selectedLocker.value);
+});
 
 const selectedOption = computed(() => {
     return deliveryOptions[deliveryMethod.value] ?? deliveryOptions.inpost_parcel_locker;
@@ -258,6 +324,10 @@ onBeforeUnmount(() => {
 
     clearTimeout(timeout);
     clearTimeout(quoteTimeout);
+
+    if (pointsMap?.destroy) {
+        pointsMap.destroy();
+    }
 });
 
 function resolveInitialDeliveryMethod() {
@@ -285,6 +355,143 @@ function resolveInitialDeliveryMethod() {
     }
 
     return 'inpost_parcel_locker';
+}
+
+async function openLockerMap() {
+    if (!props.polkurierMapTokenUrl) {
+        mapError.value = 'Mapa Paczkomatów jest chwilowo niedostępna. Skorzystaj z wyszukiwania z listy.';
+        return;
+    }
+
+    mapLoading.value = true;
+    mapError.value = '';
+
+    try {
+        await loadPolkurierMapAssets();
+
+        const response = await fetch(props.polkurierMapTokenUrl, {
+            headers: {
+                Accept: 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            credentials: 'same-origin',
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data?.token) {
+            throw new Error('Map token unavailable');
+        }
+
+        if (!window.POLKURIER?.PointsMap) {
+            throw new Error('Map library unavailable');
+        }
+
+        if (pointsMap?.destroy) {
+            pointsMap.destroy();
+        }
+
+        const provider = await window.POLKURIER.PointsMap.getCourierMapProvider('INPOST_PACZKOMAT');
+
+        if (!provider) {
+            throw new Error('InPost map provider unavailable');
+        }
+
+        pointsMap = new window.POLKURIER.PointsMap({
+            token: data.token,
+            baseUrl: data.map_base_url || 'https://maps.polkurier.pl/',
+            providers: [provider],
+            selectedProviders: [provider],
+            functions: ['collect'],
+            searchQuery: mapSearchQuery(),
+            showSelectButton: true,
+            showList: true,
+            showSearchInput: true,
+        });
+
+        pointsMap.onConfirm((point) => {
+            if (!point?.id) {
+                return;
+            }
+
+            selectLocker({
+                code: String(point.id),
+                label: mapPointLabel(point),
+                postcode: point.zip || '',
+                country_code: point.countryiso || 'PL',
+            });
+
+            pointsMap.closeMapDialog();
+        });
+
+        pointsMap.showMapDialog();
+    } catch (error) {
+        mapError.value = 'Nie udało się otworzyć mapy. Skorzystaj z wyszukiwania z listy poniżej.';
+    } finally {
+        mapLoading.value = false;
+    }
+}
+
+function loadPolkurierMapAssets() {
+    if (window.POLKURIER?.PointsMap) {
+        return Promise.resolve();
+    }
+
+    if (mapAssetsPromise) {
+        return mapAssetsPromise;
+    }
+
+    mapAssetsPromise = new Promise((resolve, reject) => {
+        if (!document.querySelector('link[data-polkurier-points-map]')) {
+            const stylesheet = document.createElement('link');
+            stylesheet.rel = 'stylesheet';
+            stylesheet.href = 'https://maps.polkurier.pl/assets/dist/points-map.css';
+            stylesheet.dataset.polkurierPointsMap = '1';
+            document.head.appendChild(stylesheet);
+        }
+
+        const existingScript = document.querySelector('script[data-polkurier-points-map]');
+
+        if (existingScript) {
+            existingScript.addEventListener('load', resolve, { once: true });
+            existingScript.addEventListener('error', reject, { once: true });
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://maps.polkurier.pl/assets/dist/points-map.bundle.js';
+        script.async = true;
+        script.dataset.polkurierPointsMap = '1';
+        script.addEventListener('load', resolve, { once: true });
+        script.addEventListener('error', reject, { once: true });
+        document.head.appendChild(script);
+    });
+
+    return mapAssetsPromise;
+}
+
+function mapSearchQuery() {
+    if (lockerCode.value) {
+        return lockerCode.value;
+    }
+
+    return [
+        fieldValue('shipping_postcode'),
+        fieldValue('shipping_city'),
+    ].filter(Boolean).join(' ');
+}
+
+function mapPointLabel(point) {
+    const cityLine = [point.zip, point.city].filter(Boolean).join(' ');
+    const address = [cityLine, point.street, point.description].filter(Boolean).join(', ');
+
+    return address ? `${point.id} — ${address}` : String(point.id);
+}
+
+function clearSearch() {
+    query.value = '';
+    lockers.value = [];
+    showResults.value = false;
 }
 
 function search() {

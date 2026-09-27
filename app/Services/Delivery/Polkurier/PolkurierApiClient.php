@@ -46,6 +46,18 @@ final class PolkurierApiClient
             ->timeout(30);
     }
 
+    public function mapToken(): string
+    {
+        $payload = $this->request('get_map_token');
+        $token = $payload['response']['token'] ?? null;
+
+        if (! is_string($token) || trim($token) === '') {
+            throw new RuntimeException('Polkurier nie zwrócił tokenu mapy punktów.');
+        }
+
+        return trim($token);
+    }
+
     /**
      * @param  array<int, string>  $couriers
      * @param  array<int, string>  $functions
