@@ -31,6 +31,27 @@ it('renders persisted customer payment state instead of raw Paynow return status
         ->assertDontSee('CONFIRMED');
 });
 
+it('keeps a persisted paid payment successful even when the return query is stale or tampered', function (): void {
+    $order = Order::factory()->paid()->create([
+        'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
+    ]);
+
+    $payment = Payment::factory()->forOrder($order)->paid()->create([
+        'provider' => 'paynow',
+        'provider_reference' => 'PAID-WITH-STALE-RETURN',
+        'external_status' => 'CONFIRMED',
+    ]);
+
+    $this->get(route('checkout.success', [
+        'paymentId' => $payment->provider_reference,
+        'paymentStatus' => 'ERROR',
+    ]))
+        ->assertOk()
+        ->assertSee('Płatność została potwierdzona. Dziękujemy za zamówienie.')
+        ->assertSee('Opłacone')
+        ->assertDontSee('Coś poszło nie tak');
+});
+
 it('does not claim payment is confirmed until the persisted payment is paid', function (): void {
     $order = Order::factory()->pendingPayment()->create([
         'fulfilment_status' => FulfilmentStatus::UNFULFILLED,
