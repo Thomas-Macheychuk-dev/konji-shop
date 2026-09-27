@@ -122,6 +122,7 @@
                             data-initial-service="{{ old('delivery_service', 'parcel_locker') }}"
                             data-initial-locker-code="{{ old('delivery_locker_code', '') }}"
                             data-shipping-quote-url="{{ route('checkout.shipping-quote') }}"
+                            data-polkurier-map-token-url="{{ route('checkout.polkurier-map-token') }}"
                             data-currency="{{ $cart->currency ?? 'PLN' }}"
                         ></div>
 
