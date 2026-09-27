@@ -139,7 +139,15 @@ it('keeps Paynow notifications and robots exempt from the human challenge', func
         ->get('/robots.txt')
         ->assertOk()
         ->assertSee('User-agent: Googlebot')
-        ->assertSee("User-agent: *\nDisallow: /", false);
+        ->assertSee("User-agent: *\nAllow: /", false)
+        ->assertSee('Disallow: /admin')
+        ->assertSee('Disallow: /account')
+        ->assertSee('Disallow: /cart')
+        ->assertSee('Disallow: /checkout')
+        ->assertSee('Disallow: /guest')
+        ->assertSee('Disallow: /human-check')
+        ->assertSee('Disallow: /payments')
+        ->assertSee('Disallow: /settings');
 
     $response = $this
         ->withHeader('User-Agent', 'curl/8.12.1')
