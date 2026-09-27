@@ -59,11 +59,13 @@ class PaymentReturnController
         }
 
         if ($payment) {
-            $isFailure = in_array($statusFromPaynow, ['ERROR', 'REJECTED', 'CANCELED'], true)
-                || $payment->status->isFailed()
-                || $payment->status->isUnpaid();
-
-            $isSuccess = ! $isFailure;
+            if ($payment->status->isPaid()) {
+                $isSuccess = true;
+            } elseif ($payment->status->isFailed() || $payment->status->isUnpaid()) {
+                $isSuccess = false;
+            } else {
+                $isSuccess = ! in_array($statusFromPaynow, ['ERROR', 'REJECTED', 'CANCELED'], true);
+            }
         } else {
             $isSuccess = true;
         }
