@@ -62,7 +62,7 @@ return [
     ],
 
     'fulfilment_status' => [
-        'unfulfilled' => 'Unfulfilled',
+        'unfulfilled' => 'Awaiting fulfilment',
         'processing' => 'Processing',
         'shipped' => 'Shipped',
         'delivered' => 'Delivered',
