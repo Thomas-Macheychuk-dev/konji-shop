@@ -7,19 +7,19 @@
                 <div>
                     @if ($isSuccess)
                         <p class="text-sm font-medium text-green-700">
-                            Zamówienie przyjęte
+                            {{ __('checkout.return.success_kicker') }}
                         </p>
 
                         <h1 class="mt-1 text-3xl font-bold tracking-tight text-zinc-900">
-                            Dziękujemy za zamówienie
+                            {{ __('checkout.return.success_title') }}
                         </h1>
                     @else
                         <p class="text-sm font-medium text-red-700">
-                            Płatność nie została zakończona
+                            {{ __('checkout.return.failure_kicker') }}
                         </p>
 
                         <h1 class="mt-1 text-3xl font-bold tracking-tight text-zinc-900">
-                            Coś poszło nie tak
+                            {{ __('checkout.return.failure_title') }}
                         </h1>
                     @endif
 
@@ -30,7 +30,7 @@
 
                 @if ($order)
                     <div class="rounded-2xl border {{ $isSuccess ? 'border-green-200' : 'border-red-200' }} bg-white px-4 py-3 text-sm shadow-sm">
-                        <p class="text-zinc-500">Numer zamówienia</p>
+                        <p class="text-zinc-500">{{ __('checkout.return.order_number') }}</p>
                         <p class="mt-1 font-semibold text-zinc-900">{{ $order->number }}</p>
                     </div>
                 @endif
@@ -42,12 +42,12 @@
                 <section class="space-y-6">
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                         <h2 class="text-lg font-semibold text-zinc-900">
-                            Status zamówienia
+                            {{ __('checkout.return.status_heading') }}
                         </h2>
 
                         <dl class="mt-5 grid gap-4 text-sm sm:grid-cols-2">
                             <div>
-                                <dt class="text-zinc-500">Zamówienie</dt>
+                                <dt class="text-zinc-500">{{ __('checkout.return.order') }}</dt>
                                 <dd class="mt-1">
                                     <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium {{ $order->status->badgeColorClasses() }}">
                                         {{ $order->status->label() }}
@@ -56,7 +56,7 @@
                             </div>
 
                             <div>
-                                <dt class="text-zinc-500">Płatność</dt>
+                                <dt class="text-zinc-500">{{ __('checkout.return.payment') }}</dt>
                                 <dd class="mt-1">
                                     @if ($payment)
                                         <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium {{ $payment->status->badgeColorClasses() }}">
@@ -69,7 +69,7 @@
                             </div>
 
                             <div>
-                                <dt class="text-zinc-500">Realizacja</dt>
+                                <dt class="text-zinc-500">{{ __('checkout.return.fulfilment') }}</dt>
                                 <dd class="mt-1">
                                     <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium {{ $order->fulfilment_status->badgeColorClasses() }}">
                                         {{ $order->fulfilment_status->label() }}
@@ -77,14 +77,6 @@
                                 </dd>
                             </div>
 
-                            @if ($status)
-                                <div>
-                                    <dt class="text-zinc-500">Status operatora płatności</dt>
-                                    <dd class="mt-1 font-medium text-zinc-900">
-                                        {{ $status }}
-                                    </dd>
-                                </div>
-                            @endif
                         </dl>
                     </div>
 
@@ -94,18 +86,18 @@
                 <aside class="space-y-6">
                     <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                         <h2 class="text-lg font-semibold text-zinc-900">
-                            Podsumowanie
+                            {{ __('checkout.return.summary') }}
                         </h2>
 
                         <dl class="mt-5 space-y-3 text-sm text-zinc-700">
                             <div class="flex items-center justify-between gap-4">
-                                <dt>Numer zamówienia</dt>
+                                <dt>{{ __('checkout.return.order_number') }}</dt>
                                 <dd class="font-medium text-zinc-900">{{ $order->number }}</dd>
                             </div>
 
                             @if ($order->placed_at)
                                 <div class="flex items-center justify-between gap-4">
-                                    <dt>Data zamówienia</dt>
+                                    <dt>{{ __('checkout.return.order_date') }}</dt>
                                     <dd class="text-right font-medium text-zinc-900">
                                         {{ $order->placed_at->format('Y-m-d H:i') }}
                                     </dd>
@@ -114,7 +106,7 @@
 
                             <div class="border-t border-zinc-100 pt-3">
                                 <div class="flex items-center justify-between gap-4">
-                                    <dt>Suma produktów brutto</dt>
+                                    <dt>{{ __('checkout.return.items_gross') }}</dt>
                                     <dd class="font-medium text-zinc-900">
                                         {{ $order->itemsGrossDecimal() }} {{ $order->currency }}
                                     </dd>
@@ -123,14 +115,14 @@
                                 @if ($order->hasTaxBreakdown())
                                     <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
                                         <div class="flex items-center justify-between gap-4">
-                                            <dt class="text-zinc-500">Produkty netto</dt>
+                                            <dt class="text-zinc-500">{{ __('checkout.return.items_net') }}</dt>
                                             <dd class="font-medium text-zinc-800">
                                                 {{ $order->itemsNetDecimal() }} {{ $order->currency }}
                                             </dd>
                                         </div>
 
                                         <div class="flex items-center justify-between gap-4">
-                                            <dt class="text-zinc-500">VAT od produktów</dt>
+                                            <dt class="text-zinc-500">{{ __('checkout.return.items_vat') }}</dt>
                                             <dd class="font-medium text-zinc-800">
                                                 {{ $order->itemsTaxDecimal() }} {{ $order->currency }}
                                             </dd>
@@ -141,7 +133,7 @@
 
                             <div>
                                 <div class="flex items-center justify-between gap-4">
-                                    <dt>Dostawa brutto</dt>
+                                    <dt>{{ __('checkout.return.shipping_gross') }}</dt>
                                     <dd class="font-medium text-zinc-900">
                                         {{ $order->shippingGrossDecimal() }} {{ $order->currency }}
                                     </dd>
@@ -150,14 +142,14 @@
                                 @if ($order->hasTaxBreakdown() && ($order->shipping_gross_amount > 0 || $order->shipping_amount > 0))
                                     <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
                                         <div class="flex items-center justify-between gap-4">
-                                            <dt class="text-zinc-500">Dostawa netto</dt>
+                                            <dt class="text-zinc-500">{{ __('checkout.return.shipping_net') }}</dt>
                                             <dd class="font-medium text-zinc-800">
                                                 {{ $order->shippingNetDecimal() }} {{ $order->currency }}
                                             </dd>
                                         </div>
 
                                         <div class="flex items-center justify-between gap-4">
-                                            <dt class="text-zinc-500">VAT od dostawy</dt>
+                                            <dt class="text-zinc-500">{{ __('checkout.return.shipping_vat') }}</dt>
                                             <dd class="font-medium text-zinc-800">
                                                 {{ $order->shippingTaxDecimal() }} {{ $order->currency }}
                                             </dd>
@@ -168,7 +160,7 @@
 
                             @if ($order->discount_amount > 0)
                                 <div class="flex items-center justify-between gap-4">
-                                    <dt>Rabat</dt>
+                                    <dt>{{ __('checkout.return.discount') }}</dt>
                                     <dd class="font-medium text-zinc-900">
                                         -{{ $order->discountDecimal() }} {{ $order->currency }}
                                     </dd>
@@ -177,7 +169,7 @@
 
                             @if ($order->hasTaxBreakdown())
                                 <div class="flex items-center justify-between gap-4">
-                                    <dt>VAT razem</dt>
+                                    <dt>{{ __('checkout.return.vat_total') }}</dt>
                                     <dd class="font-medium text-zinc-900">
                                         {{ $order->taxDecimal() }} {{ $order->currency }}
                                     </dd>
@@ -186,7 +178,7 @@
 
                             <div class="border-t border-zinc-200 pt-3">
                                 <div class="flex items-center justify-between gap-4">
-                                    <dt class="text-base font-semibold text-zinc-900">Razem brutto</dt>
+                                    <dt class="text-base font-semibold text-zinc-900">{{ __('checkout.return.total_gross') }}</dt>
                                     <dd class="text-base font-semibold text-zinc-900">
                                         {{ $order->totalDecimal() }} {{ $order->currency }}
                                     </dd>
@@ -204,7 +196,7 @@
                                     href="{{ route('account.orders.show', $order) }}"
                                     class="inline-flex w-full items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                                 >
-                                    Zobacz szczegóły zamówienia
+                                    {{ __('checkout.return.view_order_details') }}
                                 </a>
                             @endauth
 
@@ -212,14 +204,14 @@
                                 href="{{ route('home') }}"
                                 class="inline-flex w-full items-center justify-center rounded-xl border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
                             >
-                                Wróć do sklepu
+                                {{ __('checkout.return.back_to_shop') }}
                             </a>
 
                             <a
                                 href="{{ route('guest.orders.track.show') }}"
                                 class="inline-flex w-full items-center justify-center rounded-xl border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
                             >
-                                Śledź zamówienie
+                                {{ __('checkout.return.track_order') }}
                             </a>
                         </div>
                     </div>
@@ -231,14 +223,14 @@
                     href="{{ route('home') }}"
                     class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-8 py-4 text-sm font-semibold text-white transition hover:bg-zinc-800"
                 >
-                    Wróć do sklepu
+                    {{ __('checkout.return.back_to_shop') }}
                 </a>
 
                 <a
                     href="{{ route('guest.orders.track.show') }}"
                     class="inline-flex items-center justify-center rounded-xl border border-zinc-300 px-8 py-4 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
                 >
-                    Śledź zamówienie
+                    {{ __('checkout.return.track_order') }}
                 </a>
             </div>
         @endif
