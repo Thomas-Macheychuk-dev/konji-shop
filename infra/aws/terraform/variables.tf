@@ -299,3 +299,38 @@ variable "github_actions_environment" {
   type        = string
   default     = "production"
 }
+
+variable "alarm_notification_email" {
+  description = "Operational email that receives production CloudWatch alarm notifications. Leave empty to create alarms without an email subscription."
+  type        = string
+  default     = ""
+}
+
+variable "ec2_root_disk_used_percent_alarm_threshold" {
+  description = "Root filesystem usage percentage that triggers the production EC2 disk alarm."
+  type        = number
+  default     = 85
+
+  validation {
+    condition     = var.ec2_root_disk_used_percent_alarm_threshold > 0 && var.ec2_root_disk_used_percent_alarm_threshold < 100
+    error_message = "ec2_root_disk_used_percent_alarm_threshold must be between 0 and 100."
+  }
+}
+
+variable "rds_free_storage_alarm_bytes" {
+  description = "RDS free-storage threshold in bytes."
+  type        = number
+  default     = 5368709120
+}
+
+variable "rds_cpu_alarm_threshold_percent" {
+  description = "Sustained RDS CPU percentage that triggers an alarm."
+  type        = number
+  default     = 80
+}
+
+variable "rds_database_connections_alarm_threshold" {
+  description = "Sustained RDS connection count that triggers an alarm."
+  type        = number
+  default     = 48
+}

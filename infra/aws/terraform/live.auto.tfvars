@@ -32,7 +32,7 @@ rds_skip_final_snapshot   = false
 
 rds_cloudwatch_log_exports        = ["error", "slowquery"]
 rds_managed_cloudwatch_log_groups = ["error"]
-cloudwatch_log_retention_days     = 0
+cloudwatch_log_retention_days     = 14
 
 s3_bucket_name = "konji-shop-staging-uploads-628263975265"
 
@@ -46,3 +46,9 @@ enable_product_media_cloudfront = true
 extra_tags = {
   Owner = "konji-shop"
 }
+
+ec2_root_disk_used_percent_alarm_threshold = 85
+rds_free_storage_alarm_bytes               = 5368709120
+rds_cpu_alarm_threshold_percent            = 80
+rds_database_connections_alarm_threshold   = 48
+alarm_notification_email                   = "tomek.maciejczuk@gmail.com"
