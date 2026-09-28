@@ -402,11 +402,15 @@ final class IconicProductScraper
         foreach ([
             '.breadcrumbs',
             '.breadcrumb',
+            '#breadcrumbs',
+            '#breadcrumb',
             '[aria-label="breadcrumb"]',
             'nav.breadcrumbs',
             'nav.breadcrumb',
             'ol.breadcrumb',
             'ul.breadcrumb',
+            '.path',
+            '.product-path',
         ] as $selector) {
             try {
                 $node = $crawler->filter($selector)->first();
