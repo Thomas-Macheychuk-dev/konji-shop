@@ -511,7 +511,7 @@ final class DrSapporoProductScraper
             'długość' => 'Długość',
             'wysokość' => 'Wysokość',
         ] as $sourceLabel => $label) {
-            $pattern = '/\\b'.preg_quote($sourceLabel, '/').'\\s*:\\s*'
+            $pattern = '/'.preg_quote($sourceLabel, '/').'\\s*:\\s*'
                 .'([0-9]+(?:[,.][0-9]+)?(?:\\/[0-9]+(?:[,.][0-9]+)?)?'
                 .'\\s*(?:cm|centymetr(?:a|y|ów)?))/iu';
 
