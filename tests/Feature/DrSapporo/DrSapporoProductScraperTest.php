@@ -163,6 +163,46 @@ it('extracts a first width measurement concatenated to its section heading', fun
     ]);
 });
 
+it('recovers Dr Sapporo description text and derives a fallback SEO description', function (): void {
+    $html = <<<'HTML'
+        <html>
+            <head>
+                <link rel="canonical" href="https://drsapporo.com/poduszka-ortopedyczna-salsa-mini">
+            </head>
+            <body>
+                <main>
+                    <h1>Salsa Mini Poduszka ortopedyczna</h1>
+                    <div class="product-price">149,00 zł</div>
+                    <p>Termin realizacji 1 dzień roboczy</p>
+                    <div>
+                        Informacje o poduszce
+                        Salsa Mini to niska poduszka ortopedyczna przeznaczona dla dzieci i drobnych osób dorosłych.
+                        Zapewnia stabilne podparcie głowy i szyi podczas snu.
+                        Wymiary poduszki
+                        szerokość: 50 centymetrów
+                        długość: 30 centymetrów
+                    </div>
+                </main>
+            </body>
+        </html>
+    HTML;
+
+    $result = app(DrSapporoProductScraper::class)->extract(
+        $html,
+        'https://drsapporo.com/poduszka-ortopedyczna-salsa-mini',
+        [
+            'category_name' => 'Poduszki ortopedyczne Dr Sapporo',
+            'brand_name' => 'Dr Sapporo',
+        ],
+    );
+
+    expect($result['description_html'])
+        ->toContain('Salsa Mini to niska poduszka ortopedyczna')
+        ->not->toContain('Wymiary poduszki')
+        ->and($result['seo_description'])->toStartWith('Salsa Mini to niska poduszka ortopedyczna')
+        ->and($result['shipping_time'])->toBe('1 dzień roboczy');
+});
+
 it('normalizes concatenated Dr Sapporo product names', function (): void {
     $html = <<<'HTML'
         <html>
