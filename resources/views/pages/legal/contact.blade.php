@@ -9,7 +9,6 @@
             <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">Kontakt</h1>
 
             <div class="prose prose-zinc mt-8 max-w-none">
-                <h2>{{ $seller['shop_name'] }}</h2>
                 <p>
                     <strong>Sprzedawca:</strong> {{ $seller['company_name'] }}<br>
                     <strong>Adres:</strong> ul. {{ $seller['street'] }}, {{ $seller['postcode'] }} {{ $seller['city'] }}<br>
