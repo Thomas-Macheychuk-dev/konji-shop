@@ -36,7 +36,7 @@ it('extracts normalized Dr Sapporo product data and size variants', function ():
                         <p>Orteza pomaga ustabilizować paluch i może być stosowana w dzień oraz w nocy.</p>
                     </div>
                     <div class="gallery">
-                        <a href="/media/bunito-duo-large.jpg"><img src="/media/bunito-duo-thumb.jpg" alt="Bunito Duo"></a>
+                        <a href="/photos/product/999/bunito-duo-large.jpg"><img src="/photos/product/999/bunito-duo-thumb.jpg" alt="Bunito Duo"></a>
                     </div>
                     <label for="size">Rozmiar:</label>
                     <select id="size" name="size">
@@ -84,7 +84,7 @@ it('extracts normalized Dr Sapporo product data and size variants', function ():
         ->and($result['seo_description'])->toBe('Aparat ortopedyczny na haluksy.')
         ->and($result['description_html'])->toContain('Orteza pomaga ustabilizować paluch')
         ->and($result['images'])->toContain([
-            'url' => 'https://drsapporo.com/media/bunito-duo-large.jpg',
+            'url' => 'https://drsapporo.com/photos/product/999/bunito-duo-large.jpg',
             'alt' => 'Bunito Duo',
         ])
         ->and($result['attributes'])->toContain([
