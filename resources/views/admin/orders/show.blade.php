@@ -1,7 +1,7 @@
 @extends('layouts.storefront')
 
 @section('content')
-    <div class="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8 flex items-start justify-between gap-4">
             <div>
                 <a href="{{ route('admin.orders.index') }}" class="text-sm font-medium text-zinc-500 hover:text-zinc-700">
