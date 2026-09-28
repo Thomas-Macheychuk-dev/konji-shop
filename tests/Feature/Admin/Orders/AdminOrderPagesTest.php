@@ -426,6 +426,7 @@ it('allows an admin to cancel a cancellable order', function (): void {
 
     expect($order->refresh())
         ->status->toBe(OrderStatus::CANCELLED)
+        ->fulfilment_status->toBe(FulfilmentStatus::CANCELLED)
         ->notes->toContain('admin@example.test: Manual admin cancellation.');
 
     expect($order->events()->where('type', 'order_cancelled_by_admin')->exists())->toBeTrue();
