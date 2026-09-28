@@ -327,10 +327,23 @@ final class IconicProductScraper
             return null;
         }
 
-        $normalized = str_replace([' ', '.'], '', $matches[1]);
-        $normalized = str_replace(',', '.', $normalized);
+        $amount = str_replace(["\xc2\xa0", ' '], '', $matches[1]);
+        $commaPosition = strrpos($amount, ',');
+        $dotPosition = strrpos($amount, '.');
 
-        return is_numeric($normalized) ? (float) $normalized : null;
+        if ($commaPosition !== false && $dotPosition !== false) {
+            $decimalSeparator = $commaPosition > $dotPosition ? ',' : '.';
+            $groupingSeparator = $decimalSeparator === ',' ? '.' : ',';
+            $amount = str_replace($groupingSeparator, '', $amount);
+            $amount = str_replace($decimalSeparator, '.', $amount);
+        } elseif ($commaPosition !== false) {
+            $amount = str_replace('.', '', $amount);
+            $amount = str_replace(',', '.', $amount);
+        } elseif ($dotPosition !== false) {
+            $amount = str_replace(',', '', $amount);
+        }
+
+        return is_numeric($amount) ? (float) $amount : null;
     }
 
     private function labelValue(string $summaryText, string $label): ?string
