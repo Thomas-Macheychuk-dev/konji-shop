@@ -47,7 +47,13 @@ final class ImportDrSapporoProductsCommand extends Command
         $selectedProducts = array_slice($products, $offset, $limit);
         $dryRun = (bool) $this->option('dry-run');
         $vatRate = $this->vatRateOption();
-        $vatMap = $this->vatMapOption();
+        $vatMap = $this->configuredVatMap();
+
+        $overrideVatMap = $this->vatMapOption();
+        if ($overrideVatMap !== []) {
+            $vatMap = array_replace($vatMap, $overrideVatMap);
+        }
+
         $selectedProducts = $this->applyVatMap($selectedProducts, $vatMap);
         $importImages = ! $dryRun && ! (bool) $this->option('no-images');
         $imageLimit = $this->imageLimitOption();
@@ -279,6 +285,40 @@ final class ImportDrSapporoProductsCommand extends Command
         $storagePath = storage_path('app/'.$relativePath);
 
         return $storagePath;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function configuredVatMap(): array
+    {
+        $configured = config('drsapporo.vat_rates', []);
+
+        if (! is_array($configured)) {
+            throw new \InvalidArgumentException('Dr Sapporo VAT configuration must be an array.');
+        }
+
+        $map = [];
+
+        foreach ($configured as $externalId => $rateValue) {
+            if (! is_string($externalId) || trim($externalId) === '') {
+                continue;
+            }
+
+            if (is_string($rateValue) && ctype_digit(trim($rateValue))) {
+                $rateValue = (int) trim($rateValue);
+            }
+
+            if (! is_int($rateValue) || VatRate::tryFrom($rateValue) === null) {
+                throw new \InvalidArgumentException(
+                    'Invalid configured VAT rate for Dr Sapporo product '.$externalId.'. Use 0, 5, 8, or 23.'
+                );
+            }
+
+            $map[trim($externalId)] = $rateValue;
+        }
+
+        return $map;
     }
 
     /**
