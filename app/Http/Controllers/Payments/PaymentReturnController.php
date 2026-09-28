@@ -59,26 +59,33 @@ class PaymentReturnController
         }
 
         if ($payment) {
-            $isFailure = in_array($statusFromPaynow, ['ERROR', 'REJECTED', 'CANCELED'], true)
-                || $payment->status->isFailed()
-                || $payment->status->isUnpaid();
-
-            $isSuccess = ! $isFailure;
+            if ($payment->status->isPaid()) {
+                $isSuccess = true;
+            } elseif ($payment->status->isFailed() || $payment->status->isUnpaid()) {
+                $isSuccess = false;
+            } else {
+                $isSuccess = ! in_array($statusFromPaynow, ['ERROR', 'REJECTED', 'CANCELED'], true);
+            }
         } else {
             $isSuccess = true;
         }
 
-        $message = $isSuccess
-            ? 'Dziękujemy za zakupy! Status płatności zostanie zaktualizowany po potwierdzeniu operatora płatności.'
-            : ($payment?->status->isUnpaid()
-                ? 'Zamówienie zostało zapisane, ale płatność nie została rozpoczęta. Możesz bezpiecznie ponowić płatność poniżej.'
-                : 'Płatność nie została zakończona pomyślnie. Spróbuj ponownie lub skontaktuj się z nami.');
+        if ($isSuccess) {
+            $message = match (true) {
+                $payment?->status->isPaid() => __('checkout.return.messages.payment_confirmed'),
+                $payment?->status->isPending() => __('checkout.return.messages.payment_processing'),
+                default => __('checkout.return.messages.order_received'),
+            };
+        } else {
+            $message = $payment?->status->isUnpaid()
+                ? __('checkout.return.messages.payment_not_started')
+                : __('checkout.return.messages.payment_failed');
+        }
 
         return view('pages.checkout.return', [
             'isSuccess' => $isSuccess,
             'order' => $order,
             'payment' => $payment,
-            'status' => $statusFromPaynow,
             'message' => $message,
         ]);
     }

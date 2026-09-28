@@ -62,7 +62,7 @@ return [
     ],
 
     'fulfilment_status' => [
-        'unfulfilled' => 'Nieprzygotowane do realizacji',
+        'unfulfilled' => 'Oczekuje na realizację',
         'processing' => 'W realizacji',
         'shipped' => 'Wysłane',
         'delivered' => 'Dostarczone',
