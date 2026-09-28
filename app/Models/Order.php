@@ -9,6 +9,7 @@ use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Enums\ShipmentStatus;
 use DomainException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -302,6 +303,7 @@ class Order extends Model
 
         $this->update([
             'status' => OrderStatus::CANCELLED,
+            'fulfilment_status' => FulfilmentStatus::CANCELLED,
             'notes' => $trimmedNote !== ''
                 ? ($existingNotes !== '' ? $existingNotes.PHP_EOL.$trimmedNote : $trimmedNote)
                 : $this->notes,
@@ -436,6 +438,7 @@ class Order extends Model
 
         $this->update([
             'status' => OrderStatus::CANCELLED,
+            'fulfilment_status' => FulfilmentStatus::CANCELLED,
         ]);
 
         $this->appendNote($note);
@@ -520,6 +523,15 @@ class Order extends Model
             return false;
         }
 
+        if ($this->shipments()
+            ->whereNotIn('status', [
+                ShipmentStatus::FAILED->value,
+                ShipmentStatus::CANCELLED->value,
+            ])
+            ->exists()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -574,8 +586,11 @@ class Order extends Model
         );
     }
 
-    public function markPaymentAsRefunded(int $refundAmount, bool $fullyRefunded): void
-    {
+    public function markPaymentAsRefunded(
+        int $refundAmount,
+        bool $fullyRefunded,
+        string $source = 'admin_withdrawal_refund',
+    ): void {
         if (! in_array($this->payment_status, [
             PaymentStatus::PAID,
             PaymentStatus::PARTIALLY_REFUNDED,
@@ -592,10 +607,11 @@ class Order extends Model
         $this->recordEvent(
             $fullyRefunded ? 'order_refunded' : 'order_partially_refunded',
             $fullyRefunded
-                ? 'Order marked as refunded after withdrawal.'
-                : 'Order marked as partially refunded after withdrawal.',
+                ? 'Order marked as refunded.'
+                : 'Order marked as partially refunded.',
             [
                 'refund_amount' => $refundAmount,
+                'source' => $source,
             ],
         );
     }

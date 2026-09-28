@@ -68,6 +68,7 @@ return [
         'delivered' => 'Delivered',
         'returned' => 'Returned',
         'ready_for_pickup' => 'Ready For Pickup',
+        'cancelled' => 'Cancelled',
     ],
 
     'company_data_key' => [

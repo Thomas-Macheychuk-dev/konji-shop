@@ -94,14 +94,17 @@ class Payment extends Model
         ]);
     }
 
-    public function markAsRefunded(int $refundAmount, bool $fullyRefunded): void
-    {
+    public function markAsRefunded(
+        int $refundAmount,
+        bool $fullyRefunded,
+        string $source = 'admin_withdrawal_refund',
+    ): void {
         $payload = $this->payload ?? [];
         $payload['refunds'][] = [
             'amount' => $refundAmount,
             'fully_refunded' => $fullyRefunded,
             'processed_at' => now()->toISOString(),
-            'source' => 'admin_withdrawal_refund',
+            'source' => $source,
         ];
 
         $this->update([
@@ -119,6 +122,7 @@ class Payment extends Model
             'meta' => [
                 'payment_id' => $this->id,
                 'refund_amount' => $refundAmount,
+                'source' => $source,
             ],
         ]);
     }
