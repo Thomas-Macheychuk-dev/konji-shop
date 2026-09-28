@@ -513,21 +513,27 @@ final class DrSapporoProductScraper
         ] as $sourceLabel => $label) {
             $pattern = '/\\b'.preg_quote($sourceLabel, '/').'\\s*:\\s*'
                 .'([0-9]+(?:[,.][0-9]+)?(?:\\/[0-9]+(?:[,.][0-9]+)?)?'
-                .'\\s*(?:cm|centymetr(?:a|y|ów)?))\\b/iu';
+                .'\\s*(?:cm|centymetr(?:a|y|ów)?))/iu';
 
             if (preg_match_all($pattern, $bodyText, $matches) < 1) {
                 continue;
             }
 
             foreach ($matches[1] as $value) {
-                $attribute = $this->attribute($label, $this->text((string) $value));
+                $normalizedValue = preg_replace(
+                    '/(?<=[0-9])(?=(?:cm|centymetr(?:a|y|ów)?))/iu',
+                    ' ',
+                    $this->text((string) $value),
+                ) ?? $this->text((string) $value);
+
+                $attribute = $this->attribute($label, $normalizedValue);
                 $attributes[$attribute['code'].'|'.$attribute['slug']] = $attribute;
             }
         }
 
         if (preg_match(
             '/\\bRozmiar\\s+(?:poduszki|aparatu)\\s*:?[\\s-]*'
-                .'(uniwersalny\\s*\\(jeden\\s+rozmiar\\))/iu',
+                .'(uniwersalny\\s*\\((?:jeden\\s+rozmiar|regulowany)\\))/iu',
             $bodyText,
             $matches,
         ) === 1) {
@@ -547,7 +553,7 @@ final class DrSapporoProductScraper
             'code' => Str::slug($label),
             'label' => $label,
             'value' => $value,
-            'slug' => Str::slug(str_replace(['/', '\\'], '-', $value)),
+            'slug' => Str::slug(str_replace(['/', '\\', ',', '.'], '-', $value)),
         ];
     }
 
