@@ -671,26 +671,33 @@ final class IconicProductScraper
 
         try {
             $crawler->filter('select')->each(function (Crawler $select) use (&$variants, $priceGrossAmount): void {
+                $selectNode = $select->getNode(0);
+
+                if (! $selectNode instanceof DOMElement) {
+                    return;
+                }
+
                 $options = [];
 
-                try {
-                    $select->filter('option')->each(function (Crawler $option) use (&$options): void {
-                        $label = $this->normalizeText($option->text('', false));
-                        $value = $this->normalizeText((string) $option->attr('value'));
+                foreach ($selectNode->getElementsByTagName('option') as $optionNode) {
+                    if (! $optionNode instanceof DOMElement) {
+                        continue;
+                    }
 
-                        if ($label === ''
-                            || str_contains($this->comparable($label), 'wybierz opcje')
-                            || str_contains($this->comparable($label), 'wybierz')) {
-                            return;
-                        }
+                    $label = $this->normalizeText($optionNode->textContent ?? '');
+                    $value = $this->normalizeText($optionNode->getAttribute('value'));
+                    $comparableLabel = $this->comparable($label);
 
-                        $options[] = [
-                            'value' => $value,
-                            'label' => $label,
-                        ];
-                    });
-                } catch (Throwable) {
-                    return;
+                    if ($label === ''
+                        || str_contains($comparableLabel, 'wybierz opcje')
+                        || str_contains($comparableLabel, 'wybierz')) {
+                        continue;
+                    }
+
+                    $options[] = [
+                        'value' => $value,
+                        'label' => $label,
+                    ];
                 }
 
                 if ($options === []) {
