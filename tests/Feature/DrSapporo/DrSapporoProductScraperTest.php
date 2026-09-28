@@ -129,6 +129,40 @@ it('extracts normalized Dr Sapporo product data and size variants', function ():
         ]);
 });
 
+it('extracts a first width measurement concatenated to its section heading', function (): void {
+    $html = <<<'HTML'
+        <html>
+            <head>
+                <link rel="canonical" href="https://drsapporo.com/poduszka-ortopedyczna-rock">
+            </head>
+            <body>
+                <main>
+                    <h1>Rock Poduszka ortopedyczna</h1>
+                    <div class="product-price">319,00 zł</div>
+                    <p>Termin realizacji: 1 dzień roboczy</p>
+                    <div>Wymiary poduszkiszerokość: 62 centymetry długość: 38 centymetrów wysokość: 3/11 centymetrów</div>
+                </main>
+            </body>
+        </html>
+    HTML;
+
+    $result = app(DrSapporoProductScraper::class)->extract(
+        $html,
+        'https://drsapporo.com/poduszka-ortopedyczna-rock',
+        [
+            'category_name' => 'Poduszki ortopedyczne Dr Sapporo',
+            'brand_name' => 'Dr Sapporo',
+        ],
+    );
+
+    expect($result['attributes'])->toContain([
+        'code' => 'szerokosc',
+        'label' => 'Szerokość',
+        'value' => '62 centymetry',
+        'slug' => '62-centymetry',
+    ]);
+});
+
 it('records failed Dr Sapporo product requests without throwing', function (): void {
     Http::fake([
         'https://drsapporo.com/poduszka-ortopedyczna-missing' => Http::response('', 404),
