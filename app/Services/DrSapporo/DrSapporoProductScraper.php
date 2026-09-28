@@ -89,12 +89,14 @@ final class DrSapporoProductScraper
 
         $canonicalUrl = $this->canonicalUrl($crawler, $sourceUrl);
         $slug = $this->slugFromUrl($canonicalUrl);
-        $name = $this->firstText($crawler, [
-            'h1',
-            '[itemprop="name"]',
-            '.product-name',
-            '.product-title',
-        ]) ?? $this->contextString($context, 'name') ?? Str::headline($slug);
+        $name = $this->normalizeProductName(
+            $this->firstText($crawler, [
+                'h1',
+                '[itemprop="name"]',
+                '.product-name',
+                '.product-title',
+            ]) ?? $this->contextString($context, 'name') ?? Str::headline($slug)
+        );
 
         $brandName = $this->contextString($context, 'brand_name')
             ?? $this->inferBrand($name, $html);
@@ -197,6 +199,17 @@ final class DrSapporoProductScraper
         $slug = basename($path);
 
         return $slug !== '' ? $slug : substr(sha1($url), 0, 32);
+    }
+
+    private function normalizeProductName(string $name): string
+    {
+        $name = preg_replace(
+            '/(?<=[\\p{L}\\p{N})])(?=(?:Poduszka|Poszewka|Aparat)\\b)/u',
+            ' ',
+            $name,
+        ) ?? $name;
+
+        return $this->text($name);
     }
 
     private function inferBrand(string $name, string $html): string
