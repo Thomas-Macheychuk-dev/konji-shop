@@ -299,7 +299,7 @@ final class DrSapporoProductScraper
 
     private function extractShippingTime(string $bodyText): ?string
     {
-        if (preg_match('/Termin\s+realizacji\s*:?\s*([0-9]+\s+(?:dzień|dni|godzin(?:a|y)?)(?:\s+robocz(?:y|e|ych))?)/iu', $bodyText, $matches) === 1) {
+        if (preg_match('/Termin\s*realizacji\s*:?\s*([0-9]+\s+(?:dzień|dni|godzin(?:a|y)?)(?:\s+robocz(?:y|e|ych))?)/iu', $bodyText, $matches) === 1) {
             return $this->text($matches[1]);
         }
 
@@ -733,7 +733,7 @@ final class DrSapporoProductScraper
     private function descriptionTextFromBody(string $bodyText): ?string
     {
         if (preg_match(
-            '/Informacje\s+o\s+(?:poduszce|poszewce|aparacie|produkcie)\b/iu',
+            '/Informacje\s*o\s*(?:poduszce|poszewce|aparacie|produkcie)/iu',
             $bodyText,
             $startMatch,
             PREG_OFFSET_CAPTURE,
@@ -752,12 +752,12 @@ final class DrSapporoProductScraper
         $stopOffset = strlen($tail);
 
         foreach ([
-            '/\bWymiary\s+(?:poduszki|aparatu)\b/iu',
-            '/\bRozmiary?\s+(?:poduszki|poszewki|aparatu)\b/iu',
-            '/\bDostawa\s+(?:poduszki|poszewki|aparatu)\b/iu',
-            '/\bGwarancja\s+(?:na\s+)?(?:poduszkę|poszewkę|aparat)\b/iu',
-            '/\bProdukty\s+Zakupy\s+u\s+nas\b/iu',
-            '/\bCiasteczka\s+na\s+powitanie\b/iu',
+            '/Wymiary\s*(?:poduszki|aparatu)/iu',
+            '/Rozmiary?\s*(?:poduszki|poszewki|aparatu)/iu',
+            '/Dostawa\s*(?:poduszki|poszewki|aparatu)/iu',
+            '/Gwarancja\s*(?:na\s*)?(?:poduszkę|poszewkę|aparat)/iu',
+            '/Produkty\s*Zakupy\s*u\s*nas/iu',
+            '/Ciasteczka\s*na\s*powitanie/iu',
         ] as $stopPattern) {
             if (preg_match($stopPattern, $tail, $stopMatch, PREG_OFFSET_CAPTURE) !== 1) {
                 continue;
