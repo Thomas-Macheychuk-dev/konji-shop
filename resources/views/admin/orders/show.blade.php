@@ -921,12 +921,12 @@
             </div>
         </div>
 
-        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+        <div class="mt-6 min-w-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <h2 class="text-lg font-semibold text-zinc-900">Oś czasu zamówienia</h2>
 
             <div class="mt-4 space-y-4">
                 @forelse ($order->events as $event)
-                    <div class="border-l-2 border-zinc-200 pl-4">
+                    <div class="min-w-0 border-l-2 border-zinc-200 pl-4">
                         <p class="text-sm font-semibold text-zinc-900">
                             {{ $event->description }}
                         </p>
