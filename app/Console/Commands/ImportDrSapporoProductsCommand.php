@@ -17,7 +17,8 @@ final class ImportDrSapporoProductsCommand extends Command
         {--dry-run : Validate and summarize the import without writing to the database or downloading images.}
         {--limit= : Maximum number of products to import.}
         {--offset=0 : Number of products to skip before importing.}
-        {--vat-rate= : Explicit VAT rate to use when product data has no vat_rate. Allowed: 0, 5, 8, 23.}
+        {--vat-rate= : Explicit fallback VAT rate to use when product data and VAT map have no vat_rate. Allowed: 0, 5, 8, 23.}
+        {--vat-map= : Optional JSON map of external_product_id to VAT rate (0, 5, 8, or 23).}
         {--no-images : Do not download or sync product images.}
         {--image-limit=10 : Maximum number of images to import per product. Use 0 for no limit.}
         {--show-failures : Print failed product imports at the end.}';
@@ -46,6 +47,8 @@ final class ImportDrSapporoProductsCommand extends Command
         $selectedProducts = array_slice($products, $offset, $limit);
         $dryRun = (bool) $this->option('dry-run');
         $vatRate = $this->vatRateOption();
+        $vatMap = $this->vatMapOption();
+        $selectedProducts = $this->applyVatMap($selectedProducts, $vatMap);
         $importImages = ! $dryRun && ! (bool) $this->option('no-images');
         $imageLimit = $this->imageLimitOption();
 
@@ -56,7 +59,8 @@ final class ImportDrSapporoProductsCommand extends Command
         $this->line('Mode: '.($dryRun ? 'dry-run' : 'database import'));
         $this->line('Images: '.($importImages ? 'download and sync' : 'skipped'));
         $this->line('Image limit per product: '.($imageLimit === null ? 'none' : (string) $imageLimit));
-        $this->line('VAT override: '.($vatRate?->value !== null ? (string) $vatRate->value.'%' : 'none'));
+        $this->line('VAT map entries: '.count($vatMap));
+        $this->line('VAT fallback override: '.($vatRate?->value !== null ? (string) $vatRate->value.'%' : 'none'));
 
         if ($dryRun) {
             $this->printDryRunSummary($selectedProducts, $vatRate);
@@ -251,6 +255,88 @@ final class ImportDrSapporoProductsCommand extends Command
         $storagePath = storage_path('app/'.$relativePath);
 
         return $storagePath;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function vatMapOption(): array
+    {
+        $value = $this->option('vat-map');
+
+        if (! is_string($value) || trim($value) === '') {
+            return [];
+        }
+
+        $path = $this->resolvePath(trim($value));
+
+        if (! is_file($path)) {
+            throw new \InvalidArgumentException('Dr Sapporo VAT map file not found: '.$path);
+        }
+
+        try {
+            $decoded = json_decode((string) file_get_contents($path), true, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException $exception) {
+            throw new \InvalidArgumentException(
+                'Dr Sapporo VAT map is not valid JSON: '.$exception->getMessage(),
+                previous: $exception,
+            );
+        }
+
+        if (! is_array($decoded)) {
+            throw new \InvalidArgumentException('Dr Sapporo VAT map must be a JSON object.');
+        }
+
+        $map = [];
+
+        foreach ($decoded as $externalId => $rateValue) {
+            if (! is_string($externalId) || trim($externalId) === '') {
+                continue;
+            }
+
+            if (is_string($rateValue) && ctype_digit(trim($rateValue))) {
+                $rateValue = (int) trim($rateValue);
+            }
+
+            if (! is_int($rateValue) || VatRate::tryFrom($rateValue) === null) {
+                throw new \InvalidArgumentException(
+                    'Invalid VAT rate for Dr Sapporo product '.$externalId.'. Use 0, 5, 8, or 23.'
+                );
+            }
+
+            $map[trim($externalId)] = $rateValue;
+        }
+
+        return $map;
+    }
+
+    /**
+     * @param  array<int, mixed>  $products
+     * @param  array<string, int>  $vatMap
+     * @return array<int, mixed>
+     */
+    private function applyVatMap(array $products, array $vatMap): array
+    {
+        if ($vatMap === []) {
+            return $products;
+        }
+
+        foreach ($products as $index => $product) {
+            if (! is_array($product)) {
+                continue;
+            }
+
+            $externalId = $product['external_product_id'] ?? null;
+
+            if (! is_string($externalId) || ! array_key_exists($externalId, $vatMap)) {
+                continue;
+            }
+
+            $product['vat_rate'] = $vatMap[$externalId];
+            $products[$index] = $product;
+        }
+
+        return $products;
     }
 
     private function vatRateOption(): ?VatRate
