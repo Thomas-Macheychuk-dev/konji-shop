@@ -717,7 +717,7 @@
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <h2 class="text-lg font-semibold text-zinc-900">Przesyłki</h2>
 
-            <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
+            <div class="mt-4 overflow-x-auto rounded-xl border border-zinc-200">
                 <table class="min-w-full divide-y divide-zinc-200">
                     <thead class="bg-zinc-50">
                     <tr>
