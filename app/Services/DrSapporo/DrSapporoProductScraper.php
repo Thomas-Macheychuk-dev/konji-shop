@@ -103,7 +103,7 @@ final class DrSapporoProductScraper
         $categoryName = $this->contextString($context, 'category_name')
             ?? $this->breadcrumbCategory($crawler);
 
-        $bodyText = $this->text($crawler->filter('body')->count() > 0 ? $crawler->filter('body')->text('') : strip_tags($html));
+        $bodyText = $this->extractBodyText($crawler, $html);
         $price = $this->extractPrice($crawler, $bodyText);
         $shippingTime = $this->extractShippingTime($bodyText);
         $availability = $this->extractAvailability($bodyText);
@@ -258,6 +258,52 @@ final class DrSapporoProductScraper
         }
 
         return null;
+    }
+
+    private function extractBodyText(Crawler $crawler, string $html): string
+    {
+        try {
+            $body = $crawler->filter('body')->first();
+            $node = $body->getNode(0);
+
+            if ($node instanceof \DOMNode) {
+                $text = $this->nodeTextWithBoundaries($node);
+
+                if ($text !== '') {
+                    return $text;
+                }
+            }
+        } catch (Throwable) {
+            // Fall back to HTML stripping below.
+        }
+
+        $withBoundaries = preg_replace('/<[^>]+>/u', ' ', $html) ?? $html;
+
+        return $this->text(strip_tags($withBoundaries));
+    }
+
+    private function nodeTextWithBoundaries(\DOMNode $node): string
+    {
+        if ($node instanceof DOMElement
+            && in_array(mb_strtolower($node->tagName), ['script', 'style', 'noscript', 'template'], true)) {
+            return '';
+        }
+
+        if ($node instanceof \DOMText) {
+            return $this->text($node->nodeValue ?? '');
+        }
+
+        $parts = [];
+
+        foreach ($node->childNodes as $child) {
+            $text = $this->nodeTextWithBoundaries($child);
+
+            if ($text !== '') {
+                $parts[] = $text;
+            }
+        }
+
+        return $this->text(implode(' ', $parts));
     }
 
     private function extractPrice(Crawler $crawler, string $bodyText): ?float
