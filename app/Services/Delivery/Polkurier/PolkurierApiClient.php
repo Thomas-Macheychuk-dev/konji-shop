@@ -22,17 +22,17 @@ final class PolkurierApiClient
         ]);
 
         if ($response->failed()) {
-            throw new RuntimeException('Polkurier HTTP request failed.');
+            throw new RuntimeException('Żądanie HTTP do Polkurier nie powiodło się.');
         }
 
         $payload = $response->json();
 
         if (! is_array($payload)) {
-            throw new RuntimeException('Polkurier returned invalid JSON.');
+            throw new RuntimeException('Polkurier zwrócił nieprawidłową odpowiedź JSON.');
         }
 
         if (($payload['status'] ?? null) !== 'success') {
-            throw new RuntimeException((string) ($payload['response'] ?? 'Polkurier request failed.'));
+            throw new RuntimeException((string) ($payload['response'] ?? 'Żądanie do Polkurier nie powiodło się.'));
         }
 
         return $payload;
@@ -150,7 +150,7 @@ final class PolkurierApiClient
         $decoded = base64_decode($file, true);
 
         if ($decoded === false) {
-            throw new RuntimeException('Polkurier returned an invalid label file.');
+            throw new RuntimeException('Polkurier zwrócił nieprawidłowy plik etykiety.');
         }
 
         return $decoded;
@@ -171,7 +171,7 @@ final class PolkurierApiClient
         $decoded = base64_decode($file, true);
 
         if ($decoded === false) {
-            throw new RuntimeException('Polkurier returned an invalid protocol file.');
+            throw new RuntimeException('Polkurier zwrócił nieprawidłowy plik protokołu.');
         }
 
         return $decoded;
@@ -205,7 +205,7 @@ final class PolkurierApiClient
         }
 
         if (($response['cancellation'] ?? false) !== true) {
-            throw new RuntimeException('Polkurier did not confirm shipment cancellation.');
+            throw new RuntimeException('Polkurier nie potwierdził anulowania przesyłki.');
         }
 
         return $payload;

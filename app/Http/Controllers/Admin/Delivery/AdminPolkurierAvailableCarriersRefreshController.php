@@ -22,11 +22,11 @@ final class AdminPolkurierAvailableCarriersRefreshController extends Controller
         } catch (Throwable $exception) {
             return redirect()
                 ->route('admin.polkurier.index')
-                ->with('error', 'Could not refresh Polkurier available carriers: '.$exception->getMessage());
+                ->with('error', 'Nie udało się odświeżyć dostępnych przewoźników Polkurier: '.$exception->getMessage());
         }
 
         return redirect()
             ->route('admin.polkurier.index')
-            ->with('success', 'Polkurier available carriers refreshed. Found '.count($carriers).' carrier(s).');
+            ->with('success', 'Odświeżono dostępnych przewoźników Polkurier. Liczba przewoźników: '.count($carriers).'.');
     }
 }

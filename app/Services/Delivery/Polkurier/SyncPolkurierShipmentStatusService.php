@@ -19,7 +19,7 @@ final class SyncPolkurierShipmentStatusService
     public function sync(Shipment $shipment): Shipment
     {
         if ($shipment->provider !== DeliveryProvider::POLKURIER) {
-            throw new RuntimeException('Only Polkurier shipments can be synced.');
+            throw new RuntimeException('Można synchronizować tylko przesyłki Polkurier.');
         }
 
         if (! $shipment->provider_reference) {

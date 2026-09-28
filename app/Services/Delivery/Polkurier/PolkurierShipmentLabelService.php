@@ -22,7 +22,7 @@ final class PolkurierShipmentLabelService
     public function getOrStoreLabel(Shipment $shipment): array
     {
         if ($shipment->provider !== DeliveryProvider::POLKURIER) {
-            throw new RuntimeException('Only Polkurier shipment labels can be downloaded here.');
+            throw new RuntimeException('Tutaj można pobrać etykietę tylko dla przesyłki Polkurier.');
         }
 
         if (! $shipment->provider_reference) {

@@ -263,7 +263,7 @@ it('refuses to create a Polkurier shipment when the recipient house number canno
     ]);
 
     expect(fn () => app(PolkurierDeliveryGateway::class)->createShipment($order, $shipment))
-        ->toThrow(RuntimeException::class, 'Shipping address line 1 must end with a house number.');
+        ->toThrow(RuntimeException::class, 'Pierwsza linia adresu dostawy musi kończyć się numerem budynku.');
 
     Http::assertNothingSent();
 });

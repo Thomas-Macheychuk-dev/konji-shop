@@ -77,7 +77,7 @@ it('keeps a failed shipment when the delivery gateway fails', function (): void 
 
         $this->fail('Expected shipment creation to fail.');
     } catch (RuntimeException $exception) {
-        expect($exception->getMessage())->toContain('Shipment creation failed');
+        expect($exception->getMessage())->toContain('Nie udało się utworzyć przesyłki');
     }
 
     $shipment = $order->shipments()->first();
@@ -147,4 +147,4 @@ it('does not create a shipment for an order that is not confirmed', function ():
         order: $order,
         provider: DeliveryProvider::POLKURIER->value,
     );
-})->throws(RuntimeException::class, 'Only confirmed orders can have shipments created.');
+})->throws(RuntimeException::class, 'Przesyłkę można utworzyć tylko dla potwierdzonego zamówienia.');

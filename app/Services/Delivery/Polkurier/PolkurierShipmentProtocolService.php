@@ -22,7 +22,7 @@ final class PolkurierShipmentProtocolService
     public function getOrStoreProtocol(Shipment $shipment): array
     {
         if ($shipment->provider !== DeliveryProvider::POLKURIER) {
-            throw new RuntimeException('Only Polkurier shipment protocols can be downloaded here.');
+            throw new RuntimeException('Tutaj można pobrać protokół tylko dla przesyłki Polkurier.');
         }
 
         if (! $shipment->provider_reference) {

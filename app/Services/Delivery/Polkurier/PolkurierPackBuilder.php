@@ -106,7 +106,7 @@ final class PolkurierPackBuilder
         $pack = config('delivery.providers.polkurier.default_pack');
 
         if (! is_array($pack)) {
-            throw new RuntimeException('Polkurier default pack configuration is missing.');
+            throw new RuntimeException('Brakuje domyślnej konfiguracji paczki Polkurier.');
         }
 
         return [

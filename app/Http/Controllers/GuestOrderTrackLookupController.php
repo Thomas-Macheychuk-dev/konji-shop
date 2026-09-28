@@ -38,7 +38,7 @@ class GuestOrderTrackLookupController extends Controller
             return back()
                 ->withInput()
                 ->withErrors([
-                    'number' => 'We could not find an order matching those details.',
+                    'number' => 'Nie znaleziono zamówienia pasującego do podanych danych.',
                 ]);
         }
 

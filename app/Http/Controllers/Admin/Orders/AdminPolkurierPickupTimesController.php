@@ -24,13 +24,13 @@ final class AdminPolkurierPickupTimesController extends Controller
         $sender = config('delivery.providers.polkurier.sender');
 
         if (! is_array($sender) || blank($sender['postcode'] ?? null)) {
-            throw new RuntimeException('Polkurier sender postcode is missing.');
+            throw new RuntimeException('Brakuje kodu pocztowego nadawcy Polkurier.');
         }
 
         $defaultPack = config('delivery.providers.polkurier.default_pack');
 
         if (! is_array($defaultPack)) {
-            throw new RuntimeException('Polkurier default pack configuration is missing.');
+            throw new RuntimeException('Brakuje domyślnej konfiguracji paczki Polkurier.');
         }
 
         $shippingAddress = $order->shippingAddress()->first()

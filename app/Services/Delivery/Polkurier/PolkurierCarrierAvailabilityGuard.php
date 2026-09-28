@@ -79,7 +79,7 @@ final class PolkurierCarrierAvailabilityGuard
                 courierCode: $courierCode,
                 message: $this->failWhenCacheEmpty()
                     ? 'Dane dostępnych przewoźników Polkurier nie zostały jeszcze odświeżone.'
-                    : 'Dane dostępnych przewoźników Polkurier nie zostały jeszcze odświeżone. Shipment creation is allowed, but refresh carrier data in diagnostics before production use.',
+                    : 'Dane dostępnych przewoźników Polkurier nie zostały jeszcze odświeżone. Utworzenie przesyłki jest dozwolone, ale przed użyciem produkcyjnym odśwież dane przewoźników w diagnostyce.',
             );
         }
 
@@ -103,7 +103,7 @@ final class PolkurierCarrierAvailabilityGuard
                 blocking: true,
                 severity: 'error',
                 courierCode: $courierCode,
-                message: 'Polkurier carrier '.$courierCode.' does not currently support shipment type '.$shipmentType.'.',
+                message: 'Przewoźnik Polkurier '.$courierCode.' nie obsługuje obecnie typu przesyłki '.$shipmentType.'.',
             );
         }
 
@@ -116,7 +116,7 @@ final class PolkurierCarrierAvailabilityGuard
                 blocking: false,
                 severity: 'warning',
                 courierCode: $courierCode,
-                message: 'Polkurier carrier '.$courierCode.' requires additional fields. Fill them in before creating the shipment.',
+                message: 'Przewoźnik Polkurier '.$courierCode.' wymaga dodatkowych pól. Uzupełnij je przed utworzeniem przesyłki.',
                 missingRequiredFields: $requiredFields,
                 additionalFields: $additionalFields,
             );
@@ -127,7 +127,7 @@ final class PolkurierCarrierAvailabilityGuard
             blocking: false,
             severity: 'success',
             courierCode: $courierCode,
-            message: 'Polkurier carrier '.$courierCode.' is available.',
+            message: 'Przewoźnik Polkurier '.$courierCode.' jest dostępny.',
             additionalFields: $additionalFields,
         );
     }
@@ -157,7 +157,7 @@ final class PolkurierCarrierAvailabilityGuard
         }
 
         throw new PolkurierCarrierAvailabilityException(
-            'Polkurier carrier '.$check['courier_code'].' requires additional fields that are missing: '
+            'Przewoźnik Polkurier '.$check['courier_code'].' wymaga brakujących pól dodatkowych: '
             .implode(', ', $missingRequiredFields).'.'
         );
     }

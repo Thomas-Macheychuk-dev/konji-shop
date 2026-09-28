@@ -21,6 +21,6 @@ final class AdminOrderNoteController extends Controller
             $request->user()->email.': '.$validated['note']
         );
 
-        return back()->with('success', 'Internal note added.');
+        return back()->with('success', 'Dodano notatkę wewnętrzną.');
     }
 }

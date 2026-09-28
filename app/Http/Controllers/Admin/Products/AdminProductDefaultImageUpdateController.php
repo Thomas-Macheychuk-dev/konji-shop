@@ -25,7 +25,7 @@ final class AdminProductDefaultImageUpdateController extends Controller
                 Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE => $this->selectProductImage($product, $imageId),
                 Product::DEFAULT_IMAGE_TYPE_ATTRIBUTE_VALUE_IMAGE => $this->selectAttributeValueImage($product, $imageId),
                 default => throw ValidationException::withMessages([
-                    'default_image' => __('The selected default image type is invalid.'),
+                    'default_image' => 'Wybrany typ zdjęcia domyślnego jest nieprawidłowy.',
                 ]),
             };
 
@@ -35,7 +35,7 @@ final class AdminProductDefaultImageUpdateController extends Controller
             ]);
         });
 
-        return back()->with('success', 'Default product image updated.');
+        return back()->with('success', 'Zaktualizowano domyślne zdjęcie produktu.');
     }
 
     private function selectProductImage(Product $product, int $imageId): void
@@ -46,7 +46,7 @@ final class AdminProductDefaultImageUpdateController extends Controller
 
         if ($image === null) {
             throw ValidationException::withMessages([
-                'default_image' => __('The selected image does not belong to this product.'),
+                'default_image' => 'Wybrane zdjęcie nie należy do tego produktu.',
             ]);
         }
 
@@ -67,7 +67,7 @@ final class AdminProductDefaultImageUpdateController extends Controller
 
         if ($image === null) {
             throw ValidationException::withMessages([
-                'default_image' => __('The selected image does not belong to this product.'),
+                'default_image' => 'Wybrane zdjęcie nie należy do tego produktu.',
             ]);
         }
     }

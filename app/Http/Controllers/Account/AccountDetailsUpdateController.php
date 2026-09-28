@@ -48,6 +48,6 @@ final class AccountDetailsUpdateController
 
         return redirect()
             ->route('account.details.show')
-            ->with('success', 'Your account details have been updated.');
+            ->with('success', 'Dane konta zostały zaktualizowane.');
     }
 }

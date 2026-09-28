@@ -80,7 +80,7 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
         $sender = config('delivery.providers.polkurier.sender');
 
         if (! is_array($sender)) {
-            throw new RuntimeException('Polkurier sender configuration is missing.');
+            throw new RuntimeException('Brakuje konfiguracji nadawcy Polkurier.');
         }
 
         return [
@@ -104,7 +104,7 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
             ?? $order->addresses()->where('type', 'shipping')->first();
 
         if ($shippingAddress === null) {
-            throw new RuntimeException('Order has no shipping address.');
+            throw new RuntimeException('Zamówienie nie ma adresu dostawy.');
         }
 
         $streetAddress = $this->splitRecipientStreetAddress(
@@ -136,14 +136,14 @@ final class PolkurierDeliveryGateway implements DeliveryGateway
         $matches = [];
 
         if (preg_match('/^(?<street>.+?)\s+(?<house>\d+[\p{L}]?(?:[-\/]\d+[\p{L}]?)*)$/u', $addressLine1, $matches) !== 1) {
-            throw new RuntimeException('Shipping address line 1 must end with a house number.');
+            throw new RuntimeException('Pierwsza linia adresu dostawy musi kończyć się numerem budynku.');
         }
 
         $street = trim((string) ($matches['street'] ?? ''));
         $houseNumber = trim((string) ($matches['house'] ?? ''));
 
         if ($street === '' || $houseNumber === '') {
-            throw new RuntimeException('Shipping address line 1 must contain a street and house number.');
+            throw new RuntimeException('Pierwsza linia adresu dostawy musi zawierać ulicę i numer budynku.');
         }
 
         return [

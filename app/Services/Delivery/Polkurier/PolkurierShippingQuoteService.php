@@ -30,7 +30,7 @@ final class PolkurierShippingQuoteService
         array $packs = [],
     ): ShippingQuoteResult {
         if ($provider !== DeliveryProvider::POLKURIER) {
-            throw new RuntimeException('Unsupported delivery provider for shipping quote.');
+            throw new RuntimeException('Nieobsługiwany operator dostawy dla wyceny przesyłki.');
         }
 
         if ($carrier === DeliveryCarrier::LOCAL_PICKUP || $service === 'local_pickup') {
@@ -70,7 +70,7 @@ final class PolkurierShippingQuoteService
             $grossPrice = (float) ($selected['grossprice'] ?? 0);
 
             if ($grossPrice <= 0) {
-                throw new RuntimeException('Polkurier returned an invalid gross shipping price.');
+                throw new RuntimeException('Polkurier zwrócił nieprawidłową cenę brutto dostawy.');
             }
 
             return new ShippingQuoteResult(
@@ -156,13 +156,13 @@ final class PolkurierShippingQuoteService
         $sender = config('delivery.providers.polkurier.sender');
 
         if (! is_array($sender)) {
-            throw new RuntimeException('Polkurier sender configuration is missing.');
+            throw new RuntimeException('Brakuje konfiguracji nadawcy Polkurier.');
         }
 
         $pack = config('delivery.providers.polkurier.default_pack');
 
         if (! is_array($pack)) {
-            throw new RuntimeException('Polkurier default pack configuration is missing.');
+            throw new RuntimeException('Brakuje domyślnej konfiguracji paczki Polkurier.');
         }
 
         return [
@@ -213,7 +213,7 @@ final class PolkurierShippingQuoteService
         $pack = config('delivery.providers.polkurier.default_pack');
 
         if (! is_array($pack)) {
-            throw new RuntimeException('Polkurier default pack configuration is missing.');
+            throw new RuntimeException('Brakuje domyślnej konfiguracji paczki Polkurier.');
         }
 
         return [

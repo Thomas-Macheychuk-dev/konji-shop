@@ -28,7 +28,7 @@ final class HumanChallengeController extends Controller
 
         $siteKey = trim((string) config('traffic_protection.turnstile.site_key'));
 
-        abort_if($siteKey === '', 503, 'Human verification is not configured.');
+        abort_if($siteKey === '', 503, 'Weryfikacja użytkownika nie jest skonfigurowana.');
 
         return view('security.human-check', [
             'siteKey' => $siteKey,

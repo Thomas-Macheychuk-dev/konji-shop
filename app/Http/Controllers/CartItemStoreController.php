@@ -35,7 +35,7 @@ class CartItemStoreController extends Controller
         if ($variant->status !== ProductVariantStatus::ACTIVE) {
             return back()
                 ->withErrors([
-                    'product_variant_id' => 'This product variant is not available.',
+                    'product_variant_id' => 'Ten wariant produktu jest niedostępny.',
                 ])
                 ->withInput();
         }
@@ -43,7 +43,7 @@ class CartItemStoreController extends Controller
         if (! $variant->product || $variant->product->status !== ProductStatus::ACTIVE) {
             return back()
                 ->withErrors([
-                    'product_variant_id' => 'This product is not available.',
+                    'product_variant_id' => 'Ten produkt jest niedostępny.',
                 ])
                 ->withInput();
         }

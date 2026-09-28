@@ -188,6 +188,8 @@
     "You will be prompted for a secure, random pin during login, which you can retrieve from the TOTP-supported application on your phone.": "Podczas logowania zostaniesz poproszony o bezpieczny, losowy kod PIN, który możesz odczytać w aplikacji TOTP na telefonie.",
     "Your company address is incomplete.": "Adres firmy jest niekompletny.",
     "Your email address is unverified.": "Twój adres e-mail nie został zweryfikowany.",
+    "The provided two factor authentication code was invalid.": "Podany kod uwierzytelniania dwuskładnikowego jest nieprawidłowy.",
+    "The provided two factor recovery code was invalid.": "Podany kod odzyskiwania uwierzytelniania dwuskładnikowego jest nieprawidłowy.",
     "or you can": "albo możesz",
     "or, enter the code manually": "lub wpisz kod ręcznie"
 }

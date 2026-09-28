@@ -36,7 +36,7 @@ final class AdminOrderShipmentController extends Controller
                 lockerCode: $validated['locker_code'] ?? null,
             );
         } catch (ValueError) {
-            return back()->with('error', 'Unsupported delivery provider.');
+            return back()->with('error', 'Nieobsługiwany operator dostawy.');
         } catch (RuntimeException $exception) {
             return back()->with('error', $exception->getMessage());
         }

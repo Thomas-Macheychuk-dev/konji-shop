@@ -32,7 +32,7 @@ final class CreateShipmentService implements CreatesShipments
         array $additionalFields = [],
     ): Shipment {
         if (! $order->status->isConfirmed()) {
-            throw new RuntimeException('Only confirmed orders can have shipments created.');
+            throw new RuntimeException('Przesyłkę można utworzyć tylko dla potwierdzonego zamówienia.');
         }
 
         $shipment = DB::transaction(function () use ($order, $provider, $service, $lockerCode): Shipment {
@@ -78,7 +78,7 @@ final class CreateShipmentService implements CreatesShipments
             $shipment->markAsFailed($failurePayload);
 
             throw new RuntimeException(
-                'Shipment creation failed: '.$exception->getMessage(),
+                'Nie udało się utworzyć przesyłki: '.$exception->getMessage(),
                 previous: $exception,
             );
         }

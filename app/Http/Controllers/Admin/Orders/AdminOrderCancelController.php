@@ -26,6 +26,6 @@ final class AdminOrderCancelController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return back()->with('success', 'Order cancelled.');
+        return back()->with('success', 'Zamówienie zostało anulowane.');
     }
 }

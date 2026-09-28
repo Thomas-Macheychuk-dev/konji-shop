@@ -100,7 +100,7 @@ it('blocks shipment creation when shipment type is explicitly unavailable', func
     ]);
 
     expect(fn () => app(PolkurierCarrierAvailabilityGuard::class)->ensureCanCreateShipment($order))
-        ->toThrow(PolkurierCarrierAvailabilityException::class, 'Polkurier carrier DPD does not currently support shipment type box.');
+        ->toThrow(PolkurierCarrierAvailabilityException::class, 'Przewoźnik Polkurier DPD nie obsługuje obecnie typu przesyłki box.');
 });
 
 it('warns and exposes definitions when selected courier requires additional fields', function (): void {

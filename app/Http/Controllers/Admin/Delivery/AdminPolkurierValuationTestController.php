@@ -30,12 +30,12 @@ final class AdminPolkurierValuationTestController extends Controller
         } catch (Throwable $exception) {
             return back()
                 ->withInput()
-                ->with('error', 'Polkurier valuation test failed: '.$exception->getMessage());
+                ->with('error', 'Test wyceny Polkurier nie powiódł się: '.$exception->getMessage());
         }
 
         return back()
             ->withInput()
-            ->with('success', 'Polkurier valuation test completed.')
+            ->with('success', 'Test wyceny Polkurier zakończył się pomyślnie.')
             ->with('polkurier_valuation_request', $valuationRequest)
             ->with('polkurier_valuation_response', $response);
     }
@@ -51,13 +51,13 @@ final class AdminPolkurierValuationTestController extends Controller
         $sender = config('delivery.providers.polkurier.sender');
 
         if (! is_array($sender)) {
-            throw new RuntimeException('Polkurier sender configuration is missing.');
+            throw new RuntimeException('Brakuje konfiguracji nadawcy Polkurier.');
         }
 
         $pack = config('delivery.providers.polkurier.default_pack');
 
         if (! is_array($pack)) {
-            throw new RuntimeException('Polkurier default pack configuration is missing.');
+            throw new RuntimeException('Brakuje domyślnej konfiguracji paczki Polkurier.');
         }
 
         return [
