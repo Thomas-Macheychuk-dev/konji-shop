@@ -144,6 +144,7 @@ final class ImportDrSapporoProductsCommand extends Command
         $variantCount = 0;
         $medicalDeviceCount = 0;
         $productsMissingVat = 0;
+        $missingVatProducts = [];
 
         foreach ($products as $product) {
             if (! is_array($product)) {
@@ -167,6 +168,17 @@ final class ImportDrSapporoProductsCommand extends Command
 
             if (! isset($product['vat_rate']) && $vatRate === null) {
                 $productsMissingVat++;
+                $missingVatProducts[] = [
+                    'external_id' => is_string($product['external_product_id'] ?? null)
+                        ? $product['external_product_id']
+                        : '[missing external_product_id]',
+                    'name' => is_string($product['name'] ?? null)
+                        ? $product['name']
+                        : '[unnamed product]',
+                    'category' => is_string($category ?? null)
+                        ? $category
+                        : '[missing category]',
+                ];
             }
         }
 
@@ -177,6 +189,18 @@ final class ImportDrSapporoProductsCommand extends Command
         $this->line('Product images discovered: '.$imageCount);
         $this->line('Medical device products: '.$medicalDeviceCount);
         $this->line('Products without explicit VAT after override: '.$productsMissingVat);
+
+        if ($missingVatProducts !== []) {
+            $this->warn('Products still missing explicit VAT:');
+
+            foreach ($missingVatProducts as $product) {
+                $this->line(
+                    '- '.$product['external_id']
+                    .' | '.$product['name']
+                    .' | '.$product['category']
+                );
+            }
+        }
     }
 
     /**
