@@ -105,7 +105,7 @@ final class DrSapporoProductScraper
 
         $bodyText = $this->extractBodyText($crawler, $html);
         $price = $this->extractPrice($crawler, $bodyText);
-        $shippingTime = $this->extractShippingTime($bodyText);
+        $shippingTime = $this->extractShippingTime($crawler, $bodyText);
         $availability = $this->extractAvailability($bodyText);
         $sku = $this->extractLabelledValue($crawler, $bodyText, ['sku', 'kod produktu', 'symbol']);
         $ean = $this->extractLabelledValue($crawler, $bodyText, ['ean', 'gtin']);
@@ -343,8 +343,20 @@ final class DrSapporoProductScraper
         return null;
     }
 
-    private function extractShippingTime(string $bodyText): ?string
+    private function extractShippingTime(Crawler $crawler, string $bodyText): ?string
     {
+        foreach (['.term', '.productPageName .term'] as $selector) {
+            $value = $this->firstText($crawler, [$selector]);
+
+            if ($value === null) {
+                continue;
+            }
+
+            if (preg_match('/Termin\s*realizacji\s*:?\s*([0-9]+\s+(?:dzień|dni|godzin(?:a|y)?)(?:\s+robocz(?:y|e|ych))?)/iu', $value, $matches) === 1) {
+                return $this->text($matches[1]);
+            }
+        }
+
         if (preg_match('/Termin\s*realizacji\s*:?\s*([0-9]+\s+(?:dzień|dni|godzin(?:a|y)?)(?:\s+robocz(?:y|e|ych))?)/iu', $bodyText, $matches) === 1) {
             return $this->text($matches[1]);
         }
@@ -476,6 +488,44 @@ final class DrSapporoProductScraper
                     'url' => $url,
                     'alt' => $this->text($node->getAttribute('alt')),
                 ];
+            }
+        }
+
+        foreach (['.productPhotos .photo', '.productSubPhotos .photo', '.productSubPhoto .photoFrame a'] as $selector) {
+            try {
+                $nodes = $crawler->filter($selector);
+            } catch (Throwable) {
+                continue;
+            }
+
+            foreach ($nodes as $node) {
+                if (! $node instanceof DOMElement) {
+                    continue;
+                }
+
+                $candidates = [];
+
+                if (mb_strtolower($node->tagName) === 'a' && $node->hasAttribute('href')) {
+                    $candidates[] = $node->getAttribute('href');
+                }
+
+                if ($node->hasAttribute('style')
+                    && preg_match('/background-image\s*:\s*url\((["\']?)(.*?)\1\)/iu', $node->getAttribute('style'), $matches) === 1) {
+                    $candidates[] = $matches[2];
+                }
+
+                foreach ($candidates as $candidate) {
+                    $url = $this->normalizeImageUrl((string) $candidate, $baseUrl);
+
+                    if ($url === null) {
+                        continue;
+                    }
+
+                    $images[$url] = [
+                        'url' => $url,
+                        'alt' => '',
+                    ];
+                }
             }
         }
 
@@ -743,6 +793,38 @@ final class DrSapporoProductScraper
 
     private function extractDescriptionHtml(Crawler $crawler, string $bodyText): ?string
     {
+        try {
+            $specs = $crawler->filter('.productDataSpec');
+
+            foreach ($specs as $specNode) {
+                if (! $specNode instanceof DOMElement) {
+                    continue;
+                }
+
+                $spec = new Crawler($specNode);
+                $label = $this->firstText($spec, ['.label']);
+
+                if ($label === null
+                    || preg_match('/^Informacje\s+o\s+(?:poduszce|poszewce|aparacie|produkcie)$/iu', $label) !== 1) {
+                    continue;
+                }
+
+                $contentNode = $spec->filter('.content')->first();
+
+                if ($contentNode->count() === 0) {
+                    continue;
+                }
+
+                $html = $this->sanitizeHtml($contentNode->html(''));
+
+                if ($html !== null) {
+                    return $html;
+                }
+            }
+        } catch (Throwable) {
+            // Fall through to generic selectors and text fallback.
+        }
+
         foreach ([
             '[itemprop="description"]',
             '.product-description',
