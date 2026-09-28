@@ -400,9 +400,31 @@ final class IconicProductUrlScraper
 
         $path = '/'.ltrim((string) ($parts['path'] ?? '/'), '/');
         $path = preg_replace('#/+#', '/', $path) ?? $path;
+        $path = $this->removeDotSegments($path);
         $path = rtrim($path, '/') ?: '/';
 
         return 'https://'.self::HOST.($path === '/' ? '' : $path);
+    }
+
+    private function removeDotSegments(string $path): string
+    {
+        $segments = [];
+
+        foreach (explode('/', $path) as $segment) {
+            if ($segment === '' || $segment === '.') {
+                continue;
+            }
+
+            if ($segment === '..') {
+                array_pop($segments);
+
+                continue;
+            }
+
+            $segments[] = $segment;
+        }
+
+        return '/'.implode('/', $segments);
     }
 
     private function text(string $value): string
