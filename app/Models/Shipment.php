@@ -146,6 +146,11 @@ class Shipment extends Model
         $this->update(array_merge([
             'status' => ShipmentStatus::CANCELLED,
             'payload' => $payload === [] ? $this->payload : $payload,
+            'provider_status_code' => null,
+            'provider_status_label' => null,
+            'provider_status_updated_at' => null,
+            'provider_delivered_at' => null,
+            'status_synced_at' => now(),
         ], $this->providerStatusAttributes($payload)));
 
         $this->order->events()->create([
