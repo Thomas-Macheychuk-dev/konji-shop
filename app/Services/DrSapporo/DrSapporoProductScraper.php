@@ -15,6 +15,22 @@ final class DrSapporoProductScraper
 {
     private const HOST = 'drsapporo.com';
 
+    /**
+     * Supplier/manufacturer documentation confirms these products as
+     * class-I medical devices even when the reseller product page omits
+     * the explicit medical-device wording.
+     *
+     * @var list<string>
+     */
+    private const REVIEWED_MEDICAL_DEVICE_EXTERNAL_IDS = [
+        'poduszka-ortopedyczna-asana',
+        'poduszka-ortopedyczna-enso',
+        'poduszka-ortopedyczna-hiro',
+        'aparat-na-haluksy-bunito-duo-ecru',
+        'aparat-na-haluksy-bunito-duo-magenta',
+        'aparat-na-haluksy-bunito-duo-turkus',
+    ];
+
     private ?Closure $progressCallback = null;
 
     private int $timeoutSeconds = 15;
@@ -141,7 +157,8 @@ final class DrSapporoProductScraper
             'shipping_time' => $shippingTime,
             'sku' => $sku,
             'ean' => $ean,
-            'is_medical_device' => preg_match('/\bwyr[oó]b(?:em)?\s+medyczn/iu', $bodyText) === 1,
+            'is_medical_device' => preg_match('/\bwyr[oó]b(?:em)?\s+medyczn/iu', $bodyText) === 1
+                || in_array($slug, self::REVIEWED_MEDICAL_DEVICE_EXTERNAL_IDS, true),
             'images' => $images,
             'attributes' => $attributes,
             'variant_candidates' => $variantCandidates,
