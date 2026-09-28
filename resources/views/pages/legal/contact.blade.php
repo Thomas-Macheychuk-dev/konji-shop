@@ -1,59 +1,28 @@
 @extends('layouts.storefront')
 
 @section('content')
+    @php($seller = config('legal.seller'))
+
     <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
             <p class="text-sm font-medium text-zinc-500">Dane sprzedawcy</p>
-
-            <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
-                Kontakt
-            </h1>
+            <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">Kontakt</h1>
 
             <div class="prose prose-zinc mt-8 max-w-none">
-                @php
-                    $identityAddress = trim((string) config('legal.seller.identity_address'));
-                    $identityAddressLines = filled($identityAddress)
-                        ? array_values(array_filter(preg_split('/\R+/', $identityAddress) ?: [], fn (string $line): bool => trim($line) !== ''))
-                        : [];
-                @endphp
-
-                <h2>{{ config('legal.seller.shop_name') }}</h2>
-
-                @if ($identityAddressLines !== [])
-                    <p>
-                        <strong>Sprzedawca:</strong><br>
-                        @foreach ($identityAddressLines as $identityAddressLine)
-                            {{ trim($identityAddressLine) }}@if (! $loop->last)<br>@endif
-                        @endforeach
-                    </p>
-                @else
-                    <p>
-                        <strong>Firma:</strong> {{ config('legal.seller.company_name') }}<br>
-                        <strong>Reprezentant:</strong> {{ config('legal.seller.representative') }}<br>
-                        <strong>Adres:</strong>
-                        {{ config('legal.seller.street') }},
-                        {{ config('legal.seller.postcode') }} {{ config('legal.seller.city') }},
-                        {{ config('legal.seller.country') }}
-                    </p>
-                @endif
-
-                @if (filled(config('legal.seller.tax_id')))
-                    <p>
-                        <strong>NIP:</strong> {{ config('legal.seller.tax_id') }}
-                    </p>
-                @endif
-
-                @if (filled(config('legal.seller.business_registry_number')))
-                    <p>
-                        <strong>Numer w rejestrze przedsiębiorców:</strong> {{ config('legal.seller.business_registry_number') }}
-                    </p>
-                @endif
-
+                <h2>{{ $seller['shop_name'] }}</h2>
                 <p>
-                    <strong>E-mail:</strong>
-                    <a href="mailto:{{ config('legal.seller.email') }}">{{ config('legal.seller.email') }}</a><br>
-                    <strong>Telefon:</strong> {{ config('legal.seller.phone') }}
+                    <strong>Sprzedawca:</strong> {{ $seller['company_name'] }}<br>
+                    <strong>Adres:</strong> ul. {{ $seller['street'] }}, {{ $seller['postcode'] }} {{ $seller['city'] }}<br>
+                    <strong>KRS:</strong> {{ $seller['business_registry_number'] }}<br>
+                    <strong>NIP:</strong> {{ $seller['tax_id'] }}<br>
+                    <strong>REGON:</strong> {{ $seller['regon'] }}<br>
+                    <strong>Kapitał zakładowy:</strong> {{ $seller['share_capital'] }}
                 </p>
+                <p>
+                    <strong>E-mail:</strong> <a href="mailto:{{ $seller['email'] }}">{{ $seller['email'] }}</a><br>
+                    <strong>Telefon:</strong> {{ $seller['phone'] }}
+                </p>
+                <p><strong>Adres do zwrotów i reklamacji:</strong> {{ config('legal.returns.return_address') }}</p>
             </div>
         </div>
     </div>

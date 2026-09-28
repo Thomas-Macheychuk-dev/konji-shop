@@ -89,7 +89,7 @@
 
             <p class="mt-3">
                 <a
-                    href="#"
+                    href="{{ route('legal.privacy') }}"
                     class="font-medium text-zinc-900 underline underline-offset-4 hover:text-zinc-700 dark:text-zinc-100 dark:hover:text-zinc-300"
                 >
                     {{ __('Przejdź do Polityki prywatności') }}

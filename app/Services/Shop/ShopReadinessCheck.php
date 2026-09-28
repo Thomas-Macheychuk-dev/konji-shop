@@ -84,12 +84,33 @@ final class ShopReadinessCheck
      */
     private function checkLegalVersions(): array
     {
-        if ($this->settings->hasLegalVersions()) {
+        $expectedVersion = trim((string) config('legal.release.version'));
+        $expectedEffectiveDate = trim((string) config('legal.release.effective_date'));
+        $versions = $this->settings->legalVersions();
+        $effectiveDate = $this->configuration->get('legal.effective_date');
+        $documents = config('legal.documents', []);
+
+        $documentsReady = is_array($documents)
+            && collect(['terms_pdf', 'withdrawal_form_pdf', 'complaint_form_pdf'])
+                ->every(function (string $key) use ($documents): bool {
+                    $relativePath = trim((string) ($documents[$key] ?? ''));
+
+                    return $relativePath !== '' && is_file(public_path($relativePath));
+                });
+
+        $versionsReady = $expectedVersion !== ''
+            && collect($versions)->every(fn (string $version): bool => $version === $expectedVersion);
+
+        if (
+            $versionsReady
+            && $effectiveDate === $expectedEffectiveDate
+            && $documentsReady
+        ) {
             return $this->ready(
                 'Prawo',
                 'Wersje dokumentów prawnych',
                 true,
-                'Wersje regulaminu, polityki prywatności i zwrotów są skonfigurowane.'
+                'Wersje dokumentów, data wejścia w życie i pliki PDF odpowiadają zatwierdzonej publikacji '.$expectedVersion.'.'
             );
         }
 
@@ -97,7 +118,7 @@ final class ShopReadinessCheck
             'Prawo',
             'Wersje dokumentów prawnych',
             true,
-            'Wersje regulaminu, polityki prywatności i zwrotów muszą być skonfigurowane.'
+            'Wymagana jest publikacja '.$expectedVersion.' z datą wejścia w życie '.$expectedEffectiveDate.' oraz kompletem wersjonowanych plików PDF.'
         );
     }
 
@@ -106,12 +127,23 @@ final class ShopReadinessCheck
      */
     private function checkSellerIdentity(): array
     {
-        if ($this->settings->hasSellerIdentity()) {
+        $expected = config('legal.release.seller', []);
+        $current = [
+            'company_name' => $this->settings->companyName(),
+            'street' => $this->settings->street(),
+            'postcode' => $this->settings->postcode(),
+            'city' => $this->settings->city(),
+            'country' => $this->settings->country(),
+        ];
+
+        if (is_array($expected) && collect($current)->every(
+            fn (string $value, string $key): bool => $value !== '' && $value === trim((string) ($expected[$key] ?? ''))
+        )) {
             return $this->ready(
                 'Sprzedawca',
                 'Tożsamość i adres sprzedawcy',
                 true,
-                'Nazwa firmy i adres sprzedawcy są skonfigurowane.'
+                'Nazwa firmy i adres sprzedawcy odpowiadają zatwierdzonej publikacji prawnej.'
             );
         }
 
@@ -119,7 +151,7 @@ final class ShopReadinessCheck
             'Sprzedawca',
             'Tożsamość i adres sprzedawcy',
             true,
-            'Nazwa firmy, ulica, kod pocztowy, miasto i kraj sprzedawcy muszą być skonfigurowane.'
+            'Dane firmy i adres sprzedawcy muszą dokładnie odpowiadać zatwierdzonej publikacji prawnej.'
         );
     }
 
@@ -128,12 +160,14 @@ final class ShopReadinessCheck
      */
     private function checkSellerEmail(): array
     {
-        if ($this->settings->email() !== '') {
+        $expected = trim((string) config('legal.release.seller.email'));
+
+        if ($expected !== '' && $this->settings->email() === $expected) {
             return $this->ready(
                 'Sprzedawca',
                 'E-mail sprzedawcy',
                 true,
-                'E-mail sprzedawcy jest skonfigurowany.'
+                'E-mail sprzedawcy odpowiada zatwierdzonej publikacji prawnej.'
             );
         }
 
@@ -141,7 +175,7 @@ final class ShopReadinessCheck
             'Sprzedawca',
             'E-mail sprzedawcy',
             true,
-            'Kontaktowy e-mail sprzedawcy musi być skonfigurowany.'
+            'E-mail sprzedawcy musi odpowiadać zatwierdzonej publikacji prawnej.'
         );
     }
 
@@ -150,12 +184,14 @@ final class ShopReadinessCheck
      */
     private function checkSellerPhone(): array
     {
-        if ($this->settings->phone() !== '') {
+        $expected = trim((string) config('legal.release.seller.phone'));
+
+        if ($expected !== '' && $this->settings->phone() === $expected) {
             return $this->ready(
                 'Sprzedawca',
                 'Telefon sprzedawcy',
                 true,
-                'Telefon sprzedawcy jest skonfigurowany.'
+                'Telefon sprzedawcy odpowiada zatwierdzonej publikacji prawnej.'
             );
         }
 
@@ -163,7 +199,7 @@ final class ShopReadinessCheck
             'Sprzedawca',
             'Telefon sprzedawcy',
             true,
-            'Telefon sprzedawcy musi być skonfigurowany.'
+            'Telefon sprzedawcy musi odpowiadać zatwierdzonej publikacji prawnej.'
         );
     }
 
@@ -172,20 +208,30 @@ final class ShopReadinessCheck
      */
     private function checkTaxId(): array
     {
-        if ($this->settings->taxId() !== '') {
+        $expected = config('legal.release.seller', []);
+        $current = [
+            'tax_id' => $this->settings->taxId(),
+            'business_registry_number' => $this->settings->businessRegistryNumber(),
+            'regon' => $this->configuration->get('legal.seller.regon'),
+            'share_capital' => $this->configuration->get('legal.seller.share_capital'),
+        ];
+
+        if (is_array($expected) && collect($current)->every(
+            fn (string $value, string $key): bool => $value !== '' && $value === trim((string) ($expected[$key] ?? ''))
+        )) {
             return $this->ready(
                 'Sprzedawca',
-                'NIP',
-                false,
-                'NIP sprzedawcy jest skonfigurowany.'
+                'Dane rejestrowe sprzedawcy',
+                true,
+                'NIP, KRS, REGON i kapitał zakładowy odpowiadają zatwierdzonej publikacji prawnej.'
             );
         }
 
-        return $this->warning(
+        return $this->missing(
             'Sprzedawca',
-            'NIP',
-            false,
-            'NIP sprzedawcy jest pusty. Dodaj go przed produkcją, jeżeli firma powinna go wyświetlać.'
+            'Dane rejestrowe sprzedawcy',
+            true,
+            'NIP, KRS, REGON i kapitał zakładowy muszą odpowiadać zatwierdzonej publikacji prawnej.'
         );
     }
 
@@ -194,12 +240,20 @@ final class ShopReadinessCheck
      */
     private function checkReturnAddress(): array
     {
-        if ($this->settings->returnAddress() !== '') {
+        $expectedAddress = trim((string) config('legal.release.seller.return_address'));
+        $expectedEmail = trim((string) config('legal.release.seller.returns_email'));
+
+        if (
+            $expectedAddress !== ''
+            && $expectedEmail !== ''
+            && $this->settings->returnAddress() === $expectedAddress
+            && $this->settings->returnsEmail() === $expectedEmail
+        ) {
             return $this->ready(
                 'Zwroty',
                 'Adres zwrotu',
                 true,
-                'Adres zwrotu jest skonfigurowany.'
+                'Adres i e-mail do zwrotów odpowiadają zatwierdzonej publikacji prawnej.'
             );
         }
 
@@ -207,7 +261,7 @@ final class ShopReadinessCheck
             'Zwroty',
             'Adres zwrotu',
             true,
-            'Adres zwrotu musi być skonfigurowany.'
+            'Adres i e-mail do zwrotów muszą odpowiadać zatwierdzonej publikacji prawnej.'
         );
     }
 

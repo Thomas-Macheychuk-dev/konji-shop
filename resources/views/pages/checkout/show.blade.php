@@ -739,38 +739,25 @@
                                 >
 
                                 <span>
-                                    Akceptuję
+                                    Zapoznałem/am się z
                                     <a
                                         href="{{ route('legal.terms') }}"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
                                     >
-                                        Regulamin
+                                        Regulaminem sklepu internetowego
                                     </a>
-                                    oraz potwierdzam, że zapoznałem/zapoznałam się z
-                                    <a
-                                        href="{{ route('legal.privacy') }}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
-                                    >
-                                        Polityka prywatności
-                                    </a>
-                                    oraz
-                                    <a
-                                        href="{{ route('legal.returns') }}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
-                                    >
-                                        Informacje o zwrotach i odstąpieniu od umowy
-                                    </a>.
+                                    i akceptuję jego treść.
                                 </span>
                             </label>
 
-                            <p class="mt-2 text-xs text-zinc-500">
-                                Linki otwierają się w nowej karcie, aby można było je sprawdzić bez utraty postępu w kasie.
+                            <p class="mt-2 text-xs leading-5 text-zinc-500">
+                                Przed złożeniem zamówienia zapoznaj się także z
+                                <a href="{{ route('legal.privacy') }}" target="_blank" rel="noopener noreferrer" class="font-medium text-zinc-700 underline underline-offset-4">Polityką prywatności</a>
+                                oraz
+                                <a href="{{ route('legal.returns') }}" target="_blank" rel="noopener noreferrer" class="font-medium text-zinc-700 underline underline-offset-4">informacjami o zwrotach i odstąpieniu od umowy</a>.
+                                Linki otwierają się w nowej karcie.
                             </p>
 
                             @error('terms_accepted')
@@ -783,7 +770,7 @@
                                 type="submit"
                                 class="inline-flex w-full items-center justify-center rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-zinc-800"
                             >
-                                Złóż zamówienie
+                                Zamówienie z obowiązkiem zapłaty
                             </button>
 
                             <a

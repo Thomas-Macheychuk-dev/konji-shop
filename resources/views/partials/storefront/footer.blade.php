@@ -16,6 +16,8 @@
     $phone = $seller['phone'] ?? '';
     $taxId = $seller['tax_id'] ?? '';
     $registryNumber = $seller['business_registry_number'] ?? '';
+    $regon = $seller['regon'] ?? '';
+    $shareCapital = $seller['share_capital'] ?? '';
     $returnAddress = $returns['return_address'] ?? '';
     $phoneHref = filled($phone)
         ? 'tel:'.preg_replace('/[^0-9+]/', '', (string) $phone)
@@ -90,7 +92,7 @@
                     <a href="{{ route('legal.delivery-payments') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Dostawa i płatności</a>
                     <a href="{{ route('guest.orders.track.show') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Śledzenie zamówienia gościa</a>
                     <a href="{{ route('legal.returns') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Zwroty i odstąpienie od umowy</a>
-                    <a href="{{ route('legal.complaints') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Reklamacje i gwarancja</a>
+                    <a href="{{ route('legal.complaints') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Reklamacje</a>
                     <a href="{{ route('legal.contact') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Kontakt</a>
                 </nav>
             </div>
@@ -136,7 +138,13 @@
                             <span class="mt-2 block">NIP: {{ $taxId }}</span>
                         @endif
                         @if (filled($registryNumber))
-                            <span class="block">Numer w rejestrze: {{ $registryNumber }}</span>
+                            <span class="block">KRS: {{ $registryNumber }}</span>
+                        @endif
+                        @if (filled($regon))
+                            <span class="block">REGON: {{ $regon }}</span>
+                        @endif
+                        @if (filled($shareCapital))
+                            <span class="block">Kapitał zakładowy: {{ $shareCapital }}</span>
                         @endif
                     </div>
 
@@ -159,7 +167,7 @@
                 <a href="{{ route('legal.terms') }}" class="transition hover:text-white">Regulamin</a>
                 <a href="{{ route('legal.privacy') }}" class="transition hover:text-white">Polityka prywatności</a>
                 <a href="{{ route('legal.returns') }}" class="transition hover:text-white">Zwroty i odstąpienie od umowy</a>
-                <a href="{{ route('legal.complaints') }}" class="transition hover:text-white">Reklamacje i gwarancja</a>
+                <a href="{{ route('legal.complaints') }}" class="transition hover:text-white">Reklamacje</a>
                 <a href="{{ route('legal.delivery-payments') }}" class="transition hover:text-white">Dostawa i płatności</a>
                 <a href="{{ route('legal.cookie-policy') }}" class="transition hover:text-white">Polityka plików cookie</a>
             </nav>

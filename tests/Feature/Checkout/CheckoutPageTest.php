@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('shows VAT breakdown on the checkout page before placing an order', function (): void {
+it('shows VAT breakdown and the legally required order button before placing an order', function (): void {
     [$product, $variant] = checkoutPageTestProductAndVariant();
 
     $guestToken = (string) str()->uuid();
@@ -52,7 +52,11 @@ it('shows VAT breakdown on the checkout page before placing an order', function 
         ->assertSee('VAT od produktów')
         ->assertSee(number_format($itemsTax / 100, 2, ',', ' ').' PLN')
         ->assertSee('VAT razem')
-        ->assertSee('Razem brutto');
+        ->assertSee('Razem brutto')
+        ->assertSee('Zapoznałem/am się z')
+        ->assertSee('Regulaminem sklepu internetowego')
+        ->assertSee('Zamówienie z obowiązkiem zapłaty')
+        ->assertDontSee('Złóż zamówienie');
 });
 
 it('redirects to the cart when the checkout cart is empty', function (): void {
@@ -62,9 +66,7 @@ it('redirects to the cart when the checkout cart is empty', function (): void {
         ->assertSessionHas('error', 'Twój koszyk jest pusty.');
 });
 
-/**
- * @return array{0: Product, 1: ProductVariant}
- */
+/** @return array{0: Product, 1: ProductVariant} */
 function checkoutPageTestProductAndVariant(): array
 {
     $product = Product::query()->create([

@@ -662,3 +662,15 @@ test('guest checkout keeps the order recoverable and sends its confirmation when
             && $mail->order->is($order);
     });
 });
+
+test('order confirmation exposes the approved legal release on a durable medium', function (): void {
+    $order = Order::factory()->create([
+        'terms_version' => '2026-09-24',
+    ]);
+
+    $attachments = (new OrderConfirmationMail($order))->attachments();
+
+    expect($attachments)->toHaveCount(2)
+        ->and(is_file(public_path('legal/2026-09-24/ORTEZKA_PL_Regulamin_sklepu_internetowego_2026-09-24.pdf')))->toBeTrue()
+        ->and(is_file(public_path('legal/2026-09-24/ORTEZKA_PL_Formularz_odstapienia_DLA_KLIENTA_2026-09-24.pdf')))->toBeTrue();
+});

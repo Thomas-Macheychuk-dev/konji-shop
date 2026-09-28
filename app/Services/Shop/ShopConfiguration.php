@@ -6,7 +6,6 @@ namespace App\Services\Shop;
 
 use App\Models\ShopConfigurationValue;
 use App\Services\Storefront\StorefrontCache;
-use Illuminate\Support\Facades\Schema;
 use Throwable;
 
 final class ShopConfiguration
@@ -30,13 +29,40 @@ final class ShopConfiguration
     public function editableFields(): array
     {
         return [
-            'seller_identity_address' => [
+            'seller_company_name' => [
                 'category' => 'Sprzedawca',
-                'label' => 'Tożsamość i adres sprzedawcy',
-                'config_key' => 'legal.seller.identity_address',
-                'type' => 'textarea',
+                'label' => 'Pełna nazwa firmy',
+                'config_key' => 'legal.seller.company_name',
+                'type' => 'text',
                 'required' => true,
-                'help' => 'Podaj nazwę albo firmę sprzedawcy oraz pełny adres widoczny dla klientów.',
+            ],
+            'seller_street' => [
+                'category' => 'Sprzedawca',
+                'label' => 'Ulica i numer',
+                'config_key' => 'legal.seller.street',
+                'type' => 'text',
+                'required' => true,
+            ],
+            'seller_postcode' => [
+                'category' => 'Sprzedawca',
+                'label' => 'Kod pocztowy',
+                'config_key' => 'legal.seller.postcode',
+                'type' => 'text',
+                'required' => true,
+            ],
+            'seller_city' => [
+                'category' => 'Sprzedawca',
+                'label' => 'Miasto',
+                'config_key' => 'legal.seller.city',
+                'type' => 'text',
+                'required' => true,
+            ],
+            'seller_country' => [
+                'category' => 'Sprzedawca',
+                'label' => 'Kraj',
+                'config_key' => 'legal.seller.country',
+                'type' => 'text',
+                'required' => true,
             ],
             'seller_email' => [
                 'category' => 'Sprzedawca',
@@ -57,14 +83,74 @@ final class ShopConfiguration
                 'label' => 'NIP',
                 'config_key' => 'legal.seller.tax_id',
                 'type' => 'text',
-                'required' => false,
+                'required' => true,
+            ],
+            'seller_registry_number' => [
+                'category' => 'Sprzedawca',
+                'label' => 'KRS',
+                'config_key' => 'legal.seller.business_registry_number',
+                'type' => 'text',
+                'required' => true,
+            ],
+            'seller_regon' => [
+                'category' => 'Sprzedawca',
+                'label' => 'REGON',
+                'config_key' => 'legal.seller.regon',
+                'type' => 'text',
+                'required' => true,
+            ],
+            'seller_share_capital' => [
+                'category' => 'Sprzedawca',
+                'label' => 'Kapitał zakładowy',
+                'config_key' => 'legal.seller.share_capital',
+                'type' => 'text',
+                'required' => true,
             ],
             'return_address' => [
                 'category' => 'Zwroty',
-                'label' => 'Adres zwrotu',
+                'label' => 'Adres zwrotów i reklamacji',
                 'config_key' => 'legal.returns.return_address',
                 'type' => 'textarea',
                 'required' => true,
+            ],
+            'returns_email' => [
+                'category' => 'Zwroty',
+                'label' => 'E-mail do zwrotów i reklamacji',
+                'config_key' => 'legal.returns.contact_email',
+                'type' => 'email',
+                'required' => true,
+            ],
+            'legal_terms_version' => [
+                'category' => 'Prawo',
+                'label' => 'Wersja Regulaminu',
+                'config_key' => 'legal.versions.terms',
+                'type' => 'text',
+                'required' => true,
+                'help' => 'Dla tej publikacji: 2026-09-24.',
+            ],
+            'legal_privacy_version' => [
+                'category' => 'Prawo',
+                'label' => 'Wersja Polityki prywatności',
+                'config_key' => 'legal.versions.privacy',
+                'type' => 'text',
+                'required' => true,
+                'help' => 'Dla tej publikacji: 2026-09-24.',
+            ],
+            'legal_returns_version' => [
+                'category' => 'Prawo',
+                'label' => 'Wersja informacji o zwrotach',
+                'config_key' => 'legal.versions.returns',
+                'type' => 'text',
+                'required' => true,
+                'help' => 'Dla tej publikacji: 2026-09-24.',
+            ],
+            'legal_effective_date' => [
+                'category' => 'Prawo',
+                'label' => 'Data wejścia w życie',
+                'config_key' => 'legal.effective_date',
+                'type' => 'date',
+                'required' => true,
+                'help' => 'Dla tej publikacji: 2026-09-28.',
             ],
             'mail_from_address' => [
                 'category' => 'Poczta',
@@ -94,9 +180,7 @@ final class ShopConfiguration
         ];
     }
 
-    /**
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     public function formValues(): array
     {
         $values = [];
@@ -105,16 +189,10 @@ final class ShopConfiguration
             $values[$name] = $this->get($field['config_key']);
         }
 
-        if ($values['seller_identity_address'] === '') {
-            $values['seller_identity_address'] = $this->sellerIdentityAddressFallback();
-        }
-
         return $values;
     }
 
-    /**
-     * @param  array<string, mixed>  $values
-     */
+    /** @param array<string, mixed> $values */
     public function updateFromForm(array $values): void
     {
         foreach ($this->editableFields() as $name => $field) {
@@ -148,19 +226,13 @@ final class ShopConfiguration
         }
     }
 
-    /**
-     * Load all editable database overrides in one query and reuse them across
-     * requests. The short TTL is a fallback safety net; normal admin updates
-     * invalidate this namespace immediately.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     private function cachedOverrides(): array
     {
         try {
             return $this->cache->rememberVersioned(
                 StorefrontCache::NAMESPACE_SHOP_CONFIGURATION,
-                'editable-values.v1',
+                'editable-values.v2',
                 function (): array {
                     $editableConfigKeys = collect($this->editableFields())
                         ->pluck('config_key')
@@ -175,33 +247,7 @@ final class ShopConfiguration
                 $this->cache->shopConfigurationTtlSeconds(),
             );
         } catch (Throwable) {
-            // First install, migrations, or a temporarily unavailable cache/DB
-            // must not prevent the application from booting with config values.
             return [];
         }
-    }
-
-    private function settingsTableExists(): bool
-    {
-        return Schema::hasTable('shop_configuration_values');
-    }
-
-    private function sellerIdentityAddressFallback(): string
-    {
-        $seller = config('legal.seller', []);
-
-        if (! is_array($seller)) {
-            return '';
-        }
-
-        return trim(implode(PHP_EOL, array_filter([
-            trim((string) ($seller['company_name'] ?? '')),
-            trim((string) ($seller['street'] ?? '')),
-            trim(implode(' ', array_filter([
-                trim((string) ($seller['postcode'] ?? '')),
-                trim((string) ($seller['city'] ?? '')),
-            ]))),
-            trim((string) ($seller['country'] ?? '')),
-        ], fn (string $line): bool => $line !== '')));
     }
 }

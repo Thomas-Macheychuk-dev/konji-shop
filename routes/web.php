@@ -292,6 +292,10 @@ Route::post('/payments/paynow/notifications', PaynowNotificationController::clas
     ])
     ->name('payments.paynow.notifications');
 
+Route::redirect('/content/7-regulamin', '/terms-and-conditions', 301);
+Route::redirect('/content/19-reklamacje-i-zwroty', '/returns-and-withdrawal', 301);
+Route::redirect('/content/9-warunki-dostawy', '/delivery-and-payments', 301);
+
 Route::view('/terms-and-conditions', 'pages.legal.terms-and-conditions')
     ->name('legal.terms');
 
