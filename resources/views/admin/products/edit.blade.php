@@ -304,10 +304,14 @@
                                 <span>
                                     <span class="block text-sm font-semibold text-zinc-900">Informacja o doborze rozmiaru / kompresji</span>
                                     <span class="mt-1 block text-xs leading-5 text-zinc-600">
-                                        Wyświetla przed zakupem instrukcję wykonania pomiarów oraz sprawdzenia modelu, rozmiaru i klasy kompresji przed naruszeniem zabezpieczenia.
+                                        Można włączyć tylko razem z „Zabezpieczenie higieniczne: TAK”. Wyświetla przed zakupem instrukcję wykonania pomiarów oraz sprawdzenia modelu, rozmiaru i klasy kompresji przed naruszeniem zabezpieczenia.
                                     </span>
                                 </span>
                             </label>
+
+                            @error('show_compression_measurement_notice')
+                                <p class="ml-7 mt-1 text-xs font-medium text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 

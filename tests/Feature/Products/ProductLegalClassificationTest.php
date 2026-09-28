@@ -63,6 +63,22 @@ it('shows the approved pre-purchase disclosures for a classified product', funct
         ->assertSee(ProductLegalDisclosures::CUSTOM_MADE_NOTICE);
 });
 
+it('suppresses compression disclosures when the hygienic seal is not enabled', function (): void {
+    $product = productForLegalClassificationTest([
+        'has_hygienic_seal' => false,
+        'show_compression_measurement_notice' => true,
+    ]);
+
+    expect(ProductLegalDisclosures::forProduct($product))->toBe([])
+        ->and(ProductLegalDisclosures::snapshot($product)['show_compression_measurement_notice'])->toBeFalse();
+
+    $this
+        ->get(route('products.show', $product))
+        ->assertOk()
+        ->assertDontSee(ProductLegalDisclosures::MEASUREMENT_NOTICE)
+        ->assertDontSee(ProductLegalDisclosures::COMPRESSION_HYGIENIC_SEAL_NOTICE);
+});
+
 it('does not show legal exceptions on an unclassified product', function (): void {
     $product = productForLegalClassificationTest();
 

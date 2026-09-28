@@ -119,6 +119,13 @@ final class StoreProductRequest extends FormRequest
                     'Wybrany wariant domyślny musi być jednym z uzupełnionych wariantów.'
                 );
             }
+
+            if ($this->boolean('show_compression_measurement_notice') && ! $this->boolean('has_hygienic_seal')) {
+                $validator->errors()->add(
+                    'show_compression_measurement_notice',
+                    'Informację o doborze rozmiaru i kompresji można włączyć tylko razem z opcją „Zabezpieczenie higieniczne: TAK”.'
+                );
+            }
         });
     }
 

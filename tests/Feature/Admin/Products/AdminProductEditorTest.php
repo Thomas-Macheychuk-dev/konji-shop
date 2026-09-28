@@ -1374,3 +1374,57 @@ it('allows an admin to update and clear product legal classification flags', fun
         ->is_custom_made->toBeFalse()
         ->show_compression_measurement_notice->toBeFalse();
 });
+
+it('rejects a compression measurement notice without a hygienic seal when creating a product', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->post(route('admin.products.store'), [
+            'name' => 'Nieprawidłowa klasyfikacja kompresyjna',
+            'status' => ProductStatus::DRAFT->value,
+            'show_compression_measurement_notice' => '1',
+            'variants' => [
+                0 => [
+                    'sku' => 'LEGAL-COMP-NO-SEAL-001',
+                    'status' => ProductVariantStatus::ACTIVE->value,
+                    'gross_price' => '199.00',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                    'stock_status' => StockStatus::IN_STOCK->value,
+                    'package_weight_grams' => 500,
+                    'package_length_mm' => 300,
+                    'package_width_mm' => 200,
+                    'package_height_mm' => 100,
+                    'attributes' => [],
+                ],
+            ],
+        ])
+        ->assertSessionHasErrors(['show_compression_measurement_notice']);
+
+    expect(Product::query()->where('slug', 'nieprawidlowa-klasyfikacja-kompresyjna')->exists())
+        ->toBeFalse();
+});
+
+it('rejects a compression measurement notice without a hygienic seal when updating a product', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.update', $product), [
+            'name' => $product->name,
+            'status' => ProductStatus::ACTIVE->value,
+            'show_compression_measurement_notice' => '1',
+        ])
+        ->assertSessionHasErrors(['show_compression_measurement_notice']);
+
+    expect($product->refresh())
+        ->has_hygienic_seal->toBeFalse()
+        ->show_compression_measurement_notice->toBeFalse();
+});

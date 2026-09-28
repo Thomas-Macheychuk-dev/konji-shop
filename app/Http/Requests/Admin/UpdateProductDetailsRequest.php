@@ -8,6 +8,7 @@ use App\Enums\CategoryStatus;
 use App\Enums\ProductStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 final class UpdateProductDetailsRequest extends FormRequest
 {
@@ -45,6 +46,18 @@ final class UpdateProductDetailsRequest extends FormRequest
                     ->whereNull('deleted_at'),
             ],
         ];
+    }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator): void {
+            if ($this->boolean('show_compression_measurement_notice') && ! $this->boolean('has_hygienic_seal')) {
+                $validator->errors()->add(
+                    'show_compression_measurement_notice',
+                    'Informację o doborze rozmiaru i kompresji można włączyć tylko razem z opcją „Zabezpieczenie higieniczne: TAK”.'
+                );
+            }
+        });
     }
 
     public function attributes(): array

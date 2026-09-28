@@ -24,8 +24,9 @@ final class ProductLegalDisclosures
     public static function forProduct(Product $product): array
     {
         $disclosures = [];
+        $compressionMeasurementNoticeEnabled = self::compressionMeasurementNoticeEnabled($product);
 
-        if ($product->show_compression_measurement_notice) {
+        if ($compressionMeasurementNoticeEnabled) {
             $disclosures[] = [
                 'key' => 'compression_measurement',
                 'title' => 'Dobór rozmiaru',
@@ -37,7 +38,7 @@ final class ProductLegalDisclosures
             $disclosures[] = [
                 'key' => 'hygienic_seal',
                 'title' => 'Zabezpieczenie higieniczne',
-                'body' => $product->show_compression_measurement_notice
+                'body' => $compressionMeasurementNoticeEnabled
                     ? self::COMPRESSION_HYGIENIC_SEAL_NOTICE
                     : self::HYGIENIC_SEAL_NOTICE,
             ];
@@ -69,8 +70,14 @@ final class ProductLegalDisclosures
             'version' => self::VERSION,
             'has_hygienic_seal' => (bool) $product->has_hygienic_seal,
             'is_custom_made' => (bool) $product->is_custom_made,
-            'show_compression_measurement_notice' => (bool) $product->show_compression_measurement_notice,
+            'show_compression_measurement_notice' => self::compressionMeasurementNoticeEnabled($product),
             'disclosures' => self::forProduct($product),
         ];
+    }
+
+    private static function compressionMeasurementNoticeEnabled(Product $product): bool
+    {
+        return (bool) $product->has_hygienic_seal
+            && (bool) $product->show_compression_measurement_notice;
     }
 }
