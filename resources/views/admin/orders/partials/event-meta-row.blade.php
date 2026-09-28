@@ -6,23 +6,25 @@
 
     $isStructured = is_array($value) || is_object($value);
 
-    $displayValue = match (true) {
-        is_bool($value) => $value
-            ? __('admin.orders.timeline.values.yes')
-            : __('admin.orders.timeline.values.no'),
-        $value === null => '—',
-        default => (string) $value,
-    };
-
-    $prettyJson = $isStructured
-        ? json_encode(
+    if ($isStructured) {
+        $displayValue = null;
+        $prettyJson = json_encode(
             $value,
             JSON_PRETTY_PRINT
                 | JSON_UNESCAPED_UNICODE
                 | JSON_UNESCAPED_SLASHES
                 | JSON_INVALID_UTF8_SUBSTITUTE
-        )
-        : null;
+        );
+    } else {
+        $prettyJson = null;
+        $displayValue = match (true) {
+            is_bool($value) => $value
+                ? __('admin.orders.timeline.values.yes')
+                : __('admin.orders.timeline.values.no'),
+            $value === null => '—',
+            default => (string) $value,
+        };
+    }
 @endphp
 
 <div class="grid min-w-0 grid-cols-1 gap-1 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] sm:gap-4">
