@@ -26,6 +26,10 @@ it('extracts normalized Dr Sapporo product data and size variants', function ():
                     <div class="product-price">149,00 zł</div>
                     <p>Termin realizacji: 3 dni robocze</p>
                     <p>Wyrób medyczny przeznaczony do korekcji palucha koślawego.</p>
+                    <p>Szerokość: 32 cm</p>
+                    <p>Długość: 54 cm</p>
+                    <p>Wysokość: 11/13 cm</p>
+                    <p>Rozmiar poduszki: uniwersalny (jeden rozmiar)</p>
                     <p>SKU: BUN-DUO</p>
                     <p>EAN: 5901234567890</p>
                     <div class="product-description" itemprop="description">
@@ -88,6 +92,30 @@ it('extracts normalized Dr Sapporo product data and size variants', function ():
             'label' => 'Materiał',
             'value' => 'Elastyczna tkanina',
             'slug' => 'elastyczna-tkanina',
+        ])
+        ->and($result['attributes'])->toContain([
+            'code' => 'szerokosc',
+            'label' => 'Szerokość',
+            'value' => '32 cm',
+            'slug' => '32-cm',
+        ])
+        ->and($result['attributes'])->toContain([
+            'code' => 'dlugosc',
+            'label' => 'Długość',
+            'value' => '54 cm',
+            'slug' => '54-cm',
+        ])
+        ->and($result['attributes'])->toContain([
+            'code' => 'wysokosc',
+            'label' => 'Wysokość',
+            'value' => '11/13 cm',
+            'slug' => '11-13-cm',
+        ])
+        ->and($result['attributes'])->toContain([
+            'code' => 'rozmiar',
+            'label' => 'Rozmiar',
+            'value' => 'uniwersalny (jeden rozmiar)',
+            'slug' => 'uniwersalny-jeden-rozmiar',
         ])
         ->and($result['variant_candidates'])->toHaveCount(2)
         ->and($result['variant_candidates'][0])->toMatchArray([
