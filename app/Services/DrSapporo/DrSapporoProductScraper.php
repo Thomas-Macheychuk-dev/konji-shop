@@ -283,7 +283,7 @@ final class DrSapporoProductScraper
 
     private function extractShippingTime(string $bodyText): ?string
     {
-        if (preg_match('/Termin\s+realizacji\s*:\s*([0-9]+\s+(?:dzień|dni|godzin(?:y)?)(?:\s+roboczych?)?)/iu', $bodyText, $matches) === 1) {
+        if (preg_match('/Termin\s+realizacji\s*:\s*([0-9]+\s+(?:dzień|dni|godzin(?:a|y)?)(?:\s+robocz(?:y|e|ych))?)/iu', $bodyText, $matches) === 1) {
             return $this->text($matches[1]);
         }
 
