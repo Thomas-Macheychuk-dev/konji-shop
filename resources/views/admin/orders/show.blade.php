@@ -936,18 +936,12 @@
                         </p>
 
                         @if ($event->meta)
-                            <dl class="mt-2 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-600">
+                            <dl class="mt-2 min-w-0 space-y-2 overflow-hidden rounded-lg bg-zinc-50 p-3 text-xs text-zinc-600">
                                 @foreach ($event->meta as $key => $value)
-                                    <div class="flex justify-between gap-4">
-                                        <dt class="font-medium">{{ [
-                                            'provider_status' => 'Status zewnętrzny',
-                                            'provider_status_code' => 'Kod statusu zewnętrznego',
-                                            'provider_status_label' => 'Status zewnętrzny',
-                                            'payment_status' => 'Status płatności',
-                                            'fulfilment_status' => 'Status realizacji',
-                                        ][$key] ?? str($key)->headline() }}</dt>
-                                        <dd>{{ is_scalar($value) ? $value : json_encode($value) }}</dd>
-                                    </div>
+                                    @include('admin.orders.partials.event-meta-row', [
+                                        'key' => $key,
+                                        'value' => $value,
+                                    ])
                                 @endforeach
                             </dl>
                         @endif
