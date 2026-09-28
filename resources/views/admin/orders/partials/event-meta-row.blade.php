@@ -7,6 +7,7 @@
     $isStructured = is_array($value) || is_object($value);
 
     $displayValue = match (true) {
+        $isStructured => '',
         is_bool($value) => $value
             ? __('admin.orders.timeline.values.yes')
             : __('admin.orders.timeline.values.no'),
