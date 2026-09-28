@@ -282,6 +282,88 @@ it('shows order timeline event metadata on the admin order detail page', functio
         ->assertSee('CONFIRMED');
 });
 
+it('contains large structured timeline metadata inside the order card', function (): void {
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create();
+
+    $order->events()->create([
+        'type' => 'delivery_choice_selected',
+        'description' => 'Wybrano metodę dostawy.',
+        'meta' => [
+            'packs' => [
+                [
+                    'type' => 'ST',
+                    'width' => 20,
+                    'amount' => 1,
+                    'height' => 10,
+                    'length' => 30,
+                    'weight' => 1,
+                ],
+            ],
+            'carrier' => 'inpost',
+            'service' => 'parcel_locker',
+            'provider' => 'polkurier',
+            'locker_code' => 'POP-TOR48',
+            'shipping_quote' => [
+                'source' => 'polkurier_order_valuation_v2',
+                'request' => [
+                    'sender' => ['country' => 'PL', 'postcode' => '60-820'],
+                    'recipient' => ['country' => 'PL', 'postcode' => '60-406'],
+                ],
+                'response' => [
+                    'grossprice' => 13.76,
+                    'servicecode' => 'INPOST_PACZKOMAT',
+                    'diagnostic' => str_repeat('X', 500),
+                ],
+            ],
+            'user_agent' => str_repeat('KonjiAdminLongToken', 30),
+        ],
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('admin.orders.show', $order))
+        ->assertOk()
+        ->assertSee('Paczki')
+        ->assertSee('Wycena dostawy')
+        ->assertSee('Przeglądarka / user agent')
+        ->assertSee('Pokaż szczegóły techniczne')
+        ->assertSee('INPOST_PACZKOMAT')
+        ->assertSee('min-w-0', false)
+        ->assertSee('overflow-hidden', false)
+        ->assertSee('overflow-auto', false)
+        ->assertSee('whitespace-pre-wrap', false)
+        ->assertSee('break-words', false);
+});
+
+it('localizes admin timeline metadata labels for the active locale', function (): void {
+    app()->setLocale('en');
+
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $order = Order::factory()->create();
+
+    $order->events()->create([
+        'type' => 'delivery_choice_selected',
+        'description' => 'Delivery method selected.',
+        'meta' => [
+            'shipping_quote' => [
+                'grossprice' => 13.76,
+            ],
+        ],
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('admin.orders.show', $order))
+        ->assertOk()
+        ->assertSee('Shipping quote')
+        ->assertSee('Show technical details');
+});
+
 it('allows an admin to add an internal order note', function (): void {
     $user = User::factory()->create([
         'is_admin' => true,

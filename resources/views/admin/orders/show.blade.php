@@ -921,12 +921,12 @@
             </div>
         </div>
 
-        <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+        <div class="mt-6 min-w-0 overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <h2 class="text-lg font-semibold text-zinc-900">Oś czasu zamówienia</h2>
 
             <div class="mt-4 space-y-4">
                 @forelse ($order->events as $event)
-                    <div class="border-l-2 border-zinc-200 pl-4">
+                    <div class="min-w-0 border-l-2 border-zinc-200 pl-4">
                         <p class="text-sm font-semibold text-zinc-900">
                             {{ $event->description }}
                         </p>
@@ -936,18 +936,12 @@
                         </p>
 
                         @if ($event->meta)
-                            <dl class="mt-2 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-600">
+                            <dl class="mt-2 min-w-0 space-y-2 overflow-hidden rounded-lg bg-zinc-50 p-3 text-xs text-zinc-600">
                                 @foreach ($event->meta as $key => $value)
-                                    <div class="flex justify-between gap-4">
-                                        <dt class="font-medium">{{ [
-                                            'provider_status' => 'Status zewnętrzny',
-                                            'provider_status_code' => 'Kod statusu zewnętrznego',
-                                            'provider_status_label' => 'Status zewnętrzny',
-                                            'payment_status' => 'Status płatności',
-                                            'fulfilment_status' => 'Status realizacji',
-                                        ][$key] ?? str($key)->headline() }}</dt>
-                                        <dd>{{ is_scalar($value) ? $value : json_encode($value) }}</dd>
-                                    </div>
+                                    @include('admin.orders.partials.event-meta-row', [
+                                        'key' => $key,
+                                        'value' => $value,
+                                    ])
                                 @endforeach
                             </dl>
                         @endif
