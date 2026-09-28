@@ -337,7 +337,11 @@ final class DrSapporoProductScraper
 
             $quoted = preg_quote($label, '/');
 
-            if (preg_match('/\b'.$quoted.'\s*:\s*([A-Z0-9][A-Z0-9._\/ -]{1,80})/iu', $bodyText, $matches) === 1) {
+            if (preg_match(
+                '/\b'.$quoted.'\s*:\s*([A-Z0-9][A-Z0-9._\/ -]{0,80}?)(?=\s+(?:SKU|Kod\s+produktu|Symbol|EAN|GTIN)\s*:|$)/iu',
+                $bodyText,
+                $matches,
+            ) === 1) {
                 return $this->text($matches[1]);
             }
         }
