@@ -29,6 +29,65 @@ it('renders the redesigned medical storefront shell and homepage sections', func
         ->assertSee('Dostawa i płatności');
 });
 
+it('counts active products from the complete active category subtree on homepage cards', function (): void {
+    $root = Category::query()->create([
+        'name' => 'Obuwie Scholl',
+        'slug' => 'obuwie-scholl',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    $child = Category::query()->create([
+        'parent_id' => $root->id,
+        'name' => 'Obuwie damskie',
+        'slug' => 'obuwie-damskie',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    $archivedChild = Category::query()->create([
+        'parent_id' => $root->id,
+        'name' => 'Archiwalne obuwie',
+        'slug' => 'archiwalne-obuwie',
+        'status' => CategoryStatus::ARCHIVED,
+    ]);
+
+    $descendantProduct = Product::query()->create([
+        'name' => 'Produkt potomny',
+        'slug' => 'produkt-potomny',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+    $descendantProduct->categories()->attach($child->id, ['is_primary' => true]);
+
+    $multiAssignedProduct = Product::query()->create([
+        'name' => 'Produkt przypisany wielokrotnie',
+        'slug' => 'produkt-przypisany-wielokrotnie',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+    $multiAssignedProduct->categories()->attach([
+        $root->id => ['is_primary' => false],
+        $child->id => ['is_primary' => true],
+    ]);
+
+    $draftProduct = Product::query()->create([
+        'name' => 'Produkt roboczy',
+        'slug' => 'produkt-roboczy',
+        'status' => ProductStatus::DRAFT,
+    ]);
+    $draftProduct->categories()->attach($child->id, ['is_primary' => true]);
+
+    $archivedBranchProduct = Product::query()->create([
+        'name' => 'Produkt archiwalnej gałęzi',
+        'slug' => 'produkt-archiwalnej-galezi',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+    $archivedBranchProduct->categories()->attach($archivedChild->id, ['is_primary' => true]);
+
+    $this
+        ->get(route('home'))
+        ->assertOk()
+        ->assertSee('Obuwie Scholl')
+        ->assertSee('2 produktów');
+});
+
 it('searches only active storefront products from the global header', function (): void {
     $activeProduct = Product::query()->create([
         'name' => 'Stabilizator kolana premium',
