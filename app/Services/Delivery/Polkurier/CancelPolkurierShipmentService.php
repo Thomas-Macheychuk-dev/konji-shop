@@ -35,9 +35,16 @@ final class CancelPolkurierShipmentService
 
         $payload = $this->client->cancelOrder($shipment->provider_reference);
 
-        $shipment->markAsCancelled(array_merge($shipment->payload ?? [], [
-            'polkurier_cancellation' => $payload['response'] ?? $payload,
-        ]));
+        $shipmentPayload = $shipment->payload ?? [];
+
+        if (isset($shipmentPayload['polkurier_status'])) {
+            $shipmentPayload['polkurier_status_before_cancellation'] = $shipmentPayload['polkurier_status'];
+            unset($shipmentPayload['polkurier_status']);
+        }
+
+        $shipmentPayload['polkurier_cancellation'] = $payload['response'] ?? $payload;
+
+        $shipment->markAsCancelled($shipmentPayload);
 
         return $shipment->refresh();
     }
