@@ -41,6 +41,17 @@ final class OrderFulfilmentController extends Controller
                 );
             }
 
+            if ($action === 'cancellation-refund') {
+                $refund = $this->processWithdrawalRefundService->processCancelledOrder($order);
+
+                return back()->with(
+                    'success',
+                    $refund->isCompleted()
+                        ? 'Paynow potwierdził zwrot za anulowane zamówienie.'
+                        : 'Zwrot za anulowane zamówienie został zlecony w Paynow i oczekuje na potwierdzenie.',
+                );
+            }
+
             match ($action) {
                 'processing' => $order->markFulfilmentAsProcessing(),
 
