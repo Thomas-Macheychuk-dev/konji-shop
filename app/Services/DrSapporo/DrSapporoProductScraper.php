@@ -23,6 +23,22 @@ final class DrSapporoProductScraper
      * @var list<string>
      */
     private const REVIEWED_MEDICAL_DEVICE_EXTERNAL_IDS = [
+        'poduszka-ortopedyczna-rock',
+        'poduszka-ortopedyczna-shell',
+        'poduszka-ortopedyczna-cpap',
+        'poduszka-ortopedyczna-paris',
+        'poduszka-ortopedyczna-swing',
+        'poduszka-ortopedyczna-jazz',
+        'poduszka-ortopedyczna-blues',
+        'poduszka-ortopedyczna-bossanova',
+        'poduszka-ortopedyczna-nuvo',
+        'poduszka-ortopedyczna-twin-plus',
+        'poduszka-ortopedyczna-open',
+        'poduszka-ortopedyczna-max-plus',
+        'poduszka-ortopedyczna-new-york',
+        'poduszka-ortopedyczna-london',
+        'poduszka-ortopedyczna-salsa-standard',
+        'poduszka-ortopedyczna-salsa-mini',
         'poduszka-ortopedyczna-asana',
         'poduszka-ortopedyczna-enso',
         'poduszka-ortopedyczna-hiro',
