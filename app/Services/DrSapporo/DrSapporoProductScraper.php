@@ -547,7 +547,7 @@ final class DrSapporoProductScraper
             'code' => Str::slug($label),
             'label' => $label,
             'value' => $value,
-            'slug' => Str::slug($value),
+            'slug' => Str::slug(str_replace(['/', '\\'], '-', $value)),
         ];
     }
 
