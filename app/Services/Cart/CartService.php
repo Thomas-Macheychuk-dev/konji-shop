@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Models\ProductVariant;
 use App\Models\User;
 use App\Services\Products\VermeirenColorSelectionService;
+use App\Support\Products\ProductLegalDisclosures;
 use Illuminate\Support\Facades\DB;
 
 class CartService
@@ -88,6 +89,7 @@ class CartService
                     'variant_sku' => $variant->sku,
                     'image_url' => $variant->main_image_url ?? $product->default_image_url,
                     'selected_options' => $selectedOptions,
+                    'legal_disclosures' => ProductLegalDisclosures::snapshot($product),
                 ],
             ]);
         });

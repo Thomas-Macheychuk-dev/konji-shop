@@ -16,6 +16,7 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
+use App\Support\Products\ProductLegalDisclosures;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -84,6 +85,7 @@ class ProductShowController extends Controller
             'default_image' => $this->imagePayload($product->selectedDefaultImage(), $product->name),
             'base_images' => $this->baseImages($product),
             'informational_color_groups' => $informationalColorGroups,
+            'legal_disclosures' => ProductLegalDisclosures::forProduct($product),
 
             'option_groups' => $this->buildOptionGroups($product),
             'variants' => $this->buildVariants($product),
@@ -121,7 +123,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v3.%s.%d',
+            'product-page.v4.%s.%d',
             Str::lower(request()->getHost()),
             $product->getKey(),
         );

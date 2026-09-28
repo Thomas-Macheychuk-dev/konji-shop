@@ -30,6 +30,7 @@ const defaultImage = computed(() => props.product.default_image ?? null);
 const informationalColorGroups = computed(
     () => props.product.informational_color_groups ?? []
 );
+const legalDisclosures = computed(() => props.product.legal_disclosures ?? []);
 
 const currentImage = ref(0);
 const selectedOptionValueIds = ref({});
@@ -452,6 +453,24 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                 </div>
 
                 <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+                    <div
+                        v-if="legalDisclosures.length"
+                        class="mb-5 space-y-3"
+                    >
+                        <div
+                            v-for="disclosure in legalDisclosures"
+                            :key="disclosure.key"
+                            class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950"
+                        >
+                            <p class="font-semibold">
+                                {{ disclosure.title }}
+                            </p>
+                            <p class="mt-1 leading-6">
+                                {{ disclosure.body }}
+                            </p>
+                        </div>
+                    </div>
+
                     <form
                         method="POST"
                         action="/cart/items"

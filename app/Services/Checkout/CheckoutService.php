@@ -18,6 +18,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Services\Delivery\Polkurier\PolkurierPackBuilder;
 use App\Services\Delivery\Polkurier\PolkurierShippingQuoteService;
+use App\Support\Products\ProductLegalDisclosures;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
@@ -361,6 +362,11 @@ class CheckoutService
             $lineNetAmount = $vatRate->netFromGross($lineGrossAmount);
             $lineTaxAmount = max(0, $lineGrossAmount - $lineNetAmount);
 
+            $cartLegalDisclosureSnapshot = data_get($item->meta, 'legal_disclosures');
+            $legalDisclosureSnapshot = is_array($cartLegalDisclosureSnapshot)
+                ? $cartLegalDisclosureSnapshot
+                : ProductLegalDisclosures::snapshot($product);
+
             $preparedItems[] = [
                 'product_id' => $product->id,
                 'product_variant_id' => $variant->id,
@@ -385,6 +391,7 @@ class CheckoutService
                     'cart_item_id' => $item->id,
                     'cart_unit_price_snapshot' => (int) $item->unit_price,
                     'cart_meta' => $item->meta,
+                    'legal_disclosures' => $legalDisclosureSnapshot,
                     'package' => [
                         'weight_grams' => $variant->package_weight_grams,
                         'length_mm' => $variant->package_length_mm,

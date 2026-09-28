@@ -55,6 +55,9 @@ final class StoreProductRequest extends FormRequest
 
         $this->merge([
             'slug' => $this->normalizeSlug($this->input('slug')),
+            'has_hygienic_seal' => $this->boolean('has_hygienic_seal'),
+            'is_custom_made' => $this->boolean('is_custom_made'),
+            'show_compression_measurement_notice' => $this->boolean('show_compression_measurement_notice'),
             'variants' => $normalizedVariants,
             'default_variant_index' => $this->nullableInteger($this->input('default_variant_index')),
         ]);
@@ -70,6 +73,9 @@ final class StoreProductRequest extends FormRequest
             'seo_title' => ['nullable', 'string', 'max:255'],
             'seo_description' => ['nullable', 'string', 'max:5000'],
             'status' => ['required', 'string', Rule::in(ProductStatus::options())],
+            'has_hygienic_seal' => ['required', 'boolean'],
+            'is_custom_made' => ['required', 'boolean'],
+            'show_compression_measurement_notice' => ['required', 'boolean'],
             'category_id' => [
                 'nullable',
                 'integer',
@@ -126,6 +132,9 @@ final class StoreProductRequest extends FormRequest
             'seo_title' => __('SEO title'),
             'seo_description' => __('SEO description'),
             'status' => __('Product status'),
+            'has_hygienic_seal' => 'zabezpieczenie higieniczne',
+            'is_custom_made' => 'towar indywidualny',
+            'show_compression_measurement_notice' => 'informacja o doborze rozmiaru i kompresji',
             'category_id' => __('Product category'),
             'default_variant_index' => 'wariant domyślny',
             'product_images' => 'zdjęcia produktu',

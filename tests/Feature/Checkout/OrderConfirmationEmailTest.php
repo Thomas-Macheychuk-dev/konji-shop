@@ -674,3 +674,57 @@ test('order confirmation exposes the approved legal release on a durable medium'
         ->and(is_file(public_path('legal/2026-09-24/ORTEZKA_PL_Regulamin_sklepu_internetowego_2026-09-24.pdf')))->toBeTrue()
         ->and(is_file(public_path('legal/2026-09-24/ORTEZKA_PL_Formularz_odstapienia_DLA_KLIENTA_2026-09-24.pdf')))->toBeTrue();
 });
+
+test('checkout snapshots product legal disclosures on the order item', function (): void {
+    config()->set('delivery.providers.polkurier.valuation.enabled', false);
+    config()->set('delivery.providers.polkurier.valuation.fallback_prices.inpost.parcel_locker', 1499);
+
+    [$product, $variant] = createTestProductAndVariant('Legal Snapshot Product', 'LEGAL-SNAPSHOT-001');
+
+    $product->update([
+        'has_hygienic_seal' => true,
+        'is_custom_made' => true,
+        'show_compression_measurement_notice' => true,
+    ]);
+
+    $guestToken = (string) str()->uuid();
+
+    $cart = Cart::query()->create([
+        'guest_token' => $guestToken,
+        'status' => CartStatus::Active,
+        'currency' => Currency::PLN->value,
+    ]);
+
+    $cart->items()->create([
+        'product_id' => $product->id,
+        'product_variant_id' => $variant->id,
+        'quantity' => 1,
+        'unit_price' => $variant->grossPriceAmount(),
+        'currency' => Currency::PLN->value,
+        'meta' => null,
+    ]);
+
+    $this
+        ->withSession(['_token' => 'test-csrf-token'])
+        ->withCookie(CartGuestTokenResolver::COOKIE_NAME, $guestToken)
+        ->post(route('checkout.place'), validCheckoutPayload('legal-snapshot@gmail.com'))
+        ->assertSessionHasNoErrors();
+
+    $order = Order::query()
+        ->with('items')
+        ->firstOrFail();
+
+    $orderItem = $order->items->first();
+
+    expect($orderItem)->not->toBeNull();
+
+    $legal = data_get($orderItem?->meta, 'legal_disclosures');
+
+    expect($legal)
+        ->toBeArray()
+        ->and($legal['version'])->toBe('2026-09-24')
+        ->and($legal['has_hygienic_seal'])->toBeTrue()
+        ->and($legal['is_custom_made'])->toBeTrue()
+        ->and($legal['show_compression_measurement_notice'])->toBeTrue()
+        ->and($legal['disclosures'])->toHaveCount(3);
+});

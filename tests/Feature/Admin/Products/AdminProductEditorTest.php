@@ -444,6 +444,10 @@ it('shows the admin product edit page with variants', function (): void {
         ->assertSee('EDIT-COMPLETE')
         ->assertSee('Status produktu')
         ->assertSee('Kategoria produktu')
+        ->assertSee('Informacje prawne produktu')
+        ->assertSee('Zabezpieczenie higieniczne: TAK')
+        ->assertSee('Towar indywidualny / na specyfikację klienta: TAK')
+        ->assertSee('Informacja o doborze rozmiaru / kompresji')
         ->assertSee('Krótki opis')
         ->assertSee('Existing short description.')
         ->assertSee('Opis HTML produktu')
@@ -1290,4 +1294,83 @@ it('allows an admin to activate only priced draft variants', function (): void {
 
     expect($pricedDraftVariant->refresh()->status)->toBe(ProductVariantStatus::ACTIVE)
         ->and($unpricedDraftVariant->refresh()->status)->toBe(ProductVariantStatus::DRAFT);
+});
+
+it('allows an admin to create a product with explicit legal classification flags', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->post(route('admin.products.store'), [
+            'name' => 'Produkt z klasyfikacją prawną',
+            'status' => ProductStatus::DRAFT->value,
+            'has_hygienic_seal' => '1',
+            'is_custom_made' => '1',
+            'show_compression_measurement_notice' => '1',
+            'variants' => [
+                0 => [
+                    'sku' => 'LEGAL-CLASS-001',
+                    'status' => ProductVariantStatus::ACTIVE->value,
+                    'gross_price' => '199.00',
+                    'currency' => Currency::PLN->value,
+                    'vat_rate' => VatRate::VAT_23->value,
+                    'stock_status' => StockStatus::IN_STOCK->value,
+                    'package_weight_grams' => 500,
+                    'package_length_mm' => 300,
+                    'package_width_mm' => 200,
+                    'package_height_mm' => 100,
+                    'attributes' => [],
+                ],
+            ],
+        ])
+        ->assertRedirect()
+        ->assertSessionHasNoErrors();
+
+    $product = Product::query()
+        ->where('slug', 'produkt-z-klasyfikacja-prawna')
+        ->firstOrFail();
+
+    expect($product)
+        ->has_hygienic_seal->toBeTrue()
+        ->is_custom_made->toBeTrue()
+        ->show_compression_measurement_notice->toBeTrue();
+});
+
+it('allows an admin to update and clear product legal classification flags', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $product = createProductForAdminProductEditorTest();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.update', $product), [
+            'name' => $product->name,
+            'status' => ProductStatus::ACTIVE->value,
+            'has_hygienic_seal' => '1',
+            'is_custom_made' => '1',
+            'show_compression_measurement_notice' => '1',
+        ])
+        ->assertSessionHasNoErrors();
+
+    expect($product->refresh())
+        ->has_hygienic_seal->toBeTrue()
+        ->is_custom_made->toBeTrue()
+        ->show_compression_measurement_notice->toBeTrue();
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.products.update', $product), [
+            'name' => $product->name,
+            'status' => ProductStatus::ACTIVE->value,
+        ])
+        ->assertSessionHasNoErrors();
+
+    expect($product->refresh())
+        ->has_hygienic_seal->toBeFalse()
+        ->is_custom_made->toBeFalse()
+        ->show_compression_measurement_notice->toBeFalse();
 });

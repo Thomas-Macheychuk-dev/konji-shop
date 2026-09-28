@@ -567,6 +567,14 @@
                                             : data_get($item->meta, 'variant_name');
 
                                     $selectedOptionsLabel = $item->selectedOptionsLabel();
+                                    $legalDisclosures = data_get($item->meta, 'legal_disclosures.disclosures');
+
+                                    if (! is_array($legalDisclosures)) {
+                                        $legalDisclosures = $product
+                                            ? \App\Support\Products\ProductLegalDisclosures::forProduct($product)
+                                            : [];
+                                    }
+
                                     $vatRate = $variant?->vat_rate;
                                     $lineNet = $vatRate instanceof \App\Enums\VatRate && $lineTotal !== null
                                         ? $vatRate->netFromGross((int) $lineTotal)
@@ -602,6 +610,17 @@
                                             <p class="mt-1 text-xs font-medium text-zinc-600">
                                                 {{ $selectedOptionsLabel }}
                                             </p>
+                                        @endif
+
+                                        @if ($legalDisclosures !== [])
+                                            <div class="mt-2 space-y-1.5">
+                                                @foreach ($legalDisclosures as $disclosure)
+                                                    <p class="rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-2 text-xs leading-5 text-amber-950">
+                                                        <span class="font-semibold">{{ $disclosure['title'] }}:</span>
+                                                        {{ $disclosure['body'] }}
+                                                    </p>
+                                                @endforeach
+                                            </div>
                                         @endif
 
                                         <p class="mt-1 text-xs text-zinc-500">

@@ -8,6 +8,7 @@
         $grossPriceAmount = $defaultVariant?->grossPriceAmount();
         $currency = $defaultVariant?->currency?->value ?? 'PLN';
         $stockStatus = $defaultVariant?->stock_status?->value;
+        $legalDisclosures = \App\Support\Products\ProductLegalDisclosures::forProduct($product);
     @endphp
 
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -86,6 +87,17 @@
                                 </p>
                             @endif
                         </div>
+
+                        @if ($legalDisclosures !== [])
+                            <div class="space-y-3">
+                                @foreach ($legalDisclosures as $disclosure)
+                                    <div class="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-950 dark:border-amber-800/60 dark:bg-amber-950/30 dark:text-amber-100">
+                                        <p class="font-semibold">{{ $disclosure['title'] }}</p>
+                                        <p class="mt-1 leading-6">{{ $disclosure['body'] }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
 
                         <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                             @if ($grossPriceAmount !== null)

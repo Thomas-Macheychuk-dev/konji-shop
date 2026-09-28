@@ -145,6 +145,64 @@
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div class="rounded-2xl border border-amber-200 bg-amber-50/70 p-5 lg:col-span-2">
+                        <h3 class="text-sm font-semibold text-amber-950">Informacje prawne produktu</h3>
+
+                        <p class="mt-2 text-xs leading-5 text-amber-900/80">
+                            Ustawienia dotyczą konkretnego produktu. Nie oznaczaj automatycznie całej kategorii wyrobów medycznych.
+                        </p>
+
+                        <div class="mt-4 space-y-4">
+                            <label class="flex items-start gap-3">
+                                <input
+                                    type="checkbox"
+                                    name="has_hygienic_seal"
+                                    value="1"
+                                    @checked(old('has_hygienic_seal'))
+                                    class="mt-1 h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                >
+                                <span>
+                                    <span class="block text-sm font-semibold text-zinc-900">Zabezpieczenie higieniczne: TAK</span>
+                                    <span class="mt-1 block text-xs leading-5 text-zinc-600">
+                                        Zaznacz tylko wtedy, gdy ten konkretny produkt faktycznie jest wysyłany z widoczną plombą lub zabezpieczeniem i po jego otwarciu nie może zostać ponownie wprowadzony do obrotu ze względów ochrony zdrowia lub higieny.
+                                    </span>
+                                </span>
+                            </label>
+
+                            <label class="flex items-start gap-3">
+                                <input
+                                    type="checkbox"
+                                    name="is_custom_made"
+                                    value="1"
+                                    @checked(old('is_custom_made'))
+                                    class="mt-1 h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                >
+                                <span>
+                                    <span class="block text-sm font-semibold text-zinc-900">Towar indywidualny / na specyfikację klienta: TAK</span>
+                                    <span class="mt-1 block text-xs leading-5 text-zinc-600">
+                                        Nie zaznaczaj wyłącznie dlatego, że klient wybiera standardowy rozmiar S/M/L, kolor albo gotowy wariant z listy.
+                                    </span>
+                                </span>
+                            </label>
+
+                            <label class="flex items-start gap-3">
+                                <input
+                                    type="checkbox"
+                                    name="show_compression_measurement_notice"
+                                    value="1"
+                                    @checked(old('show_compression_measurement_notice'))
+                                    class="mt-1 h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                >
+                                <span>
+                                    <span class="block text-sm font-semibold text-zinc-900">Informacja o doborze rozmiaru / kompresji</span>
+                                    <span class="mt-1 block text-xs leading-5 text-zinc-600">
+                                        Wyświetla przed zakupem instrukcję wykonania pomiarów oraz sprawdzenia modelu, rozmiaru i klasy kompresji przed naruszeniem zabezpieczenia.
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="mt-5 grid grid-cols-1 gap-5">

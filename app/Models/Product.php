@@ -27,12 +27,21 @@ class Product extends Model
         self::DEFAULT_IMAGE_TYPE_ATTRIBUTE_VALUE_IMAGE,
     ];
 
+    protected $attributes = [
+        'has_hygienic_seal' => false,
+        'is_custom_made' => false,
+        'show_compression_measurement_notice' => false,
+    ];
+
     protected $fillable = [
         'name',
         'slug',
         'short_description',
         'description',
         'status',
+        'has_hygienic_seal',
+        'is_custom_made',
+        'show_compression_measurement_notice',
         'seo_title',
         'seo_description',
         'published_at',
@@ -47,6 +56,9 @@ class Product extends Model
     {
         return [
             'status' => ProductStatus::class,
+            'has_hygienic_seal' => 'boolean',
+            'is_custom_made' => 'boolean',
+            'show_compression_measurement_notice' => 'boolean',
             'published_at' => 'datetime',
             'deleted_at' => 'datetime',
             'default_image_id' => 'integer',
