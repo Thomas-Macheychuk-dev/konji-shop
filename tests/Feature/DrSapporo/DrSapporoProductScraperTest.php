@@ -265,6 +265,74 @@ it('preserves boundaries between adjacent Dr Sapporo content nodes', function ()
         ->and($result['description_html'])->not->toContain('Wymiary poduszki');
 });
 
+it('parses the native Dr Sapporo product template', function (): void {
+    $html = <<<'HTML'
+        <html>
+            <head>
+                <link rel="canonical" href="https://drsapporo.com/poszewka-na-poduszke-bossanova">
+                <meta property="og:image" content="https://drsapporo.com/photos/product/49/main.webp">
+            </head>
+            <body>
+                <div class="productPhotos">
+                    <div class="photo" style="background-image:url(https://drsapporo.com/photos/product/49/hero.webp)"></div>
+                </div>
+                <div class="productSubPhotos">
+                    <div class="productSubPhoto">
+                        <div class="photoFrame">
+                            <a href="https://drsapporo.com/photos/product/49/detail.webp">
+                                <div class="photo" style="background-image:url('https://drsapporo.com/photos/product/49/detail-thumb.webp')"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="productPageRight">
+                    <div class="productPageName">
+                        <div class="name"><h1>Bossanova <span>Poszewka na poduszkę ortopedyczną</span></h1></div>
+                        <div class="right">
+                            <div class="price"><span id="price">79<span>,00 zł</span></span></div>
+                            <div class="term">Termin realizacji: <b>1 dzień roboczy</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="productDataSpecs">
+                    <div class="productDataSpec">
+                        <div class="label">Informacje o poszewce</div>
+                        <div class="content">
+                            <div class="content">
+                                <div>Oferta dotyczy poszewki na poduszkę ortopedyczną Bossanova od Dr Sapporo.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </html>
+    HTML;
+
+    $result = app(DrSapporoProductScraper::class)->extract(
+        $html,
+        'https://drsapporo.com/poszewka-na-poduszke-bossanova',
+        [
+            'category_name' => 'Poszewki na poduszki Dr Sapporo',
+            'brand_name' => 'Dr Sapporo',
+        ],
+    );
+
+    expect($result['shipping_time'])->toBe('1 dzień roboczy')
+        ->and($result['description_html'])->toContain('Oferta dotyczy poszewki')
+        ->and($result['images'])->toContain([
+            'url' => 'https://drsapporo.com/photos/product/49/hero.webp',
+            'alt' => '',
+        ])
+        ->and($result['images'])->toContain([
+            'url' => 'https://drsapporo.com/photos/product/49/detail.webp',
+            'alt' => '',
+        ])
+        ->and($result['images'])->toContain([
+            'url' => 'https://drsapporo.com/photos/product/49/detail-thumb.webp',
+            'alt' => '',
+        ]);
+});
+
 it('records failed Dr Sapporo product requests without throwing', function (): void {
     Http::fake([
         'https://drsapporo.com/poduszka-ortopedyczna-missing' => Http::response('', 404),
