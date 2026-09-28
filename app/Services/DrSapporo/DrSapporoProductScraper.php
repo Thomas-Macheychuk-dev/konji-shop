@@ -109,7 +109,7 @@ final class DrSapporoProductScraper
         $ean = $this->extractLabelledValue($crawler, $bodyText, ['ean', 'gtin']);
 
         $images = $this->extractImages($crawler, $canonicalUrl);
-        $attributes = $this->extractAttributes($crawler);
+        $attributes = $this->extractAttributes($crawler, $bodyText);
         $variantCandidates = $this->extractVariants($crawler, $price);
 
         return [
@@ -452,7 +452,7 @@ final class DrSapporoProductScraper
     /**
      * @return array<int, array{code: string, label: string, value: string, slug: string}>
      */
-    private function extractAttributes(Crawler $crawler): array
+    private function extractAttributes(Crawler $crawler, string $bodyText): array
     {
         $attributes = [];
 
@@ -504,6 +504,35 @@ final class DrSapporoProductScraper
             });
         } catch (Throwable) {
             // Optional semantic extraction only.
+        }
+
+        foreach ([
+            'szerokość' => 'Szerokość',
+            'długość' => 'Długość',
+            'wysokość' => 'Wysokość',
+        ] as $sourceLabel => $label) {
+            $pattern = '/\\b'.preg_quote($sourceLabel, '/').'\\s*:\\s*'
+                .'([0-9]+(?:[,.][0-9]+)?(?:\\/[0-9]+(?:[,.][0-9]+)?)?'
+                .'\\s*(?:cm|centymetr(?:a|y|ów)?))\\b/iu';
+
+            if (preg_match_all($pattern, $bodyText, $matches) < 1) {
+                continue;
+            }
+
+            foreach ($matches[1] as $value) {
+                $attribute = $this->attribute($label, $this->text((string) $value));
+                $attributes[$attribute['code'].'|'.$attribute['slug']] = $attribute;
+            }
+        }
+
+        if (preg_match(
+            '/\\bRozmiar\\s+(?:poduszki|aparatu)\\s*:?[\\s-]*'
+                .'(uniwersalny\\s*\\(jeden\\s+rozmiar\\))/iu',
+            $bodyText,
+            $matches,
+        ) === 1) {
+            $attribute = $this->attribute('Rozmiar', $this->text($matches[1]));
+            $attributes[$attribute['code'].'|'.$attribute['slug']] = $attribute;
         }
 
         return array_values($attributes);
