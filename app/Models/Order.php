@@ -302,6 +302,7 @@ class Order extends Model
 
         $this->update([
             'status' => OrderStatus::CANCELLED,
+            'fulfilment_status' => FulfilmentStatus::CANCELLED,
             'notes' => $trimmedNote !== ''
                 ? ($existingNotes !== '' ? $existingNotes.PHP_EOL.$trimmedNote : $trimmedNote)
                 : $this->notes,
@@ -436,6 +437,7 @@ class Order extends Model
 
         $this->update([
             'status' => OrderStatus::CANCELLED,
+            'fulfilment_status' => FulfilmentStatus::CANCELLED,
         ]);
 
         $this->appendNote($note);
@@ -574,7 +576,11 @@ class Order extends Model
         );
     }
 
-    public function markPaymentAsRefunded(int $refundAmount, bool $fullyRefunded): void
+    public function markPaymentAsRefunded(
+        int $refundAmount,
+        bool $fullyRefunded,
+        string $source = 'admin_withdrawal_refund',
+    ): void
     {
         if (! in_array($this->payment_status, [
             PaymentStatus::PAID,
@@ -592,10 +598,11 @@ class Order extends Model
         $this->recordEvent(
             $fullyRefunded ? 'order_refunded' : 'order_partially_refunded',
             $fullyRefunded
-                ? 'Order marked as refunded after withdrawal.'
-                : 'Order marked as partially refunded after withdrawal.',
+                ? 'Order marked as refunded.'
+                : 'Order marked as partially refunded.',
             [
                 'refund_amount' => $refundAmount,
+                'source' => $source,
             ],
         );
     }
