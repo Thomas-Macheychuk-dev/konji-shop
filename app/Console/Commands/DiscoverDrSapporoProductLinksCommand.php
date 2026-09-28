@@ -16,7 +16,7 @@ final class DiscoverDrSapporoProductLinksCommand extends Command
         {--request-delay-ms=500 : Milliseconds to pause before each Dr Sapporo HTTP request.}
         {--no-progress : Do not print progress.}
         {--json : Print the discovery result as JSON.}
-        {--save= : Save the discovery result as JSON under storage/app.}
+        {--save= : Save the discovery result as JSON under storage/app/private.}
         {--show-failures : Print failed Dr Sapporo URLs.}';
 
     protected $description = 'Discover Dr Sapporo product URLs from the public catalogue page.';
