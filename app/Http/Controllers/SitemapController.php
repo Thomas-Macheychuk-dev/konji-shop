@@ -85,11 +85,22 @@ final class SitemapController extends Controller
             'priority' => '0.8',
         ]);
 
+        $legacyPlaceholderUrls = collect(config('legacy-product-placeholders', []))
+            ->keys()
+            ->map(fn (string $slug): array => [
+                'loc' => route('legacy-products.placeholder', ['slug' => $slug]),
+                'lastmod' => now(),
+                'changefreq' => 'monthly',
+                'priority' => '0.6',
+            ]);
+
         return response()
             ->view('sitemap', [
                 'urls' => $staticUrls
                     ->merge($categoryUrls)
                     ->merge($productUrls)
+                    ->merge($legacyPlaceholderUrls)
+                    ->unique('loc')
                     ->values(),
             ])
             ->header('Content-Type', 'application/xml');

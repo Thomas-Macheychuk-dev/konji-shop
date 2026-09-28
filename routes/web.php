@@ -64,6 +64,7 @@ use App\Http\Controllers\GuestOrderWithdrawalCreateController;
 use App\Http\Controllers\GuestOrderWithdrawalStoreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HumanChallengeController;
+use App\Http\Controllers\LegacyProductPlaceholderController;
 use App\Http\Controllers\Payments\PaymentRetryController;
 use App\Http\Controllers\Payments\PaymentReturnController;
 use App\Http\Controllers\Payments\PaynowNotificationController;
@@ -82,6 +83,21 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::get('/categories/{category:slug}', CategoryProductIndexController::class)
     ->name('categories.show');
+
+$legacyProductPlaceholders = config('legacy-product-placeholders', []);
+$legacyProductPlaceholderSlugs = array_keys($legacyProductPlaceholders);
+
+foreach ($legacyProductPlaceholders as $slug => $placeholder) {
+    foreach (($placeholder['source_paths'] ?? []) as $sourcePath) {
+        Route::permanentRedirect($sourcePath, '/products/'.$slug);
+    }
+}
+
+if ($legacyProductPlaceholderSlugs !== []) {
+    Route::get('/products/{slug}', LegacyProductPlaceholderController::class)
+        ->whereIn('slug', $legacyProductPlaceholderSlugs)
+        ->name('legacy-products.placeholder');
+}
 
 Route::get('/products/{product:slug}', ProductShowController::class)
     ->name('products.show');
