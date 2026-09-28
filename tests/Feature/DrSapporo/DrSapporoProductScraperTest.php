@@ -163,6 +163,34 @@ it('extracts a first width measurement concatenated to its section heading', fun
     ]);
 });
 
+it('normalizes concatenated Dr Sapporo product names', function (): void {
+    $html = <<<'HTML'
+        <html>
+            <head>
+                <link rel="canonical" href="https://drsapporo.com/poszewka-na-poduszke-shell">
+            </head>
+            <body>
+                <main>
+                    <h1>ShellPoszewka na poduszkę ortopedyczną</h1>
+                    <div class="product-price">79,00 zł</div>
+                    <p>Termin realizacji: 1 dzień roboczy</p>
+                </main>
+            </body>
+        </html>
+    HTML;
+
+    $result = app(DrSapporoProductScraper::class)->extract(
+        $html,
+        'https://drsapporo.com/poszewka-na-poduszke-shell',
+        [
+            'category_name' => 'Poszewki na poduszki Dr Sapporo',
+            'brand_name' => 'Dr Sapporo',
+        ],
+    );
+
+    expect($result['name'])->toBe('Shell Poszewka na poduszkę ortopedyczną');
+});
+
 it('records failed Dr Sapporo product requests without throwing', function (): void {
     Http::fake([
         'https://drsapporo.com/poduszka-ortopedyczna-missing' => Http::response('', 404),
