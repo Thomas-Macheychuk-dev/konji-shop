@@ -164,9 +164,9 @@ class PrepareLegacySeoProductApprovalReviewCommand extends Command
         );
 
         $reviewClass = match ($classification) {
-            'exact_identifier_and_name' => $candidateReachable && $variantReady
+            'exact_identifier_and_name' => $candidateReachable
                 ? 'approval_candidate_exact_identifier_and_name'
-                : ($candidateReachable ? 'blocked_matched_variant_not_active' : 'blocked_target_draft_strong'),
+                : 'blocked_target_draft_strong',
             'identifier_agreement' => $candidateReachable && $variantReady
                 ? ($sharedTokens === [] ? 'review_identifier_agreement_name_divergence' : 'review_identifier_agreement_semantic_support')
                 : ($candidateReachable ? 'blocked_matched_variant_not_active' : 'blocked_target_draft_strong'),

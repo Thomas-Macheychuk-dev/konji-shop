@@ -350,3 +350,101 @@ it('requires an explicit base URL and never silently validates the configured ap
     ]))->toBe(1)
         ->and(Artisan::output())->toContain('Option --base-url is required.');
 });
+
+it('validates schema v2 exact-identity candidates without pretending draft or absent variants are active', function (): void {
+    $records = [
+        [
+            'legacy_product_id' => '10',
+            'legacy_h1' => 'Produkt Alfa',
+            'legacy_index' => 'ALFA-10',
+            'target_product_id' => '100',
+            'target_product_name' => 'Produkt Alfa',
+            'target_path' => '/products/produkt-alfa',
+            'target_product_status' => 'active',
+            'target_storefront_reachable' => true,
+            'matched_variant_status' => 'draft',
+            'approval_basis' => 'exact_identifier_and_name',
+            'decision' => 'VALIDATE_301_CANDIDATE',
+            'approved' => false,
+            'source_paths' => ['/produkt-alfa-id-10'],
+        ],
+        [
+            'legacy_product_id' => '20',
+            'legacy_h1' => 'Produkt Beta',
+            'legacy_index' => 'BETA-20',
+            'target_product_id' => '200',
+            'target_product_name' => 'Produkt Beta',
+            'target_path' => '/products/produkt-beta',
+            'target_product_status' => 'active',
+            'target_storefront_reachable' => true,
+            'matched_variant_status' => null,
+            'approval_basis' => 'exact_identifier_and_name',
+            'decision' => 'VALIDATE_301_CANDIDATE',
+            'approved' => false,
+            'source_paths' => ['/produkt-beta-id-20'],
+        ],
+    ];
+
+    $manifest = writeSeoTargetValidationManifest([
+        'schema_version' => 2,
+        'validation_only' => true,
+        'product_count' => 2,
+        'source_path_count' => 2,
+        'redirects_installed' => 0,
+        'records' => $records,
+    ]);
+
+    Http::fake([
+        'https://staging.example.test/products/produkt-alfa' => Http::response(
+            seoTargetValidationHtml('Produkt Alfa', 'https://staging.example.test/products/produkt-alfa'),
+            200,
+            ['Content-Type' => 'text/html'],
+        ),
+        'https://staging.example.test/products/produkt-beta' => Http::response(
+            seoTargetValidationHtml('Produkt Beta', 'https://staging.example.test/products/produkt-beta'),
+            200,
+            ['Content-Type' => 'text/html'],
+        ),
+    ]);
+
+    expect(Artisan::call('seo:validate-approved-product-targets', [
+        '--manifest' => $manifest,
+        '--base-url' => 'https://staging.example.test',
+        '--output' => 'storage/framework/testing/seo-target-validation-report.json',
+    ]))->toBe(0)
+        ->and(Artisan::output())->toContain('RESULT: PASS');
+
+    Http::assertSentCount(2);
+});
+
+it('rejects schema v2 validation candidates that do not carry exact identity evidence', function (): void {
+    Http::fake();
+
+    $manifest = writeSeoTargetValidationManifest([
+        'schema_version' => 2,
+        'validation_only' => true,
+        'product_count' => 1,
+        'source_path_count' => 1,
+        'redirects_installed' => 0,
+        'records' => [[
+            'target_product_id' => '100',
+            'target_product_name' => 'Produkt Alfa',
+            'target_path' => '/products/produkt-alfa',
+            'target_product_status' => 'active',
+            'target_storefront_reachable' => true,
+            'approval_basis' => 'identifier_agreement',
+            'decision' => 'VALIDATE_301_CANDIDATE',
+            'approved' => false,
+            'source_paths' => ['/produkt-alfa-id-10'],
+        ]],
+    ]);
+
+    expect(Artisan::call('seo:validate-approved-product-targets', [
+        '--manifest' => $manifest,
+        '--base-url' => 'https://staging.example.test',
+        '--output' => 'storage/framework/testing/seo-target-validation-report.json',
+    ]))->toBe(1)
+        ->and(Artisan::output())->toContain('approval_basis=exact_identifier_and_name');
+
+    Http::assertNothingSent();
+});

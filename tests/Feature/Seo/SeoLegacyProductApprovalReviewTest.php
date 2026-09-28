@@ -54,6 +54,15 @@ it('prepares review cohorts without approving redirects', function () {
                 'variant_candidate_product_id' => '50', 'variant_candidate_variant_id' => '500', 'variant_candidate_variant_sku' => 'C-5',
                 'variant_candidate_variant_status' => 'active', 'parent_candidate_product_id' => '51', 'name_candidate_product_id' => null,
             ],
+            [
+                'legacy_id' => '6', 'legacy_url' => 'https://ortezka.pl/f-id-6', 'legacy_path' => '/f-id-6',
+                'legacy_h1' => 'Exact Informational Product X-6', 'legacy_index' => 'X-6', 'classification' => 'exact_identifier_and_name',
+                'candidate_product_id' => '60', 'candidate_product_name' => 'Exact Informational Product X-6', 'candidate_target_path' => '/products/exact-informational-product',
+                'candidate_product_status' => 'active', 'candidate_storefront_reachable' => true, 'candidate_active_variant_count' => 0,
+                'candidate_external_source' => 'supplier', 'candidate_external_parent_sku' => null,
+                'variant_candidate_product_id' => '60', 'variant_candidate_variant_id' => '600', 'variant_candidate_variant_sku' => 'X-6',
+                'variant_candidate_variant_status' => 'draft', 'parent_candidate_product_id' => null, 'name_candidate_product_id' => '60',
+            ],
         ],
     ];
 
@@ -65,6 +74,7 @@ https://ortezka.pl/b-id-2,/b-id-2,,product,2,1,200,,,,Orteza kolana AT2,,AT2,,,,
 https://ortezka.pl/c-id-3,/c-id-3,,product,3,1,200,,,,Aparat na staw skokowy 4009,,4009,,,,,0,
 https://ortezka.pl/d-id-4,/d-id-4,,product,4,1,200,,,,Draft Exact,,D-4,,,,,0,
 https://ortezka.pl/e-id-5,/e-id-5,,product,5,1,200,,,,Conflict,,C-5,,,,,0,
+https://ortezka.pl/f-id-6,/f-id-6,,product,6,1,200,,,,Exact Informational Product X-6,,X-6,,,,,0,
 CSV;
 
     Storage::disk('local')->put('matching/evidence.json', json_encode($evidence, JSON_THROW_ON_ERROR));
@@ -81,14 +91,15 @@ CSV;
     $byId = collect($report['records'])->keyBy('legacy_id');
 
     expect($report['redirects_approved'])->toBe(0)
-        ->and($report['summary']['approval_candidates'])->toBe(1)
-        ->and($report['summary']['approval_candidate_source_paths'])->toBe(2)
+        ->and($report['summary']['approval_candidates'])->toBe(2)
+        ->and($report['summary']['approval_candidate_source_paths'])->toBe(3)
         ->and($byId['1']['review_class'])->toBe('approval_candidate_exact_identifier_and_name')
         ->and($byId['1']['legacy_source_path_count'])->toBe(2)
         ->and($byId['2']['review_class'])->toBe('review_identifier_agreement_semantic_support')
         ->and($byId['3']['review_class'])->toBe('review_identifier_agreement_name_divergence')
         ->and($byId['4']['review_class'])->toBe('blocked_target_draft_strong')
         ->and($byId['5']['review_class'])->toBe('identifier_conflict')
+        ->and($byId['6']['review_class'])->toBe('approval_candidate_exact_identifier_and_name')
         ->and(collect($report['records'])->every(fn (array $record): bool => $record['redirect_approved'] === false))->toBeTrue();
 });
 

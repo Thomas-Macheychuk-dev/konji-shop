@@ -376,8 +376,15 @@ function swatchFallback(label) {
     return (code ?? normalized).slice(0, 6);
 }
 
+const hasActiveVariants = computed(() => variants.value.length > 0);
+
 const canAddToCart = computed(() => {
-    return exactSelectedVariant.value?.stock_status !== 'out_of_stock';
+    const variant = exactSelectedVariant.value;
+
+    return variant !== null
+        && variant.price !== null
+        && variant.price !== undefined
+        && variant.stock_status !== 'out_of_stock';
 });
 
 initializeSelection();
@@ -504,7 +511,10 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-end">
+                        <div
+                            v-if="hasActiveVariants"
+                            class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-end"
+                        >
                             <div class="flex items-center rounded-xl border border-zinc-300 bg-white shadow-sm">
                                 <button
                                     type="button"
@@ -537,7 +547,8 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 
                             <button
                                 type="submit"
-                                class="inline-flex h-11 min-w-[176px] items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-[#155fa8] px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[#0b3b70] focus:outline-none focus:ring-4 focus:ring-blue-100 active:translate-y-px"
+                                class="inline-flex h-11 min-w-[176px] items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-[#155fa8] px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[#0b3b70] focus:outline-none focus:ring-4 focus:ring-blue-100 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50"
+                                :disabled="!canAddToCart"
                             >
                                 <svg
                                     class="h-4.5 w-4.5 shrink-0"
@@ -553,6 +564,13 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                                 </svg>
                                 <span>Dodaj do koszyka</span>
                             </button>
+                        </div>
+
+                        <div
+                            v-else
+                            class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-950"
+                        >
+                            Produkt obecnie niedostępny do zakupu.
                         </div>
                     </form>
 

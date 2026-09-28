@@ -97,13 +97,18 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
      */
     private function approvedTargets(array $manifest): array
     {
-        if (($manifest['schema_version'] ?? null) !== 1) {
+        $schemaVersion = $manifest['schema_version'] ?? null;
+
+        if (! in_array($schemaVersion, [1, 2], true)) {
             throw new RuntimeException('Unsupported redirect approval manifest schema version.');
         }
 
         if (($manifest['redirects_installed'] ?? null) !== 0) {
             throw new RuntimeException('Approval manifest must remain evidence-only with redirects_installed=0.');
         }
+
+        $validationOnly = $schemaVersion === 2
+            && ($manifest['validation_only'] ?? null) === true;
 
         $records = $manifest['records'] ?? null;
 
@@ -119,12 +124,33 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
                 throw new RuntimeException('Approval manifest contains a non-object record.');
             }
 
-            if (($record['approved'] ?? false) !== true || ($record['decision'] ?? null) !== 'APPROVE_301') {
-                throw new RuntimeException('Approval manifest contains a record that is not explicitly APPROVE_301.');
-            }
+            if ($schemaVersion === 1) {
+                if (($record['approved'] ?? false) !== true || ($record['decision'] ?? null) !== 'APPROVE_301') {
+                    throw new RuntimeException('Approval manifest contains a record that is not explicitly APPROVE_301.');
+                }
 
-            if (($record['target_product_status'] ?? null) !== 'active' || ($record['matched_variant_status'] ?? null) !== 'active') {
-                throw new RuntimeException('Approval manifest contains an inactive target product or matched variant.');
+                if (($record['target_product_status'] ?? null) !== 'active' || ($record['matched_variant_status'] ?? null) !== 'active') {
+                    throw new RuntimeException('Approval manifest contains an inactive target product or matched variant.');
+                }
+            } else {
+                if (($record['approval_basis'] ?? null) !== 'exact_identifier_and_name') {
+                    throw new RuntimeException('Schema v2 target validation requires approval_basis=exact_identifier_and_name.');
+                }
+
+                if (($record['target_product_status'] ?? null) !== 'active'
+                    || ($record['target_storefront_reachable'] ?? null) !== true) {
+                    throw new RuntimeException('Schema v2 target validation requires an active, storefront-reachable target product.');
+                }
+
+                if ($validationOnly) {
+                    if (($record['approved'] ?? null) !== false
+                        || ($record['decision'] ?? null) !== 'VALIDATE_301_CANDIDATE') {
+                        throw new RuntimeException('Validation-only schema v2 records must remain unapproved VALIDATE_301_CANDIDATE records.');
+                    }
+                } elseif (($record['approved'] ?? false) !== true
+                    || ($record['decision'] ?? null) !== 'APPROVE_301') {
+                    throw new RuntimeException('Approved schema v2 records must be explicitly APPROVE_301.');
+                }
             }
 
             $targetProductId = $record['target_product_id'] ?? null;
@@ -175,12 +201,22 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
             ];
         }
 
-        if (($manifest['approved_product_count'] ?? null) !== count($targets)) {
-            throw new RuntimeException('approved_product_count does not match unique approved target records.');
-        }
+        if ($schemaVersion === 1) {
+            if (($manifest['approved_product_count'] ?? null) !== count($targets)) {
+                throw new RuntimeException('approved_product_count does not match unique approved target records.');
+            }
 
-        if (($manifest['approved_source_path_count'] ?? null) !== count($sourcePaths)) {
-            throw new RuntimeException('approved_source_path_count does not match unique approved source paths.');
+            if (($manifest['approved_source_path_count'] ?? null) !== count($sourcePaths)) {
+                throw new RuntimeException('approved_source_path_count does not match unique approved source paths.');
+            }
+        } else {
+            if (($manifest['product_count'] ?? null) !== count($targets)) {
+                throw new RuntimeException('product_count does not match unique schema v2 target records.');
+            }
+
+            if (($manifest['source_path_count'] ?? null) !== count($sourcePaths)) {
+                throw new RuntimeException('source_path_count does not match unique schema v2 source paths.');
+            }
         }
 
         ksort($targets, SORT_STRING);

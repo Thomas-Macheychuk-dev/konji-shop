@@ -56,6 +56,14 @@ class CartItemStoreController extends Controller
                 ->withInput();
         }
 
+        if ($variant->grossPriceAmount() === null) {
+            return back()
+                ->withErrors([
+                    'product_variant_id' => 'Cena tego wariantu jest obecnie niedostępna.',
+                ])
+                ->withInput();
+        }
+
         $selectedColors = $colorSelectionService->resolve(
             $variant->product,
             $request->input('informational_colors', []),

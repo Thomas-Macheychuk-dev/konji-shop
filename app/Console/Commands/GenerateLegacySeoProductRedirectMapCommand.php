@@ -76,12 +76,18 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
      */
     private function approvedRules(array $manifest): array
     {
-        if (($manifest['schema_version'] ?? null) !== 1) {
+        $schemaVersion = $manifest['schema_version'] ?? null;
+
+        if (! in_array($schemaVersion, [1, 2], true)) {
             throw new RuntimeException('Unsupported redirect approval manifest schema version.');
         }
 
         if (($manifest['redirects_installed'] ?? null) !== 0) {
             throw new RuntimeException('Approval manifest must remain evidence-only with redirects_installed=0.');
+        }
+
+        if ($schemaVersion === 2 && ($manifest['validation_only'] ?? null) === true) {
+            throw new RuntimeException('Validation-only schema v2 manifests cannot generate runtime redirects.');
         }
 
         $records = $manifest['records'] ?? null;
@@ -102,8 +108,20 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
                 throw new RuntimeException('Approval manifest contains a record that is not explicitly APPROVE_301.');
             }
 
-            if (($record['target_product_status'] ?? null) !== 'active' || ($record['matched_variant_status'] ?? null) !== 'active') {
-                throw new RuntimeException('Approval manifest contains an inactive product or matched variant.');
+            if ($schemaVersion === 1) {
+                if (($record['target_product_status'] ?? null) !== 'active'
+                    || ($record['matched_variant_status'] ?? null) !== 'active') {
+                    throw new RuntimeException('Schema v1 approval manifest contains an inactive product or matched variant.');
+                }
+            } else {
+                if (($record['approval_basis'] ?? null) !== 'exact_identifier_and_name') {
+                    throw new RuntimeException('Schema v2 redirect generation requires approval_basis=exact_identifier_and_name.');
+                }
+
+                if (($record['target_product_status'] ?? null) !== 'active'
+                    || ($record['target_storefront_reachable'] ?? null) !== true) {
+                    throw new RuntimeException('Schema v2 redirect generation requires an active, storefront-reachable target product.');
+                }
             }
 
             $target = $record['target_path'] ?? null;
@@ -141,12 +159,22 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
             }
         }
 
-        if (($manifest['approved_product_count'] ?? null) !== $approvedProducts) {
-            throw new RuntimeException('approved_product_count does not match manifest records.');
-        }
+        if ($schemaVersion === 1) {
+            if (($manifest['approved_product_count'] ?? null) !== $approvedProducts) {
+                throw new RuntimeException('approved_product_count does not match manifest records.');
+            }
 
-        if (($manifest['approved_source_path_count'] ?? null) !== count($rules)) {
-            throw new RuntimeException('approved_source_path_count does not match expanded source paths.');
+            if (($manifest['approved_source_path_count'] ?? null) !== count($rules)) {
+                throw new RuntimeException('approved_source_path_count does not match expanded source paths.');
+            }
+        } else {
+            if (($manifest['product_count'] ?? null) !== $approvedProducts) {
+                throw new RuntimeException('product_count does not match schema v2 manifest records.');
+            }
+
+            if (($manifest['source_path_count'] ?? null) !== count($rules)) {
+                throw new RuntimeException('source_path_count does not match schema v2 expanded source paths.');
+            }
         }
 
         $sources = array_fill_keys(array_keys($rules), true);

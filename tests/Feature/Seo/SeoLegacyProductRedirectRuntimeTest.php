@@ -84,3 +84,110 @@ it('keeps approved sources direct and target paths product-only', function (): v
         ->and(array_unique($sources))->toHaveCount(36)
         ->and(array_intersect($sources, $targets))->toBe([]);
 });
+
+it('allows an explicitly approved schema v2 exact-identity product even when its historical matched variant is not active', function (): void {
+    $manifestRelative = 'storage/framework/testing/schema-v2-product-redirect-approvals.json';
+    $manifestPath = base_path($manifestRelative);
+    $outputRelative = 'storage/framework/testing/schema-v2-product-redirect-map.conf';
+    $outputPath = base_path($outputRelative);
+
+    if (! is_dir(dirname($manifestPath))) {
+        mkdir(dirname($manifestPath), 0775, true);
+    }
+
+    $manifest = [
+        'schema_version' => 2,
+        'validation_only' => false,
+        'product_count' => 2,
+        'source_path_count' => 2,
+        'redirects_installed' => 0,
+        'records' => [
+            [
+                'target_product_id' => '100',
+                'target_product_name' => 'Produkt Alfa',
+                'target_path' => '/products/produkt-alfa',
+                'target_product_status' => 'active',
+                'target_storefront_reachable' => true,
+                'matched_variant_status' => 'draft',
+                'approval_basis' => 'exact_identifier_and_name',
+                'decision' => 'APPROVE_301',
+                'approved' => true,
+                'source_paths' => ['/produkt-alfa-id-10'],
+            ],
+            [
+                'target_product_id' => '200',
+                'target_product_name' => 'Produkt Beta',
+                'target_path' => '/products/produkt-beta',
+                'target_product_status' => 'active',
+                'target_storefront_reachable' => true,
+                'matched_variant_status' => null,
+                'approval_basis' => 'exact_identifier_and_name',
+                'decision' => 'APPROVE_301',
+                'approved' => true,
+                'source_paths' => ['/produkt-beta-id-20'],
+            ],
+        ],
+    ];
+
+    file_put_contents(
+        $manifestPath,
+        json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)
+    );
+
+    @unlink($outputPath);
+
+    try {
+        expect(Artisan::call('seo:generate-legacy-product-redirect-map', [
+            '--manifest' => $manifestRelative,
+            '--output' => $outputRelative,
+        ]))->toBe(0);
+
+        $generated = (string) file_get_contents($outputPath);
+
+        expect($generated)
+            ->toContain('"/produkt-alfa-id-10" "/products/produkt-alfa";')
+            ->toContain('"/produkt-beta-id-20" "/products/produkt-beta";');
+    } finally {
+        @unlink($manifestPath);
+        @unlink($outputPath);
+    }
+});
+
+it('refuses to generate runtime redirects from a schema v2 validation-only manifest', function (): void {
+    $manifestRelative = 'storage/framework/testing/schema-v2-validation-only.json';
+    $manifestPath = base_path($manifestRelative);
+
+    if (! is_dir(dirname($manifestPath))) {
+        mkdir(dirname($manifestPath), 0775, true);
+    }
+
+    file_put_contents($manifestPath, json_encode([
+        'schema_version' => 2,
+        'validation_only' => true,
+        'product_count' => 1,
+        'source_path_count' => 1,
+        'redirects_installed' => 0,
+        'records' => [[
+            'target_product_id' => '100',
+            'target_product_name' => 'Produkt Alfa',
+            'target_path' => '/products/produkt-alfa',
+            'target_product_status' => 'active',
+            'target_storefront_reachable' => true,
+            'approval_basis' => 'exact_identifier_and_name',
+            'decision' => 'VALIDATE_301_CANDIDATE',
+            'approved' => false,
+            'source_paths' => ['/produkt-alfa-id-10'],
+        ]],
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR));
+
+    try {
+        expect(Artisan::call('seo:generate-legacy-product-redirect-map', [
+            '--manifest' => $manifestRelative,
+            '--output' => 'storage/framework/testing/should-not-exist.conf',
+        ]))->toBe(1)
+            ->and(Artisan::output())->toContain('Validation-only schema v2 manifests cannot generate runtime redirects.');
+    } finally {
+        @unlink($manifestPath);
+        @unlink(base_path('storage/framework/testing/should-not-exist.conf'));
+    }
+});
