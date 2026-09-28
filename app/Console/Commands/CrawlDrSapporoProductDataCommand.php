@@ -12,7 +12,7 @@ use JsonException;
 final class CrawlDrSapporoProductDataCommand extends Command
 {
     protected $signature = 'drsapporo:crawl-product-data
-        {--from=scrapers/drsapporo/product-links.json : Product link discovery JSON file under storage/app.}
+        {--from=scrapers/drsapporo/product-links.json : Product link discovery JSON file under storage/app/private.}
         {--url=* : Explicit Dr Sapporo product URL to scrape instead of reading --from.}
         {--limit= : Maximum number of product URLs to scrape.}
         {--offset=0 : Number of product URLs to skip before scraping.}
