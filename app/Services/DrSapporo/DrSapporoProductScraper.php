@@ -113,6 +113,9 @@ final class DrSapporoProductScraper
         $images = $this->extractImages($crawler, $canonicalUrl);
         $attributes = $this->extractAttributes($crawler, $bodyText);
         $variantCandidates = $this->extractVariants($crawler, $price);
+        $descriptionHtml = $this->extractDescriptionHtml($crawler, $bodyText);
+        $seoDescription = $this->firstAttr($crawler, 'meta[name="description"]', 'content')
+            ?? $this->seoDescriptionFallback($descriptionHtml);
 
         return [
             'source' => 'drsapporo',
@@ -129,8 +132,8 @@ final class DrSapporoProductScraper
             'categories' => $categoryName !== null ? [$categoryName] : [],
             'source_category_name' => $this->contextString($context, 'category_name'),
             'source_product_list_name' => $this->contextString($context, 'name'),
-            'seo_description' => $this->firstAttr($crawler, 'meta[name="description"]', 'content'),
-            'description_html' => $this->extractDescriptionHtml($crawler),
+            'seo_description' => $seoDescription,
+            'description_html' => $descriptionHtml,
             'price_gross_amount' => $price,
             'currency' => 'PLN',
             'availability' => $availability['code'],
@@ -296,7 +299,7 @@ final class DrSapporoProductScraper
 
     private function extractShippingTime(string $bodyText): ?string
     {
-        if (preg_match('/Termin\s+realizacji\s*:\s*([0-9]+\s+(?:dzień|dni|godzin(?:a|y)?)(?:\s+robocz(?:y|e|ych))?)/iu', $bodyText, $matches) === 1) {
+        if (preg_match('/Termin\s+realizacji\s*:?\s*([0-9]+\s+(?:dzień|dni|godzin(?:a|y)?)(?:\s+robocz(?:y|e|ych))?)/iu', $bodyText, $matches) === 1) {
             return $this->text($matches[1]);
         }
 
@@ -692,7 +695,7 @@ final class DrSapporoProductScraper
         return $name !== '' ? Str::headline($name) : '';
     }
 
-    private function extractDescriptionHtml(Crawler $crawler): ?string
+    private function extractDescriptionHtml(Crawler $crawler, string $bodyText): ?string
     {
         foreach ([
             '[itemprop="description"]',
@@ -718,19 +721,73 @@ final class DrSapporoProductScraper
             }
         }
 
-        foreach (['main', '#content'] as $selector) {
-            try {
-                $node = $crawler->filter($selector)->first();
+        $descriptionText = $this->descriptionTextFromBody($bodyText);
 
-                if ($node->count() > 0) {
-                    return $this->sanitizeHtml($node->html(''));
-                }
-            } catch (Throwable) {
-                continue;
-            }
+        if ($descriptionText !== null) {
+            return '<p>'.e($descriptionText).'</p>';
         }
 
         return null;
+    }
+
+    private function descriptionTextFromBody(string $bodyText): ?string
+    {
+        if (preg_match(
+            '/Informacje\s+o\s+(?:poduszce|poszewce|aparacie|produkcie)\b/iu',
+            $bodyText,
+            $startMatch,
+            PREG_OFFSET_CAPTURE,
+        ) !== 1) {
+            return null;
+        }
+
+        $matchedHeading = (string) $startMatch[0][0];
+        $startOffset = (int) $startMatch[0][1] + strlen($matchedHeading);
+        $tail = substr($bodyText, $startOffset);
+
+        if ($tail === false) {
+            return null;
+        }
+
+        $stopOffset = strlen($tail);
+
+        foreach ([
+            '/\bWymiary\s+(?:poduszki|aparatu)\b/iu',
+            '/\bRozmiary?\s+(?:poduszki|poszewki|aparatu)\b/iu',
+            '/\bDostawa\s+(?:poduszki|poszewki|aparatu)\b/iu',
+            '/\bGwarancja\s+(?:na\s+)?(?:poduszkę|poszewkę|aparat)\b/iu',
+            '/\bProdukty\s+Zakupy\s+u\s+nas\b/iu',
+            '/\bCiasteczka\s+na\s+powitanie\b/iu',
+        ] as $stopPattern) {
+            if (preg_match($stopPattern, $tail, $stopMatch, PREG_OFFSET_CAPTURE) !== 1) {
+                continue;
+            }
+
+            $stopOffset = min($stopOffset, (int) $stopMatch[0][1]);
+        }
+
+        $text = $this->text(substr($tail, 0, $stopOffset));
+
+        if ($text === '') {
+            return null;
+        }
+
+        return Str::limit($text, 6000, '');
+    }
+
+    private function seoDescriptionFallback(?string $descriptionHtml): ?string
+    {
+        if ($descriptionHtml === null) {
+            return null;
+        }
+
+        $text = $this->text(strip_tags($descriptionHtml));
+
+        if ($text === '') {
+            return null;
+        }
+
+        return Str::limit($text, 155, '');
     }
 
     private function sanitizeHtml(string $html): ?string
