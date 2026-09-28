@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
@@ -140,6 +141,51 @@ it('applies per-product Dr Sapporo VAT rates from a reviewed VAT map', function 
 
     expect($swing->variants()->firstOrFail()->vat_rate)->toBe(VatRate::VAT_8)
         ->and($cover->variants()->firstOrFail()->vat_rate)->toBe(VatRate::VAT_23);
+});
+
+it('keeps successfully imported Dr Sapporo images when another source image fails', function (): void {
+    Storage::fake('public');
+
+    $successfulImageUrl = 'https://drsapporo.com/photos/product/1/a.webp';
+    $failedImageUrl = 'https://drsapporo.com/photos/product/1/b.webp';
+
+    $png = base64_decode(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+        true,
+    );
+
+    expect($png)->not->toBeFalse();
+
+    Http::fake([
+        $successfulImageUrl => Http::response($png, 200, ['Content-Type' => 'image/png']),
+        $failedImageUrl => Http::response('', 500, ['Content-Type' => 'text/plain']),
+    ]);
+
+    writeDrSapporoImportFixture('scrapers/drsapporo/import-image-partial-failure.json', [
+        drSapporoImportPayload(),
+    ]);
+
+    $this->artisan('drsapporo:import', [
+        '--from' => 'scrapers/drsapporo/import-image-partial-failure.json',
+        '--show-failures' => true,
+    ])
+        ->expectsOutputToContain('Image skipped for Dr Sapporo product poduszka-ortopedyczna-swing')
+        ->expectsOutputToContain('Imported products: 1')
+        ->expectsOutputToContain('Warnings: 1')
+        ->expectsOutputToContain('Failures: 0')
+        ->assertSuccessful();
+
+    $product = Product::query()
+        ->where('external_source', 'drsapporo')
+        ->where('external_id', 'poduszka-ortopedyczna-swing')
+        ->firstOrFail();
+
+    $image = $product->images()->firstOrFail();
+
+    expect($product->images()->count())->toBe(1)
+        ->and($image->source_url)->toBe($successfulImageUrl)
+        ->and($image->is_main)->toBeTrue()
+        ->and(Storage::disk($image->disk)->exists($image->path))->toBeTrue();
 });
 
 it('updates existing Dr Sapporo products instead of duplicating them', function (): void {
