@@ -68,6 +68,7 @@ return [
         'delivered' => 'Dostarczone',
         'returned' => 'Zwrócone',
         'ready_for_pickup' => 'Gotowe do odbioru',
+        'cancelled' => 'Anulowane',
     ],
 
     'company_data_key' => [
