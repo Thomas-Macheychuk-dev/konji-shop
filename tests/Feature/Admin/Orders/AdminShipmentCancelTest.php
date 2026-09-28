@@ -26,7 +26,14 @@ it('allows an admin to cancel a Polkurier shipment', function (): void {
         'tracking_url' => 'https://example.com/track/TRACK123',
         'service' => 'courier',
         'locker_code' => null,
-        'payload' => [],
+        'provider_status_code' => 'OC',
+        'provider_status_label' => 'Oczekuje na odbiór',
+        'payload' => [
+            'polkurier_status' => [
+                'status_code' => 'OC',
+                'status' => 'Oczekuje na odbiór',
+            ],
+        ],
     ]);
 
     Http::fake([
@@ -46,7 +53,10 @@ it('allows an admin to cancel a Polkurier shipment', function (): void {
 
     expect($shipment->refresh())
         ->status->toBe(ShipmentStatus::CANCELLED)
-        ->payload->toHaveKey('polkurier_cancellation');
+        ->provider_status_code->toBeNull()
+        ->provider_status_label->toBeNull()
+        ->payload->toHaveKey('polkurier_cancellation')
+        ->payload->toHaveKey('polkurier_status_before_cancellation');
 
     expect($shipment->payload['polkurier_cancellation'])
         ->toBe([

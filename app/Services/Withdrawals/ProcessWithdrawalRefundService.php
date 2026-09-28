@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Withdrawals;
 
 use App\Enums\PaymentRefundStatus;
+use App\Enums\FulfilmentStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\WithdrawalStatus;
 use App\Events\WithdrawalRequestRefunded;
@@ -28,6 +29,13 @@ final class ProcessWithdrawalRefundService
     public function process(Order $order): PaymentRefund
     {
         $refund = DB::transaction(fn (): PaymentRefund => $this->prepareRefund($order));
+
+        return $this->advance($refund);
+    }
+
+    public function processCancelledOrder(Order $order): PaymentRefund
+    {
+        $refund = DB::transaction(fn (): PaymentRefund => $this->prepareCancelledOrderRefund($order));
 
         return $this->advance($refund);
     }
@@ -148,6 +156,92 @@ final class ProcessWithdrawalRefundService
         return $refund->load(['order', 'payment']);
     }
 
+    private function prepareCancelledOrderRefund(Order $order): PaymentRefund
+    {
+        /** @var Order $lockedOrder */
+        $lockedOrder = Order::query()
+            ->with(['payments', 'paymentRefunds'])
+            ->lockForUpdate()
+            ->findOrFail($order->id);
+
+        if (! $lockedOrder->status->isCancelled()) {
+            throw new DomainException('Zwrot za anulowanie jest dostępny tylko dla anulowanego zamówienia.');
+        }
+
+        if ($lockedOrder->fulfilment_status !== FulfilmentStatus::CANCELLED) {
+            $lockedOrder->update([
+                'fulfilment_status' => FulfilmentStatus::CANCELLED,
+            ]);
+        }
+
+        $activeRefund = $lockedOrder->paymentRefunds
+            ->filter(fn (PaymentRefund $refund): bool => $refund->provider === 'paynow' && $refund->requiresReconciliation())
+            ->sortBy('id')
+            ->first();
+
+        if ($activeRefund instanceof PaymentRefund) {
+            return $activeRefund;
+        }
+
+        if (! in_array($lockedOrder->payment_status, [
+            PaymentStatus::PAID,
+            PaymentStatus::PARTIALLY_REFUNDED,
+        ], true)) {
+            throw new DomainException('Zwrot można wykonać tylko dla opłaconych zamówień.');
+        }
+
+        $payment = $lockedOrder->payments
+            ->filter(fn (Payment $payment): bool => $payment->provider === 'paynow')
+            ->filter(fn (Payment $payment): bool => in_array($payment->status, [
+                PaymentStatus::PAID,
+                PaymentStatus::PARTIALLY_REFUNDED,
+            ], true))
+            ->filter(fn (Payment $payment): bool => strtoupper(trim((string) $payment->external_status)) === 'CONFIRMED')
+            ->filter(fn (Payment $payment): bool => trim((string) $payment->provider_reference) !== '')
+            ->sortByDesc('id')
+            ->first();
+
+        if (! $payment instanceof Payment) {
+            throw new DomainException('Brak potwierdzonej płatności Paynow kwalifikującej się do zwrotu.');
+        }
+
+        $alreadyRefunded = (int) PaymentRefund::query()
+            ->where('payment_id', $payment->id)
+            ->where('status', PaymentRefundStatus::SUCCESSFUL->value)
+            ->sum('amount');
+
+        $refundAmount = max(0, (int) $payment->amount - $alreadyRefunded);
+
+        if ($refundAmount <= 0) {
+            throw new DomainException('Płatność została już w całości zwrócona.');
+        }
+
+        $refund = PaymentRefund::query()->create([
+            'order_id' => $lockedOrder->id,
+            'payment_id' => $payment->id,
+            'provider' => 'paynow',
+            'status' => PaymentRefundStatus::REQUESTED,
+            'amount' => $refundAmount,
+            'currency' => $payment->currency,
+            'reason' => 'OTHER',
+            'idempotency_key' => (string) Str::uuid(),
+            'withdrawal_request_ids' => [],
+            'withdrawal_statuses' => [],
+        ]);
+
+        $lockedOrder->events()->create([
+            'type' => 'order_cancellation_refund_requested',
+            'description' => 'Administrator zlecił zwrot środków za anulowane zamówienie.',
+            'meta' => [
+                'payment_refund_id' => $refund->id,
+                'payment_id' => $payment->id,
+                'refund_amount' => $refundAmount,
+            ],
+        ]);
+
+        return $refund->load(['order', 'payment']);
+    }
+
     private function advance(PaymentRefund $refund): PaymentRefund
     {
         if ($refund->isCompleted()) {
@@ -190,7 +284,9 @@ final class ProcessWithdrawalRefundService
             || $previousProviderRefundId !== $refund->provider_refund_id
         ) {
             $refund->order->events()->create([
-                'type' => 'withdrawal_refund_provider_status',
+                'type' => $this->isCancellationRefund($refund)
+                    ? 'order_cancellation_refund_provider_status'
+                    : 'withdrawal_refund_provider_status',
                 'description' => 'Zaktualizowano status zwrotu Paynow.',
                 'meta' => [
                     'payment_refund_id' => $refund->id,
@@ -273,18 +369,28 @@ final class ProcessWithdrawalRefundService
 
             $fullyRefunded = $totalRefundedAmount >= (int) $payment->amount;
 
+            $source = $this->isCancellationRefund($lockedRefund)
+                ? 'admin_order_cancellation_refund'
+                : 'admin_withdrawal_refund';
+
             $payment->setRelation('order', $lockedOrder);
-            $payment->markAsRefunded((int) $lockedRefund->amount, $fullyRefunded);
-            $lockedOrder->markPaymentAsRefunded((int) $lockedRefund->amount, $fullyRefunded);
+            $payment->markAsRefunded((int) $lockedRefund->amount, $fullyRefunded, $source);
+            $lockedOrder->markPaymentAsRefunded((int) $lockedRefund->amount, $fullyRefunded, $source);
 
             $lockedRefund->update([
                 'completed_at' => now(),
                 'last_checked_at' => now(),
             ]);
 
+            $isCancellationRefund = $this->isCancellationRefund($lockedRefund);
+
             $lockedOrder->events()->create([
-                'type' => 'withdrawal_refund_processed',
-                'description' => 'Paynow potwierdził wykonanie zwrotu z odstąpienia.',
+                'type' => $isCancellationRefund
+                    ? 'order_cancellation_refund_processed'
+                    : 'withdrawal_refund_processed',
+                'description' => $isCancellationRefund
+                    ? 'Paynow potwierdził wykonanie zwrotu za anulowane zamówienie.'
+                    : 'Paynow potwierdził wykonanie zwrotu z odstąpienia.',
                 'meta' => [
                     'payment_refund_id' => $lockedRefund->id,
                     'provider_refund_id' => $lockedRefund->provider_refund_id,
@@ -311,6 +417,21 @@ final class ProcessWithdrawalRefundService
             $lockedRefund = PaymentRefund::query()
                 ->lockForUpdate()
                 ->findOrFail($refund->id);
+
+            if ($this->isCancellationRefund($lockedRefund)) {
+                $lockedRefund->order->events()->create([
+                    'type' => 'order_cancellation_refund_failed',
+                    'description' => 'Paynow nie przekazał środków za anulowane zamówienie.',
+                    'meta' => [
+                        'payment_refund_id' => $lockedRefund->id,
+                        'provider_refund_id' => $lockedRefund->provider_refund_id,
+                        'status' => $lockedRefund->status->value,
+                        'failure_reason' => $lockedRefund->failure_reason,
+                    ],
+                ]);
+
+                return;
+            }
 
             $withdrawalStatuses = is_array($lockedRefund->withdrawal_statuses)
                 ? $lockedRefund->withdrawal_statuses
@@ -345,6 +466,11 @@ final class ProcessWithdrawalRefundService
                 ],
             ]);
         });
+    }
+
+    private function isCancellationRefund(PaymentRefund $refund): bool
+    {
+        return ($refund->withdrawal_request_ids ?? []) === [];
     }
 
     /**

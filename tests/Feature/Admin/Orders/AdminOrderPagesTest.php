@@ -426,9 +426,46 @@ it('allows an admin to cancel a cancellable order', function (): void {
 
     expect($order->refresh())
         ->status->toBe(OrderStatus::CANCELLED)
+        ->fulfilment_status->toBe(FulfilmentStatus::CANCELLED)
         ->notes->toContain('admin@example.test: Manual admin cancellation.');
 
     expect($order->events()->where('type', 'order_cancelled_by_admin')->exists())->toBeTrue();
+});
+
+it('requires an active shipment to be cancelled before the order can be cancelled', function (): void {
+    $user = User::factory()->create([
+        'is_admin' => true,
+        'email' => 'admin@example.test',
+    ]);
+
+    $order = Order::factory()->create([
+        'status' => OrderStatus::CONFIRMED,
+        'payment_status' => PaymentStatus::PAID,
+        'fulfilment_status' => FulfilmentStatus::PROCESSING,
+        'delivery_provider' => DeliveryProvider::POLKURIER,
+        'delivery_carrier' => DeliveryCarrier::INPOST,
+        'delivery_service' => 'parcel_locker',
+    ]);
+
+    Shipment::query()->create([
+        'order_id' => $order->id,
+        'provider' => DeliveryProvider::POLKURIER,
+        'status' => ShipmentStatus::CREATED,
+        'provider_reference' => '1234-1',
+        'service' => 'parcel_locker',
+    ]);
+
+    $this->actingAs($user)
+        ->from(route('admin.orders.show', $order))
+        ->patch(route('admin.orders.cancel', $order), [
+            'note' => 'Should be blocked until shipment cancellation.',
+        ])
+        ->assertRedirect(route('admin.orders.show', $order))
+        ->assertSessionHas('error');
+
+    expect($order->refresh())
+        ->status->toBe(OrderStatus::CONFIRMED)
+        ->fulfilment_status->toBe(FulfilmentStatus::PROCESSING);
 });
 
 it('does not allow an admin to cancel a completed order', function (): void {
