@@ -51,13 +51,12 @@ it('fails closed when a Dr Sapporo product has no reviewed VAT classification', 
     expect(Product::query()->where('external_source', 'drsapporo')->count())->toBe(0);
 });
 
-it('imports Dr Sapporo products as drafts with deterministic internal SKUs and explicit VAT', function (): void {
+it('imports Dr Sapporo products as drafts with deterministic internal SKUs and reviewed VAT', function (): void {
     writeDrSapporoImportFixture('scrapers/drsapporo/import-test.json', [drSapporoImportPayload()]);
 
     $this->artisan('drsapporo:import', [
         '--from' => 'scrapers/drsapporo/import-test.json',
         '--no-images' => true,
-        '--vat-rate' => '23',
     ])->assertSuccessful();
 
     $product = Product::query()
@@ -83,9 +82,9 @@ it('imports Dr Sapporo products as drafts with deterministic internal SKUs and e
 
     expect($variant->sku)->toBe('DRS-PODUSZKA-ORTOPEDYCZNA-SWING-M')
         ->and($variant->status)->toBe(ProductVariantStatus::DRAFT)
-        ->and($variant->vat_rate)->toBe(VatRate::VAT_23)
+        ->and($variant->vat_rate)->toBe(VatRate::VAT_8)
         ->and($variant->price_gross_amount)->toBe(29900)
-        ->and($variant->price_net_amount)->toBe(VatRate::VAT_23->netFromGross(29900))
+        ->and($variant->price_net_amount)->toBe(VatRate::VAT_8->netFromGross(29900))
         ->and($variant->is_default)->toBeTrue()
         ->and($variant->attributeValues()->whereHas('attribute', fn ($query) => $query->where('slug', 'rozmiar'))->where('slug', 'm')->exists())->toBeTrue();
 
