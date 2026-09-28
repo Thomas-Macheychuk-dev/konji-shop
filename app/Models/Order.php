@@ -9,6 +9,7 @@ use App\Enums\DeliveryProvider;
 use App\Enums\FulfilmentStatus;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Enums\ShipmentStatus;
 use DomainException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -519,6 +520,15 @@ class Order extends Model
             FulfilmentStatus::DELIVERED,
             FulfilmentStatus::RETURNED,
         ], true)) {
+            return false;
+        }
+
+        if ($this->shipments()
+            ->whereNotIn('status', [
+                ShipmentStatus::FAILED->value,
+                ShipmentStatus::CANCELLED->value,
+            ])
+            ->exists()) {
             return false;
         }
 
