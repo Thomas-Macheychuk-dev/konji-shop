@@ -88,6 +88,53 @@ it('imports Dr Sapporo products as drafts with deterministic internal SKUs and e
         ->and($product->images()->count())->toBe(0);
 });
 
+it('applies per-product Dr Sapporo VAT rates from a reviewed VAT map', function (): void {
+    writeDrSapporoImportFixture('scrapers/drsapporo/import-vat-map.json', [
+        drSapporoImportPayload(),
+        drSapporoImportPayload([
+            'external_product_id' => 'poszewka-na-poduszke-rock',
+            'slug' => 'poszewka-na-poduszke-rock',
+            'name' => 'Rock Poszewka na poduszkę ortopedyczną',
+            'category' => 'Poszewki na poduszki Dr Sapporo',
+            'categories' => ['Poszewki na poduszki Dr Sapporo'],
+            'source_category_name' => 'Poszewki na poduszki Dr Sapporo',
+            'is_medical_device' => false,
+            'price_gross_amount' => 79.0,
+            'variant_candidates' => [],
+        ]),
+    ]);
+
+    $vatMapPath = Storage::disk('local')->path('scrapers/drsapporo/vat-map-test.json');
+
+    if (! is_dir(dirname($vatMapPath))) {
+        mkdir(dirname($vatMapPath), 0755, true);
+    }
+
+    file_put_contents($vatMapPath, json_encode([
+        'poduszka-ortopedyczna-swing' => 8,
+        'poszewka-na-poduszke-rock' => 23,
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR));
+
+    $this->artisan('drsapporo:import', [
+        '--from' => 'scrapers/drsapporo/import-vat-map.json',
+        '--vat-map' => 'scrapers/drsapporo/vat-map-test.json',
+        '--no-images' => true,
+    ])->assertSuccessful();
+
+    $swing = Product::query()
+        ->where('external_source', 'drsapporo')
+        ->where('external_id', 'poduszka-ortopedyczna-swing')
+        ->firstOrFail();
+
+    $cover = Product::query()
+        ->where('external_source', 'drsapporo')
+        ->where('external_id', 'poszewka-na-poduszke-rock')
+        ->firstOrFail();
+
+    expect($swing->variants()->firstOrFail()->vat_rate)->toBe(VatRate::VAT_8)
+        ->and($cover->variants()->firstOrFail()->vat_rate)->toBe(VatRate::VAT_23);
+});
+
 it('updates existing Dr Sapporo products instead of duplicating them', function (): void {
     writeDrSapporoImportFixture('scrapers/drsapporo/import-test.json', [drSapporoImportPayload()]);
 
