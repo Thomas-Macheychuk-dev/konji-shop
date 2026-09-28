@@ -337,6 +337,14 @@ final class DrSapporoProductScraper
 
             $quoted = preg_quote($label, '/');
 
+            if (in_array($label, ['ean', 'gtin'], true)) {
+                if (preg_match('/\b'.$quoted.'\s*:\s*([0-9]{8,14})\b/iu', $bodyText, $matches) === 1) {
+                    return $matches[1];
+                }
+
+                continue;
+            }
+
             if (preg_match(
                 '/\b'.$quoted.'\s*:\s*([A-Z0-9][A-Z0-9._\/ -]{0,80}?)(?=\s+(?:SKU|Kod\s+produktu|Symbol|EAN|GTIN)\s*:|$)/iu',
                 $bodyText,
