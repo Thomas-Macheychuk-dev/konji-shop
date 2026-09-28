@@ -23,7 +23,7 @@ it('can dry-run Dr Sapporo product data without database writes', function (): v
         ->expectsOutputToContain('Categories referenced: 1')
         ->expectsOutputToContain('Variants to create/update: 2')
         ->expectsOutputToContain('Product images discovered: 2')
-        ->expectsOutputToContain('Products without explicit VAT after override: 1')
+        ->expectsOutputToContain('Products without explicit VAT after override: 0')
         ->assertSuccessful();
 
     expect(Product::query()->count())->toBe(0)
@@ -31,8 +31,14 @@ it('can dry-run Dr Sapporo product data without database writes', function (): v
         ->and(ProductVariant::query()->count())->toBe(0);
 });
 
-it('fails closed when Dr Sapporo VAT is not explicit', function (): void {
-    writeDrSapporoImportFixture('scrapers/drsapporo/import-test.json', [drSapporoImportPayload()]);
+it('fails closed when a Dr Sapporo product has no reviewed VAT classification', function (): void {
+    writeDrSapporoImportFixture('scrapers/drsapporo/import-test.json', [
+        drSapporoImportPayload([
+            'external_product_id' => 'unreviewed-drsapporo-product',
+            'slug' => 'unreviewed-drsapporo-product',
+            'name' => 'Unreviewed Dr Sapporo product',
+        ]),
+    ]);
 
     $this->artisan('drsapporo:import', [
         '--from' => 'scrapers/drsapporo/import-test.json',
@@ -119,7 +125,9 @@ it('applies per-product Dr Sapporo VAT rates from a reviewed VAT map', function 
         '--from' => 'scrapers/drsapporo/import-vat-map.json',
         '--vat-map' => 'scrapers/drsapporo/vat-map-test.json',
         '--no-images' => true,
-    ])->assertSuccessful();
+    ])
+        ->expectsOutputToContain('VAT map entries: 42')
+        ->assertSuccessful();
 
     $swing = Product::query()
         ->where('external_source', 'drsapporo')
