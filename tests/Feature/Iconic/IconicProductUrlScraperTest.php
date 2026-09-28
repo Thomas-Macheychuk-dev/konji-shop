@@ -77,6 +77,14 @@ it('normalizes only Iconic product and category URLs on the approved host', func
         'https://sklep.iconic.pl/produkty/obuwie-darco',
     ))->toBe('https://sklep.iconic.pl/produkty/relief-dual.html')
         ->and($scraper->normalizeProductUrl(
+            '../../../../produkty/relief-dual.html',
+            'https://sklep.iconic.pl/produkty/zaopatrzenie-ran-stopy-cukrzycowej/darco',
+        ))->toBe('https://sklep.iconic.pl/produkty/relief-dual.html')
+        ->and($scraper->normalizeProductUrl(
+            '/produkty/../../../../produkty/relief-dual.html',
+            'https://sklep.iconic.pl/produkty/podologia',
+        ))->toBe('https://sklep.iconic.pl/produkty/relief-dual.html')
+        ->and($scraper->normalizeProductUrl(
             'https://example.com/produkty/relief-dual.html',
         ))->toBeNull()
         ->and($scraper->normalizeProductUrl(
