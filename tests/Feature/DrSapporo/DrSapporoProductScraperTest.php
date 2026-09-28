@@ -173,13 +173,11 @@ it('recovers Dr Sapporo description text and derives a fallback SEO description'
                 <main>
                     <h1>Salsa Mini Poduszka ortopedyczna</h1>
                     <div class="product-price">149,00 zł</div>
-                    <p>Termin realizacji 1 dzień roboczy</p>
+                    <p>Terminrealizacji 1 dzień roboczy</p>
                     <div>
-                        Informacje o poduszce
-                        Salsa Mini to niska poduszka ortopedyczna przeznaczona dla dzieci i drobnych osób dorosłych.
+                        Informacje o poduszceSalsa Mini to niska poduszka ortopedyczna przeznaczona dla dzieci i drobnych osób dorosłych.
                         Zapewnia stabilne podparcie głowy i szyi podczas snu.
-                        Wymiary poduszki
-                        szerokość: 50 centymetrów
+                        Wymiary poduszkiszerokość: 50 centymetrów
                         długość: 30 centymetrów
                     </div>
                 </main>
