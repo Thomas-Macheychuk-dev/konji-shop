@@ -442,7 +442,7 @@ final class DrSapporoProductScraper
         if ($ogImage !== null) {
             $url = $this->normalizeImageUrl($ogImage, $baseUrl);
 
-            if ($url !== null) {
+            if ($url !== null && $this->isProductImageUrl($url)) {
                 $images[$url] = ['url' => $url, 'alt' => ''];
             }
         }
@@ -480,7 +480,7 @@ final class DrSapporoProductScraper
 
                 $url = $this->normalizeImageUrl($candidate, $baseUrl);
 
-                if ($url === null) {
+                if ($url === null || ! $this->isProductImageUrl($url)) {
                     continue;
                 }
 
@@ -517,7 +517,7 @@ final class DrSapporoProductScraper
                 foreach ($candidates as $candidate) {
                     $url = $this->normalizeImageUrl((string) $candidate, $baseUrl);
 
-                    if ($url === null) {
+                    if ($url === null || ! $this->isProductImageUrl($url)) {
                         continue;
                     }
 
@@ -530,6 +530,16 @@ final class DrSapporoProductScraper
         }
 
         return array_values($images);
+    }
+
+    private function isProductImageUrl(string $url): bool
+    {
+        $host = mb_strtolower((string) parse_url($url, PHP_URL_HOST));
+        $host = preg_replace('/^www\./iu', '', $host) ?? $host;
+        $path = (string) parse_url($url, PHP_URL_PATH);
+
+        return $host === self::HOST
+            && preg_match('#^/photos/product/[^/]+/#iu', $path) === 1;
     }
 
     private function normalizeImageUrl(string $url, string $baseUrl): ?string
