@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Withdrawals;
 
 use App\Enums\PaymentRefundStatus;
+use App\Enums\FulfilmentStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\WithdrawalStatus;
 use App\Events\WithdrawalRequestRefunded;
@@ -167,9 +168,9 @@ final class ProcessWithdrawalRefundService
             throw new DomainException('Zwrot za anulowanie jest dostępny tylko dla anulowanego zamówienia.');
         }
 
-        if ($lockedOrder->fulfilment_status !== AppEnumsFulfilmentStatus::CANCELLED) {
+        if ($lockedOrder->fulfilment_status !== FulfilmentStatus::CANCELLED) {
             $lockedOrder->update([
-                'fulfilment_status' => AppEnumsFulfilmentStatus::CANCELLED,
+                'fulfilment_status' => FulfilmentStatus::CANCELLED,
             ]);
         }
 
