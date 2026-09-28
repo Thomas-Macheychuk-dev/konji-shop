@@ -127,6 +127,33 @@ it('extracts normalized Iconic product data, gallery, categories and size varian
         ->and($result['failed_urls'])->toBe([]);
 });
 
+it('parses Iconic comma-decimal prices with grouping', function (): void {
+    $html = <<<'HTML'
+        <html lang="pl">
+            <head>
+                <link rel="canonical" href="https://sklep.iconic.pl/produkty/test-price.html">
+            </head>
+            <body>
+                <main>
+                    <h1>Test Price</h1>
+                    <div>1 234,56 zł</div>
+                    <div>Dostępny: Dostępny</div>
+                    <div>Numer katalogowy: PRICE-1</div>
+                    <h2>Opis produktu</h2>
+                    <div class="product-description"><p>Opis testowego produktu.</p></div>
+                </main>
+            </body>
+        </html>
+    HTML;
+
+    $result = app(IconicProductScraper::class)->extract(
+        $html,
+        'https://sklep.iconic.pl/produkty/test-price.html',
+    );
+
+    expect($result['price_gross_amount'])->toBe(1234.56);
+});
+
 it('preserves an Iconic on-order service without inventing a retail price', function (): void {
     $html = <<<'HTML'
         <html lang="pl">
