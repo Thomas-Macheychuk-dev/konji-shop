@@ -79,6 +79,14 @@
                 ], true)
                 && $hasRefundablePaynowPayment;
 
+            $canRefundCancellation = $order->status === \App\Enums\OrderStatus::CANCELLED
+                && $refundableWithdrawalRequests->isEmpty()
+                && in_array($order->payment_status, [
+                    \App\Enums\PaymentStatus::PAID,
+                    \App\Enums\PaymentStatus::PARTIALLY_REFUNDED,
+                ], true)
+                && $hasRefundablePaynowPayment;
+
             $hasPendingWithdrawalRefund = $refundableWithdrawalRequests
                 ->contains(fn ($withdrawalRequest) => $withdrawalRequest->status === \App\Enums\WithdrawalStatus::REFUND_PENDING);
 
@@ -105,7 +113,11 @@
 
                     <div>
                         <dt class="text-zinc-500">Realizacja</dt>
-                        <dd class="font-medium text-zinc-900">{{ $order->fulfilment_status->label() }}</dd>
+                        <dd class="font-medium text-zinc-900">
+                            {{ $order->status === \App\Enums\OrderStatus::CANCELLED
+                                ? \App\Enums\FulfilmentStatus::CANCELLED->label()
+                                : $order->fulfilment_status->label() }}
+                        </dd>
                     </div>
                 </dl>
             </div>
@@ -114,6 +126,39 @@
                 <h2 class="text-lg font-semibold text-zinc-900">Akcje realizacji</h2>
 
                 <div class="mt-4 flex flex-wrap gap-3">
+                    @if ($canRefundCancellation)
+                        <div class="w-full rounded-2xl border border-purple-200 bg-purple-50 p-4 text-sm text-purple-900">
+                            <p class="font-semibold">Zwrot za anulowane zamówienie</p>
+
+                            <p class="mt-1">
+                                Kwota do zwrotu:
+                                <strong>{{ number_format($order->total_amount / 100, 2, '.', '') }} {{ $order->currency }}</strong>.
+                            </p>
+
+                            @if ($activePaymentRefund)
+                                <p class="mt-1">
+                                    Paynow: <strong>{{ strtoupper($activePaymentRefund->status->value) }}</strong>
+                                    @if ($activePaymentRefund->provider_refund_id)
+                                        · {{ $activePaymentRefund->provider_refund_id }}
+                                    @endif
+                                </p>
+                            @endif
+                        </div>
+
+                        <form
+                            method="POST"
+                            action="{{ route('admin.orders.fulfilment.update', [$order, 'cancellation-refund']) }}"
+                            onsubmit="return confirm('Zlecić lub sprawdzić pełny zwrot w Paynow za anulowane zamówienie?')"
+                        >
+                            @csrf
+                            @method('PATCH')
+
+                            <button class="rounded-xl bg-purple-700 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-600">
+                                {{ $activePaymentRefund ? 'Sprawdź status zwrotu' : 'Zwróć środki' }}
+                            </button>
+                        </form>
+                    @endif
+
                     @if ($refundableWithdrawalRequests->isNotEmpty())
                         <div class="w-full rounded-2xl border border-purple-200 bg-purple-50 p-4 text-sm text-purple-900">
                             <p class="font-semibold">
@@ -753,7 +798,10 @@
                                     {{ $shipment->status->label() }}
                                 </span>
 
-                                @if ($shipment->provider_status_code || $shipment->provider_status_label)
+                                @if (
+                                    $shipment->status !== \App\Enums\ShipmentStatus::CANCELLED
+                                    && ($shipment->provider_status_code || $shipment->provider_status_label)
+                                )
                                     <p class="mt-2 text-xs text-zinc-500">
                                         Polkurier:
                                         <span class="font-medium text-zinc-700">
@@ -848,7 +896,7 @@
                                         ], true);
                                 @endphp
 
-                                @if ($isPolkurierShipment)
+                                @if ($isPolkurierShipment && $shipment->status !== \App\Enums\ShipmentStatus::CANCELLED)
                                     <div class="flex flex-col items-start gap-2">
                                         <form method="POST" action="{{ route('admin.shipments.status.refresh', $shipment) }}">
                                             @csrf
@@ -955,7 +1003,7 @@
         <div class="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <h2 class="text-lg font-semibold text-zinc-900">Pozycje</h2>
 
-            <div class="mt-4 overflow-hidden rounded-xl border border-zinc-200">
+            <div class="mt-4 overflow-x-auto rounded-xl border border-zinc-200">
                 <table class="min-w-full divide-y divide-zinc-200">
                     <thead class="bg-zinc-50">
                     <tr>
