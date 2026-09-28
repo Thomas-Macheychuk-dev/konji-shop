@@ -270,7 +270,7 @@ it('parses the native Dr Sapporo product template', function (): void {
         <html>
             <head>
                 <link rel="canonical" href="https://drsapporo.com/poszewka-na-poduszke-bossanova">
-                <meta property="og:image" content="https://drsapporo.com/photos/product/49/main.webp">
+                <meta property="og:image" content="https://drsapporo.com/layout/logo_og.png">
             </head>
             <body>
                 <div class="productPhotos">
@@ -329,6 +329,10 @@ it('parses the native Dr Sapporo product template', function (): void {
         ])
         ->and($result['images'])->toContain([
             'url' => 'https://drsapporo.com/photos/product/49/detail-thumb.webp',
+            'alt' => '',
+        ])
+        ->and($result['images'])->not->toContain([
+            'url' => 'https://drsapporo.com/layout/logo_og.png',
             'alt' => '',
         ]);
 });
