@@ -229,6 +229,42 @@ it('normalizes concatenated Dr Sapporo product names', function (): void {
     expect($result['name'])->toBe('Shell Poszewka na poduszkę ortopedyczną');
 });
 
+it('preserves boundaries between adjacent Dr Sapporo content nodes', function (): void {
+    $html = <<<'HTML'
+        <html>
+            <head>
+                <link rel="canonical" href="https://drsapporo.com/poduszka-ortopedyczna-open">
+            </head>
+            <body>
+                <main>
+                    <h1>Open Poduszka ortopedyczna</h1>
+                    <div class="product-price">189,00 zł</div>
+                    <div><span>Termin</span><span>realizacji:</span><span>1 dzień roboczy</span></div>
+                    <section>
+                        <h2>Informacje o poduszce</h2>
+                        <p>Open to klasyczna poduszka ortopedyczna przeznaczona do spania na plecach.</p>
+                        <h2>Wymiary poduszki</h2>
+                        <p>Szerokość: 60 centymetrów</p>
+                    </section>
+                </main>
+            </body>
+        </html>
+    HTML;
+
+    $result = app(DrSapporoProductScraper::class)->extract(
+        $html,
+        'https://drsapporo.com/poduszka-ortopedyczna-open',
+        [
+            'category_name' => 'Poduszki ortopedyczne Dr Sapporo',
+            'brand_name' => 'Dr Sapporo',
+        ],
+    );
+
+    expect($result['shipping_time'])->toBe('1 dzień roboczy')
+        ->and($result['description_html'])->toContain('Open to klasyczna poduszka ortopedyczna')
+        ->and($result['description_html'])->not->toContain('Wymiary poduszki');
+});
+
 it('records failed Dr Sapporo product requests without throwing', function (): void {
     Http::fake([
         'https://drsapporo.com/poduszka-ortopedyczna-missing' => Http::response('', 404),
