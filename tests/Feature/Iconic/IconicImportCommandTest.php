@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
@@ -63,6 +64,7 @@ function iconicCommandFixture(): array
 
 it('reports Iconic exclusions in dry-run and blocks database import before writes when VAT is unresolved', function (): void {
     Storage::fake('local');
+    config()->set('iconic.default_vat_rate', null);
 
     $priced = iconicCommandFixture();
 
@@ -138,4 +140,30 @@ it('imports only priced Iconic products when an explicit VAT override is supplie
     expect($exit)->toBe(0)
         ->and(Product::query()->where('external_source', 'iconic')->count())->toBe(1)
         ->and(Product::query()->where('external_id', 'regeneracja-narzedzi')->exists())->toBeFalse();
+});
+
+
+it('uses the configured default Iconic VAT rate when no CLI override is supplied', function (): void {
+    Storage::fake('local');
+    config()->set('iconic.default_vat_rate', 8);
+
+    Storage::disk('local')->put(
+        'scrapers/iconic/test-products.json',
+        json_encode([
+            'source' => 'iconic',
+            'products' => [iconicCommandFixture()],
+        ], JSON_THROW_ON_ERROR),
+    );
+
+    $exit = Artisan::call('iconic:import', [
+        '--from' => 'scrapers/iconic/test-products.json',
+        '--no-images' => true,
+    ]);
+
+    $variant = ProductVariant::query()
+        ->whereHas('product', fn ($query) => $query->where('external_source', 'iconic'))
+        ->firstOrFail();
+
+    expect($exit)->toBe(0)
+        ->and($variant->vat_rate->value)->toBe(8);
 });
