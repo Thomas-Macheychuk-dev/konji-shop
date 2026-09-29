@@ -448,10 +448,44 @@ it('keeps only images belonging to the current Iconic structured gallery', funct
         [
             'url' => 'https://sklep.iconic.pl/_images/produkty/Test/product-1.jpg',
             'alt' => 'Product one',
+            'fallback_url' => 'https://sklep.iconic.pl/.miniatury/100/147/product-1.jpg',
         ],
         [
             'url' => 'https://sklep.iconic.pl/_images/produkty/Test/product-2.jpg',
             'alt' => 'Product two',
+            'fallback_url' => 'https://sklep.iconic.pl/.miniatury/100/147/product-2.jpg',
+        ],
+    ]);
+});
+
+it('deduplicates Iconic gallery rows by src when srcBig is malformed', function (): void {
+    $html = <<<'HTML'
+        <html><head>
+            <link rel="canonical" href="https://sklep.iconic.pl/produkty/gallery-duplicate.html">
+        </head><body>
+            <h2>Gallery duplicate product</h2>
+            <div>
+                Array ( [id] => 1 [galleryId] => 10 [productId] => 526 [src] => /_images/produkty/Test/product.jpg [srcMin] => /.miniatury/500/526/product_mini.jpg [srcBig] => /_images/produkty/Test/product.jpg [alt] => Product ) 1
+                Array ( [id] => 2 [galleryId] => 11 [productId] => 526 [src] => /_images/produkty/Test/product.jpg [srcMin] => /.miniatury/500/526/product_mini.jpg [srcBig] => /_images/_images/produkty/Test/product.jpg [alt] => Product ) 1
+            </div>
+            <div>55.00 zł</div>
+            <div>Dostępny: Dostępny</div>
+            <div>Numer katalogowy: GALLERY-2</div>
+            <h2>Opis produktu</h2>
+            <div class="product-description"><p>Opis produktu.</p></div>
+        </body></html>
+    HTML;
+
+    $result = app(IconicProductScraper::class)->extract(
+        $html,
+        'https://sklep.iconic.pl/produkty/gallery-duplicate.html',
+    );
+
+    expect($result['images'])->toBe([
+        [
+            'url' => 'https://sklep.iconic.pl/_images/produkty/Test/product.jpg',
+            'alt' => 'Product',
+            'fallback_url' => 'https://sklep.iconic.pl/.miniatury/500/526/product_mini.jpg',
         ],
     ]);
 });
