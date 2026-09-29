@@ -139,6 +139,30 @@ it('imports an Iconic product idempotently with approved multi-root taxonomy and
         ->and($second['warnings'])->toBe([]);
 });
 
+it('canonicalizes known Iconic source taxonomy defects without mutating source evidence', function (): void {
+    $fixture = iconicPricedFixture();
+    $fixture['external_product_id'] = 'taxonomy-alias-test';
+    $fixture['slug'] = 'taxonomy-alias-test';
+    $fixture['name'] = 'Taxonomy alias test';
+    $fixture['source_category_path'] = [
+        'Podologia',
+        'Narzędzia do piel?gnacji ran',
+    ];
+    $fixture['categories'] = $fixture['source_category_path'];
+    $fixture['raw_context']['listing_roots'] = [
+        'https://sklep.iconic.pl/produkty/podologia',
+    ];
+    $fixture['variant_candidates'] = [];
+
+    $product = app(IconicProductImporter::class)
+        ->import($fixture, VatRate::VAT_23, false)['product']
+        ->fresh('categories');
+
+    expect($product->categories->pluck('name')->all())
+        ->toContain('Narzędzia do pielęgnacji ran')
+        ->not->toContain('Narzędzia do piel?gnacji ran');
+});
+
 it('rejects Iconic on-order or unpriced products from commerce import', function (): void {
     $fixture = iconicPricedFixture();
     $fixture['external_product_id'] = 'regeneracja-narzedzi';
