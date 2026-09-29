@@ -551,7 +551,16 @@ final class Seni24ProductScraper
 
                     $deduped = [];
                     foreach ($options as $option) {
-                        $deduped[$option['value']] = $option;
+                        $value = $option['value'];
+
+                        if (! isset($deduped[$value])) {
+                            $deduped[$value] = $option;
+                            continue;
+                        }
+
+                        if ($option['selected']) {
+                            $deduped[$value]['selected'] = true;
+                        }
                     }
                     $options = array_values($deduped);
 
@@ -585,7 +594,7 @@ final class Seni24ProductScraper
 
     private function inputOptionLabel(Crawler $input): string
     {
-        foreach (['title', 'aria-label', 'data-value'] as $attribute) {
+        foreach (['title', 'aria-label'] as $attribute) {
             $value = $this->normalizeText((string) $input->attr($attribute));
             if ($value !== '') {
                 return $value;
@@ -593,17 +602,44 @@ final class Seni24ProductScraper
         }
 
         $node = $input->getNode(0);
+
         if ($node instanceof DOMElement) {
             $parent = $node->parentElement;
+
             if ($parent instanceof DOMElement && mb_strtolower($parent->tagName) === 'label') {
                 $value = $this->normalizeText($parent->textContent ?? '');
+
                 if ($value !== '') {
                     return $value;
                 }
             }
+
+            $id = trim($node->getAttribute('id'));
+
+            if ($id !== '' && $node->ownerDocument !== null) {
+                foreach ($node->ownerDocument->getElementsByTagName('label') as $label) {
+                    if (! $label instanceof DOMElement || $label->getAttribute('for') !== $id) {
+                        continue;
+                    }
+
+                    $value = $this->normalizeText($label->textContent ?? '');
+
+                    if ($value !== '') {
+                        return $value;
+                    }
+                }
+            }
         }
 
-        return $this->normalizeText((string) $input->attr('value'));
+        foreach (['data-value', 'value'] as $attribute) {
+            $value = $this->normalizeText((string) $input->attr($attribute));
+
+            if ($value !== '') {
+                return $value;
+            }
+        }
+
+        return '';
     }
 
     /** @return list<array{url:string,alt:string}> */

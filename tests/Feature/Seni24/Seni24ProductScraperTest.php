@@ -24,13 +24,13 @@ it('extracts Seni24 identity, VAT, price, taxonomy, medical data and selected va
                 <div class="product-variants">
                     <div class="product-variants-item">
                         <span class="control-label">Rozmiar</span>
-                        <label><input data-product-attribute="1" name="group[1]" value="43-46" checked>43-46</label>
-                        <label><input data-product-attribute="1" name="group[1]" value="39-42">39-42</label>
+                        <label><input data-product-attribute="1" name="group[1]" value="0" data-value="0" checked>43-46</label>
+                        <label><input data-product-attribute="1" name="group[1]" value="0" data-value="0">39-42</label>
                     </div>
                     <div class="product-variants-item">
                         <span class="control-label">Kolor</span>
-                        <label><input data-product-attribute="2" name="group[2]" value="Czarny" checked>Czarny</label>
-                        <label><input data-product-attribute="2" name="group[2]" value="Ciemny szary">Ciemny szary</label>
+                        <label><input data-product-attribute="2" name="group[2]" value="0" data-value="0" checked>Czarny</label>
+                        <label><input data-product-attribute="2" name="group[2]" value="0" data-value="0">Ciemny szary</label>
                     </div>
                 </div>
 
