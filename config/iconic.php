@@ -16,5 +16,17 @@ return [
     | priced product lacks an explicit VAT rate after this map / CLI overrides.
     |
     */
+    /*
+    |--------------------------------------------------------------------------
+    | Default Iconic VAT rate
+    |--------------------------------------------------------------------------
+    |
+    | Business-approved fallback for all commerce-eligible Iconic products.
+    | Per-product vat_rates entries still take precedence when present, and
+    | --vat-rate may be used as an explicit command-line fallback override.
+    |
+    */
+    'default_vat_rate' => 8,
+
     'vat_rates' => [],
 ];
