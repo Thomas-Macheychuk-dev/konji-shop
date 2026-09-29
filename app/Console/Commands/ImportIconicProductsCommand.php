@@ -54,7 +54,7 @@ final class ImportIconicProductsCommand extends Command
         $limit = $this->nullablePositiveIntOption('limit');
         $selectedProducts = array_slice($eligibleProducts, $offset, $limit);
         $dryRun = (bool) $this->option('dry-run');
-        $vatRate = $this->vatRateOption();
+        $vatRate = $this->vatRateOption() ?? $this->configuredDefaultVatRate();
         $vatMap = $this->configuredVatMap();
 
         $overrideVatMap = $this->vatMapOption();
@@ -77,7 +77,7 @@ final class ImportIconicProductsCommand extends Command
         $this->line('Images: '.($importImages ? 'download and sync' : 'skipped'));
         $this->line('Image limit per product: '.($imageLimit === null ? 'none' : (string) $imageLimit));
         $this->line('VAT map entries: '.count($vatMap));
-        $this->line('VAT fallback override: '.($vatRate?->value !== null ? (string) $vatRate->value.'%' : 'none'));
+        $this->line('VAT fallback rate: '.($vatRate?->value !== null ? (string) $vatRate->value.'%' : 'none'));
 
         if ($dryRun) {
             $this->printDryRunSummary($selectedProducts, $vatRate);
@@ -511,6 +511,35 @@ final class ImportIconicProductsCommand extends Command
         }
 
         return $products;
+    }
+
+    private function configuredDefaultVatRate(): ?VatRate
+    {
+        $value = config('iconic.default_vat_rate');
+
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        if (is_string($value) && ctype_digit(trim($value))) {
+            $value = (int) trim($value);
+        }
+
+        if (! is_int($value)) {
+            throw new \InvalidArgumentException(
+                'Invalid configured default Iconic VAT rate. Use 0, 5, 8, or 23.'
+            );
+        }
+
+        $rate = VatRate::tryFrom($value);
+
+        if ($rate === null) {
+            throw new \InvalidArgumentException(
+                'Invalid configured default Iconic VAT rate. Use 0, 5, 8, or 23.'
+            );
+        }
+
+        return $rate;
     }
 
     private function vatRateOption(): ?VatRate
