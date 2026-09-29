@@ -9,10 +9,62 @@ use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
+function iconicCommandFixture(): array
+{
+    return [
+        'source' => 'iconic',
+        'source_url' => 'https://sklep.iconic.pl/produkty/relief-dual.html',
+        'canonical_url' => 'https://sklep.iconic.pl/produkty/relief-dual.html',
+        'external_product_id' => 'relief-dual',
+        'slug' => 'relief-dual',
+        'name' => 'But Pooperacyjny DARCO - Relief Dual',
+        'price_gross_amount' => 176.0,
+        'currency' => 'PLN',
+        'availability' => 'in_stock',
+        'availability_label' => 'Dostępny',
+        'is_on_order' => false,
+        'shipping_time' => '24 h - 2 dni',
+        'unit' => 'sztuka',
+        'catalogue_number' => 'RD-M1',
+        'source_category_path' => [
+            'Zaopatrzenie ortopedyczne stopy',
+            'DARCO - Obuwie odciążające i pooperacyjne',
+        ],
+        'categories' => [
+            'Zaopatrzenie ortopedyczne stopy',
+            'DARCO - Obuwie odciążające i pooperacyjne',
+        ],
+        'description_html' => '<p>Opis produktu.</p>',
+        'description_plain' => 'Opis produktu.',
+        'images' => [],
+        'attributes' => [
+            ['label' => 'Numer katalogowy', 'value' => 'RD-M1'],
+        ],
+        'variant_candidates' => [
+            [
+                'external_variant_id' => '1195',
+                'label' => 'Rozmiar: MS',
+                'attributes' => [
+                    ['label' => 'Rozmiar', 'value' => 'MS'],
+                ],
+                'price_gross_amount' => 176.0,
+                'currency' => 'PLN',
+            ],
+        ],
+        'is_medical_device' => true,
+        'medical_device_class' => 'I',
+        'raw_context' => [
+            'listing_roots' => [
+                'https://sklep.iconic.pl/produkty/zaopatrzenie-ortopedyczne-stopy',
+            ],
+        ],
+    ];
+}
+
 it('reports Iconic exclusions in dry-run and blocks database import before writes when VAT is unresolved', function (): void {
     Storage::fake('local');
 
-    $priced = iconicPricedFixture();
+    $priced = iconicCommandFixture();
 
     $onOrder = $priced;
     $onOrder['external_product_id'] = 'regeneracja-narzedzi';
@@ -58,7 +110,7 @@ it('reports Iconic exclusions in dry-run and blocks database import before write
 it('imports only priced Iconic products when an explicit VAT override is supplied', function (): void {
     Storage::fake('local');
 
-    $priced = iconicPricedFixture();
+    $priced = iconicCommandFixture();
 
     $onOrder = $priced;
     $onOrder['external_product_id'] = 'regeneracja-narzedzi';
