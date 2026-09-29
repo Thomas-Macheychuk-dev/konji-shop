@@ -172,12 +172,18 @@ final class Seni24ProductUrlScraper
         $rootPath = (string) parse_url($rootUrl, PHP_URL_PATH);
 
         $crawler->filter('a[href]')->each(function (Crawler $node) use (&$products, &$pages, $baseUrl, $rootPath): void {
-            if ($this->isSiteChromeAnchor($node)) {
+            $href = $node->attr('href');
+            if (!is_string($href)) {
                 return;
             }
 
-            $href = $node->attr('href');
-            if (!is_string($href)) {
+            $pageUrl = $this->normalizePaginationUrl($href, $baseUrl, $rootPath);
+            if ($pageUrl !== null) {
+                $pages[$pageUrl] = true;
+                return;
+            }
+
+            if ($this->isSiteChromeAnchor($node)) {
                 return;
             }
 
@@ -199,10 +205,6 @@ final class Seni24ProductUrlScraper
                 return;
             }
 
-            $pageUrl = $this->normalizePaginationUrl($href, $baseUrl, $rootPath);
-            if ($pageUrl !== null) {
-                $pages[$pageUrl] = true;
-            }
         });
 
         return [
