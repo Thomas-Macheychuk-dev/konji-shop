@@ -499,6 +499,11 @@ final class IconicProductImporter
             }
 
             $seenUrls[$url] = true;
+            $fallbackUrl = $this->stringOrNull($imageData['fallback_url'] ?? null);
+
+            if ($fallbackUrl === $url) {
+                $fallbackUrl = null;
+            }
 
             try {
                 $imported = $this->remoteImageImporter->import(
@@ -507,11 +512,28 @@ final class IconicProductImporter
                     'public',
                     self::IMAGE_ALLOWED_HOSTS,
                 );
-            } catch (Throwable $exception) {
-                $this->warnings[] = 'Image skipped for Iconic product '
-                    .$product->external_id.': '.$url.' — '.$exception->getMessage();
+            } catch (Throwable $primaryException) {
+                if ($fallbackUrl === null) {
+                    $this->warnings[] = 'Image skipped for Iconic product '
+                        .$product->external_id.': '.$url.' — '.$primaryException->getMessage();
 
-                continue;
+                    continue;
+                }
+
+                try {
+                    $imported = $this->remoteImageImporter->import(
+                        $fallbackUrl,
+                        'products/iconic/'.$product->external_id.'/gallery',
+                        'public',
+                        self::IMAGE_ALLOWED_HOSTS,
+                    );
+                } catch (Throwable $fallbackException) {
+                    $this->warnings[] = 'Image skipped for Iconic product '
+                        .$product->external_id.': '.$url.' — '.$primaryException->getMessage()
+                        .'; fallback '.$fallbackUrl.' — '.$fallbackException->getMessage();
+
+                    continue;
+                }
             }
 
             $alt = $this->stringOrNull($imageData['alt'] ?? null) ?: $product->name;
