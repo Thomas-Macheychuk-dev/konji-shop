@@ -43,7 +43,7 @@ final class IconicProductImporter
     /**
      * @var list<string>
      */
-    private const IMAGE_ALLOWED_HOSTS = ['iconic.com'];
+    private const IMAGE_ALLOWED_HOSTS = ['sklep.iconic.pl'];
 
     /**
      * @var list<string>
@@ -186,11 +186,11 @@ final class IconicProductImporter
             $parent = $this->resolveCategory($rootName, null, [$rootName]);
             $resolved[$parent->id] = $parent;
 
-            foreach ($sourcePath as $segment) {
+            foreach ($sourcePath as $segmentIndex => $segment) {
                 $parent = $this->resolveCategory(
                     $segment,
                     $parent,
-                    array_merge([$rootName], array_slice($sourcePath, 0, array_search($segment, $sourcePath, true) + 1)),
+                    array_merge([$rootName], array_slice($sourcePath, 0, $segmentIndex + 1)),
                 );
                 $resolved[$parent->id] = $parent;
             }
