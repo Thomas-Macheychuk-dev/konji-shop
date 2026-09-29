@@ -125,7 +125,7 @@ final class IconicProductScraper
             $warnings[] = 'Product description not found.';
         }
 
-        $images = $this->images($crawler, $sourceUrl);
+        $images = $this->images($crawler, $sourceUrl, $html);
 
         if ($images === []) {
             $warnings[] = 'Product gallery images not found.';
@@ -384,7 +384,20 @@ final class IconicProductScraper
 
         $value = $this->normalizeText($matches[1]);
 
-        return $value !== '' ? $value : null;
+        if ($value === '') {
+            return null;
+        }
+
+        $comparableValue = $this->comparable($value);
+
+        if ($comparableValue === ''
+            || str_starts_with($comparableValue, 'dodaj do koszyka')
+            || str_starts_with($comparableValue, 'dodaj do listy zyczen')
+            || str_starts_with($comparableValue, 'zamow produkt')) {
+            return null;
+        }
+
+        return $value;
     }
 
     private function availability(?string $label, bool $onOrder): string
@@ -403,7 +416,9 @@ final class IconicProductScraper
             return 'out_of_stock';
         }
 
-        if (str_contains($value, 'dostep')) {
+        if (str_contains($value, 'dostep')
+            || str_contains($value, 'ogranicz')
+            || str_contains($value, 'wyczerp')) {
             return 'in_stock';
         }
 
@@ -673,7 +688,7 @@ final class IconicProductScraper
     /**
      * @return list<array{url: string, alt: string}>
      */
-    private function images(Crawler $crawler, string $sourceUrl): array
+    private function images(Crawler $crawler, string $sourceUrl, string $html): array
     {
         $images = [];
 
@@ -708,6 +723,29 @@ final class IconicProductScraper
                 });
             } catch (Throwable) {
                 continue;
+            }
+        }
+
+        if (preg_match_all(
+            '#(?:https?://'.preg_quote(self::HOST, '#').')?(/_images/produkty/[^\s"\'<>]+?\.(?:jpe?g|png|webp|gif|avif))#iu',
+            mb_scrub($html, 'UTF-8'),
+            $matches,
+        ) === 1 || ($matches[1] ?? []) !== []) {
+            foreach ($matches[1] ?? [] as $path) {
+                if (! is_string($path)) {
+                    continue;
+                }
+
+                $url = $this->normalizeImageUrl($path, $sourceUrl);
+
+                if ($url === null) {
+                    continue;
+                }
+
+                $images[$url] ??= [
+                    'url' => $url,
+                    'alt' => '',
+                ];
             }
         }
 
