@@ -1469,7 +1469,9 @@ final class Seni24ProductScraper
         try {
             return Http::connectTimeout(min(5, $this->timeoutSeconds))
                 ->timeout($this->timeoutSeconds)
-                ->withHeaders($this->headers())
+                ->withHeaders($this->headers() + [
+                    'X-Requested-With' => 'XMLHttpRequest',
+                ])
                 ->asForm()
                 ->post($url, $parameters);
         } catch (Throwable) {
@@ -1486,7 +1488,6 @@ final class Seni24ProductScraper
             'Accept' => 'text/html,application/xhtml+xml,application/json',
             'Accept-Language' => 'pl-PL,pl;q=0.9,en;q=0.5',
             'User-Agent' => 'KonjiShopCatalogCrawler/1.0 (+https://ortezka.pl)',
-            'X-Requested-With' => 'XMLHttpRequest',
         ];
     }
 
