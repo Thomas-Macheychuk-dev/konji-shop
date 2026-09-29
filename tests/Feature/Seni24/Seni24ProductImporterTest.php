@@ -240,6 +240,22 @@ it('requires approved Seni24 root provenance before category writes', function (
         ->and(Category::query()->count())->toBe(0);
 });
 
+it('maps unknown Seni24 availability to out of stock', function (): void {
+    $fixture = seni24ImporterFixture();
+    $fixture['availability'] = 'unknown';
+    $fixture['variant_candidates'][0]['availability'] = 'unknown';
+    $fixture['variant_candidates'] = [$fixture['variant_candidates'][0]];
+
+    $product = app(Seni24ProductImporter::class)
+        ->import($fixture, null, false)['product']
+        ->fresh('variants');
+
+    expect($product->variants)->toHaveCount(1)
+        ->and($product->variants->first()->stock_status)->toBe(
+            StockStatus::OUT_OF_STOCK,
+        );
+});
+
 it('imports Seni24 images from Seni24 subdomains only', function (): void {
     Storage::fake('public');
 
