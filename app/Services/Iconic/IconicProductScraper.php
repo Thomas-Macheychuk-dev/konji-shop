@@ -93,7 +93,7 @@ final class IconicProductScraper
         $identityUrl = $canonicalUrl ?? $sourceUrl;
         $name = $this->productName($crawler);
         $summaryText = $this->productSummaryText($crawler, $name);
-        $descriptionHtml = $this->descriptionHtml($crawler, $sourceUrl);
+        $descriptionHtml = $this->descriptionHtml($crawler, $sourceUrl, $name);
         $descriptionPlain = $this->normalizeText(strip_tags((string) $descriptionHtml));
         $categoryPath = $this->categoryPath($crawler);
         $price = $this->priceGrossAmount($summaryText);
@@ -272,11 +272,13 @@ final class IconicProductScraper
     private function productName(Crawler $crawler): string
     {
         foreach ([
-            'h1',
+            '.product-name h2',
+            '.productName h2',
+            'h2',
             '.product-name h1',
             '.productName h1',
+            'h1',
             '[itemprop="name"]',
-            'h2',
         ] as $selector) {
             $value = $this->text($crawler, $selector);
 
@@ -472,7 +474,7 @@ final class IconicProductScraper
         return [];
     }
 
-    private function descriptionHtml(Crawler $crawler, string $sourceUrl): ?string
+    private function descriptionHtml(Crawler $crawler, string $sourceUrl, string $productName): ?string
     {
         foreach ([
             '#opis-produktu',
@@ -503,7 +505,8 @@ final class IconicProductScraper
             }
         }
 
-        return $this->descriptionHtmlFromHeading($crawler, $sourceUrl);
+        return $this->descriptionHtmlFromHeading($crawler, $sourceUrl)
+            ?? $this->descriptionHtmlFromContentHeading($crawler, $sourceUrl, $productName);
     }
 
     private function descriptionHtmlFromHeading(Crawler $crawler, string $sourceUrl): ?string
@@ -569,6 +572,87 @@ final class IconicProductScraper
         $html = $this->sanitizeHtml($html, $sourceUrl);
 
         return $this->normalizeText(strip_tags($html)) !== '' ? $html : null;
+    }
+
+    private function descriptionHtmlFromContentHeading(
+        Crawler $crawler,
+        string $sourceUrl,
+        string $productName,
+    ): ?string {
+        try {
+            $headings = $crawler->filter('h1, h2, h3, h4');
+        } catch (Throwable) {
+            return null;
+        }
+
+        $productComparable = $this->comparable($productName);
+        $contentHeading = null;
+
+        $headings->each(function (Crawler $heading) use (&$contentHeading, $productComparable): void {
+            if ($contentHeading !== null) {
+                return;
+            }
+
+            $text = $this->normalizeText($heading->text('', false));
+            $comparable = $this->comparable($text);
+
+            if ($text === ''
+                || $comparable === $productComparable
+                || in_array($comparable, [
+                    'opis produktu',
+                    'do pobrania',
+                    'instrukcja uzytkowania',
+                    'inne produkty w kategorii',
+                    'powiazane produkty',
+                ], true)) {
+                return;
+            }
+
+            $contentHeading = $heading->getNode(0);
+        });
+
+        if (! $contentHeading instanceof DOMNode) {
+            return null;
+        }
+
+        $html = '';
+        $current = $contentHeading;
+        $captured = 0;
+
+        while ($current instanceof DOMNode && $captured < 250) {
+            if ($current !== $contentHeading
+                && $current instanceof DOMElement
+                && preg_match('/^h[1-6]$/i', $current->tagName) === 1) {
+                $heading = $this->comparable($current->textContent ?? '');
+
+                if (in_array($heading, [
+                    'do pobrania',
+                    'instrukcja uzytkowania',
+                    'inne produkty w kategorii',
+                    'powiazane produkty',
+                ], true)) {
+                    break;
+                }
+            }
+
+            if ($current instanceof DOMElement) {
+                $fragment = $current->ownerDocument?->saveHTML($current);
+
+                if (is_string($fragment)) {
+                    $html .= $fragment;
+                }
+            } elseif (trim((string) $current->textContent) !== '') {
+                $html .= '<p>'.e($this->normalizeText((string) $current->textContent)).'</p>';
+            }
+
+            $current = $current->nextSibling;
+            $captured++;
+        }
+
+        $html = $this->sanitizeHtml($html, $sourceUrl);
+        $plain = $this->normalizeText(strip_tags($html));
+
+        return mb_strlen($plain) >= 40 ? $html : null;
     }
 
     private function sanitizeHtml(string $html, string $sourceUrl): string
@@ -776,6 +860,24 @@ final class IconicProductScraper
 
         if (str_contains($comparable, 'strona') || str_contains($comparable, 'side')) {
             return 'Strona';
+        }
+
+        $contextNode = $select->parentNode;
+
+        for ($depth = 0; $contextNode instanceof DOMNode && $depth < 3; $depth++, $contextNode = $contextNode->parentNode) {
+            $context = $this->comparable($contextNode->textContent ?? '');
+
+            if (str_contains($context, 'rozmiar')) {
+                return 'Rozmiar';
+            }
+
+            if (str_contains($context, 'kolor')) {
+                return 'Kolor';
+            }
+
+            if (str_contains($context, 'strona')) {
+                return 'Strona';
+            }
         }
 
         return null;
