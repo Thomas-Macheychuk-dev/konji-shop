@@ -60,10 +60,7 @@ final class CrawlIconicProductDataCommand extends Command
         }
 
         if ($json) {
-            $this->line(json_encode(
-                $result,
-                JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION
-            ));
+            $this->line($this->encodeJson($result));
         } else {
             $this->info('Source product URLs: '.$result['source_product_url_count']);
             $this->info('Scraped products: '.$result['product_count']);
@@ -94,16 +91,40 @@ final class CrawlIconicProductDataCommand extends Command
         $save = $this->option('save');
 
         if (is_string($save) && trim($save) !== '') {
-            Storage::disk('local')->put(
-                ltrim($save, '/'),
-                json_encode(
-                    $result,
-                    JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION
-                )
-            );
+            $relativePath = ltrim($save, '/');
+            $contents = $this->encodeJson($result);
+
+            if (! Storage::disk('local')->put($relativePath, $contents)) {
+                throw new \RuntimeException(
+                    'Unable to save Iconic product crawl JSON to local disk: '.$relativePath,
+                );
+            }
+
+            if (! Storage::disk('local')->exists($relativePath)
+                || Storage::disk('local')->size($relativePath) === 0) {
+                throw new \RuntimeException(
+                    'Iconic product crawl JSON was written as an empty artifact: '.$relativePath,
+                );
+            }
         }
 
         return $result['product_count'] > 0 ? self::SUCCESS : self::FAILURE;
+    }
+
+    /**
+     * @param  array<string, mixed>  $result
+     */
+    private function encodeJson(array $result): string
+    {
+        return json_encode(
+            $result,
+            JSON_PRETTY_PRINT
+                | JSON_UNESCAPED_UNICODE
+                | JSON_UNESCAPED_SLASHES
+                | JSON_PRESERVE_ZERO_FRACTION
+                | JSON_INVALID_UTF8_SUBSTITUTE
+                | JSON_THROW_ON_ERROR,
+        );
     }
 
     /**
