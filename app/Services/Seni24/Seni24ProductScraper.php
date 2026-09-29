@@ -122,6 +122,54 @@ final class Seni24ProductScraper
             $variantData['groups'],
         );
 
+        foreach ($structuredVariantCandidates as &$candidate) {
+            if (($candidate['external_variant_id'] ?? null) !== $externalVariantId) {
+                continue;
+            }
+
+            $structuredPrice = $candidate['price_gross_amount'] ?? null;
+
+            /*
+             * The visible "Cena za 1 opak." price is authoritative for
+             * the currently selected combination.
+             *
+             * Seni24 structured data may expose a lower quantity-tier
+             * price, e.g. "Cena od 2 opak.", so it must never overwrite
+             * a valid visible one-package price.
+             */
+            if ($price !== null) {
+                $candidate['price_gross_amount'] = $price;
+            } elseif (is_int($structuredPrice) || is_float($structuredPrice)) {
+                $price = (float) $structuredPrice;
+            } elseif (is_string($structuredPrice)
+                && trim($structuredPrice) !== ''
+                && is_numeric(str_replace(',', '.', trim($structuredPrice)))) {
+                $price = (float) str_replace(',', '.', trim($structuredPrice));
+            }
+
+            $structuredCatalogueNumber = is_string(
+                $candidate['catalogue_number'] ?? null
+            )
+                ? $this->normalizeText($candidate['catalogue_number'])
+                : '';
+
+            if ($structuredCatalogueNumber !== '') {
+                $catalogueNumber = $structuredCatalogueNumber;
+            }
+
+            $structuredEan = is_string($candidate['ean'] ?? null)
+                ? $this->normalizeText($candidate['ean'])
+                : '';
+
+            if ($structuredEan !== '') {
+                $ean = $structuredEan;
+            }
+
+            break;
+        }
+
+        unset($candidate);
+
         $variantsResolvedByStructuredData = $structuredVariantCandidates !== []
             && $this->structuredVariantsCoverOptions(
                 $structuredVariantCandidates,
@@ -343,15 +391,63 @@ final class Seni24ProductScraper
 
     private function priceGrossAmount(string $text): ?float
     {
-        $patterns = [
-            '/Cena\\s+za\\s+1\\s+opak\\.?.{0,80}?z\\s+VAT\\s+(?:0|5|8|23)\\s*%.{0,80}?(\\d{1,7}(?:[ .]\\d{3})*[,.]\\d{2})\\s*zł/iu',
-            '/Cena\\s+1\\s+opak\\.?.{0,50}?(\\d{1,7}(?:[ .]\\d{3})*[,.]\\d{2})\\s*zł/iu',
-        ];
+        if (preg_match(
+            '/Cena\s+(?:za\s+)?(?:1\s+)?opak\.?.{0,120}?'
+            .'z\s+VAT\s+(?:0|5|8|23)\s*%(.{0,300})/iu',
+            $text,
+            $matches,
+        ) === 1) {
+            $segment = $matches[1];
 
-        foreach ($patterns as $pattern) {
-            if (preg_match($pattern, $text, $m) === 1) {
-                return $this->money($m[1]);
+            $parts = preg_split(
+                '/(?:Cena\s+regularna|Najniższa\s+cena|'
+                .'Produkt\s+(?:nie)?dostępny|'
+                .'Przewidywany\s+czas\s+realizacji)/iu',
+                $segment,
+                2,
+            );
+
+            if (is_array($parts) && isset($parts[0])) {
+                $segment = $parts[0];
             }
+
+            // Promotions are rendered as e.g.
+            // "RABAT 0,11 zł 8,99 zł (...)". The rebate is not the
+            // commerce price and must never win the parser.
+            $segment = preg_replace(
+                '/RABAT\s+\d{1,7}(?:[ .]\d{3})*[,.]\d{2}\s*zł/iu',
+                ' ',
+                $segment,
+            ) ?? $segment;
+
+            // Seni24 normally renders the actual selling price immediately
+            // before the parenthesised unit price.
+            if (preg_match(
+                '/(\d{1,7}(?:[ .]\d{3})*[,.]\d{2})\s*zł\s*\(/iu',
+                $segment,
+                $priceMatch,
+            ) === 1) {
+                return $this->money($priceMatch[1]);
+            }
+
+            // Safe fallback for products without a displayed unit-price
+            // parenthesis, after promotional rebate values were removed.
+            if (preg_match(
+                '/(\d{1,7}(?:[ .]\d{3})*[,.]\d{2})\s*zł/iu',
+                $segment,
+                $priceMatch,
+            ) === 1) {
+                return $this->money($priceMatch[1]);
+            }
+        }
+
+        if (preg_match(
+            '/Cena\s+(?:za\s+)?(?:1\s+)?opak\.?.{0,80}?'
+            .'(\d{1,7}(?:[ .]\d{3})*[,.]\d{2})\s*zł/iu',
+            $text,
+            $matches,
+        ) === 1) {
+            return $this->money($matches[1]);
         }
 
         return null;
@@ -359,8 +455,38 @@ final class Seni24ProductScraper
 
     private function vatRate(string $text): ?int
     {
-        if (preg_match('/Cena\\s+za\\s+1\\s+opak\\.?.{0,80}?z\\s+VAT\\s+(0|5|8|23)\\s*%/iu', $text, $m) === 1) {
-            return (int) $m[1];
+        /*
+         * Prefer the normal Seni24 one-package pricing block.
+         */
+        if (preg_match(
+            '/Cena\s+(?:za\s+)?(?:1\s+)?opak\.?.{0,120}?'
+            .'z\s+VAT\s+(0|5|8|23)\s*%/iu',
+            $text,
+            $matches,
+        ) === 1) {
+            return (int) $matches[1];
+        }
+
+        /*
+         * Some Seni24 products expose VAT only in a variant-pricing
+         * table heading, for example "Cena (z vat 8%)".
+         *
+         * Use that page-wide fallback only when every explicit VAT
+         * marker agrees on exactly one supported VAT rate.
+         */
+        if (preg_match_all(
+            '/z\s+VAT\s+(0|5|8|23)\s*%/iu',
+            $text,
+            $matches,
+        ) > 0) {
+            $rates = array_values(array_unique(array_map(
+                static fn (string $rate): int => (int) $rate,
+                $matches[1],
+            )));
+
+            if (count($rates) === 1) {
+                return $rates[0];
+            }
         }
 
         return null;

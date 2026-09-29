@@ -331,3 +331,256 @@ it('preserves a single DOM option when Seni24 structured variant data omits that
             ],
         ]);
 });
+
+it('does not treat a Seni24 promotional rebate as the selling price', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical"
+                href="https://www.seni24.pl/krem-testowy_12006-21158">
+        </head>
+        <body>
+            <h1>Krem testowy</h1>
+
+            <div class="product-variants">
+                <div class="product-variants-item">
+                    <span class="control-label">Pojemność</span>
+                    <label>
+                        <input
+                            data-product-attribute="1"
+                            name="group[1]"
+                            value="1"
+                            checked
+                        >
+                        200 ml
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                Cena za 1 opak.
+                z VAT 23%
+                RABAT 0,11 zł
+                8,99 zł (8,99 zł / 100 ML)
+                Cena regularna: 9,84 zł
+                Najniższa cena z 30 dni przed obniżką: 9,10 zł
+            </div>
+
+            <div id="availability-data"
+                data-availability="InStock"></div>
+
+            <div id="product-details">
+                <table>
+                    <tr>
+                        <th>Indeks</th>
+                        <td>SE-TEST-200</td>
+                    </tr>
+                    <tr>
+                        <th>ean13</th>
+                        <td>5900000000001</td>
+                    </tr>
+                </table>
+            </div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/krem-testowy_12006-21158',
+    );
+
+    expect($result['price_gross_amount'])->toBe(8.99)
+        ->and($result['vat_rate'])->toBe(23)
+        ->and($result['price_gross_amount'])->not->toBe(0.11);
+});
+
+it('backfills selected Seni24 commerce data from structured variant data', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical"
+                href="https://www.seni24.pl/pianka-testowa_11917-20370">
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/pianka-testowa_11917-20370",
+                  "sku": "SE-PIANKA-500",
+                  "gtin13": "5900000000002",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "17.70",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+        <body>
+            <h1>Pianka testowa</h1>
+
+            <div class="product-variants">
+                <div class="product-variants-item">
+                    <span class="control-label">Pojemność</span>
+                    <label>
+                        <input
+                            data-product-attribute="1"
+                            name="group[1]"
+                            value="1"
+                            checked
+                        >
+                        500 ml
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                Cena za 1 opak. z VAT 23%
+            </div>
+
+            <div id="availability-data"
+                data-availability="InStock"></div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/pianka-testowa_11917-20370',
+    );
+
+    expect($result['price_gross_amount'])->toBe(17.70)
+        ->and($result['vat_rate'])->toBe(23)
+        ->and($result['catalogue_number'])->toBe('SE-PIANKA-500')
+        ->and($result['ean'])->toBe('5900000000002')
+        ->and($result['variants_unresolved'])->toBeFalse();
+});
+
+it('prefers the visible one-package price over a lower structured quantity-tier price', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical"
+                href="https://www.seni24.pl/eva-dermo-test_1360-3339">
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/eva-dermo-test_1360-3339",
+                  "sku": "EO-C04-0050-001",
+                  "gtin13": "5900000001360",
+                  "capacity": "50 ml",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "28.23",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+
+        <body>
+            <h1>Przeciwzmarszczkowy krem na dzień Eva Dermo 50 ml</h1>
+
+            <div class="product-variants">
+                <div class="product-variants-item">
+                    <span class="control-label">Pojemność</span>
+
+                    <label>
+                        <input
+                            data-product-attribute="1"
+                            name="group[1]"
+                            value="1"
+                            checked
+                        >
+                        50 ml
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                Cena za 1 opak. z VAT 23%
+                RABAT 3,84 zł
+                28,55 zł (57,10 zł / 100 ML)
+                Cena regularna: 38,55 zł
+                Najniższa cena z 30 dni przed obniżką za 1 opak.:
+                32,39 zł
+
+                Cena od 2 opak. z VAT 23%
+                28,23 zł (56,46 zł / 100 ML)
+            </div>
+
+            <div id="availability-data"
+                data-availability="InStock"></div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/eva-dermo-test_1360-3339',
+    );
+
+    expect($result['price_gross_amount'])->toBe(28.55)
+        ->and($result['vat_rate'])->toBe(23)
+        ->and($result['variant_candidates'])->toHaveCount(1)
+        ->and(
+            $result['variant_candidates'][0]['price_gross_amount']
+        )->toBe(28.55)
+        ->and($result['variants_unresolved'])->toBeFalse();
+});
+
+it('extracts a unique VAT rate from a Seni24 variant pricing table', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical"
+                href="https://www.seni24.pl/strzykawki-test_22172-25594">
+        </head>
+
+        <body>
+            <h1>Strzykawki insulinowe testowe</h1>
+
+            <section>
+                <h3>Dostępne warianty produktu</h3>
+
+                <div>
+                    Cena
+                    (z vat 8%)
+
+                    Pojemność 1 ml
+                    Rozmiar igły 30G 0.3x8mm
+                    Skala U-100
+
+                    od 1 opak. 44,17 zł
+                    od 10 opak. 42,63 zł
+                </div>
+            </section>
+
+            <div id="availability-data"
+                data-availability="OutOfStock"></div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/strzykawki-test_22172-25594',
+    );
+
+    expect($result['vat_rate'])->toBe(8);
+});
