@@ -657,6 +657,7 @@ final class IconicProductScraper
 
     private function sanitizeHtml(string $html, string $sourceUrl): string
     {
+        $html = mb_scrub($html, 'UTF-8');
         $html = preg_replace('#<script\b[^>]*>.*?</script>#isu', '', $html) ?? $html;
         $html = preg_replace('#<style\b[^>]*>.*?</style>#isu', '', $html) ?? $html;
         $html = preg_replace('/\s+on[a-z]+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/iu', '', $html) ?? $html;
@@ -666,7 +667,7 @@ final class IconicProductScraper
             return $absolute !== null ? ' src="'.e($absolute).'"' : '';
         }, $html) ?? $html;
 
-        return trim($html);
+        return trim(mb_scrub($html, 'UTF-8'));
     }
 
     /**
@@ -1058,7 +1059,9 @@ final class IconicProductScraper
 
     private function normalizeText(string $value): string
     {
+        $value = mb_scrub($value, 'UTF-8');
         $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $value = mb_scrub($value, 'UTF-8');
         $value = str_replace("\xc2\xa0", ' ', $value);
         $value = preg_replace('/\s+/u', ' ', $value) ?? $value;
 
