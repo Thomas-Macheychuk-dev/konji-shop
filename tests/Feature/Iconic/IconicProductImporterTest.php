@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Services\Iconic\IconicProductImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -194,4 +196,49 @@ it('requires explicit VAT for an eligible Iconic commerce product', function ():
     );
 
     expect(Product::query()->where('external_source', 'iconic')->count())->toBe(0);
+});
+
+it('falls back to an Iconic gallery thumbnail when the full-size image is unavailable', function (): void {
+    Storage::fake('public');
+
+    $fixture = iconicPricedFixture();
+    $fixture['images'] = [[
+        'url' => 'https://sklep.iconic.pl/_images/produkty/Test/missing-full.jpg',
+        'fallback_url' => 'https://sklep.iconic.pl/.miniatury/500/147/fallback.jpg',
+        'alt' => 'Fallback image',
+    ]];
+
+    $png = base64_decode(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZQmcAAAAASUVORK5CYII=',
+        true,
+    );
+
+    expect($png)->not->toBeFalse();
+
+    Http::fake([
+        'https://sklep.iconic.pl/_images/produkty/Test/missing-full.jpg' => Http::response('', 404),
+        'https://sklep.iconic.pl/.miniatury/500/147/fallback.jpg' => Http::response(
+            $png,
+            200,
+            ['Content-Type' => 'image/png'],
+        ),
+    ]);
+
+    $result = app(IconicProductImporter::class)->import(
+        $fixture,
+        VatRate::VAT_8,
+        true,
+        10,
+    );
+
+    $image = $result['product']->images->first();
+
+    expect($result['warnings'])->toBe([])
+        ->and($image)->not->toBeNull()
+        ->and($image->source_url)->toBe(
+            'https://sklep.iconic.pl/.miniatury/500/147/fallback.jpg',
+        )
+        ->and($image->alt_text)->toBe('Fallback image');
+
+    Storage::disk('public')->assertExists($image->path);
 });
