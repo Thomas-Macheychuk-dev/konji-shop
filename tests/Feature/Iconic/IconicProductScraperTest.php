@@ -127,6 +127,69 @@ it('extracts normalized Iconic product data, gallery, categories and size varian
         ->and($result['failed_urls'])->toBe([]);
 });
 
+it('uses the live Iconic product heading and ignores related-product prices', function (): void {
+    $html = <<<'HTML'
+        <html lang="pl">
+            <head>
+                <link rel="canonical" href="https://sklep.iconic.pl/produkty/relief-dual-live.html">
+            </head>
+            <body>
+                <nav class="breadcrumbs">
+                    <a href="/">Home</a>
+                    <a href="/produkty/zaopatrzenie-ortopedyczne-stopy">Zaopatrzenie ortopedyczne stopy</a>
+                </nav>
+
+                <main>
+                    <h2>But Pooperacyjny DARCO - Relief Dual</h2>
+                    <div class="gallery"><img src="/_images/produkty/DARCO/relief.jpg"></div>
+
+                    <h2>But Pooperacyjny DARCO - Relief Dual</h2>
+                    <div>176.00 zł</div>
+                    <div>Dostępny: Dostępny</div>
+                    <div>Czas wysyłki: 24 h - 2 dni</div>
+                    <div>Jednostka miary: sztuka</div>
+                    <div>
+                        Rozmiar:
+                        <select>
+                            <option value="">Wybierz opcję</option>
+                            <option value="1195">MS (39,0 – 41,0) do 26 cm</option>
+                        </select>
+                    </div>
+                    <div>Numer katalogowy: RD-M1</div>
+
+                    <div>Opis produktu</div>
+                    <section>
+                        <h1>Ortopedyczne buty pooperacyjne DARCO Relief Dual odciążające stopę</h1>
+                        <p>Buty DARCO Relief Dual to certyfikowany wyrób medyczny klasy I przeznaczony do odciążania stopy.</p>
+                        <p>Cena dotyczy jednej sztuki.</p>
+                    </section>
+
+                    <h2>Inne produkty w kategorii</h2>
+                    <a href="/produkty/medsurg.html">But Pooperacyjny DARCO - MedSurg Pro 110.00 zł</a>
+                </main>
+            </body>
+        </html>
+    HTML;
+
+    $result = app(IconicProductScraper::class)->extract(
+        $html,
+        'https://sklep.iconic.pl/produkty/relief-dual-live.html',
+    );
+
+    expect($result['name'])->toBe('But Pooperacyjny DARCO - Relief Dual')
+        ->and($result['price_gross_amount'])->toBe(176.0)
+        ->and($result['availability'])->toBe('in_stock')
+        ->and($result['availability_label'])->toBe('Dostępny')
+        ->and($result['shipping_time'])->toBe('24 h - 2 dni')
+        ->and($result['unit'])->toBe('sztuka')
+        ->and($result['catalogue_number'])->toBe('RD-M1')
+        ->and($result['description_plain'])->toContain('certyfikowany wyrób medyczny klasy I')
+        ->and($result['description_plain'])->not->toContain('MedSurg Pro 110.00 zł')
+        ->and($result['variant_candidates'])->toHaveCount(1)
+        ->and($result['variant_candidates'][0]['label'])
+        ->toBe('Rozmiar: MS (39,0 – 41,0) do 26 cm');
+});
+
 it('parses Iconic comma-decimal prices with grouping', function (): void {
     $html = <<<'HTML'
         <html lang="pl">
