@@ -13,7 +13,7 @@ use JsonException;
 final class ImportSeni24ProductsCommand extends Command
 {
     protected $signature = 'seni24:import
-        {--from=scrapers/seni24/products-full-v3.json : Frozen Seni24 full product-data JSON path. Relative paths are resolved under the local disk.}
+        {--from=scrapers/seni24/products-full-v1.json : Frozen Seni24 full product-data JSON path. Relative paths are resolved under the local disk.}
         {--dry-run : Validate and summarize the import without writing to the database or downloading images.}
         {--limit= : Maximum number of products to import.}
         {--offset=0 : Number of products to skip before importing.}
@@ -70,7 +70,7 @@ final class ImportSeni24ProductsCommand extends Command
         $this->info('Importing Seni24 products from: '.$dataPath);
         $this->line('Source products: '.count($products));
         $this->line('Commerce-eligible priced products: '.count($eligibleProducts));
-        $this->line('Excluded on-order/unpriced products: '.count($excludedProducts));
+        $this->line('Excluded on-order/unpriced/unresolved-variant products: '.count($excludedProducts));
         $this->line('Offset: '.$offset);
         $this->line('Selected products: '.count($selectedProducts));
         $this->line('Mode: '.($dryRun ? 'dry-run' : 'database import'));
@@ -342,7 +342,12 @@ final class ImportSeni24ProductsCommand extends Command
             $hasPrice = (is_int($price) || is_float($price))
                 || (is_string($price) && trim($price) !== '' && is_numeric(str_replace(',', '.', trim($price))));
 
-            if ($onOrder || ! $hasPrice) {
+            $variantsUnresolved = filter_var(
+                $product['variants_unresolved'] ?? false,
+                FILTER_VALIDATE_BOOLEAN,
+            );
+
+            if ($onOrder || ! $hasPrice || $variantsUnresolved) {
                 $excluded[] = $product;
 
                 continue;
