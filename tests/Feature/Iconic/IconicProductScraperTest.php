@@ -409,6 +409,53 @@ it('maps exhausted Iconic availability to out of stock', function (): void {
         ->and($result['availability_label'])->toBe('Wyczerpany');
 });
 
+it('keeps only images belonging to the current Iconic structured gallery', function (): void {
+    $html = <<<'HTML'
+        <html><head>
+            <link rel="canonical" href="https://sklep.iconic.pl/produkty/gallery-scope.html">
+        </head><body>
+            <h2>Gallery scope product</h2>
+
+            <div>
+                Array ( [id] => 1 [galleryId] => 10 [productId] => 147 [src] => /_images/produkty/Test/product-1.jpg [srcMin] => /.miniatury/100/147/product-1.jpg [srcBig] => /_images/produkty/Test/product-1.jpg [alt] => Product one ) 1
+                Array ( [id] => 2 [galleryId] => 11 [productId] => 147 [src] => /_images/produkty/Test/product-2.jpg [srcMin] => /.miniatury/100/147/product-2.jpg [srcBig] => /_images/produkty/Test/product-2.jpg [alt] => Product two ) 1
+            </div>
+
+            <div>55.00 zł</div>
+            <div>Dostępny: Dostępny</div>
+            <div>Numer katalogowy: GALLERY-1</div>
+
+            <h2>Opis produktu</h2>
+            <div class="product-description">
+                <p>Opis produktu.</p>
+                <img src="/_images/produkty/Test/measurement-guide.jpg" alt="Measurement guide">
+            </div>
+
+            <h2>Powiązane produkty</h2>
+            <div>
+                Array ( [id] => 3 [galleryId] => 12 [productId] => 999 [src] => /_images/produkty/Test/related.jpg [srcMin] => /.miniatury/100/999/related.jpg [srcBig] => /_images/produkty/Test/related.jpg [alt] => Related product ) 1
+            </div>
+            <img src="/_images/produkty/Test/related-fallback.jpg" alt="Related fallback">
+        </body></html>
+    HTML;
+
+    $result = app(IconicProductScraper::class)->extract(
+        $html,
+        'https://sklep.iconic.pl/produkty/gallery-scope.html',
+    );
+
+    expect($result['images'])->toBe([
+        [
+            'url' => 'https://sklep.iconic.pl/_images/produkty/Test/product-1.jpg',
+            'alt' => 'Product one',
+        ],
+        [
+            'url' => 'https://sklep.iconic.pl/_images/produkty/Test/product-2.jpg',
+            'alt' => 'Product two',
+        ],
+    ]);
+});
+
 it('recovers Iconic full-size gallery paths embedded outside normal image links', function (): void {
     $html = <<<'HTML'
         <html><head>
