@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 use App\Services\Iconic\IconicProductDataCrawler;
 use App\Services\Iconic\IconicProductScraper;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 it('extracts normalized Iconic product data, gallery, categories and size variants', function (): void {
     $html = <<<'HTML'
@@ -314,6 +316,44 @@ it('crawls Iconic discovery data and keeps missing-price products for review', f
             'url' => 'https://sklep.iconic.pl/produkty/service.html',
             'warning' => 'Product is marked as on-order and has no authoritative retail price on the product page.',
         ]);
+});
+
+it('saves Iconic crawl JSON as a non-empty valid artifact when source text contains invalid utf-8', function (): void {
+    Storage::fake('local');
+
+    $html = "<html><head>"
+        ."<link rel=\"canonical\" href=\"https://sklep.iconic.pl/produkty/utf8-test.html\">"
+        ."</head><body>"
+        ."<h2>UTF-8 Test</h2>"
+        ."<div>49.00 zł</div>"
+        ."<div>Dostępny: Dostępny</div>"
+        ."<div>Numer katalogowy: UTF-1</div>"
+        ."<h1>Opis testowego produktu</h1>"
+        ."<p>Niepoprawny bajt: \xC3\x28</p>"
+        ."</body></html>";
+
+    Http::fake([
+        'https://sklep.iconic.pl/produkty/utf8-test.html' => Http::response($html),
+    ]);
+
+    $exit = Artisan::call('iconic:crawl-product-data', [
+        '--url' => ['https://sklep.iconic.pl/produkty/utf8-test.html'],
+        '--request-delay-ms' => '0',
+        '--save' => 'scrapers/iconic/utf8-test.json',
+    ]);
+
+    expect($exit)->toBe(0)
+        ->and(Storage::disk('local')->exists('scrapers/iconic/utf8-test.json'))->toBeTrue()
+        ->and(Storage::disk('local')->size('scrapers/iconic/utf8-test.json'))->toBeGreaterThan(0);
+
+    $decoded = json_decode(
+        Storage::disk('local')->get('scrapers/iconic/utf8-test.json'),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect($decoded['product_count'])->toBe(1)
+        ->and($decoded['products'][0]['name'])->toBe('UTF-8 Test');
 });
 
 it('records failed Iconic product requests without throwing', function (): void {
