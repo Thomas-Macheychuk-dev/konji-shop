@@ -691,6 +691,12 @@ final class IconicProductScraper
      */
     private function images(Crawler $crawler, string $sourceUrl, string $html): array
     {
+        $structuredGalleryImages = $this->structuredGalleryImages($html, $sourceUrl);
+
+        if ($structuredGalleryImages !== []) {
+            return $structuredGalleryImages;
+        }
+
         $images = [];
 
         foreach (['img[src]', 'a[href]'] as $selector) {
@@ -748,6 +754,95 @@ final class IconicProductScraper
                     'alt' => '',
                 ];
             }
+        }
+
+        return array_values($images);
+    }
+
+    /**
+     * Prefer Iconic's structured gallery metadata when present. The page may
+     * contain description illustrations and related-product images elsewhere,
+     * so the first gallery productId is treated as the current product and
+     * only images carrying that same productId are returned.
+     *
+     * @return list<array{url: string, alt: string}>
+     */
+    private function structuredGalleryImages(string $html, string $sourceUrl): array
+    {
+        $text = html_entity_decode(
+            strip_tags(mb_scrub($html, 'UTF-8')),
+            ENT_QUOTES | ENT_HTML5,
+            'UTF-8',
+        );
+
+        if (preg_match_all('/Array\s*\((.*?)\)\s*1/isu', $text, $matches) !== 1
+            && ($matches[1] ?? []) === []) {
+            return [];
+        }
+
+        $productId = null;
+        $images = [];
+
+        foreach ($matches[1] ?? [] as $block) {
+            if (! is_string($block)
+                || preg_match('/\[productId\]\s*=>\s*(\d+)/iu', $block, $productMatch) !== 1) {
+                continue;
+            }
+
+            $blockProductId = $productMatch[1];
+
+            if ($productId === null) {
+                $productId = $blockProductId;
+            }
+
+            if ($blockProductId !== $productId) {
+                continue;
+            }
+
+            $raw = null;
+
+            foreach (['srcBig', 'src'] as $key) {
+                if (preg_match(
+                    '/\['.preg_quote($key, '/').'\]\s*=>\s*([^\s\)]+)/iu',
+                    $block,
+                    $srcMatch,
+                ) === 1) {
+                    $raw = $srcMatch[1];
+                    break;
+                }
+            }
+
+            if ($raw === null) {
+                continue;
+            }
+
+            $url = $this->normalizeImageUrl($raw, $sourceUrl);
+
+            if ($url === null) {
+                continue;
+            }
+
+            $path = mb_strtolower((string) parse_url($url, PHP_URL_PATH));
+
+            if (! str_contains($path, '/_images/produkty/')
+                || str_contains($path, '/.miniatury/')) {
+                continue;
+            }
+
+            $alt = '';
+
+            if (preg_match(
+                '/\[alt\]\s*=>\s*(.*?)(?=\s*\[[^\]]+\]\s*=>|$)/isu',
+                $block,
+                $altMatch,
+            ) === 1) {
+                $alt = $this->normalizeText($altMatch[1]);
+            }
+
+            $images[$url] = [
+                'url' => $url,
+                'alt' => $alt,
+            ];
         }
 
         return array_values($images);
