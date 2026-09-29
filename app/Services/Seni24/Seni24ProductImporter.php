@@ -395,7 +395,10 @@ final class Seni24ProductImporter
         $candidates = $this->variantCandidates($scraped);
         $seenExternalVariantIds = [];
         $syncedVariantIds = [];
-        $defaultAssigned = false;
+        $defaultSourceExternalId = $this->defaultVariantSourceExternalId(
+            $candidates,
+            $scraped,
+        );
 
         foreach ($candidates as $index => $candidate) {
             $sourceExternalId = $this->stringOrNull($candidate['external_variant_id'] ?? null)
@@ -422,7 +425,7 @@ final class Seni24ProductImporter
 
             $attributeValueIds = $this->variantAttributeValueIds($candidate);
             $sku = $this->variantSku($product->external_id, $sourceExternalId);
-            $isDefault = ! $defaultAssigned;
+            $isDefault = $sourceExternalId === $defaultSourceExternalId;
 
             $variant = ProductVariant::withTrashed()
                 ->where('product_id', $product->id)
@@ -438,7 +441,7 @@ final class Seni24ProductImporter
                 'price_gross_amount' => $grossAmount,
                 'currency' => Currency::PLN,
                 'vat_rate' => $vatRate,
-                'stock_status' => $this->stockStatus($scraped),
+                'stock_status' => $this->variantStockStatus($candidate, $scraped),
                 'is_default' => $isDefault,
             ];
 
@@ -454,7 +457,6 @@ final class Seni24ProductImporter
 
             $variant->attributeValues()->sync($attributeValueIds);
             $syncedVariantIds[] = $variant->id;
-            $defaultAssigned = true;
         }
 
         if ($syncedVariantIds === []) {
@@ -898,6 +900,61 @@ final class Seni24ProductImporter
     private function isSafeFilterAttributeValue(string $value): bool
     {
         return mb_strlen($value) <= 120 && substr_count($value, ' ') <= 12;
+    }
+
+    /**
+     * Prefer the first source candidate that is currently purchasable.
+     * Because the scraper places the source-selected combination first,
+     * an in-stock selected combination remains the default. If all
+     * combinations are unavailable, preserve the first source candidate.
+     *
+     * @param list<array<string,mixed>> $candidates
+     * @param array<string,mixed> $scraped
+     */
+    private function defaultVariantSourceExternalId(
+        array $candidates,
+        array $scraped,
+    ): string {
+        $fallback = null;
+
+        foreach ($candidates as $index => $candidate) {
+            $sourceExternalId = $this->stringOrNull(
+                $candidate['external_variant_id'] ?? null
+            ) ?: (string) ($index + 1);
+
+            $fallback ??= $sourceExternalId;
+
+            if ($this->variantStockStatus(
+                $candidate,
+                $scraped,
+            ) === StockStatus::IN_STOCK) {
+                return $sourceExternalId;
+            }
+        }
+
+        return $fallback ?? '1';
+    }
+
+    /**
+     * @param array<string,mixed> $candidate
+     * @param array<string,mixed> $scraped
+     */
+    private function variantStockStatus(
+        array $candidate,
+        array $scraped,
+    ): StockStatus {
+        $candidateAvailability = $candidate['availability'] ?? null;
+
+        if (is_string($candidateAvailability)
+            && trim($candidateAvailability) !== ''
+            && $candidateAvailability !== 'unknown') {
+            return $this->stockStatus([
+                'availability' => $candidateAvailability,
+                'availability_label' => $candidate['availability_label'] ?? null,
+            ]);
+        }
+
+        return $this->stockStatus($scraped);
     }
 
     private function stockStatus(array $scraped): StockStatus

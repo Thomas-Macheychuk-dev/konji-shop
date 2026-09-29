@@ -17,6 +17,7 @@ it('extracts Seni24 identity, VAT, price, taxonomy, medical data and selected va
                 <a href="/">Strona główna</a>
                 <a href="/rehabilitacja/">Rehabilitacja i likwidacja barier</a>
                 <a href="/produkty-przeciwzylakowe/">Produkty przeciwżylakowe i medyczne</a>
+                <a href="/skarpety-medyczne-deomed-wool_10858-18630">Skarpety bezuciskowe z wełną merynosową DeoMed Wool</a>
             </nav>
 
             <main>
@@ -130,4 +131,203 @@ it('keeps a single-option Seni24 product eligible for authoritative import', fun
         ->and($result['warnings'])->not->toContain(
             'Seni24 product exposes additional variant choices whose authoritative combination prices were not resolved.'
         );
+});
+
+it('resolves authoritative Seni24 JSON-LD combinations and selected stock state', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical" href="https://www.seni24.pl/skarpety-medyczne-deomed-wool-dla-diabetykow-z-welna-merynosowa_10858-18630">
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "10858",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/skarpety-medyczne-deomed-wool-dla-diabetykow-z-welna-merynosowa_10858-18632",
+                  "sku": "NN-SSK-DEOW-002",
+                  "gtin13": "5901050202824",
+                  "size": "43-46",
+                  "color": "Ciemny szary",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "23.46",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                },
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/skarpety-medyczne-deomed-wool-dla-diabetykow-z-welna-merynosowa_10858-18630",
+                  "sku": "NN-SSK-DEOW-004",
+                  "gtin13": "5901050201827",
+                  "size": "43-46",
+                  "color": "Czarny",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "23.46",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/OutOfStock"
+                  }
+                },
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/skarpety-medyczne-deomed-wool-dla-diabetykow-z-welna-merynosowa_10858-18629",
+                  "sku": "NN-SSK-DEOW-003",
+                  "gtin13": "5901050201728",
+                  "size": "39-42",
+                  "color": "Czarny",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "23.46",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/OutOfStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+
+        <body>
+            <h1>Skarpety bezuciskowe z wełną merynosową DeoMed Wool</h1>
+
+            <div class="recommendation">Produkt dostępny</div>
+
+            <div class="product-variants">
+                <div class="product-variants-item">
+                    <span class="control-label">Rozmiar</span>
+                    <label><input data-product-attribute="51" name="group[51]" value="1488" data-value="0" checked>43-46</label>
+                    <label><input data-product-attribute="51" name="group[51]" value="1487" data-value="0">39-42</label>
+                </div>
+
+                <div class="product-variants-item">
+                    <span class="control-label">Kolor</span>
+                    <label><input data-product-attribute="54" name="group[54]" value="1375" data-value="0" checked>Czarny</label>
+                    <label><input data-product-attribute="54" name="group[54]" value="3635" data-value="0">Ciemny szary</label>
+                </div>
+            </div>
+
+            <div>Cena za 1 opak. z VAT 8% 23,46 zł (23,46 zł / 1 szt.)</div>
+
+            <div id="product-details">
+                <table class="product-features">
+                    <tr><th>Indeks</th><td>NN-SSK-DEOW-004</td></tr>
+                    <tr><th>ean13</th><td>5901050201827</td></tr>
+                </table>
+            </div>
+
+            <div id="availability-data" data-availability="OutOfStock"></div>
+
+            <a id="availability-text">
+                <div class="h6">Produkt niedostępny</div>
+            </a>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/skarpety-medyczne-deomed-wool-dla-diabetykow-z-welna-merynosowa_10858-18630',
+    );
+
+    expect($result['availability'])->toBe('out_of_stock')
+        ->and($result['availability_label'])->toBe('Produkt niedostępny')
+        ->and($result['variants_unresolved'])->toBeFalse()
+        ->and($result['variant_candidates'])->toHaveCount(3)
+        ->and(array_column(
+            $result['variant_candidates'],
+            'external_variant_id',
+        ))->toBe(['18630', '18632', '18629'])
+        ->and($result['variant_candidates'][0]['attributes'])->toBe([
+            ['label' => 'Rozmiar', 'value' => '43-46'],
+            ['label' => 'Kolor', 'value' => 'Czarny'],
+        ])
+        ->and($result['variant_candidates'][0]['availability'])->toBe('out_of_stock')
+        ->and($result['variant_candidates'][1]['availability'])->toBe('in_stock')
+        ->and($result['warnings'])->not->toContain(
+            'Seni24 product exposes additional variant choices whose authoritative combination prices were not resolved.'
+        );
+});
+
+it('preserves a single DOM option when Seni24 structured variant data omits that attribute', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical" href="https://www.seni24.pl/kubek-pojnik-z-ustnikiem-200-ml_338-16501">
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "338",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/kubek-pojnik-z-ustnikiem-200-ml_338-16501",
+                  "sku": "NN-SRW-AHK1-001",
+                  "gtin13": "5905279578104",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "9.39",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+
+        <body>
+            <h1>Kubek pojnik z ustnikiem 200 ml</h1>
+
+            <div class="product-variants">
+                <div class="product-variants-item">
+                    <span class="control-label">Pojemność</span>
+                    <label>
+                        <input
+                            data-product-attribute="1"
+                            name="group[1]"
+                            value="123"
+                            data-value="0"
+                            checked
+                        >
+                        200 ml
+                    </label>
+                </div>
+            </div>
+
+            <div>Cena za 1 opak. z VAT 8% 9,39 zł (9,39 zł / 1 szt.)</div>
+            <div id="availability-data" data-availability="InStock"></div>
+
+            <div id="product-details">
+                <table class="product-features">
+                    <tr><th>Indeks</th><td>NN-SRW-AHK1-001</td></tr>
+                    <tr><th>ean13</th><td>5905279578104</td></tr>
+                </table>
+            </div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/kubek-pojnik-z-ustnikiem-200-ml_338-16501',
+    );
+
+    expect($result['variants_unresolved'])->toBeFalse()
+        ->and($result['variant_candidates'])->toHaveCount(1)
+        ->and($result['variant_candidates'][0]['label'])->toBe(
+            'Pojemność: 200 ml'
+        )
+        ->and($result['variant_candidates'][0]['attributes'])->toBe([
+            [
+                'label' => 'Pojemność',
+                'value' => '200 ml',
+            ],
+        ]);
 });

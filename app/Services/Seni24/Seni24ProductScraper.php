@@ -94,17 +94,43 @@ final class Seni24ProductScraper
 
         $price = $this->priceGrossAmount($bodyText);
         $vatRate = $this->vatRate($bodyText);
-        $availabilityLabel = $this->availabilityLabel($bodyText);
-        $availability = $this->availability($availabilityLabel);
+        $availabilityData = $this->availabilityData($crawler, $bodyText);
+        $availabilityLabel = $availabilityData['label'];
+        $availability = $availabilityData['status'];
         $isOnOrder = $availability === 'on_order';
         $features = $this->featureAttributes($crawler, $bodyText);
-        $categoryPath = $this->categoryPath($crawler);
+        $categoryPath = $this->categoryPath($crawler, $name);
         $variantData = $this->variantData($crawler);
         $descriptionHtml = $this->descriptionHtml($crawler);
         $descriptionPlain = $this->normalizeText(strip_tags((string) $descriptionHtml));
         $catalogueNumber = $this->attributeValue($features, 'Indeks');
         $ean = $this->attributeValue($features, 'ean13')
             ?? $this->attributeValue($features, 'EAN');
+
+        $structuredVariantCandidates = $this->structuredVariantCandidates(
+            $crawler,
+            $externalProductId,
+            $externalVariantId,
+            $variantData['groups'],
+            $vatRate,
+        );
+
+        $structuredVariantCandidates = $this->enrichStructuredVariantAttributes(
+            $structuredVariantCandidates,
+            $externalVariantId,
+            $variantData['selected_attributes'],
+            $variantData['groups'],
+        );
+
+        $variantsResolvedByStructuredData = $structuredVariantCandidates !== []
+            && $this->structuredVariantsCoverOptions(
+                $structuredVariantCandidates,
+                $variantData['groups'],
+            );
+
+        $variantsUnresolved = $variantData['unresolved']
+            && ! $variantsResolvedByStructuredData;
+
         $medicalValue = $this->attributeValue($features, 'Wyrób medyczny');
         $isMedicalDevice = $medicalValue !== null
             && in_array(Str::lower(Str::ascii($medicalValue)), ['tak', 'yes', '1'], true);
@@ -124,7 +150,7 @@ final class Seni24ProductScraper
         if ($catalogueNumber === null) {
             $warnings[] = 'Seni24 product index not found.';
         }
-        if ($variantData['unresolved']) {
+        if ($variantsUnresolved) {
             $warnings[] = 'Seni24 product exposes additional variant choices whose authoritative combination prices were not resolved.';
         }
         if ($images === []) {
@@ -138,6 +164,23 @@ final class Seni24ProductScraper
                 static fn (array $a): string => $a['label'].': '.$a['value'],
                 $selectedAttributes,
             ));
+
+        $selectedVariantCandidate = [
+            'external_variant_id' => $externalVariantId,
+            'label' => $variantLabel,
+            'attributes' => $selectedAttributes,
+            'catalogue_number' => $catalogueNumber,
+            'ean' => $ean,
+            'price_gross_amount' => $price,
+            'currency' => 'PLN',
+            'vat_rate' => $vatRate,
+            'availability' => $availability,
+            'availability_label' => $availabilityLabel,
+        ];
+
+        $variantCandidates = $structuredVariantCandidates !== []
+            ? $structuredVariantCandidates
+            : [$selectedVariantCandidate];
 
         $context = is_array($context) ? $context : [];
         $listingRoots = $this->stringList($context['listing_roots'] ?? []);
@@ -174,18 +217,9 @@ final class Seni24ProductScraper
             'seo_description' => $this->metaContent($crawler, 'meta[name="description"]'),
             'images' => $images,
             'attributes' => $features,
-            'variant_candidates' => [[
-                'external_variant_id' => $externalVariantId,
-                'label' => $variantLabel,
-                'attributes' => $selectedAttributes,
-                'catalogue_number' => $catalogueNumber,
-                'ean' => $ean,
-                'price_gross_amount' => $price,
-                'currency' => 'PLN',
-                'vat_rate' => $vatRate,
-            ]],
+            'variant_candidates' => $variantCandidates,
             'variant_options' => $variantData['groups'],
-            'variants_unresolved' => $variantData['unresolved'],
+            'variants_unresolved' => $variantsUnresolved,
             'is_medical_device' => $isMedicalDevice,
             'medical_device_class' => $this->attributeValue($features, 'Klasa wyrobu medycznego'),
             'raw_context' => array_merge($context, [
@@ -258,8 +292,14 @@ final class Seni24ProductScraper
     }
 
     /** @return list<string> */
-    private function categoryPath(Crawler $crawler): array
-    {
+    private function categoryPath(
+        Crawler $crawler,
+        string $productName = '',
+    ): array {
+        $productKey = Str::lower(
+            Str::ascii($this->normalizeText($productName))
+        );
+
         $selectors = [
             '.breadcrumb a',
             'nav[aria-label*="breadcrumb" i] a',
@@ -274,16 +314,22 @@ final class Seni24ProductScraper
                 }
 
                 $path = [];
-                $nodes->each(function (Crawler $node) use (&$path): void {
-                    $value = $this->normalizeText($node->text(''));
-                    $key = Str::lower(Str::ascii($value));
-                    if ($value === '' || in_array($key, ['strona glowna', 'sklep'], true)) {
-                        return;
+                $nodes->each(
+                    function (Crawler $node) use (&$path, $productKey): void {
+                        $value = $this->normalizeText($node->text(''));
+                        $key = Str::lower(Str::ascii($value));
+
+                        if ($value === ''
+                            || in_array($key, ['strona glowna', 'sklep'], true)
+                            || ($productKey !== '' && $key === $productKey)) {
+                            return;
+                        }
+
+                        if (! in_array($value, $path, true)) {
+                            $path[] = $value;
+                        }
                     }
-                    if (!in_array($value, $path, true)) {
-                        $path[] = $value;
-                    }
-                });
+                );
 
                 if ($path !== []) {
                     return $path;
@@ -326,21 +372,115 @@ final class Seni24ProductScraper
         return (float) str_replace(',', '.', $value);
     }
 
-    private function availabilityLabel(string $text): ?string
+    /** @return array{label:?string,status:string} */
+    private function availabilityData(Crawler $crawler, string $bodyText): array
     {
         foreach ([
-            'Produkt dostępny',
-            'Produkt niedostępny',
-            'Chwilowo niedostępny',
-            'Produkt na zamówienie',
-            'Na zamówienie',
-        ] as $label) {
-            if ($this->containsComparable($text, $label)) {
-                return $label;
+            ['#availability-data[data-availability]', 'data-availability'],
+            ['#availability-link[href]', 'href'],
+            ['meta[property="og:availability"][content]', 'content'],
+        ] as [$selector, $attribute]) {
+            try {
+                $node = $crawler->filter($selector)->first();
+
+                if ($node->count() === 0) {
+                    continue;
+                }
+
+                $status = $this->availabilityFromMachineValue(
+                    (string) $node->attr($attribute)
+                );
+
+                if ($status !== null) {
+                    return [
+                        'label' => match ($status) {
+                            'in_stock' => 'Produkt dostępny',
+                            'out_of_stock' => 'Produkt niedostępny',
+                            'on_order' => 'Produkt na zamówienie',
+                            default => null,
+                        },
+                        'status' => $status,
+                    ];
+                }
+            } catch (Throwable) {
             }
         }
 
+        foreach ([
+            '#availability-text .h6',
+            '.product-availability-status .h6',
+        ] as $selector) {
+            try {
+                $node = $crawler->filter($selector)->first();
+
+                if ($node->count() === 0) {
+                    continue;
+                }
+
+                $label = $this->normalizeText($node->text(''));
+
+                if ($label !== '') {
+                    return [
+                        'label' => $label,
+                        'status' => $this->availability($label),
+                    ];
+                }
+            } catch (Throwable) {
+            }
+        }
+
+        $label = $this->availabilityLabel($bodyText);
+
+        return [
+            'label' => $label,
+            'status' => $this->availability($label),
+        ];
+    }
+
+    private function availabilityFromMachineValue(string $value): ?string
+    {
+        $value = Str::lower(Str::ascii($value));
+        $value = preg_replace('/[^a-z]+/', '', $value) ?? $value;
+
+        if (str_contains($value, 'outofstock')) {
+            return 'out_of_stock';
+        }
+
+        if (str_contains($value, 'instock')) {
+            return 'in_stock';
+        }
+
+        if (str_contains($value, 'preorder')
+            || str_contains($value, 'backorder')) {
+            return 'on_order';
+        }
+
         return null;
+    }
+
+    private function availabilityLabel(string $text): ?string
+    {
+        $matches = [];
+
+        foreach ([
+            'Produkt niedostępny',
+            'Chwilowo niedostępny',
+            'Produkt dostępny',
+            'Produkt na zamówienie',
+            'Na zamówienie',
+        ] as $label) {
+            if (! $this->containsComparable($text, $label)) {
+                continue;
+            }
+
+            $matches[$this->availability($label)] = $label;
+        }
+
+        if (count($matches) !== 1) {
+            return null;
+        }
+
+        return array_values($matches)[0];
     }
 
     private function availability(?string $label): string
@@ -350,12 +490,15 @@ final class Seni24ProductScraper
         }
 
         $value = Str::lower(Str::ascii($label));
+
         if (str_contains($value, 'zamow')) {
             return 'on_order';
         }
+
         if (str_contains($value, 'niedostep')) {
             return 'out_of_stock';
         }
+
         if (str_contains($value, 'dostep')) {
             return 'in_stock';
         }
@@ -490,6 +633,525 @@ final class Seni24ProductScraper
         }
 
         return null;
+    }
+
+    /**
+     * Resolve authoritative Seni24 combinations from schema.org ProductGroup
+     * structured data. One product page may contain all concrete combinations.
+     *
+     * @param list<array<string,mixed>> $groups
+     * @return list<array<string,mixed>>
+     */
+    private function structuredVariantCandidates(
+        Crawler $crawler,
+        string $externalProductId,
+        string $selectedVariantId,
+        array $groups,
+        ?int $vatRate,
+    ): array {
+        $candidates = [];
+
+        try {
+            $crawler->filter('script[type="application/ld+json"]')->each(
+                function (Crawler $script) use (
+                    &$candidates,
+                    $externalProductId,
+                    $groups,
+                    $vatRate,
+                ): void {
+                    $node = $script->getNode(0);
+
+                    if (! $node instanceof DOMElement) {
+                        return;
+                    }
+
+                    $json = trim((string) $node->textContent);
+
+                    if ($json === '') {
+                        return;
+                    }
+
+                    try {
+                        $decoded = json_decode(
+                            $json,
+                            true,
+                            512,
+                            JSON_THROW_ON_ERROR,
+                        );
+                    } catch (Throwable) {
+                        return;
+                    }
+
+                    $this->collectStructuredVariantCandidates(
+                        $decoded,
+                        $externalProductId,
+                        $groups,
+                        $vatRate,
+                        $candidates,
+                    );
+                }
+            );
+        } catch (Throwable) {
+        }
+
+        if (isset($candidates[$selectedVariantId])) {
+            $selected = $candidates[$selectedVariantId];
+            unset($candidates[$selectedVariantId]);
+
+            return [
+                $selected,
+                ...array_values($candidates),
+            ];
+        }
+
+        return array_values($candidates);
+    }
+
+    /**
+     * @param list<array<string,mixed>> $groups
+     * @param array<string,array<string,mixed>> $candidates
+     */
+    private function collectStructuredVariantCandidates(
+        mixed $node,
+        string $externalProductId,
+        array $groups,
+        ?int $vatRate,
+        array &$candidates,
+    ): void {
+        if (! is_array($node)) {
+            return;
+        }
+
+        $url = is_string($node['url'] ?? null)
+            ? $this->normalizeText($node['url'])
+            : null;
+
+        $variantId = $url !== null
+            ? $this->variantIdFromStructuredUrl($url, $externalProductId)
+            : null;
+
+        if ($variantId !== null) {
+            $attributes = $this->structuredVariantAttributes($node, $groups);
+            $offer = $this->structuredOffer($node['offers'] ?? null);
+            $price = $offer !== null
+                ? $this->structuredOfferPrice($offer)
+                : null;
+
+            $sku = is_string($node['sku'] ?? null)
+                ? $this->normalizeText($node['sku'])
+                : null;
+
+            $ean = null;
+
+            foreach (['gtin13', 'gtin14', 'gtin'] as $key) {
+                if (is_string($node[$key] ?? null)) {
+                    $ean = $this->normalizeText($node[$key]);
+
+                    if ($ean !== '') {
+                        break;
+                    }
+                }
+            }
+
+            if ($ean === '') {
+                $ean = null;
+            }
+
+            if ($price !== null
+                && ($attributes !== [] || $sku !== null || $ean !== null)) {
+                $availability = $offer !== null
+                    ? ($this->availabilityFromMachineValue(
+                        (string) ($offer['availability'] ?? '')
+                    ) ?? 'unknown')
+                    : 'unknown';
+
+                $label = $attributes === []
+                    ? ($sku ?: $variantId)
+                    : implode(', ', array_map(
+                        static fn (array $attribute): string =>
+                            $attribute['label'].': '.$attribute['value'],
+                        $attributes,
+                    ));
+
+                $candidates[$variantId] = [
+                    'external_variant_id' => $variantId,
+                    'label' => $label,
+                    'attributes' => $attributes,
+                    'catalogue_number' => $sku,
+                    'ean' => $ean,
+                    'price_gross_amount' => $price,
+                    'currency' => is_string($offer['priceCurrency'] ?? null)
+                        ? strtoupper($this->normalizeText($offer['priceCurrency']))
+                        : 'PLN',
+                    'vat_rate' => $vatRate,
+                    'availability' => $availability,
+                    'availability_label' => match ($availability) {
+                        'in_stock' => 'Produkt dostępny',
+                        'out_of_stock' => 'Produkt niedostępny',
+                        'on_order' => 'Produkt na zamówienie',
+                        default => null,
+                    },
+                    'source_url' => $url,
+                ];
+            }
+        }
+
+        foreach ($node as $child) {
+            if (! is_array($child)) {
+                continue;
+            }
+
+            $this->collectStructuredVariantCandidates(
+                $child,
+                $externalProductId,
+                $groups,
+                $vatRate,
+                $candidates,
+            );
+        }
+    }
+
+    private function variantIdFromStructuredUrl(
+        string $url,
+        string $externalProductId,
+    ): ?string {
+        $path = (string) parse_url($url, PHP_URL_PATH);
+
+        if (preg_match(
+            '/_'.preg_quote($externalProductId, '/').'-([0-9]+)(?:\.html)?$/u',
+            $path,
+            $matches,
+        ) !== 1) {
+            return null;
+        }
+
+        return $matches[1];
+    }
+
+    /**
+     * @param array<string,mixed> $node
+     * @param list<array<string,mixed>> $groups
+     * @return list<array{label:string,value:string}>
+     */
+    private function structuredVariantAttributes(
+        array $node,
+        array $groups,
+    ): array {
+        $scalarValues = [];
+
+        foreach ($node as $key => $value) {
+            if (! is_string($key)
+                || ! is_scalar($value)
+                || in_array($key, [
+                    '@context',
+                    '@type',
+                    '@id',
+                    'url',
+                    'sku',
+                    'gtin',
+                    'gtin13',
+                    'gtin14',
+                    'name',
+                    'description',
+                    'productID',
+                    'mpn',
+                ], true)) {
+                continue;
+            }
+
+            $value = $this->normalizeText((string) $value);
+
+            if ($value !== '') {
+                $scalarValues[] = $value;
+            }
+        }
+
+        $attributes = [];
+
+        foreach ($groups as $group) {
+            $label = is_string($group['label'] ?? null)
+                ? $this->normalizeText($group['label'])
+                : '';
+
+            if ($label === '') {
+                continue;
+            }
+
+            foreach (($group['options'] ?? []) as $option) {
+                if (! is_array($option)
+                    || ! is_string($option['value'] ?? null)) {
+                    continue;
+                }
+
+                $optionValue = $this->normalizeText($option['value']);
+
+                foreach ($scalarValues as $scalarValue) {
+                    if (! $this->sameComparable(
+                        $optionValue,
+                        $scalarValue,
+                    )) {
+                        continue;
+                    }
+
+                    $attributes[$label] = [
+                        'label' => $label,
+                        'value' => $optionValue,
+                    ];
+
+                    break 2;
+                }
+            }
+        }
+
+        foreach ([
+            'size' => 'Rozmiar',
+            'color' => 'Kolor',
+            'colour' => 'Kolor',
+            'capacity' => 'Pojemność',
+        ] as $key => $label) {
+            if (isset($attributes[$label])
+                || ! is_scalar($node[$key] ?? null)) {
+                continue;
+            }
+
+            $value = $this->normalizeText((string) $node[$key]);
+
+            if ($value !== '') {
+                $attributes[$label] = [
+                    'label' => $label,
+                    'value' => $value,
+                ];
+            }
+        }
+
+        return array_values($attributes);
+    }
+
+    /** @return array<string,mixed>|null */
+    private function structuredOffer(mixed $offers): ?array
+    {
+        if (! is_array($offers)) {
+            return null;
+        }
+
+        if (array_key_exists('price', $offers)) {
+            return $offers;
+        }
+
+        foreach ($offers as $offer) {
+            if (is_array($offer) && array_key_exists('price', $offer)) {
+                return $offer;
+            }
+        }
+
+        return null;
+    }
+
+    /** @param array<string,mixed> $offer */
+    private function structuredOfferPrice(array $offer): ?float
+    {
+        $price = $offer['price'] ?? null;
+
+        if (! is_string($price) && ! is_int($price) && ! is_float($price)) {
+            return null;
+        }
+
+        $value = $this->money((string) $price);
+
+        return $value >= 0 ? $value : null;
+    }
+
+    /**
+     * Preserve authoritative DOM attributes that structured data omits.
+     *
+     * Selected DOM attributes apply to the selected combination. Options whose
+     * group has exactly one possible value apply to every combination.
+     *
+     * @param list<array<string,mixed>> $candidates
+     * @param list<array{label:string,value:string}> $selectedAttributes
+     * @param list<array<string,mixed>> $groups
+     * @return list<array<string,mixed>>
+     */
+    private function enrichStructuredVariantAttributes(
+        array $candidates,
+        string $selectedVariantId,
+        array $selectedAttributes,
+        array $groups,
+    ): array {
+        foreach ($candidates as &$candidate) {
+            $attributes = [];
+
+            foreach (($candidate['attributes'] ?? []) as $attribute) {
+                if (! is_array($attribute)
+                    || ! is_string($attribute['label'] ?? null)
+                    || ! is_string($attribute['value'] ?? null)) {
+                    continue;
+                }
+
+                $attributes[
+                    Str::lower(Str::ascii($attribute['label']))
+                ] = [
+                    'label' => $attribute['label'],
+                    'value' => $attribute['value'],
+                ];
+            }
+
+            if (($candidate['external_variant_id'] ?? null) === $selectedVariantId) {
+                foreach ($selectedAttributes as $attribute) {
+                    $key = Str::lower(Str::ascii($attribute['label']));
+
+                    $attributes[$key] ??= $attribute;
+                }
+            }
+
+            foreach ($groups as $group) {
+                $label = is_string($group['label'] ?? null)
+                    ? $this->normalizeText($group['label'])
+                    : '';
+
+                $options = is_array($group['options'] ?? null)
+                    ? $group['options']
+                    : [];
+
+                if ($label === '' || count($options) !== 1) {
+                    continue;
+                }
+
+                $option = $options[0];
+
+                if (! is_array($option)
+                    || ! is_string($option['value'] ?? null)) {
+                    continue;
+                }
+
+                $value = $this->normalizeText($option['value']);
+
+                if ($value === '') {
+                    continue;
+                }
+
+                $key = Str::lower(Str::ascii($label));
+
+                $attributes[$key] ??= [
+                    'label' => $label,
+                    'value' => $value,
+                ];
+            }
+
+            $candidate['attributes'] = array_values($attributes);
+
+            if ($candidate['attributes'] !== []) {
+                $candidate['label'] = implode(', ', array_map(
+                    static fn (array $attribute): string =>
+                        $attribute['label'].': '.$attribute['value'],
+                    $candidate['attributes'],
+                ));
+            }
+        }
+
+        unset($candidate);
+
+        return $candidates;
+    }
+
+    /**
+     * @param list<array<string,mixed>> $candidates
+     * @param list<array<string,mixed>> $groups
+     */
+    private function structuredVariantsCoverOptions(
+        array $candidates,
+        array $groups,
+    ): bool {
+        if ($candidates === []) {
+            return false;
+        }
+
+        if ($groups === []) {
+            return true;
+        }
+
+        foreach ($candidates as $candidate) {
+            foreach ($groups as $group) {
+                $label = is_string($group['label'] ?? null)
+                    ? $this->normalizeText($group['label'])
+                    : '';
+
+                if ($label === '') {
+                    continue;
+                }
+
+                $hasAttribute = false;
+
+                foreach (($candidate['attributes'] ?? []) as $attribute) {
+                    if (is_array($attribute)
+                        && is_string($attribute['label'] ?? null)
+                        && $this->sameComparable(
+                            $attribute['label'],
+                            $label,
+                        )) {
+                        $hasAttribute = true;
+                        break;
+                    }
+                }
+
+                if (! $hasAttribute) {
+                    return false;
+                }
+            }
+        }
+
+        foreach ($groups as $group) {
+            $label = is_string($group['label'] ?? null)
+                ? $this->normalizeText($group['label'])
+                : '';
+
+            foreach (($group['options'] ?? []) as $option) {
+                if ($label === ''
+                    || ! is_array($option)
+                    || ! is_string($option['value'] ?? null)) {
+                    continue;
+                }
+
+                $optionValue = $this->normalizeText($option['value']);
+                $covered = false;
+
+                foreach ($candidates as $candidate) {
+                    foreach (($candidate['attributes'] ?? []) as $attribute) {
+                        if (! is_array($attribute)
+                            || ! is_string($attribute['label'] ?? null)
+                            || ! is_string($attribute['value'] ?? null)) {
+                            continue;
+                        }
+
+                        if ($this->sameComparable(
+                            $attribute['label'],
+                            $label,
+                        ) && $this->sameComparable(
+                            $attribute['value'],
+                            $optionValue,
+                        )) {
+                            $covered = true;
+                            break 2;
+                        }
+                    }
+                }
+
+                if (! $covered) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private function sameComparable(string $left, string $right): bool
+    {
+        $normalize = fn (string $value): string => Str::lower(
+            Str::ascii($this->normalizeText($value))
+        );
+
+        return $normalize($left) === $normalize($right);
     }
 
     /** @return array{groups:list<array<string,mixed>>,selected_attributes:list<array{label:string,value:string}>,unresolved:bool} */

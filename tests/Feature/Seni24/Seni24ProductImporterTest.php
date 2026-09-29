@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
+use App\Enums\StockStatus;
 use App\Enums\VatRate;
 use App\Models\Category;
 use App\Models\Product;
@@ -115,4 +116,65 @@ it('requires explicit Seni24 VAT when source VAT is absent', function (): void {
         InvalidArgumentException::class,
         'Seni24 VAT rate is not explicit',
     );
+});
+
+it('imports each resolved Seni24 variant with its own stock state', function (): void {
+    $fixture = seni24PricedFixture();
+
+    $fixture['variant_candidates'] = [
+        [
+            'external_variant_id' => '18630',
+            'label' => 'Rozmiar: 43-46, Kolor: Czarny',
+            'attributes' => [
+                ['label' => 'Rozmiar', 'value' => '43-46'],
+                ['label' => 'Kolor', 'value' => 'Czarny'],
+            ],
+            'price_gross_amount' => 23.46,
+            'currency' => 'PLN',
+            'vat_rate' => 8,
+            'availability' => 'out_of_stock',
+            'availability_label' => 'Produkt niedostępny',
+        ],
+        [
+            'external_variant_id' => '18632',
+            'label' => 'Rozmiar: 43-46, Kolor: Ciemny szary',
+            'attributes' => [
+                ['label' => 'Rozmiar', 'value' => '43-46'],
+                ['label' => 'Kolor', 'value' => 'Ciemny szary'],
+            ],
+            'price_gross_amount' => 23.46,
+            'currency' => 'PLN',
+            'vat_rate' => 8,
+            'availability' => 'in_stock',
+            'availability_label' => 'Produkt dostępny',
+        ],
+    ];
+
+    $fixture['availability'] = 'out_of_stock';
+    $fixture['availability_label'] = 'Produkt niedostępny';
+    $fixture['variants_unresolved'] = false;
+
+    app(Seni24ProductImporter::class)->import(
+        $fixture,
+        null,
+        false,
+    );
+
+    $variants = ProductVariant::query()
+        ->whereIn('external_variant_id', [
+            'seni24-338-18630',
+            'seni24-338-18632',
+        ])
+        ->get()
+        ->keyBy('external_variant_id');
+
+    expect($variants)->toHaveCount(2)
+        ->and($variants['seni24-338-18630']->stock_status)
+        ->toBe(StockStatus::OUT_OF_STOCK)
+        ->and($variants['seni24-338-18632']->stock_status)
+        ->toBe(StockStatus::IN_STOCK)
+        ->and($variants['seni24-338-18630']->is_default)
+        ->toBeFalse()
+        ->and($variants['seni24-338-18632']->is_default)
+        ->toBeTrue();
 });
