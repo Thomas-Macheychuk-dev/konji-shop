@@ -77,79 +77,101 @@ final class IconicProductUrlScraper
      */
     public function scrape(array $startUrls = self::DEFAULT_URLS): array
     {
-        $queue = [];
         $start = [];
         $visited = [];
         $failed = [];
         $products = [];
+        $pageLinks = [];
+        $processedRootMemberships = 0;
+        $queuedRemaining = [];
+        $stoppedAtLimit = false;
 
         foreach ($startUrls as $startUrl) {
             $url = $this->normalizeCategoryUrl($startUrl);
 
-            if ($url === null || isset($start[$url])) {
-                continue;
+            if ($url !== null) {
+                $start[$url] = true;
             }
-
-            $start[$url] = true;
-            $queue[] = $url;
         }
 
-        while ($queue !== [] && count($visited) < $this->maxCategoryPages) {
-            $url = array_shift($queue);
+        foreach (array_keys($start) as $rootUrl) {
+            $queue = [$rootUrl];
+            $visitedForRoot = [];
 
-            if (! is_string($url) || isset($visited[$url])) {
-                continue;
-            }
+            while ($queue !== []) {
+                if ($processedRootMemberships >= $this->maxCategoryPages) {
+                    $stoppedAtLimit = true;
+                    $queuedRemaining = array_values(array_unique(array_merge($queuedRemaining, $queue)));
+                    break 2;
+                }
 
-            $visited[$url] = true;
-            $this->emit(sprintf(
-                'Fetching Iconic category %d/%d: %s',
-                count($visited),
-                count($visited) + count($queue),
-                $url,
-            ));
+                $url = array_shift($queue);
 
-            $html = $this->fetchBody($url, $failed);
-
-            if ($html === null) {
-                continue;
-            }
-
-            $links = $this->extractLinks($html, $url);
-
-            foreach ($links['products'] as $product) {
-                $productUrl = $product['url'];
-
-                if (! isset($products[$productUrl])) {
-                    $products[$productUrl] = $product;
-
+                if (! is_string($url) || isset($visitedForRoot[$url])) {
                     continue;
                 }
 
-                if (($products[$productUrl]['name'] ?? '') === '' && ($product['name'] ?? '') !== '') {
-                    $products[$productUrl]['name'] = $product['name'];
+                $visitedForRoot[$url] = true;
+                $visited[$url] = true;
+                $processedRootMemberships++;
+
+                if (! isset($pageLinks[$url])) {
+                    $this->emit(sprintf(
+                        'Fetching Iconic category %d/%d: %s',
+                        count($visited),
+                        count($visited) + count($queue),
+                        $url,
+                    ));
+
+                    $html = $this->fetchBody($url, $failed);
+
+                    if ($html === null) {
+                        $pageLinks[$url] = [
+                            'products' => [],
+                            'category_urls' => [],
+                        ];
+                    } else {
+                        $pageLinks[$url] = $this->extractLinks($html, $url);
+                    }
                 }
 
-                if (($products[$productUrl]['price_gross_amount'] ?? null) === null
-                    && ($product['price_gross_amount'] ?? null) !== null) {
-                    $products[$productUrl]['price_gross_amount'] = $product['price_gross_amount'];
+                $links = $pageLinks[$url];
+
+                foreach ($links['products'] as $product) {
+                    $productUrl = $product['url'];
+                    $product['listing_roots'] = [$rootUrl];
+
+                    if (! isset($products[$productUrl])) {
+                        $products[$productUrl] = $product;
+
+                        continue;
+                    }
+
+                    if (($products[$productUrl]['name'] ?? '') === '' && ($product['name'] ?? '') !== '') {
+                        $products[$productUrl]['name'] = $product['name'];
+                    }
+
+                    if (($products[$productUrl]['price_gross_amount'] ?? null) === null
+                        && ($product['price_gross_amount'] ?? null) !== null) {
+                        $products[$productUrl]['price_gross_amount'] = $product['price_gross_amount'];
+                    }
+
+                    foreach (['listing_pages', 'listing_roots'] as $key) {
+                        $products[$productUrl][$key] = array_values(array_unique(array_merge(
+                            is_array($products[$productUrl][$key] ?? null)
+                                ? $products[$productUrl][$key]
+                                : [],
+                            is_array($product[$key] ?? null)
+                                ? $product[$key]
+                                : [],
+                        )));
+                    }
                 }
 
-                $listingPages = array_values(array_unique(array_merge(
-                    is_array($products[$productUrl]['listing_pages'] ?? null)
-                        ? $products[$productUrl]['listing_pages']
-                        : [],
-                    is_array($product['listing_pages'] ?? null)
-                        ? $product['listing_pages']
-                        : [],
-                )));
-
-                $products[$productUrl]['listing_pages'] = $listingPages;
-            }
-
-            foreach ($links['category_urls'] as $categoryUrl) {
-                if (! isset($visited[$categoryUrl]) && ! in_array($categoryUrl, $queue, true)) {
-                    $queue[] = $categoryUrl;
+                foreach ($links['category_urls'] as $categoryUrl) {
+                    if (! isset($visitedForRoot[$categoryUrl]) && ! in_array($categoryUrl, $queue, true)) {
+                        $queue[] = $categoryUrl;
+                    }
                 }
             }
         }
@@ -162,9 +184,10 @@ final class IconicProductUrlScraper
             'product_count' => count($products),
             'visited_urls' => array_keys($visited),
             'visited_category_count' => count($visited),
-            'queued_category_urls_remaining' => array_values($queue),
+            'visited_root_category_memberships' => $processedRootMemberships,
+            'queued_category_urls_remaining' => $queuedRemaining,
             'max_category_pages' => $this->maxCategoryPages,
-            'stopped_at_category_limit' => $queue !== [],
+            'stopped_at_category_limit' => $stoppedAtLimit,
             'failed_urls' => $failed,
         ];
     }
@@ -191,6 +214,10 @@ final class IconicProductUrlScraper
         $categoryUrls = [];
 
         $anchors->each(function (Crawler $node) use (&$products, &$categoryUrls, $baseUrl): void {
+            if ($this->isSiteChromeAnchor($node)) {
+                return;
+            }
+
             $href = $node->attr('href');
 
             if (! is_string($href)) {
@@ -298,6 +325,36 @@ final class IconicProductUrlScraper
         }
 
         return $response->body();
+    }
+
+    private function isSiteChromeAnchor(Crawler $node): bool
+    {
+        $domNode = $node->getNode(0);
+
+        if (! $domNode instanceof DOMElement) {
+            return false;
+        }
+
+        for ($depth = 0, $current = $domNode; $current instanceof DOMElement && $depth < 10; $depth++, $current = $current->parentElement) {
+            $tag = mb_strtolower($current->tagName);
+
+            if (in_array($tag, ['header', 'nav', 'footer'], true)) {
+                return true;
+            }
+
+            $signature = mb_strtolower(trim(
+                $current->getAttribute('id').' '.$current->getAttribute('class')
+            ));
+
+            if ($signature !== '' && preg_match(
+                '/(?:^|[ _-])(header|footer|navbar|navigation|breadcrumb|breadcrumbs|top-menu|main-menu|menu-top|menu-main)(?:$|[ _-])/u',
+                $signature,
+            ) === 1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function productName(Crawler $node, string $url): string
