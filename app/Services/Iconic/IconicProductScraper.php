@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Iconic;
 
 use Closure;
+use DOMDocument;
 use DOMElement;
 use DOMNode;
 use Illuminate\Support\Facades\Http;
@@ -667,94 +668,101 @@ final class IconicProductScraper
      */
     private function variantCandidates(Crawler $crawler, ?float $priceGrossAmount): array
     {
+        $root = $crawler->getNode(0);
+
+        if (! $root instanceof DOMNode) {
+            return [];
+        }
+
+        $document = $root instanceof DOMDocument
+            ? $root
+            : $root->ownerDocument;
+
+        if (! $document instanceof DOMDocument) {
+            return [];
+        }
+
         $variants = [];
 
-        try {
-            $crawler->filter('select')->each(function (Crawler $select) use (&$variants, $priceGrossAmount): void {
-                $selectNode = $select->getNode(0);
+        foreach ($document->getElementsByTagName('select') as $selectNode) {
+            if (! $selectNode instanceof DOMElement) {
+                continue;
+            }
 
-                if (! $selectNode instanceof DOMElement) {
-                    return;
+            $options = [];
+
+            foreach ($selectNode->getElementsByTagName('option') as $optionNode) {
+                if (! $optionNode instanceof DOMElement) {
+                    continue;
                 }
 
-                $options = [];
+                $label = $this->normalizeText($optionNode->textContent ?? '');
+                $value = $this->normalizeText($optionNode->getAttribute('value'));
+                $comparableLabel = $this->comparable($label);
 
-                foreach ($selectNode->getElementsByTagName('option') as $optionNode) {
-                    if (! $optionNode instanceof DOMElement) {
-                        continue;
-                    }
-
-                    $label = $this->normalizeText($optionNode->textContent ?? '');
-                    $value = $this->normalizeText($optionNode->getAttribute('value'));
-                    $comparableLabel = $this->comparable($label);
-
-                    if ($label === ''
-                        || str_contains($comparableLabel, 'wybierz opcje')
-                        || str_contains($comparableLabel, 'wybierz')) {
-                        continue;
-                    }
-
-                    $options[] = [
-                        'value' => $value,
-                        'label' => $label,
-                    ];
+                if ($label === ''
+                    || str_contains($comparableLabel, 'wybierz opcje')
+                    || str_contains($comparableLabel, 'wybierz')) {
+                    continue;
                 }
 
-                if ($options === []) {
-                    return;
-                }
+                $options[] = [
+                    'value' => $value,
+                    'label' => $label,
+                ];
+            }
 
-                $attributeLabel = $this->selectLabel($crawler, $select) ?? 'Wariant';
+            if ($options === []) {
+                continue;
+            }
 
-                foreach ($options as $index => $option) {
-                    $externalId = $option['value'] !== ''
-                        ? $option['value']
-                        : (Str::slug($option['label']) ?: 'option-'.($index + 1));
+            $attributeLabel = $this->selectLabelFromDom($document, $selectNode) ?? 'Wariant';
 
-                    $key = mb_strtolower($attributeLabel.'|'.$externalId);
+            foreach ($options as $index => $option) {
+                $externalId = $option['value'] !== ''
+                    ? $option['value']
+                    : (Str::slug($option['label']) ?: 'option-'.($index + 1));
 
-                    $variants[$key] = [
-                        'external_variant_id' => $externalId,
-                        'label' => $attributeLabel.': '.$option['label'],
-                        'attributes' => [
-                            [
-                                'label' => $attributeLabel,
-                                'value' => $option['label'],
-                            ],
+                $key = mb_strtolower($attributeLabel.'|'.$externalId);
+
+                $variants[$key] = [
+                    'external_variant_id' => $externalId,
+                    'label' => $attributeLabel.': '.$option['label'],
+                    'attributes' => [
+                        [
+                            'label' => $attributeLabel,
+                            'value' => $option['label'],
                         ],
-                        'price_gross_amount' => $priceGrossAmount,
-                        'currency' => 'PLN',
-                    ];
-                }
-            });
-        } catch (Throwable) {
-            return [];
+                    ],
+                    'price_gross_amount' => $priceGrossAmount,
+                    'currency' => 'PLN',
+                ];
+            }
         }
 
         return array_values($variants);
     }
 
-    private function selectLabel(Crawler $crawler, Crawler $select): ?string
+    private function selectLabelFromDom(DOMDocument $document, DOMElement $select): ?string
     {
-        $id = $this->normalizeText((string) $select->attr('id'));
+        $id = $this->normalizeText($select->getAttribute('id'));
 
         if ($id !== '') {
-            try {
-                $label = $crawler->filter('label[for="'.$this->cssEscape($id).'"]')->first();
-
-                if ($label->count() > 0) {
-                    $text = rtrim($this->normalizeText($label->text('', false)), ':');
-
-                    if ($text !== '') {
-                        return $text;
-                    }
+            foreach ($document->getElementsByTagName('label') as $labelNode) {
+                if (! $labelNode instanceof DOMElement
+                    || $this->normalizeText($labelNode->getAttribute('for')) !== $id) {
+                    continue;
                 }
-            } catch (Throwable) {
-                // Continue with name/id inference.
+
+                $text = rtrim($this->normalizeText($labelNode->textContent ?? ''), ':');
+
+                if ($text !== '') {
+                    return $text;
+                }
             }
         }
 
-        $name = $this->normalizeText((string) $select->attr('name'));
+        $name = $this->normalizeText($select->getAttribute('name'));
         $candidate = $name !== '' ? $name : $id;
         $comparable = $this->comparable($candidate);
 
