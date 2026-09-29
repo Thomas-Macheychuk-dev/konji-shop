@@ -412,13 +412,14 @@ final class IconicProductScraper
             return 'unknown';
         }
 
-        if (str_contains($value, 'niedostep') || str_contains($value, 'brak')) {
+        if (str_contains($value, 'niedostep')
+            || str_contains($value, 'brak')
+            || str_contains($value, 'wyczerp')) {
             return 'out_of_stock';
         }
 
         if (str_contains($value, 'dostep')
-            || str_contains($value, 'ogranicz')
-            || str_contains($value, 'wyczerp')) {
+            || str_contains($value, 'ogranicz')) {
             return 'in_stock';
         }
 
