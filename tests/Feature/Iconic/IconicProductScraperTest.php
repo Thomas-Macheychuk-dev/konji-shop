@@ -356,6 +356,67 @@ it('saves Iconic crawl JSON as a non-empty valid artifact when source text conta
         ->and($decoded['products'][0]['name'])->toBe('UTF-8 Test');
 });
 
+it('does not treat Iconic action buttons as a catalogue number and maps limited availability', function (): void {
+    $html = <<<'HTML'
+        <html><head>
+            <link rel="canonical" href="https://sklep.iconic.pl/produkty/blank-sku.html">
+        </head><body>
+            <h2>Blank SKU product</h2>
+            <div>55.00 zł</div>
+            <div>Dostępny: Ograniczony</div>
+            <div>Czas wysyłki: 24 h - 2 dni</div>
+            <div>Jednostka miary: sztuka</div>
+            <div>Numer katalogowy:</div>
+            <button>DODAJ DO KOSZYKA</button>
+            <div>Opis produktu</div>
+            <h1>Opis Blank SKU</h1>
+            <p>Pełny opis produktu testowego.</p>
+        </body></html>
+    HTML;
+
+    $result = app(IconicProductScraper::class)->extract(
+        $html,
+        'https://sklep.iconic.pl/produkty/blank-sku.html',
+    );
+
+    expect($result['catalogue_number'])->toBeNull()
+        ->and($result['availability'])->toBe('in_stock')
+        ->and($result['availability_label'])->toBe('Ograniczony')
+        ->and($result['warnings'])->toContain('Catalogue number not found.');
+});
+
+it('recovers Iconic full-size gallery paths embedded outside normal image links', function (): void {
+    $html = <<<'HTML'
+        <html><head>
+            <link rel="canonical" href="https://sklep.iconic.pl/produkty/embedded-image.html">
+        </head><body>
+            <h2>Embedded image product</h2>
+            <div>
+                Array ( [src] => /_images/produkty/Test/full.jpg
+                [srcMin] => /.miniatury/100/1/full_mini.jpg
+                [srcBig] => /_images/produkty/Test/full.jpg )
+            </div>
+            <img src="/.miniatury/100/1/full_mini.jpg" alt="mini">
+            <div>49.00 zł</div>
+            <div>Dostępny: Dostępny</div>
+            <div>Numer katalogowy: IMG-1</div>
+            <div>Opis produktu</div>
+            <h1>Opis obrazu</h1>
+            <p>Opis produktu z osadzoną ścieżką galerii.</p>
+        </body></html>
+    HTML;
+
+    $result = app(IconicProductScraper::class)->extract(
+        $html,
+        'https://sklep.iconic.pl/produkty/embedded-image.html',
+    );
+
+    expect($result['images'])->toContain([
+        'url' => 'https://sklep.iconic.pl/_images/produkty/Test/full.jpg',
+        'alt' => '',
+    ]);
+});
+
 it('records failed Iconic product requests without throwing', function (): void {
     Http::fake([
         'https://sklep.iconic.pl/produkty/missing.html' => Http::response('', 404),
