@@ -33,11 +33,7 @@ final class Seni24ProductImporter
      * @var array<string, string>
      */
     private const ROOT_CATEGORY_MAP = [
-        'https://www.seni24.pl/produkty/zaopatrzenie-ran-stopy-cukrzycowej' => 'Zaopatrzenie Stopy Cukrzycowej',
-        'https://www.seni24.pl/produkty/podologia' => 'Podologia',
-        'https://www.seni24.pl/produkty/zaopatrzenie-ortopedyczne-stopy' => 'Zaopatrzenie Ortopedyczne Stopy',
-        'https://www.seni24.pl/produkty/zaopatrzenie-po-zabiegach-na-hallux-valgus' => 'Zaopatrzenie po operacjach Hallux Valgus',
-        'https://www.seni24.pl/produkty/materialy-do-produkcji-wkladek' => 'Materiały do produkcji wkładek',
+        'https://www.seni24.pl/strona-glowna' => 'Seni24',
     ];
 
     /**
@@ -45,15 +41,12 @@ final class Seni24ProductImporter
      *
      * @var array<string, string>
      */
-    private const CATEGORY_NAME_ALIASES = [
-        'Narzędzia do piel?gnacji ran' => 'Narzędzia do pielęgnacji ran',
-        'Materiały odciążąjące sprzedawane na sztuki' => 'Materiały odciążające sprzedawane na sztuki',
-    ];
+    private const CATEGORY_NAME_ALIASES = [];
 
     /**
      * @var list<string>
      */
-    private const IMAGE_ALLOWED_HOSTS = ['www.seni24.pl'];
+    private const IMAGE_ALLOWED_HOSTS = ['www.seni24.pl', 'seni24.pl'];
 
     /**
      * @var list<string>
@@ -77,6 +70,12 @@ final class Seni24ProductImporter
         $this->warnings = [];
 
         $externalId = $this->externalProductId($scraped);
+
+        if ($this->booleanValue($scraped['variants_unresolved'] ?? null) === true) {
+            throw new InvalidArgumentException(
+                'Seni24 product '.$externalId.' has unresolved source variants and is not eligible for commerce import.'
+            );
+        }
 
         if ($this->booleanValue($scraped['is_on_order'] ?? null) === true
             || $this->moneyToMinorUnits($scraped['price_gross_amount'] ?? null) === null) {
