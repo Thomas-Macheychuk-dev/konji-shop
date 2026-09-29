@@ -765,7 +765,12 @@ final class IconicProductScraper
      * so the first gallery productId is treated as the current product and
      * only images carrying that same productId are returned.
      *
-     * @return list<array{url: string, alt: string}>
+     * src is preferred over srcBig because Iconic has live gallery rows where
+     * srcBig is malformed while src is the canonical full-size path. srcMin is
+     * retained as a download fallback because some published full-size paths
+     * return 404 even though the product thumbnail is available.
+     *
+     * @return list<array{url: string, alt: string, fallback_url?: string}>
      */
     private function structuredGalleryImages(string $html, string $sourceUrl): array
     {
@@ -801,7 +806,7 @@ final class IconicProductScraper
 
             $raw = null;
 
-            foreach (['srcBig', 'src'] as $key) {
+            foreach (['src', 'srcBig'] as $key) {
                 if (preg_match(
                     '/\['.preg_quote($key, '/').'\]\s*=>\s*([^\s\)]+)/iu',
                     $block,
@@ -829,6 +834,20 @@ final class IconicProductScraper
                 continue;
             }
 
+            $fallbackUrl = null;
+
+            if (preg_match(
+                '/\[srcMin\]\s*=>\s*([^\s\)]+)/iu',
+                $block,
+                $fallbackMatch,
+            ) === 1) {
+                $fallbackUrl = $this->normalizeImageUrl($fallbackMatch[1], $sourceUrl);
+
+                if ($fallbackUrl === $url) {
+                    $fallbackUrl = null;
+                }
+            }
+
             $alt = '';
 
             if (preg_match(
@@ -839,10 +858,11 @@ final class IconicProductScraper
                 $alt = $this->normalizeText($altMatch[1]);
             }
 
-            $images[$url] = [
+            $images[$url] = array_filter([
                 'url' => $url,
                 'alt' => $alt,
-            ];
+                'fallback_url' => $fallbackUrl,
+            ], static fn (mixed $value): bool => $value !== null);
         }
 
         return array_values($images);
