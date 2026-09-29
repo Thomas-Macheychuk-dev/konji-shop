@@ -41,6 +41,16 @@ final class IconicProductImporter
     ];
 
     /**
+     * Source taxonomy aliases retained outside the frozen crawl evidence.
+     *
+     * @var array<string, string>
+     */
+    private const CATEGORY_NAME_ALIASES = [
+        'Narzędzia do piel?gnacji ran' => 'Narzędzia do pielęgnacji ran',
+        'Materiały odciążąjące sprzedawane na sztuki' => 'Materiały odciążające sprzedawane na sztuki',
+    ];
+
+    /**
      * @var list<string>
      */
     private const IMAGE_ALLOWED_HOSTS = ['sklep.iconic.pl'];
@@ -279,7 +289,13 @@ final class IconicProductImporter
         foreach ($path as $segment) {
             $segment = $this->stringOrNull($segment);
 
-            if ($segment !== null && ! in_array($segment, $result, true)) {
+            if ($segment === null) {
+                continue;
+            }
+
+            $segment = self::CATEGORY_NAME_ALIASES[$segment] ?? $segment;
+
+            if (! in_array($segment, $result, true)) {
                 $result[] = $segment;
             }
         }
