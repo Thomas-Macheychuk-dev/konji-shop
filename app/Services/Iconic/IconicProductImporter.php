@@ -172,10 +172,7 @@ final class IconicProductImporter
         }
 
         $sourcePath = $this->sourceCategoryPath($scraped);
-        $approvedRootNames = array_values(self::ROOT_CATEGORY_MAP);
-
-        if ($sourcePath !== []
-            && in_array($sourcePath[0], $approvedRootNames, true)) {
+        if ($sourcePath !== [] && $this->isApprovedRootCategoryName($sourcePath[0])) {
             array_shift($sourcePath);
         }
 
@@ -240,6 +237,31 @@ final class IconicProductImporter
         }
 
         return array_keys($names);
+    }
+
+    private function isApprovedRootCategoryName(string $name): bool
+    {
+        $key = Str::of($name)
+            ->ascii()
+            ->lower()
+            ->replaceMatches('/[^a-z0-9]+/', ' ')
+            ->trim()
+            ->value();
+
+        foreach (self::ROOT_CATEGORY_MAP as $approvedName) {
+            $approvedKey = Str::of($approvedName)
+                ->ascii()
+                ->lower()
+                ->replaceMatches('/[^a-z0-9]+/', ' ')
+                ->trim()
+                ->value();
+
+            if ($key === $approvedKey) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -948,7 +970,7 @@ final class IconicProductImporter
     private function moneyToMinorUnits(mixed $value): ?int
     {
         if (is_int($value)) {
-            return $value > 10000 ? $value : $value * 100;
+            return $value * 100;
         }
 
         if (is_float($value)) {
