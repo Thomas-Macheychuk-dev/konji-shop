@@ -744,9 +744,9 @@ final class Seni24ProductImporter
         );
 
         return match ($availability) {
-            'out_of_stock', 'unavailable', 'sold_out', 'not_available' => StockStatus::OUT_OF_STOCK,
+            'in_stock', 'available' => StockStatus::IN_STOCK,
             'preorder', 'on_order' => StockStatus::PREORDER,
-            default => StockStatus::IN_STOCK,
+            default => StockStatus::OUT_OF_STOCK,
         };
     }
 
