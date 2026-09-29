@@ -385,6 +385,30 @@ it('does not treat Iconic action buttons as a catalogue number and maps limited 
         ->and($result['warnings'])->toContain('Catalogue number not found.');
 });
 
+it('maps exhausted Iconic availability to out of stock', function (): void {
+    $html = <<<'HTML'
+        <html><head>
+            <link rel="canonical" href="https://sklep.iconic.pl/produkty/exhausted.html">
+        </head><body>
+            <h2>Exhausted product</h2>
+            <div>55.00 zł</div>
+            <div>Dostępny: Wyczerpany</div>
+            <div>Numer katalogowy: OUT-1</div>
+            <div>Opis produktu</div>
+            <h1>Opis Exhausted product</h1>
+            <p>Produkt testowy bez stanu magazynowego.</p>
+        </body></html>
+    HTML;
+
+    $result = app(IconicProductScraper::class)->extract(
+        $html,
+        'https://sklep.iconic.pl/produkty/exhausted.html',
+    );
+
+    expect($result['availability'])->toBe('out_of_stock')
+        ->and($result['availability_label'])->toBe('Wyczerpany');
+});
+
 it('recovers Iconic full-size gallery paths embedded outside normal image links', function (): void {
     $html = <<<'HTML'
         <html><head>
