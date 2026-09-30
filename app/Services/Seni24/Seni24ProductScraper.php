@@ -63,7 +63,21 @@ final class Seni24ProductScraper
             return $this->failedResult($normalized, 'HTTP '.$response->status(), $context);
         }
 
-        return $this->extract($response->body(), $normalized, $context);
+        $result = $this->extract(
+            $response->body(),
+            $normalized,
+            $context,
+        );
+
+        $rawContext = is_array($result['raw_context'] ?? null)
+            ? $result['raw_context']
+            : [];
+
+        if (($rawContext['structured_variant_recovery_required'] ?? false) === true) {
+            $result = $this->hydrateStructuredVariantCandidates($result);
+        }
+
+        return $result;
     }
 
     /** @param array<string,mixed>|null $context
@@ -115,11 +129,14 @@ final class Seni24ProductScraper
             $vatRate,
         );
 
-        $structuredVariantHasContradictedSingleOptions =
+        $structuredVariantContradictedSingleOptionKeys =
             $this->contradictedStructuredSingleOptionGroupKeys(
                 $structuredVariantCandidates,
                 $variantData['groups'],
-            ) !== [];
+            );
+
+        $structuredVariantHasContradictedSingleOptions =
+            $structuredVariantContradictedSingleOptionKeys !== [];
 
         $structuredVariantCandidates = $this->enrichStructuredVariantAttributes(
             $structuredVariantCandidates,
@@ -182,10 +199,13 @@ final class Seni24ProductScraper
                 $variantData['groups'],
             );
 
-        $variantsUnresolved = $structuredVariantHasContradictedSingleOptions
-            || $this->hasDuplicateStructuredVariantAttributeSignatures(
+        $structuredVariantHasDuplicateAttributeSignatures =
+            $this->hasDuplicateStructuredVariantAttributeSignatures(
                 $structuredVariantCandidates,
-            )
+            );
+
+        $variantsUnresolved = $structuredVariantHasContradictedSingleOptions
+            || $structuredVariantHasDuplicateAttributeSignatures
             || (
                 $variantData['unresolved']
                 && ! $variantsResolvedByStructuredData
@@ -286,10 +306,516 @@ final class Seni24ProductScraper
                 'listing_roots' => $listingRoots,
                 'selected_variant_url' => $identityUrl,
                 'selected_variant_id' => $externalVariantId,
+                'structured_variant_recovery_required' =>
+                    $structuredVariantCandidates !== []
+                    && (
+                        $structuredVariantHasContradictedSingleOptions
+                        || $structuredVariantHasDuplicateAttributeSignatures
+                    ),
+                'structured_variant_recovery_keys' =>
+                    array_keys(
+                        $structuredVariantContradictedSingleOptionKeys,
+                    ),
             ]),
             'warnings' => $warnings,
             'failed_urls' => [],
         ];
+    }
+
+    /**
+     * Recover customer-visible structured variant semantics from concrete
+     * combination pages.
+     *
+     * The requested combination path is the request identity. Seni24 may keep
+     * canonical URL, page-level SKU and EAN pinned to the default combination,
+     * so those page-level values are deliberately not trusted here.
+     *
+     * ProductGroup data continues to own candidate identity/SKU/EAN/price.
+     * DOM selected attributes are accepted only when they agree with the
+     * requested candidate's URL-fragment evidence.
+     *
+     * Recovery is all-or-nothing for the product.
+     *
+     * @param array<string,mixed> $result
+     * @return array<string,mixed>
+     */
+    private function hydrateStructuredVariantCandidates(
+        array $result,
+    ): array {
+        $context = is_array($result['raw_context'] ?? null)
+            ? $result['raw_context']
+            : [];
+
+        if (($context['structured_variant_recovery_required'] ?? false) !== true) {
+            return $result;
+        }
+
+        $externalProductId = is_string(
+            $result['external_product_id'] ?? null
+        )
+            ? $this->normalizeText($result['external_product_id'])
+            : '';
+
+        $candidates = is_array($result['variant_candidates'] ?? null)
+            ? $result['variant_candidates']
+            : [];
+
+        $groups = is_array($result['variant_options'] ?? null)
+            ? $result['variant_options']
+            : [];
+
+        $requiredKeys = $this->stringList(
+            $context['structured_variant_recovery_keys'] ?? [],
+        );
+
+        if ($externalProductId === '' || count($candidates) < 2) {
+            return $this->variantHydrationFailure(
+                $result,
+                'missing_product_identity_or_candidates',
+            );
+        }
+
+        $vatRate = is_int($result['vat_rate'] ?? null)
+            ? $result['vat_rate']
+            : null;
+
+        $hydrated = [];
+
+        foreach ($candidates as $candidate) {
+            if (! is_array($candidate)) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'invalid_candidate',
+                );
+            }
+
+            $variantId = is_string(
+                $candidate['external_variant_id'] ?? null
+            )
+                ? $this->normalizeText(
+                    $candidate['external_variant_id'],
+                )
+                : '';
+
+            $candidateSourceUrl = is_string(
+                $candidate['source_url'] ?? null
+            )
+                ? $candidate['source_url']
+                : null;
+
+            $requestUrl = $candidateSourceUrl !== null
+                ? $this->normalizeProductUrl($candidateSourceUrl)
+                : null;
+
+            if ($variantId === '' || $requestUrl === null) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'missing_candidate_request_identity',
+                );
+            }
+
+            [$requestProductId, $requestVariantId] =
+                $this->idsFromUrl($requestUrl);
+
+            if (
+                $requestProductId !== $externalProductId
+                || $requestVariantId !== $variantId
+            ) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'candidate_request_identity_mismatch:'.$variantId,
+                );
+            }
+
+            $this->emit(
+                'Hydrating Seni24 combination page: '.$requestUrl,
+            );
+            $this->pauseBeforeRequest();
+
+            try {
+                $response = Http::connectTimeout(
+                    min(5, $this->timeoutSeconds),
+                )
+                    ->timeout($this->timeoutSeconds)
+                    ->withHeaders($this->headers())
+                    ->get($requestUrl);
+            } catch (Throwable) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'candidate_request_failed:'.$variantId,
+                );
+            }
+
+            if (! $response->successful()) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'candidate_http_'.$response->status().':'.$variantId,
+                );
+            }
+
+            try {
+                $crawler = new Crawler(
+                    $response->body(),
+                    $requestUrl,
+                );
+            } catch (Throwable) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'invalid_candidate_html:'.$variantId,
+                );
+            }
+
+            $bodyText = $this->normalizeText(
+                $crawler->filter('body')->count() > 0
+                    ? $crawler->filter('body')->text('')
+                    : $crawler->text(''),
+            );
+
+            $pageVariantData = $this->variantData($crawler);
+            $selectedAttributes =
+                $pageVariantData['selected_attributes'];
+
+            if ($selectedAttributes === []) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'missing_selected_dom_attributes:'.$variantId,
+                );
+            }
+
+            /*
+             * Validate the combination-specific visible selling price
+             * against the candidate price already proven by ProductGroup.
+             */
+            $visiblePrice = $this->priceGrossAmount($bodyText);
+            $expectedPrice = $this->numericPriceValue(
+                $candidate['price_gross_amount'] ?? null,
+            );
+
+            if (
+                $visiblePrice === null
+                || $expectedPrice === null
+                || abs($visiblePrice - $expectedPrice) > 0.011
+            ) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'candidate_visible_price_mismatch:'.$variantId,
+                );
+            }
+
+            /*
+             * Re-read ProductGroup from this response, selecting by the
+             * REQUESTED combination ID rather than canonical/default ID.
+             * This validates source identity without trusting stale page
+             * feature metadata.
+             */
+            $pageVatRate = $this->vatRate($bodyText)
+                ?? $vatRate;
+
+            $pageStructuredCandidates =
+                $this->structuredVariantCandidates(
+                    $crawler,
+                    $externalProductId,
+                    $variantId,
+                    $pageVariantData['groups'],
+                    $pageVatRate,
+                );
+
+            $pageIdentityCandidate = null;
+
+            foreach ($pageStructuredCandidates as $pageCandidate) {
+                if (
+                    is_array($pageCandidate)
+                    && (string) (
+                        $pageCandidate['external_variant_id'] ?? ''
+                    ) === $variantId
+                ) {
+                    $pageIdentityCandidate = $pageCandidate;
+                    break;
+                }
+            }
+
+            if ($pageIdentityCandidate === null) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'candidate_missing_from_product_group:'.$variantId,
+                );
+            }
+
+            foreach (['catalogue_number', 'ean'] as $identityKey) {
+                $expectedIdentity = is_string(
+                    $candidate[$identityKey] ?? null
+                )
+                    ? $this->normalizeText(
+                        $candidate[$identityKey],
+                    )
+                    : '';
+
+                $pageIdentity = is_string(
+                    $pageIdentityCandidate[$identityKey] ?? null
+                )
+                    ? $this->normalizeText(
+                        $pageIdentityCandidate[$identityKey],
+                    )
+                    : '';
+
+                if (
+                    $expectedIdentity !== ''
+                    && $pageIdentity !== $expectedIdentity
+                ) {
+                    return $this->variantHydrationFailure(
+                        $result,
+                        'candidate_structured_identity_mismatch:'
+                            .$variantId.':'.$identityKey,
+                    );
+                }
+            }
+
+            $pageStructuredPrice = $this->numericPriceValue(
+                $pageIdentityCandidate[
+                    'price_gross_amount'
+                ] ?? null,
+            );
+
+            if (
+                $pageStructuredPrice === null
+                || abs(
+                    $pageStructuredPrice - $expectedPrice
+                ) > 0.011
+            ) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'candidate_structured_price_mismatch:'.$variantId,
+                );
+            }
+
+            /*
+             * URL fragments are validation evidence only.
+             * They never become imported attribute values.
+             */
+            $fragmentValues = $this->variantFragmentMap(
+                $candidateSourceUrl,
+            );
+
+            $selectedByKey = [];
+
+            foreach ($selectedAttributes as $attribute) {
+                if (
+                    ! is_array($attribute)
+                    || ! is_string($attribute['label'] ?? null)
+                    || ! is_string($attribute['value'] ?? null)
+                ) {
+                    continue;
+                }
+
+                $key = $this->variantFragmentKey(
+                    $attribute['label'],
+                );
+
+                if ($key !== '') {
+                    $selectedByKey[$key] = $attribute;
+                }
+            }
+
+            foreach ($requiredKeys as $requiredKey) {
+                if (
+                    ! isset($selectedByKey[$requiredKey])
+                    || ! isset($fragmentValues[$requiredKey])
+                ) {
+                    return $this->variantHydrationFailure(
+                        $result,
+                        'candidate_missing_required_semantic:'
+                            .$variantId.':'.$requiredKey,
+                    );
+                }
+            }
+
+            foreach ($selectedByKey as $key => $attribute) {
+                if (! isset($fragmentValues[$key])) {
+                    continue;
+                }
+
+                if (
+                    $this->variantFragmentComparable(
+                        $attribute['value'],
+                    )
+                    !==
+                    $this->variantFragmentComparable(
+                        $fragmentValues[$key],
+                    )
+                ) {
+                    return $this->variantHydrationFailure(
+                        $result,
+                        'candidate_fragment_semantic_mismatch:'
+                            .$variantId.':'.$key,
+                    );
+                }
+            }
+
+            $attributes = [];
+
+            foreach (($candidate['attributes'] ?? []) as $attribute) {
+                if (
+                    ! is_array($attribute)
+                    || ! is_string($attribute['label'] ?? null)
+                    || ! is_string($attribute['value'] ?? null)
+                ) {
+                    continue;
+                }
+
+                $attributes[
+                    Str::lower(Str::ascii($attribute['label']))
+                ] = $attribute;
+            }
+
+            foreach ($selectedAttributes as $attribute) {
+                if (
+                    ! is_array($attribute)
+                    || ! is_string($attribute['label'] ?? null)
+                    || ! is_string($attribute['value'] ?? null)
+                ) {
+                    continue;
+                }
+
+                $attributes[
+                    Str::lower(Str::ascii($attribute['label']))
+                ] = [
+                    'label' => $attribute['label'],
+                    'value' => $attribute['value'],
+                ];
+            }
+
+            $candidate['attributes'] = array_values($attributes);
+
+            $candidate['label'] = implode(
+                ', ',
+                array_map(
+                    static fn (array $attribute): string =>
+                        $attribute['label'].': '.$attribute['value'],
+                    $candidate['attributes'],
+                ),
+            );
+
+            $hydrated[] = $candidate;
+        }
+
+        if (
+            ! $this->structuredVariantsCoverOptions(
+                $hydrated,
+                $groups,
+            )
+        ) {
+            return $this->variantHydrationFailure(
+                $result,
+                'hydrated_candidates_do_not_cover_options',
+            );
+        }
+
+        if (
+            $this->hasDuplicateStructuredVariantAttributeSignatures(
+                $hydrated,
+            )
+        ) {
+            return $this->variantHydrationFailure(
+                $result,
+                'hydrated_candidates_not_customer_distinguishable',
+            );
+        }
+
+        $result['variant_candidates'] = $hydrated;
+        $result['variants_unresolved'] = false;
+
+        $warning =
+            'Seni24 product exposes additional variant choices '
+            .'whose authoritative combination prices were not resolved.';
+
+        $result['warnings'] = array_values(
+            array_filter(
+                is_array($result['warnings'] ?? null)
+                    ? $result['warnings']
+                    : [],
+                static fn (mixed $value): bool =>
+                    $value !== $warning,
+            ),
+        );
+
+        $context['structured_variant_hydration'] = [
+            'attempted' => true,
+            'succeeded' => true,
+            'candidate_count' => count($hydrated),
+        ];
+
+        $result['raw_context'] = $context;
+
+        return $result;
+    }
+
+    /**
+     * @param array<string,mixed> $result
+     * @return array<string,mixed>
+     */
+    private function variantHydrationFailure(
+        array $result,
+        string $reason,
+    ): array {
+        $context = is_array($result['raw_context'] ?? null)
+            ? $result['raw_context']
+            : [];
+
+        $context['structured_variant_hydration'] = [
+            'attempted' => true,
+            'succeeded' => false,
+            'reason' => $reason,
+        ];
+
+        $result['raw_context'] = $context;
+
+        return $result;
+    }
+
+    private function numericPriceValue(mixed $value): ?float
+    {
+        if (
+            ! is_string($value)
+            && ! is_int($value)
+            && ! is_float($value)
+        ) {
+            return null;
+        }
+
+        if (
+            is_string($value)
+            && trim($value) === ''
+        ) {
+            return null;
+        }
+
+        $normalized = str_replace(
+            ',',
+            '.',
+            trim((string) $value),
+        );
+
+        return is_numeric($normalized)
+            ? (float) $normalized
+            : null;
+    }
+
+    private function variantFragmentComparable(
+        string $value,
+    ): string {
+        $value = Str::lower(
+            Str::ascii(
+                $this->normalizeText(
+                    rawurldecode($value),
+                ),
+            ),
+        );
+
+        return preg_replace(
+            '/[^a-z0-9]+/',
+            '',
+            $value,
+        ) ?? $value;
     }
 
     public function normalizeProductUrl(string $url, ?string $baseUrl = null): ?string

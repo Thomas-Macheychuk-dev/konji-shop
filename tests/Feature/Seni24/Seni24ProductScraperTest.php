@@ -766,3 +766,308 @@ it('marks structured variants unresolved when visible attributes are indistingui
         ])
         ->and($result['variants_unresolved'])->toBeTrue();
 });
+
+
+it('hydrates structured Seni24 variants from concrete combination pages', function (): void {
+    $productGroup = <<<'JSON'
+        {
+          "@context": "https://schema.org",
+          "@type": "ProductGroup",
+          "productID": "427",
+          "hasVariant": [
+            {
+              "@type": "Product",
+              "url": "https://www.seni24.pl/test-igly_427-24045#/srednica_i_dlugosc_igly-12x40mm/rozmiar_igly-18g",
+              "sku": "NN-SKD-AI12-001",
+              "gtin13": "4031881909317",
+              "size": "18G",
+              "offers": {
+                "@type": "Offer",
+                "price": "4.83",
+                "priceCurrency": "PLN",
+                "availability": "https://schema.org/InStock"
+              }
+            },
+            {
+              "@type": "Product",
+              "url": "https://www.seni24.pl/test-igly_427-24046#/srednica_i_dlugosc_igly-12_x_50_mm/rozmiar_igly-18g",
+              "sku": "NN-SKD-AI12-002",
+              "gtin13": "4031881903440",
+              "size": "18G",
+              "offers": {
+                "@type": "Offer",
+                "price": "13.80",
+                "priceCurrency": "PLN",
+                "availability": "https://schema.org/InStock"
+              }
+            }
+          ]
+        }
+    JSON;
+
+    $page = static function (
+        string $dimension,
+        string $price,
+        string $productGroup,
+    ): string {
+        return <<<HTML
+            <html>
+            <head>
+                <link
+                    rel="canonical"
+                    href="https://www.seni24.pl/test-igly_427-24045"
+                >
+
+                <script type="application/ld+json">
+                {$productGroup}
+                </script>
+            </head>
+
+            <body>
+                <h1>Test igły</h1>
+
+                <div class="product-variants">
+                    <div class="product-variants-item">
+                        <span class="control-label">
+                            Średnica i długość igły
+                        </span>
+
+                        <label>
+                            <input
+                                data-product-attribute="1"
+                                name="group[1]"
+                                checked
+                            >
+                            {$dimension}
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    Cena za 1 opak. z VAT 8%
+                    {$price} zł ({$price} zł / 1 szt.)
+                </div>
+
+                <div
+                    id="availability-data"
+                    data-availability="InStock"
+                ></div>
+            </body>
+            </html>
+        HTML;
+    };
+
+    $initialHtml = $page(
+        '1.2x40mm',
+        '4,83',
+        $productGroup,
+    );
+
+    $variant45Html = $page(
+        '1.2x40mm',
+        '4,83',
+        $productGroup,
+    );
+
+    $variant46Html = $page(
+        '1.2 x 50 mm',
+        '13,80',
+        $productGroup,
+    );
+
+    $calls = [];
+
+    \Illuminate\Support\Facades\Http::fake(
+        function (
+            \Illuminate\Http\Client\Request $request
+        ) use (
+            &$calls,
+            $initialHtml,
+            $variant45Html,
+            $variant46Html,
+        ) {
+            $url = $request->url();
+
+            $calls[$url] = ($calls[$url] ?? 0) + 1;
+
+            if (str_ends_with($url, '_427-24045')) {
+                return \Illuminate\Support\Facades\Http::response(
+                    $calls[$url] === 1
+                        ? $initialHtml
+                        : $variant45Html,
+                    200,
+                );
+            }
+
+            if (str_ends_with($url, '_427-24046')) {
+                return \Illuminate\Support\Facades\Http::response(
+                    $variant46Html,
+                    200,
+                );
+            }
+
+            return \Illuminate\Support\Facades\Http::response(
+                'unexpected',
+                404,
+            );
+        }
+    );
+
+    $result = app(Seni24ProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape(
+            'https://www.seni24.pl/test-igly_427-24045',
+        );
+
+    $candidates = collect(
+        $result['variant_candidates'],
+    )->keyBy('external_variant_id');
+
+    expect($result['variants_unresolved'])
+        ->toBeFalse()
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['attempted']
+        )->toBeTrue()
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['succeeded']
+        )->toBeTrue()
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['candidate_count']
+        )->toBe(2)
+        ->and($candidates)->toHaveCount(2)
+        ->and(
+            collect(
+                $candidates['24045']['attributes']
+            )->firstWhere(
+                'label',
+                'Średnica i długość igły',
+            )['value']
+        )->toBe('1.2x40mm')
+        ->and(
+            collect(
+                $candidates['24046']['attributes']
+            )->firstWhere(
+                'label',
+                'Średnica i długość igły',
+            )['value']
+        )->toBe('1.2 x 50 mm')
+        ->and($result['warnings'])->not->toContain(
+            'Seni24 product exposes additional variant choices whose authoritative combination prices were not resolved.'
+        );
+
+    \Illuminate\Support\Facades\Http::assertSentCount(3);
+});
+
+it('keeps structured Seni24 variants unresolved when combination pages expose no selected DOM semantics', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link
+                rel="canonical"
+                href="https://www.seni24.pl/test-strzykawki_22172-25594"
+            >
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "22172",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-strzykawki_22172-25594#/pojemnosc-1_ml/rozmiar_igly-30g_03x8mm/skala-u_100",
+                  "sku": "NN-MCH-I018-001",
+                  "gtin13": "8586015044205",
+                  "size": "30G 0.3x8mm",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "44.19",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/OutOfStock"
+                  }
+                },
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-strzykawki_22172-25595#/pojemnosc-05_ml/rozmiar_igly-30g_03x8mm/skala-u_100",
+                  "sku": "NN-MCH-I058-001",
+                  "gtin13": "8586015046346",
+                  "size": "30G 0.3x8mm",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "45.80",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+
+        <body>
+            <h1>Test strzykawki</h1>
+
+            <div>
+                Cena za 1 opak. z VAT 8%
+                44,19 zł (44,19 zł / 1 szt.)
+            </div>
+
+            <div
+                id="availability-data"
+                data-availability="OutOfStock"
+            ></div>
+        </body>
+        </html>
+    HTML;
+
+    \Illuminate\Support\Facades\Http::fake([
+        '*' => \Illuminate\Support\Facades\Http::response(
+            $html,
+            200,
+        ),
+    ]);
+
+    $result = app(Seni24ProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape(
+            'https://www.seni24.pl/test-strzykawki_22172-25594',
+        );
+
+    expect($result['variants_unresolved'])
+        ->toBeTrue()
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['attempted']
+        )->toBeTrue()
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['succeeded']
+        )->toBeFalse()
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['reason']
+        )->toBe(
+            'missing_selected_dom_attributes:25594'
+        )
+        ->and($result['variant_candidates'])
+        ->toHaveCount(2)
+        ->and($result['warnings'])->toContain(
+            'Seni24 product exposes additional variant choices whose authoritative combination prices were not resolved.'
+        );
+
+    /*
+     * Initial product request + first hydration attempt.
+     * Recovery must stop immediately after authoritative
+     * semantics are unavailable.
+     */
+    \Illuminate\Support\Facades\Http::assertSentCount(2);
+});
