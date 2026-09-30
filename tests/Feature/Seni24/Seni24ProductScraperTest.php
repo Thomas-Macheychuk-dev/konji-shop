@@ -1071,3 +1071,698 @@ it('keeps structured Seni24 variants unresolved when combination pages expose no
      */
     \Illuminate\Support\Facades\Http::assertSentCount(2);
 });
+
+
+it('accepts a visible Seni24 combination price when exact page identity proves stale structured pricing', function (): void {
+    $productGroup = <<<'JSON'
+        {
+          "@context": "https://schema.org",
+          "@type": "ProductGroup",
+          "productID": "1398",
+          "hasVariant": [
+            {
+              "@type": "Product",
+              "url": "https://www.seni24.pl/test-serweta_1398-25738#/rozmiar-130x90/otwor-8cm",
+              "sku": "MA-134-SETF-048",
+              "gtin13": "5900516268480",
+              "size": "130x90",
+              "offers": {
+                "@type": "Offer",
+                "price": "10.89",
+                "priceCurrency": "PLN",
+                "availability": "https://schema.org/InStock"
+              }
+            },
+            {
+              "@type": "Product",
+              "url": "https://www.seni24.pl/test-serweta_1398-25737#/rozmiar-45x45cm/otwor-5cm",
+              "sku": "MA-134-SETF-047",
+              "gtin13": "5900516268473",
+              "size": "45x45cm",
+              "offers": {
+                "@type": "Offer",
+                "price": "10.89",
+                "priceCurrency": "PLN",
+                "availability": "https://schema.org/OutOfStock"
+              }
+            }
+          ]
+        }
+    JSON;
+
+    $page = static function (
+        string $canonicalVariant,
+        string $size,
+        string $opening,
+        string $price,
+        string $sku,
+        string $ean,
+        string $productGroup,
+    ): string {
+        return <<<HTML
+            <html>
+            <head>
+                <link
+                    rel="canonical"
+                    href="https://www.seni24.pl/test-serweta_1398-{$canonicalVariant}"
+                >
+
+                <script type="application/ld+json">
+                {$productGroup}
+                </script>
+            </head>
+
+            <body>
+                <h1>Test serweta</h1>
+
+                <div class="product-variants">
+                    <div class="product-variants-item">
+                        <span class="control-label">
+                            Rozmiar
+                        </span>
+
+                        <label>
+                            <input
+                                data-product-attribute="1"
+                                name="group[1]"
+                                checked
+                            >
+                            {$size}
+                        </label>
+                    </div>
+
+                    <div class="product-variants-item">
+                        <span class="control-label">
+                            Otwór
+                        </span>
+
+                        <label>
+                            <input
+                                data-product-attribute="2"
+                                name="group[2]"
+                                checked
+                            >
+                            {$opening}
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    Cena za 1 opak. z VAT 8%
+                    {$price} zł ({$price} zł / 1 szt.)
+                </div>
+
+                <div id="product-details">
+                    <table class="product-features">
+                        <tr>
+                            <th>Indeks</th>
+                            <td>{$sku}</td>
+                        </tr>
+                        <tr>
+                            <th>ean13</th>
+                            <td>{$ean}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div
+                    id="availability-data"
+                    data-availability="InStock"
+                ></div>
+            </body>
+            </html>
+        HTML;
+    };
+
+    $initial = $page(
+        '25738',
+        '130x90',
+        '8cm',
+        '10,89',
+        'MA-134-SETF-048',
+        '5900516268480',
+        $productGroup,
+    );
+
+    $variant25738 = $initial;
+
+    $variant25737 = $page(
+        '25737',
+        '45x45cm',
+        '5cm',
+        '3,69',
+        'MA-134-SETF-047',
+        '5900516268473',
+        $productGroup,
+    );
+
+    $calls = [];
+
+    \Illuminate\Support\Facades\Http::fake(
+        function (
+            \Illuminate\Http\Client\Request $request
+        ) use (
+            &$calls,
+            $initial,
+            $variant25738,
+            $variant25737,
+        ) {
+            $url = $request->url();
+            $calls[$url] = ($calls[$url] ?? 0) + 1;
+
+            if (str_ends_with($url, '_1398-25738')) {
+                return \Illuminate\Support\Facades\Http::response(
+                    $calls[$url] === 1
+                        ? $initial
+                        : $variant25738,
+                    200,
+                );
+            }
+
+            if (str_ends_with($url, '_1398-25737')) {
+                return \Illuminate\Support\Facades\Http::response(
+                    $variant25737,
+                    200,
+                );
+            }
+
+            return \Illuminate\Support\Facades\Http::response(
+                'unexpected',
+                404,
+            );
+        }
+    );
+
+    $result = app(Seni24ProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape(
+            'https://www.seni24.pl/test-serweta_1398-25738',
+        );
+
+    $candidates = collect(
+        $result['variant_candidates'],
+    )->keyBy('external_variant_id');
+
+    expect($result['variants_unresolved'])
+        ->toBeFalse()
+        ->and($candidates['25737']['price_gross_amount'])
+        ->toBe(3.69)
+        ->and(
+            collect(
+                $candidates['25737']['attributes']
+            )->firstWhere(
+                'label',
+                'Otwór',
+            )['value']
+        )->toBe('5cm')
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['succeeded']
+        )->toBeTrue();
+
+    \Illuminate\Support\Facades\Http::assertSentCount(3);
+});
+
+it('ignores a zero DOM placeholder when structured Seni24 semantics are fragment-confirmed', function (): void {
+    $productGroup = <<<'JSON'
+        {
+          "@context": "https://schema.org",
+          "@type": "ProductGroup",
+          "productID": "5220",
+          "hasVariant": [
+            {
+              "@type": "Product",
+              "url": "https://www.seni24.pl/test-sliniaki_5220-9586#/ilosc_sztuk-50_szt/kolor-morelowy",
+              "sku": "NN-SWE-TSKM-001",
+              "gtin13": "5907457960091",
+              "color": "Morelowy",
+              "offers": {
+                "@type": "Offer",
+                "price": "19.79",
+                "priceCurrency": "PLN",
+                "availability": "https://schema.org/InStock"
+              }
+            },
+            {
+              "@type": "Product",
+              "url": "https://www.seni24.pl/test-sliniaki_5220-9587#/ilosc_sztuk-50_szt/kolor-bialy",
+              "sku": "NN-SWE-TSKM-002",
+              "gtin13": "5907457960092",
+              "color": "Biały",
+              "offers": {
+                "@type": "Offer",
+                "price": "19.79",
+                "priceCurrency": "PLN",
+                "availability": "https://schema.org/InStock"
+              }
+            }
+          ]
+        }
+    JSON;
+
+    $page = static function (
+        string $variant,
+        string $productGroup,
+    ): string {
+        return <<<HTML
+            <html>
+            <head>
+                <link
+                    rel="canonical"
+                    href="https://www.seni24.pl/test-sliniaki_5220-{$variant}"
+                >
+
+                <script type="application/ld+json">
+                {$productGroup}
+                </script>
+            </head>
+
+            <body>
+                <h1>Test śliniaki</h1>
+
+                <div class="product-variants">
+                    <div class="product-variants-item">
+                        <span class="control-label">
+                            Kolor
+                        </span>
+
+                        <label>
+                            <input
+                                data-product-attribute="1"
+                                name="group[1]"
+                                value="0"
+                                checked
+                            >
+                        </label>
+                    </div>
+
+                    <div class="product-variants-item">
+                        <span class="control-label">
+                            Ilość sztuk
+                        </span>
+
+                        <label>
+                            <input
+                                data-product-attribute="2"
+                                name="group[2]"
+                                checked
+                            >
+                            50 szt.
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    Cena za 1 opak. z VAT 23%
+                    19,79 zł (19,79 zł / 1 szt.)
+                </div>
+
+                <div
+                    id="availability-data"
+                    data-availability="InStock"
+                ></div>
+            </body>
+            </html>
+        HTML;
+    };
+
+    \Illuminate\Support\Facades\Http::fake(
+        function (
+            \Illuminate\Http\Client\Request $request
+        ) use ($productGroup, $page) {
+            if (
+                str_ends_with(
+                    $request->url(),
+                    '_5220-9586',
+                )
+            ) {
+                return \Illuminate\Support\Facades\Http::response(
+                    $page('9586', $productGroup),
+                    200,
+                );
+            }
+
+            if (
+                str_ends_with(
+                    $request->url(),
+                    '_5220-9587',
+                )
+            ) {
+                return \Illuminate\Support\Facades\Http::response(
+                    $page('9587', $productGroup),
+                    200,
+                );
+            }
+
+            return \Illuminate\Support\Facades\Http::response(
+                'unexpected',
+                404,
+            );
+        }
+    );
+
+    $result = app(Seni24ProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape(
+            'https://www.seni24.pl/test-sliniaki_5220-9586',
+        );
+
+    $candidates = collect(
+        $result['variant_candidates'],
+    )->keyBy('external_variant_id');
+
+    expect($result['variants_unresolved'])
+        ->toBeFalse()
+        ->and(
+            collect(
+                $candidates['9586']['attributes']
+            )->firstWhere(
+                'label',
+                'Kolor',
+            )['value']
+        )->toBe('Morelowy')
+        ->and(
+            collect(
+                $candidates['9587']['attributes']
+            )->firstWhere(
+                'label',
+                'Kolor',
+            )['value']
+        )->toBe('Biały')
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['succeeded']
+        )->toBeTrue();
+});
+
+
+it('uses a concrete Seni24 ProductGroup price when it corroborates the visible combination price', function (): void {
+    $group = static function (
+        string $priceA,
+        string $priceB,
+    ): string {
+        return <<<JSON
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "9000",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-price-drift_9000-10001#/rozmiar-a",
+                  "sku": "TEST-A",
+                  "gtin13": "5900000000001",
+                  "size": "A",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "{$priceA}",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                },
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-price-drift_9000-10002#/rozmiar-b",
+                  "sku": "TEST-B",
+                  "gtin13": "5900000000002",
+                  "size": "B",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "{$priceB}",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+        JSON;
+    };
+
+    $page = static function (
+        string $variant,
+        string $size,
+        string $visiblePrice,
+        string $jsonLd,
+    ): string {
+        return <<<HTML
+            <html>
+            <head>
+                <link
+                    rel="canonical"
+                    href="https://www.seni24.pl/test-price-drift_9000-{$variant}"
+                >
+
+                <script type="application/ld+json">
+                {$jsonLd}
+                </script>
+            </head>
+
+            <body>
+                <h1>Test price drift</h1>
+
+                <div class="product-variants">
+                    <div class="product-variants-item">
+                        <span class="control-label">
+                            Rozmiar
+                        </span>
+
+                        <label>
+                            <input
+                                data-product-attribute="1"
+                                name="group[1]"
+                                checked
+                            >
+                            {$size}
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    Cena za 1 opak. z VAT 23%
+                    {$visiblePrice} zł
+                    ({$visiblePrice} zł / 1 szt.)
+                </div>
+
+                <div
+                    id="availability-data"
+                    data-availability="InStock"
+                ></div>
+            </body>
+            </html>
+        HTML;
+    };
+
+    $initialGroup = $group(
+        '10.00',
+        '10.00',
+    );
+
+    $initial = $page(
+        '10001',
+        'A',
+        '10,00',
+        $initialGroup,
+    );
+
+    $variantA = $page(
+        '10001',
+        'A',
+        '3,69',
+        $group(
+            '3.69',
+            '10.00',
+        ),
+    );
+
+    $variantB = $page(
+        '10002',
+        'B',
+        '7,50',
+        $group(
+            '10.00',
+            '7.50',
+        ),
+    );
+
+    $calls = [];
+
+    \Illuminate\Support\Facades\Http::fake(
+        function (
+            \Illuminate\Http\Client\Request $request
+        ) use (
+            &$calls,
+            $initial,
+            $variantA,
+            $variantB,
+        ) {
+            $url = $request->url();
+
+            $calls[$url] =
+                ($calls[$url] ?? 0) + 1;
+
+            if (
+                str_ends_with(
+                    $url,
+                    '_9000-10001',
+                )
+            ) {
+                return \Illuminate\Support\Facades\Http::response(
+                    $calls[$url] === 1
+                        ? $initial
+                        : $variantA,
+                    200,
+                );
+            }
+
+            if (
+                str_ends_with(
+                    $url,
+                    '_9000-10002',
+                )
+            ) {
+                return \Illuminate\Support\Facades\Http::response(
+                    $variantB,
+                    200,
+                );
+            }
+
+            return \Illuminate\Support\Facades\Http::response(
+                'unexpected',
+                404,
+            );
+        }
+    );
+
+    $result = app(Seni24ProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape(
+            'https://www.seni24.pl/test-price-drift_9000-10001',
+        );
+
+    $candidates = collect(
+        $result['variant_candidates'],
+    )->keyBy('external_variant_id');
+
+    expect($result['variants_unresolved'])
+        ->toBeFalse()
+        ->and(
+            $result['raw_context'][
+                'structured_variant_hydration'
+            ]['succeeded']
+        )->toBeTrue()
+        ->and(
+            $candidates['10001'][
+                'price_gross_amount'
+            ]
+        )->toBe(3.69)
+        ->and(
+            $candidates['10002'][
+                'price_gross_amount'
+            ]
+        )->toBe(7.5);
+
+    \Illuminate\Support\Facades\Http::assertSentCount(3);
+});
+
+it('rejects an HTTP 200 Seni24 fallback page as a failed product scrape', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <title>Seni24</title>
+        </head>
+
+        <body>
+            <h1>Co oferuje sklep Seni24.pl?</h1>
+
+            <p>
+                Generic store content without authoritative
+                product commerce data.
+            </p>
+        </body>
+        </html>
+    HTML;
+
+    \Illuminate\Support\Facades\Http::fake([
+        '*' =>
+            \Illuminate\Support\Facades\Http::response(
+                $html,
+                200,
+            ),
+    ]);
+
+    $url =
+        'https://www.seni24.pl/'
+        .'zel-do-higieny-intymnej-lactacyd-fresh-butelka-z-pompka'
+        .'_715-24570';
+
+    $result = app(Seni24ProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape($url);
+
+    expect($result['name'])
+        ->toBe('')
+        ->and($result['canonical_url'])
+        ->toBeNull()
+        ->and($result['external_product_id'])
+        ->toBeNull()
+        ->and($result['variant_candidates'])
+        ->toBe([])
+        ->and($result['failed_urls'])
+        ->toBe([
+            $url => 'non_product_fallback_page',
+        ]);
+});
+
+
+it('rejects an HTTP 200 Seni24 category page that contains only an incidental price', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <title>Seni24</title>
+        </head>
+
+        <body>
+            <h1>Produkty do pielęgnacji i oczyszczania twarzy</h1>
+
+            <div>
+                Cena za 1 opak. 6,06 zł
+            </div>
+
+            <p>
+                Generic category content rather than the requested
+                product page.
+            </p>
+        </body>
+        </html>
+    HTML;
+
+    \Illuminate\Support\Facades\Http::fake([
+        '*' =>
+            \Illuminate\Support\Facades\Http::response(
+                $html,
+                200,
+            ),
+    ]);
+
+    $url =
+        'https://www.seni24.pl/'
+        .'krem-ochronny-linoderm-plus-z-alantoina-50-ml'
+        .'_2381-4352';
+
+    $result = app(Seni24ProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape($url);
+
+    expect($result['name'])
+        ->toBe('')
+        ->and($result['price_gross_amount'])
+        ->toBeNull()
+        ->and($result['external_product_id'])
+        ->toBeNull()
+        ->and($result['failed_urls'])
+        ->toBe([
+            $url => 'non_product_fallback_page',
+        ]);
+});

@@ -69,6 +69,23 @@ final class Seni24ProductScraper
             $context,
         );
 
+        /*
+         * Seni24 can occasionally answer a real product URL with HTTP 200
+         * while rendering a generic store/fallback page.
+         *
+         * extract() intentionally remains a permissive parser because it is
+         * also used with partial HTML fixtures. Live scrape() calls, however,
+         * must fail closed when the response contains no authoritative
+         * product/commerce evidence.
+         */
+        if (! $this->hasAuthoritativeProductEvidence($result)) {
+            return $this->failedResult(
+                $normalized,
+                'non_product_fallback_page',
+                $context,
+            );
+        }
+
         $rawContext = is_array($result['raw_context'] ?? null)
             ? $result['raw_context']
             : [];
@@ -472,8 +489,17 @@ final class Seni24ProductScraper
             );
 
             $pageVariantData = $this->variantData($crawler);
-            $selectedAttributes =
-                $pageVariantData['selected_attributes'];
+
+            $selectedAttributes = array_values(
+                array_filter(
+                    $pageVariantData['selected_attributes'],
+                    fn (array $attribute): bool =>
+                        is_string($attribute['value'] ?? null)
+                        && ! $this->isVariantPlaceholderValue(
+                            $attribute['value'],
+                        ),
+                ),
+            );
 
             if ($selectedAttributes === []) {
                 return $this->variantHydrationFailure(
@@ -494,13 +520,15 @@ final class Seni24ProductScraper
             if (
                 $visiblePrice === null
                 || $expectedPrice === null
-                || abs($visiblePrice - $expectedPrice) > 0.011
             ) {
                 return $this->variantHydrationFailure(
                     $result,
                     'candidate_visible_price_mismatch:'.$variantId,
                 );
             }
+
+            $visiblePriceDiffers =
+                abs($visiblePrice - $expectedPrice) > 0.011;
 
             /*
              * Re-read ProductGroup from this response, selecting by the
@@ -576,15 +604,58 @@ final class Seni24ProductScraper
                 ] ?? null,
             );
 
-            if (
-                $pageStructuredPrice === null
-                || abs(
+            if ($pageStructuredPrice === null) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'candidate_structured_price_mismatch:'.$variantId,
+                );
+            }
+
+            $pageStructuredPriceDiffers =
+                abs(
                     $pageStructuredPrice - $expectedPrice
+                ) > 0.011;
+
+            /*
+             * The original product page may expose stale ProductGroup
+             * pricing. A concrete combination page is allowed to replace
+             * that price only when its own ProductGroup price and visible
+             * one-package price independently agree.
+             *
+             * Candidate identity and customer semantics are still
+             * validated below before anything is accepted.
+             */
+            if (
+                $pageStructuredPriceDiffers
+                && abs(
+                    $pageStructuredPrice - $visiblePrice
                 ) > 0.011
             ) {
                 return $this->variantHydrationFailure(
                     $result,
                     'candidate_structured_price_mismatch:'.$variantId,
+                );
+            }
+
+            /*
+             * If ProductGroup did NOT change but only the visible price
+             * changed, retain the stricter exact-page identity proof.
+             */
+            if (
+                ! $pageStructuredPriceDiffers
+                && $visiblePriceDiffers
+                && ! $this->combinationPageHasExactIdentity(
+                    $crawler,
+                    $requestUrl,
+                    $externalProductId,
+                    $variantId,
+                    $candidate,
+                    $bodyText,
+                )
+            ) {
+                return $this->variantHydrationFailure(
+                    $result,
+                    'candidate_visible_price_mismatch:'.$variantId,
                 );
             }
 
@@ -616,10 +687,57 @@ final class Seni24ProductScraper
                 }
             }
 
-            foreach ($requiredKeys as $requiredKey) {
+            $candidateByKey = [];
+
+            foreach (($candidate['attributes'] ?? []) as $attribute) {
                 if (
-                    ! isset($selectedByKey[$requiredKey])
-                    || ! isset($fragmentValues[$requiredKey])
+                    ! is_array($attribute)
+                    || ! is_string($attribute['label'] ?? null)
+                    || ! is_string($attribute['value'] ?? null)
+                    || $this->isVariantPlaceholderValue(
+                        $attribute['value'],
+                    )
+                ) {
+                    continue;
+                }
+
+                $key = $this->variantFragmentKey(
+                    $attribute['label'],
+                );
+
+                if ($key !== '') {
+                    $candidateByKey[$key] = $attribute;
+                }
+            }
+
+            foreach ($requiredKeys as $requiredKey) {
+                if (! isset($fragmentValues[$requiredKey])) {
+                    return $this->variantHydrationFailure(
+                        $result,
+                        'candidate_missing_required_semantic:'
+                            .$variantId.':'.$requiredKey,
+                    );
+                }
+
+                if (isset($selectedByKey[$requiredKey])) {
+                    continue;
+                }
+
+                $structuredAttribute =
+                    $candidateByKey[$requiredKey] ?? null;
+
+                if (
+                    ! is_array($structuredAttribute)
+                    || ! is_string(
+                        $structuredAttribute['value'] ?? null
+                    )
+                    || $this->variantFragmentComparable(
+                        $structuredAttribute['value'],
+                    )
+                        !==
+                        $this->variantFragmentComparable(
+                            $fragmentValues[$requiredKey],
+                        )
                 ) {
                     return $this->variantHydrationFailure(
                         $result,
@@ -685,6 +803,14 @@ final class Seni24ProductScraper
             }
 
             $candidate['attributes'] = array_values($attributes);
+
+            if ($pageStructuredPriceDiffers) {
+                $candidate['price_gross_amount'] =
+                    $pageStructuredPrice;
+            } elseif ($visiblePriceDiffers) {
+                $candidate['price_gross_amount'] =
+                    $visiblePrice;
+            }
 
             $candidate['label'] = implode(
                 ', ',
@@ -770,6 +896,236 @@ final class Seni24ProductScraper
         $result['raw_context'] = $context;
 
         return $result;
+    }
+
+    /**
+     * Prove that this response really represents the requested combination
+     * before allowing visible commerce data to override stale ProductGroup
+     * commerce data.
+     *
+     * We require:
+     * - canonical product/combination IDs equal the request, and
+     * - every available stable candidate identity field (SKU/EAN) agrees,
+     * - with at least one stable identity field actually present.
+     *
+     * @param array<string,mixed> $candidate
+     */
+    private function combinationPageHasExactIdentity(
+        Crawler $crawler,
+        string $requestUrl,
+        string $externalProductId,
+        string $variantId,
+        array $candidate,
+        string $bodyText,
+    ): bool {
+        $canonicalUrl = $this->canonicalUrl(
+            $crawler,
+            $requestUrl,
+        );
+
+        if ($canonicalUrl === null) {
+            return false;
+        }
+
+        [$canonicalProductId, $canonicalVariantId] =
+            $this->idsFromUrl($canonicalUrl);
+
+        if (
+            $canonicalProductId !== $externalProductId
+            || $canonicalVariantId !== $variantId
+        ) {
+            return false;
+        }
+
+        $features = $this->featureAttributes(
+            $crawler,
+            $bodyText,
+        );
+
+        $pageIdentities = [
+            'catalogue_number' =>
+                $this->attributeValue(
+                    $features,
+                    'Indeks',
+                ),
+
+            'ean' =>
+                $this->attributeValue(
+                    $features,
+                    'ean13',
+                )
+                ?? $this->attributeValue(
+                    $features,
+                    'EAN',
+                ),
+        ];
+
+        $matched = 0;
+
+        foreach (
+            [
+                'catalogue_number',
+                'ean',
+            ] as $identityKey
+        ) {
+            $expected = is_string(
+                $candidate[$identityKey] ?? null
+            )
+                ? $this->normalizeText(
+                    $candidate[$identityKey],
+                )
+                : '';
+
+            if ($expected === '') {
+                continue;
+            }
+
+            $actual = is_string(
+                $pageIdentities[$identityKey] ?? null
+            )
+                ? $this->normalizeText(
+                    $pageIdentities[$identityKey],
+                )
+                : '';
+
+            if (
+                $actual === ''
+                || ! $this->sameComparable(
+                    $actual,
+                    $expected,
+                )
+            ) {
+                return false;
+            }
+
+            $matched++;
+        }
+
+        return $matched > 0;
+    }
+
+    private function isVariantPlaceholderValue(
+        string $value,
+    ): bool {
+        return $this->normalizeText($value) === '0';
+    }
+
+    /**
+     * @param array<string,mixed> $result
+     */
+    /**
+     * Live HTTP responses must contain independent evidence that the page
+     * really represents the requested Seni24 product.
+     *
+     * A price alone is insufficient: generic category/fallback pages can
+     * contain unrelated prices while still being served with HTTP 200.
+     *
+     * @param array<string,mixed> $result
+     */
+    private function hasAuthoritativeProductEvidence(
+        array $result,
+    ): bool {
+        $hasPrice =
+            $this->numericPriceValue(
+                $result['price_gross_amount'] ?? null,
+            ) !== null;
+
+        $vatRate = $result['vat_rate'] ?? null;
+
+        $hasExplicitVat =
+            is_int($vatRate)
+            && in_array(
+                $vatRate,
+                [0, 5, 8, 23],
+                true,
+            );
+
+        $availability = is_string(
+            $result['availability'] ?? null
+        )
+            ? $result['availability']
+            : '';
+
+        $hasMachineAvailability = in_array(
+            $availability,
+            [
+                'in_stock',
+                'out_of_stock',
+                'on_order',
+            ],
+            true,
+        );
+
+        $hasStableIdentity = false;
+
+        foreach (['catalogue_number', 'ean'] as $key) {
+            if (
+                is_string($result[$key] ?? null)
+                && $this->normalizeText(
+                    $result[$key],
+                ) !== ''
+            ) {
+                $hasStableIdentity = true;
+                break;
+            }
+        }
+
+        $hasImages =
+            is_array($result['images'] ?? null)
+            && $result['images'] !== [];
+
+        $hasStructuredIdentity = false;
+
+        foreach (
+            is_array($result['variant_candidates'] ?? null)
+                ? $result['variant_candidates']
+                : []
+            as $candidate
+        ) {
+            if (! is_array($candidate)) {
+                continue;
+            }
+
+            foreach (
+                [
+                    'source_url',
+                    'catalogue_number',
+                    'ean',
+                ] as $key
+            ) {
+                if (
+                    is_string($candidate[$key] ?? null)
+                    && $this->normalizeText(
+                        $candidate[$key],
+                    ) !== ''
+                ) {
+                    $hasStructuredIdentity = true;
+                    break 2;
+                }
+            }
+        }
+
+        /*
+         * Strong independent product evidence is sufficient on its own.
+         */
+        if (
+            $hasStableIdentity
+            || $hasImages
+            || $hasStructuredIdentity
+        ) {
+            return true;
+        }
+
+        /*
+         * For sparse products, price must be corroborated by another
+         * commerce-specific signal. An incidental category-page price
+         * alone must never qualify.
+         */
+        return $hasPrice
+            && (
+                $hasExplicitVat
+                || $hasMachineAvailability
+            );
     }
 
     private function numericPriceValue(mixed $value): ?float
@@ -2012,6 +2368,19 @@ final class Seni24ProductScraper
                 }
 
                 $optionValue = $this->normalizeText($option['value']);
+
+                /*
+                 * Seni24 sometimes renders a literal "0" as the DOM value
+                 * for an option whose real customer-facing semantic is
+                 * available from structured ProductGroup data.
+                 *
+                 * A placeholder is not an option that structured
+                 * candidates should be required to cover.
+                 */
+                if ($this->isVariantPlaceholderValue($optionValue)) {
+                    continue;
+                }
+
                 $covered = false;
 
                 foreach ($candidates as $candidate) {
