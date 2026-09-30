@@ -1666,6 +1666,296 @@ it('uses a concrete Seni24 ProductGroup price when it corroborates the visible c
     \Illuminate\Support\Facades\Http::assertSentCount(3);
 });
 
+
+it('uses the requested Seni24 combination instead of a stale canonical combination for visible pricing', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link
+                rel="canonical"
+                href="https://www.seni24.pl/test-quatro_24173-31484"
+            >
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "24173",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-quatro_24173-26363#/rozmiar-s",
+                  "sku": "SE-094-SM10-G04",
+                  "gtin13": "5900516803384",
+                  "size": "S",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "35.79",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                },
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-quatro_24173-31484#/rozmiar-xxl",
+                  "sku": "SE-094-2X10-G04",
+                  "gtin13": "5900516739386",
+                  "size": "XXL",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "47.63",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+
+        <body>
+            <h1>Seni Super Quatro</h1>
+
+            <div>
+                Cena za 1 opak. z VAT 5% 27,44 zł
+            </div>
+
+            <div>
+                Produkt dostępny
+            </div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/test-quatro_24173-26363',
+    );
+
+    $candidates = collect(
+        $result['variant_candidates'],
+    )->keyBy('external_variant_id');
+
+    expect(
+        $result['raw_context']['selected_variant_id'],
+    )->toBe('26363')
+        ->and($result['price_gross_amount'])
+        ->toBe(27.44)
+        ->and(
+            $candidates['26363']['price_gross_amount'],
+        )->toBe(27.44)
+        ->and(
+            $candidates['31484']['price_gross_amount'],
+        )->toBe(47.63)
+        ->and($result['variants_unresolved'])
+        ->toBeFalse();
+});
+
+
+it('excludes Seni24 multipack product controls from the current products variant options', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link
+                rel="canonical"
+                href="https://www.seni24.pl/test-quatro_24173-26363"
+            >
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "24173",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-quatro_24173-26363#/ilosc_sztuk-10_szt/rozmiar-s",
+                  "sku": "SE-094-SM10-G04",
+                  "gtin13": "5900516803384",
+                  "size": "S",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "27.44",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                },
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-quatro_24173-26364#/ilosc_sztuk-10_szt/rozmiar-m",
+                  "sku": "SE-094-ME10-G04",
+                  "gtin13": "5900516803391",
+                  "size": "M",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "31.13",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+
+        <body>
+            <h1>Seni Super Quatro</h1>
+
+            <div class="product-variants">
+                <div class="product-variants-item">
+                    <span class="control-label">
+                        Rozmiar (Tabela rozmiarów)
+                    </span>
+
+                    <label>
+                        <input
+                            data-product-attribute="51"
+                            name="group[51]"
+                            value="1"
+                            checked
+                        >
+                        S
+                    </label>
+
+                    <label>
+                        <input
+                            data-product-attribute="51"
+                            name="group[51]"
+                            value="2"
+                        >
+                        M
+                    </label>
+                </div>
+
+                <div class="product-variants-item">
+                    <span class="control-label">
+                        Ilość sztuk
+                    </span>
+
+                    <label class="product-variants__radio">
+                        <input
+                            data-value="10"
+                            class="input-radio unit_value"
+                            type="radio"
+                            data-product-attribute="52"
+                            name="group[52]"
+                            value="1292"
+                            checked
+                            data-product-pack-id-change="24173"
+                            data-rate="5"
+                            data-price-wt="27,44 zł"
+                            data-product-type="origin"
+                        >
+
+                        <span class="radio-label">
+                            <span class="multipack-size">
+                                10 szt.
+                            </span>
+
+                            <span class="multipack-price">
+                                (27,44 zł za opak.)
+                            </span>
+                        </span>
+                    </label>
+
+                    <label class="product-variants__radio">
+                        <input
+                            class="multipack-input-radio withpromoflag"
+                            type="radio"
+                            name="group[52]"
+                            value="1292"
+                            data-price-wt="327,56 zł"
+                            data-price-unit="27,30 zł"
+                            data-unit="12 x10 szt."
+                            data-rate="5"
+                            data-product-type="pack"
+                            data-product-pack-id-change="25318"
+                        >
+
+                        <span class="radio-label promoflag">
+                            <span class="multipack-size">
+                                12 x10 szt.
+                            </span>
+
+                            <span class="multipack-price">
+                                (27,30 zł za opak.)
+                            </span>
+                        </span>
+
+                        <div class="multipackpackinginfo">
+                            ZESTAW
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                Cena za 1 opak. z VAT 5% 27,44 zł
+            </div>
+
+            <div>
+                Produkt dostępny
+            </div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/test-quatro_24173-26363'
+            .'#/ilosc_sztuk-10_szt/rozmiar-s',
+    );
+
+    $quantityGroup = collect(
+        $result['variant_options'],
+    )->firstWhere(
+        'label',
+        'Ilość sztuk',
+    );
+
+    $candidates = collect(
+        $result['variant_candidates'],
+    )->keyBy('external_variant_id');
+
+    expect($quantityGroup)
+        ->not->toBeNull()
+        ->and($quantityGroup['options'])
+        ->toBe([
+            [
+                'value' => '10 szt.',
+                'selected' => true,
+            ],
+        ])
+        ->and($result['variants_unresolved'])
+        ->toBeFalse()
+        ->and($result['variant_candidates'])
+        ->toHaveCount(2)
+        ->and(
+            collect(
+                $candidates['26363']['attributes'],
+            )->firstWhere(
+                'label',
+                'Ilość sztuk',
+            )['value']
+        )->toBe('10 szt.')
+        ->and(
+            collect(
+                $candidates['26364']['attributes'],
+            )->firstWhere(
+                'label',
+                'Ilość sztuk',
+            )['value']
+        )->toBe('10 szt.')
+        ->and(
+            collect(
+                $quantityGroup['options'],
+            )->pluck('value')
+        )->not->toContain(
+            '12 x10 szt. (27,30 zł za opak.) ZESTAW',
+        );
+});
+
+
 it('rejects an HTTP 200 Seni24 fallback page as a failed product scrape', function (): void {
     $html = <<<'HTML'
         <html>

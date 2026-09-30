@@ -118,6 +118,15 @@ final class Seni24ProductScraper
             return $this->failedResult($sourceUrl, 'missing_seni24_numeric_identity', $context);
         }
 
+        [$requestedProductId, $requestedVariantId] =
+            $this->idsFromUrl($sourceUrl);
+
+        $selectedVariantId =
+            $requestedProductId === $externalProductId
+            && $requestedVariantId !== null
+                ? $requestedVariantId
+                : $externalVariantId;
+
         $name = $this->firstText($crawler, ['h1', '[itemprop="name"]']);
         $bodyText = $this->normalizeText($crawler->filter('body')->count() > 0
             ? $crawler->filter('body')->text('')
@@ -141,7 +150,7 @@ final class Seni24ProductScraper
         $structuredVariantCandidates = $this->structuredVariantCandidates(
             $crawler,
             $externalProductId,
-            $externalVariantId,
+            $selectedVariantId,
             $variantData['groups'],
             $vatRate,
         );
@@ -157,13 +166,13 @@ final class Seni24ProductScraper
 
         $structuredVariantCandidates = $this->enrichStructuredVariantAttributes(
             $structuredVariantCandidates,
-            $externalVariantId,
+            $selectedVariantId,
             $variantData['selected_attributes'],
             $variantData['groups'],
         );
 
         foreach ($structuredVariantCandidates as &$candidate) {
-            if (($candidate['external_variant_id'] ?? null) !== $externalVariantId) {
+            if (($candidate['external_variant_id'] ?? null) !== $selectedVariantId) {
                 continue;
             }
 
@@ -256,14 +265,14 @@ final class Seni24ProductScraper
 
         $selectedAttributes = $variantData['selected_attributes'];
         $variantLabel = $selectedAttributes === []
-            ? ($catalogueNumber ?? $externalVariantId)
+            ? ($catalogueNumber ?? $selectedVariantId)
             : implode(', ', array_map(
                 static fn (array $a): string => $a['label'].': '.$a['value'],
                 $selectedAttributes,
             ));
 
         $selectedVariantCandidate = [
-            'external_variant_id' => $externalVariantId,
+            'external_variant_id' => $selectedVariantId,
             'label' => $variantLabel,
             'attributes' => $selectedAttributes,
             'catalogue_number' => $catalogueNumber,
@@ -321,8 +330,8 @@ final class Seni24ProductScraper
             'medical_device_class' => $this->attributeValue($features, 'Klasa wyrobu medycznego'),
             'raw_context' => array_merge($context, [
                 'listing_roots' => $listingRoots,
-                'selected_variant_url' => $identityUrl,
-                'selected_variant_id' => $externalVariantId,
+                'selected_variant_url' => $sourceUrl,
+                'selected_variant_id' => $selectedVariantId,
                 'structured_variant_recovery_required' =>
                     $structuredVariantCandidates !== []
                     && (
@@ -2465,6 +2474,27 @@ final class Seni24ProductScraper
                     try {
                         $groupNode->filter('input[data-product-attribute], input[name^="group["]')->each(
                             function (Crawler $input) use (&$options, &$selected, $label): void {
+                                /*
+                                 * Seni24 renders commercial multipacks alongside
+                                 * the current product variant controls.
+                                 *
+                                 * A data-product-type="pack" input switches to a
+                                 * different product (via data-product-pack-id-change)
+                                 * and therefore must not become a variant option
+                                 * of the current product.
+                                 */
+                                $productType = Str::lower(
+                                    $this->normalizeText(
+                                        (string) $input->attr(
+                                            'data-product-type',
+                                        ),
+                                    ),
+                                );
+
+                                if ($productType === 'pack') {
+                                    return;
+                                }
+
                                 $value = $this->inputOptionLabel($input);
                                 if ($value === '') {
                                     return;
@@ -2515,11 +2545,122 @@ final class Seni24ProductScraper
             $selectedDeduped[$attribute['label'].'|'.$attribute['value']] = $attribute;
         }
 
-        return [
+        return $this->normalizeVariantData([
             'groups' => $groups,
             'selected_attributes' => array_values($selectedDeduped),
             'unresolved' => $unresolved,
-        ];
+        ]);
+    }
+
+    /**
+     * Remove presentation-only price annotations from variant option labels
+     * before comparing or propagating customer-visible variant semantics.
+     *
+     * @param array{
+     *     groups:list<array<string,mixed>>,
+     *     selected_attributes:list<array{label:string,value:string}>,
+     *     unresolved:bool
+     * } $variantData
+     * @return array{
+     *     groups:list<array<string,mixed>>,
+     *     selected_attributes:list<array{label:string,value:string}>,
+     *     unresolved:bool
+     * }
+     */
+    private function normalizeVariantData(array $variantData): array
+    {
+        foreach ($variantData['groups'] as &$group) {
+            if (! is_array($group)) {
+                continue;
+            }
+
+            $normalizedOptions = [];
+
+            foreach (($group['options'] ?? []) as $option) {
+                if (
+                    ! is_array($option)
+                    || ! is_string($option['value'] ?? null)
+                ) {
+                    continue;
+                }
+
+                $value = $this->normalizeVariantOptionValue(
+                    $option['value'],
+                );
+
+                if ($value === '') {
+                    continue;
+                }
+
+                $key = Str::lower(Str::ascii($value));
+
+                if (! isset($normalizedOptions[$key])) {
+                    $normalizedOptions[$key] = [
+                        'value' => $value,
+                        'selected' => (bool) ($option['selected'] ?? false),
+                    ];
+
+                    continue;
+                }
+
+                if (($option['selected'] ?? false) === true) {
+                    $normalizedOptions[$key]['selected'] = true;
+                }
+            }
+
+            $group['options'] = array_values($normalizedOptions);
+        }
+
+        unset($group);
+
+        $selectedAttributes = [];
+
+        foreach ($variantData['selected_attributes'] as $attribute) {
+            if (
+                ! is_array($attribute)
+                || ! is_string($attribute['label'] ?? null)
+                || ! is_string($attribute['value'] ?? null)
+            ) {
+                continue;
+            }
+
+            $value = $this->normalizeVariantOptionValue(
+                $attribute['value'],
+            );
+
+            if ($value === '') {
+                continue;
+            }
+
+            $key =
+                Str::lower(Str::ascii($attribute['label']))
+                .'|'
+                .Str::lower(Str::ascii($value));
+
+            $selectedAttributes[$key] = [
+                'label' => $attribute['label'],
+                'value' => $value,
+            ];
+        }
+
+        $variantData['selected_attributes'] =
+            array_values($selectedAttributes);
+
+        return $variantData;
+    }
+
+    private function normalizeVariantOptionValue(
+        string $value,
+    ): string {
+        $value = $this->normalizeText($value);
+
+        $normalized = preg_replace(
+            '/\\s*\\(\\s*\\d+(?:[.,]\\d{1,2})?\\s*zł\\s+za\\s+opak\\.\\s*\\)\\s*$/iu',
+            '',
+            $value,
+        );
+
+        return trim($normalized ?? $value);
     }
 
     private function inputOptionLabel(Crawler $input): string
