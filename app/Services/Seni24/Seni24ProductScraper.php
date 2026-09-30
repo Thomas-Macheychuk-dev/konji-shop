@@ -115,6 +115,12 @@ final class Seni24ProductScraper
             $vatRate,
         );
 
+        $structuredVariantHasContradictedSingleOptions =
+            $this->contradictedStructuredSingleOptionGroupKeys(
+                $structuredVariantCandidates,
+                $variantData['groups'],
+            ) !== [];
+
         $structuredVariantCandidates = $this->enrichStructuredVariantAttributes(
             $structuredVariantCandidates,
             $externalVariantId,
@@ -176,8 +182,14 @@ final class Seni24ProductScraper
                 $variantData['groups'],
             );
 
-        $variantsUnresolved = $variantData['unresolved']
-            && ! $variantsResolvedByStructuredData;
+        $variantsUnresolved = $structuredVariantHasContradictedSingleOptions
+            || $this->hasDuplicateStructuredVariantAttributeSignatures(
+                $structuredVariantCandidates,
+            )
+            || (
+                $variantData['unresolved']
+                && ! $variantsResolvedByStructuredData
+            );
 
         $medicalValue = $this->attributeValue($features, 'Wyrób medyczny');
         $isMedicalDevice = $medicalValue !== null
@@ -1104,6 +1116,12 @@ final class Seni24ProductScraper
         array $selectedAttributes,
         array $groups,
     ): array {
+        $contradictedSingleOptionKeys =
+            $this->contradictedStructuredSingleOptionGroupKeys(
+                $candidates,
+                $groups,
+            );
+
         foreach ($candidates as &$candidate) {
             $attributes = [];
 
@@ -1124,7 +1142,19 @@ final class Seni24ProductScraper
 
             if (($candidate['external_variant_id'] ?? null) === $selectedVariantId) {
                 foreach ($selectedAttributes as $attribute) {
-                    $key = Str::lower(Str::ascii($attribute['label']));
+                    $fragmentKey = $this->variantFragmentKey(
+                        $attribute['label'],
+                    );
+
+                    if (isset(
+                        $contradictedSingleOptionKeys[$fragmentKey]
+                    )) {
+                        continue;
+                    }
+
+                    $key = Str::lower(
+                        Str::ascii($attribute['label'])
+                    );
 
                     $attributes[$key] ??= $attribute;
                 }
@@ -1140,6 +1170,14 @@ final class Seni24ProductScraper
                     : [];
 
                 if ($label === '' || count($options) !== 1) {
+                    continue;
+                }
+
+                if (isset(
+                    $contradictedSingleOptionKeys[
+                        $this->variantFragmentKey($label)
+                    ]
+                )) {
                     continue;
                 }
 
@@ -1178,6 +1216,215 @@ final class Seni24ProductScraper
         unset($candidate);
 
         return $candidates;
+    }
+
+    /**
+     * Return one-option DOM groups that cannot safely be treated as
+     * product-wide invariants.
+     *
+     * Candidate URL fragments are used only as contradiction evidence.
+     * Their values are not converted into customer-facing attributes here.
+     *
+     * A group is unsafe when:
+     * - candidate URLs expose more than one value for the group, or
+     * - only part of the structured candidate set exposes that group.
+     *
+     * @param list<array<string,mixed>> $candidates
+     * @param list<array<string,mixed>> $groups
+     * @return array<string,true>
+     */
+    private function contradictedStructuredSingleOptionGroupKeys(
+        array $candidates,
+        array $groups,
+    ): array {
+        if (count($candidates) < 2) {
+            return [];
+        }
+
+        $contradicted = [];
+
+        foreach ($groups as $group) {
+            if (! is_array($group)) {
+                continue;
+            }
+
+            $label = is_string($group['label'] ?? null)
+                ? $this->normalizeText($group['label'])
+                : '';
+
+            $options = is_array($group['options'] ?? null)
+                ? $group['options']
+                : [];
+
+            if ($label === '' || count($options) !== 1) {
+                continue;
+            }
+
+            $key = $this->variantFragmentKey($label);
+
+            if ($key === '') {
+                continue;
+            }
+
+            $values = [];
+            $candidateCountWithValue = 0;
+
+            foreach ($candidates as $candidate) {
+                if (! is_array($candidate)) {
+                    continue;
+                }
+
+                $sourceUrl = is_string(
+                    $candidate['source_url'] ?? null
+                )
+                    ? $candidate['source_url']
+                    : null;
+
+                $fragmentValues = $this->variantFragmentMap(
+                    $sourceUrl,
+                );
+
+                if (! isset($fragmentValues[$key])) {
+                    continue;
+                }
+
+                $candidateCountWithValue++;
+                $values[$fragmentValues[$key]] = true;
+            }
+
+            if (
+                count($values) > 1
+                || (
+                    $candidateCountWithValue > 0
+                    && $candidateCountWithValue < count($candidates)
+                )
+            ) {
+                $contradicted[$key] = true;
+            }
+        }
+
+        return $contradicted;
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    private function variantFragmentMap(?string $url): array
+    {
+        if ($url === null || trim($url) === '') {
+            return [];
+        }
+
+        $fragment = parse_url($url, PHP_URL_FRAGMENT);
+
+        if (! is_string($fragment) || trim($fragment) === '') {
+            return [];
+        }
+
+        $result = [];
+
+        foreach (
+            explode('/', trim(rawurldecode($fragment), '/'))
+            as $segment
+        ) {
+            if (! str_contains($segment, '-')) {
+                continue;
+            }
+
+            [$rawKey, $rawValue] = explode('-', $segment, 2);
+
+            $key = $this->variantFragmentKey($rawKey);
+            $value = $this->variantFragmentKey($rawValue);
+
+            if ($key === '' || $value === '') {
+                continue;
+            }
+
+            $result[$key] = $value;
+        }
+
+        return $result;
+    }
+
+    private function variantFragmentKey(string $value): string
+    {
+        $value = Str::lower(
+            Str::ascii(
+                $this->normalizeText(
+                    rawurldecode($value),
+                ),
+            ),
+        );
+
+        return trim(
+            preg_replace(
+                '/[^a-z0-9]+/',
+                '_',
+                $value,
+            ) ?? $value,
+            '_',
+        );
+    }
+
+    /**
+     * Structured variants must be distinguishable by the customer-facing
+     * attributes that we actually imported.
+     *
+     * Catalogue number, EAN and external ID deliberately do not participate:
+     * they prove source identity but do not repair missing semantic choices.
+     *
+     * @param list<array<string,mixed>> $candidates
+     */
+    private function hasDuplicateStructuredVariantAttributeSignatures(
+        array $candidates,
+    ): bool {
+        if (count($candidates) < 2) {
+            return false;
+        }
+
+        $seen = [];
+
+        foreach ($candidates as $candidate) {
+            if (! is_array($candidate)) {
+                continue;
+            }
+
+            $parts = [];
+
+            foreach (($candidate['attributes'] ?? []) as $attribute) {
+                if (! is_array($attribute)
+                    || ! is_string($attribute['label'] ?? null)
+                    || ! is_string($attribute['value'] ?? null)) {
+                    continue;
+                }
+
+                $label = $this->variantFragmentKey(
+                    $attribute['label'],
+                );
+
+                $value = $this->variantFragmentKey(
+                    $attribute['value'],
+                );
+
+                if ($label === '' || $value === '') {
+                    continue;
+                }
+
+                $parts[] = $label.'='.$value;
+            }
+
+            sort($parts, SORT_STRING);
+
+            $signature = implode('|', $parts);
+
+            if (isset($seen[$signature])) {
+                return true;
+            }
+
+            $seen[$signature] = true;
+        }
+
+        return false;
     }
 
     /**

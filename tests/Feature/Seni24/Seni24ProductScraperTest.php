@@ -584,3 +584,185 @@ it('extracts a unique VAT rate from a Seni24 variant pricing table', function ()
 
     expect($result['vat_rate'])->toBe(8);
 });
+
+it('does not propagate a single DOM option when structured variant urls contradict it', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link
+                rel="canonical"
+                href="https://www.seni24.pl/test-igly_427-24045"
+            >
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "427",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-igly_427-24045#/srednica_i_dlugosc_igly-12x40mm/rozmiar_igly-18g",
+                  "sku": "NN-SKD-AI12-001",
+                  "gtin13": "4031881909317",
+                  "size": "18G",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "4.83",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                },
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-igly_427-24046#/rozmiar_igly-18g/srednica_i_dlugosc_igly-12_x_50_mm",
+                  "sku": "NN-SKD-AI12-002",
+                  "gtin13": "4031881903440",
+                  "size": "18G",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "13.80",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+
+        <body>
+            <h1>Test igły</h1>
+
+            <div class="product-variants">
+                <div class="product-variants-item">
+                    <span class="control-label">
+                        Średnica i długość igły
+                    </span>
+
+                    <label>
+                        <input
+                            data-product-attribute="1"
+                            name="group[1]"
+                            checked
+                        >
+                        1.2x40mm
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                Cena za 1 opak. z VAT 8%
+                4,83 zł (4,83 zł / 1 szt.)
+            </div>
+
+            <div
+                id="availability-data"
+                data-availability="InStock"
+            ></div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/test-igly_427-24045',
+    );
+
+    expect($result['variant_candidates'])->toHaveCount(2)
+        ->and($result['variants_unresolved'])->toBeTrue();
+
+    foreach ($result['variant_candidates'] as $candidate) {
+        expect(
+            array_column(
+                $candidate['attributes'],
+                'label',
+            )
+        )->not->toContain(
+            'Średnica i długość igły',
+        );
+    }
+});
+
+it('marks structured variants unresolved when visible attributes are indistinguishable', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link
+                rel="canonical"
+                href="https://www.seni24.pl/test-strzykawki_22172-25594"
+            >
+
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "22172",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-strzykawki_22172-25594#/pojemnosc-1_ml/rozmiar_igly-30g_03x8mm/skala-u_100",
+                  "sku": "NN-MCH-I018-001",
+                  "gtin13": "8586015044205",
+                  "size": "30G 0.3x8mm",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "44.19",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/OutOfStock"
+                  }
+                },
+                {
+                  "@type": "Product",
+                  "url": "https://www.seni24.pl/test-strzykawki_22172-25595#/pojemnosc-05_ml/rozmiar_igly-30g_03x8mm/skala-u_100",
+                  "sku": "NN-MCH-I058-001",
+                  "gtin13": "8586015046346",
+                  "size": "30G 0.3x8mm",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "45.80",
+                    "priceCurrency": "PLN",
+                    "availability": "https://schema.org/InStock"
+                  }
+                }
+              ]
+            }
+            </script>
+        </head>
+
+        <body>
+            <h1>Test strzykawki</h1>
+
+            <div>
+                Cena za 1 opak. z VAT 8%
+                44,19 zł (44,19 zł / 1 szt.)
+            </div>
+
+            <div
+                id="availability-data"
+                data-availability="OutOfStock"
+            ></div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/test-strzykawki_22172-25594',
+    );
+
+    expect($result['variant_candidates'])->toHaveCount(2)
+        ->and($result['variant_candidates'][0]['attributes'])->toBe([
+            [
+                'label' => 'Rozmiar',
+                'value' => '30G 0.3x8mm',
+            ],
+        ])
+        ->and($result['variant_candidates'][1]['attributes'])->toBe([
+            [
+                'label' => 'Rozmiar',
+                'value' => '30G 0.3x8mm',
+            ],
+        ])
+        ->and($result['variants_unresolved'])->toBeTrue();
+});
