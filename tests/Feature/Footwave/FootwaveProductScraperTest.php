@@ -294,7 +294,7 @@ function footwaveHardBallFixture(): array
     return [
         'id' => 21697,
         'name' =>
-            'FOOTWAVE™ HARD BALL Twarda piłka do masażu stóp',
+            'FOOTWAVE&#8482; HARD BALL Twarda piłka do masażu stóp',
         'slug' =>
             'footwave-hard-ball-twarda-pilka-do-masazu-stop',
         'parent' => 0,

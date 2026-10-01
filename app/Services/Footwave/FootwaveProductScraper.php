@@ -59,7 +59,7 @@ final class FootwaveProductScraper
                 $product['sku'] ?? null
             ),
             'source_type' => $type,
-            'name' => $this->stringOrNull($product['name'] ?? null),
+            'name' => $this->plainTextOrNull($product['name'] ?? null),
             'slug' => $this->stringOrNull($product['slug'] ?? null),
             'canonical_url' => $this->stringOrNull(
                 $product['permalink'] ?? null
@@ -321,7 +321,7 @@ final class FootwaveProductScraper
                 continue;
             }
 
-            $name = $this->stringOrNull($attribute['name'] ?? null);
+            $name = $this->plainTextOrNull($attribute['name'] ?? null);
 
             if ($name === null) {
                 continue;
@@ -354,7 +354,7 @@ final class FootwaveProductScraper
                 }
 
                 $slug = $this->stringOrNull($term['slug'] ?? null);
-                $value = $this->stringOrNull($term['name'] ?? null);
+                $value = $this->plainTextOrNull($term['name'] ?? null);
 
                 if ($slug === null || $value === null) {
                     continue;
@@ -396,7 +396,7 @@ final class FootwaveProductScraper
                 continue;
             }
 
-            $name = $this->stringOrNull($attribute['name'] ?? null);
+            $name = $this->plainTextOrNull($attribute['name'] ?? null);
             $rawValue = $this->stringOrNull($attribute['value'] ?? null);
 
             if ($name === null || $rawValue === null) {
@@ -477,7 +477,7 @@ final class FootwaveProductScraper
                 continue;
             }
 
-            $name = $this->stringOrNull($category['name'] ?? null);
+            $name = $this->plainTextOrNull($category['name'] ?? null);
             $slug = $this->stringOrNull($category['slug'] ?? null);
 
             if ($name === null || $slug === null) {
@@ -531,6 +531,25 @@ final class FootwaveProductScraper
         $value = (int) $value;
 
         return $value > 0 ? $value : null;
+    }
+
+    private function plainTextOrNull(mixed $value): ?string
+    {
+        $value = $this->stringOrNull($value);
+
+        if ($value === null) {
+            return null;
+        }
+
+        $value = trim(
+            html_entity_decode(
+                $value,
+                ENT_QUOTES | ENT_HTML5,
+                'UTF-8',
+            )
+        );
+
+        return $value === '' ? null : $value;
     }
 
     private function stringOrNull(mixed $value): ?string
