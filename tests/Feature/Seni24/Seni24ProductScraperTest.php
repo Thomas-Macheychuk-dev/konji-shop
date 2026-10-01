@@ -1952,7 +1952,37 @@ it('excludes Seni24 multipack product controls from the current products variant
             )->pluck('value')
         )->not->toContain(
             '12 x10 szt. (27,30 zł za opak.) ZESTAW',
-        );
+        )
+        ->and(
+            collect(
+                $candidates['26363']['attributes'],
+            )->pluck('label')
+        )->not->toContain(
+            'Rozmiar (Tabela rozmiarów)',
+        )
+        ->and(
+            collect(
+                $candidates['26364']['attributes'],
+            )->pluck('label')
+        )->not->toContain(
+            'Rozmiar (Tabela rozmiarów)',
+        )
+        ->and(
+            collect(
+                $candidates['26363']['attributes'],
+            )->firstWhere(
+                'label',
+                'Rozmiar',
+            )['value']
+        )->toBe('S')
+        ->and(
+            collect(
+                $candidates['26364']['attributes'],
+            )->firstWhere(
+                'label',
+                'Rozmiar',
+            )['value']
+        )->toBe('M');
 });
 
 

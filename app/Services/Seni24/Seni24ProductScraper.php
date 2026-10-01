@@ -2574,6 +2574,12 @@ final class Seni24ProductScraper
                 continue;
             }
 
+            if (is_string($group['label'] ?? null)) {
+                $group['label'] = $this->normalizeVariantAttributeLabel(
+                    $group['label'],
+                );
+            }
+
             $normalizedOptions = [];
 
             foreach (($group['options'] ?? []) as $option) {
@@ -2632,13 +2638,17 @@ final class Seni24ProductScraper
                 continue;
             }
 
+            $label = $this->normalizeVariantAttributeLabel(
+                $attribute['label'],
+            );
+
             $key =
-                Str::lower(Str::ascii($attribute['label']))
+                Str::lower(Str::ascii($label))
                 .'|'
                 .Str::lower(Str::ascii($value));
 
             $selectedAttributes[$key] = [
-                'label' => $attribute['label'],
+                'label' => $label,
                 'value' => $value,
             ];
         }
@@ -2647,6 +2657,21 @@ final class Seni24ProductScraper
             array_values($selectedAttributes);
 
         return $variantData;
+    }
+
+    private function normalizeVariantAttributeLabel(
+        string $label,
+    ): string {
+        $label = trim(
+            $this->normalizeText($label),
+            " \t\n\r\0\x0B:",
+        );
+
+        return Str::lower(
+            Str::ascii($label),
+        ) === 'rozmiar (tabela rozmiarow)'
+            ? 'Rozmiar'
+            : $label;
     }
 
     private function normalizeVariantOptionValue(

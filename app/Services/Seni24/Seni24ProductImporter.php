@@ -601,7 +601,11 @@ final class Seni24ProductImporter
                 continue;
             }
 
-            $label = $this->stringOrNull($attributeData['label'] ?? null);
+            $label = $this->normalizeVariantAttributeLabel(
+                $this->stringOrNull(
+                    $attributeData['label'] ?? null,
+                ),
+            );
             $value = $this->stringOrNull($attributeData['value'] ?? null);
 
             if ($label === null || $value === null) {
@@ -612,6 +616,20 @@ final class Seni24ProductImporter
         }
 
         return array_values(array_unique($ids));
+    }
+
+    private function normalizeVariantAttributeLabel(
+        ?string $label,
+    ): ?string {
+        if ($label === null) {
+            return null;
+        }
+
+        return Str::lower(
+            Str::ascii($label),
+        ) === 'rozmiar (tabela rozmiarow)'
+            ? 'Rozmiar'
+            : $label;
     }
 
     private function resolveAttributeValue(string $attributeName, string $value): AttributeValue

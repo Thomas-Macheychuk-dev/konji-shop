@@ -178,3 +178,46 @@ it('imports each resolved Seni24 variant with its own stock state', function ():
         ->and($variants['seni24-338-18632']->is_default)
         ->toBeTrue();
 });
+
+it('canonicalizes the Seni24 size-table alias without duplicating variant size values', function (): void {
+    $fixture = seni24PricedFixture();
+
+    $fixture['variant_candidates'][0]['attributes'] = [
+        ['label' => 'Rozmiar', 'value' => 'S'],
+        [
+            'label' => 'Rozmiar (Tabela rozmiarów)',
+            'value' => 'S',
+        ],
+        [
+            'label' => 'Ilość sztuk',
+            'value' => '10 szt.',
+        ],
+    ];
+
+    app(Seni24ProductImporter::class)->import(
+        $fixture,
+        null,
+        false,
+    );
+
+    $variant = ProductVariant::query()
+        ->with('attributeValues.attribute')
+        ->firstOrFail();
+
+    $attributes = $variant->attributeValues
+        ->map(
+            fn ($value): string =>
+                $value->attribute->name.'='.$value->value
+        )
+        ->sort()
+        ->values()
+        ->all();
+
+    expect($attributes)
+        ->toContain('Rozmiar=S')
+        ->toContain('Ilość sztuk=10 szt.')
+        ->not->toContain(
+            'Rozmiar (Tabela rozmiarów)=S',
+        )
+        ->toHaveCount(2);
+});
