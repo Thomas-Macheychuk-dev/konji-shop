@@ -926,8 +926,8 @@ final class Seni24ProductImporter
      * an in-stock selected combination remains the default. If all
      * combinations are unavailable, preserve the first source candidate.
      *
-     * @param list<array<string,mixed>> $candidates
-     * @param array<string,mixed> $scraped
+     * @param  list<array<string,mixed>>  $candidates
+     * @param  array<string,mixed>  $scraped
      */
     private function defaultVariantSourceExternalId(
         array $candidates,
@@ -954,8 +954,8 @@ final class Seni24ProductImporter
     }
 
     /**
-     * @param array<string,mixed> $candidate
-     * @param array<string,mixed> $scraped
+     * @param  array<string,mixed>  $candidate
+     * @param  array<string,mixed>  $scraped
      */
     private function variantStockStatus(
         array $candidate,

@@ -6,28 +6,27 @@ use Illuminate\Support\Facades\Http;
 
 it('discovers only top-level FootWave products from the Store API catalogue', function (): void {
     Http::fake([
-        'https://footwave.pl/wp-json/wc/store/v1/products?*' =>
-            Http::response([
-                [
-                    'id' => 372,
-                    'type' => 'variable',
-                    'name' => 'FootWave™ KIDS',
-                ],
-                [
-                    'id' => 21697,
-                    'type' => 'simple',
-                    'name' => 'FOOTWAVE™ HARD BALL',
-                ],
-                [
-                    'id' => 17063,
-                    'type' => 'variation',
-                    'parent' => 372,
-                    'name' => 'FootWave™ KIDS',
-                ],
-            ], 200, [
-                'X-WP-Total' => '3',
-                'X-WP-TotalPages' => '1',
-            ]),
+        'https://footwave.pl/wp-json/wc/store/v1/products?*' => Http::response([
+            [
+                'id' => 372,
+                'type' => 'variable',
+                'name' => 'FootWave™ KIDS',
+            ],
+            [
+                'id' => 21697,
+                'type' => 'simple',
+                'name' => 'FOOTWAVE™ HARD BALL',
+            ],
+            [
+                'id' => 17063,
+                'type' => 'variation',
+                'parent' => 372,
+                'name' => 'FootWave™ KIDS',
+            ],
+        ], 200, [
+            'X-WP-Total' => '3',
+            'X-WP-TotalPages' => '1',
+        ]),
     ]);
 
     $products = app(FootwaveStoreApiClient::class)->catalogue();
@@ -40,28 +39,25 @@ it('discovers only top-level FootWave products from the Store API catalogue', fu
 
 it('hydrates authoritative FootWave variable product variants from the Store API', function (): void {
     Http::fake([
-        'https://footwave.pl/wp-json/wc/store/v1/products/372' =>
-            Http::response(footwaveKidsParentFixture()),
+        'https://footwave.pl/wp-json/wc/store/v1/products/372' => Http::response(footwaveKidsParentFixture()),
 
-        'https://footwave.pl/wp-json/wc/store/v1/products/17063' =>
-            Http::response(footwaveKidsVariationFixture(
-                id: 17063,
-                size: '3XSK (24-25)',
-                slug: '3xsk-24-25',
-                sku: 'FW_07020248_3XSK',
-                inStock: true,
-                maxQty: 580,
-            )),
+        'https://footwave.pl/wp-json/wc/store/v1/products/17063' => Http::response(footwaveKidsVariationFixture(
+            id: 17063,
+            size: '3XSK (24-25)',
+            slug: '3xsk-24-25',
+            sku: 'FW_07020248_3XSK',
+            inStock: true,
+            maxQty: 580,
+        )),
 
-        'https://footwave.pl/wp-json/wc/store/v1/products/17062' =>
-            Http::response(footwaveKidsVariationFixture(
-                id: 17062,
-                size: '2XSK (26-27)',
-                slug: '2xsk-26-27',
-                sku: 'FW_07020248_2XSK',
-                inStock: false,
-                maxQty: 1,
-            )),
+        'https://footwave.pl/wp-json/wc/store/v1/products/17062' => Http::response(footwaveKidsVariationFixture(
+            id: 17062,
+            size: '2XSK (26-27)',
+            slug: '2xsk-26-27',
+            sku: 'FW_07020248_2XSK',
+            inStock: false,
+            maxQty: 1,
+        )),
 
         '*' => Http::response([], 404),
     ]);
@@ -110,8 +106,7 @@ it('hydrates authoritative FootWave variable product variants from the Store API
 
 it('normalizes a purchasable simple FootWave product into one authoritative variant', function (): void {
     Http::fake([
-        'https://footwave.pl/wp-json/wc/store/v1/products/21697' =>
-            Http::response(footwaveHardBallFixture()),
+        'https://footwave.pl/wp-json/wc/store/v1/products/21697' => Http::response(footwaveHardBallFixture()),
     ]);
 
     $result = app(FootwaveProductScraper::class)
@@ -139,23 +134,21 @@ it('normalizes a purchasable simple FootWave product into one authoritative vari
 
 it('excludes non-purchasable FootWave catalogue products before hydrating their variations', function (): void {
     Http::fake([
-        'https://footwave.pl/wp-json/wc/store/v1/products/33565' =>
-            Http::response([
-                'id' => 33565,
-                'name' => 'FootWave™ EXPERT_53',
-                'slug' => 'footwave-expert_53',
-                'type' => 'variable',
-                'sku' => '',
-                'permalink' =>
-                    'https://footwave.pl/wkladki-indywidualne/footwave-expert_53/',
-                'is_purchasable' => false,
-                'is_in_stock' => false,
-                'variations' => [
-                    ['id' => 99999],
-                ],
-                'images' => [],
-                'categories' => [],
-            ]),
+        'https://footwave.pl/wp-json/wc/store/v1/products/33565' => Http::response([
+            'id' => 33565,
+            'name' => 'FootWave™ EXPERT_53',
+            'slug' => 'footwave-expert_53',
+            'type' => 'variable',
+            'sku' => '',
+            'permalink' => 'https://footwave.pl/wkladki-indywidualne/footwave-expert_53/',
+            'is_purchasable' => false,
+            'is_in_stock' => false,
+            'variations' => [
+                ['id' => 99999],
+            ],
+            'images' => [],
+            'categories' => [],
+        ]),
 
         '*' => Http::response([], 500),
     ]);
@@ -169,8 +162,7 @@ it('excludes non-purchasable FootWave catalogue products before hydrating their 
         ->and($result['variants_unresolved'])->toBeFalse();
 
     Http::assertNotSent(
-        fn ($request): bool =>
-            str_contains($request->url(), '/products/99999')
+        fn ($request): bool => str_contains($request->url(), '/products/99999')
     );
 });
 
@@ -182,11 +174,9 @@ function footwaveKidsParentFixture(): array
         'slug' => 'footwave-kids',
         'parent' => 0,
         'type' => 'variable',
-        'permalink' =>
-            'https://footwave.pl/wkladki-ortopedyczne/footwave-kids/',
+        'permalink' => 'https://footwave.pl/wkladki-ortopedyczne/footwave-kids/',
         'sku' => 'FW_07020248',
-        'short_description' =>
-            '<p>POZIOM 1: KOŚLAWOŚĆ STÓP I KOLAN</p>',
+        'short_description' => '<p>POZIOM 1: KOŚLAWOŚĆ STÓP I KOLAN</p>',
         'description' => '<p>Opis FootWave KIDS</p>',
         'prices' => [
             'price' => '9900',
@@ -198,8 +188,7 @@ function footwaveKidsParentFixture(): array
         'images' => [
             [
                 'id' => 19919,
-                'src' =>
-                    'https://footwave.pl/wp-content/uploads/2021/08/kids.png',
+                'src' => 'https://footwave.pl/wp-content/uploads/2021/08/kids.png',
             ],
         ],
         'categories' => [
@@ -270,8 +259,7 @@ function footwaveKidsVariationFixture(
         'parent' => 372,
         'type' => 'variation',
         'variation' => 'Rozmiar: '.$size,
-        'permalink' =>
-            'https://footwave.pl/wkladki-ortopedyczne/footwave-kids/'.
+        'permalink' => 'https://footwave.pl/wkladki-ortopedyczne/footwave-kids/'.
             '?attribute_pa_rozmiar='.$slug,
         'sku' => $sku,
         'prices' => [
@@ -293,14 +281,11 @@ function footwaveHardBallFixture(): array
 {
     return [
         'id' => 21697,
-        'name' =>
-            'FOOTWAVE&#8482; HARD BALL Twarda piłka do masażu stóp',
-        'slug' =>
-            'footwave-hard-ball-twarda-pilka-do-masazu-stop',
+        'name' => 'FOOTWAVE&#8482; HARD BALL Twarda piłka do masażu stóp',
+        'slug' => 'footwave-hard-ball-twarda-pilka-do-masazu-stop',
         'parent' => 0,
         'type' => 'simple',
-        'permalink' =>
-            'https://footwave.pl/inne-produkty/akcesoria-do-cwiczen/'.
+        'permalink' => 'https://footwave.pl/inne-produkty/akcesoria-do-cwiczen/'.
             'footwave-hard-ball-twarda-pilka-do-masazu-stop/',
         'sku' => 'HARD_BALL',
         'short_description' => '<p>Krótki opis.</p>',
@@ -315,8 +300,7 @@ function footwaveHardBallFixture(): array
         'images' => [
             [
                 'id' => 21698,
-                'src' =>
-                    'https://footwave.pl/wp-content/uploads/2025/04/'.
+                'src' => 'https://footwave.pl/wp-content/uploads/2025/04/'.
                     'footwave-hard-ball.png',
             ],
         ],
@@ -341,3 +325,76 @@ function footwaveHardBallFixture(): array
         ],
     ];
 }
+
+it('keeps a zero-priced unpurchasable but supplier-in-stock FootWave size unavailable', function (): void {
+    $unavailable = footwaveKidsVariationFixture(
+        id: 17062,
+        size: '2XSK (26-27)',
+        slug: '2xsk-26-27',
+        sku: '',
+        inStock: true,
+        maxQty: 1,
+    );
+    $unavailable['prices']['price'] = '0';
+    $unavailable['prices']['regular_price'] = '0';
+    $unavailable['is_purchasable'] = false;
+
+    Http::fake([
+        'https://footwave.pl/wp-json/wc/store/v1/products/372' => Http::response(footwaveKidsParentFixture()),
+        'https://footwave.pl/wp-json/wc/store/v1/products/17063' => Http::response(footwaveKidsVariationFixture(
+            id: 17063,
+            size: '3XSK (24-25)',
+            slug: '3xsk-24-25',
+            sku: 'FW_07020248_3XSK',
+            inStock: true,
+            maxQty: 580,
+        )),
+        'https://footwave.pl/wp-json/wc/store/v1/products/17062' => Http::response($unavailable),
+        '*' => Http::response([], 404),
+    ]);
+
+    $scraped = app(FootwaveProductScraper::class)->scrapeById(372);
+
+    expect($scraped['eligible'])->toBeTrue()
+        ->and($scraped['variants_unresolved'])->toBeFalse()
+        ->and($scraped['variants'])->toHaveCount(2)
+        ->and($scraped['variants'][0]['stock_status'])->toBe('in_stock')
+        ->and($scraped['variants'][1])->toMatchArray([
+            'external_variant_id' => '17062',
+            'price_gross_amount' => 0,
+            'stock_status' => 'out_of_stock',
+            'is_purchasable' => false,
+        ]);
+});
+
+it('rejects a purchasable FootWave size whose authoritative price is zero', function (): void {
+    $zero = footwaveKidsVariationFixture(
+        id: 17062,
+        size: '2XSK (26-27)',
+        slug: '2xsk-26-27',
+        sku: 'FW_ZERO',
+        inStock: true,
+        maxQty: 1,
+    );
+    $zero['prices']['price'] = '0';
+
+    Http::fake([
+        'https://footwave.pl/wp-json/wc/store/v1/products/372' => Http::response(footwaveKidsParentFixture()),
+        'https://footwave.pl/wp-json/wc/store/v1/products/17063' => Http::response(footwaveKidsVariationFixture(
+            id: 17063,
+            size: '3XSK (24-25)',
+            slug: '3xsk-24-25',
+            sku: 'FW_07020248_3XSK',
+            inStock: true,
+            maxQty: 580,
+        )),
+        'https://footwave.pl/wp-json/wc/store/v1/products/17062' => Http::response($zero),
+        '*' => Http::response([], 404),
+    ]);
+
+    $scraped = app(FootwaveProductScraper::class)->scrapeById(372);
+
+    expect($scraped['eligible'])->toBeFalse()
+        ->and($scraped['variants_unresolved'])->toBeTrue()
+        ->and(implode(' ', $scraped['warnings']))->toContain('no positive price');
+});

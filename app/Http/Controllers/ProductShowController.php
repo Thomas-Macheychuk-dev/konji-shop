@@ -62,7 +62,9 @@ class ProductShowController extends Controller
                 ->orderByDesc('category_product.is_primary')
                 ->orderBy('name'),
             'variants' => fn ($query) => $query
-                ->where('status', ProductVariantStatus::ACTIVE->value)
+                ->whereIn('status', $isAdminPreview
+                    ? [ProductVariantStatus::ACTIVE->value, ProductVariantStatus::DRAFT->value]
+                    : [ProductVariantStatus::ACTIVE->value])
                 ->with('attributeValues.attribute'),
             'attributeValueImages.attributeValue.attribute',
         ]);

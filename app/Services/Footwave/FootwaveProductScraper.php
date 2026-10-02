@@ -28,7 +28,7 @@ final class FootwaveProductScraper
      * Transform one top-level WooCommerce Store API product into the
      * stable FootWave source boundary consumed later by the importer.
      *
-     * @param array<string, mixed> $product
+     * @param  array<string, mixed>  $product
      * @return array<string, mixed>
      */
     public function scrape(array $product): array
@@ -100,8 +100,8 @@ final class FootwaveProductScraper
     }
 
     /**
-     * @param array<string, mixed> $result
-     * @param array<string, mixed> $product
+     * @param  array<string, mixed>  $result
+     * @param  array<string, mixed>  $product
      * @return array<string, mixed>
      */
     private function withSimpleVariant(
@@ -113,11 +113,11 @@ final class FootwaveProductScraper
             $product['prices']['price'] ?? null
         );
 
-        if ($price === null) {
+        if ($price === null || $price <= 0) {
             $result['variants_unresolved'] = true;
             $result['exclusion_reason'] = 'missing_simple_product_price';
             $result['warnings'][] =
-                'FootWave simple product has no authoritative Store API price.';
+                'FootWave simple product has no positive authoritative Store API price.';
 
             return $result;
         }
@@ -131,12 +131,10 @@ final class FootwaveProductScraper
                 $product['prices']['regular_price'] ?? null
             ),
             'currency' => $this->currency($product),
-            'stock_status' =>
-                ($product['is_in_stock'] ?? false) === true
+            'stock_status' => ($product['is_in_stock'] ?? false) === true
                     ? 'in_stock'
                     : 'out_of_stock',
-            'is_purchasable' =>
-                ($product['is_purchasable'] ?? false) === true,
+            'is_purchasable' => ($product['is_purchasable'] ?? false) === true,
             'source_max_qty' => $this->positiveInt(
                 $product['add_to_cart']['maximum'] ?? null
             ),
@@ -148,8 +146,8 @@ final class FootwaveProductScraper
     }
 
     /**
-     * @param array<string, mixed> $result
-     * @param array<string, mixed> $product
+     * @param  array<string, mixed>  $result
+     * @param  array<string, mixed>  $product
      * @return array<string, mixed>
      */
     private function withVariableVariants(
@@ -230,11 +228,11 @@ final class FootwaveProductScraper
              */
             if (
                 ($child['is_purchasable'] ?? false) === true
-                && $price === null
+                && ($price === null || $price <= 0)
             ) {
                 $unresolved = true;
                 $result['warnings'][] = sprintf(
-                    'Purchasable FootWave variation %d has no price.',
+                    'Purchasable FootWave variation %d has no positive price.',
                     $variationId,
                 );
 
@@ -266,12 +264,15 @@ final class FootwaveProductScraper
                     $child['prices']['regular_price'] ?? null
                 ),
                 'currency' => $this->currency($child),
-                'stock_status' =>
-                    ($child['is_in_stock'] ?? false) === true
+                // Woo can report an unpurchasable zero-priced variant as in stock.
+                // That supplier state must never become a sellable Ortezka option.
+                'stock_status' => ($child['is_in_stock'] ?? false) === true
+                    && ($child['is_purchasable'] ?? false) === true
+                    && $price !== null
+                    && $price > 0
                         ? 'in_stock'
                         : 'out_of_stock',
-                'is_purchasable' =>
-                    ($child['is_purchasable'] ?? false) === true,
+                'is_purchasable' => ($child['is_purchasable'] ?? false) === true,
                 'source_max_qty' => $this->positiveInt(
                     $child['add_to_cart']['maximum'] ?? null
                 ),
@@ -305,7 +306,7 @@ final class FootwaveProductScraper
     }
 
     /**
-     * @param array<string, mixed> $product
+     * @param  array<string, mixed>  $product
      * @return array<string, array<string, mixed>>
      */
     private function attributeDefinitions(array $product): array
@@ -346,8 +347,7 @@ final class FootwaveProductScraper
                     is_array($attribute['terms'] ?? null)
                         ? $attribute['terms']
                         : []
-                )
-                as $sortOrder => $term
+                ) as $sortOrder => $term
             ) {
                 if (! is_array($term)) {
                     continue;
@@ -371,8 +371,7 @@ final class FootwaveProductScraper
                 'name' => $name,
                 'code' => $code,
                 'taxonomy' => $taxonomy,
-                'external_attribute_id' =>
-                    'footwave-'.($taxonomy ?: $code),
+                'external_attribute_id' => 'footwave-'.($taxonomy ?: $code),
                 'terms' => $terms,
             ];
         }
@@ -381,8 +380,8 @@ final class FootwaveProductScraper
     }
 
     /**
-     * @param array<string, mixed> $parentVariation
-     * @param array<string, array<string, mixed>> $definitions
+     * @param  array<string, mixed>  $parentVariation
+     * @param  array<string, array<string, mixed>>  $definitions
      * @return list<array<string, mixed>>
      */
     private function variationAttributes(
@@ -442,7 +441,7 @@ final class FootwaveProductScraper
     }
 
     /**
-     * @param array<string, mixed> $product
+     * @param  array<string, mixed>  $product
      * @return list<string>
      */
     private function images(array $product): array
@@ -465,7 +464,7 @@ final class FootwaveProductScraper
     }
 
     /**
-     * @param array<string, mixed> $product
+     * @param  array<string, mixed>  $product
      * @return list<array{id:int|null,name:string,slug:string}>
      */
     private function categories(array $product): array
@@ -495,7 +494,7 @@ final class FootwaveProductScraper
     }
 
     /**
-     * @param array<string, mixed> $product
+     * @param  array<string, mixed>  $product
      */
     private function currency(array $product): string
     {

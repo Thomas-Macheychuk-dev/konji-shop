@@ -21,36 +21,43 @@ final class Seni24ProductUrlScraper
     ];
 
     private ?Closure $progressCallback = null;
+
     private int $timeoutSeconds = 15;
+
     private int $requestDelayMilliseconds = 500;
+
     private int $maxCategoryPages = 250;
 
     public function withProgressCallback(?Closure $callback): self
     {
         $this->progressCallback = $callback;
+
         return $this;
     }
 
     public function withTimeout(int $seconds): self
     {
         $this->timeoutSeconds = max(1, $seconds);
+
         return $this;
     }
 
     public function withRequestDelayMilliseconds(int $milliseconds): self
     {
         $this->requestDelayMilliseconds = max(0, $milliseconds);
+
         return $this;
     }
 
     public function withMaxCategoryPages(int $pages): self
     {
         $this->maxCategoryPages = max(1, $pages);
+
         return $this;
     }
 
     /** @param array<int,string> $startUrls
-     *  @return array<int,string>
+     * @return array<int,string>
      */
     public function discover(array $startUrls = self::DEFAULT_URLS): array
     {
@@ -58,7 +65,7 @@ final class Seni24ProductUrlScraper
     }
 
     /** @param array<int,string> $startUrls
-     *  @return array<string,mixed>
+     * @return array<string,mixed>
      */
     public function scrape(array $startUrls = self::DEFAULT_URLS): array
     {
@@ -89,7 +96,7 @@ final class Seni24ProductUrlScraper
                 }
 
                 $url = array_shift($queue);
-                if (!is_string($url) || isset($visitedForRoot[$url])) {
+                if (! is_string($url) || isset($visitedForRoot[$url])) {
                     continue;
                 }
 
@@ -109,8 +116,9 @@ final class Seni24ProductUrlScraper
                     $productUrl = $candidate['url'];
                     $candidate['listing_roots'] = [$root];
 
-                    if (!isset($products[$productUrl])) {
+                    if (! isset($products[$productUrl])) {
                         $products[$productUrl] = $candidate;
+
                         continue;
                     }
 
@@ -132,7 +140,7 @@ final class Seni24ProductUrlScraper
                 }
 
                 foreach ($links['pagination_urls'] as $pageUrl) {
-                    if (!isset($visitedForRoot[$pageUrl]) && !in_array($pageUrl, $queue, true)) {
+                    if (! isset($visitedForRoot[$pageUrl]) && ! in_array($pageUrl, $queue, true)) {
                         $queue[] = $pageUrl;
                     }
                 }
@@ -173,13 +181,14 @@ final class Seni24ProductUrlScraper
 
         $crawler->filter('a[href]')->each(function (Crawler $node) use (&$products, &$pages, $baseUrl, $rootPath): void {
             $href = $node->attr('href');
-            if (!is_string($href)) {
+            if (! is_string($href)) {
                 return;
             }
 
             $pageUrl = $this->normalizePaginationUrl($href, $baseUrl, $rootPath);
             if ($pageUrl !== null) {
                 $pages[$pageUrl] = true;
+
                 return;
             }
 
@@ -197,11 +206,12 @@ final class Seni24ProductUrlScraper
                     'listing_pages' => [$baseUrl],
                 ];
 
-                if (!isset($products[$productUrl])) {
+                if (! isset($products[$productUrl])) {
                     $products[$productUrl] = $candidate;
                 } elseif ($products[$productUrl]['name'] === '' && $candidate['name'] !== '') {
                     $products[$productUrl]['name'] = $candidate['name'];
                 }
+
                 return;
             }
 
@@ -249,12 +259,12 @@ final class Seni24ProductUrlScraper
         $query = [];
         parse_str((string) ($parts['query'] ?? ''), $query);
 
-        if (rtrim($path, '/') !== rtrim($rootPath, '/') || !isset($query['page'])) {
+        if (rtrim($path, '/') !== rtrim($rootPath, '/') || ! isset($query['page'])) {
             return null;
         }
 
         $page = filter_var($query['page'], FILTER_VALIDATE_INT);
-        if (!is_int($page) || $page < 1) {
+        if (! is_int($page) || $page < 1) {
             return null;
         }
 
@@ -273,11 +283,13 @@ final class Seni24ProductUrlScraper
                 ->get($url);
         } catch (Throwable $exception) {
             $failed[$url] = $exception->getMessage();
+
             return null;
         }
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             $failed[$url] = 'HTTP '.$response->status();
+
             return null;
         }
 
@@ -287,7 +299,7 @@ final class Seni24ProductUrlScraper
     private function isSiteChromeAnchor(Crawler $node): bool
     {
         $domNode = $node->getNode(0);
-        if (!$domNode instanceof DOMElement) {
+        if (! $domNode instanceof DOMElement) {
             return false;
         }
 
@@ -340,7 +352,7 @@ final class Seni24ProductUrlScraper
     private function priceNearAnchor(Crawler $node): ?float
     {
         $domNode = $node->getNode(0);
-        if (!$domNode instanceof DOMElement) {
+        if (! $domNode instanceof DOMElement) {
             return null;
         }
 
@@ -365,7 +377,7 @@ final class Seni24ProductUrlScraper
             $url = 'https:'.$url;
         } elseif (str_starts_with($url, '/')) {
             $url = 'https://'.self::HOST.$url;
-        } elseif (!preg_match('#^https?://#iu', $url)) {
+        } elseif (! preg_match('#^https?://#iu', $url)) {
             if ($baseUrl === null) {
                 return null;
             }
@@ -376,12 +388,12 @@ final class Seni24ProductUrlScraper
         }
 
         $parts = parse_url($url);
-        if (!is_array($parts) || !isset($parts['host'])) {
+        if (! is_array($parts) || ! isset($parts['host'])) {
             return null;
         }
 
         $host = mb_strtolower((string) $parts['host']);
-        if (!in_array($host, ['seni24.pl', 'www.seni24.pl'], true)) {
+        if (! in_array($host, ['seni24.pl', 'www.seni24.pl'], true)) {
             return null;
         }
 
@@ -413,6 +425,7 @@ final class Seni24ProductUrlScraper
         $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $value = str_replace("\xc2\xa0", ' ', $value);
         $value = preg_replace('/\\s+/u', ' ', $value) ?? $value;
+
         return trim($value);
     }
 

@@ -105,8 +105,7 @@ it('imports an Iconic product idempotently with approved multi-root taxonomy and
             'ICO-RELIEF-DUAL-1196',
         ])
         ->and($product->variants->every(
-            fn (ProductVariant $variant): bool =>
-                $variant->status === ProductVariantStatus::DRAFT
+            fn (ProductVariant $variant): bool => $variant->status === ProductVariantStatus::DRAFT
                 && $variant->vat_rate === VatRate::VAT_8
                 && $variant->price_gross_amount === 17600
         ))->toBeTrue();

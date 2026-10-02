@@ -93,7 +93,7 @@ final class FootwaveStoreApiClient
     }
 
     /**
-     * @param array<string, scalar> $query
+     * @param  array<string, scalar>  $query
      */
     private function get(
         string $path,

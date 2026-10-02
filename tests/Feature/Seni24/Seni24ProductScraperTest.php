@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Services\Seni24\Seni24ProductScraper;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Http;
 
 it('extracts Seni24 identity, VAT, price, taxonomy, medical data and selected variant', function (): void {
     $html = <<<'HTML'
@@ -767,7 +769,6 @@ it('marks structured variants unresolved when visible attributes are indistingui
         ->and($result['variants_unresolved'])->toBeTrue();
 });
 
-
 it('hydrates structured Seni24 variants from concrete combination pages', function (): void {
     $productGroup = <<<'JSON'
         {
@@ -877,9 +878,9 @@ it('hydrates structured Seni24 variants from concrete combination pages', functi
 
     $calls = [];
 
-    \Illuminate\Support\Facades\Http::fake(
+    Http::fake(
         function (
-            \Illuminate\Http\Client\Request $request
+            Request $request
         ) use (
             &$calls,
             $initialHtml,
@@ -891,7 +892,7 @@ it('hydrates structured Seni24 variants from concrete combination pages', functi
             $calls[$url] = ($calls[$url] ?? 0) + 1;
 
             if (str_ends_with($url, '_427-24045')) {
-                return \Illuminate\Support\Facades\Http::response(
+                return Http::response(
                     $calls[$url] === 1
                         ? $initialHtml
                         : $variant45Html,
@@ -900,13 +901,13 @@ it('hydrates structured Seni24 variants from concrete combination pages', functi
             }
 
             if (str_ends_with($url, '_427-24046')) {
-                return \Illuminate\Support\Facades\Http::response(
+                return Http::response(
                     $variant46Html,
                     200,
                 );
             }
 
-            return \Illuminate\Support\Facades\Http::response(
+            return Http::response(
                 'unexpected',
                 404,
             );
@@ -961,7 +962,7 @@ it('hydrates structured Seni24 variants from concrete combination pages', functi
             'Seni24 product exposes additional variant choices whose authoritative combination prices were not resolved.'
         );
 
-    \Illuminate\Support\Facades\Http::assertSentCount(3);
+    Http::assertSentCount(3);
 });
 
 it('keeps structured Seni24 variants unresolved when combination pages expose no selected DOM semantics', function (): void {
@@ -1026,8 +1027,8 @@ it('keeps structured Seni24 variants unresolved when combination pages expose no
         </html>
     HTML;
 
-    \Illuminate\Support\Facades\Http::fake([
-        '*' => \Illuminate\Support\Facades\Http::response(
+    Http::fake([
+        '*' => Http::response(
             $html,
             200,
         ),
@@ -1069,9 +1070,8 @@ it('keeps structured Seni24 variants unresolved when combination pages expose no
      * Recovery must stop immediately after authoritative
      * semantics are unavailable.
      */
-    \Illuminate\Support\Facades\Http::assertSentCount(2);
+    Http::assertSentCount(2);
 });
-
 
 it('accepts a visible Seni24 combination price when exact page identity proves stale structured pricing', function (): void {
     $productGroup = <<<'JSON'
@@ -1218,9 +1218,9 @@ it('accepts a visible Seni24 combination price when exact page identity proves s
 
     $calls = [];
 
-    \Illuminate\Support\Facades\Http::fake(
+    Http::fake(
         function (
-            \Illuminate\Http\Client\Request $request
+            Request $request
         ) use (
             &$calls,
             $initial,
@@ -1231,7 +1231,7 @@ it('accepts a visible Seni24 combination price when exact page identity proves s
             $calls[$url] = ($calls[$url] ?? 0) + 1;
 
             if (str_ends_with($url, '_1398-25738')) {
-                return \Illuminate\Support\Facades\Http::response(
+                return Http::response(
                     $calls[$url] === 1
                         ? $initial
                         : $variant25738,
@@ -1240,13 +1240,13 @@ it('accepts a visible Seni24 combination price when exact page identity proves s
             }
 
             if (str_ends_with($url, '_1398-25737')) {
-                return \Illuminate\Support\Facades\Http::response(
+                return Http::response(
                     $variant25737,
                     200,
                 );
             }
 
-            return \Illuminate\Support\Facades\Http::response(
+            return Http::response(
                 'unexpected',
                 404,
             );
@@ -1281,7 +1281,7 @@ it('accepts a visible Seni24 combination price when exact page identity proves s
             ]['succeeded']
         )->toBeTrue();
 
-    \Illuminate\Support\Facades\Http::assertSentCount(3);
+    Http::assertSentCount(3);
 });
 
 it('ignores a zero DOM placeholder when structured Seni24 semantics are fragment-confirmed', function (): void {
@@ -1387,9 +1387,9 @@ it('ignores a zero DOM placeholder when structured Seni24 semantics are fragment
         HTML;
     };
 
-    \Illuminate\Support\Facades\Http::fake(
+    Http::fake(
         function (
-            \Illuminate\Http\Client\Request $request
+            Request $request
         ) use ($productGroup, $page) {
             if (
                 str_ends_with(
@@ -1397,7 +1397,7 @@ it('ignores a zero DOM placeholder when structured Seni24 semantics are fragment
                     '_5220-9586',
                 )
             ) {
-                return \Illuminate\Support\Facades\Http::response(
+                return Http::response(
                     $page('9586', $productGroup),
                     200,
                 );
@@ -1409,13 +1409,13 @@ it('ignores a zero DOM placeholder when structured Seni24 semantics are fragment
                     '_5220-9587',
                 )
             ) {
-                return \Illuminate\Support\Facades\Http::response(
+                return Http::response(
                     $page('9587', $productGroup),
                     200,
                 );
             }
 
-            return \Illuminate\Support\Facades\Http::response(
+            return Http::response(
                 'unexpected',
                 404,
             );
@@ -1456,7 +1456,6 @@ it('ignores a zero DOM placeholder when structured Seni24 semantics are fragment
             ]['succeeded']
         )->toBeTrue();
 });
-
 
 it('uses a concrete Seni24 ProductGroup price when it corroborates the visible combination price', function (): void {
     $group = static function (
@@ -1588,9 +1587,9 @@ it('uses a concrete Seni24 ProductGroup price when it corroborates the visible c
 
     $calls = [];
 
-    \Illuminate\Support\Facades\Http::fake(
+    Http::fake(
         function (
-            \Illuminate\Http\Client\Request $request
+            Request $request
         ) use (
             &$calls,
             $initial,
@@ -1608,7 +1607,7 @@ it('uses a concrete Seni24 ProductGroup price when it corroborates the visible c
                     '_9000-10001',
                 )
             ) {
-                return \Illuminate\Support\Facades\Http::response(
+                return Http::response(
                     $calls[$url] === 1
                         ? $initial
                         : $variantA,
@@ -1622,13 +1621,13 @@ it('uses a concrete Seni24 ProductGroup price when it corroborates the visible c
                     '_9000-10002',
                 )
             ) {
-                return \Illuminate\Support\Facades\Http::response(
+                return Http::response(
                     $variantB,
                     200,
                 );
             }
 
-            return \Illuminate\Support\Facades\Http::response(
+            return Http::response(
                 'unexpected',
                 404,
             );
@@ -1663,9 +1662,8 @@ it('uses a concrete Seni24 ProductGroup price when it corroborates the visible c
             ]
         )->toBe(7.5);
 
-    \Illuminate\Support\Facades\Http::assertSentCount(3);
+    Http::assertSentCount(3);
 });
-
 
 it('uses the requested Seni24 combination instead of a stale canonical combination for visible pricing', function (): void {
     $html = <<<'HTML'
@@ -1750,7 +1748,6 @@ it('uses the requested Seni24 combination instead of a stale canonical combinati
         ->and($result['variants_unresolved'])
         ->toBeFalse();
 });
-
 
 it('excludes Seni24 multipack product controls from the current products variant options', function (): void {
     $html = <<<'HTML'
@@ -1985,7 +1982,6 @@ it('excludes Seni24 multipack product controls from the current products variant
         )->toBe('M');
 });
 
-
 it('rejects an HTTP 200 Seni24 fallback page as a failed product scrape', function (): void {
     $html = <<<'HTML'
         <html>
@@ -2004,12 +2000,11 @@ it('rejects an HTTP 200 Seni24 fallback page as a failed product scrape', functi
         </html>
     HTML;
 
-    \Illuminate\Support\Facades\Http::fake([
-        '*' =>
-            \Illuminate\Support\Facades\Http::response(
-                $html,
-                200,
-            ),
+    Http::fake([
+        '*' => Http::response(
+            $html,
+            200,
+        ),
     ]);
 
     $url =
@@ -2035,7 +2030,6 @@ it('rejects an HTTP 200 Seni24 fallback page as a failed product scrape', functi
         ]);
 });
 
-
 it('rejects an HTTP 200 Seni24 category page that contains only an incidental price', function (): void {
     $html = <<<'HTML'
         <html>
@@ -2058,12 +2052,11 @@ it('rejects an HTTP 200 Seni24 category page that contains only an incidental pr
         </html>
     HTML;
 
-    \Illuminate\Support\Facades\Http::fake([
-        '*' =>
-            \Illuminate\Support\Facades\Http::response(
-                $html,
-                200,
-            ),
+    Http::fake([
+        '*' => Http::response(
+            $html,
+            200,
+        ),
     ]);
 
     $url =

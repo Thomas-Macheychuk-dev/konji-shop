@@ -56,7 +56,15 @@ class CartItemStoreController extends Controller
                 ->withInput();
         }
 
-        if ($variant->grossPriceAmount() === null) {
+        $grossAmount = $variant->grossPriceAmount();
+
+        if (
+            $grossAmount === null
+            || (
+                $variant->product->external_source === 'footwave'
+                && $grossAmount <= 0
+            )
+        ) {
             return back()
                 ->withErrors([
                     'product_variant_id' => 'Cena tego wariantu jest obecnie niedostępna.',
