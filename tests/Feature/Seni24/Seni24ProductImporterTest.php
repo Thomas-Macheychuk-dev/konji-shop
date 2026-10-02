@@ -206,8 +206,7 @@ it('canonicalizes the Seni24 size-table alias without duplicating variant size v
 
     $attributes = $variant->attributeValues
         ->map(
-            fn ($value): string =>
-                $value->attribute->name.'='.$value->value
+            fn ($value): string => $value->attribute->name.'='.$value->value
         )
         ->sort()
         ->values()

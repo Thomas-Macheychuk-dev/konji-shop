@@ -16,29 +16,34 @@ final class Seni24ProductScraper
     private const HOSTS = ['www.seni24.pl', 'seni24.pl'];
 
     private ?Closure $progressCallback = null;
+
     private int $timeoutSeconds = 15;
+
     private int $requestDelayMilliseconds = 500;
 
     public function withProgressCallback(?Closure $callback): self
     {
         $this->progressCallback = $callback;
+
         return $this;
     }
 
     public function withTimeout(int $seconds): self
     {
         $this->timeoutSeconds = max(1, $seconds);
+
         return $this;
     }
 
     public function withRequestDelayMilliseconds(int $milliseconds): self
     {
         $this->requestDelayMilliseconds = max(0, $milliseconds);
+
         return $this;
     }
 
     /** @param array<string,mixed>|null $context
-     *  @return array<string,mixed>
+     * @return array<string,mixed>
      */
     public function scrape(string $url, ?array $context = null): array
     {
@@ -59,7 +64,7 @@ final class Seni24ProductScraper
             return $this->failedResult($normalized, $exception->getMessage(), $context);
         }
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return $this->failedResult($normalized, 'HTTP '.$response->status(), $context);
         }
 
@@ -98,7 +103,7 @@ final class Seni24ProductScraper
     }
 
     /** @param array<string,mixed>|null $context
-     *  @return array<string,mixed>
+     * @return array<string,mixed>
      */
     public function extract(string $html, string $sourceUrl, ?array $context = null): array
     {
@@ -332,16 +337,14 @@ final class Seni24ProductScraper
                 'listing_roots' => $listingRoots,
                 'selected_variant_url' => $sourceUrl,
                 'selected_variant_id' => $selectedVariantId,
-                'structured_variant_recovery_required' =>
-                    $structuredVariantCandidates !== []
+                'structured_variant_recovery_required' => $structuredVariantCandidates !== []
                     && (
                         $structuredVariantHasContradictedSingleOptions
                         || $structuredVariantHasDuplicateAttributeSignatures
                     ),
-                'structured_variant_recovery_keys' =>
-                    array_keys(
-                        $structuredVariantContradictedSingleOptionKeys,
-                    ),
+                'structured_variant_recovery_keys' => array_keys(
+                    $structuredVariantContradictedSingleOptionKeys,
+                ),
             ]),
             'warnings' => $warnings,
             'failed_urls' => [],
@@ -362,7 +365,7 @@ final class Seni24ProductScraper
      *
      * Recovery is all-or-nothing for the product.
      *
-     * @param array<string,mixed> $result
+     * @param  array<string,mixed>  $result
      * @return array<string,mixed>
      */
     private function hydrateStructuredVariantCandidates(
@@ -502,8 +505,7 @@ final class Seni24ProductScraper
             $selectedAttributes = array_values(
                 array_filter(
                     $pageVariantData['selected_attributes'],
-                    fn (array $attribute): bool =>
-                        is_string($attribute['value'] ?? null)
+                    fn (array $attribute): bool => is_string($attribute['value'] ?? null)
                         && ! $this->isVariantPlaceholderValue(
                             $attribute['value'],
                         ),
@@ -824,8 +826,7 @@ final class Seni24ProductScraper
             $candidate['label'] = implode(
                 ', ',
                 array_map(
-                    static fn (array $attribute): string =>
-                        $attribute['label'].': '.$attribute['value'],
+                    static fn (array $attribute): string => $attribute['label'].': '.$attribute['value'],
                     $candidate['attributes'],
                 ),
             );
@@ -868,8 +869,7 @@ final class Seni24ProductScraper
                 is_array($result['warnings'] ?? null)
                     ? $result['warnings']
                     : [],
-                static fn (mixed $value): bool =>
-                    $value !== $warning,
+                static fn (mixed $value): bool => $value !== $warning,
             ),
         );
 
@@ -885,7 +885,7 @@ final class Seni24ProductScraper
     }
 
     /**
-     * @param array<string,mixed> $result
+     * @param  array<string,mixed>  $result
      * @return array<string,mixed>
      */
     private function variantHydrationFailure(
@@ -917,7 +917,7 @@ final class Seni24ProductScraper
      * - every available stable candidate identity field (SKU/EAN) agrees,
      * - with at least one stable identity field actually present.
      *
-     * @param array<string,mixed> $candidate
+     * @param  array<string,mixed>  $candidate
      */
     private function combinationPageHasExactIdentity(
         Crawler $crawler,
@@ -952,17 +952,15 @@ final class Seni24ProductScraper
         );
 
         $pageIdentities = [
-            'catalogue_number' =>
-                $this->attributeValue(
-                    $features,
-                    'Indeks',
-                ),
+            'catalogue_number' => $this->attributeValue(
+                $features,
+                'Indeks',
+            ),
 
-            'ean' =>
-                $this->attributeValue(
-                    $features,
-                    'ean13',
-                )
+            'ean' => $this->attributeValue(
+                $features,
+                'ean13',
+            )
                 ?? $this->attributeValue(
                     $features,
                     'EAN',
@@ -1020,7 +1018,7 @@ final class Seni24ProductScraper
     }
 
     /**
-     * @param array<string,mixed> $result
+     * @param  array<string,mixed>  $result
      */
     /**
      * Live HTTP responses must contain independent evidence that the page
@@ -1029,7 +1027,7 @@ final class Seni24ProductScraper
      * A price alone is insufficient: generic category/fallback pages can
      * contain unrelated prices while still being served with HTTP 200.
      *
-     * @param array<string,mixed> $result
+     * @param  array<string,mixed>  $result
      */
     private function hasAuthoritativeProductEvidence(
         array $result,
@@ -1088,8 +1086,7 @@ final class Seni24ProductScraper
         foreach (
             is_array($result['variant_candidates'] ?? null)
                 ? $result['variant_candidates']
-                : []
-            as $candidate
+                : [] as $candidate
         ) {
             if (! is_array($candidate)) {
                 continue;
@@ -1191,12 +1188,12 @@ final class Seni24ProductScraper
         }
 
         $parts = parse_url($absolute);
-        if (!is_array($parts) || !isset($parts['host'])) {
+        if (! is_array($parts) || ! isset($parts['host'])) {
             return null;
         }
 
         $host = mb_strtolower((string) $parts['host']);
-        if (!in_array($host, self::HOSTS, true)) {
+        if (! in_array($host, self::HOSTS, true)) {
             return null;
         }
 
@@ -1226,6 +1223,7 @@ final class Seni24ProductScraper
     {
         $path = trim((string) parse_url($url, PHP_URL_PATH), '/');
         $base = basename($path);
+
         return (string) preg_replace('/_[0-9]+-[0-9]+(?:\\.html)?$/u', '', $base);
     }
 
@@ -1398,6 +1396,7 @@ final class Seni24ProductScraper
     private function money(string $value): float
     {
         $value = str_replace(["\xc2\xa0", ' '], '', $value);
+
         return (float) str_replace(',', '.', $value);
     }
 
@@ -1635,6 +1634,7 @@ final class Seni24ProductScraper
                 return $attribute['value'];
             }
         }
+
         return null;
     }
 
@@ -1668,7 +1668,7 @@ final class Seni24ProductScraper
      * Resolve authoritative Seni24 combinations from schema.org ProductGroup
      * structured data. One product page may contain all concrete combinations.
      *
-     * @param list<array<string,mixed>> $groups
+     * @param  list<array<string,mixed>>  $groups
      * @return list<array<string,mixed>>
      */
     private function structuredVariantCandidates(
@@ -1737,8 +1737,8 @@ final class Seni24ProductScraper
     }
 
     /**
-     * @param list<array<string,mixed>> $groups
-     * @param array<string,array<string,mixed>> $candidates
+     * @param  list<array<string,mixed>>  $groups
+     * @param  array<string,array<string,mixed>>  $candidates
      */
     private function collectStructuredVariantCandidates(
         mixed $node,
@@ -1797,8 +1797,7 @@ final class Seni24ProductScraper
                 $label = $attributes === []
                     ? ($sku ?: $variantId)
                     : implode(', ', array_map(
-                        static fn (array $attribute): string =>
-                            $attribute['label'].': '.$attribute['value'],
+                        static fn (array $attribute): string => $attribute['label'].': '.$attribute['value'],
                         $attributes,
                     ));
 
@@ -1858,8 +1857,8 @@ final class Seni24ProductScraper
     }
 
     /**
-     * @param array<string,mixed> $node
-     * @param list<array<string,mixed>> $groups
+     * @param  array<string,mixed>  $node
+     * @param  list<array<string,mixed>>  $groups
      * @return list<array{label:string,value:string}>
      */
     private function structuredVariantAttributes(
@@ -1996,9 +1995,9 @@ final class Seni24ProductScraper
      * Selected DOM attributes apply to the selected combination. Options whose
      * group has exactly one possible value apply to every combination.
      *
-     * @param list<array<string,mixed>> $candidates
-     * @param list<array{label:string,value:string}> $selectedAttributes
-     * @param list<array<string,mixed>> $groups
+     * @param  list<array<string,mixed>>  $candidates
+     * @param  list<array{label:string,value:string}>  $selectedAttributes
+     * @param  list<array<string,mixed>>  $groups
      * @return list<array<string,mixed>>
      */
     private function enrichStructuredVariantAttributes(
@@ -2097,8 +2096,7 @@ final class Seni24ProductScraper
 
             if ($candidate['attributes'] !== []) {
                 $candidate['label'] = implode(', ', array_map(
-                    static fn (array $attribute): string =>
-                        $attribute['label'].': '.$attribute['value'],
+                    static fn (array $attribute): string => $attribute['label'].': '.$attribute['value'],
                     $candidate['attributes'],
                 ));
             }
@@ -2120,8 +2118,8 @@ final class Seni24ProductScraper
      * - candidate URLs expose more than one value for the group, or
      * - only part of the structured candidate set exposes that group.
      *
-     * @param list<array<string,mixed>> $candidates
-     * @param list<array<string,mixed>> $groups
+     * @param  list<array<string,mixed>>  $candidates
+     * @param  list<array<string,mixed>>  $groups
      * @return array<string,true>
      */
     private function contradictedStructuredSingleOptionGroupKeys(
@@ -2215,8 +2213,7 @@ final class Seni24ProductScraper
         $result = [];
 
         foreach (
-            explode('/', trim(rawurldecode($fragment), '/'))
-            as $segment
+            explode('/', trim(rawurldecode($fragment), '/')) as $segment
         ) {
             if (! str_contains($segment, '-')) {
                 continue;
@@ -2264,7 +2261,7 @@ final class Seni24ProductScraper
      * Catalogue number, EAN and external ID deliberately do not participate:
      * they prove source identity but do not repair missing semantic choices.
      *
-     * @param list<array<string,mixed>> $candidates
+     * @param  list<array<string,mixed>>  $candidates
      */
     private function hasDuplicateStructuredVariantAttributeSignatures(
         array $candidates,
@@ -2319,8 +2316,8 @@ final class Seni24ProductScraper
     }
 
     /**
-     * @param list<array<string,mixed>> $candidates
-     * @param list<array<string,mixed>> $groups
+     * @param  list<array<string,mixed>>  $candidates
+     * @param  list<array<string,mixed>>  $groups
      */
     private function structuredVariantsCoverOptions(
         array $candidates,
@@ -2515,6 +2512,7 @@ final class Seni24ProductScraper
 
                         if (! isset($deduped[$value])) {
                             $deduped[$value] = $option;
+
                             continue;
                         }
 
@@ -2789,12 +2787,12 @@ final class Seni24ProductScraper
         }
 
         $parts = parse_url($absolute);
-        if (!is_array($parts) || !isset($parts['host'])) {
+        if (! is_array($parts) || ! isset($parts['host'])) {
             return null;
         }
 
         $host = mb_strtolower((string) $parts['host']);
-        if (!str_ends_with($host, 'seni24.pl')) {
+        if (! str_ends_with($host, 'seni24.pl')) {
             return null;
         }
 
@@ -2835,6 +2833,7 @@ final class Seni24ProductScraper
             $node = $crawler->filter($selector)->first();
             if ($node->count() > 0) {
                 $value = $this->normalizeText((string) $node->attr('content'));
+
                 return $value !== '' ? $value : null;
             }
         } catch (Throwable) {
@@ -2858,6 +2857,7 @@ final class Seni24ProductScraper
             } catch (Throwable) {
             }
         }
+
         return '';
     }
 
@@ -2882,7 +2882,7 @@ final class Seni24ProductScraper
         }
 
         $parts = parse_url($baseUrl);
-        if (!is_array($parts)) {
+        if (! is_array($parts)) {
             return null;
         }
 
@@ -2897,19 +2897,21 @@ final class Seni24ProductScraper
         $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $value = str_replace("\xc2\xa0", ' ', $value);
         $value = preg_replace('/\\s+/u', ' ', $value) ?? $value;
+
         return trim($value);
     }
 
     private function containsComparable(string $haystack, string $needle): bool
     {
         $normalize = static fn (string $value): string => Str::lower(Str::ascii($value));
+
         return str_contains($normalize($haystack), $normalize($needle));
     }
 
     /** @return list<string> */
     private function stringList(mixed $value): array
     {
-        if (!is_array($value)) {
+        if (! is_array($value)) {
             return [];
         }
         $result = [];
@@ -2918,11 +2920,12 @@ final class Seni24ProductScraper
                 $result[] = trim($item);
             }
         }
+
         return array_values(array_unique($result));
     }
 
     /** @param array<string,mixed>|null $context
-     *  @return array<string,mixed>
+     * @return array<string,mixed>
      */
     private function failedResult(string $url, string $reason, ?array $context): array
     {

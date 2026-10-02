@@ -142,7 +142,6 @@ it('imports only priced Iconic products when an explicit VAT override is supplie
         ->and(Product::query()->where('external_id', 'regeneracja-narzedzi')->exists())->toBeFalse();
 });
 
-
 it('uses the configured default Iconic VAT rate when no CLI override is supplied', function (): void {
     Storage::fake('local');
     config()->set('iconic.default_vat_rate', 8);
