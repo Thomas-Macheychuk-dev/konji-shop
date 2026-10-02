@@ -47,3 +47,38 @@ it('rejects an active variant whose price is unavailable', function (): void {
 
     $this->assertDatabaseCount('cart_items', 0);
 });
+
+it('rejects an active FootWave variant with a zero gross price at cart entry', function (): void {
+    $product = Product::query()->create([
+        'name' => 'FootWave zero-price guard',
+        'slug' => 'footwave-zero-price-guard',
+        'status' => ProductStatus::ACTIVE,
+        'external_source' => 'footwave',
+        'external_id' => '20795',
+    ]);
+
+    $variant = ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'FOOTWAVE-20804',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => 0,
+        'price_gross_amount' => 0,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => false,
+    ]);
+
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->from(route('products.show', $product->slug))
+        ->post(route('cart.items.store'), [
+            'product_variant_id' => $variant->id,
+            'quantity' => 1,
+        ])
+        ->assertRedirect(route('products.show', $product->slug))
+        ->assertSessionHasErrors('product_variant_id');
+
+    $this->assertDatabaseCount('cart_items', 0);
+});

@@ -336,7 +336,14 @@ class CheckoutService
 
             $unitGrossAmount = $variant->grossPriceAmount();
 
-            if ($unitGrossAmount === null || $unitGrossAmount < 0) {
+            if (
+                $unitGrossAmount === null
+                || $unitGrossAmount < 0
+                || (
+                    $product->external_source === 'footwave'
+                    && $unitGrossAmount === 0
+                )
+            ) {
                 throw new RuntimeException("Variant {$variant->id} has an invalid price.");
             }
 

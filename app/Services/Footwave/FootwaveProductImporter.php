@@ -29,7 +29,7 @@ final class FootwaveProductImporter
     ) {}
 
     /**
-     * @param array<string, mixed> $scraped
+     * @param  array<string, mixed>  $scraped
      */
     public function import(
         array $scraped,
@@ -59,7 +59,7 @@ final class FootwaveProductImporter
             $isNew = $product === null;
 
             if ($product === null) {
-                $product = new Product();
+                $product = new Product;
                 $product->external_source = 'footwave';
                 $product->external_id = $externalId;
                 $product->status = ProductStatus::DRAFT;
@@ -131,7 +131,7 @@ final class FootwaveProductImporter
     }
 
     /**
-     * @param array<string, mixed> $scraped
+     * @param  array<string, mixed>  $scraped
      */
     private function assertImportable(array $scraped): void
     {
@@ -212,18 +212,18 @@ final class FootwaveProductImporter
 
             if (
                 ($variant['is_purchasable'] ?? false) === true
-                && ! is_int($gross)
+                && (! is_int($gross) || $gross <= 0)
             ) {
                 throw new RuntimeException(
                     'Purchasable FootWave variant '.$variantId.
-                    ' has no authoritative gross price.'
+                    ' has no positive authoritative gross price.'
                 );
             }
         }
     }
 
     /**
-     * @param array<string, mixed> $scraped
+     * @param  array<string, mixed>  $scraped
      */
     private function syncCategories(
         Product $product,
@@ -272,7 +272,7 @@ final class FootwaveProductImporter
     }
 
     /**
-     * @param array<string, mixed> $scraped
+     * @param  array<string, mixed>  $scraped
      */
     private function syncImages(
         Product $product,
@@ -382,7 +382,7 @@ final class FootwaveProductImporter
     }
 
     /**
-     * @param array<string, mixed> $scraped
+     * @param  array<string, mixed>  $scraped
      * @return array<string, int>
      */
     private function syncAttributes(array $scraped): array
@@ -474,8 +474,7 @@ final class FootwaveProductImporter
         if ($attribute !== null) {
             $updates = [
                 'name' => $name,
-                'display_type' =>
-                    AttributeDisplayType::SELECT,
+                'display_type' => AttributeDisplayType::SELECT,
             ];
 
             if (! filled($attribute->external_attribute_id)) {
@@ -489,12 +488,10 @@ final class FootwaveProductImporter
         }
 
         return Attribute::query()->create([
-            'external_attribute_id' =>
-                $externalAttributeId,
+            'external_attribute_id' => $externalAttributeId,
             'name' => $name,
             'slug' => $slug,
-            'display_type' =>
-                AttributeDisplayType::SELECT,
+            'display_type' => AttributeDisplayType::SELECT,
         ]);
     }
 
@@ -543,8 +540,7 @@ final class FootwaveProductImporter
 
         return AttributeValue::query()->create([
             'attribute_id' => $attribute->id,
-            'external_option_id' =>
-                $externalOptionId,
+            'external_option_id' => $externalOptionId,
             'value' => $value,
             'slug' => $slug,
             'sort_order' => $sortOrder,
@@ -552,8 +548,8 @@ final class FootwaveProductImporter
     }
 
     /**
-     * @param array<string, mixed> $scraped
-     * @param array<string, int> $attributeValueMap
+     * @param  array<string, mixed>  $scraped
+     * @param  array<string, int>  $attributeValueMap
      */
     private function syncVariants(
         Product $product,
@@ -601,7 +597,7 @@ final class FootwaveProductImporter
             $isNew = $variant === null;
 
             if ($variant === null) {
-                $variant = new ProductVariant();
+                $variant = new ProductVariant;
                 $variant->product_id = $product->id;
                 $variant->external_variant_id =
                     $externalVariantId;
@@ -644,9 +640,12 @@ final class FootwaveProductImporter
             $variant->currency = Currency::PLN;
             $variant->vat_rate = $vatRate;
 
+            // Defensive check even for manually supplied scraped payloads.
             $variant->stock_status =
-                ($variantData['stock_status'] ?? null)
-                    === 'in_stock'
+                ($variantData['stock_status'] ?? null) === 'in_stock'
+                && ($variantData['is_purchasable'] ?? false) === true
+                && $grossAmount !== null
+                && $grossAmount > 0
                     ? StockStatus::IN_STOCK
                     : StockStatus::OUT_OF_STOCK;
 
@@ -658,8 +657,7 @@ final class FootwaveProductImporter
             $valueIds = [];
 
             foreach (
-                ($variantData['attributes'] ?? [])
-                as $attributeData
+                ($variantData['attributes'] ?? []) as $attributeData
             ) {
                 if (! is_array($attributeData)) {
                     continue;
@@ -696,18 +694,17 @@ final class FootwaveProductImporter
             ->where('product_id', $product->id)
             ->when(
                 $incomingIds !== [],
-                fn ($query) =>
-                    $query->whereNotIn(
-                        'external_variant_id',
-                        $incomingIds
-                    ),
+                fn ($query) => $query->whereNotIn(
+                    'external_variant_id',
+                    $incomingIds
+                ),
                 fn ($query) => $query,
             )
             ->delete();
     }
 
     /**
-     * @param list<array<string, mixed>> $variants
+     * @param  list<array<string, mixed>>  $variants
      */
     private function defaultVariantIndex(
         array $variants,
@@ -722,6 +719,7 @@ final class FootwaveProductImporter
                     $variant['price_gross_amount']
                     ?? null
                 )
+                && $variant['price_gross_amount'] > 0
             ) {
                 return $index;
             }
