@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Support\Seo\ParentProductRedirectApprovalPolicy;
 use Illuminate\Console\Command;
 use JsonException;
 use RuntimeException;
@@ -37,7 +38,7 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
             /** @var array<string, mixed> $manifest */
             $manifest = json_decode($rawManifest, true, flags: JSON_THROW_ON_ERROR);
             $rules = $this->approvedRules($manifest);
-            $rendered = $this->renderMap($rules, hash('sha256', $rawManifest));
+            $rendered = $this->renderMap($rules, hash('sha256', $rawManifest), $manifestRelative);
 
             $directory = dirname($outputPath);
 
@@ -77,6 +78,10 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
     private function approvedRules(array $manifest): array
     {
         $schemaVersion = $manifest['schema_version'] ?? null;
+
+        if ($schemaVersion === 3) {
+            return $this->approvedV3Rules($manifest);
+        }
 
         if (! in_array($schemaVersion, [1, 2], true)) {
             throw new RuntimeException('Unsupported redirect approval manifest schema version.');
@@ -190,6 +195,242 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
         return $rules;
     }
 
+    /**
+     * Generate mappings only from a complete, explicitly approved
+     * schema-v3 manifest.
+     *
+     * Original records must match the existing v1 manifest exactly.
+     * Parent-product records must match frozen SEO-03B evidence and
+     * contain an explicit individual approval decision.
+     *
+     * @param  array<string, mixed>  $manifest
+     * @return array<string, string>
+     */
+    private function approvedV3Rules(array $manifest): array
+    {
+        if (($manifest['validation_only'] ?? null) !== false
+            || ($manifest['redirects_installed'] ?? null) !== 0) {
+            throw new RuntimeException(
+                'Schema v3 requires an approved, non-validation-only manifest.',
+            );
+        }
+
+        if (($manifest['parent_review_sha256'] ?? null)
+                !== ParentProductRedirectApprovalPolicy::REVIEW_SHA256
+            || ($manifest['parent_validation_sha256'] ?? null)
+                !== ParentProductRedirectApprovalPolicy::VALIDATION_SHA256) {
+            throw new RuntimeException(
+                'Schema v3 SEO-03B evidence provenance mismatch.',
+            );
+        }
+
+        $originalPath = base_path(
+            'resources/seo/ortezka/product-redirect-approvals.json',
+        );
+
+        $originalRaw = @file_get_contents($originalPath);
+
+        if (! is_string($originalRaw)
+            || ($manifest['original_manifest_sha256'] ?? null)
+                !== hash('sha256', $originalRaw)) {
+            throw new RuntimeException(
+                'Schema v3 original cohort provenance mismatch.',
+            );
+        }
+
+        $original = json_decode(
+            $originalRaw,
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+
+        if (! is_array($original)
+            || ($original['schema_version'] ?? null) !== 1
+            || ($original['approved_product_count'] ?? null) !== 23
+            || ($original['approved_source_path_count'] ?? null) !== 36) {
+            throw new RuntimeException(
+                'Original SEO redirect cohort is invalid.',
+            );
+        }
+
+        // Reuse the established v1 validation rules. This also checks
+        // approval state, active variants, duplicate paths and chains.
+        if (count($this->approvedRules($original)) !== 36) {
+            throw new RuntimeException(
+                'Original cohort failed existing redirect validation.',
+            );
+        }
+
+        $originalById = [];
+
+        foreach ($original['records'] as $record) {
+            if (! is_array($record)) {
+                throw new RuntimeException(
+                    'Invalid original redirect record.',
+                );
+            }
+
+            $id = (string) ($record['legacy_product_id'] ?? '');
+
+            if ($id === '' || isset($originalById[$id])) {
+                throw new RuntimeException(
+                    'Duplicate or missing original legacy ID.',
+                );
+            }
+
+            $originalById[$id] = $record;
+        }
+
+        $policy = app(
+            ParentProductRedirectApprovalPolicy::class,
+        );
+
+        $reviewed = $policy->reviewedRecords();
+
+        $records = $manifest['records'] ?? null;
+
+        if (! is_array($records)
+            || count($records) !== 45
+            || ($manifest['product_count'] ?? null) !== 45
+            || ($manifest['source_path_count'] ?? null) !== 64) {
+            throw new RuntimeException(
+                'Schema v3 requires exactly 45 products and 64 source paths.',
+            );
+        }
+
+        $rules = [];
+        $targets = [];
+        $seenOriginal = [];
+        $seenParent = [];
+
+        foreach ($records as $record) {
+            if (! is_array($record)
+                || ($record['approved'] ?? null) !== true
+                || ($record['decision'] ?? null) !== 'APPROVE_301') {
+                throw new RuntimeException(
+                    'Schema v3 contains an unapproved redirect.',
+                );
+            }
+
+            $basis = $record['approval_basis'] ?? null;
+
+            if ($basis === 'exact_active_variant_sku_and_name') {
+                $id = (string) ($record['legacy_product_id'] ?? '');
+
+                if (! isset($originalById[$id])
+                    || isset($seenOriginal[$id])) {
+                    throw new RuntimeException(
+                        'Invalid original-cohort identity.',
+                    );
+                }
+
+                // The only permitted addition to an existing v1 record
+                // is its explicit schema-v3 approval-basis discriminator.
+                $comparison = $record;
+
+                unset($comparison['approval_basis']);
+
+                if ($comparison !== $originalById[$id]) {
+                    throw new RuntimeException(
+                        'Schema v3 original approval differs from its frozen record.',
+                    );
+                }
+
+                $seenOriginal[$id] = true;
+            } elseif (
+                $basis
+                === ParentProductRedirectApprovalPolicy::APPROVAL_BASIS
+            ) {
+                $id = (string) ($record['legacy_id'] ?? '');
+
+                if (! isset($reviewed[$id])
+                    || isset($seenParent[$id])) {
+                    throw new RuntimeException(
+                        'Invalid parent-product approval identity.',
+                    );
+                }
+
+                $policy->assertApprovedRecord(
+                    $record,
+                    $reviewed[$id],
+                );
+
+                $seenParent[$id] = true;
+            } else {
+                throw new RuntimeException(
+                    'Unsupported schema v3 approval basis.',
+                );
+            }
+
+            $target = $record['target_path'] ?? null;
+
+            if (! is_string($target)
+                || ! str_starts_with($target, '/products/')) {
+                throw new RuntimeException(
+                    'Invalid schema v3 target path.',
+                );
+            }
+
+            $this->validatePath($target, 'target');
+
+            if (isset($targets[$target])) {
+                throw new RuntimeException(
+                    'Duplicate schema v3 target path: '.$target,
+                );
+            }
+
+            $targets[$target] = true;
+
+            $sourcePaths = $record['source_paths'] ?? null;
+
+            if (! is_array($sourcePaths) || $sourcePaths === []) {
+                throw new RuntimeException(
+                    'Missing schema v3 source paths.',
+                );
+            }
+
+            foreach ($sourcePaths as $source) {
+                if (! is_string($source)) {
+                    throw new RuntimeException(
+                        'Invalid schema v3 source path type.',
+                    );
+                }
+
+                $this->validatePath($source, 'source');
+
+                if ($source === $target
+                    || array_key_exists($source, $rules)) {
+                    throw new RuntimeException(
+                        'Duplicate or looping schema v3 source: '.$source,
+                    );
+                }
+
+                $rules[$source] = $target;
+            }
+        }
+
+        if (count($seenOriginal) !== 23
+            || count($seenParent) !== 22
+            || count($rules) !== 64) {
+            throw new RuntimeException(
+                'Incomplete schema v3 approval cohort.',
+            );
+        }
+
+        // Reject indirect redirects and cycles across both cohorts.
+        foreach ($rules as $source => $target) {
+            if (array_key_exists($target, $rules)) {
+                throw new RuntimeException(
+                    'Schema v3 redirect chain: '.$source,
+                );
+            }
+        }
+
+        ksort($rules, SORT_STRING);
+
+        return $rules;
+    }
+
     private function validatePath(string $path, string $label): void
     {
         if ($path === '' || ! str_starts_with($path, '/') || str_starts_with($path, '//')) {
@@ -202,11 +443,11 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
     }
 
     /** @param array<string, string> $rules */
-    private function renderMap(array $rules, string $manifestSha256): string
+    private function renderMap(array $rules, string $manifestSha256, string $manifestRelative): string
     {
         $lines = [
             '# GENERATED FILE. DO NOT EDIT BY HAND.',
-            '# Source: resources/seo/ortezka/product-redirect-approvals.json',
+            '# Source: '.$manifestRelative,
             '# Manifest SHA-256: '.$manifestSha256,
             '# Runtime activation is controlled separately by LEGACY_SEO_REDIRECTS_ENABLED.',
             'map_hash_bucket_size 128;',

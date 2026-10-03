@@ -74,7 +74,7 @@ it('locks the SEO-03B parent-product candidate cohort without authorising redire
         expect($record['approved'])->toBeFalse()
             ->and($record['decision'])->toBe('PENDING_HUMAN_APPROVAL')
             ->and($record['approval_basis'])
-                ->toBe('exact_parent_sku_and_name_with_active_variants')
+            ->toBe('exact_parent_sku_and_name_with_active_variants')
             ->and($record['target_validation'])->toBe('PASS')
             ->and($record['active_variant_count'])->toBeGreaterThan(0);
 

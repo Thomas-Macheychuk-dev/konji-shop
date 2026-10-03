@@ -16,7 +16,7 @@ it('loads exactly the frozen 22-product parent SKU approval candidates', functio
         expect($record['approved'])->toBeFalse()
             ->and($record['decision'])->toBe('PENDING_HUMAN_APPROVAL')
             ->and($record['approval_basis'])
-                ->toBe(ParentProductRedirectApprovalPolicy::APPROVAL_BASIS)
+            ->toBe(ParentProductRedirectApprovalPolicy::APPROVAL_BASIS)
             ->and($record['active_variant_count'])->toBeGreaterThan(0);
 
         foreach ($record['source_paths'] as $source) {

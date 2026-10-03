@@ -177,8 +177,8 @@ final class ParentProductRedirectApprovalPolicy
      *
      * Approval metadata is deliberately separate from matching evidence.
      *
-     * @param array<string, mixed> $submitted
-     * @param array<string, mixed> $frozen
+     * @param  array<string, mixed>  $submitted
+     * @param  array<string, mixed>  $frozen
      */
     public function assertApprovedRecord(array $submitted, array $frozen): void
     {
