@@ -99,6 +99,10 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
     {
         $schemaVersion = $manifest['schema_version'] ?? null;
 
+        if ($schemaVersion === 3) {
+            return $this->approvedSchemaV3Targets($manifest);
+        }
+
         if (! in_array($schemaVersion, [1, 2], true)) {
             throw new RuntimeException('Unsupported redirect approval manifest schema version.');
         }
@@ -217,6 +221,80 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
             if (($manifest['source_path_count'] ?? null) !== count($sourcePaths)) {
                 throw new RuntimeException('source_path_count does not match unique schema v2 source paths.');
             }
+        }
+
+        ksort($targets, SORT_STRING);
+
+        return array_values($targets);
+    }
+
+    /**
+     * Resolve final storefront targets from a fully approved
+     * schema-v3 manifest without generating Nginx configuration.
+     *
+     * The shared generator gate owns all approval, provenance,
+     * identity, source-path and redirect-chain checks.
+     *
+     * @param  array<string, mixed>  $manifest
+     * @return list<array{
+     *     target_product_id: string,
+     *     target_product_name: string,
+     *     target_path: string
+     * }>
+     */
+    private function approvedSchemaV3Targets(array $manifest): array
+    {
+        $records = app(
+            GenerateLegacySeoProductRedirectMapCommand::class,
+        )->validatedSchemaV3Records($manifest);
+
+        $targets = [];
+
+        foreach ($records as $record) {
+            $productId = $record['target_product_id'] ?? null;
+            $productName = $record['target_product_name'] ?? null;
+            $targetPath = $record['target_path'] ?? null;
+
+            if ((! is_string($productId) && ! is_int($productId))
+                || trim((string) $productId) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v3 target product ID.',
+                );
+            }
+
+            if (! is_string($productName)
+                || trim($productName) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v3 target product name.',
+                );
+            }
+
+            if (! is_string($targetPath)
+                || ! str_starts_with($targetPath, '/products/')) {
+                throw new RuntimeException(
+                    'Invalid schema v3 target path.',
+                );
+            }
+
+            $this->validatePath($targetPath, 'target');
+
+            if (isset($targets[$targetPath])) {
+                throw new RuntimeException(
+                    'Duplicate schema v3 target path: '.$targetPath,
+                );
+            }
+
+            $targets[$targetPath] = [
+                'target_product_id' => (string) $productId,
+                'target_product_name' => $productName,
+                'target_path' => $targetPath,
+            ];
+        }
+
+        if (count($targets) !== 45) {
+            throw new RuntimeException(
+                'Schema v3 target validation requires 45 unique products.',
+            );
         }
 
         ksort($targets, SORT_STRING);

@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Console\Commands\GenerateLegacySeoProductRedirectMapCommand;
 use App\Support\Seo\ParentProductRedirectApprovalPolicy;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Http;
 
 function seo03bV3Fixture(): array
 {
@@ -300,5 +303,233 @@ it('fails closed for invalid schema v3 approvals without overwriting the output 
             file_get_contents($outputPath),
             'Generator overwrote output for case: '.$case,
         );
+    }
+});
+
+it('shares the strict schema v3 approval gate without generating an nginx map', function (): void {
+    $validator = app(
+        GenerateLegacySeoProductRedirectMapCommand::class,
+    );
+
+    $manifest = seo03bV3Fixture();
+
+    $output = base_path(
+        'storage/framework/testing/seo-03b-schema-v3-candidate.conf',
+    );
+
+    @unlink($output);
+
+    $records = $validator->validatedSchemaV3Records($manifest);
+
+    expect($records)->toHaveCount(45)
+        ->and(is_file($output))->toBeFalse();
+
+    $manifest['records'][23]['approved'] = false;
+    $manifest['records'][23]['decision'] = 'PENDING_HUMAN_APPROVAL';
+
+    expect(fn () => $validator->validatedSchemaV3Records($manifest))
+        ->toThrow(RuntimeException::class);
+
+    expect(is_file($output))->toBeFalse();
+});
+
+it('validates all 64 synthetic schema v3 runtime redirects without changing activation', function (): void {
+    config(['traffic_protection.enabled' => false]);
+
+    $manifest = seo03bV3Fixture();
+    $manifestRelative = seo03bWriteV3Fixture($manifest);
+
+    $sourceTargets = [];
+    $targetNames = [];
+
+    foreach ($manifest['records'] as $record) {
+        $targetNames[$record['target_path']] = $record['target_product_name'];
+
+        foreach ($record['source_paths'] as $source) {
+            $sourceTargets[$source] = $record['target_path'];
+        }
+    }
+
+    expect($sourceTargets)->toHaveCount(64)
+        ->and($targetNames)->toHaveCount(45);
+
+    Http::fake(
+        static function (Request $request) use (
+            $sourceTargets,
+            $targetNames
+        ) {
+            $path = parse_url($request->url(), PHP_URL_PATH);
+
+            if ($path === '/robots.txt') {
+                return Http::response(
+                    "User-agent: *\nAllow: /\n",
+                    200,
+                );
+            }
+
+            if (is_string($path) && isset($sourceTargets[$path])) {
+                return Http::response(
+                    '',
+                    301,
+                    [
+                        'Location' => 'https://staging.example.test'.$sourceTargets[$path],
+                    ],
+                );
+            }
+
+            if (is_string($path) && isset($targetNames[$path])) {
+                $name = htmlspecialchars(
+                    $targetNames[$path],
+                    ENT_QUOTES | ENT_SUBSTITUTE,
+                    'UTF-8',
+                );
+
+                $canonical = 'https://staging.example.test'.$path;
+
+                $html = '<!doctype html><html><head>'
+                    .'<link rel="canonical" href="'.$canonical.'">'
+                    .'</head><body><h1>'.$name.'</h1></body></html>';
+
+                return Http::response(
+                    $html,
+                    200,
+                    ['Content-Type' => 'text/html'],
+                );
+            }
+
+            return Http::response(
+                'Unexpected URL',
+                500,
+            );
+        },
+    );
+
+    $reportRelative =
+        'storage/framework/testing/seo-03b-v3-runtime-validation.json';
+
+    try {
+        $exit = Artisan::call(
+            'seo:validate-legacy-product-redirect-runtime',
+            [
+                '--manifest' => $manifestRelative,
+                '--base-url' => 'https://staging.example.test',
+                '--output' => $reportRelative,
+            ],
+        );
+
+        expect($exit)->toBe(0)
+            ->and(Artisan::output())->toContain('RESULT: PASS');
+
+        $report = json_decode(
+            (string) file_get_contents(base_path($reportRelative)),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+
+        expect($report['result'])->toBe('PASS')
+            ->and($report['summary']['approved_source_paths'])->toBe(64)
+            ->and($report['summary']['source_http_301'])->toBe(64)
+            ->and($report['summary']['correct_destinations'])->toBe(64)
+            ->and($report['summary']['query_strings_dropped'])->toBe(64)
+            ->and($report['summary']['target_http_200'])->toBe(64)
+            ->and($report['summary']['canonical_correct'])->toBe(64)
+            ->and($report['summary']['indexable'])->toBe(64)
+            ->and($report['summary']['product_identity_correct'])->toBe(64)
+            ->and($report['summary']['redirect_chains'])->toBe(0)
+            ->and($report['summary']['redirect_loops'])->toBe(0)
+            ->and($report['control']['unchanged'])->toBeTrue()
+            ->and($report['redirect_activation_changed_by_this_command'])
+            ->toBeFalse();
+
+        // 64 source requests + 64 destination requests + 1 control.
+        Http::assertSentCount(129);
+    } finally {
+        @unlink(base_path($reportRelative));
+    }
+});
+
+it('rejects invalid schema v3 runtime manifests before issuing HTTP requests', function (): void {
+    config(['traffic_protection.enabled' => false]);
+
+    Http::fake();
+
+    $reportRelative =
+        'storage/framework/testing/seo-03b-v3-runtime-validation.json';
+
+    $reportPath = base_path($reportRelative);
+
+    $cases = [
+        'pending_parent',
+        'changed_parent_source',
+        'changed_original_target',
+        'validation_only',
+        'incorrect_provenance',
+    ];
+
+    try {
+        foreach ($cases as $case) {
+            $manifest = seo03bV3Fixture();
+
+            switch ($case) {
+                case 'pending_parent':
+                    $manifest['records'][23]['approved'] = false;
+                    $manifest['records'][23]['decision'] =
+                        'PENDING_HUMAN_APPROVAL';
+                    break;
+
+                case 'changed_parent_source':
+                    $manifest['records'][23]['source_paths'][0] =
+                        '/unreviewed-legacy-source';
+                    break;
+
+                case 'changed_original_target':
+                    $manifest['records'][0]['target_path'] =
+                        '/products/incorrect-target';
+                    break;
+
+                case 'validation_only':
+                    $manifest['validation_only'] = true;
+                    break;
+
+                case 'incorrect_provenance':
+                    $manifest['parent_validation_sha256'] =
+                        str_repeat('0', 64);
+                    break;
+
+                default:
+                    throw new RuntimeException('Unknown case: '.$case);
+            }
+
+            $manifestRelative = seo03bWriteV3Fixture($manifest);
+
+            $sentinel = "DO_NOT_OVERWRITE\n";
+
+            file_put_contents($reportPath, $sentinel);
+
+            $exit = Artisan::call(
+                'seo:validate-legacy-product-redirect-runtime',
+                [
+                    '--manifest' => $manifestRelative,
+                    '--base-url' => 'https://staging.example.test',
+                    '--output' => $reportRelative,
+                ],
+            );
+
+            $this->assertSame(
+                1,
+                $exit,
+                'Invalid runtime manifest accepted: '.$case,
+            );
+
+            $this->assertSame(
+                $sentinel,
+                file_get_contents($reportPath),
+                'Invalid manifest overwrote report: '.$case,
+            );
+        }
+
+        Http::assertNothingSent();
+    } finally {
+        @unlink($reportPath);
     }
 });

@@ -431,6 +431,23 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
         return $rules;
     }
 
+    /**
+     * Reuse the complete schema-v3 approval gate without generating
+     * or publishing any Nginx configuration.
+     *
+     * @param  array<string, mixed>  $manifest
+     * @return list<array<string, mixed>>
+     */
+    public function validatedSchemaV3Records(array $manifest): array
+    {
+        $this->approvedV3Rules($manifest);
+
+        /** @var list<array<string, mixed>> $records */
+        $records = $manifest['records'];
+
+        return $records;
+    }
+
     private function validatePath(string $path, string $label): void
     {
         if ($path === '' || ! str_starts_with($path, '/') || str_starts_with($path, '//')) {
