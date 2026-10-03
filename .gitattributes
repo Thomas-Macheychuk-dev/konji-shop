@@ -11,3 +11,4 @@ README.md export-ignore
 .github/workflows/browser-tests.yml export-ignore
 
 *.pdf binary
+resources/seo/ortezka/review/parent-product-documentary-review-20261003.csv -text

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Console\Commands\GenerateLegacySeoProductRedirectMapCommand;
 use App\Support\Seo\ParentProductRedirectApprovalPolicy;
+use App\Support\Seo\ParentProductRedirectDecisionLedger;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
@@ -21,7 +22,11 @@ function seo03bV3Fixture(): array
     );
 
     $policy = app(ParentProductRedirectApprovalPolicy::class);
-    $reviewed = array_values($policy->reviewedRecords());
+    $frozen = $policy->reviewedRecords();
+    $reviewed = array_values($frozen);
+    $approvedParentIds = app(
+        ParentProductRedirectDecisionLedger::class,
+    )->approvedRecords($frozen);
 
     $records = [];
 
@@ -31,6 +36,10 @@ function seo03bV3Fixture(): array
     }
 
     foreach ($reviewed as $record) {
+        if (! isset($approvedParentIds[(string) $record['legacy_id']])) {
+            continue;
+        }
+
         // Synthetic approval metadata exists ONLY inside this test fixture.
         $record['approved'] = true;
         $record['decision'] = 'APPROVE_301';
@@ -45,14 +54,15 @@ function seo03bV3Fixture(): array
         'schema_version' => 3,
         'validation_only' => false,
         'redirects_installed' => 0,
-        'product_count' => 45,
-        'source_path_count' => 64,
+        'product_count' => 41,
+        'source_path_count' => 58,
 
         'original_manifest_sha256' => hash_file('sha256', $originalPath),
 
         'parent_review_sha256' => ParentProductRedirectApprovalPolicy::REVIEW_SHA256,
 
         'parent_validation_sha256' => ParentProductRedirectApprovalPolicy::VALIDATION_SHA256,
+        'parent_decision_sha256' => ParentProductRedirectDecisionLedger::DECISION_SHA256,
 
         'records' => $records,
     ];
@@ -91,10 +101,10 @@ afterEach(function (): void {
     ));
 });
 
-it('generates exactly 64 synthetic schema v3 mappings without modifying the committed production map', function (): void {
+it('generates exactly 58 synthetic schema v3 mappings without modifying the committed production map', function (): void {
     $manifest = seo03bV3Fixture();
 
-    expect($manifest['records'])->toHaveCount(45);
+    expect($manifest['records'])->toHaveCount(41);
 
     $manifestRelative = seo03bWriteV3Fixture($manifest);
 
@@ -126,7 +136,7 @@ it('generates exactly 64 synthetic schema v3 mappings without modifying the comm
     }
 
     expect($exit)->toBe(0)
-        ->and(Artisan::output())->toContain('Approved source paths: 64')
+        ->and(Artisan::output())->toContain('Approved source paths: 58')
         ->and(is_file($outputPath))->toBeTrue();
 
     $generated = (string) file_get_contents($outputPath);
@@ -135,7 +145,7 @@ it('generates exactly 64 synthetic schema v3 mappings without modifying the comm
         ->toContain('map $uri $legacy_seo_product_redirect_target {')
         ->toContain('default "";')
         ->toContain('# Source: '.$manifestRelative)
-        ->and(substr_count($generated, ' "/products/'))->toBe(64);
+        ->and(substr_count($generated, ' "/products/'))->toBe(58);
 
     // Check every mapping, not merely the summary count.
     $allSources = [];
@@ -154,8 +164,8 @@ it('generates exactly 64 synthetic schema v3 mappings without modifying the comm
         }
     }
 
-    expect($allSources)->toHaveCount(64)
-        ->and(array_unique($allSources))->toHaveCount(64)
+    expect($allSources)->toHaveCount(58)
+        ->and(array_unique($allSources))->toHaveCount(58)
         ->and(hash_file('sha256', $productionMap))
         ->toBe($productionHashBefore);
 });
@@ -321,7 +331,7 @@ it('shares the strict schema v3 approval gate without generating an nginx map', 
 
     $records = $validator->validatedSchemaV3Records($manifest);
 
-    expect($records)->toHaveCount(45)
+    expect($records)->toHaveCount(41)
         ->and(is_file($output))->toBeFalse();
 
     $manifest['records'][23]['approved'] = false;
@@ -333,7 +343,7 @@ it('shares the strict schema v3 approval gate without generating an nginx map', 
     expect(is_file($output))->toBeFalse();
 });
 
-it('validates all 64 synthetic schema v3 runtime redirects without changing activation', function (): void {
+it('validates all 58 synthetic schema v3 runtime redirects without changing activation', function (): void {
     config(['traffic_protection.enabled' => false]);
 
     $manifest = seo03bV3Fixture();
@@ -350,8 +360,8 @@ it('validates all 64 synthetic schema v3 runtime redirects without changing acti
         }
     }
 
-    expect($sourceTargets)->toHaveCount(64)
-        ->and($targetNames)->toHaveCount(45);
+    expect($sourceTargets)->toHaveCount(58)
+        ->and($targetNames)->toHaveCount(41);
 
     Http::fake(
         static function (Request $request) use (
@@ -427,22 +437,22 @@ it('validates all 64 synthetic schema v3 runtime redirects without changing acti
         );
 
         expect($report['result'])->toBe('PASS')
-            ->and($report['summary']['approved_source_paths'])->toBe(64)
-            ->and($report['summary']['source_http_301'])->toBe(64)
-            ->and($report['summary']['correct_destinations'])->toBe(64)
-            ->and($report['summary']['query_strings_dropped'])->toBe(64)
-            ->and($report['summary']['target_http_200'])->toBe(64)
-            ->and($report['summary']['canonical_correct'])->toBe(64)
-            ->and($report['summary']['indexable'])->toBe(64)
-            ->and($report['summary']['product_identity_correct'])->toBe(64)
+            ->and($report['summary']['approved_source_paths'])->toBe(58)
+            ->and($report['summary']['source_http_301'])->toBe(58)
+            ->and($report['summary']['correct_destinations'])->toBe(58)
+            ->and($report['summary']['query_strings_dropped'])->toBe(58)
+            ->and($report['summary']['target_http_200'])->toBe(58)
+            ->and($report['summary']['canonical_correct'])->toBe(58)
+            ->and($report['summary']['indexable'])->toBe(58)
+            ->and($report['summary']['product_identity_correct'])->toBe(58)
             ->and($report['summary']['redirect_chains'])->toBe(0)
             ->and($report['summary']['redirect_loops'])->toBe(0)
             ->and($report['control']['unchanged'])->toBeTrue()
             ->and($report['redirect_activation_changed_by_this_command'])
             ->toBeFalse();
 
-        // 64 source requests + 64 destination requests + 1 control.
-        Http::assertSentCount(129);
+        // 58 source requests + 58 destination requests + 1 control.
+        Http::assertSentCount(117);
     } finally {
         @unlink(base_path($reportRelative));
     }
@@ -532,4 +542,183 @@ it('rejects invalid schema v3 runtime manifests before issuing HTTP requests', f
     } finally {
         @unlink($reportPath);
     }
+});
+
+it('validates all 41 ledger-approved schema v3 product destinations without changing redirects', function (): void {
+    config(['traffic_protection.enabled' => false]);
+
+    $manifest = seo03bV3Fixture();
+    $manifestRelative = seo03bWriteV3Fixture($manifest);
+    $names = [];
+
+    foreach ($manifest['records'] as $record) {
+        $names[$record['target_path']] = $record['target_product_name'];
+    }
+
+    expect($names)->toHaveCount(41);
+
+    Http::fake(
+        static function (Request $request) use ($names) {
+            $path = parse_url($request->url(), PHP_URL_PATH);
+
+            if (! is_string($path) || ! isset($names[$path])) {
+                return Http::response('Unexpected URL', 500);
+            }
+
+            $name = htmlspecialchars($names[$path], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $canonical = 'https://staging.example.test'.$path;
+            $html = '<!doctype html><html><head>'
+                .'<link rel="canonical" href="'.$canonical.'">'
+                .'</head><body><h1>'.$name.'</h1></body></html>';
+
+            return Http::response(
+                $html,
+                200,
+                ['Content-Type' => 'text/html'],
+            );
+        },
+    );
+
+    $reportRelative = 'storage/framework/testing/seo-03b-v3-target-validation.json';
+
+    try {
+        $exit = Artisan::call('seo:validate-approved-product-targets', [
+            '--manifest' => $manifestRelative,
+            '--base-url' => 'https://staging.example.test',
+            '--output' => $reportRelative,
+        ]);
+
+        expect($exit)->toBe(0)
+            ->and(Artisan::output())->toContain('RESULT: PASS');
+
+        $report = json_decode(
+            (string) file_get_contents(base_path($reportRelative)),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+
+        expect($report['result'])->toBe('PASS')
+            ->and($report['summary']['approved_target_products'])->toBe(41)
+            ->and($report['summary']['http_200'])->toBe(41)
+            ->and($report['summary']['canonical_correct'])->toBe(41)
+            ->and($report['summary']['indexable'])->toBe(41)
+            ->and($report['summary']['product_identity_correct'])->toBe(41)
+            ->and($report['redirects_enabled_by_this_command'])->toBeFalse();
+
+        Http::assertSentCount(41);
+    } finally {
+        @unlink(base_path($reportRelative));
+    }
+});
+
+it('rejects pending held and tampered schema v3 target manifests before HTTP requests', function (): void {
+    config(['traffic_protection.enabled' => false]);
+    Http::fake();
+
+    $reportRelative = 'storage/framework/testing/seo-03b-v3-target-validation.json';
+    $reportPath = base_path($reportRelative);
+
+    try {
+        foreach (['pending_parent', 'held_parent', 'changed_target', 'validation_only', 'incorrect_provenance'] as $case) {
+            $manifest = seo03bV3Fixture();
+
+            switch ($case) {
+                case 'pending_parent':
+                    $manifest['records'][23]['approved'] = false;
+                    $manifest['records'][23]['decision'] = 'PENDING_HUMAN_APPROVAL';
+                    break;
+
+                case 'held_parent':
+                    $record = app(ParentProductRedirectApprovalPolicy::class)
+                        ->reviewedRecords()['6664'];
+                    $record['approved'] = true;
+                    $record['decision'] = 'APPROVE_301';
+                    $record['approved_by'] = 'synthetic-phpunit-reviewer';
+                    $record['approved_at'] = '2026-10-03T18:00:00+02:00';
+                    $record['approval_reference'] = 'SEO-03B-TEST-HELD-MUST-FAIL';
+                    $manifest['records'][23] = $record;
+                    break;
+
+                case 'changed_target':
+                    $manifest['records'][23]['target_path'] = '/products/unreviewed-product';
+                    break;
+
+                case 'validation_only':
+                    $manifest['validation_only'] = true;
+                    break;
+
+                case 'incorrect_provenance':
+                    $manifest['parent_decision_sha256'] = str_repeat('0', 64);
+                    break;
+            }
+
+            $manifestRelative = seo03bWriteV3Fixture($manifest);
+            $sentinel = "DO_NOT_OVERWRITE\n";
+            file_put_contents($reportPath, $sentinel);
+
+            $exit = Artisan::call('seo:validate-approved-product-targets', [
+                '--manifest' => $manifestRelative,
+                '--base-url' => 'https://staging.example.test',
+                '--output' => $reportRelative,
+            ]);
+
+            $this->assertSame(1, $exit, 'Invalid schema-v3 target fixture accepted: '.$case);
+            $this->assertSame($sentinel, file_get_contents($reportPath), 'Report overwritten: '.$case);
+        }
+
+        Http::assertNothingSent();
+    } finally {
+        @unlink($reportPath);
+    }
+});
+
+it('rejects every held parent or modified decision hash before writing a map or performing HTTP requests', function (): void {
+    config(['traffic_protection.enabled' => false]);
+    Http::fake();
+
+    $policy = app(ParentProductRedirectApprovalPolicy::class);
+    $heldRecord = $policy->reviewedRecords()['6664']; // One source path; keep fixture totals unchanged.
+    $heldRecord['approved'] = true;
+    $heldRecord['decision'] = 'APPROVE_301';
+    $heldRecord['approved_by'] = 'synthetic-phpunit-reviewer';
+    $heldRecord['approved_at'] = '2026-10-03T18:00:00+02:00';
+    $heldRecord['approval_reference'] = 'SEO-03B-TEST-HELD-MUST-FAIL';
+
+    foreach (['held_parent', 'modified_decision_hash'] as $case) {
+        $manifest = seo03bV3Fixture();
+
+        if ($case === 'held_parent') {
+            $manifest['records'][23] = $heldRecord;
+        } else {
+            $manifest['parent_decision_sha256'] = str_repeat('0', 64);
+        }
+
+        $relative = seo03bWriteV3Fixture($manifest);
+
+        foreach ([
+            ['seo:generate-legacy-product-redirect-map', 'storage/framework/testing/seo-03b-held-map.conf'],
+            ['seo:validate-approved-product-targets', 'storage/framework/testing/seo-03b-held-target.json'],
+            ['seo:validate-legacy-product-redirect-runtime', 'storage/framework/testing/seo-03b-held-runtime.json'],
+        ] as [$command, $output]) {
+            $absolute = base_path($output);
+            $sentinel = "DO_NOT_OVERWRITE\n";
+
+            file_put_contents($absolute, $sentinel);
+
+            try {
+                $arguments = ['--manifest' => $relative, '--output' => $output];
+
+                if ($command !== 'seo:generate-legacy-product-redirect-map') {
+                    $arguments['--base-url'] = 'https://staging.example.test';
+                }
+
+                $this->assertSame(1, Artisan::call($command, $arguments), $case.' '.$command);
+                $this->assertSame($sentinel, file_get_contents($absolute), $case.' '.$command);
+            } finally {
+                @unlink($absolute);
+            }
+        }
+    }
+
+    Http::assertNothingSent();
 });

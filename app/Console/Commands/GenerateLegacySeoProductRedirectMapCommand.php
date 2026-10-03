@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Support\Seo\ParentProductRedirectApprovalPolicy;
+use App\Support\Seo\ParentProductRedirectDecisionLedger;
 use Illuminate\Console\Command;
 use JsonException;
 use RuntimeException;
@@ -286,15 +287,24 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
         );
 
         $reviewed = $policy->reviewedRecords();
+        $approvedParents = app(ParentProductRedirectDecisionLedger::class)->approvedRecords($reviewed);
+
+        if (($manifest['parent_decision_sha256'] ?? null)
+                !== ParentProductRedirectDecisionLedger::DECISION_SHA256) {
+            throw new RuntimeException('Schema v3 accepted-decision provenance mismatch.');
+        }
+
+        $expectedProductCount = 23 + ParentProductRedirectDecisionLedger::APPROVED_PRODUCTS;
+        $expectedSourceCount = 36 + ParentProductRedirectDecisionLedger::APPROVED_SOURCE_PATHS;
 
         $records = $manifest['records'] ?? null;
 
         if (! is_array($records)
-            || count($records) !== 45
-            || ($manifest['product_count'] ?? null) !== 45
-            || ($manifest['source_path_count'] ?? null) !== 64) {
+            || count($records) !== $expectedProductCount
+            || ($manifest['product_count'] ?? null) !== $expectedProductCount
+            || ($manifest['source_path_count'] ?? null) !== $expectedSourceCount) {
             throw new RuntimeException(
-                'Schema v3 requires exactly 45 products and 64 source paths.',
+                'Schema v3 requires the complete ledger-approved partial cohort.',
             );
         }
 
@@ -343,7 +353,7 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
             ) {
                 $id = (string) ($record['legacy_id'] ?? '');
 
-                if (! isset($reviewed[$id])
+                if (! isset($approvedParents[$id])
                     || isset($seenParent[$id])) {
                     throw new RuntimeException(
                         'Invalid parent-product approval identity.',
@@ -352,7 +362,7 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
 
                 $policy->assertApprovedRecord(
                     $record,
-                    $reviewed[$id],
+                    $approvedParents[$id],
                 );
 
                 $seenParent[$id] = true;
@@ -410,8 +420,8 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
         }
 
         if (count($seenOriginal) !== 23
-            || count($seenParent) !== 22
-            || count($rules) !== 64) {
+            || count($seenParent) !== ParentProductRedirectDecisionLedger::APPROVED_PRODUCTS
+            || count($rules) !== $expectedSourceCount) {
             throw new RuntimeException(
                 'Incomplete schema v3 approval cohort.',
             );
