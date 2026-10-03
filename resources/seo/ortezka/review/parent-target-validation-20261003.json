@@ -1,0 +1,280 @@
+{
+  "summary": {
+    "products": 22,
+    "source_paths": 28,
+    "passed": 22,
+    "failed": 0
+  },
+  "records": [
+    {
+      "legacy_id": "6617",
+      "source_paths": [
+        "/poduszka-ortopedyczna-profilowana-silent-dream-id-6617"
+      ],
+      "target_path": "/products/poduszka-ortopedyczna-profilowana-silent-dream",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/poduszka-ortopedyczna-profilowana-silent-dream",
+      "expected_h1": "Poduszka ortopedyczna profilowana „Silent Dream”",
+      "observed_h1": "\n                                Poduszka ortopedyczna profilowana „Silent Dream”\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6627",
+      "source_paths": [
+        "/dynamiczna-poduszka-do-siedzenia-dynapad-37979-id-6627",
+        "/dynamiczna-poduszka-do-siedzenia-dynapad-id-6627"
+      ],
+      "target_path": "/products/dynamiczna-poduszka-do-siedzenia-dynapad",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/dynamiczna-poduszka-do-siedzenia-dynapad",
+      "expected_h1": "Dynamiczna poduszka do siedzenia „DYNAPAD”",
+      "observed_h1": "\n                                Dynamiczna poduszka do siedzenia „DYNAPAD”\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6628",
+      "source_paths": [
+        "/dynamiczna-poduszka-do-siedzenia-dynapad-max-id-6628"
+      ],
+      "target_path": "/products/dynamiczna-poduszka-do-siedzenia-dynapad-max",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/dynamiczna-poduszka-do-siedzenia-dynapad-max",
+      "expected_h1": "Dynamiczna poduszka do siedzenia „DYNAPAD MAX”",
+      "observed_h1": "\n                                Dynamiczna poduszka do siedzenia „DYNAPAD MAX”\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6631",
+      "source_paths": [
+        "/pilka-rehabilitacyjna-masujaca-midi-id-6631"
+      ],
+      "target_path": "/products/pilka-rehabilitacyjna-masujaca-midi",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/pilka-rehabilitacyjna-masujaca-midi",
+      "expected_h1": "Piłka rehabilitacyjna masująca MIDI",
+      "observed_h1": "\n                                Piłka rehabilitacyjna masująca MIDI\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6632",
+      "source_paths": [
+        "/pilka-rehabilitacyjna-midi-reh-37988-id-6632",
+        "/pilka-rehabilitacyjna-midi-reh-id-6632"
+      ],
+      "target_path": "/products/pilka-rehabilitacyjna-midi-reh",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/pilka-rehabilitacyjna-midi-reh",
+      "expected_h1": "Piłka rehabilitacyjna MIDI REH",
+      "observed_h1": "\n                                Piłka rehabilitacyjna MIDI REH\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6644",
+      "source_paths": [
+        "/kula-lokciowa-aluminiowa-38003-id-6644",
+        "/kula-lokciowa-aluminiowa-id-6644"
+      ],
+      "target_path": "/products/kula-lokciowa-aluminiowa",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/kula-lokciowa-aluminiowa",
+      "expected_h1": "Kula łokciowa – aluminiowa",
+      "observed_h1": "\n                                Kula łokciowa – aluminiowa\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6646",
+      "source_paths": [
+        "/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt-70785-id-6646",
+        "/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt-id-6646"
+      ],
+      "target_path": "/products/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt",
+      "expected_h1": "Kula łokciowa – aluminiowa z ruchomą obejmą, ergonomiczny uchwyt",
+      "observed_h1": "\n                                Kula łokciowa – aluminiowa z ruchomą obejmą, ergonomiczny uchwyt\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6647",
+      "source_paths": [
+        "/nasadka-gumowa-na-kule-70108-id-6647",
+        "/nasadka-gumowa-na-kule-id-6647"
+      ],
+      "target_path": "/products/nasadka-gumowa-na-kule",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/nasadka-gumowa-na-kule",
+      "expected_h1": "Nasadka gumowa na kulę",
+      "observed_h1": "\n                                Nasadka gumowa na kulę\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6650",
+      "source_paths": [
+        "/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-70781-id-6650",
+        "/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-id-6650"
+      ],
+      "target_path": "/products/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem",
+      "expected_h1": "Laska inwalidzka aluminiowa z miękkim uchwytem",
+      "observed_h1": "\n                                Laska inwalidzka aluminiowa z miękkim uchwytem\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6652",
+      "source_paths": [
+        "/laska-inwalidzka-trojnog-id-6652"
+      ],
+      "target_path": "/products/laska-inwalidzka-trojnog",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/laska-inwalidzka-trojnog",
+      "expected_h1": "Laska inwalidzka – trójnóg",
+      "observed_h1": "\n                                Laska inwalidzka – trójnóg\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6654",
+      "source_paths": [
+        "/laska-inwalidzka-czwornog-wysoki-id-6654"
+      ],
+      "target_path": "/products/laska-inwalidzka-czwornog-wysoki",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/laska-inwalidzka-czwornog-wysoki",
+      "expected_h1": "Laska inwalidzka – czwórnóg wysoki",
+      "observed_h1": "\n                                Laska inwalidzka – czwórnóg wysoki\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6661",
+      "source_paths": [
+        "/podporka-rehabilitacyjna-4-kolowa-aluminiowa-dynamic-id-6661"
+      ],
+      "target_path": "/products/podporka-rehabilitacyjna-4-kolowa-aluminiowa-dynamic",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/podporka-rehabilitacyjna-4-kolowa-aluminiowa-dynamic",
+      "expected_h1": "Podpórka rehabilitacyjna 4-kołowa, aluminiowa. DYNAMIC",
+      "observed_h1": "\n                                Podpórka rehabilitacyjna 4-kołowa, aluminiowa. DYNAMIC\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6663",
+      "source_paths": [
+        "/balkonik-aluminiowy-z-kulka-skladany-dwukolowy-id-6663"
+      ],
+      "target_path": "/products/balkonik-aluminiowy-z-kulka-skladany-dwukolowy",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/balkonik-aluminiowy-z-kulka-skladany-dwukolowy",
+      "expected_h1": "Balkonik aluminiowy z kulką – składany, dwukołowy",
+      "observed_h1": "\n                                Balkonik aluminiowy z kulką – składany, dwukołowy\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6664",
+      "source_paths": [
+        "/podporka-rehabilitacyjna-dwukolowa-standard-id-6664"
+      ],
+      "target_path": "/products/podporka-rehabilitacyjna-dwukolowa-standard",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/podporka-rehabilitacyjna-dwukolowa-standard",
+      "expected_h1": "Podpórka rehabilitacyjna dwukołowa. STANDARD",
+      "observed_h1": "\n                                Podpórka rehabilitacyjna dwukołowa. STANDARD\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6666",
+      "source_paths": [
+        "/podporka-rehabilitacyjna-4-kolowa-aluminiowa-comfort-id-6666"
+      ],
+      "target_path": "/products/podporka-rehabilitacyjna-4-kolowa-aluminiowa-comfort",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/podporka-rehabilitacyjna-4-kolowa-aluminiowa-comfort",
+      "expected_h1": "Podpórka rehabilitacyjna 4-kołowa – aluminiowa. COMFORT",
+      "observed_h1": "\n                                Podpórka rehabilitacyjna 4-kołowa – aluminiowa. COMFORT\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6667",
+      "source_paths": [
+        "/balkonik-aluminiowy-kroczacostaly-ulatwiajacy-wstawanie-id-6667"
+      ],
+      "target_path": "/products/balkonik-aluminiowy-kroczaco-staly-ulatwiajacy-wstawanie",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/balkonik-aluminiowy-kroczaco-staly-ulatwiajacy-wstawanie",
+      "expected_h1": "Balkonik aluminiowy – krocząco–stały, ułatwiający wstawanie",
+      "observed_h1": "\n                                Balkonik aluminiowy – krocząco–stały, ułatwiający wstawanie\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6668",
+      "source_paths": [
+        "/krzeslo-toaletowe-skladane-id-6668"
+      ],
+      "target_path": "/products/krzeslo-toaletowe-skladane",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/krzeslo-toaletowe-skladane",
+      "expected_h1": "Krzesło toaletowe – składane",
+      "observed_h1": "\n                                Krzesło toaletowe – składane\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6670",
+      "source_paths": [
+        "/krzeslo-toaletowe-tapicerowane-id-6670"
+      ],
+      "target_path": "/products/krzeslo-toaletowe-tapicerowane",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/krzeslo-toaletowe-tapicerowane",
+      "expected_h1": "Krzesło toaletowe tapicerowane",
+      "observed_h1": "\n                                Krzesło toaletowe tapicerowane\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "6687",
+      "source_paths": [
+        "/taboret-prysznicowy-z-wycieciem-u-id-6687"
+      ],
+      "target_path": "/products/taboret-prysznicowy-z-wycieciem-u",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/taboret-prysznicowy-z-wycieciem-u",
+      "expected_h1": "Taboret prysznicowy z wycięciem U",
+      "observed_h1": "\n                                Taboret prysznicowy z wycięciem U\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "11156",
+      "source_paths": [
+        "/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-ergo-id-11156"
+      ],
+      "target_path": "/products/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-ergo",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-ergo",
+      "expected_h1": "Laska inwalidzka aluminiowa z miękkim uchwytem ERGO",
+      "observed_h1": "\n                                Laska inwalidzka aluminiowa z miękkim uchwytem ERGO\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "13663",
+      "source_paths": [
+        "/poduszka-ortopedyczna-do-siedzenia-perfect-balance-id-13663"
+      ],
+      "target_path": "/products/poduszka-ortopedyczna-do-siedzenia-perfect-balance",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/poduszka-ortopedyczna-do-siedzenia-perfect-balance",
+      "expected_h1": "Poduszka ortopedyczna do siedzenia „PERFECT BALANCE”",
+      "observed_h1": "\n                                Poduszka ortopedyczna do siedzenia „PERFECT BALANCE”\n                            ",
+      "failures": []
+    },
+    {
+      "legacy_id": "13664",
+      "source_paths": [
+        "/-laska-inwalidzka-czwornog-z-miekkim-uchwytem-t-soft-id-13664"
+      ],
+      "target_path": "/products/laska-inwalidzka-czwornog-z-miekkim-uchwytem-t-soft",
+      "http_status": "200",
+      "canonical": "https://ortezka.pl/products/laska-inwalidzka-czwornog-z-miekkim-uchwytem-t-soft",
+      "expected_h1": "Laska inwalidzka – czwórnóg z miękkim uchwytem T-SOFT",
+      "observed_h1": "\n                                Laska inwalidzka – czwórnóg z miękkim uchwytem T-SOFT\n                            ",
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "purpose": "Second-cohort human approval review; evidence only.",
+  "validation_only": true,
+  "approved_product_count": 0,
+  "approved_source_path_count": 0,
+  "candidate_product_count": 22,
+  "candidate_source_path_count": 28,
+  "redirects_installed": 0,
+  "review_sha256": "a2000a334104a862b73f3ddcdb548d4b297accfb7c607038cd82fbd0e0c3db5d",
+  "validation_sha256": "811248a3708f7d3be504a330762fa04e4e7838062c72ca8050c198ffcafe69e3",
+  "records": [
+    {
+      "legacy_id": "6617",
+      "legacy_name": "Poduszka ortopedyczna profilowana \"Silent Dream\"",
+      "legacy_index": "MFP-6035",
+      "target_product_id": "13206",
+      "target_product_name": "Poduszka ortopedyczna profilowana „Silent Dream”",
+      "target_parent_sku": "MFP-6035",
+      "target_path": "/products/poduszka-ortopedyczna-profilowana-silent-dream",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/poduszka-ortopedyczna-profilowana-silent-dream-id-6617"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6627",
+      "legacy_name": "Dynamiczna poduszka do siedzenia DYNAPAD",
+      "legacy_index": "DSC-33",
+      "target_product_id": "13096",
+      "target_product_name": "Dynamiczna poduszka do siedzenia „DYNAPAD”",
+      "target_parent_sku": "DSC-33",
+      "target_path": "/products/dynamiczna-poduszka-do-siedzenia-dynapad",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/dynamiczna-poduszka-do-siedzenia-dynapad-37979-id-6627",
+        "/dynamiczna-poduszka-do-siedzenia-dynapad-id-6627"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6628",
+      "legacy_name": "Dynamiczna poduszka do siedzenia DYNAPAD MAX",
+      "legacy_index": "DSC-35",
+      "target_product_id": "13095",
+      "target_product_name": "Dynamiczna poduszka do siedzenia „DYNAPAD MAX”",
+      "target_parent_sku": "DSC-35",
+      "target_path": "/products/dynamiczna-poduszka-do-siedzenia-dynapad-max",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/dynamiczna-poduszka-do-siedzenia-dynapad-max-id-6628"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6631",
+      "legacy_name": "Piłka rehabilitacyjna masująca MIDI",
+      "legacy_index": "TMB-20",
+      "target_product_id": "13267",
+      "target_product_name": "Piłka rehabilitacyjna masująca MIDI",
+      "target_parent_sku": "TMB-20",
+      "target_path": "/products/pilka-rehabilitacyjna-masujaca-midi",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/pilka-rehabilitacyjna-masujaca-midi-id-6631"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6632",
+      "legacy_name": "Piłka rehabilitacyjna MIDI REH",
+      "legacy_index": "RLB",
+      "target_product_id": "13269",
+      "target_product_name": "Piłka rehabilitacyjna MIDI REH",
+      "target_parent_sku": "RLB",
+      "target_path": "/products/pilka-rehabilitacyjna-midi-reh",
+      "active_variant_count": 3,
+      "source_paths": [
+        "/pilka-rehabilitacyjna-midi-reh-37988-id-6632",
+        "/pilka-rehabilitacyjna-midi-reh-id-6632"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6644",
+      "legacy_name": "Kula łokciowa - aluminiowa",
+      "legacy_index": "AR-010",
+      "target_product_id": "13129",
+      "target_product_name": "Kula łokciowa – aluminiowa",
+      "target_parent_sku": "AR-010",
+      "target_path": "/products/kula-lokciowa-aluminiowa",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/kula-lokciowa-aluminiowa-38003-id-6644",
+        "/kula-lokciowa-aluminiowa-id-6644"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6646",
+      "legacy_name": "Kula łokciowa – aluminiowa z ruchomą obejmą, ergonomiczny uchwyt",
+      "legacy_index": "AR-025",
+      "target_product_id": "13130",
+      "target_product_name": "Kula łokciowa – aluminiowa z ruchomą obejmą, ergonomiczny uchwyt",
+      "target_parent_sku": "AR-025",
+      "target_path": "/products/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt-70785-id-6646",
+        "/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt-id-6646"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6647",
+      "legacy_name": "Nasadka gumowa na kule",
+      "legacy_index": "AR-011",
+      "target_product_id": "13168",
+      "target_product_name": "Nasadka gumowa na kulę",
+      "target_parent_sku": "AR-011",
+      "target_path": "/products/nasadka-gumowa-na-kule",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/nasadka-gumowa-na-kule-70108-id-6647",
+        "/nasadka-gumowa-na-kule-id-6647"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6650",
+      "legacy_name": "Laska inwalidzka aluminiowa z miękkim uchwytem",
+      "legacy_index": "AR-014",
+      "target_product_id": "13141",
+      "target_product_name": "Laska inwalidzka aluminiowa z miękkim uchwytem",
+      "target_parent_sku": "AR-014",
+      "target_path": "/products/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-70781-id-6650",
+        "/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-id-6650"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6652",
+      "legacy_name": "Laska inwalidzka - trójnóg",
+      "legacy_index": "AR-016",
+      "target_product_id": "13135",
+      "target_product_name": "Laska inwalidzka – trójnóg",
+      "target_parent_sku": "AR-016",
+      "target_path": "/products/laska-inwalidzka-trojnog",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/laska-inwalidzka-trojnog-id-6652"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6654",
+      "legacy_name": "Laska inwalidzka – czwórnóg wysoki",
+      "legacy_index": "AR-017W",
+      "target_product_id": "13136",
+      "target_product_name": "Laska inwalidzka – czwórnóg wysoki",
+      "target_parent_sku": "AR-017W",
+      "target_path": "/products/laska-inwalidzka-czwornog-wysoki",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/laska-inwalidzka-czwornog-wysoki-id-6654"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6661",
+      "legacy_name": "Podpórka rehabilitacyjna 4-kołowa, aluminiowa. DYNAMIC",
+      "legacy_index": "AR-007",
+      "target_product_id": "13254",
+      "target_product_name": "Podpórka rehabilitacyjna 4-kołowa, aluminiowa. DYNAMIC",
+      "target_parent_sku": "AR-007",
+      "target_path": "/products/podporka-rehabilitacyjna-4-kolowa-aluminiowa-dynamic",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/podporka-rehabilitacyjna-4-kolowa-aluminiowa-dynamic-id-6661"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6663",
+      "legacy_name": "Balkonik aluminiowy z kulką – składany, dwukołowy",
+      "legacy_index": "AR-009",
+      "target_product_id": "13089",
+      "target_product_name": "Balkonik aluminiowy z kulką – składany, dwukołowy",
+      "target_parent_sku": "AR-009",
+      "target_path": "/products/balkonik-aluminiowy-z-kulka-skladany-dwukolowy",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/balkonik-aluminiowy-z-kulka-skladany-dwukolowy-id-6663"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6664",
+      "legacy_name": "Podpórka rehabilitacyjna dwukołowa STANDARD",
+      "legacy_index": "AR-020",
+      "target_product_id": "13236",
+      "target_product_name": "Podpórka rehabilitacyjna dwukołowa. STANDARD",
+      "target_parent_sku": "AR-020",
+      "target_path": "/products/podporka-rehabilitacyjna-dwukolowa-standard",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/podporka-rehabilitacyjna-dwukolowa-standard-id-6664"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6666",
+      "legacy_name": "Podpórka rehabilitacyjna 4-kołowa - aluminiowa. COMFORT",
+      "legacy_index": "AR-022",
+      "target_product_id": "13250",
+      "target_product_name": "Podpórka rehabilitacyjna 4-kołowa – aluminiowa. COMFORT",
+      "target_parent_sku": "AR-022",
+      "target_path": "/products/podporka-rehabilitacyjna-4-kolowa-aluminiowa-comfort",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/podporka-rehabilitacyjna-4-kolowa-aluminiowa-comfort-id-6666"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6667",
+      "legacy_name": "Balkonik aluminiowy krocząco–stały ułatwiający wstawanie",
+      "legacy_index": "AR-023",
+      "target_product_id": "13083",
+      "target_product_name": "Balkonik aluminiowy – krocząco–stały, ułatwiający wstawanie",
+      "target_parent_sku": "AR-023",
+      "target_path": "/products/balkonik-aluminiowy-kroczaco-staly-ulatwiajacy-wstawanie",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/balkonik-aluminiowy-kroczacostaly-ulatwiajacy-wstawanie-id-6667"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6668",
+      "legacy_name": "Krzesło toaletowe składane",
+      "legacy_index": "AR-101",
+      "target_product_id": "13124",
+      "target_product_name": "Krzesło toaletowe – składane",
+      "target_parent_sku": "AR-101",
+      "target_path": "/products/krzeslo-toaletowe-skladane",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/krzeslo-toaletowe-skladane-id-6668"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6670",
+      "legacy_name": "Krzesło toaletowe tapicerowane",
+      "legacy_index": "AR-103",
+      "target_product_id": "13126",
+      "target_product_name": "Krzesło toaletowe tapicerowane",
+      "target_parent_sku": "AR-103",
+      "target_path": "/products/krzeslo-toaletowe-tapicerowane",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/krzeslo-toaletowe-tapicerowane-id-6670"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "6687",
+      "legacy_name": "Taboret prysznicowy z wycięciem U",
+      "legacy_index": "AR-209",
+      "target_product_id": "13151",
+      "target_product_name": "Taboret prysznicowy z wycięciem U",
+      "target_parent_sku": "AR-209",
+      "target_path": "/products/taboret-prysznicowy-z-wycieciem-u",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/taboret-prysznicowy-z-wycieciem-u-id-6687"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "11156",
+      "legacy_name": "Laska inwalidzka aluminiowa z miękkim uchwytem ERGO",
+      "legacy_index": "AR-014E",
+      "target_product_id": "13139",
+      "target_product_name": "Laska inwalidzka aluminiowa z miękkim uchwytem ERGO",
+      "target_parent_sku": "AR-014E",
+      "target_path": "/products/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-ergo",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/laska-inwalidzka-aluminiowa-z-miekkim-uchwytem-ergo-id-11156"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "13663",
+      "legacy_name": "Poduszka ortopedyczna do siedzenia “PERFECT BALANCE”",
+      "legacy_index": "MFP-4009",
+      "target_product_id": "13239",
+      "target_product_name": "Poduszka ortopedyczna do siedzenia „PERFECT BALANCE”",
+      "target_parent_sku": "MFP-4009",
+      "target_path": "/products/poduszka-ortopedyczna-do-siedzenia-perfect-balance",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/poduszka-ortopedyczna-do-siedzenia-perfect-balance-id-13663"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    },
+    {
+      "legacy_id": "13664",
+      "legacy_name": "Laska inwalidzka – czwórnóg z miękkim uchwytem T-SOFT",
+      "legacy_index": "AR-017M",
+      "target_product_id": "13133",
+      "target_product_name": "Laska inwalidzka – czwórnóg z miękkim uchwytem T-SOFT",
+      "target_parent_sku": "AR-017M",
+      "target_path": "/products/laska-inwalidzka-czwornog-z-miekkim-uchwytem-t-soft",
+      "active_variant_count": 1,
+      "source_paths": [
+        "/-laska-inwalidzka-czwornog-z-miekkim-uchwytem-t-soft-id-13664"
+      ],
+      "approval_basis": "exact_parent_sku_and_name_with_active_variants",
+      "target_validation": "PASS",
+      "decision": "PENDING_HUMAN_APPROVAL",
+      "approved": false
+    }
+  ]
+}
