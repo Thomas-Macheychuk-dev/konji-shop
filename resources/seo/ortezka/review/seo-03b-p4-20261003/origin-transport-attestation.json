@@ -1,0 +1,34 @@
+{
+    "schema_version": 1,
+    "purpose": "SEO-03B-P4 origin transport and destination validation evidence",
+    "validated_at": "2026-10-03T20:24:25+00:00",
+    "logical_base_url": "https://ortezka.pl",
+    "transport": {
+        "method": "AWS SSM local port forwarding",
+        "local_endpoint": "127.0.0.1:18443",
+        "observed": {
+            "HTTP_STATUS": "200",
+            "PRIMARY_IP": "127.0.0.1",
+            "PRIMARY_PORT": "18443",
+            "SEO_03B_P4C_TRANSPORT": "PASS",
+            "HTTP_TRANSFERS": "42",
+            "OFF_ORIGIN_TRANSFERS": "0",
+            "VALIDATOR_EXIT": "0",
+            "SEO_03B_P4C_VALIDATION": "PASS"
+        }
+    },
+    "validation": {
+        "approved_products": 41,
+        "approved_redirect_paths": 58,
+        "target_validation_result": "PASS"
+    },
+    "sha256": {
+        "approved_manifest": "6a1ca8e5c7fa2df92148490634dabb0d648f6d1647d6cce4a6bc5c3da10e674d",
+        "candidate_map": "303c1e455a7836baec46e02fe0f9945e5f28f91ab2dc564ab88ba60323147173",
+        "target_validation": "e3cee72d645cd8497140112eadcb1139771f4c5262c813d9a2f62706d6d2eaeb",
+        "original_execution_log": "216ed19938db34f8c4a8739bb119d4997712468d73b530ee028f8910732e7f26",
+        "unchanged_production_map": "bebe59097adddcdedf811d87b65ba6339ab289939485279a246159f1ff645862"
+    },
+    "deployment_authorised": false,
+    "redirects_activated": false
+}
