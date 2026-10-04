@@ -10,7 +10,7 @@ it('generates the committed nginx map deterministically from the approved manife
 
     try {
         $exitCode = Artisan::call('seo:generate-legacy-product-redirect-map', [
-            '--manifest' => 'resources/seo/ortezka/product-redirect-approvals.json',
+            '--manifest' => 'resources/seo/ortezka/review/seo-03b-p4-20261003/approved-58-manifest.json',
             '--output' => $temporaryRelative,
         ]);
 
@@ -21,8 +21,8 @@ it('generates the committed nginx map deterministically from the approved manife
         $committed = (string) file_get_contents(base_path('docker/nginx/generated/legacy-seo-product-map.conf'));
 
         expect($generated)->toBe($committed)
-            ->and(substr_count($generated, '"/'))->toBeGreaterThanOrEqual(72)
-            ->and(substr_count($generated, ' "/products/'))->toBe(36)
+            ->and(substr_count($generated, '"/'))->toBeGreaterThanOrEqual(116)
+            ->and(substr_count($generated, ' "/products/'))->toBe(58)
             ->and($generated)->toContain('map_hash_bucket_size 128;')
             ->and($generated)->toContain('map $uri $legacy_seo_product_redirect_target {')
             ->and($generated)->toContain('default "";');
