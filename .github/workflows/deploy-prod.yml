@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -56,7 +58,83 @@ jobs:
       - name: Run tests
         run: php artisan test
 
+      - name: Guard SEO-03B production deployment
+        id: seo03b_gate
+        shell: bash
+        env:
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+
+          BASE="7e009b879c9c6c22a55951d6319750e3a72bbc03"
+          ORIGINAL="bebe59097adddcdedf811d87b65ba6339ab289939485279a246159f1ff645862"
+          PROMOTED="ece3d1558b317f2e7517e0ac6397e18f936e55a2ae258c51ffd28ef7db10c196"
+          MANIFEST="6a1ca8e5c7fa2df92148490634dabb0d648f6d1647d6cce4a6bc5c3da10e674d"
+
+          MAP_PATH="docker/nginx/generated/legacy-seo-product-map.conf"
+          MANIFEST_PATH="resources/seo/ortezka/review/seo-03b-p4-20261003/approved-58-manifest.json"
+
+          current="$(sha256sum "$MAP_PATH" | awk '{print $1}')"
+
+          if [[ "$current" == "$ORIGINAL" ]]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [[ "$current" != "$PROMOTED" ]]; then
+            echo "::error::Unexpected production redirect map checksum."
+            exit 1
+          fi
+
+          if [[ "$GITHUB_EVENT_NAME" != "push" ||
+                "$GITHUB_REF" != "refs/heads/main" ||
+                "${PUSH_BEFORE:-}" != "$BASE" ||
+                "$GITHUB_SHA" != "$(git rev-parse HEAD)" ]]; then
+            echo "::error::SEO-03B deployment remains blocked pending release authorisation."
+            exit 1
+          fi
+
+          git merge-base --is-ancestor "$BASE" "$GITHUB_SHA"
+
+          original_sha="$(
+            git show "$BASE:$MAP_PATH" | sha256sum | awk '{print $1}'
+          )"
+
+          [[ "$original_sha" == "$ORIGINAL" ]] || {
+            echo "::error::Unexpected original map."
+            exit 1
+          }
+
+          manifest_sha="$(sha256sum "$MANIFEST_PATH" | awk '{print $1}')"
+
+          [[ "$manifest_sha" == "$MANIFEST" ]] || {
+            echo "::error::Frozen approval manifest mismatch."
+            exit 1
+          }
+
+          expected_diff="$(printf '%s\n' \
+            $'M\t.github/workflows/deploy-prod.yml' \
+            $'M\tdocker/nginx/generated/legacy-seo-product-map.conf' \
+            $'A\ttests/Feature/Seo/SeoLegacyProductRedirectPromotionTest.php' \
+            $'M\ttests/Feature/Seo/SeoLegacyProductRedirectRuntimeTest.php')"
+
+          actual_diff="$(git diff --name-status "$BASE" "$GITHUB_SHA")"
+
+          if [[ "$actual_diff" != "$expected_diff" ]]; then
+            echo "::error::Unexpected files in SEO-03B source promotion."
+            printf '%s\n' "$actual_diff"
+            exit 1
+          fi
+
+          git diff --check "$BASE" "$GITHUB_SHA"
+
+          echo "deploy=false" >> "$GITHUB_OUTPUT"
+
+          echo "### SEO-03B source-only promotion" >> "$GITHUB_STEP_SUMMARY"
+          echo "Tests completed; production deployment intentionally withheld." >> "$GITHUB_STEP_SUMMARY"
+
       - name: Configure AWS credentials
+        if: steps.seo03b_gate.outputs.deploy == 'true'
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
           role-to-assume: ${{ vars.AWS_PROD_DEPLOY_ROLE_ARN }}
@@ -65,6 +143,7 @@ jobs:
           allowed-account-ids: '628263975265'
 
       - name: Deploy over SSM
+        if: steps.seo03b_gate.outputs.deploy == 'true'
         env:
           AWS_REGION: eu-central-1
           INSTANCE_ID: ${{ vars.AWS_PROD_INSTANCE_ID }}
