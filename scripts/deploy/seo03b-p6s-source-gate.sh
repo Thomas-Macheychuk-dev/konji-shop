@@ -2,61 +2,137 @@
 set -euo pipefail
 
 fail() {
-    echo "::error::P6S source-only gate: $*" >&2
+    echo "::error::SEO-03B production HOLD: $*" >&2
     exit 1
 }
 
-RELEASE="df2e1fe0cd25188ae642f65c324c97911304f623"
+BASE="6a32ed2a932c0c82af6a176904a6edb5087778ee"
 
 MAP_SHA="ece3d1558b317f2e7517e0ac6397e18f936e55a2ae258c51ffd28ef7db10c196"
-
 MANIFEST_SHA="6a1ca8e5c7fa2df92148490634dabb0d648f6d1647d6cce4a6bc5c3da10e674d"
 
-MAP="docker/nginx/generated/legacy-seo-product-map.conf"
+WORKFLOW=".github/workflows/deploy-prod.yml"
+GATE="scripts/deploy/seo03b-p6s-source-gate.sh"
+TEST="tests/Feature/Seo/SeoLegacyProductDeploymentGovernanceTest.php"
 
+MAP="docker/nginx/generated/legacy-seo-product-map.conf"
 MANIFEST="resources/seo/ortezka/review/seo-03b-p4-20261003/approved-58-manifest.json"
 
+# This policy accepts CI-only pushes. It never authorises deployment.
 [[ "${GITHUB_EVENT_NAME:-}" == "push" ]] ||
-    fail "Only a push event is accepted."
+    fail "Manual dispatch and non-push events are prohibited."
 
 [[ "${GITHUB_REF:-}" == "refs/heads/main" ]] ||
     fail "Only main is accepted."
 
-[[ "${PUSH_BEFORE:-}" == "$RELEASE" ]] ||
-    fail "Unexpected previous main commit."
+HEAD="$(git rev-parse HEAD)"
+BEFORE="${PUSH_BEFORE:-}"
 
-HEAD_SHA="$(git rev-parse HEAD)"
+[[ "${GITHUB_SHA:-}" == "$HEAD" ]] ||
+    fail "GitHub SHA does not match the checked-out commit."
 
-[[ "${GITHUB_SHA:-}" == "$HEAD_SHA" ]] ||
-    fail "GitHub SHA does not match checkout."
+[[ -n "$BEFORE" && "$BEFORE" != "$HEAD" ]] ||
+    fail "Invalid previous commit."
 
-PARENT_SHA="$(git rev-parse HEAD^)"
+[[ "$HEAD" != "$BASE" ]] ||
+    fail "No P6S-C transition exists."
 
-[[ "$PARENT_SHA" == "$RELEASE" ]] ||
-    fail "P6S transition must be one direct commit after release."
+git merge-base --is-ancestor "$BASE" "$HEAD" ||
+    fail "Unexpected commit ancestry."
 
-CURRENT_MAP="$(sha256sum "$MAP" | awk '{print $1}')"
+# All accepted histories must begin with the exact P6S-C HOLD commit.
+FIRST="$(
+    git rev-list --first-parent --reverse "${BASE}..${HEAD}" |
+    sed -n '1p'
+)"
 
-CURRENT_MANIFEST="$(sha256sum "$MANIFEST" | awk '{print $1}')"
+[[ -n "$FIRST" ]] ||
+    fail "Missing first transition commit."
 
-[[ "$CURRENT_MAP" == "$MAP_SHA" ]] ||
-    fail "Frozen 58-rule map changed."
-
-[[ "$CURRENT_MANIFEST" == "$MANIFEST_SHA" ]] ||
-    fail "Frozen human approval manifest changed."
+[[ "$(git rev-parse "${FIRST}^")" == "$BASE" ]] ||
+    fail "First transition is not directly based on P6S-A."
 
 EXPECTED_DIFF="$(printf '%s\n' \
     $'M\t.github/workflows/deploy-prod.yml' \
-    $'A\tscripts/deploy/seo03b-p6s-source-gate.sh' \
-    $'A\ttests/Feature/Seo/SeoLegacyProductDeploymentGovernanceTest.php')"
+    $'M\tscripts/deploy/seo03b-p6s-source-gate.sh' \
+    $'M\ttests/Feature/Seo/SeoLegacyProductDeploymentGovernanceTest.php')"
 
-ACTUAL_DIFF="$(git diff --name-status "$RELEASE" "$HEAD_SHA")"
+ACTUAL_DIFF="$(git diff --name-status "$BASE" "$FIRST")"
 
 [[ "$ACTUAL_DIFF" == "$EXPECTED_DIFF" ]] ||
-    fail "Unexpected P6S source transition file boundary."
+    fail "First P6S-C transition changed unexpected files."
 
-git diff --check "$RELEASE" "$HEAD_SHA" ||
-    fail "Git diff contains errors."
+git diff --check "$BASE" "$FIRST" ||
+    fail "First transition contains Git diff errors."
+
+if [[ "$BEFORE" == "$BASE" ]]; then
+
+    # First promotion must contain precisely one direct commit.
+    [[ "$HEAD" == "$FIRST" ]] ||
+        fail "First promotion must contain exactly one commit."
+
+    MODE="FIRST_SOURCE_ONLY_PROMOTION"
+
+else
+
+    # Subsequent pushes may run CI but must retain the HOLD boundary.
+    git merge-base --is-ancestor "$FIRST" "$BEFORE" ||
+        fail "Previous commit is outside the accepted HOLD history."
+
+    git merge-base --is-ancestor "$BEFORE" "$HEAD" ||
+        fail "Non-fast-forward push rejected."
+
+    git diff --quiet "$FIRST" "$HEAD" -- \
+        "$WORKFLOW" "$GATE" "$MAP" "$MANIFEST" ||
+        fail "A protected production-governance file changed."
+
+    # Examine actual commit history, not just the final tree.
+    # A protected-file change followed by a revert is also prohibited.
+    PROTECTED_TOUCHES="$(
+        git log --full-history -m --format= --name-only "${FIRST}..${HEAD}" -- \
+            "$WORKFLOW" "$GATE" "$MAP" "$MANIFEST" |
+            sed '/^[[:space:]]*$/d'
+    )"
+
+    [[ -z "$PROTECTED_TOUCHES" ]] ||
+        fail "Protected file modified in ongoing CI-only commit history."
+
+    MODE="ONGOING_CI_ONLY"
+fi
+
+# Verify immutable SEO release content at the checked-out commit.
+[[ "$(sha256sum "$MAP" | awk '{print $1}')" == "$MAP_SHA" ]] ||
+    fail "Frozen production redirect map changed."
+
+[[ "$(sha256sum "$MANIFEST" | awk '{print $1}')" == "$MANIFEST_SHA" ]] ||
+    fail "Frozen human approval manifest changed."
+
+# Independently verify the two workflow deployment locks.
+if ! python3 - "$WORKFLOW" <<'PY'
+from pathlib import Path
+import re
+import sys
+
+workflow = Path(sys.argv[1]).read_text()
+
+checks = []
+
+for name in ("Configure AWS credentials", "Deploy over SSM"):
+    pattern = (
+        r"(?m)^      - name: "
+        + re.escape(name)
+        + r"\n        if: \$\{\{ false \}\}(?:\n|$)"
+    )
+
+    checks.append(bool(re.search(pattern, workflow)))
+
+checks.append(workflow.count('if: ${{ false }}') == 2)
+
+sys.exit(0 if all(checks) else 1)
+PY
+then
+    fail "Independent AWS/SSM deployment locks are missing."
+fi
 
 [[ -n "${GITHUB_OUTPUT:-}" ]] ||
     fail "GitHub output file is unavailable."
@@ -65,12 +141,12 @@ printf 'deploy=false\n' >> "$GITHUB_OUTPUT"
 
 if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
     {
-        echo "### SEO-03B P6S source-only transition"
-        echo "Source transition accepted."
-        echo "AWS and SSM deployment remain disabled."
-        echo "Production reconciliation requires separate authorisation."
+        echo "### SEO-03B production HOLD"
+        echo "Mode: ${MODE}"
+        echo "CI accepted; production deployment intentionally disabled."
     } >> "$GITHUB_STEP_SUMMARY"
 fi
 
-echo "P6S_SOURCE_ONLY_TRANSITION=PASS"
-echo "P6S_DEPLOYMENT=WITHHELD"
+echo "P6S_C_MODE=$MODE"
+echo "P6S_C_PRODUCTION_HOLD=PASS"
+echo "P6S_C_DEPLOYMENT=WITHHELD"

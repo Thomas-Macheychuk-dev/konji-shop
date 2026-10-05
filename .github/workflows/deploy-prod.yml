@@ -58,7 +58,7 @@ jobs:
       - name: Run tests
         run: php artisan test
 
-      - name: Guard SEO-03B P6S source-only transition
+      - name: Guard SEO-03B production HOLD
         id: seo03b_gate
         shell: bash
         env:

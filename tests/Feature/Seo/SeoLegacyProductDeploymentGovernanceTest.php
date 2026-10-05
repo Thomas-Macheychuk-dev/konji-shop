@@ -2,21 +2,15 @@
 
 declare(strict_types=1);
 
-it('keeps the first P6S transition source-only and independently disables both production deployment steps', function (): void {
+it('retains two independent production deployment locks', function (): void {
     $workflow = (string) file_get_contents(base_path(
         '.github/workflows/deploy-prod.yml',
     ));
 
-    $guard = (string) file_get_contents(base_path(
-        'scripts/deploy/seo03b-p6s-source-gate.sh',
-    ));
-
-    // The workflow must execute the dedicated P6S transition guard.
     expect($workflow)
-        ->toContain('name: Guard SEO-03B P6S source-only transition')
+        ->toContain('name: Guard SEO-03B production HOLD')
         ->toContain('run: bash scripts/deploy/seo03b-p6s-source-gate.sh');
 
-    // Verify both locks individually, not merely their combined count.
     foreach ([
         'Configure AWS credentials',
         'Deploy over SSM',
@@ -31,24 +25,54 @@ it('keeps the first P6S transition source-only and independently disables both p
     expect(substr_count($workflow, 'if: ${{ false }}'))
         ->toBe(2);
 
-    // The previous conditional deployment mechanism must be absent.
     expect($workflow)->not->toContain(
         "if: steps.seo03b_gate.outputs.deploy == 'true'",
     );
+});
 
-    // P6S-A must not contain an authorised deployment path.
+it('enforces a permanent CI-only production HOLD', function (): void {
+    $guard = (string) file_get_contents(base_path(
+        'scripts/deploy/seo03b-p6s-source-gate.sh',
+    ));
+
     expect($guard)
+        ->toContain('FIRST_SOURCE_ONLY_PROMOTION')
+        ->toContain('ONGOING_CI_ONLY')
+        ->toContain('P6S_C_PRODUCTION_HOLD=PASS')
         ->toContain('deploy=false')
         ->not->toContain('deploy=true');
 
-    // The exact previously released source is the transition boundary.
+    // The first transition must originate from the reconciled release.
+    expect($guard)->toContain(
+        '6a32ed2a932c0c82af6a176904a6edb5087778ee',
+    );
+
+    // The previously approved SEO release must remain immutable.
     expect($guard)
-        ->toContain('df2e1fe0cd25188ae642f65c324c97911304f623')
         ->toContain('ece3d1558b317f2e7517e0ac6397e18f936e55a2ae258c51ffd28ef7db10c196')
         ->toContain('6a1ca8e5c7fa2df92148490634dabb0d648f6d1647d6cce4a6bc5c3da10e674d');
 
-    // The transition must include its own regression contract.
-    expect($guard)->toContain(
-        'SeoLegacyProductDeploymentGovernanceTest.php',
-    );
+    // Subsequent pushes must not change protected release files.
+    expect($guard)
+        ->toContain('git diff --quiet "$FIRST" "$HEAD" --')
+        ->toContain('git log --full-history -m --format= --name-only')
+        ->toContain('PROTECTED_TOUCHES')
+        ->toContain('"$WORKFLOW" "$GATE" "$MAP" "$MANIFEST"');
+});
+
+it('preserves the exact three-file first transition boundary', function (): void {
+    $guard = (string) file_get_contents(base_path(
+        'scripts/deploy/seo03b-p6s-source-gate.sh',
+    ));
+
+    expect($guard)
+        ->toContain('EXPECTED_DIFF=')
+        ->toContain('.github/workflows/deploy-prod.yml')
+        ->toContain('scripts/deploy/seo03b-p6s-source-gate.sh')
+        ->toContain('tests/Feature/Seo/SeoLegacyProductDeploymentGovernanceTest.php');
+
+    // Manual workflow dispatch must never bypass the production HOLD.
+    expect($guard)
+        ->toContain('GITHUB_EVENT_NAME')
+        ->toContain('Manual dispatch and non-push events are prohibited.');
 });
