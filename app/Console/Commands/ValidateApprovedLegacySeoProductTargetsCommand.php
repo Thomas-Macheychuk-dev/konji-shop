@@ -23,7 +23,8 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         {--manifest=resources/seo/ortezka/product-redirect-approvals.json : Repository-relative approved redirect manifest}
         {--base-url= : Absolute HTTP(S) base URL of the Konji storefront to validate}
         {--output=storage/app/seo/ortezka/approved-product-target-validation.json : Repository-relative JSON evidence output}
-        {--timeout=15 : Per-request timeout in seconds}';
+        {--timeout=15 : Per-request timeout in seconds}
+        {--allow-noindex : Allow noindex responses only for explicitly isolated staging validation}';
 
     protected $description = 'Validate every human-approved legacy SEO product redirect target before redirect activation.';
 
@@ -34,6 +35,7 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
             $outputRelative = $this->safeRelativePath('output');
             $baseUrl = $this->validatedBaseUrl();
             $timeout = $this->validatedTimeout();
+            $allowNoindex = (bool) $this->option('allow-noindex');
             $manifestPath = base_path($manifestRelative);
 
             if (! is_file($manifestPath)) {
@@ -58,7 +60,7 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
             }
 
             $summary = $this->summary($targets, $records);
-            $result = $this->passes($summary) ? 'PASS' : 'FAIL';
+            $result = $this->passes($summary, $allowNoindex) ? 'PASS' : 'FAIL';
 
             $report = [
                 'schema_version' => 1,
@@ -67,6 +69,7 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
                 'manifest' => $manifestRelative,
                 'manifest_sha256' => hash('sha256', $rawManifest),
                 'base_url' => $baseUrl,
+                'allow_noindex' => $allowNoindex,
                 'redirects_enabled_by_this_command' => false,
                 'human_verification_cookie_used' => $humanVerificationCookie !== null,
                 'human_verification_cookie_name' => $humanVerificationCookie['name'] ?? null,
@@ -632,19 +635,19 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
     }
 
     /** @param array<string, int> $summary */
-    private function passes(array $summary): bool
+    private function passes(array $summary, bool $allowNoindex): bool
     {
         $expected = $summary['approved_target_products'];
 
         return $expected > 0
             && $summary['http_200'] === $expected
             && $summary['canonical_correct'] === $expected
-            && $summary['indexable'] === $expected
+            && ($allowNoindex || $summary['indexable'] === $expected)
             && $summary['product_identity_correct'] === $expected
             && $summary['missing_targets'] === 0
             && $summary['redirected_targets'] === 0
             && $summary['canonical_mismatches'] === 0
-            && $summary['noindex_targets'] === 0
+            && ($allowNoindex || $summary['noindex_targets'] === 0)
             && $summary['identity_mismatches'] === 0
             && $summary['request_failures'] === 0
             && $summary['other_http_failures'] === 0

@@ -24,7 +24,8 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
         {--base-url= : Absolute HTTP(S) base URL of the staging storefront}
         {--output=storage/app/seo/ortezka/legacy-product-redirect-runtime-validation.json : Repository-relative JSON evidence output}
         {--control-path=/robots.txt : Unrelated direct path that must remain a non-redirecting HTTP 200}
-        {--timeout=15 : Per-request timeout in seconds}';
+        {--timeout=15 : Per-request timeout in seconds}
+        {--allow-noindex : Allow noindex responses only for explicitly isolated staging validation}';
 
     protected $description = 'Validate the enabled staging runtime for every approved legacy product redirect without changing redirect activation.';
 
@@ -36,6 +37,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             $baseUrl = $this->validatedBaseUrl();
             $controlPath = $this->validatedControlPath();
             $timeout = $this->validatedTimeout();
+            $allowNoindex = (bool) $this->option('allow-noindex');
             $manifestPath = base_path($manifestRelative);
 
             if (! is_file($manifestPath)) {
@@ -72,7 +74,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             );
 
             $summary = $this->summary($mappings, $records, $control);
-            $result = $this->passes($summary) ? 'PASS' : 'FAIL';
+            $result = $this->passes($summary, $allowNoindex) ? 'PASS' : 'FAIL';
 
             $report = [
                 'schema_version' => 1,
@@ -81,6 +83,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
                 'manifest' => $manifestRelative,
                 'manifest_sha256' => hash('sha256', $rawManifest),
                 'base_url' => $baseUrl,
+                'allow_noindex' => $allowNoindex,
                 'control_path' => $controlPath,
                 'redirect_activation_changed_by_this_command' => false,
                 'human_verification_cookie_used' => $humanVerificationCookie !== null,
@@ -848,7 +851,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
     }
 
     /** @param array<string, int> $summary */
-    private function passes(array $summary): bool
+    private function passes(array $summary, bool $allowNoindex): bool
     {
         $expected = $summary['approved_source_paths'];
 
@@ -858,7 +861,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             && $summary['query_strings_dropped'] === $expected
             && $summary['target_http_200'] === $expected
             && $summary['canonical_correct'] === $expected
-            && $summary['indexable'] === $expected
+            && ($allowNoindex || $summary['indexable'] === $expected)
             && $summary['product_identity_correct'] === $expected
             && $summary['wrong_destinations'] === 0
             && $summary['missing_location_headers'] === 0
@@ -870,7 +873,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             && $summary['other_source_statuses'] === 0
             && $summary['other_target_statuses'] === 0
             && $summary['canonical_mismatches'] === 0
-            && $summary['noindex_targets'] === 0
+            && ($allowNoindex || $summary['noindex_targets'] === 0)
             && $summary['identity_mismatches'] === 0
             && $summary['unrelated_control_failures'] === 0
             && $summary['duplicate_or_conflicting_sources'] === 0;

@@ -429,3 +429,142 @@ it('rejects duplicate approved source paths before making network requests', fun
 
     Http::assertNothingSent();
 });
+
+it('allows staging target noindex only when explicitly requested', function (): void {
+    $manifest = writeSeoRuntimeManifest(
+        seoRuntimeManifest([
+            seoRuntimeRecord(
+                '10',
+                'Produkt Alfa',
+                '/products/produkt-alfa',
+                ['/legacy-alfa-id-10'],
+            ),
+        ]),
+    );
+
+    Http::fake(function (Request $request) {
+        return match (true) {
+            str_contains(
+                $request->url(),
+                '/legacy-alfa-id-10'
+            ) => Http::response(
+                '',
+                301,
+                [
+                    'Location' =>
+                        'https://staging.example.test'
+                        .'/products/produkt-alfa',
+                ],
+            ),
+
+            $request->url()
+                === 'https://staging.example.test'
+                .'/products/produkt-alfa'
+                => Http::response(
+                    seoRuntimeHtml(
+                        'Produkt Alfa',
+                        'https://staging.example.test'
+                        .'/products/produkt-alfa',
+                    ),
+                    200,
+                    [
+                        'Content-Type' => 'text/html',
+                        'X-Robots-Tag' =>
+                            'noindex, nofollow, noarchive',
+                    ],
+                ),
+
+            str_contains(
+                $request->url(),
+                '/robots.txt'
+            ) => Http::response(
+                'User-agent: *',
+                200,
+            ),
+
+            default => Http::response(
+                'unexpected',
+                500,
+            ),
+        };
+    });
+
+    $arguments = [
+        '--manifest' => $manifest,
+        '--base-url' =>
+            'https://staging.example.test',
+        '--output' =>
+            'storage/framework/testing/'
+            .'seo-runtime-validation-report.json',
+    ];
+
+    expect(
+        Artisan::call(
+            'seo:validate-legacy-product-redirect-runtime',
+            $arguments,
+        )
+    )->toBe(1)
+        ->and(Artisan::output())
+        ->toContain('Noindex targets:                  1')
+        ->toContain('RESULT: FAIL');
+
+    $arguments['--allow-noindex'] = true;
+
+    expect(
+        Artisan::call(
+            'seo:validate-legacy-product-redirect-runtime',
+            $arguments,
+        )
+    )->toBe(0)
+        ->and(Artisan::output())
+        ->toContain('Noindex targets:                  1')
+        ->toContain('RESULT: PASS');
+
+    $report = json_decode(
+        (string) file_get_contents(
+            base_path(
+                'storage/framework/testing/'
+                .'seo-runtime-validation-report.json'
+            )
+        ),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect($report['allow_noindex'])->toBeTrue()
+        ->and($report['result'])->toBe('PASS')
+        ->and(
+            $report['summary']
+            ['approved_source_paths']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['source_http_301']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['correct_destinations']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['target_http_200']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['canonical_correct']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['indexable']
+        )->toBe(0)
+        ->and(
+            $report['summary']
+            ['noindex_targets']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['product_identity_correct']
+        )->toBe(1);
+
+    Http::assertSentCount(6);
+});
