@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Support\Seo\ParentProductRedirectApprovalPolicy;
 use App\Support\Seo\ParentProductRedirectDecisionLedger;
+use App\Support\Seo\SemanticSupportRedirectDecisionLedger;
 use Illuminate\Console\Command;
 use JsonException;
 use RuntimeException;
@@ -79,6 +80,10 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
     private function approvedRules(array $manifest): array
     {
         $schemaVersion = $manifest['schema_version'] ?? null;
+
+        if ($schemaVersion === 4) {
+            return $this->approvedV4Rules($manifest);
+        }
 
         if ($schemaVersion === 3) {
             return $this->approvedV3Rules($manifest);
@@ -439,6 +444,219 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
         ksort($rules, SORT_STRING);
 
         return $rules;
+    }
+
+    /**
+     * Generate mappings only from the complete SEO-06 schema-v4
+     * owner-approved semantic-support cohort.
+     *
+     * Schema v4 is strictly additive to the frozen approved-64
+     * schema-v3 manifest. The first 45 records must be byte-semantic
+     * equivalents of approved-64 records and the additional 221
+     * records must exactly equal the frozen SEO-06 approval evidence.
+     *
+     * @param  array<string, mixed>  $manifest
+     * @return array<string, string>
+     */
+    private function approvedV4Rules(array $manifest): array
+    {
+        if (
+            ($manifest['validation_only'] ?? null) !== false
+            || ($manifest['deployment_authorized'] ?? null) !== false
+            || ($manifest['redirects_installed'] ?? null) !== 0
+        ) {
+            throw new RuntimeException(
+                'Schema v4 must remain approved evidence only; '
+                .'deployment is not authorised.',
+            );
+        }
+
+        if (
+            ($manifest['base_manifest_sha256'] ?? null)
+                !== SemanticSupportRedirectDecisionLedger::BASE_MANIFEST_SHA256
+            || ($manifest['semantic_support_review_sha256'] ?? null)
+                !== SemanticSupportRedirectDecisionLedger::REVIEW_SHA256
+            || ($manifest['semantic_support_decision_sha256'] ?? null)
+                !== SemanticSupportRedirectDecisionLedger::DECISION_SHA256
+            || ($manifest['owner_decision_reference'] ?? null)
+                !== 'SEO-06-OWNER-DECISION-20261006'
+        ) {
+            throw new RuntimeException(
+                'Schema v4 SEO-06 provenance mismatch.',
+            );
+        }
+
+        $baseRelative =
+            'resources/seo/ortezka/review/seo-05h-20261006/'
+            .'approved-64-manifest.json';
+
+        if (($manifest['base_manifest_path'] ?? null) !== $baseRelative) {
+            throw new RuntimeException(
+                'Schema v4 base manifest path mismatch.',
+            );
+        }
+
+        $baseRaw = @file_get_contents(base_path($baseRelative));
+
+        if (
+            ! is_string($baseRaw)
+            || ! hash_equals(
+                SemanticSupportRedirectDecisionLedger::BASE_MANIFEST_SHA256,
+                hash('sha256', $baseRaw),
+            )
+        ) {
+            throw new RuntimeException(
+                'Schema v4 approved-64 base manifest changed.',
+            );
+        }
+
+        $baseManifest = json_decode(
+            $baseRaw,
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+
+        if (! is_array($baseManifest)) {
+            throw new RuntimeException(
+                'Schema v4 approved-64 base manifest is invalid.',
+            );
+        }
+
+        $baseRecords = $this->validatedSchemaV3Records(
+            $baseManifest,
+        );
+
+        $seo06Records = app(
+            SemanticSupportRedirectDecisionLedger::class,
+        )->approvedRecords();
+
+        $expectedRecords = array_merge(
+            $baseRecords,
+            $seo06Records,
+        );
+
+        $records = $manifest['records'] ?? null;
+
+        if (
+            ! is_array($records)
+            || $records !== $expectedRecords
+            || count($records)
+                !== SemanticSupportRedirectDecisionLedger::PROSPECTIVE_PRODUCTS
+            || ($manifest['product_count'] ?? null)
+                !== SemanticSupportRedirectDecisionLedger::PROSPECTIVE_PRODUCTS
+            || ($manifest['source_path_count'] ?? null)
+                !== SemanticSupportRedirectDecisionLedger::PROSPECTIVE_SOURCE_PATHS
+        ) {
+            throw new RuntimeException(
+                'Schema v4 requires the exact complete approved '
+                .'64 + SEO-06 semantic-support cohort.',
+            );
+        }
+
+        $rules = [];
+        $targets = [];
+
+        foreach ($records as $record) {
+            if (
+                ! is_array($record)
+                || ($record['approved'] ?? null) !== true
+                || ($record['decision'] ?? null) !== 'APPROVE_301'
+            ) {
+                throw new RuntimeException(
+                    'Schema v4 contains an unapproved redirect.',
+                );
+            }
+
+            $target = $record['target_path'] ?? null;
+
+            if (
+                ! is_string($target)
+                || ! str_starts_with($target, '/products/')
+            ) {
+                throw new RuntimeException(
+                    'Invalid schema v4 target path.',
+                );
+            }
+
+            $this->validatePath($target, 'target');
+
+            if (isset($targets[$target])) {
+                throw new RuntimeException(
+                    'Duplicate schema v4 target path: '.$target,
+                );
+            }
+
+            $targets[$target] = true;
+
+            $sourcePaths = $record['source_paths'] ?? null;
+
+            if (! is_array($sourcePaths) || $sourcePaths === []) {
+                throw new RuntimeException(
+                    'Missing schema v4 source paths.',
+                );
+            }
+
+            foreach ($sourcePaths as $source) {
+                if (! is_string($source)) {
+                    throw new RuntimeException(
+                        'Invalid schema v4 source path type.',
+                    );
+                }
+
+                $this->validatePath($source, 'source');
+
+                if (
+                    $source === $target
+                    || array_key_exists($source, $rules)
+                ) {
+                    throw new RuntimeException(
+                        'Duplicate or looping schema v4 source: '.$source,
+                    );
+                }
+
+                $rules[$source] = $target;
+            }
+        }
+
+        if (
+            count($targets)
+                !== SemanticSupportRedirectDecisionLedger::PROSPECTIVE_PRODUCTS
+            || count($rules)
+                !== SemanticSupportRedirectDecisionLedger::PROSPECTIVE_SOURCE_PATHS
+        ) {
+            throw new RuntimeException(
+                'Schema v4 approved cohort counts are inconsistent.',
+            );
+        }
+
+        foreach ($rules as $source => $target) {
+            if (array_key_exists($target, $rules)) {
+                throw new RuntimeException(
+                    'Schema v4 redirect chain/cycle risk: '
+                    .$source.' -> '.$target,
+                );
+            }
+        }
+
+        ksort($rules, SORT_STRING);
+
+        return $rules;
+    }
+
+    /**
+     * Reuse schema-v4 validation without generating an Nginx map.
+     *
+     * @param  array<string, mixed>  $manifest
+     * @return list<array<string, mixed>>
+     */
+    public function validatedSchemaV4Records(array $manifest): array
+    {
+        $this->approvedV4Rules($manifest);
+
+        /** @var list<array<string, mixed>> $records */
+        $records = $manifest['records'];
+
+        return $records;
     }
 
     /**
