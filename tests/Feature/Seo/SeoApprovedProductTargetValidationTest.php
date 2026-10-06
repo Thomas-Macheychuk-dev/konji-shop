@@ -448,3 +448,33 @@ it('rejects schema v2 validation candidates that do not carry exact identity evi
 
     Http::assertNothingSent();
 });
+
+it('keeps target and runtime evidence JSON serializable when HTTP metadata contains malformed UTF-8', function (): void {
+    foreach ([
+        'app/Console/Commands/ValidateApprovedLegacySeoProductTargetsCommand.php',
+        'app/Console/Commands/ValidateLegacySeoProductRedirectRuntimeCommand.php',
+    ] as $path) {
+        $source = (string) file_get_contents(base_path($path));
+
+        expect($source)
+            ->toContain('JSON_INVALID_UTF8_SUBSTITUTE')
+            ->toContain('JSON_THROW_ON_ERROR');
+    }
+
+    $flags = JSON_PRETTY_PRINT
+        | JSON_UNESCAPED_SLASHES
+        | JSON_UNESCAPED_UNICODE
+        | JSON_INVALID_UTF8_SUBSTITUTE
+        | JSON_THROW_ON_ERROR;
+
+    $encoded = json_encode(
+        [
+            'observed_http_metadata' => "bad-\xC3\x28-value",
+        ],
+        $flags,
+    );
+
+    expect($encoded)
+        ->toBeString()
+        ->toContain("\u{FFFD}");
+});
