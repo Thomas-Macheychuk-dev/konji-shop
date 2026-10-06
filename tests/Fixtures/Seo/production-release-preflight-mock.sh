@@ -3,29 +3,32 @@ set -uo pipefail
 
 SCRIPT="scripts/deploy/production-release-preflight.sh"
 
-BASE="bbe0e4e1473219afa04e0e01cc82ba534cf5d71f"
+SOURCE_BASE="96fbe6b2cad2dfccce2c3e4e7564398263fcf5c2"
 
 APP="sha256:d15817d4739e9cacf44daec8680f4370daf6be9c2bc6effcd37c8052ee378cb1"
-WEB="sha256:e81b7c35e39b2672effb24188d3a25fc430a011b56fcac7fbe1ab8532c225616"
+WEB="sha256:ea6c62b7a8ce95d2d1728fa84e3fbe754b00b496b6ace4b3ac3a4c9ea684f9a4"
+MOCK_WEB_ROLLBACK_IMAGE="sha256:e81b7c35e39b2672effb24188d3a25fc430a011b56fcac7fbe1ab8532c225616"
 REDIS="sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99"
 
-MOCK_SOURCE_MAP_SHA="52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009"
-MOCK_ACTIVE_MAP_SHA="209323a552d3481bf3ca92ed85e8d32912d68bd47d2501ce95b2440a7d3e7b01"
+MAP="52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009"
 
 MANIFEST400="285aaa614de3322d51ae29ffb45b0fdd1f80279decc21774a6a6a508dca9aafa"
 MANIFEST64="cfd55f42623bd1ce22deaac1d82229f82a63b9ee3b3fd354d11db22d0362f9a7"
 EXTRA="35fd51ac823a1a2695265abd87d6dcfc4ad34f12c17c42cf627e9a57444dd802"
+EVIDENCE="fc9aa7bbb02d14bfe52acfdd1cb6ba29f325ce032d967bbd838c9fc72984cf0e"
 
-export BASE APP WEB REDIS MOCK_SOURCE_MAP_SHA MOCK_ACTIVE_MAP_SHA MANIFEST400 MANIFEST64 EXTRA
+export \
+    SOURCE_BASE APP WEB MOCK_WEB_ROLLBACK_IMAGE REDIS MAP \
+    MANIFEST400 MANIFEST64 EXTRA EVIDENCE
 
-echo "=== PORTABLE SOURCE PREFLIGHT ==="
+echo "=== PORTABLE LIVE-400 BASELINE PREFLIGHT ==="
 
 if [[ ! -f "$SCRIPT" ]] || ! bash -n "$SCRIPT"; then
-    echo "SEO06_PREDEPLOY_SOURCE_SYNTAX=FAIL"
+    echo "SEO06_LIVE400_SOURCE_SYNTAX=FAIL"
     exit 2
 fi
 
-echo "SEO06_PREDEPLOY_SOURCE_SYNTAX=PASS"
+echo "SEO06_LIVE400_SOURCE_SYNTAX=PASS"
 
 id() {
     if [[ "${1:-}" == "-un" ]]; then
@@ -46,7 +49,7 @@ pwd() {
 git() {
     case "${1:-}:${2:-}" in
         rev-parse:HEAD)
-            printf '%s\n' "${TEST_HEAD:-synthetic-approved400-head}"
+            printf '%s\n' "${TEST_HEAD:-synthetic-live400-head}"
             ;;
 
         branch:--show-current)
@@ -81,7 +84,7 @@ sha256sum() {
     case "${1:-}" in
         docker/nginx/generated/legacy-seo-product-map.conf)
             printf '%s  %s\n' \
-                "${TEST_SOURCE_MAP:-$MOCK_SOURCE_MAP_SHA}" "$1"
+                "${TEST_SOURCE_MAP:-$MAP}" "$1"
             ;;
 
         docker/nginx/generated/legacy-seo-staging-extra-map.conf)
@@ -99,6 +102,11 @@ sha256sum() {
                 "${TEST_MANIFEST64:-$MANIFEST64}" "$1"
             ;;
 
+        storage/app/private/scrapers/seo/ortezka/audits/seo06-production-live400-20261006/runtime-400.json)
+            printf '%s  %s\n' \
+                "${TEST_EVIDENCE:-$EVIDENCE}" "$1"
+            ;;
+
         *)
             return 91
             ;;
@@ -112,6 +120,7 @@ grep() {
                 printf '%s\n' "${TEST_SOURCE_RULES:-400}"
                 return 0
                 ;;
+
             docker/nginx/generated/legacy-seo-staging-extra-map.conf)
                 printf '%s\n' "${TEST_EXTRA_RULES:-336}"
                 return 0
@@ -202,6 +211,7 @@ docker() {
                     else
                         echo running
                     fi
+
                     return 0
                     ;;
 
@@ -216,6 +226,7 @@ docker() {
                         web) echo "$WEB" ;;
                         *) echo "$APP" ;;
                     esac
+
                     return 0
                     ;;
 
@@ -265,6 +276,12 @@ docker() {
                 konji-shop-web:seo06-pre400-bbe0e4e)
                     [[ "${TEST_WEB_ROLLBACK_MISSING:-0}" != 1 ]] ||
                         return 7
+                    echo "$MOCK_WEB_ROLLBACK_IMAGE"
+                    ;;
+
+                konji-shop-web:seo06-live400-96fbe6b)
+                    [[ "${TEST_LIVE400_TAG_MISSING:-0}" != 1 ]] ||
+                        return 7
                     echo "$WEB"
                     ;;
 
@@ -282,15 +299,17 @@ docker() {
 
             if [[ "${3:-}" == sha256sum ]]; then
                 printf '%s  %s\n' \
-                    "${TEST_ACTIVE_MAP:-$MOCK_ACTIVE_MAP_SHA}" \
+                    "${TEST_ACTIVE_MAP:-$MAP}" \
                     "${4:-}"
+
                 return 0
             fi
 
             if [[ "${3:-}" == sh &&
                   "${4:-}" == -lc ]]; then
                 printf '%s\n' \
-                    "${TEST_ACTIVE_RULES:-64}"
+                    "${TEST_ACTIVE_RULES:-400}"
+
                 return 0
             fi
 
@@ -335,7 +354,7 @@ export -f \
     mock_cid mock_service
 
 TEMP_DIR="$(
-    mktemp -d -t konji-seo06-predeploy-XXXXXX
+    mktemp -d -t konji-seo06-live400-XXXXXX
 )" || exit 2
 
 trap 'rm -rf -- "$TEMP_DIR"' EXIT
@@ -360,13 +379,13 @@ run_case() {
         fi
 
         bash "$SCRIPT" \
-            --candidate-400-predeploy \
+            --current-live400-baseline \
             >"$TEMP_DIR/$name.log" 2>&1
 
         rc=$?
 
         grep -Fqx \
-            'SEO06_PREDEPLOY_DEPLOY_AUTHORIZED=false' \
+            'SEO06_LIVE400_BASELINE_DEPLOY_AUTHORIZED=false' \
             "$TEMP_DIR/$name.log" ||
             exit 1
 
@@ -376,12 +395,12 @@ run_case() {
                 exit 1
 
             grep -Fqx \
-                'SEO06_PREDEPLOY_CANDIDATE=PASS' \
+                'SEO06_LIVE400_BASELINE=PASS' \
                 "$TEMP_DIR/$name.log" ||
                 exit 1
 
             grep -Fqx \
-                'SEO06_PREDEPLOY_FAILURE_COUNT=0' \
+                'SEO06_LIVE400_BASELINE_FAILURE_COUNT=0' \
                 "$TEMP_DIR/$name.log" ||
                 exit 1
 
@@ -396,7 +415,7 @@ run_case() {
                 exit 1
 
             grep -Fqx \
-                'SEO06_PREDEPLOY_CANDIDATE=FAIL' \
+                'SEO06_LIVE400_BASELINE=FAIL' \
                 "$TEMP_DIR/$name.log" ||
                 exit 1
         fi
@@ -416,9 +435,9 @@ run_case() {
     fi
 }
 
-echo "=== SYNTHETIC SEO-06 PREDEPLOY TESTS ==="
+echo "=== SYNTHETIC SEO-06 LIVE-400 TESTS ==="
 
-run_case valid_candidate pass ""
+run_case valid_live400 pass ""
 
 run_case wrong_user fail EXECUTION_USER \
     TEST_USER ssm-user
@@ -426,11 +445,8 @@ run_case wrong_user fail EXECUTION_USER \
 run_case wrong_directory fail PRODUCTION_DIRECTORY \
     TEST_DIRECTORY /tmp/wrong
 
-run_case baseline_not_ancestor fail LIVE_BASELINE_IS_ANCESTOR \
+run_case baseline_not_ancestor fail LIVE400_SOURCE_IS_ANCESTOR \
     TEST_ANCESTRY_ERROR 1
-
-run_case candidate_not_advanced fail CANDIDATE_CHECKOUT_ADVANCED \
-    TEST_HEAD "$BASE"
 
 run_case wrong_branch fail CHECKOUT_BRANCH \
     TEST_BRANCH detached
@@ -452,6 +468,15 @@ run_case corrupt_manifest64 fail APPROVED_64_BASE_MANIFEST_SHA \
 
 run_case corrupt_extra_map fail STAGING_EXTRA_336_MAP_SHA \
     TEST_EXTRA_MAP incorrect
+
+run_case corrupt_live_evidence fail LIVE400_VALIDATION_EVIDENCE_SHA \
+    TEST_EVIDENCE incorrect
+
+run_case source_rule_drift fail SOURCE_400_RULES \
+    TEST_SOURCE_RULES 399
+
+run_case extra_rule_drift fail STAGING_EXTRA_336_RULES \
+    TEST_EXTRA_RULES 335
 
 run_case compose_image_drift fail COMPOSE_IMAGE_REFERENCES \
     TEST_COMPOSE_DRIFT 1
@@ -492,14 +517,20 @@ run_case missing_app_rollback fail APP_PRE400_ROLLBACK \
 run_case missing_web_rollback fail WEB_PRE400_ROLLBACK \
     TEST_WEB_ROLLBACK_MISSING 1
 
+run_case missing_live400_tag fail WEB_LIVE400_IMMUTABLE \
+    TEST_LIVE400_TAG_MISSING 1
+
 run_case redirects_disabled fail REDIRECT_FLAG \
     TEST_REDIRECT_FLAG false
 
 run_case staging_candidate_enabled fail STAGING_CANDIDATE_FLAG_OFF \
     TEST_STAGING_FLAG true
 
-run_case active_map_drift fail ACTIVE_LIVE64_MAP_SHA \
+run_case active_map_drift fail ACTIVE_LIVE400_MAP_SHA \
     TEST_ACTIVE_MAP incorrect
+
+run_case active_rule_drift fail ACTIVE_LIVE400_RULES \
+    TEST_ACTIVE_RULES 399
 
 run_case staging_runtime_active fail STAGING_RUNTIME_OVERLAY_OFF \
     TEST_STAGING_RUNTIME_DISABLED 0
@@ -518,15 +549,15 @@ run_case curl_failure fail PRODUCTION_HEALTH_REQUEST \
 
 echo "=== SYNTHETIC ACCEPTANCE ==="
 
-echo "SEO06_PREDEPLOY_CASES_PASSED=$PASSED/$TOTAL"
-echo "SEO06_PREDEPLOY_FAILURES=$FAILED"
+echo "SEO06_LIVE400_CASES_PASSED=$PASSED/$TOTAL"
+echo "SEO06_LIVE400_FAILURES=$FAILED"
 
 if [[ "$FAILED" -eq 0 &&
-      "$PASSED" -eq 33 ]]; then
+      "$PASSED" -eq 37 ]]; then
 
-    echo "SEO06_PREDEPLOY_SYNTHETIC=PASS"
+    echo "SEO06_LIVE400_SYNTHETIC=PASS"
     exit 0
 fi
 
-echo "SEO06_PREDEPLOY_SYNTHETIC=FAIL"
+echo "SEO06_LIVE400_SYNTHETIC=FAIL"
 exit 1
