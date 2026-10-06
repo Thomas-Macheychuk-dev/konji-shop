@@ -448,3 +448,217 @@ it('rejects schema v2 validation candidates that do not carry exact identity evi
 
     Http::assertNothingSent();
 });
+
+it('keeps target and runtime evidence JSON serializable when HTTP metadata contains malformed UTF-8', function (): void {
+    foreach ([
+        'app/Console/Commands/ValidateApprovedLegacySeoProductTargetsCommand.php',
+        'app/Console/Commands/ValidateLegacySeoProductRedirectRuntimeCommand.php',
+    ] as $path) {
+        $source = (string) file_get_contents(base_path($path));
+
+        expect($source)
+            ->toContain('JSON_INVALID_UTF8_SUBSTITUTE')
+            ->toContain('JSON_THROW_ON_ERROR');
+    }
+
+    $flags = JSON_PRETTY_PRINT
+        | JSON_UNESCAPED_SLASHES
+        | JSON_UNESCAPED_UNICODE
+        | JSON_INVALID_UTF8_SUBSTITUTE
+        | JSON_THROW_ON_ERROR;
+
+    $encoded = json_encode(
+        [
+            'observed_http_metadata' => "bad-\xC3\x28-value",
+        ],
+        $flags,
+    );
+
+    expect($encoded)
+        ->toBeString()
+        ->toContain("\u{FFFD}");
+});
+
+it('allows staging noindex only when explicitly requested', function (): void {
+    $manifest = writeSeoTargetValidationManifest(
+        seoTargetValidationManifest([
+            seoTargetValidationRecord(
+                '10',
+                'Produkt Alfa',
+                '/products/produkt-alfa',
+                '/legacy-alfa-id-10',
+            ),
+        ]),
+    );
+
+    Http::fake([
+        'https://staging.example.test/products/produkt-alfa' =>
+            Http::response(
+                seoTargetValidationHtml(
+                    'Produkt Alfa',
+                    'https://staging.example.test/products/produkt-alfa',
+                ),
+                200,
+                [
+                    'Content-Type' => 'text/html',
+                    'X-Robots-Tag' =>
+                        'noindex, nofollow, noarchive',
+                ],
+            ),
+    ]);
+
+    $arguments = [
+        '--manifest' => $manifest,
+        '--base-url' =>
+            'https://staging.example.test',
+        '--output' =>
+            'storage/framework/testing/'
+            .'seo-target-validation-report.json',
+    ];
+
+    expect(
+        Artisan::call(
+            'seo:validate-approved-product-targets',
+            $arguments,
+        )
+    )->toBe(1)
+        ->and(Artisan::output())
+        ->toContain('Noindex targets:                 1')
+        ->toContain('RESULT: FAIL');
+
+    $arguments['--allow-noindex'] = true;
+
+    expect(
+        Artisan::call(
+            'seo:validate-approved-product-targets',
+            $arguments,
+        )
+    )->toBe(0)
+        ->and(Artisan::output())
+        ->toContain('Noindex targets:                 1')
+        ->toContain('RESULT: PASS');
+
+    $report = json_decode(
+        (string) file_get_contents(
+            base_path(
+                'storage/framework/testing/'
+                .'seo-target-validation-report.json'
+            )
+        ),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect($report['allow_noindex'])->toBeTrue()
+        ->and($report['result'])->toBe('PASS')
+        ->and($report['summary']['http_200'])->toBe(1)
+        ->and($report['summary']['canonical_correct'])
+        ->toBe(1)
+        ->and($report['summary']['indexable'])
+        ->toBe(0)
+        ->and($report['summary']['noindex_targets'])
+        ->toBe(1)
+        ->and(
+            $report['summary']
+            ['product_identity_correct']
+        )->toBe(1);
+
+    Http::assertSentCount(2);
+});
+
+it('preserves UTF-8 product identity while parsing target HTML', function (): void {
+    $name = 'Stabilizator stawu skokowego z wkładką silikonową 1409';
+
+    $manifest = writeSeoTargetValidationManifest(
+        seoTargetValidationManifest([
+            seoTargetValidationRecord(
+                '11337',
+                $name,
+                '/products/stabilizator-stawu-skokowego-z-wkladka-silikonowa-1409',
+                '/orteza-stawu-skokowego-ograniczajaca-ruch-id-3312',
+            ),
+        ]),
+    );
+
+    Http::fake([
+        'https://staging.example.test/products/stabilizator-stawu-skokowego-z-wkladka-silikonowa-1409' =>
+            Http::response(
+                seoTargetValidationHtml(
+                    $name,
+                    'https://staging.example.test/products/stabilizator-stawu-skokowego-z-wkladka-silikonowa-1409',
+                ),
+                200,
+                [
+                    'Content-Type' => 'text/html; charset=utf-8',
+                ],
+            ),
+    ]);
+
+    $exitCode = Artisan::call(
+        'seo:validate-approved-product-targets',
+        [
+            '--manifest' => $manifest,
+            '--base-url' => 'https://staging.example.test',
+            '--output' =>
+                'storage/framework/testing/'
+                .'seo-target-validation-report.json',
+        ],
+    );
+
+    expect($exitCode)->toBe(0)
+        ->and(Artisan::output())
+        ->toContain('Product identity correct:       1')
+        ->toContain('Identity mismatches:              0')
+        ->toContain('RESULT: PASS');
+
+    $report = json_decode(
+        (string) file_get_contents(
+            base_path(
+                'storage/framework/testing/'
+                .'seo-target-validation-report.json'
+            )
+        ),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect($report['records'][0]['observed_h1'])
+        ->toBe($name)
+        ->and(
+            $report['records'][0]['identity_correct']
+        )->toBeTrue()
+        ->and(
+            $report['records'][0]['failures']
+        )->toBe([]);
+});
+
+it('pins the ASCII-safe UTF-8 DOM bridge used by both live SEO validators', function (): void {
+    foreach ([
+        'app/Console/Commands/ValidateApprovedLegacySeoProductTargetsCommand.php',
+        'app/Console/Commands/ValidateLegacySeoProductRedirectRuntimeCommand.php',
+    ] as $relative) {
+        $source = (string) file_get_contents(
+            base_path($relative)
+        );
+
+        expect($source)
+            ->toContain(
+                'private function utf8HtmlCrawler('
+            )
+            ->toContain(
+                'mb_encode_numericentity('
+            )
+            ->toContain(
+                "new \\DOMDocument('1.0', 'UTF-8')"
+            )
+            ->toContain(
+                'LIBXML_NONET'
+            )
+            ->toContain(
+                'return new Crawler($document, $url);'
+            )
+            ->not->toContain(
+                'addHtmlContent($html'
+            );
+    }
+});

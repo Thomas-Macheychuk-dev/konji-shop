@@ -429,3 +429,238 @@ it('rejects duplicate approved source paths before making network requests', fun
 
     Http::assertNothingSent();
 });
+
+it('allows staging target noindex only when explicitly requested', function (): void {
+    $manifest = writeSeoRuntimeManifest(
+        seoRuntimeManifest([
+            seoRuntimeRecord(
+                '10',
+                'Produkt Alfa',
+                '/products/produkt-alfa',
+                ['/legacy-alfa-id-10'],
+            ),
+        ]),
+    );
+
+    Http::fake(function (Request $request) {
+        return match (true) {
+            str_contains(
+                $request->url(),
+                '/legacy-alfa-id-10'
+            ) => Http::response(
+                '',
+                301,
+                [
+                    'Location' =>
+                        'https://staging.example.test'
+                        .'/products/produkt-alfa',
+                ],
+            ),
+
+            $request->url()
+                === 'https://staging.example.test'
+                .'/products/produkt-alfa'
+                => Http::response(
+                    seoRuntimeHtml(
+                        'Produkt Alfa',
+                        'https://staging.example.test'
+                        .'/products/produkt-alfa',
+                    ),
+                    200,
+                    [
+                        'Content-Type' => 'text/html',
+                        'X-Robots-Tag' =>
+                            'noindex, nofollow, noarchive',
+                    ],
+                ),
+
+            str_contains(
+                $request->url(),
+                '/robots.txt'
+            ) => Http::response(
+                'User-agent: *',
+                200,
+            ),
+
+            default => Http::response(
+                'unexpected',
+                500,
+            ),
+        };
+    });
+
+    $arguments = [
+        '--manifest' => $manifest,
+        '--base-url' =>
+            'https://staging.example.test',
+        '--output' =>
+            'storage/framework/testing/'
+            .'seo-runtime-validation-report.json',
+    ];
+
+    expect(
+        Artisan::call(
+            'seo:validate-legacy-product-redirect-runtime',
+            $arguments,
+        )
+    )->toBe(1)
+        ->and(Artisan::output())
+        ->toContain('Noindex targets:                  1')
+        ->toContain('RESULT: FAIL');
+
+    $arguments['--allow-noindex'] = true;
+
+    expect(
+        Artisan::call(
+            'seo:validate-legacy-product-redirect-runtime',
+            $arguments,
+        )
+    )->toBe(0)
+        ->and(Artisan::output())
+        ->toContain('Noindex targets:                  1')
+        ->toContain('RESULT: PASS');
+
+    $report = json_decode(
+        (string) file_get_contents(
+            base_path(
+                'storage/framework/testing/'
+                .'seo-runtime-validation-report.json'
+            )
+        ),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect($report['allow_noindex'])->toBeTrue()
+        ->and($report['result'])->toBe('PASS')
+        ->and(
+            $report['summary']
+            ['approved_source_paths']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['source_http_301']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['correct_destinations']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['target_http_200']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['canonical_correct']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['indexable']
+        )->toBe(0)
+        ->and(
+            $report['summary']
+            ['noindex_targets']
+        )->toBe(1)
+        ->and(
+            $report['summary']
+            ['product_identity_correct']
+        )->toBe(1);
+
+    Http::assertSentCount(6);
+});
+
+it('preserves UTF-8 product identity while parsing redirect target HTML', function (): void {
+    $name = 'Stabilizator stawu skokowego z wkładką silikonową 1409';
+
+    $manifest = writeSeoRuntimeManifest(
+        seoRuntimeManifest([
+            seoRuntimeRecord(
+                '11337',
+                $name,
+                '/products/stabilizator-stawu-skokowego-z-wkladka-silikonowa-1409',
+                [
+                    '/orteza-stawu-skokowego-ograniczajaca-ruch-id-3312',
+                ],
+            ),
+        ]),
+    );
+
+    Http::fake(function (Request $request) use ($name) {
+        return match (true) {
+            str_contains(
+                $request->url(),
+                '/orteza-stawu-skokowego-ograniczajaca-ruch-id-3312'
+            ) => Http::response(
+                '',
+                301,
+                [
+                    'Location' =>
+                        'https://staging.example.test'
+                        .'/products/stabilizator-stawu-skokowego-z-wkladka-silikonowa-1409',
+                ],
+            ),
+
+            $request->url()
+                === 'https://staging.example.test'
+                .'/products/stabilizator-stawu-skokowego-z-wkladka-silikonowa-1409'
+                => Http::response(
+                    seoRuntimeHtml(
+                        $name,
+                        'https://staging.example.test'
+                        .'/products/stabilizator-stawu-skokowego-z-wkladka-silikonowa-1409',
+                    ),
+                    200,
+                    [
+                        'Content-Type' =>
+                            'text/html; charset=utf-8',
+                    ],
+                ),
+
+            str_contains(
+                $request->url(),
+                '/robots.txt'
+            ) => Http::response(
+                'User-agent: *',
+                200,
+            ),
+
+            default => Http::response(
+                'unexpected',
+                500,
+            ),
+        };
+    });
+
+    $exitCode = Artisan::call(
+        'seo:validate-legacy-product-redirect-runtime',
+        [
+            '--manifest' => $manifest,
+            '--base-url' => 'https://staging.example.test',
+            '--output' =>
+                'storage/framework/testing/'
+                .'seo-runtime-validation-report.json',
+        ],
+    );
+
+    expect($exitCode)->toBe(0)
+        ->and(Artisan::output())
+        ->toContain('Identity mismatches:               0')
+        ->toContain('RESULT: PASS');
+
+    $report = json_decode(
+        (string) file_get_contents(
+            base_path(
+                'storage/framework/testing/'
+                .'seo-runtime-validation-report.json'
+            )
+        ),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    expect($report['records'][0]['observed_h1'])
+        ->toBe($name)
+        ->and(
+            $report['records'][0]['target_identity_correct']
+        )->toBeTrue();
+});

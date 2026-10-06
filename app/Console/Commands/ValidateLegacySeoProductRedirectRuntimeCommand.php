@@ -24,7 +24,8 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
         {--base-url= : Absolute HTTP(S) base URL of the staging storefront}
         {--output=storage/app/seo/ortezka/legacy-product-redirect-runtime-validation.json : Repository-relative JSON evidence output}
         {--control-path=/robots.txt : Unrelated direct path that must remain a non-redirecting HTTP 200}
-        {--timeout=15 : Per-request timeout in seconds}';
+        {--timeout=15 : Per-request timeout in seconds}
+        {--allow-noindex : Allow noindex responses only for explicitly isolated staging validation}';
 
     protected $description = 'Validate the enabled staging runtime for every approved legacy product redirect without changing redirect activation.';
 
@@ -36,6 +37,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             $baseUrl = $this->validatedBaseUrl();
             $controlPath = $this->validatedControlPath();
             $timeout = $this->validatedTimeout();
+            $allowNoindex = (bool) $this->option('allow-noindex');
             $manifestPath = base_path($manifestRelative);
 
             if (! is_file($manifestPath)) {
@@ -72,7 +74,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             );
 
             $summary = $this->summary($mappings, $records, $control);
-            $result = $this->passes($summary) ? 'PASS' : 'FAIL';
+            $result = $this->passes($summary, $allowNoindex) ? 'PASS' : 'FAIL';
 
             $report = [
                 'schema_version' => 1,
@@ -81,6 +83,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
                 'manifest' => $manifestRelative,
                 'manifest_sha256' => hash('sha256', $rawManifest),
                 'base_url' => $baseUrl,
+                'allow_noindex' => $allowNoindex,
                 'control_path' => $controlPath,
                 'redirect_activation_changed_by_this_command' => false,
                 'human_verification_cookie_used' => $humanVerificationCookie !== null,
@@ -113,6 +116,10 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
      */
     private function approvedMappings(array $manifest): array
     {
+        if (($manifest['schema_version'] ?? null) === 4) {
+            return $this->approvedSchemaV4Mappings($manifest);
+        }
+
         if (($manifest['schema_version'] ?? null) === 3) {
             return $this->approvedSchemaV3Mappings($manifest);
         }
@@ -317,6 +324,94 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
         return array_values($mappings);
     }
 
+    private function approvedSchemaV4Mappings(array $manifest): array
+    {
+        $records = app(
+            GenerateLegacySeoProductRedirectMapCommand::class,
+        )->validatedSchemaV4Records($manifest);
+
+        $mappings = [];
+        $targets = [];
+
+        foreach ($records as $record) {
+            $productId = $record['target_product_id'] ?? null;
+            $productName = $record['target_product_name'] ?? null;
+            $targetPath = $record['target_path'] ?? null;
+            $sourcePaths = $record['source_paths'] ?? null;
+
+            if ((! is_string($productId) && ! is_int($productId))
+                || trim((string) $productId) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v4 target product ID.',
+                );
+            }
+
+            if (! is_string($productName)
+                || trim($productName) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v4 target product name.',
+                );
+            }
+
+            if (! is_string($targetPath)
+                || ! str_starts_with($targetPath, '/products/')) {
+                throw new RuntimeException(
+                    'Invalid schema v4 target path.',
+                );
+            }
+
+            $this->validatePath($targetPath, 'target');
+
+            if (isset($targets[$targetPath])) {
+                throw new RuntimeException(
+                    'Duplicate schema v4 target: '.$targetPath,
+                );
+            }
+
+            $targets[$targetPath] = true;
+
+            if (! is_array($sourcePaths) || $sourcePaths === []) {
+                throw new RuntimeException(
+                    'Missing schema v4 source paths.',
+                );
+            }
+
+            foreach ($sourcePaths as $sourcePath) {
+                if (! is_string($sourcePath)) {
+                    throw new RuntimeException(
+                        'Invalid schema v4 source path type.',
+                    );
+                }
+
+                $this->validatePath($sourcePath, 'source');
+
+                if ($sourcePath === $targetPath
+                    || isset($mappings[$sourcePath])) {
+                    throw new RuntimeException(
+                        'Duplicate or looping schema v4 source: '.$sourcePath,
+                    );
+                }
+
+                $mappings[$sourcePath] = [
+                    'source_path' => $sourcePath,
+                    'target_product_id' => (string) $productId,
+                    'target_product_name' => $productName,
+                    'target_path' => $targetPath,
+                ];
+            }
+        }
+
+        if (count($targets) !== 266 || count($mappings) !== 400) {
+            throw new RuntimeException(
+                'Schema v4 runtime validation requires 266 products and 400 owner-approved source paths.',
+            );
+        }
+
+        ksort($mappings, SORT_STRING);
+
+        return array_values($mappings);
+    }
+
     /**
      * @param  array{source_path: string, target_product_id: string, target_product_name: string, target_path: string}  $mapping
      * @param  array{name: string, value: string, domain: string}|null  $humanVerificationCookie
@@ -432,7 +527,10 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             return $record;
         }
 
-        $crawler = new Crawler($targetResponse->body(), $expectedTargetUrl);
+        $crawler = $this->utf8HtmlCrawler(
+            $targetResponse->body(),
+            $expectedTargetUrl,
+        );
         $canonical = $this->canonicalHref($crawler);
         $record['target_canonical'] = $canonical;
         $record['target_canonical_correct'] = $canonical !== null
@@ -527,6 +625,58 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
         $value = trim($value);
 
         return $value !== '' ? $value : null;
+    }
+
+
+    private function utf8HtmlCrawler(string $html, string $url): Crawler
+    {
+        if (! mb_check_encoding($html, 'UTF-8')) {
+            throw new RuntimeException(
+                'Storefront HTML response is not valid UTF-8: '.$url
+            );
+        }
+
+        /*
+         * Symfony 8 DomCrawler uses the PHP HTML5 DOM parser.
+         *
+         * On the current PHP/Symfony production-compatible stack, a real
+         * valid UTF-8 storefront response can lose a UTF-8 lead byte while
+         * crossing that parser boundary.
+         *
+         * Convert every non-ASCII Unicode code point to a numeric HTML
+         * entity first. The HTML presented to legacy DOMDocument is then
+         * ASCII-safe, while DOM decoding restores the original Unicode
+         * text values.
+         */
+        $asciiSafeHtml = mb_encode_numericentity(
+            $html,
+            [0x80, 0x10FFFF, 0, 0x1FFFFF],
+            'UTF-8',
+        );
+
+        $document = new \DOMDocument('1.0', 'UTF-8');
+
+        $previousInternalErrors = libxml_use_internal_errors(true);
+
+        try {
+            $loaded = $document->loadHTML(
+                $asciiSafeHtml,
+                LIBXML_NONET,
+            );
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors(
+                $previousInternalErrors,
+            );
+        }
+
+        if ($loaded !== true) {
+            throw new RuntimeException(
+                'Unable to parse storefront HTML response: '.$url
+            );
+        }
+
+        return new Crawler($document, $url);
     }
 
     private function canonicalHref(Crawler $crawler): ?string
@@ -756,7 +906,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
     }
 
     /** @param array<string, int> $summary */
-    private function passes(array $summary): bool
+    private function passes(array $summary, bool $allowNoindex): bool
     {
         $expected = $summary['approved_source_paths'];
 
@@ -766,7 +916,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             && $summary['query_strings_dropped'] === $expected
             && $summary['target_http_200'] === $expected
             && $summary['canonical_correct'] === $expected
-            && $summary['indexable'] === $expected
+            && ($allowNoindex || $summary['indexable'] === $expected)
             && $summary['product_identity_correct'] === $expected
             && $summary['wrong_destinations'] === 0
             && $summary['missing_location_headers'] === 0
@@ -778,7 +928,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             && $summary['other_source_statuses'] === 0
             && $summary['other_target_statuses'] === 0
             && $summary['canonical_mismatches'] === 0
-            && $summary['noindex_targets'] === 0
+            && ($allowNoindex || $summary['noindex_targets'] === 0)
             && $summary['identity_mismatches'] === 0
             && $summary['unrelated_control_failures'] === 0
             && $summary['duplicate_or_conflicting_sources'] === 0;
@@ -797,7 +947,7 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
         try {
             $json = json_encode(
                 $report,
-                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR
             )."\n";
         } catch (JsonException $exception) {
             throw new RuntimeException('Unable to encode redirect-runtime validation report: '.$exception->getMessage(), previous: $exception);

@@ -23,7 +23,8 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         {--manifest=resources/seo/ortezka/product-redirect-approvals.json : Repository-relative approved redirect manifest}
         {--base-url= : Absolute HTTP(S) base URL of the Konji storefront to validate}
         {--output=storage/app/seo/ortezka/approved-product-target-validation.json : Repository-relative JSON evidence output}
-        {--timeout=15 : Per-request timeout in seconds}';
+        {--timeout=15 : Per-request timeout in seconds}
+        {--allow-noindex : Allow noindex responses only for explicitly isolated staging validation}';
 
     protected $description = 'Validate every human-approved legacy SEO product redirect target before redirect activation.';
 
@@ -34,6 +35,7 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
             $outputRelative = $this->safeRelativePath('output');
             $baseUrl = $this->validatedBaseUrl();
             $timeout = $this->validatedTimeout();
+            $allowNoindex = (bool) $this->option('allow-noindex');
             $manifestPath = base_path($manifestRelative);
 
             if (! is_file($manifestPath)) {
@@ -58,7 +60,7 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
             }
 
             $summary = $this->summary($targets, $records);
-            $result = $this->passes($summary) ? 'PASS' : 'FAIL';
+            $result = $this->passes($summary, $allowNoindex) ? 'PASS' : 'FAIL';
 
             $report = [
                 'schema_version' => 1,
@@ -67,6 +69,7 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
                 'manifest' => $manifestRelative,
                 'manifest_sha256' => hash('sha256', $rawManifest),
                 'base_url' => $baseUrl,
+                'allow_noindex' => $allowNoindex,
                 'redirects_enabled_by_this_command' => false,
                 'human_verification_cookie_used' => $humanVerificationCookie !== null,
                 'human_verification_cookie_name' => $humanVerificationCookie['name'] ?? null,
@@ -98,6 +101,10 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
     private function approvedTargets(array $manifest): array
     {
         $schemaVersion = $manifest['schema_version'] ?? null;
+
+        if ($schemaVersion === 4) {
+            return $this->approvedSchemaV4Targets($manifest);
+        }
 
         if ($schemaVersion === 3) {
             return $this->approvedSchemaV3Targets($manifest);
@@ -302,6 +309,66 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         return array_values($targets);
     }
 
+    private function approvedSchemaV4Targets(array $manifest): array
+    {
+        $records = app(
+            GenerateLegacySeoProductRedirectMapCommand::class,
+        )->validatedSchemaV4Records($manifest);
+
+        $targets = [];
+
+        foreach ($records as $record) {
+            $productId = $record['target_product_id'] ?? null;
+            $productName = $record['target_product_name'] ?? null;
+            $targetPath = $record['target_path'] ?? null;
+
+            if ((! is_string($productId) && ! is_int($productId))
+                || trim((string) $productId) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v4 target product ID.',
+                );
+            }
+
+            if (! is_string($productName)
+                || trim($productName) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v4 target product name.',
+                );
+            }
+
+            if (! is_string($targetPath)
+                || ! str_starts_with($targetPath, '/products/')) {
+                throw new RuntimeException(
+                    'Invalid schema v4 target path.',
+                );
+            }
+
+            $this->validatePath($targetPath, 'target');
+
+            if (isset($targets[$targetPath])) {
+                throw new RuntimeException(
+                    'Duplicate schema v4 target path: '.$targetPath,
+                );
+            }
+
+            $targets[$targetPath] = [
+                'target_product_id' => (string) $productId,
+                'target_product_name' => $productName,
+                'target_path' => $targetPath,
+            ];
+        }
+
+        if (count($targets) !== 266) {
+            throw new RuntimeException(
+                'Schema v4 target validation requires 266 owner-approved unique products.',
+            );
+        }
+
+        ksort($targets, SORT_STRING);
+
+        return array_values($targets);
+    }
+
     /**
      * @param  array{target_product_id: string, target_product_name: string, target_path: string}  $target
      * @param  array{name: string, value: string, domain: string}|null  $humanVerificationCookie
@@ -363,7 +430,7 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         }
 
         $html = $response->body();
-        $crawler = new Crawler($html, $url);
+        $crawler = $this->utf8HtmlCrawler($html, $url);
         $canonical = $this->canonicalHref($crawler);
         $record['canonical'] = $canonical;
         $record['canonical_correct'] = $canonical !== null
@@ -389,6 +456,58 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         }
 
         return $record;
+    }
+
+
+    private function utf8HtmlCrawler(string $html, string $url): Crawler
+    {
+        if (! mb_check_encoding($html, 'UTF-8')) {
+            throw new RuntimeException(
+                'Storefront HTML response is not valid UTF-8: '.$url
+            );
+        }
+
+        /*
+         * Symfony 8 DomCrawler uses the PHP HTML5 DOM parser.
+         *
+         * On the current PHP/Symfony production-compatible stack, a real
+         * valid UTF-8 storefront response can lose a UTF-8 lead byte while
+         * crossing that parser boundary.
+         *
+         * Convert every non-ASCII Unicode code point to a numeric HTML
+         * entity first. The HTML presented to legacy DOMDocument is then
+         * ASCII-safe, while DOM decoding restores the original Unicode
+         * text values.
+         */
+        $asciiSafeHtml = mb_encode_numericentity(
+            $html,
+            [0x80, 0x10FFFF, 0, 0x1FFFFF],
+            'UTF-8',
+        );
+
+        $document = new \DOMDocument('1.0', 'UTF-8');
+
+        $previousInternalErrors = libxml_use_internal_errors(true);
+
+        try {
+            $loaded = $document->loadHTML(
+                $asciiSafeHtml,
+                LIBXML_NONET,
+            );
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors(
+                $previousInternalErrors,
+            );
+        }
+
+        if ($loaded !== true) {
+            throw new RuntimeException(
+                'Unable to parse storefront HTML response: '.$url
+            );
+        }
+
+        return new Crawler($document, $url);
     }
 
     private function canonicalHref(Crawler $crawler): ?string
@@ -568,19 +687,19 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
     }
 
     /** @param array<string, int> $summary */
-    private function passes(array $summary): bool
+    private function passes(array $summary, bool $allowNoindex): bool
     {
         $expected = $summary['approved_target_products'];
 
         return $expected > 0
             && $summary['http_200'] === $expected
             && $summary['canonical_correct'] === $expected
-            && $summary['indexable'] === $expected
+            && ($allowNoindex || $summary['indexable'] === $expected)
             && $summary['product_identity_correct'] === $expected
             && $summary['missing_targets'] === 0
             && $summary['redirected_targets'] === 0
             && $summary['canonical_mismatches'] === 0
-            && $summary['noindex_targets'] === 0
+            && ($allowNoindex || $summary['noindex_targets'] === 0)
             && $summary['identity_mismatches'] === 0
             && $summary['request_failures'] === 0
             && $summary['other_http_failures'] === 0
@@ -602,7 +721,7 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         try {
             $json = json_encode(
                 $report,
-                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR
             )."\n";
         } catch (JsonException $exception) {
             throw new RuntimeException('Unable to encode target-validation report: '.$exception->getMessage(), previous: $exception);
