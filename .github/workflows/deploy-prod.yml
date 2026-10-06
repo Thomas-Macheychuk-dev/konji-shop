@@ -58,7 +58,7 @@ jobs:
       - name: Run tests
         run: php artisan test
 
-      - name: Guard SEO-03B production HOLD
+      - name: Guard SEO-06 400-rule production source HOLD
         id: seo03b_gate
         shell: bash
         env:

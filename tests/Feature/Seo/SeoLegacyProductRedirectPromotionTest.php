@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Support\Seo\ParentProductRedirectApprovalPolicy;
 use App\Support\Seo\ParentProductRedirectDecisionLedger;
 
-it('promotes the committed deployment source from historical 58 to the approved 64-rule cohort', function (): void {
+it('promotes the committed deployment source additively from 64 to the approved 400-rule cohort', function (): void {
     $originalPath =
         'resources/seo/ortezka/product-redirect-approvals.json';
 
@@ -13,9 +13,13 @@ it('promotes the committed deployment source from historical 58 to the approved 
         'resources/seo/ortezka/review/'
         .'seo-03b-p4-20261003/approved-58-manifest.json';
 
-    $candidate64Path =
+    $approved64Path =
         'resources/seo/ortezka/review/'
         .'seo-05h-20261006/approved-64-manifest.json';
+
+    $approved400Path =
+        'resources/seo/ortezka/review/'
+        .'seo-06c-20261006/approved-400-manifest.json';
 
     $readManifest = static function (string $path): array {
         return json_decode(
@@ -33,31 +37,46 @@ it('promotes the committed deployment source from historical 58 to the approved 
                 ->and($record['decision'])->toBe('APPROVE_301');
 
             foreach ($record['source_paths'] as $source) {
-                expect(array_key_exists($source, $rules))->toBeFalse();
+                expect(array_key_exists($source, $rules))
+                    ->toBeFalse();
 
                 $rules[$source] = $record['target_path'];
             }
         }
+
+        ksort($rules);
 
         return $rules;
     };
 
     $originalManifest = $readManifest($originalPath);
     $historical58Manifest = $readManifest($historical58Path);
-    $candidate64Manifest = $readManifest($candidate64Path);
+    $approved64Manifest = $readManifest($approved64Path);
+    $approved400Manifest = $readManifest($approved400Path);
 
     $original = $readRules($originalManifest);
     $historical58 = $readRules($historical58Manifest);
-    $candidate64 = $readRules($candidate64Manifest);
+    $approved64 = $readRules($approved64Manifest);
+    $approved400 = $readRules($approved400Manifest);
 
     expect($original)->toHaveCount(36)
         ->and($historical58)->toHaveCount(58)
-        ->and($candidate64)->toHaveCount(64);
+        ->and($approved64)->toHaveCount(64)
+        ->and($approved400)->toHaveCount(400);
 
-    // Both promoted cohorts must preserve every original destination.
     foreach ($original as $source => $target) {
         expect($historical58[$source] ?? null)->toBe($target)
-            ->and($candidate64[$source] ?? null)->toBe($target);
+            ->and($approved64[$source] ?? null)->toBe($target)
+            ->and($approved400[$source] ?? null)->toBe($target);
+    }
+
+    foreach ($historical58 as $source => $target) {
+        expect($approved64[$source] ?? null)->toBe($target)
+            ->and($approved400[$source] ?? null)->toBe($target);
+    }
+
+    foreach ($approved64 as $source => $target) {
+        expect($approved400[$source] ?? null)->toBe($target);
     }
 
     expect(array_diff_key(
@@ -66,67 +85,58 @@ it('promotes the committed deployment source from historical 58 to the approved 
     ))->toHaveCount(22);
 
     expect(array_diff_key(
-        $candidate64,
+        $approved64,
         $original,
     ))->toHaveCount(28);
 
-    // SEO-05 must be strictly additive to the already-deployed 58.
-    foreach ($historical58 as $source => $target) {
-        expect($candidate64[$source] ?? null)->toBe($target);
-    }
+    expect(array_diff_key(
+        $approved400,
+        $approved64,
+    ))->toHaveCount(336);
 
-    $added = array_diff_key(
-        $candidate64,
-        $historical58,
-    );
+    expect(array_intersect_key(
+        array_diff_key($approved400, $approved64),
+        $approved64,
+    ))->toBe([]);
 
-    $expectedAdded = [
-        '/pilka-rehabilitacyjna-midi-reh-37988-id-6632'
-            => '/products/pilka-rehabilitacyjna-midi-reh',
-
-        '/pilka-rehabilitacyjna-midi-reh-id-6632'
-            => '/products/pilka-rehabilitacyjna-midi-reh',
-
-        '/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt-70785-id-6646'
-            => '/products/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt',
-
-        '/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt-id-6646'
-            => '/products/kula-lokciowa-aluminiowa-z-ruchoma-obejma-ergonomiczny-uchwyt',
-
-        '/podporka-rehabilitacyjna-dwukolowa-standard-id-6664'
-            => '/products/podporka-rehabilitacyjna-dwukolowa-standard',
-
-        '/taboret-prysznicowy-z-wycieciem-u-id-6687'
-            => '/products/taboret-prysznicowy-z-wycieciem-u',
-    ];
-
-    ksort($added);
-    ksort($expectedAdded);
-
-    expect($added)->toBe($expectedAdded);
-
-    // Current governance must now accept all 22 reviewed parent products.
     $reviewed = app(
         ParentProductRedirectApprovalPolicy::class,
     )->reviewedRecords();
 
-    $approved = app(
+    $approvedParents = app(
         ParentProductRedirectDecisionLedger::class,
     )->approvedRecords($reviewed);
 
     expect($reviewed)->toHaveCount(22)
-        ->and($approved)->toHaveCount(22)
-        ->and(array_diff_key($reviewed, $approved))->toBe([]);
+        ->and($approvedParents)->toHaveCount(22)
+        ->and(
+            array_diff_key($reviewed, $approvedParents),
+        )->toBe([]);
 
-    // Candidate remains explicitly non-deployed.
-    expect($candidate64Manifest['product_count'])->toBe(45)
-        ->and($candidate64Manifest['source_path_count'])->toBe(64)
-        ->and($candidate64Manifest['deployment_authorized'])->toBeFalse()
-        ->and($candidate64Manifest['redirects_installed'])->toBe(0)
-        ->and($candidate64Manifest['parent_decision_sha256'])
-        ->toBe(ParentProductRedirectDecisionLedger::DECISION_SHA256);
+    expect($approved64Manifest['product_count'])->toBe(45)
+        ->and($approved64Manifest['source_path_count'])->toBe(64)
+        ->and(
+            $approved64Manifest['deployment_authorized'],
+        )->toBeFalse()
+        ->and($approved64Manifest['redirects_installed'])->toBe(0);
 
-    // The committed deployment source must now equal the approved-64 manifest.
+    expect($approved400Manifest['schema_version'])->toBe(4)
+        ->and($approved400Manifest['product_count'])->toBe(266)
+        ->and(
+            $approved400Manifest['source_path_count'],
+        )->toBe(400)
+        ->and(
+            $approved400Manifest['deployment_authorized'],
+        )->toBeFalse()
+        ->and(
+            $approved400Manifest['redirects_installed'],
+        )->toBe(0)
+        ->and(
+            $approved400Manifest['base_manifest_sha256'],
+        )->toBe(
+            'cfd55f42623bd1ce22deaac1d82229f82a63b9ee3b3fd354d11db22d0362f9a7',
+        );
+
     $map = (string) file_get_contents(base_path(
         'docker/nginx/generated/legacy-seo-product-map.conf',
     ));
@@ -140,25 +150,32 @@ it('promotes the committed deployment source from historical 58 to the approved 
         PREG_SET_ORDER,
     );
 
-    expect($ruleCount)->toBe(64);
+    expect($ruleCount)->toBe(400);
 
     $runtime = [];
 
     foreach ($matches as $match) {
-        expect(array_key_exists($match[1], $runtime))->toBeFalse();
+        expect(array_key_exists($match[1], $runtime))
+            ->toBeFalse();
 
         $runtime[$match[1]] = $match[2];
     }
 
     ksort($runtime);
-    ksort($candidate64);
 
-    expect($runtime)->toBe($candidate64);
+    expect($runtime)->toBe($approved400);
 
     expect($map)
-        ->toContain('# Source: '.$candidate64Path)
-        ->toContain('# Manifest SHA-256: '.hash_file(
-            'sha256',
-            base_path($candidate64Path),
-        ));
+        ->toContain('# Source: '.$approved400Path)
+        ->toContain(
+            '# Manifest SHA-256: '
+            .hash_file(
+                'sha256',
+                base_path($approved400Path),
+            ),
+        );
+
+    expect(hash('sha256', $map))->toBe(
+        '52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009',
+    );
 });

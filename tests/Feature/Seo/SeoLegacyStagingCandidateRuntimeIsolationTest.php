@@ -83,11 +83,16 @@ afterEach(function (): void {
     );
 });
 
-it('keeps the 400-rule SEO-06 candidate isolated to staging while production remains exactly approved-64', function (): void {
-    $manifest =
+it('keeps the staging overlay isolated while the committed production source is the exact approved-400 union', function (): void {
+    $manifest400 =
         'resources/seo/ortezka/review/'
         .'seo-06c-20261006/'
         .'approved-400-manifest.json';
+
+    $manifest64 =
+        'resources/seo/ortezka/review/'
+        .'seo-05h-20261006/'
+        .'approved-64-manifest.json';
 
     $temporary =
         'storage/framework/testing/'
@@ -97,7 +102,7 @@ it('keeps the 400-rule SEO-06 candidate isolated to staging while production rem
         Artisan::call(
             'seo:generate-legacy-product-redirect-map',
             [
-                '--manifest' => $manifest,
+                '--manifest' => $manifest400,
                 '--output' => $temporary,
             ],
         )
@@ -121,6 +126,28 @@ it('keeps the 400-rule SEO-06 candidate isolated to staging while production rem
         base_path($temporary)
     );
 
+    $baseManifest = json_decode(
+        (string) file_get_contents(
+            base_path($manifest64)
+        ),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+
+    $baseRules = [];
+
+    foreach ($baseManifest['records'] as $record) {
+        foreach ($record['source_paths'] as $source) {
+            expect($baseRules)
+                ->not->toHaveKey($source);
+
+            $baseRules[$source] =
+                $record['target_path'];
+        }
+    }
+
+    ksort($baseRules, SORT_STRING);
+
     $productionRules =
         seo06StagingMapRules($productionMap);
 
@@ -130,34 +157,53 @@ it('keeps the 400-rule SEO-06 candidate isolated to staging while production rem
     $candidateRules =
         seo06StagingMapRules($fullCandidate);
 
-    expect($productionRules)
+    expect($baseRules)
         ->toHaveCount(64)
+        ->and($productionRules)
+        ->toHaveCount(400)
         ->and(hash(
             'sha256',
             $productionMap,
         ))
         ->toBe(
-            '209323a552d3481bf3ca92ed85e8d32912d68bd47d2501ce95b2440a7d3e7b01'
+            '52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009'
         )
         ->and($extraRules)
         ->toHaveCount(336)
+        ->and(hash(
+            'sha256',
+            $stagingExtraMap,
+        ))
+        ->toBe(
+            '35fd51ac823a1a2695265abd87d6dcfc4ad34f12c17c42cf627e9a57444dd802'
+        )
         ->and($candidateRules)
         ->toHaveCount(400);
 
-    foreach ($productionRules as $source => $target) {
-        expect($candidateRules[$source] ?? null)
+    foreach ($baseRules as $source => $target) {
+        expect($productionRules[$source] ?? null)
             ->toBe($target)
             ->and($extraRules)
             ->not->toHaveKey($source);
     }
 
-    $combined = $productionRules + $extraRules;
+    foreach ($extraRules as $source => $target) {
+        expect($productionRules[$source] ?? null)
+            ->toBe($target)
+            ->and($baseRules)
+            ->not->toHaveKey($source);
+    }
+
+    $combined = $baseRules + $extraRules;
 
     ksort($combined, SORT_STRING);
+    ksort($productionRules, SORT_STRING);
     ksort($candidateRules, SORT_STRING);
 
     expect($combined)
-        ->toBe($candidateRules);
+        ->toBe($productionRules)
+        ->and($candidateRules)
+        ->toBe($productionRules);
 
     $nginx = (string) file_get_contents(
         base_path(
@@ -170,11 +216,10 @@ it('keeps the 400-rule SEO-06 candidate isolated to staging while production rem
     $stagingBlocks = array_values(
         array_filter(
             $blocks,
-            static fn (string $block): bool =>
-                str_contains(
-                    $block,
-                    'server_name staging.ortezka.pl;',
-                ),
+            static fn (string $block): bool => str_contains(
+                $block,
+                'server_name staging.ortezka.pl;',
+            ),
         ),
     );
 
