@@ -527,7 +527,10 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             return $record;
         }
 
-        $crawler = new Crawler($targetResponse->body(), $expectedTargetUrl);
+        $crawler = $this->utf8HtmlCrawler(
+            $targetResponse->body(),
+            $expectedTargetUrl,
+        );
         $canonical = $this->canonicalHref($crawler);
         $record['target_canonical'] = $canonical;
         $record['target_canonical_correct'] = $canonical !== null
@@ -622,6 +625,58 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
         $value = trim($value);
 
         return $value !== '' ? $value : null;
+    }
+
+
+    private function utf8HtmlCrawler(string $html, string $url): Crawler
+    {
+        if (! mb_check_encoding($html, 'UTF-8')) {
+            throw new RuntimeException(
+                'Storefront HTML response is not valid UTF-8: '.$url
+            );
+        }
+
+        /*
+         * Symfony 8 DomCrawler uses the PHP HTML5 DOM parser.
+         *
+         * On the current PHP/Symfony production-compatible stack, a real
+         * valid UTF-8 storefront response can lose a UTF-8 lead byte while
+         * crossing that parser boundary.
+         *
+         * Convert every non-ASCII Unicode code point to a numeric HTML
+         * entity first. The HTML presented to legacy DOMDocument is then
+         * ASCII-safe, while DOM decoding restores the original Unicode
+         * text values.
+         */
+        $asciiSafeHtml = mb_encode_numericentity(
+            $html,
+            [0x80, 0x10FFFF, 0, 0x1FFFFF],
+            'UTF-8',
+        );
+
+        $document = new \DOMDocument('1.0', 'UTF-8');
+
+        $previousInternalErrors = libxml_use_internal_errors(true);
+
+        try {
+            $loaded = $document->loadHTML(
+                $asciiSafeHtml,
+                LIBXML_NONET,
+            );
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors(
+                $previousInternalErrors,
+            );
+        }
+
+        if ($loaded !== true) {
+            throw new RuntimeException(
+                'Unable to parse storefront HTML response: '.$url
+            );
+        }
+
+        return new Crawler($document, $url);
     }
 
     private function canonicalHref(Crawler $crawler): ?string
