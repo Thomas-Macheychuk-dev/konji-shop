@@ -1,38 +1,44 @@
 #!/usr/bin/env bash
 
-# SEO-06: read-only 400-rule candidate / 64-rule live-runtime preflight.
+# SEO-06: read-only verified live-400 production baseline.
 #
 # This script does NOT authorise or execute deployment.
 #
 # Intended execution point:
-#   1. approved-400 source has been merged and checked out on EC2;
-#   2. production images/containers have NOT yet been rebuilt;
-#   3. live runtime therefore still represents bbe0e4e / 64 rules.
+#   - approved-400 source is present on main;
+#   - the exact tested web image is already live;
+#   - production exposes 400 ordinary governed redirects;
+#   - the staging-only 336 overlay remains disabled;
+#   - the frozen pre-400 rollback image remains available.
 
 set -uo pipefail
 
-echo "SEO06_PREDEPLOY_DEPLOY_AUTHORIZED=false"
+echo "SEO06_LIVE400_BASELINE_DEPLOY_AUTHORIZED=false"
 
-if [[ $# -ne 1 || "${1:-}" != "--candidate-400-predeploy" ]]; then
-    echo "SEO06_PREDEPLOY_ERROR=INVALID_MODE" >&2
+if [[ $# -ne 1 || "${1:-}" != "--current-live400-baseline" ]]; then
+    echo "SEO06_LIVE400_BASELINE_ERROR=INVALID_MODE" >&2
     exit 64
 fi
 
-LIVE_BASELINE_HEAD="bbe0e4e1473219afa04e0e01cc82ba534cf5d71f"
+LIVE400_SOURCE_HEAD="96fbe6b2cad2dfccce2c3e4e7564398263fcf5c2"
 
 EXPECTED_SOURCE_MAP="52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009"
-EXPECTED_ACTIVE_MAP="209323a552d3481bf3ca92ed85e8d32912d68bd47d2501ce95b2440a7d3e7b01"
+EXPECTED_ACTIVE_MAP="52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009"
 
 EXPECTED_MANIFEST="285aaa614de3322d51ae29ffb45b0fdd1f80279decc21774a6a6a508dca9aafa"
 EXPECTED_BASE_MANIFEST="cfd55f42623bd1ce22deaac1d82229f82a63b9ee3b3fd354d11db22d0362f9a7"
 EXPECTED_EXTRA_MAP="35fd51ac823a1a2695265abd87d6dcfc4ad34f12c17c42cf627e9a57444dd802"
 
+EXPECTED_LIVE_EVIDENCE="fc9aa7bbb02d14bfe52acfdd1cb6ba29f325ce032d967bbd838c9fc72984cf0e"
+
 EXPECTED_APP="sha256:d15817d4739e9cacf44daec8680f4370daf6be9c2bc6effcd37c8052ee378cb1"
-EXPECTED_WEB="sha256:e81b7c35e39b2672effb24188d3a25fc430a011b56fcac7fbe1ab8532c225616"
+EXPECTED_WEB="sha256:ea6c62b7a8ce95d2d1728fa84e3fbe754b00b496b6ace4b3ac3a4c9ea684f9a4"
+EXPECTED_WEB_ROLLBACK="sha256:e81b7c35e39b2672effb24188d3a25fc430a011b56fcac7fbe1ab8532c225616"
 EXPECTED_REDIS="sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99"
 
 APP_ROLLBACK="konji-shop-app:seo06-pre400-bbe0e4e"
 WEB_ROLLBACK="konji-shop-web:seo06-pre400-bbe0e4e"
+WEB_LIVE400="konji-shop-web:seo06-live400-96fbe6b"
 
 COMPOSE="docker-compose.prod.yml"
 
@@ -41,6 +47,8 @@ EXTRA_MAP="docker/nginx/generated/legacy-seo-staging-extra-map.conf"
 
 MANIFEST="resources/seo/ortezka/review/seo-06c-20261006/approved-400-manifest.json"
 BASE_MANIFEST="resources/seo/ortezka/review/seo-05h-20261006/approved-64-manifest.json"
+
+LIVE_EVIDENCE="storage/app/private/scrapers/seo/ortezka/audits/seo06-production-live400-20261006/runtime-400.json"
 
 FAILURES=0
 
@@ -79,7 +87,7 @@ check_equal \
     "$(pwd -P)" \
     "/var/www/konji-shop"
 
-echo "=== CANDIDATE SOURCE STATE ==="
+echo "=== LIVE-400 SOURCE STATE ==="
 
 HEAD="$(git rev-parse HEAD 2>/dev/null)"
 HEAD_RC=$?
@@ -91,24 +99,17 @@ STATUS_RC=$?
 
 git merge-base \
     --is-ancestor \
-    "$LIVE_BASELINE_HEAD" \
+    "$LIVE400_SOURCE_HEAD" \
     "$HEAD" \
     >/dev/null 2>&1
 
 ANCESTRY_RC=$?
 
-if [[ "$HEAD" != "$LIVE_BASELINE_HEAD" ]]; then
-    ADVANCED="yes"
-else
-    ADVANCED="no"
-fi
-
 check_equal "GIT_READ" "$HEAD_RC" "0"
 check_equal "CHECKOUT_BRANCH" "$BRANCH" "main"
 check_equal "TRACKED_STATUS_READ" "$STATUS_RC" "0"
 check_equal "TRACKED_SOURCE_CLEAN" "$TRACKED" ""
-check_equal "LIVE_BASELINE_IS_ANCESTOR" "$ANCESTRY_RC" "0"
-check_equal "CANDIDATE_CHECKOUT_ADVANCED" "$ADVANCED" "yes"
+check_equal "LIVE400_SOURCE_IS_ANCESTOR" "$ANCESTRY_RC" "0"
 
 check_equal \
     "SOURCE_400_MAP_SHA" \
@@ -129,6 +130,11 @@ check_equal \
     "STAGING_EXTRA_336_MAP_SHA" \
     "$(read_sha "$EXTRA_MAP")" \
     "$EXPECTED_EXTRA_MAP"
+
+check_equal \
+    "LIVE400_VALIDATION_EVIDENCE_SHA" \
+    "$(read_sha "$LIVE_EVIDENCE")" \
+    "$EXPECTED_LIVE_EVIDENCE"
 
 SOURCE_RULES="$(
     grep -cE \
@@ -171,12 +177,13 @@ ACTUAL_IMAGES="$(
 )"
 
 check_equal "COMPOSE_CONFIG_READ" "$COMPOSE_RC" "0"
+
 check_equal \
     "COMPOSE_IMAGE_REFERENCES" \
     "$ACTUAL_IMAGES" \
     "$EXPECTED_IMAGES"
 
-echo "=== RUNNING LIVE-64 SERVICE IMAGES ==="
+echo "=== RUNNING VERIFIED LIVE-400 SERVICE IMAGES ==="
 
 declare -A EXPECTED_SERVICE_IMAGES=(
     [redis]="$EXPECTED_REDIS"
@@ -225,7 +232,7 @@ for SERVICE in redis app queue scheduler web; do
         "${EXPECTED_SERVICE_IMAGES[$SERVICE]}"
 done
 
-echo "=== MUTABLE TAGS AND PRE-400 ROLLBACK ==="
+echo "=== MUTABLE TAGS AND FROZEN ROLLBACK ==="
 
 check_equal \
     "APP_PROD_TAG" \
@@ -250,9 +257,14 @@ check_equal \
 check_equal \
     "WEB_PRE400_ROLLBACK" \
     "$(image_id "$WEB_ROLLBACK")" \
+    "$EXPECTED_WEB_ROLLBACK"
+
+check_equal \
+    "WEB_LIVE400_IMMUTABLE" \
+    "$(image_id "$WEB_LIVE400")" \
     "$EXPECTED_WEB"
 
-echo "=== ACTIVE LIVE RUNTIME MUST STILL BE 64 ==="
+echo "=== ACTIVE LIVE RUNTIME MUST BE EXACTLY 400 ==="
 
 WEB_CID="${CONTAINERS[web]:-}"
 
@@ -325,14 +337,14 @@ check_equal \
     "1"
 
 check_equal \
-    "ACTIVE_LIVE64_MAP_SHA" \
+    "ACTIVE_LIVE400_MAP_SHA" \
     "$ACTIVE_MAP" \
     "$EXPECTED_ACTIVE_MAP"
 
 check_equal \
-    "ACTIVE_LIVE64_RULES" \
+    "ACTIVE_LIVE400_RULES" \
     "$ACTIVE_RULES" \
-    "64"
+    "400"
 
 check_equal \
     "STAGING_RUNTIME_OVERLAY_OFF" \
@@ -396,19 +408,19 @@ check_equal \
     "$STAGING_HEALTH" \
     "200"
 
-echo "=== FINAL READ-ONLY PREDEPLOY RESULT ==="
+echo "=== FINAL READ-ONLY LIVE-400 BASELINE RESULT ==="
 
-echo "SEO06_PREDEPLOY_FAILURE_COUNT=$FAILURES"
+echo "SEO06_LIVE400_BASELINE_FAILURE_COUNT=$FAILURES"
 
 if [[ "$FAILURES" -eq 0 ]]; then
-    echo "SEO06_CANDIDATE_SOURCE_RULES=400"
-    echo "SEO06_ACTIVE_PRODUCTION_RULES=64"
-    echo "SEO06_PREDEPLOY_CANDIDATE=PASS"
-    echo "SEO06_PREDEPLOY_DEPLOY_AUTHORIZED=false"
+    echo "SEO06_SOURCE_RULES=400"
+    echo "SEO06_ACTIVE_PRODUCTION_RULES=400"
+    echo "SEO06_LIVE400_BASELINE=PASS"
+    echo "SEO06_LIVE400_BASELINE_DEPLOY_AUTHORIZED=false"
     exit 0
 fi
 
-echo "SEO06_PREDEPLOY_CANDIDATE=FAIL"
-echo "SEO06_PREDEPLOY_DEPLOY_AUTHORIZED=false"
+echo "SEO06_LIVE400_BASELINE=FAIL"
+echo "SEO06_LIVE400_BASELINE_DEPLOY_AUTHORIZED=false"
 
 exit 1
