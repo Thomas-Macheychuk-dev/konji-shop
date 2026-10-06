@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Artisan;
 
-it('keeps the committed production map exactly bound to the frozen approved-58 manifest', function (): void {
+it('keeps the committed deployment-source map exactly bound to the approved-64 manifest', function (): void {
     $manifestRelative =
         'resources/seo/ortezka/review/'
-        .'seo-03b-p4-20261003/approved-58-manifest.json';
+        .'seo-05h-20261006/approved-64-manifest.json';
 
     $manifestPath = base_path($manifestRelative);
 
@@ -17,8 +17,8 @@ it('keeps the committed production map exactly bound to the frozen approved-58 m
         flags: JSON_THROW_ON_ERROR,
     );
 
-    expect($manifest['product_count'])->toBe(41)
-        ->and($manifest['source_path_count'])->toBe(58);
+    expect($manifest['product_count'])->toBe(45)
+        ->and($manifest['source_path_count'])->toBe(64);
 
     $expected = [];
 
@@ -33,7 +33,7 @@ it('keeps the committed production map exactly bound to the frozen approved-58 m
         }
     }
 
-    expect($expected)->toHaveCount(58);
+    expect($expected)->toHaveCount(64);
 
     $committed = (string) file_get_contents(base_path(
         'docker/nginx/generated/legacy-seo-product-map.conf',
@@ -48,7 +48,7 @@ it('keeps the committed production map exactly bound to the frozen approved-58 m
         PREG_SET_ORDER,
     );
 
-    expect($count)->toBe(58);
+    expect($count)->toBe(64);
 
     $actual = [];
 

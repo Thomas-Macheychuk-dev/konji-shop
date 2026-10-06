@@ -34,7 +34,7 @@ it('retains a non-authorising production baseline contract', function (): void {
     ))->toBe(3);
 });
 
-it('pins the approved production source and SEO checksums', function (): void {
+it('pins the live 58-rule production baseline while repository source advances to approved 64', function (): void {
     $source = (string) file_get_contents(base_path(
         'scripts/deploy/production-release-preflight.sh',
     ));
@@ -52,11 +52,14 @@ it('pins the approved production source and SEO checksums', function (): void {
         expect($source)->toContain($value);
     }
 
+    // The read-only production preflight above remains pinned to the
+    // currently running 58-rule baseline. The repository deployment
+    // source has independently advanced to the approved 64-rule map.
     expect(hash_file(
         'sha256',
         base_path('docker/nginx/generated/legacy-seo-product-map.conf'),
     ))->toBe(
-        'ece3d1558b317f2e7517e0ac6397e18f936e55a2ae258c51ffd28ef7db10c196',
+        '209323a552d3481bf3ca92ed85e8d32912d68bd47d2501ce95b2440a7d3e7b01',
     );
 
     expect(hash_file(
@@ -67,6 +70,16 @@ it('pins the approved production source and SEO checksums', function (): void {
         ),
     ))->toBe(
         '6a1ca8e5c7fa2df92148490634dabb0d648f6d1647d6cce4a6bc5c3da10e674d',
+    );
+
+    expect(hash_file(
+        'sha256',
+        base_path(
+            'resources/seo/ortezka/review/'
+            .'seo-05h-20261006/approved-64-manifest.json',
+        ),
+    ))->toBe(
+        'cfd55f42623bd1ce22deaac1d82229f82a63b9ee3b3fd354d11db22d0362f9a7',
     );
 });
 

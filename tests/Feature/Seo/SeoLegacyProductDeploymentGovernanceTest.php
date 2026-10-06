@@ -30,49 +30,74 @@ it('retains two independent production deployment locks', function (): void {
     );
 });
 
-it('enforces a permanent CI-only production HOLD', function (): void {
+it('accepts the exact approved-64 source while withholding deployment', function (): void {
     $guard = (string) file_get_contents(base_path(
         'scripts/deploy/seo03b-p6s-source-gate.sh',
     ));
 
     expect($guard)
-        ->toContain('FIRST_SOURCE_ONLY_PROMOTION')
-        ->toContain('ONGOING_CI_ONLY')
-        ->toContain('P6S_C_PRODUCTION_HOLD=PASS')
+        ->toContain('FIRST_APPROVED64_SOURCE_PROMOTION')
+        ->toContain('ONGOING_APPROVED64_CI_ONLY')
+        ->toContain('SEO05_SOURCE_GATE=PASS')
+        ->toContain('SEO05_SOURCE_RULES=64')
+        ->toContain('SEO05_DEPLOYMENT=WITHHELD')
         ->toContain('deploy=false')
         ->not->toContain('deploy=true');
 
-    // The first transition must originate from the reconciled release.
-    expect($guard)->toContain(
-        '6a32ed2a932c0c82af6a176904a6edb5087778ee',
-    );
-
-    // The previously approved SEO release must remain immutable.
     expect($guard)
-        ->toContain('ece3d1558b317f2e7517e0ac6397e18f936e55a2ae258c51ffd28ef7db10c196')
-        ->toContain('6a1ca8e5c7fa2df92148490634dabb0d648f6d1647d6cce4a6bc5c3da10e674d');
+        ->toContain(
+            '62c22a995aeff956c1f7e10dab94534da222426c',
+        )
+        ->toContain(
+            '209323a552d3481bf3ca92ed85e8d32912d68bd47d2501ce95b2440a7d3e7b01',
+        )
+        ->toContain(
+            'cfd55f42623bd1ce22deaac1d82229f82a63b9ee3b3fd354d11db22d0362f9a7',
+        )
+        ->toContain(
+            '6a1ca8e5c7fa2df92148490634dabb0d648f6d1647d6cce4a6bc5c3da10e674d',
+        );
 
-    // Subsequent pushes must not change protected release files.
     expect($guard)
         ->toContain('git diff --quiet "$FIRST" "$HEAD" --')
-        ->toContain('git log --full-history -m --format= --name-only')
+        ->toContain('git log')
         ->toContain('PROTECTED_TOUCHES')
-        ->toContain('"$WORKFLOW" "$GATE" "$MAP" "$MANIFEST"');
+        ->toContain('"$WORKFLOW"')
+        ->toContain('"$GATE"')
+        ->toContain('"$MAP"')
+        ->toContain('"$MANIFEST"')
+        ->toContain('"$HISTORICAL_MANIFEST"');
 });
 
-it('preserves the exact three-file first transition boundary', function (): void {
+it('preserves the exact six-file approved-64 transition boundary', function (): void {
     $guard = (string) file_get_contents(base_path(
         'scripts/deploy/seo03b-p6s-source-gate.sh',
     ));
 
     expect($guard)
         ->toContain('EXPECTED_DIFF=')
-        ->toContain('.github/workflows/deploy-prod.yml')
-        ->toContain('scripts/deploy/seo03b-p6s-source-gate.sh')
-        ->toContain('tests/Feature/Seo/SeoLegacyProductDeploymentGovernanceTest.php');
+        ->toContain(
+            'docker/nginx/generated/legacy-seo-product-map.conf',
+        )
+        ->toContain(
+            'scripts/deploy/seo03b-p6s-source-gate.sh',
+        )
+        ->toContain(
+            'tests/Feature/Seo/SeoLegacyProductDeploymentGovernanceTest.php',
+        )
+        ->toContain(
+            'tests/Feature/Seo/SeoLegacyProductRedirectPromotionTest.php',
+        )
+        ->toContain(
+            'tests/Feature/Seo/SeoLegacyProductRedirectRuntimeTest.php',
+        )
+        ->toContain(
+            'tests/Feature/Seo/SeoProductionReleasePreflightContractTest.php',
+        );
 
-    // Manual workflow dispatch must never bypass the production HOLD.
     expect($guard)
         ->toContain('GITHUB_EVENT_NAME')
-        ->toContain('Manual dispatch and non-push events are prohibited.');
+        ->toContain(
+            'Manual dispatch and non-push events are prohibited.',
+        );
 });

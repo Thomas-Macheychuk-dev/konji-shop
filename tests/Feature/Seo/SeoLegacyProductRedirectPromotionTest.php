@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Support\Seo\ParentProductRedirectApprovalPolicy;
 use App\Support\Seo\ParentProductRedirectDecisionLedger;
 
-it('keeps production on 58 while the approved candidate is a strictly additive 64-rule cohort', function (): void {
+it('promotes the committed deployment source from historical 58 to the approved 64-rule cohort', function (): void {
     $originalPath =
         'resources/seo/ortezka/product-redirect-approvals.json';
 
@@ -126,7 +126,7 @@ it('keeps production on 58 while the approved candidate is a strictly additive 6
         ->and($candidate64Manifest['parent_decision_sha256'])
         ->toBe(ParentProductRedirectDecisionLedger::DECISION_SHA256);
 
-    // Production must STILL equal the historical approved-58 manifest.
+    // The committed deployment source must now equal the approved-64 manifest.
     $map = (string) file_get_contents(base_path(
         'docker/nginx/generated/legacy-seo-product-map.conf',
     ));
@@ -140,7 +140,7 @@ it('keeps production on 58 while the approved candidate is a strictly additive 6
         PREG_SET_ORDER,
     );
 
-    expect($ruleCount)->toBe(58);
+    expect($ruleCount)->toBe(64);
 
     $runtime = [];
 
@@ -151,14 +151,14 @@ it('keeps production on 58 while the approved candidate is a strictly additive 6
     }
 
     ksort($runtime);
-    ksort($historical58);
+    ksort($candidate64);
 
-    expect($runtime)->toBe($historical58);
+    expect($runtime)->toBe($candidate64);
 
     expect($map)
-        ->toContain('# Source: '.$historical58Path)
+        ->toContain('# Source: '.$candidate64Path)
         ->toContain('# Manifest SHA-256: '.hash_file(
             'sha256',
-            base_path($historical58Path),
+            base_path($candidate64Path),
         ));
 });
