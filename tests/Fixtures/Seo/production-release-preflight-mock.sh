@@ -3,32 +3,29 @@ set -uo pipefail
 
 SCRIPT="scripts/deploy/production-release-preflight.sh"
 
-BASE="ba94d18144d53ab2d2c869efca681cd71f63d06a"
-BRANCH="chore/seo-03b-p6s-cb-deployment-preflight-20261005"
+BASE="bbe0e4e1473219afa04e0e01cc82ba534cf5d71f"
 
-APP="sha256:fbb0fd2eab198faea10907f18784d8a3116f357814dc828e0830a37fa4b1caaf"
-WEB="sha256:cf71d25e36389e330f6a1364d49d603a3507f9e5e82f42493dd3dc23849f004f"
+APP="sha256:d15817d4739e9cacf44daec8680f4370daf6be9c2bc6effcd37c8052ee378cb1"
+WEB="sha256:e81b7c35e39b2672effb24188d3a25fc430a011b56fcac7fbe1ab8532c225616"
 REDIS="sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99"
-ROLLBACK="sha256:769c0d75699d09872f8e779993b05accd64a2cf68e2428ff3badc2a801783ed5"
 
-MAP="209323a552d3481bf3ca92ed85e8d32912d68bd47d2501ce95b2440a7d3e7b01"
-MANIFEST="cfd55f42623bd1ce22deaac1d82229f82a63b9ee3b3fd354d11db22d0362f9a7"
+MOCK_SOURCE_MAP_SHA="52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009"
+MOCK_ACTIVE_MAP_SHA="209323a552d3481bf3ca92ed85e8d32912d68bd47d2501ce95b2440a7d3e7b01"
 
-MOCK_MAP_SHA="$MAP"
-MOCK_MANIFEST_SHA="$MANIFEST"
-export APP WEB REDIS ROLLBACK MOCK_MAP_SHA MOCK_MANIFEST_SHA
+MANIFEST400="285aaa614de3322d51ae29ffb45b0fdd1f80279decc21774a6a6a508dca9aafa"
+MANIFEST64="cfd55f42623bd1ce22deaac1d82229f82a63b9ee3b3fd354d11db22d0362f9a7"
+EXTRA="35fd51ac823a1a2695265abd87d6dcfc4ad34f12c17c42cf627e9a57444dd802"
+
+export BASE APP WEB REDIS MOCK_SOURCE_MAP_SHA MOCK_ACTIVE_MAP_SHA MANIFEST400 MANIFEST64 EXTRA
 
 echo "=== PORTABLE SOURCE PREFLIGHT ==="
 
 if [[ ! -f "$SCRIPT" ]] || ! bash -n "$SCRIPT"; then
-    echo "P6S_CB6_SOURCE_PREFLIGHT=FAIL"
+    echo "SEO06_PREDEPLOY_SOURCE_SYNTAX=FAIL"
     exit 2
 fi
 
-echo "P6S_CB6_SOURCE_PREFLIGHT=PASS"
-
-# All functions below are exported into the CHILD Bash process.
-# They replace external dependencies during synthetic testing only.
+echo "SEO06_PREDEPLOY_SOURCE_SYNTAX=PASS"
 
 id() {
     if [[ "${1:-}" == "-un" ]]; then
@@ -49,11 +46,13 @@ pwd() {
 git() {
     case "${1:-}:${2:-}" in
         rev-parse:HEAD)
-            printf '%s\n' "${TEST_HEAD:-1514ab8520798514fdb6292a12b81dc180ea5032}"
+            printf '%s\n' "${TEST_HEAD:-synthetic-approved400-head}"
             ;;
+
         branch:--show-current)
             printf '%s\n' "${TEST_BRANCH:-main}"
             ;;
+
         status:--porcelain)
             if [[ "${TEST_GIT_STATUS_ERROR:-0}" == 1 ]]; then
                 return 3
@@ -63,6 +62,15 @@ git() {
                 printf ' M docker-compose.prod.yml\n'
             fi
             ;;
+
+        merge-base:--is-ancestor)
+            if [[ "${TEST_ANCESTRY_ERROR:-0}" == 1 ]]; then
+                return 1
+            fi
+
+            return 0
+            ;;
+
         *)
             return 90
             ;;
@@ -72,15 +80,46 @@ git() {
 sha256sum() {
     case "${1:-}" in
         docker/nginx/generated/legacy-seo-product-map.conf)
-            printf '%s  %s\n' "${TEST_SOURCE_MAP:-$MOCK_MAP_SHA}" "$1"
+            printf '%s  %s\n' \
+                "${TEST_SOURCE_MAP:-$MOCK_SOURCE_MAP_SHA}" "$1"
             ;;
+
+        docker/nginx/generated/legacy-seo-staging-extra-map.conf)
+            printf '%s  %s\n' \
+                "${TEST_EXTRA_MAP:-$EXTRA}" "$1"
+            ;;
+
+        resources/seo/ortezka/review/seo-06c-20261006/approved-400-manifest.json)
+            printf '%s  %s\n' \
+                "${TEST_MANIFEST400:-$MANIFEST400}" "$1"
+            ;;
+
         resources/seo/ortezka/review/seo-05h-20261006/approved-64-manifest.json)
-            printf '%s  %s\n' "${TEST_MANIFEST:-$MOCK_MANIFEST_SHA}" "$1"
+            printf '%s  %s\n' \
+                "${TEST_MANIFEST64:-$MANIFEST64}" "$1"
             ;;
+
         *)
             return 91
             ;;
     esac
+}
+
+grep() {
+    if [[ "${1:-}" == "-cE" ]]; then
+        case "${3:-}" in
+            docker/nginx/generated/legacy-seo-product-map.conf)
+                printf '%s\n' "${TEST_SOURCE_RULES:-400}"
+                return 0
+                ;;
+            docker/nginx/generated/legacy-seo-staging-extra-map.conf)
+                printf '%s\n' "${TEST_EXTRA_RULES:-336}"
+                return 0
+                ;;
+        esac
+    fi
+
+    command grep "$@"
 }
 
 mock_cid() {
@@ -106,16 +145,19 @@ mock_service() {
 }
 
 docker() {
-    local service value cid
+    local service cid
 
     case "${1:-}" in
         compose)
             [[ "${2:-}" == "-f" &&
-               "${3:-}" == "docker-compose.prod.yml" ]] || return 92
+               "${3:-}" == "docker-compose.prod.yml" ]] ||
+                return 92
 
-            if [[ "${4:-}" == config && "${5:-}" == --images ]]; then
+            if [[ "${4:-}" == config &&
+                  "${5:-}" == --images ]]; then
 
-                [[ "${TEST_COMPOSE_ERROR:-0}" != 1 ]] || return 4
+                [[ "${TEST_COMPOSE_ERROR:-0}" != 1 ]] ||
+                    return 4
 
                 printf '%s\n' \
                     'konji-shop-web:prod' \
@@ -131,7 +173,9 @@ docker() {
                 return 0
             fi
 
-            if [[ "${4:-}" == ps && "${5:-}" == -q ]]; then
+            if [[ "${4:-}" == ps &&
+                  "${5:-}" == -q ]]; then
+
                 service="${6:-}"
 
                 if [[ "${TEST_MISSING_SERVICE:-}" == "$service" ]]; then
@@ -145,9 +189,11 @@ docker() {
 
         inspect)
             cid="${2:-}"
-            service=$(mock_service "$cid") || return 5
+            service="$(mock_service "$cid")" ||
+                return 5
 
-            [[ "${3:-}" == --format ]] || return 5
+            [[ "${3:-}" == --format ]] ||
+                return 5
 
             case "${4:-}" in
                 '{{.State.Status}}')
@@ -176,49 +222,89 @@ docker() {
                 '{{range .Config.Env}}{{println .}}{{end}}')
                     printf 'LEGACY_SEO_REDIRECTS_ENABLED=%s\n' \
                         "${TEST_REDIRECT_FLAG:-true}"
+
+                    printf 'LEGACY_SEO_STAGING_CANDIDATE_ENABLED=%s\n' \
+                        "${TEST_STAGING_FLAG:-false}"
+
                     return 0
                     ;;
             esac
             ;;
 
         image)
-            [[ "${2:-}" == inspect ]] || return 6
+            [[ "${2:-}" == inspect ]] ||
+                return 6
 
             case "${3:-}" in
                 konji-shop-app:prod)
-                    [[ "${TEST_TAG_DRIFT:-}" != app ]] ||
-                        { echo sha256:synthetic-wrong-tag; return 0; }
-                    echo "$APP"
+                    if [[ "${TEST_TAG_DRIFT:-}" == app ]]; then
+                        echo sha256:synthetic-wrong-tag
+                    else
+                        echo "$APP"
+                    fi
                     ;;
 
                 konji-shop-web:prod)
-                    [[ "${TEST_TAG_DRIFT:-}" != web ]] ||
-                        { echo sha256:synthetic-wrong-tag; return 0; }
-                    echo "$WEB"
+                    if [[ "${TEST_TAG_DRIFT:-}" == web ]]; then
+                        echo sha256:synthetic-wrong-tag
+                    else
+                        echo "$WEB"
+                    fi
                     ;;
 
-                konji-shop-web:seo03b-pre58-7e009b8)
-                    [[ "${TEST_ROLLBACK_MISSING:-0}" != 1 ]] || return 7
-                    echo "$ROLLBACK"
+                redis:7-alpine)
+                    echo "$REDIS"
+                    ;;
+
+                konji-shop-app:seo06-pre400-bbe0e4e)
+                    [[ "${TEST_APP_ROLLBACK_MISSING:-0}" != 1 ]] ||
+                        return 7
+                    echo "$APP"
+                    ;;
+
+                konji-shop-web:seo06-pre400-bbe0e4e)
+                    [[ "${TEST_WEB_ROLLBACK_MISSING:-0}" != 1 ]] ||
+                        return 7
+                    echo "$WEB"
                     ;;
 
                 *)
                     return 7
                     ;;
             esac
+
             return 0
             ;;
 
         exec)
-            [[ "${2:-}" == mock-web ]] || return 8
+            [[ "${2:-}" == mock-web ]] ||
+                return 8
 
             if [[ "${3:-}" == sha256sum ]]; then
                 printf '%s  %s\n' \
-                    "${TEST_ACTIVE_MAP:-$MOCK_MAP_SHA}" "${4:-}"
+                    "${TEST_ACTIVE_MAP:-$MOCK_ACTIVE_MAP_SHA}" \
+                    "${4:-}"
                 return 0
             fi
 
-            if [[ "${3:-}" == nginx && "${4:-}" == -t ]]; then
+            if [[ "${3:-}" == sh &&
+                  "${4:-}" == -lc ]]; then
+                printf '%s\n' \
+                    "${TEST_ACTIVE_RULES:-64}"
+                return 0
+            fi
+
+            if [[ "${3:-}" == grep ]]; then
+                printf '%s\n' \
+                    "${TEST_STAGING_RUNTIME_DISABLED:-1}"
+
+                [[ "${TEST_STAGING_RUNTIME_DISABLED:-1}" == 1 ]]
+                return $?
+            fi
+
+            if [[ "${3:-}" == nginx &&
+                  "${4:-}" == -t ]]; then
+
                 [[ "${TEST_NGINX_ERROR:-0}" != 1 ]]
                 return $?
             fi
@@ -229,13 +315,29 @@ docker() {
 }
 
 curl() {
-    printf '%s' "${TEST_HEALTH:-200}"
-    return "${TEST_CURL_ERROR:-0}"
+    local joined="$*"
+
+    if [[ "${TEST_CURL_ERROR:-0}" == 1 ]]; then
+        return 7
+    fi
+
+    if [[ "$joined" == *"staging.ortezka.pl"* ]]; then
+        printf '%s' "${TEST_STAGING_HEALTH:-200}"
+    else
+        printf '%s' "${TEST_PROD_HEALTH:-200}"
+    fi
+
+    return 0
 }
 
-export -f id pwd git sha256sum docker curl mock_cid mock_service
+export -f \
+    id pwd git sha256sum grep docker curl \
+    mock_cid mock_service
 
-TEMP_DIR=$(mktemp -d -t konji-p6scb6-XXXXXX) || exit 2
+TEMP_DIR="$(
+    mktemp -d -t konji-seo06-predeploy-XXXXXX
+)" || exit 2
+
 trap 'rm -rf -- "$TEMP_DIR"' EXIT
 
 PASSED=0
@@ -257,33 +359,46 @@ run_case() {
             export "$variable"
         fi
 
-        bash "$SCRIPT" --current-baseline \
+        bash "$SCRIPT" \
+            --candidate-400-predeploy \
             >"$TEMP_DIR/$name.log" 2>&1
 
         rc=$?
 
-        grep -Fqx 'P6S_CB5_DEPLOY_AUTHORIZED=false' \
-            "$TEMP_DIR/$name.log" || exit 1
+        grep -Fqx \
+            'SEO06_PREDEPLOY_DEPLOY_AUTHORIZED=false' \
+            "$TEMP_DIR/$name.log" ||
+            exit 1
 
         if [[ "$outcome" == pass ]]; then
 
-            [[ "$rc" -eq 0 ]] || exit 1
+            [[ "$rc" -eq 0 ]] ||
+                exit 1
 
-            grep -Fqx 'P6S_CB5_CURRENT_BASELINE=PASS' \
-                "$TEMP_DIR/$name.log" || exit 1
+            grep -Fqx \
+                'SEO06_PREDEPLOY_CANDIDATE=PASS' \
+                "$TEMP_DIR/$name.log" ||
+                exit 1
 
-            grep -Fqx 'P6S_CB5_FAILURE_COUNT=0' \
-                "$TEMP_DIR/$name.log" || exit 1
+            grep -Fqx \
+                'SEO06_PREDEPLOY_FAILURE_COUNT=0' \
+                "$TEMP_DIR/$name.log" ||
+                exit 1
 
         else
 
-            [[ "$rc" -eq 1 ]] || exit 1
+            [[ "$rc" -eq 1 ]] ||
+                exit 1
 
-            grep -Fqx "$marker=FAIL" \
-                "$TEMP_DIR/$name.log" || exit 1
+            grep -Fqx \
+                "$marker=FAIL" \
+                "$TEMP_DIR/$name.log" ||
+                exit 1
 
-            grep -Fqx 'P6S_CB5_CURRENT_BASELINE=FAIL' \
-                "$TEMP_DIR/$name.log" || exit 1
+            grep -Fqx \
+                'SEO06_PREDEPLOY_CANDIDATE=FAIL' \
+                "$TEMP_DIR/$name.log" ||
+                exit 1
         fi
 
         exit 0
@@ -301,18 +416,21 @@ run_case() {
     fi
 }
 
-echo "=== SYNTHETIC BASELINE TESTS ==="
+echo "=== SYNTHETIC SEO-06 PREDEPLOY TESTS ==="
 
-run_case valid_baseline pass ""
+run_case valid_candidate pass ""
 
 run_case wrong_user fail EXECUTION_USER \
     TEST_USER ssm-user
 
 run_case wrong_directory fail PRODUCTION_DIRECTORY \
-    TEST_DIRECTORY /tmp/incorrect-production-directory
+    TEST_DIRECTORY /tmp/wrong
 
-run_case wrong_checkout fail CHECKOUT_HEAD \
-    TEST_HEAD incorrect-sha
+run_case baseline_not_ancestor fail LIVE_BASELINE_IS_ANCESTOR \
+    TEST_ANCESTRY_ERROR 1
+
+run_case candidate_not_advanced fail CANDIDATE_CHECKOUT_ADVANCED \
+    TEST_HEAD "$BASE"
 
 run_case wrong_branch fail CHECKOUT_BRANCH \
     TEST_BRANCH detached
@@ -323,11 +441,17 @@ run_case dirty_tracked_source fail TRACKED_SOURCE_CLEAN \
 run_case git_status_error fail TRACKED_STATUS_READ \
     TEST_GIT_STATUS_ERROR 1
 
-run_case corrupt_source_map fail SOURCE_MAP_SHA \
-    TEST_SOURCE_MAP incorrect-sha
+run_case corrupt_source_map fail SOURCE_400_MAP_SHA \
+    TEST_SOURCE_MAP incorrect
 
-run_case corrupt_manifest fail APPROVAL_MANIFEST_SHA \
-    TEST_MANIFEST incorrect-sha
+run_case corrupt_manifest400 fail APPROVED_400_MANIFEST_SHA \
+    TEST_MANIFEST400 incorrect
+
+run_case corrupt_manifest64 fail APPROVED_64_BASE_MANIFEST_SHA \
+    TEST_MANIFEST64 incorrect
+
+run_case corrupt_extra_map fail STAGING_EXTRA_336_MAP_SHA \
+    TEST_EXTRA_MAP incorrect
 
 run_case compose_image_drift fail COMPOSE_IMAGE_REFERENCES \
     TEST_COMPOSE_DRIFT 1
@@ -362,33 +486,47 @@ run_case app_tag_drift fail APP_PROD_TAG \
 run_case web_tag_drift fail WEB_PROD_TAG \
     TEST_TAG_DRIFT web
 
-run_case missing_rollback fail WEB_ROLLBACK_IMAGE \
-    TEST_ROLLBACK_MISSING 1
+run_case missing_app_rollback fail APP_PRE400_ROLLBACK \
+    TEST_APP_ROLLBACK_MISSING 1
+
+run_case missing_web_rollback fail WEB_PRE400_ROLLBACK \
+    TEST_WEB_ROLLBACK_MISSING 1
 
 run_case redirects_disabled fail REDIRECT_FLAG \
     TEST_REDIRECT_FLAG false
 
-run_case active_map_drift fail ACTIVE_WEB_MAP \
-    TEST_ACTIVE_MAP incorrect-sha
+run_case staging_candidate_enabled fail STAGING_CANDIDATE_FLAG_OFF \
+    TEST_STAGING_FLAG true
+
+run_case active_map_drift fail ACTIVE_LIVE64_MAP_SHA \
+    TEST_ACTIVE_MAP incorrect
+
+run_case staging_runtime_active fail STAGING_RUNTIME_OVERLAY_OFF \
+    TEST_STAGING_RUNTIME_DISABLED 0
 
 run_case nginx_invalid fail NGINX_CONFIGURATION \
     TEST_NGINX_ERROR 1
 
-run_case http_503 fail HEALTH_HTTP \
-    TEST_HEALTH 503
+run_case prod_http_503 fail PRODUCTION_HEALTH_HTTP \
+    TEST_PROD_HEALTH 503
 
-run_case curl_failure fail HEALTH_REQUEST \
-    TEST_CURL_ERROR 7
+run_case staging_http_503 fail STAGING_HEALTH_HTTP \
+    TEST_STAGING_HEALTH 503
+
+run_case curl_failure fail PRODUCTION_HEALTH_REQUEST \
+    TEST_CURL_ERROR 1
 
 echo "=== SYNTHETIC ACCEPTANCE ==="
 
-echo "P6S_CB6_CASES_PASSED=$PASSED/$TOTAL"
-echo "P6S_CB6_FAILURES=$FAILED"
+echo "SEO06_PREDEPLOY_CASES_PASSED=$PASSED/$TOTAL"
+echo "SEO06_PREDEPLOY_FAILURES=$FAILED"
 
-if [[ "$FAILED" -eq 0 && "$PASSED" -eq 26 ]]; then
-    echo "P6S_CB6_SYNTHETIC_BASELINE=PASS"
+if [[ "$FAILED" -eq 0 &&
+      "$PASSED" -eq 33 ]]; then
+
+    echo "SEO06_PREDEPLOY_SYNTHETIC=PASS"
     exit 0
 fi
 
-echo "P6S_CB6_SYNTHETIC_BASELINE=FAIL"
+echo "SEO06_PREDEPLOY_SYNTHETIC=FAIL"
 exit 1

@@ -54,7 +54,7 @@ afterEach(function (): void {
     ));
 });
 
-it('validates and generates exactly 400 schema-v4 rules without modifying the production 64-rule map', function (): void {
+it('validates and generates exactly 400 schema-v4 rules without modifying the committed production 400-rule map', function (): void {
     $manifest = seo06V4Manifest();
 
     expect($manifest['schema_version'])->toBe(4)
@@ -137,7 +137,7 @@ it('validates and generates exactly 400 schema-v4 rules without modifying the pr
     expect(preg_match_all(
         '/^    "([^"]+)" "([^"]+)";$/m',
         $productionMapContents,
-    ))->toBe(64);
+    ))->toBe(400);
 });
 
 it('shares strict schema-v4 validation without generating a map', function (): void {
@@ -245,7 +245,6 @@ it('fails closed when schema-v4 provenance or frozen records are changed', funct
     }
 });
 
-
 it('validates all 266 schema-v4 targets through the shared approval gate', function (): void {
     config(['traffic_protection.enabled' => false]);
 
@@ -293,11 +292,9 @@ it('validates all 266 schema-v4 targets through the shared approval gate', funct
         $exit = Artisan::call(
             'seo:validate-approved-product-targets',
             [
-                '--manifest' =>
-                    'resources/seo/ortezka/review/'
+                '--manifest' => 'resources/seo/ortezka/review/'
                     .'seo-06c-20261006/approved-400-manifest.json',
-                '--base-url' =>
-                    'https://staging.example.test',
+                '--base-url' => 'https://staging.example.test',
                 '--output' => $report,
             ],
         );
@@ -373,8 +370,7 @@ it('validates all 400 schema-v4 redirects through the shared approval gate', fun
                     '',
                     301,
                     [
-                        'Location' =>
-                            'https://staging.example.test'
+                        'Location' => 'https://staging.example.test'
                             .$sourceTargets[$path],
                     ],
                 );
@@ -419,11 +415,9 @@ it('validates all 400 schema-v4 redirects through the shared approval gate', fun
         $exit = Artisan::call(
             'seo:validate-legacy-product-redirect-runtime',
             [
-                '--manifest' =>
-                    'resources/seo/ortezka/review/'
+                '--manifest' => 'resources/seo/ortezka/review/'
                     .'seo-06c-20261006/approved-400-manifest.json',
-                '--base-url' =>
-                    'https://staging.example.test',
+                '--base-url' => 'https://staging.example.test',
                 '--output' => $report,
             ],
         );

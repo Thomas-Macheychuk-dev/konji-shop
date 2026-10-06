@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Artisan;
 
-it('keeps the committed deployment-source map exactly bound to the approved-64 manifest', function (): void {
+it('keeps the committed deployment-source map exactly bound to the approved-400 schema-v4 manifest', function (): void {
     $manifestRelative =
         'resources/seo/ortezka/review/'
-        .'seo-05h-20261006/approved-64-manifest.json';
+        .'seo-06c-20261006/approved-400-manifest.json';
 
     $manifestPath = base_path($manifestRelative);
 
@@ -17,8 +17,11 @@ it('keeps the committed deployment-source map exactly bound to the approved-64 m
         flags: JSON_THROW_ON_ERROR,
     );
 
-    expect($manifest['product_count'])->toBe(45)
-        ->and($manifest['source_path_count'])->toBe(64);
+    expect($manifest['schema_version'])->toBe(4)
+        ->and($manifest['product_count'])->toBe(266)
+        ->and($manifest['source_path_count'])->toBe(400)
+        ->and($manifest['deployment_authorized'])->toBeFalse()
+        ->and($manifest['redirects_installed'])->toBe(0);
 
     $expected = [];
 
@@ -27,13 +30,14 @@ it('keeps the committed deployment-source map exactly bound to the approved-64 m
             ->and($record['decision'])->toBe('APPROVE_301');
 
         foreach ($record['source_paths'] as $source) {
-            expect(array_key_exists($source, $expected))->toBeFalse();
+            expect(array_key_exists($source, $expected))
+                ->toBeFalse();
 
             $expected[$source] = $record['target_path'];
         }
     }
 
-    expect($expected)->toHaveCount(64);
+    expect($expected)->toHaveCount(400);
 
     $committed = (string) file_get_contents(base_path(
         'docker/nginx/generated/legacy-seo-product-map.conf',
@@ -48,12 +52,13 @@ it('keeps the committed deployment-source map exactly bound to the approved-64 m
         PREG_SET_ORDER,
     );
 
-    expect($count)->toBe(64);
+    expect($count)->toBe(400);
 
     $actual = [];
 
     foreach ($matches as $match) {
-        expect(array_key_exists($match[1], $actual))->toBeFalse();
+        expect(array_key_exists($match[1], $actual))
+            ->toBeFalse();
 
         $actual[$match[1]] = $match[2];
     }
@@ -65,11 +70,18 @@ it('keeps the committed deployment-source map exactly bound to the approved-64 m
         ->and($committed)
         ->toContain('# Source: '.$manifestRelative)
         ->toContain(
-            '# Manifest SHA-256: '.hash('sha256', $rawManifest),
+            '# Manifest SHA-256: '
+            .hash('sha256', $rawManifest),
         )
         ->toContain('map_hash_bucket_size 128;')
-        ->toContain('map $uri $legacy_seo_product_redirect_target {')
+        ->toContain(
+            'map $uri $legacy_seo_product_redirect_target {',
+        )
         ->toContain('default "";');
+
+    expect(hash('sha256', $committed))->toBe(
+        '52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009',
+    );
 });
 
 it('keeps the runtime redirect layer disabled by default and conditionally injectable', function (): void {
