@@ -22,5 +22,24 @@ case "${LEGACY_SEO_REDIRECTS_ENABLED:-false}" in
         ;;
 esac
 
+
+staging_runtime_file="$runtime_dir/20-staging-candidate-redirects.conf"
+staging_available_file=/etc/nginx/legacy-seo/available/20-staging-candidate-redirects-enabled.conf
+
+case "${LEGACY_SEO_STAGING_CANDIDATE_ENABLED:-false}" in
+    1|true|TRUE|True|yes|YES|Yes|on|ON|On)
+        cp "$staging_available_file" "$staging_runtime_file"
+        echo "Legacy SEO staging candidate redirects: ENABLED" >&2
+        ;;
+    0|false|FALSE|False|no|NO|No|off|OFF|Off|"")
+        printf '%s\n' '# Legacy SEO staging candidate redirects disabled.' > "$staging_runtime_file"
+        echo "Legacy SEO staging candidate redirects: disabled" >&2
+        ;;
+    *)
+        echo "ERROR: LEGACY_SEO_STAGING_CANDIDATE_ENABLED must be true/false, 1/0, yes/no, or on/off." >&2
+        exit 1
+        ;;
+esac
+
 nginx -t
 exec nginx -g 'daemon off;'
