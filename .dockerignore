@@ -10,3 +10,8 @@ storage/framework/views/*
 bootstrap/cache/*
 .env
 .env.*
+
+# Runtime/generated application storage must not be sent to Docker builds.
+storage/app/public/**
+storage/app/private/**
+storage/app/scrapers/**
