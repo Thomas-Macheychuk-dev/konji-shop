@@ -6,13 +6,13 @@ SCRIPT="scripts/deploy/production-release-preflight.sh"
 BASE="ba94d18144d53ab2d2c869efca681cd71f63d06a"
 BRANCH="chore/seo-03b-p6s-cb-deployment-preflight-20261005"
 
-APP="sha256:f72e5f97d3d544620a20172c731d20b29aca91fe796bfd518911e40e47362092"
-WEB="sha256:80e3ed87af3c8fd63e28dd690268a9d5e657a2b3691dda98c40cff7f7e303504"
+APP="sha256:fbb0fd2eab198faea10907f18784d8a3116f357814dc828e0830a37fa4b1caaf"
+WEB="sha256:cf71d25e36389e330f6a1364d49d603a3507f9e5e82f42493dd3dc23849f004f"
 REDIS="sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99"
 ROLLBACK="sha256:769c0d75699d09872f8e779993b05accd64a2cf68e2428ff3badc2a801783ed5"
 
-MAP="ece3d1558b317f2e7517e0ac6397e18f936e55a2ae258c51ffd28ef7db10c196"
-MANIFEST="6a1ca8e5c7fa2df92148490634dabb0d648f6d1647d6cce4a6bc5c3da10e674d"
+MAP="209323a552d3481bf3ca92ed85e8d32912d68bd47d2501ce95b2440a7d3e7b01"
+MANIFEST="cfd55f42623bd1ce22deaac1d82229f82a63b9ee3b3fd354d11db22d0362f9a7"
 
 MOCK_MAP_SHA="$MAP"
 MOCK_MANIFEST_SHA="$MANIFEST"
@@ -49,7 +49,7 @@ pwd() {
 git() {
     case "${1:-}:${2:-}" in
         rev-parse:HEAD)
-            printf '%s\n' "${TEST_HEAD:-6a32ed2a932c0c82af6a176904a6edb5087778ee}"
+            printf '%s\n' "${TEST_HEAD:-1514ab8520798514fdb6292a12b81dc180ea5032}"
             ;;
         branch:--show-current)
             printf '%s\n' "${TEST_BRANCH:-main}"
@@ -74,7 +74,7 @@ sha256sum() {
         docker/nginx/generated/legacy-seo-product-map.conf)
             printf '%s  %s\n' "${TEST_SOURCE_MAP:-$MOCK_MAP_SHA}" "$1"
             ;;
-        resources/seo/ortezka/review/seo-03b-p4-20261003/approved-58-manifest.json)
+        resources/seo/ortezka/review/seo-05h-20261006/approved-64-manifest.json)
             printf '%s  %s\n' "${TEST_MANIFEST:-$MOCK_MANIFEST_SHA}" "$1"
             ;;
         *)
