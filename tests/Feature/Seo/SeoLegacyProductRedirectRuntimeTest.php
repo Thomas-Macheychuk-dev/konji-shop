@@ -2,33 +2,74 @@
 
 use Illuminate\Support\Facades\Artisan;
 
-it('generates the committed nginx map deterministically from the approved manifest', function (): void {
-    $temporaryRelative = 'storage/framework/testing/legacy-seo-product-map.conf';
-    $temporaryPath = base_path($temporaryRelative);
+it('keeps the committed production map exactly bound to the frozen approved-58 manifest', function (): void {
+    $manifestRelative =
+        'resources/seo/ortezka/review/'
+        .'seo-03b-p4-20261003/approved-58-manifest.json';
 
-    @unlink($temporaryPath);
+    $manifestPath = base_path($manifestRelative);
 
-    try {
-        $exitCode = Artisan::call('seo:generate-legacy-product-redirect-map', [
-            '--manifest' => 'resources/seo/ortezka/review/seo-03b-p4-20261003/approved-58-manifest.json',
-            '--output' => $temporaryRelative,
-        ]);
+    $rawManifest = (string) file_get_contents($manifestPath);
 
-        expect($exitCode)->toBe(0)
-            ->and(is_file($temporaryPath))->toBeTrue();
+    $manifest = json_decode(
+        $rawManifest,
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
 
-        $generated = (string) file_get_contents($temporaryPath);
-        $committed = (string) file_get_contents(base_path('docker/nginx/generated/legacy-seo-product-map.conf'));
+    expect($manifest['product_count'])->toBe(41)
+        ->and($manifest['source_path_count'])->toBe(58);
 
-        expect($generated)->toBe($committed)
-            ->and(substr_count($generated, '"/'))->toBeGreaterThanOrEqual(116)
-            ->and(substr_count($generated, ' "/products/'))->toBe(58)
-            ->and($generated)->toContain('map_hash_bucket_size 128;')
-            ->and($generated)->toContain('map $uri $legacy_seo_product_redirect_target {')
-            ->and($generated)->toContain('default "";');
-    } finally {
-        @unlink($temporaryPath);
+    $expected = [];
+
+    foreach ($manifest['records'] as $record) {
+        expect($record['approved'])->toBeTrue()
+            ->and($record['decision'])->toBe('APPROVE_301');
+
+        foreach ($record['source_paths'] as $source) {
+            expect(array_key_exists($source, $expected))->toBeFalse();
+
+            $expected[$source] = $record['target_path'];
+        }
     }
+
+    expect($expected)->toHaveCount(58);
+
+    $committed = (string) file_get_contents(base_path(
+        'docker/nginx/generated/legacy-seo-product-map.conf',
+    ));
+
+    $matches = [];
+
+    $count = preg_match_all(
+        '/^    "([^"]+)" "([^"]+)";$/m',
+        $committed,
+        $matches,
+        PREG_SET_ORDER,
+    );
+
+    expect($count)->toBe(58);
+
+    $actual = [];
+
+    foreach ($matches as $match) {
+        expect(array_key_exists($match[1], $actual))->toBeFalse();
+
+        $actual[$match[1]] = $match[2];
+    }
+
+    ksort($expected);
+    ksort($actual);
+
+    expect($actual)->toBe($expected)
+        ->and($committed)
+        ->toContain('# Source: '.$manifestRelative)
+        ->toContain(
+            '# Manifest SHA-256: '.hash('sha256', $rawManifest),
+        )
+        ->toContain('map_hash_bucket_size 128;')
+        ->toContain('map $uri $legacy_seo_product_redirect_target {')
+        ->toContain('default "";');
 });
 
 it('keeps the runtime redirect layer disabled by default and conditionally injectable', function (): void {

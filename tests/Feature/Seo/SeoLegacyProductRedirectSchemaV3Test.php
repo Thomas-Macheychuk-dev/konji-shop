@@ -54,8 +54,8 @@ function seo03bV3Fixture(): array
         'schema_version' => 3,
         'validation_only' => false,
         'redirects_installed' => 0,
-        'product_count' => 41,
-        'source_path_count' => 58,
+        'product_count' => 45,
+        'source_path_count' => 64,
 
         'original_manifest_sha256' => hash_file('sha256', $originalPath),
 
@@ -101,10 +101,10 @@ afterEach(function (): void {
     ));
 });
 
-it('generates exactly 58 synthetic schema v3 mappings without modifying the committed production map', function (): void {
+it('generates exactly 64 synthetic schema v3 mappings without modifying the committed production map', function (): void {
     $manifest = seo03bV3Fixture();
 
-    expect($manifest['records'])->toHaveCount(41);
+    expect($manifest['records'])->toHaveCount(45);
 
     $manifestRelative = seo03bWriteV3Fixture($manifest);
 
@@ -136,7 +136,7 @@ it('generates exactly 58 synthetic schema v3 mappings without modifying the comm
     }
 
     expect($exit)->toBe(0)
-        ->and(Artisan::output())->toContain('Approved source paths: 58')
+        ->and(Artisan::output())->toContain('Approved source paths: 64')
         ->and(is_file($outputPath))->toBeTrue();
 
     $generated = (string) file_get_contents($outputPath);
@@ -145,7 +145,7 @@ it('generates exactly 58 synthetic schema v3 mappings without modifying the comm
         ->toContain('map $uri $legacy_seo_product_redirect_target {')
         ->toContain('default "";')
         ->toContain('# Source: '.$manifestRelative)
-        ->and(substr_count($generated, ' "/products/'))->toBe(58);
+        ->and(substr_count($generated, ' "/products/'))->toBe(64);
 
     // Check every mapping, not merely the summary count.
     $allSources = [];
@@ -164,8 +164,8 @@ it('generates exactly 58 synthetic schema v3 mappings without modifying the comm
         }
     }
 
-    expect($allSources)->toHaveCount(58)
-        ->and(array_unique($allSources))->toHaveCount(58)
+    expect($allSources)->toHaveCount(64)
+        ->and(array_unique($allSources))->toHaveCount(64)
         ->and(hash_file('sha256', $productionMap))
         ->toBe($productionHashBefore);
 });
@@ -331,7 +331,7 @@ it('shares the strict schema v3 approval gate without generating an nginx map', 
 
     $records = $validator->validatedSchemaV3Records($manifest);
 
-    expect($records)->toHaveCount(41)
+    expect($records)->toHaveCount(45)
         ->and(is_file($output))->toBeFalse();
 
     $manifest['records'][23]['approved'] = false;
@@ -343,7 +343,7 @@ it('shares the strict schema v3 approval gate without generating an nginx map', 
     expect(is_file($output))->toBeFalse();
 });
 
-it('validates all 58 synthetic schema v3 runtime redirects without changing activation', function (): void {
+it('validates all 64 synthetic schema v3 runtime redirects without changing activation', function (): void {
     config(['traffic_protection.enabled' => false]);
 
     $manifest = seo03bV3Fixture();
@@ -360,8 +360,8 @@ it('validates all 58 synthetic schema v3 runtime redirects without changing acti
         }
     }
 
-    expect($sourceTargets)->toHaveCount(58)
-        ->and($targetNames)->toHaveCount(41);
+    expect($sourceTargets)->toHaveCount(64)
+        ->and($targetNames)->toHaveCount(45);
 
     Http::fake(
         static function (Request $request) use (
@@ -437,22 +437,22 @@ it('validates all 58 synthetic schema v3 runtime redirects without changing acti
         );
 
         expect($report['result'])->toBe('PASS')
-            ->and($report['summary']['approved_source_paths'])->toBe(58)
-            ->and($report['summary']['source_http_301'])->toBe(58)
-            ->and($report['summary']['correct_destinations'])->toBe(58)
-            ->and($report['summary']['query_strings_dropped'])->toBe(58)
-            ->and($report['summary']['target_http_200'])->toBe(58)
-            ->and($report['summary']['canonical_correct'])->toBe(58)
-            ->and($report['summary']['indexable'])->toBe(58)
-            ->and($report['summary']['product_identity_correct'])->toBe(58)
+            ->and($report['summary']['approved_source_paths'])->toBe(64)
+            ->and($report['summary']['source_http_301'])->toBe(64)
+            ->and($report['summary']['correct_destinations'])->toBe(64)
+            ->and($report['summary']['query_strings_dropped'])->toBe(64)
+            ->and($report['summary']['target_http_200'])->toBe(64)
+            ->and($report['summary']['canonical_correct'])->toBe(64)
+            ->and($report['summary']['indexable'])->toBe(64)
+            ->and($report['summary']['product_identity_correct'])->toBe(64)
             ->and($report['summary']['redirect_chains'])->toBe(0)
             ->and($report['summary']['redirect_loops'])->toBe(0)
             ->and($report['control']['unchanged'])->toBeTrue()
             ->and($report['redirect_activation_changed_by_this_command'])
             ->toBeFalse();
 
-        // 58 source requests + 58 destination requests + 1 control.
-        Http::assertSentCount(117);
+        // 64 source requests + 64 destination requests + 1 control.
+        Http::assertSentCount(129);
     } finally {
         @unlink(base_path($reportRelative));
     }
@@ -544,7 +544,7 @@ it('rejects invalid schema v3 runtime manifests before issuing HTTP requests', f
     }
 });
 
-it('validates all 41 ledger-approved schema v3 product destinations without changing redirects', function (): void {
+it('validates all 45 ledger-approved schema v3 product destinations without changing redirects', function (): void {
     config(['traffic_protection.enabled' => false]);
 
     $manifest = seo03bV3Fixture();
@@ -555,7 +555,7 @@ it('validates all 41 ledger-approved schema v3 product destinations without chan
         $names[$record['target_path']] = $record['target_product_name'];
     }
 
-    expect($names)->toHaveCount(41);
+    expect($names)->toHaveCount(45);
 
     Http::fake(
         static function (Request $request) use ($names) {
@@ -598,14 +598,14 @@ it('validates all 41 ledger-approved schema v3 product destinations without chan
         );
 
         expect($report['result'])->toBe('PASS')
-            ->and($report['summary']['approved_target_products'])->toBe(41)
-            ->and($report['summary']['http_200'])->toBe(41)
-            ->and($report['summary']['canonical_correct'])->toBe(41)
-            ->and($report['summary']['indexable'])->toBe(41)
-            ->and($report['summary']['product_identity_correct'])->toBe(41)
+            ->and($report['summary']['approved_target_products'])->toBe(45)
+            ->and($report['summary']['http_200'])->toBe(45)
+            ->and($report['summary']['canonical_correct'])->toBe(45)
+            ->and($report['summary']['indexable'])->toBe(45)
+            ->and($report['summary']['product_identity_correct'])->toBe(45)
             ->and($report['redirects_enabled_by_this_command'])->toBeFalse();
 
-        Http::assertSentCount(41);
+        Http::assertSentCount(45);
     } finally {
         @unlink(base_path($reportRelative));
     }

@@ -7,25 +7,25 @@ namespace App\Support\Seo;
 use RuntimeException;
 
 /**
- * Frozen October 3, 2026 owner decisions: 18 approved / 4 on HOLD.
+ * Current October 6, 2026 owner decisions: 22 approved / 0 on HOLD.
  *
  * Documentary decisions do not install redirects or authorise deployment.
  */
 final class ParentProductRedirectDecisionLedger
 {
-    public const DECISION_SHA256 = 'a41b06d7c169d06b31cb1c48e34bdffaf178b639d519548e49c75b388cb4f50e';
+    public const DECISION_SHA256 = '16eaa929ed3957d853acfc3e88d853ea11b22d97b4e5e98991a7647df7d28f56';
 
     public const DOCUMENTARY_REVIEW_SHA256 = '15335ec4ee46893cdbdf67e87ca7caa5c68d2cfe6adef0127bbf457afa94158a';
 
-    public const APPROVED_PRODUCTS = 18;
+    public const APPROVED_PRODUCTS = 22;
 
-    public const APPROVED_SOURCE_PATHS = 22;
+    public const APPROVED_SOURCE_PATHS = 28;
 
-    public const HELD_PRODUCTS = 4;
+    public const HELD_PRODUCTS = 0;
 
-    public const HELD_SOURCE_PATHS = 6;
+    public const HELD_SOURCE_PATHS = 0;
 
-    private const DECISION_PATH = 'resources/seo/ortezka/review/parent-product-decisions-20261003.json';
+    private const DECISION_PATH = 'resources/seo/ortezka/review/parent-product-decisions-20261006.json';
 
     private const DOCUMENTARY_REVIEW_PATH = 'resources/seo/ortezka/review/parent-product-documentary-review-20261003.csv';
 
@@ -52,7 +52,7 @@ final class ParentProductRedirectDecisionLedger
 
         if (! is_array($ledger)
             || ($ledger['schema_version'] ?? null) !== 1
-            || ($ledger['decision_record_date'] ?? null) !== '2026-10-03'
+            || ($ledger['decision_record_date'] ?? null) !== '2026-10-06'
             || ($ledger['decision_source'] ?? null) !== 'User message: Approved'
             || ($ledger['deployment_authorized'] ?? null) !== false
             || ($ledger['redirects_installed_by_this_record'] ?? null) !== 0
@@ -69,8 +69,8 @@ final class ParentProductRedirectDecisionLedger
             || ($counts['approved_source_paths'] ?? null) !== self::APPROVED_SOURCE_PATHS
             || ($counts['held_products'] ?? null) !== self::HELD_PRODUCTS
             || ($counts['held_source_paths'] ?? null) !== self::HELD_SOURCE_PATHS
-            || ($counts['combined_with_original_approved_products'] ?? null) !== 41
-            || ($counts['combined_with_original_source_paths'] ?? null) !== 58) {
+            || ($counts['combined_with_original_approved_products'] ?? null) !== 45
+            || ($counts['combined_with_original_source_paths'] ?? null) !== 64) {
             throw new RuntimeException('SEO-03B decision ledger cohort counts are invalid.');
         }
 

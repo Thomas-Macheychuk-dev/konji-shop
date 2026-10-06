@@ -291,9 +291,9 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
             ];
         }
 
-        if (count($targets) !== 41) {
+        if (count($targets) !== 45) {
             throw new RuntimeException(
-                'Schema v3 target validation requires 41 ledger-approved unique products.',
+                'Schema v3 target validation requires 45 ledger-approved unique products.',
             );
         }
 

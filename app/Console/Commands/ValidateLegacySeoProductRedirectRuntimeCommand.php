@@ -306,9 +306,9 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
             }
         }
 
-        if (count($targets) !== 41 || count($mappings) !== 58) {
+        if (count($targets) !== 45 || count($mappings) !== 64) {
             throw new RuntimeException(
-                'Schema v3 runtime validation requires 41 products and 58 ledger-approved source paths.',
+                'Schema v3 runtime validation requires 45 products and 64 ledger-approved source paths.',
             );
         }
 
