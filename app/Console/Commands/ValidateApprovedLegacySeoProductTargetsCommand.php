@@ -99,6 +99,10 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
     {
         $schemaVersion = $manifest['schema_version'] ?? null;
 
+        if ($schemaVersion === 4) {
+            return $this->approvedSchemaV4Targets($manifest);
+        }
+
         if ($schemaVersion === 3) {
             return $this->approvedSchemaV3Targets($manifest);
         }
@@ -294,6 +298,66 @@ final class ValidateApprovedLegacySeoProductTargetsCommand extends Command
         if (count($targets) !== 45) {
             throw new RuntimeException(
                 'Schema v3 target validation requires 45 ledger-approved unique products.',
+            );
+        }
+
+        ksort($targets, SORT_STRING);
+
+        return array_values($targets);
+    }
+
+    private function approvedSchemaV4Targets(array $manifest): array
+    {
+        $records = app(
+            GenerateLegacySeoProductRedirectMapCommand::class,
+        )->validatedSchemaV4Records($manifest);
+
+        $targets = [];
+
+        foreach ($records as $record) {
+            $productId = $record['target_product_id'] ?? null;
+            $productName = $record['target_product_name'] ?? null;
+            $targetPath = $record['target_path'] ?? null;
+
+            if ((! is_string($productId) && ! is_int($productId))
+                || trim((string) $productId) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v4 target product ID.',
+                );
+            }
+
+            if (! is_string($productName)
+                || trim($productName) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v4 target product name.',
+                );
+            }
+
+            if (! is_string($targetPath)
+                || ! str_starts_with($targetPath, '/products/')) {
+                throw new RuntimeException(
+                    'Invalid schema v4 target path.',
+                );
+            }
+
+            $this->validatePath($targetPath, 'target');
+
+            if (isset($targets[$targetPath])) {
+                throw new RuntimeException(
+                    'Duplicate schema v4 target path: '.$targetPath,
+                );
+            }
+
+            $targets[$targetPath] = [
+                'target_product_id' => (string) $productId,
+                'target_product_name' => $productName,
+                'target_path' => $targetPath,
+            ];
+        }
+
+        if (count($targets) !== 266) {
+            throw new RuntimeException(
+                'Schema v4 target validation requires 266 owner-approved unique products.',
             );
         }
 

@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use App\Console\Commands\GenerateLegacySeoProductRedirectMapCommand;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Http;
 
 function seo06V4Manifest(): array
 {
@@ -240,5 +242,228 @@ it('fails closed when schema-v4 provenance or frozen records are changed', funct
             file_get_contents($output),
             'Invalid schema-v4 candidate overwrote output: '.$case,
         );
+    }
+});
+
+
+it('validates all 266 schema-v4 targets through the shared approval gate', function (): void {
+    config(['traffic_protection.enabled' => false]);
+
+    $manifest = seo06V4Manifest();
+    $targets = [];
+
+    foreach ($manifest['records'] as $record) {
+        $targets[$record['target_path']] =
+            $record['target_product_name'];
+    }
+
+    expect($targets)->toHaveCount(266);
+
+    Http::fake(
+        static function (Request $request) use ($targets) {
+            $path = parse_url($request->url(), PHP_URL_PATH);
+
+            if (! is_string($path) || ! isset($targets[$path])) {
+                return Http::response('Unexpected URL', 500);
+            }
+
+            $name = htmlspecialchars(
+                $targets[$path],
+                ENT_QUOTES | ENT_SUBSTITUTE,
+                'UTF-8',
+            );
+
+            $canonical =
+                'https://staging.example.test'.$path;
+
+            return Http::response(
+                '<!doctype html><html><head>'
+                .'<link rel="canonical" href="'.$canonical.'">'
+                .'</head><body><h1>'.$name.'</h1></body></html>',
+                200,
+                ['Content-Type' => 'text/html'],
+            );
+        },
+    );
+
+    $report =
+        'storage/framework/testing/seo-06-v4-target-validation.json';
+
+    try {
+        $exit = Artisan::call(
+            'seo:validate-approved-product-targets',
+            [
+                '--manifest' =>
+                    'resources/seo/ortezka/review/'
+                    .'seo-06c-20261006/approved-400-manifest.json',
+                '--base-url' =>
+                    'https://staging.example.test',
+                '--output' => $report,
+            ],
+        );
+
+        expect($exit)->toBe(0)
+            ->and(Artisan::output())
+            ->toContain('RESULT: PASS');
+
+        $data = json_decode(
+            (string) file_get_contents(base_path($report)),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+
+        expect($data['result'])->toBe('PASS')
+            ->and($data['summary']['approved_target_products'])
+            ->toBe(266)
+            ->and($data['summary']['http_200'])
+            ->toBe(266)
+            ->and($data['summary']['canonical_correct'])
+            ->toBe(266)
+            ->and($data['summary']['indexable'])
+            ->toBe(266)
+            ->and($data['summary']['product_identity_correct'])
+            ->toBe(266);
+
+        Http::assertSentCount(266);
+    } finally {
+        @unlink(base_path($report));
+    }
+});
+
+it('validates all 400 schema-v4 redirects through the shared approval gate', function (): void {
+    config(['traffic_protection.enabled' => false]);
+
+    $manifest = seo06V4Manifest();
+
+    $sourceTargets = [];
+    $targetNames = [];
+
+    foreach ($manifest['records'] as $record) {
+        $targetNames[$record['target_path']] =
+            $record['target_product_name'];
+
+        foreach ($record['source_paths'] as $source) {
+            $sourceTargets[$source] =
+                $record['target_path'];
+        }
+    }
+
+    expect($sourceTargets)->toHaveCount(400)
+        ->and($targetNames)->toHaveCount(266);
+
+    Http::fake(
+        static function (Request $request) use (
+            $sourceTargets,
+            $targetNames,
+        ) {
+            $path = parse_url($request->url(), PHP_URL_PATH);
+
+            if ($path === '/robots.txt') {
+                return Http::response(
+                    "User-agent: *\nAllow: /\n",
+                    200,
+                );
+            }
+
+            if (
+                is_string($path)
+                && isset($sourceTargets[$path])
+            ) {
+                return Http::response(
+                    '',
+                    301,
+                    [
+                        'Location' =>
+                            'https://staging.example.test'
+                            .$sourceTargets[$path],
+                    ],
+                );
+            }
+
+            if (
+                is_string($path)
+                && isset($targetNames[$path])
+            ) {
+                $name = htmlspecialchars(
+                    $targetNames[$path],
+                    ENT_QUOTES | ENT_SUBSTITUTE,
+                    'UTF-8',
+                );
+
+                $canonical =
+                    'https://staging.example.test'.$path;
+
+                return Http::response(
+                    '<!doctype html><html><head>'
+                    .'<link rel="canonical" href="'
+                    .$canonical
+                    .'"></head><body><h1>'
+                    .$name
+                    .'</h1></body></html>',
+                    200,
+                    ['Content-Type' => 'text/html'],
+                );
+            }
+
+            return Http::response(
+                'Unexpected URL',
+                500,
+            );
+        },
+    );
+
+    $report =
+        'storage/framework/testing/seo-06-v4-runtime-validation.json';
+
+    try {
+        $exit = Artisan::call(
+            'seo:validate-legacy-product-redirect-runtime',
+            [
+                '--manifest' =>
+                    'resources/seo/ortezka/review/'
+                    .'seo-06c-20261006/approved-400-manifest.json',
+                '--base-url' =>
+                    'https://staging.example.test',
+                '--output' => $report,
+            ],
+        );
+
+        expect($exit)->toBe(0)
+            ->and(Artisan::output())
+            ->toContain('RESULT: PASS');
+
+        $data = json_decode(
+            (string) file_get_contents(base_path($report)),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+
+        expect($data['result'])->toBe('PASS')
+            ->and($data['summary']['approved_source_paths'])
+            ->toBe(400)
+            ->and($data['summary']['source_http_301'])
+            ->toBe(400)
+            ->and($data['summary']['correct_destinations'])
+            ->toBe(400)
+            ->and($data['summary']['query_strings_dropped'])
+            ->toBe(400)
+            ->and($data['summary']['target_http_200'])
+            ->toBe(400)
+            ->and($data['summary']['canonical_correct'])
+            ->toBe(400)
+            ->and($data['summary']['indexable'])
+            ->toBe(400)
+            ->and($data['summary']['product_identity_correct'])
+            ->toBe(400)
+            ->and($data['summary']['redirect_chains'])
+            ->toBe(0)
+            ->and($data['summary']['redirect_loops'])
+            ->toBe(0)
+            ->and($data['control']['unchanged'])
+            ->toBeTrue();
+
+        Http::assertSentCount(801);
+    } finally {
+        @unlink(base_path($report));
     }
 });
