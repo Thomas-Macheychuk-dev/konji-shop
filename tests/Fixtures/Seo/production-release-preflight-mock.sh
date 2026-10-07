@@ -6,7 +6,8 @@ SCRIPT="scripts/deploy/production-release-preflight.sh"
 SOURCE_BASE="96fbe6b2cad2dfccce2c3e4e7564398263fcf5c2"
 
 APP="sha256:d15817d4739e9cacf44daec8680f4370daf6be9c2bc6effcd37c8052ee378cb1"
-WEB="sha256:ea6c62b7a8ce95d2d1728fa84e3fbe754b00b496b6ace4b3ac3a4c9ea684f9a4"
+WEB="sha256:1cb8e6078b624388354f7351bd72bac95fe2c64abeded5d8563e1e52183e9854"
+MOCK_WEB_PRE_HASH_IMAGE="sha256:ea6c62b7a8ce95d2d1728fa84e3fbe754b00b496b6ace4b3ac3a4c9ea684f9a4"
 MOCK_WEB_ROLLBACK_IMAGE="sha256:e81b7c35e39b2672effb24188d3a25fc430a011b56fcac7fbe1ab8532c225616"
 REDIS="sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99"
 
@@ -18,7 +19,7 @@ EXTRA="35fd51ac823a1a2695265abd87d6dcfc4ad34f12c17c42cf627e9a57444dd802"
 EVIDENCE="fc9aa7bbb02d14bfe52acfdd1cb6ba29f325ce032d967bbd838c9fc72984cf0e"
 
 export \
-    SOURCE_BASE APP WEB MOCK_WEB_ROLLBACK_IMAGE REDIS MAP \
+    SOURCE_BASE APP WEB MOCK_WEB_PRE_HASH_IMAGE MOCK_WEB_ROLLBACK_IMAGE REDIS MAP \
     MANIFEST400 MANIFEST64 EXTRA EVIDENCE
 
 echo "=== PORTABLE LIVE-400 BASELINE PREFLIGHT ==="
@@ -279,7 +280,19 @@ docker() {
                     echo "$MOCK_WEB_ROLLBACK_IMAGE"
                     ;;
 
+                konji-shop-web:pre-maphash-cb0a34d)
+                    [[ "${TEST_PRE_HASH_ROLLBACK_MISSING:-0}" != 1 ]] ||
+                        return 7
+                    echo "$MOCK_WEB_PRE_HASH_IMAGE"
+                    ;;
+
                 konji-shop-web:seo06-live400-96fbe6b)
+                    [[ "${TEST_ORIGINAL_LIVE400_TAG_MISSING:-0}" != 1 ]] ||
+                        return 7
+                    echo "$MOCK_WEB_PRE_HASH_IMAGE"
+                    ;;
+
+                konji-shop-web:maphash-live-cb0a34d)
                     [[ "${TEST_LIVE400_TAG_MISSING:-0}" != 1 ]] ||
                         return 7
                     echo "$WEB"
@@ -517,6 +530,12 @@ run_case missing_app_rollback fail APP_PRE400_ROLLBACK \
 run_case missing_web_rollback fail WEB_PRE400_ROLLBACK \
     TEST_WEB_ROLLBACK_MISSING 1
 
+run_case missing_pre_hash_rollback fail WEB_PRE_HASH_ROLLBACK \
+    TEST_PRE_HASH_ROLLBACK_MISSING 1
+
+run_case missing_original_live400_tag fail WEB_ORIGINAL_LIVE400_IMMUTABLE \
+    TEST_ORIGINAL_LIVE400_TAG_MISSING 1
+
 run_case missing_live400_tag fail WEB_LIVE400_IMMUTABLE \
     TEST_LIVE400_TAG_MISSING 1
 
@@ -553,7 +572,7 @@ echo "SEO06_LIVE400_CASES_PASSED=$PASSED/$TOTAL"
 echo "SEO06_LIVE400_FAILURES=$FAILED"
 
 if [[ "$FAILED" -eq 0 &&
-      "$PASSED" -eq 37 ]]; then
+      "$PASSED" -eq 39 ]]; then
 
     echo "SEO06_LIVE400_SYNTHETIC=PASS"
     exit 0
