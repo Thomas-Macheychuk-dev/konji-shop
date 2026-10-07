@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Support\Seo\ExactNameOnlyRedirectDecisionLedger;
 use App\Support\Seo\ParentProductRedirectApprovalPolicy;
 use App\Support\Seo\ParentProductRedirectDecisionLedger;
 use App\Support\Seo\SemanticSupportRedirectDecisionLedger;
@@ -80,6 +81,10 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
     private function approvedRules(array $manifest): array
     {
         $schemaVersion = $manifest['schema_version'] ?? null;
+
+        if ($schemaVersion === 5) {
+            return $this->approvedV5Rules($manifest);
+        }
 
         if ($schemaVersion === 4) {
             return $this->approvedV4Rules($manifest);
@@ -458,6 +463,226 @@ final class GenerateLegacySeoProductRedirectMapCommand extends Command
      * @param  array<string, mixed>  $manifest
      * @return array<string, string>
      */
+
+    /**
+     * Generate mappings only from the exact complete approved
+     * schema-v5 union:
+     *
+     *   approved SEO-06 schema-v4 400-rule baseline
+     *   + owner-approved SEO-07 exact-name-only 259-rule cohort.
+     *
+     * Deployment remains explicitly unauthorised.
+     *
+     * @param  array<string, mixed>  $manifest
+     * @return array<string, string>
+     */
+    private function approvedV5Rules(array $manifest): array
+    {
+        if (
+            ($manifest['validation_only'] ?? null) !== false
+            || ($manifest['deployment_authorized'] ?? null) !== false
+            || ($manifest['redirects_installed'] ?? null) !== 0
+        ) {
+            throw new RuntimeException(
+                'Schema v5 must remain approved evidence only; '
+                .'deployment is not authorised.',
+            );
+        }
+
+        if (
+            ($manifest['base_manifest_sha256'] ?? null)
+                !== ExactNameOnlyRedirectDecisionLedger::BASE_MANIFEST_SHA256
+            || ($manifest['exact_name_source_sha256'] ?? null)
+                !== ExactNameOnlyRedirectDecisionLedger::SOURCE_MANIFEST_SHA256
+            || ($manifest['exact_name_review_sha256'] ?? null)
+                !== ExactNameOnlyRedirectDecisionLedger::REVIEW_SHA256
+            || ($manifest['exact_name_decision_sha256'] ?? null)
+                !== ExactNameOnlyRedirectDecisionLedger::DECISION_SHA256
+            || ($manifest['staging_validation_sha256'] ?? null)
+                !== ExactNameOnlyRedirectDecisionLedger::STAGING_VALIDATION_SHA256
+            || ($manifest['owner_decision_reference'] ?? null)
+                !== ExactNameOnlyRedirectDecisionLedger::DECISION_REFERENCE
+        ) {
+            throw new RuntimeException(
+                'Schema v5 SEO-07 provenance mismatch.',
+            );
+        }
+
+        $baseRelative =
+            'resources/seo/ortezka/review/seo-06c-20261006/'
+            .'approved-400-manifest.json';
+
+        if (($manifest['base_manifest_path'] ?? null) !== $baseRelative) {
+            throw new RuntimeException(
+                'Schema v5 base manifest path mismatch.',
+            );
+        }
+
+        $baseRaw = @file_get_contents(
+            base_path($baseRelative),
+        );
+
+        if (
+            ! is_string($baseRaw)
+            || ! hash_equals(
+                ExactNameOnlyRedirectDecisionLedger::BASE_MANIFEST_SHA256,
+                hash('sha256', $baseRaw),
+            )
+        ) {
+            throw new RuntimeException(
+                'Schema v5 approved-400 base manifest changed.',
+            );
+        }
+
+        $baseManifest = json_decode(
+            $baseRaw,
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+
+        if (! is_array($baseManifest)) {
+            throw new RuntimeException(
+                'Schema v5 approved-400 base manifest is invalid.',
+            );
+        }
+
+        $baseRecords = $this->validatedSchemaV4Records(
+            $baseManifest,
+        );
+
+        $seo07Records = app(
+            ExactNameOnlyRedirectDecisionLedger::class,
+        )->approvedRecords();
+
+        $expectedRecords = array_merge(
+            $baseRecords,
+            $seo07Records,
+        );
+
+        $records = $manifest['records'] ?? null;
+
+        if (
+            ! is_array($records)
+            || $records !== $expectedRecords
+            || count($records)
+                !== ExactNameOnlyRedirectDecisionLedger::PROSPECTIVE_PRODUCTS
+            || ($manifest['product_count'] ?? null)
+                !== ExactNameOnlyRedirectDecisionLedger::PROSPECTIVE_PRODUCTS
+            || ($manifest['source_path_count'] ?? null)
+                !== ExactNameOnlyRedirectDecisionLedger::PROSPECTIVE_SOURCE_PATHS
+        ) {
+            throw new RuntimeException(
+                'Schema v5 requires the exact complete approved '
+                .'400 + SEO-07 259-rule cohort.',
+            );
+        }
+
+        $rules = [];
+        $targets = [];
+
+        foreach ($records as $record) {
+            if (
+                ! is_array($record)
+                || ($record['approved'] ?? null) !== true
+                || ($record['decision'] ?? null) !== 'APPROVE_301'
+            ) {
+                throw new RuntimeException(
+                    'Schema v5 contains an unapproved redirect.',
+                );
+            }
+
+            $target = $record['target_path'] ?? null;
+
+            if (
+                ! is_string($target)
+                || ! str_starts_with($target, '/products/')
+            ) {
+                throw new RuntimeException(
+                    'Invalid schema v5 target path.',
+                );
+            }
+
+            $this->validatePath($target, 'target');
+
+            if (isset($targets[$target])) {
+                throw new RuntimeException(
+                    'Duplicate schema v5 target path: '.$target,
+                );
+            }
+
+            $targets[$target] = true;
+
+            $sourcePaths = $record['source_paths'] ?? null;
+
+            if (! is_array($sourcePaths) || $sourcePaths === []) {
+                throw new RuntimeException(
+                    'Missing schema v5 source paths.',
+                );
+            }
+
+            foreach ($sourcePaths as $source) {
+                if (! is_string($source)) {
+                    throw new RuntimeException(
+                        'Invalid schema v5 source path type.',
+                    );
+                }
+
+                $this->validatePath($source, 'source');
+
+                if (
+                    $source === $target
+                    || array_key_exists($source, $rules)
+                ) {
+                    throw new RuntimeException(
+                        'Duplicate or looping schema v5 source: '.$source,
+                    );
+                }
+
+                $rules[$source] = $target;
+            }
+        }
+
+        if (
+            count($targets)
+                !== ExactNameOnlyRedirectDecisionLedger::PROSPECTIVE_PRODUCTS
+            || count($rules)
+                !== ExactNameOnlyRedirectDecisionLedger::PROSPECTIVE_SOURCE_PATHS
+        ) {
+            throw new RuntimeException(
+                'Schema v5 approved cohort counts are inconsistent.',
+            );
+        }
+
+        foreach ($rules as $source => $target) {
+            if (array_key_exists($target, $rules)) {
+                throw new RuntimeException(
+                    'Schema v5 redirect chain/cycle risk: '
+                    .$source.' -> '.$target,
+                );
+            }
+        }
+
+        ksort($rules, SORT_STRING);
+
+        return $rules;
+    }
+
+    /**
+     * Reuse schema-v5 validation without generating an Nginx map.
+     *
+     * @param  array<string, mixed>  $manifest
+     * @return list<array<string, mixed>>
+     */
+    public function validatedSchemaV5Records(array $manifest): array
+    {
+        $this->approvedV5Rules($manifest);
+
+        /** @var list<array<string, mixed>> $records */
+        $records = $manifest['records'];
+
+        return $records;
+    }
+
     private function approvedV4Rules(array $manifest): array
     {
         if (

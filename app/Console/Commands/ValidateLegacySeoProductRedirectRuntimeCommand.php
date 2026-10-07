@@ -116,6 +116,10 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
      */
     private function approvedMappings(array $manifest): array
     {
+        if (($manifest['schema_version'] ?? null) === 5) {
+            return $this->approvedSchemaV5Mappings($manifest);
+        }
+
         if (($manifest['schema_version'] ?? null) === 4) {
             return $this->approvedSchemaV4Mappings($manifest);
         }
@@ -323,6 +327,95 @@ final class ValidateLegacySeoProductRedirectRuntimeCommand extends Command
 
         return array_values($mappings);
     }
+
+    private function approvedSchemaV5Mappings(array $manifest): array
+    {
+        $records = app(
+            GenerateLegacySeoProductRedirectMapCommand::class,
+        )->validatedSchemaV5Records($manifest);
+
+        $mappings = [];
+        $targets = [];
+
+        foreach ($records as $record) {
+            $productId = $record['target_product_id'] ?? null;
+            $productName = $record['target_product_name'] ?? null;
+            $targetPath = $record['target_path'] ?? null;
+            $sourcePaths = $record['source_paths'] ?? null;
+
+            if ((! is_string($productId) && ! is_int($productId))
+                || trim((string) $productId) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v5 target product ID.',
+                );
+            }
+
+            if (! is_string($productName)
+                || trim($productName) === '') {
+                throw new RuntimeException(
+                    'Invalid schema v5 target product name.',
+                );
+            }
+
+            if (! is_string($targetPath)
+                || ! str_starts_with($targetPath, '/products/')) {
+                throw new RuntimeException(
+                    'Invalid schema v5 target path.',
+                );
+            }
+
+            $this->validatePath($targetPath, 'target');
+
+            if (isset($targets[$targetPath])) {
+                throw new RuntimeException(
+                    'Duplicate schema v5 target: '.$targetPath,
+                );
+            }
+
+            $targets[$targetPath] = true;
+
+            if (! is_array($sourcePaths) || $sourcePaths === []) {
+                throw new RuntimeException(
+                    'Missing schema v5 source paths.',
+                );
+            }
+
+            foreach ($sourcePaths as $sourcePath) {
+                if (! is_string($sourcePath)) {
+                    throw new RuntimeException(
+                        'Invalid schema v5 source path type.',
+                    );
+                }
+
+                $this->validatePath($sourcePath, 'source');
+
+                if ($sourcePath === $targetPath
+                    || isset($mappings[$sourcePath])) {
+                    throw new RuntimeException(
+                        'Duplicate or looping schema v5 source: '.$sourcePath,
+                    );
+                }
+
+                $mappings[$sourcePath] = [
+                    'source_path' => $sourcePath,
+                    'target_product_id' => (string) $productId,
+                    'target_product_name' => $productName,
+                    'target_path' => $targetPath,
+                ];
+            }
+        }
+
+        if (count($targets) !== 415 || count($mappings) !== 659) {
+            throw new RuntimeException(
+                'Schema v4 runtime validation requires 415 products and 659 owner-approved source paths.',
+            );
+        }
+
+        ksort($mappings, SORT_STRING);
+
+        return array_values($mappings);
+    }
+
 
     private function approvedSchemaV4Mappings(array $manifest): array
     {
