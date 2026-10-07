@@ -54,12 +54,15 @@ it('pins the verified live-400 production and frozen pre-400 rollback baselines'
         '35fd51ac823a1a2695265abd87d6dcfc4ad34f12c17c42cf627e9a57444dd802',
         'fc9aa7bbb02d14bfe52acfdd1cb6ba29f325ce032d967bbd838c9fc72984cf0e',
         'sha256:d15817d4739e9cacf44daec8680f4370daf6be9c2bc6effcd37c8052ee378cb1',
+        'sha256:1cb8e6078b624388354f7351bd72bac95fe2c64abeded5d8563e1e52183e9854',
         'sha256:ea6c62b7a8ce95d2d1728fa84e3fbe754b00b496b6ace4b3ac3a4c9ea684f9a4',
         'sha256:e81b7c35e39b2672effb24188d3a25fc430a011b56fcac7fbe1ab8532c225616',
         'sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99',
         'konji-shop-app:seo06-pre400-bbe0e4e',
         'konji-shop-web:seo06-pre400-bbe0e4e',
+        'konji-shop-web:pre-maphash-cb0a34d',
         'konji-shop-web:seo06-live400-96fbe6b',
+        'konji-shop-web:maphash-live-cb0a34d',
     ] as $value) {
         expect($source)->toContain($value);
     }
@@ -97,7 +100,7 @@ it('rejects unsupported live-400 baseline modes before inspecting production', f
         );
 });
 
-it('passes all 37 mocked SEO-06 live-400 baseline scenarios', function (): void {
+it('passes all 39 mocked SEO-06 live-400 baseline scenarios', function (): void {
     $fixture = base_path(
         'tests/Fixtures/Seo/'
         .'production-release-preflight-mock.sh',
@@ -124,7 +127,7 @@ it('passes all 37 mocked SEO-06 live-400 baseline scenarios', function (): void 
         ->toContain('missing_web_rollback=PASS')
         ->toContain('missing_live400_tag=PASS')
         ->toContain(
-            'SEO06_LIVE400_CASES_PASSED=37/37',
+            'SEO06_LIVE400_CASES_PASSED=39/39',
         )
         ->toContain('SEO06_LIVE400_FAILURES=0')
         ->toContain('SEO06_LIVE400_SYNTHETIC=PASS');
