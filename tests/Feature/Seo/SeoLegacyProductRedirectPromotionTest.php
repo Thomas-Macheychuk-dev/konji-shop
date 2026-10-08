@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Support\Seo\ParentProductRedirectApprovalPolicy;
 use App\Support\Seo\ParentProductRedirectDecisionLedger;
 
-it('promotes the committed deployment source additively from 64 through 400 to the authorised 659-rule cohort', function (): void {
+it('promotes the committed deployment source additively from 64 through 400 and 659 to the authorised 708-rule cohort', function (): void {
     $originalPath =
         'resources/seo/ortezka/product-redirect-approvals.json';
 
@@ -28,6 +28,14 @@ it('promotes the committed deployment source additively from 64 through 400 to t
     $authorizationPath =
         'resources/seo/ortezka/review/'
         .'seo-07h-20261008/production-promotion-659.json';
+
+    $approved708Path =
+        'resources/seo/ortezka/review/'
+        .'seo-08d-20261008/approved-708-manifest.json';
+
+    $authorization708Path =
+        'resources/seo/ortezka/review/'
+        .'seo-08f-20261008/production-promotion-708.json';
 
     $readManifest = static function (string $path): array {
         return json_decode(
@@ -62,40 +70,52 @@ it('promotes the committed deployment source additively from 64 through 400 to t
     $approved64Manifest = $readManifest($approved64Path);
     $approved400Manifest = $readManifest($approved400Path);
     $approved659Manifest = $readManifest($approved659Path);
+    $approved708Manifest = $readManifest($approved708Path);
     $authorization = $readManifest($authorizationPath);
+    $authorization708 = $readManifest($authorization708Path);
 
     $original = $readRules($originalManifest);
     $historical58 = $readRules($historical58Manifest);
     $approved64 = $readRules($approved64Manifest);
     $approved400 = $readRules($approved400Manifest);
     $approved659 = $readRules($approved659Manifest);
+    $approved708 = $readRules($approved708Manifest);
 
     expect($original)->toHaveCount(36)
         ->and($historical58)->toHaveCount(58)
         ->and($approved64)->toHaveCount(64)
         ->and($approved400)->toHaveCount(400)
-        ->and($approved659)->toHaveCount(659);
+        ->and($approved659)->toHaveCount(659)
+        ->and($approved708)->toHaveCount(708);
 
     foreach ($original as $source => $target) {
         expect($historical58[$source] ?? null)->toBe($target)
             ->and($approved64[$source] ?? null)->toBe($target)
             ->and($approved400[$source] ?? null)->toBe($target)
-            ->and($approved659[$source] ?? null)->toBe($target);
+            ->and($approved659[$source] ?? null)->toBe($target)
+            ->and($approved708[$source] ?? null)->toBe($target);
     }
 
     foreach ($historical58 as $source => $target) {
         expect($approved64[$source] ?? null)->toBe($target)
             ->and($approved400[$source] ?? null)->toBe($target)
-            ->and($approved659[$source] ?? null)->toBe($target);
+            ->and($approved659[$source] ?? null)->toBe($target)
+            ->and($approved708[$source] ?? null)->toBe($target);
     }
 
     foreach ($approved64 as $source => $target) {
         expect($approved400[$source] ?? null)->toBe($target)
-            ->and($approved659[$source] ?? null)->toBe($target);
+            ->and($approved659[$source] ?? null)->toBe($target)
+            ->and($approved708[$source] ?? null)->toBe($target);
     }
 
     foreach ($approved400 as $source => $target) {
-        expect($approved659[$source] ?? null)->toBe($target);
+        expect($approved659[$source] ?? null)->toBe($target)
+            ->and($approved708[$source] ?? null)->toBe($target);
+    }
+
+    foreach ($approved659 as $source => $target) {
+        expect($approved708[$source] ?? null)->toBe($target);
     }
 
     expect(array_diff_key(
@@ -121,6 +141,16 @@ it('promotes the committed deployment source additively from 64 through 400 to t
     expect(array_intersect_key(
         array_diff_key($approved659, $approved400),
         $approved400,
+    ))->toBe([]);
+
+    expect(array_diff_key(
+        $approved708,
+        $approved659,
+    ))->toHaveCount(49);
+
+    expect(array_intersect_key(
+        array_diff_key($approved708, $approved659),
+        $approved659,
     ))->toBe([]);
 
     $reviewed = app(
@@ -158,6 +188,12 @@ it('promotes the committed deployment source additively from 64 through 400 to t
         ->and($approved659Manifest['base_manifest_sha256'])
         ->toBe('285aaa614de3322d51ae29ffb45b0fdd1f80279decc21774a6a6a508dca9aafa');
 
+    expect($approved708Manifest['schema_version'])->toBe(6)
+        ->and($approved708Manifest['product_count'])->toBe(445)
+        ->and($approved708Manifest['source_path_count'])->toBe(708)
+        ->and($approved708Manifest['deployment_authorized'])->toBeFalse()
+        ->and($approved708Manifest['redirects_installed'])->toBe(0);
+
     expect(hash_file(
         'sha256',
         base_path($authorizationPath),
@@ -175,6 +211,23 @@ it('promotes the committed deployment source additively from 64 through 400 to t
             $authorization['authorization']['production_ordinary_redirect_rule_count'],
         )->toBe(659);
 
+    expect(hash_file(
+        'sha256',
+        base_path($authorization708Path),
+    ))->toBe('7116b063d95aec383cabaf0a9a50ef2e947ea4623afa389c79c80c6197bd7530');
+
+    expect($authorization708['decision'])
+        ->toBe('AUTHORIZE_PRODUCTION_708')
+        ->and(
+            $authorization708['authorization']['production_source_promotion'],
+        )->toBeTrue()
+        ->and(
+            $authorization708['authorization']['production_runtime_activation'],
+        )->toBeTrue()
+        ->and(
+            $authorization708['authorization']['production_ordinary_redirect_rule_count'],
+        )->toBe(708);
+
     $map = (string) file_get_contents(base_path(
         'docker/nginx/generated/legacy-seo-product-map.conf',
     ));
@@ -188,7 +241,7 @@ it('promotes the committed deployment source additively from 64 through 400 to t
         PREG_SET_ORDER,
     );
 
-    expect($ruleCount)->toBe(659);
+    expect($ruleCount)->toBe(708);
 
     $runtime = [];
 
@@ -201,19 +254,19 @@ it('promotes the committed deployment source additively from 64 through 400 to t
 
     ksort($runtime);
 
-    expect($runtime)->toBe($approved659);
+    expect($runtime)->toBe($approved708);
 
     expect($map)
-        ->toContain('# Source: '.$approved659Path)
+        ->toContain('# Source: '.$approved708Path)
         ->toContain(
             '# Manifest SHA-256: '
             .hash_file(
                 'sha256',
-                base_path($approved659Path),
+                base_path($approved708Path),
             ),
         );
 
     expect(hash('sha256', $map))->toBe(
-        '2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e',
+        '059d34d5e2b49301a4da744d904fd4e43a67c9005a10cb54e6ee90b6e2d4edff',
     );
 });

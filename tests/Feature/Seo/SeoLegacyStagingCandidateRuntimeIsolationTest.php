@@ -83,7 +83,7 @@ afterEach(function (): void {
     );
 });
 
-it('keeps the staging overlay isolated while the committed production source is the exact approved-659 cohort', function (): void {
+it('keeps the historical staging overlay isolated while the committed production source is the exact approved-708 cohort', function (): void {
     $manifest659 =
         'resources/seo/ortezka/review/'
         .'seo-07f-20261007/'
@@ -160,13 +160,13 @@ it('keeps the staging overlay isolated while the committed production source is 
     expect($baseRules)
         ->toHaveCount(64)
         ->and($productionRules)
-        ->toHaveCount(659)
+        ->toHaveCount(708)
         ->and(hash(
             'sha256',
             $productionMap,
         ))
         ->toBe(
-            '2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e'
+            '059d34d5e2b49301a4da744d904fd4e43a67c9005a10cb54e6ee90b6e2d4edff'
         )
         ->and($extraRules)
         ->toHaveCount(336)
@@ -203,11 +203,20 @@ it('keeps the staging overlay isolated while the committed production source is 
             ->toBe($target);
     }
 
+    foreach ($candidateRules as $source => $target) {
+        expect($productionRules[$source] ?? null)
+            ->toBe($target);
+    }
+
+    $seo08Increment = array_diff_key(
+        $productionRules,
+        $candidateRules,
+    );
+
+    expect($seo08Increment)->toHaveCount(49);
+
     ksort($productionRules, SORT_STRING);
     ksort($candidateRules, SORT_STRING);
-
-    expect($candidateRules)
-        ->toBe($productionRules);
 
     $nginx = (string) file_get_contents(
         base_path(

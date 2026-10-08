@@ -54,7 +54,7 @@ afterEach(function (): void {
     ));
 });
 
-it('validates and generates exactly 400 schema-v4 rules without modifying the committed production 659-rule map', function (): void {
+it('validates and generates exactly 400 schema-v4 rules without modifying the committed production 708-rule map', function (): void {
     $manifest = seo06V4Manifest();
 
     expect($manifest['schema_version'])->toBe(4)
@@ -137,13 +137,13 @@ it('validates and generates exactly 400 schema-v4 rules without modifying the co
     expect(preg_match_all(
         '/^    "([^"]+)" "([^"]+)";$/m',
         $productionMapContents,
-    ))->toBe(659);
+    ))->toBe(708);
 
     expect(hash(
         'sha256',
         $productionMapContents,
     ))->toBe(
-        '2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e',
+        '059d34d5e2b49301a4da744d904fd4e43a67c9005a10cb54e6ee90b6e2d4edff',
     );
 });
 

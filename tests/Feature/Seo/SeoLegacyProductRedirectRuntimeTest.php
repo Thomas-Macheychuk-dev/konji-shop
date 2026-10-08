@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Artisan;
 
-it('keeps the committed deployment-source map exactly bound to the approved-659 schema-v5 manifest', function (): void {
+it('keeps the committed deployment-source map exactly bound to the owner-authorised 708-rule schema-v6 manifest', function (): void {
     $manifestRelative =
         'resources/seo/ortezka/review/'
-        .'seo-07f-20261007/approved-659-manifest.json';
+        .'seo-08d-20261008/approved-708-manifest.json';
 
     $manifestPath = base_path($manifestRelative);
 
@@ -17,9 +17,9 @@ it('keeps the committed deployment-source map exactly bound to the approved-659 
         flags: JSON_THROW_ON_ERROR,
     );
 
-    expect($manifest['schema_version'])->toBe(5)
-        ->and($manifest['product_count'])->toBe(415)
-        ->and($manifest['source_path_count'])->toBe(659)
+    expect($manifest['schema_version'])->toBe(6)
+        ->and($manifest['product_count'])->toBe(445)
+        ->and($manifest['source_path_count'])->toBe(708)
         ->and($manifest['deployment_authorized'])->toBeFalse()
         ->and($manifest['redirects_installed'])->toBe(0);
 
@@ -37,7 +37,7 @@ it('keeps the committed deployment-source map exactly bound to the approved-659 
         }
     }
 
-    expect($expected)->toHaveCount(659);
+    expect($expected)->toHaveCount(708);
 
     $committed = (string) file_get_contents(base_path(
         'docker/nginx/generated/legacy-seo-product-map.conf',
@@ -52,7 +52,7 @@ it('keeps the committed deployment-source map exactly bound to the approved-659 
         PREG_SET_ORDER,
     );
 
-    expect($count)->toBe(659);
+    expect($count)->toBe(708);
 
     $actual = [];
 
@@ -80,7 +80,7 @@ it('keeps the committed deployment-source map exactly bound to the approved-659 
         ->toContain('default "";');
 
     expect(hash('sha256', $committed))->toBe(
-        '2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e',
+        '059d34d5e2b49301a4da744d904fd4e43a67c9005a10cb54e6ee90b6e2d4edff',
     );
 });
 
