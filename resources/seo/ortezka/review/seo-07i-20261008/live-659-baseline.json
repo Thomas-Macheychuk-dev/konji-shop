@@ -1,0 +1,55 @@
+{
+    "schema_version": 1,
+    "phase": "SEO-07I",
+    "recorded_date": "2026-10-08",
+    "decision": "VERIFY_LIVE_PRODUCTION_659",
+    "source": {
+        "main_commit": "56bf4c205667517430cbaa2f1ce1212aba3723db",
+        "promotion_source_commit": "dff528e44c6d27ebb55b963ddbc8fb7fca62d065",
+        "production_map_sha256": "2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e",
+        "ordinary_redirect_rules": 659
+    },
+    "runtime": {
+        "web_image": "sha256:a16c4f9c7459f7715925becc5fb414ec11a5cffa56e251b6ef3cd6ca8b8a70e6",
+        "immutable_live_tag": "konji-shop-web:seo07h-live659-56bf4c2",
+        "pre659_rollback_tag": "konji-shop-web:seo07h-pre659-1cb8e60",
+        "pre659_rollback_image": "sha256:1cb8e6078b624388354f7351bd72bac95fe2c64abeded5d8563e1e52183e9854",
+        "redirects_enabled": true,
+        "staging_candidate_enabled": false,
+        "production_health_http": 200,
+        "staging_health_http": 200,
+        "q5_placeholder_redirect_separate": true,
+        "q5_result": "PASS"
+    },
+    "validation": {
+        "target_report_path": "storage/app/private/scrapers/seo/ortezka/audits/seo07h-production-live659-20261008/targets-415.json",
+        "target_report_sha256": "85723cda4b943bfd7b72ec24845365bc037b85e847d64a2191726ec1ae6dca52",
+        "target_products": 415,
+        "target_result": "PASS",
+        "runtime_report_path": "storage/app/private/scrapers/seo/ortezka/audits/seo07h-production-live659-20261008/runtime-659.json",
+        "runtime_report_sha256": "4616f00e7f6a0456fe6910e46d716b06a9dc498163f06e88bcd9c7b1bd624ab9",
+        "source_paths": 659,
+        "runtime_result": "PASS",
+        "redirect_chains": 0,
+        "redirect_loops": 0
+    },
+    "service_isolation": {
+        "app_image": "sha256:d15817d4739e9cacf44daec8680f4370daf6be9c2bc6effcd37c8052ee378cb1",
+        "queue_image": "sha256:d15817d4739e9cacf44daec8680f4370daf6be9c2bc6effcd37c8052ee378cb1",
+        "scheduler_image": "sha256:d15817d4739e9cacf44daec8680f4370daf6be9c2bc6effcd37c8052ee378cb1",
+        "redis_image": "sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99",
+        "app_recreated": false,
+        "queue_recreated": false,
+        "scheduler_recreated": false,
+        "redis_recreated": false,
+        "database_writes": 0,
+        "migrations": 0
+    },
+    "governance": {
+        "authorization_text": "AUTHORIZE SEO-07 PRODUCTION 659",
+        "authorization_path": "resources/seo/ortezka/review/seo-07h-20261008/production-promotion-659.json",
+        "authorization_sha256": "f8fd7f0d43ac0a12f80abb4e40ca1a6264f4b93bdf83e7c4ed2ea0b12e6f8bde",
+        "automatic_production_deployment_disabled": true,
+        "runtime_mutated_by_closure_capture": false
+    }
+}
