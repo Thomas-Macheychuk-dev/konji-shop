@@ -1,0 +1,40 @@
+{
+    "schema_version": 1,
+    "phase": "SEO-07H",
+    "recorded_date": "2026-10-08",
+    "decision": "AUTHORIZE_PRODUCTION_659",
+    "authorization_text": "AUTHORIZE SEO-07 PRODUCTION 659",
+    "scope": {
+        "ordinary_redirect_rules_before": 400,
+        "ordinary_redirect_rules_after": 659,
+        "incremental_redirect_rules": 259,
+        "approved_products": 415,
+        "q5_placeholder_redirect_separate": true,
+        "unrelated_application_changes_authorized": false
+    },
+    "source_baseline": {
+        "main_commit": "8f17139032dc076eb99b895b53c4f6aba8b224fb",
+        "production_map_sha256": "52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009",
+        "ordinary_redirect_rules": 400
+    },
+    "candidate_manifest": {
+        "path": "resources/seo/ortezka/review/seo-07f-20261007/approved-659-manifest.json",
+        "sha256": "dc06ef797feb99073ec895749685d03d5e2bb2f090f8feff033e84eaa8556184",
+        "product_count": 415,
+        "source_path_count": 659
+    },
+    "staging_runtime_proof": {
+        "path": "resources/seo/ortezka/review/seo-07g-20261007/staging-runtime-proof.json",
+        "sha256": "400a8fb07cca664fcab20be2612e515806d068b5f526e867c8df8f7693678cb1",
+        "result": "PASS",
+        "target_report_sha256": "3525ebb1815e37a4cd1b71cc9b72fa4c802e4b68d195cc002b6cadc916c956b2",
+        "runtime_report_sha256": "ffb823fade60b1445dfedb0a90c374668d4b4c998a7f608a8cce8c125e26262e",
+        "incremental_map_sha256": "047640fff8dbdd5ff737d05e94ae7a60e7bccf9b744eb8b4763bf40547081437"
+    },
+    "authorization": {
+        "production_source_promotion": true,
+        "production_runtime_activation": true,
+        "production_ordinary_redirect_rule_count": 659
+    },
+    "redirects_installed_at_record_time": 0
+}
