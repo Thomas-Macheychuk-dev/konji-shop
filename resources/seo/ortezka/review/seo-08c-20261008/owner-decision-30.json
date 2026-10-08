@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "document_type": "SEO-08 owner decision ledger for reviewed identifier-agreement/name-divergence cohort",
+  "phase": "SEO-08C",
+  "decision_record_date": "2026-10-08",
+  "decision_source": "User message: APPROVE SEO-08 30/49; HOLD 3321,7560",
+  "decision_reference": "SEO-08-OWNER-DECISION-20261008",
+  "decision": "APPROVE_301_WITH_HOLDS",
+  "approval_basis": "exact_variant_and_parent_identifier_agreement_with_manual_semantic_review",
+  "deployment_authorized": false,
+  "production_redirect_activation_authorized": false,
+  "redirects_installed_by_this_record": 0,
+  "nginx_map_changed_by_this_record": false,
+  "runtime_changed_by_this_record": false,
+  "source_manifest": "resources/seo/ortezka/review/seo-08a-20261008/identifier-name-divergence-32.json",
+  "source_manifest_sha256": "d00159cd7354981b4f0ae3022498817defd15c4b9c0ee94447931e14b443d6c4",
+  "frozen_review_path": "resources/seo/ortezka/review/seo-08b-20261008/reviewed-identifier-divergence-32.json",
+  "frozen_review_sha256": "63897817b27060b06fc37d01a3921a4805ef0cd12f6297458bda638758afcfde",
+  "counts": {
+    "reviewed_identities": 32,
+    "reviewed_source_paths": 53,
+    "approved_identities": 30,
+    "approved_source_paths": 49,
+    "held_identities": 2,
+    "held_source_paths": 4,
+    "current_approved_products": 415,
+    "current_approved_source_paths": 659,
+    "prospective_combined_products": 445,
+    "prospective_combined_source_paths": 708
+  },
+  "approved_legacy_ids": [
+    "3162",
+    "3192",
+    "3204",
+    "3210",
+    "3211",
+    "3213",
+    "3220",
+    "3221",
+    "3222",
+    "3229",
+    "3231",
+    "3232",
+    "3234",
+    "3235",
+    "3241",
+    "3242",
+    "3319",
+    "3322",
+    "3324",
+    "3331",
+    "3334",
+    "3339",
+    "3341",
+    "3359",
+    "3360",
+    "3362",
+    "3363",
+    "6971",
+    "6972",
+    "9536"
+  ],
+  "held_legacy_ids": [
+    "3321",
+    "7560"
+  ],
+  "holds": {
+    "3321": {
+      "legacy_index": "4009",
+      "reason": "Legacy ankle-joint brace contradicts target Biustonosz LANA 4009."
+    },
+    "7560": {
+      "legacy_index": "S-01",
+      "reason": "Legacy ankle-joint stabilizer contradicts target anti-decubitus tubular mattress."
+    }
+  },
+  "governance": {
+    "owner_approval_received": true,
+    "candidate_manifest_generation_authorized": true,
+    "candidate_map_generation_authorized": true,
+    "staging_candidate_activation_authorized": false,
+    "production_deployment_authorized": false,
+    "production_redirect_activation_authorized": false
+  }
+}
