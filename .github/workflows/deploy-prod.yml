@@ -58,12 +58,12 @@ jobs:
       - name: Run tests
         run: php artisan test
 
-      - name: Guard SEO-07 659-rule production source HOLD
-        id: seo07h_gate
+      - name: Guard SEO-08 708-rule production source HOLD
+        id: seo08f_gate
         shell: bash
         env:
           PUSH_BEFORE: ${{ github.event.before }}
-        run: bash scripts/deploy/seo07h-production659-source-gate.sh
+        run: bash scripts/deploy/seo08f-production708-source-gate.sh
 
       - name: Configure AWS credentials
         if: ${{ false }}
