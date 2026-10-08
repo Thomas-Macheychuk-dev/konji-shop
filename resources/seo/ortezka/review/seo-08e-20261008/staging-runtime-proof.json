@@ -1,0 +1,108 @@
+{
+    "schema_version": 1,
+    "phase": "SEO-08E",
+    "recorded_date": "2026-10-08",
+    "purpose": "Immutable staging-only runtime proof for the owner-approved SEO-08 identifier-agreement/name-divergence SAFE cohort.",
+    "source_commit": "679d4f4e565169ff7db5b8c5e9f2d2735e41cfe0",
+    "owner_decision": {
+        "path": "resources/seo/ortezka/review/seo-08c-20261008/owner-decision-30.json",
+        "sha256": "971191f37c00f1eca6798309b6a22aa00c572e0ab967f7ac0fb2483579a4654e",
+        "approved_products": 30,
+        "approved_source_paths": 49,
+        "held_legacy_ids": [
+            "3321",
+            "7560"
+        ]
+    },
+    "manifest": {
+        "path": "resources/seo/ortezka/review/seo-08d-20261008/approved-708-manifest.json",
+        "sha256": "ee80e33e585e29c382c170372cb9de008d81da0438123275f31e6dc1129aa8db",
+        "approved_products": 445,
+        "ordinary_source_paths": 708
+    },
+    "staging_candidate": {
+        "base_production_rules": 659,
+        "incremental_rules": 49,
+        "effective_staging_rules": 708,
+        "incremental_map_path": "resources/seo/ortezka/review/seo-08d-20261008/staging-incremental-49-map.conf",
+        "incremental_map_sha256": "8d58bad1f99b01eeccad98d8ddd192a02bd6998264b6a27c69b1bacc413726c2",
+        "candidate_web_image": "sha256:0d2e2425c7e7a9666c88ed90cbcad1eb5fc6c30a2e6c504a2f90e454eea1723f"
+    },
+    "validator_adapter": {
+        "report_path": "storage/app/private/scrapers/seo/ortezka/audits/seo08e-staging-20261008/validator-adapter-708.json",
+        "sha256": "8a7cbab4e0e5e8dece9f137edff7340c6f2bf02f3ccbb2868396544027284d85",
+        "target_products": 445,
+        "source_paths": 708,
+        "deployable": false
+    },
+    "target_validation": {
+        "report_path": "storage/app/private/scrapers/seo/ortezka/audits/seo08e-staging-20261008/target-validation-445.json",
+        "report_sha256": "7a8bd78322c435c67086a048fc4233b3e9047f108362089911ac5a22ebd5b34d",
+        "approved_target_products": 445,
+        "http_200": 445,
+        "canonical_correct": 445,
+        "product_identity_correct": 445,
+        "missing_targets": 0,
+        "redirected_targets": 0,
+        "canonical_mismatches": 0,
+        "identity_mismatches": 0,
+        "request_failures": 0,
+        "other_http_failures": 0,
+        "noindex_targets": 445,
+        "noindex_allowed_for_isolated_staging": true,
+        "result": "PASS"
+    },
+    "runtime_validation": {
+        "report_path": "storage/app/private/scrapers/seo/ortezka/audits/seo08e-staging-20261008/runtime-validation-708.json",
+        "report_sha256": "30c98f270277b97eb5dae87fd07e4f5774de7ec1c67b813a33588ae3cd1dd2f9",
+        "approved_source_paths": 708,
+        "source_http_301": 708,
+        "correct_destinations": 708,
+        "query_strings_dropped": 708,
+        "target_http_200": 708,
+        "canonical_correct": 708,
+        "product_identity_correct": 708,
+        "redirect_chains": 0,
+        "redirect_loops": 0,
+        "wrong_destinations": 0,
+        "missing_location_headers": 0,
+        "query_strings_preserved": 0,
+        "source_request_failures": 0,
+        "target_request_failures": 0,
+        "canonical_mismatches": 0,
+        "identity_mismatches": 0,
+        "unrelated_control_failures": 0,
+        "duplicate_or_conflicting_sources": 0,
+        "noindex_targets": 708,
+        "noindex_allowed_for_isolated_staging": true,
+        "result": "PASS"
+    },
+    "production_isolation": {
+        "ordinary_rules_during_test": 659,
+        "production_map_sha256": "2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e",
+        "original_web_image": "sha256:a16c4f9c7459f7715925becc5fb414ec11a5cffa56e251b6ef3cd6ca8b8a70e6",
+        "production_origin_http_before": 200,
+        "production_origin_http_after": 200,
+        "production_public_http_before": 403,
+        "production_public_http_after": 403,
+        "public_status_unchanged": true,
+        "production_promoted": false
+    },
+    "restoration": {
+        "staging_overlay_final_state": "OFF",
+        "original_web_image_restored": true,
+        "restored_web_image": "sha256:a16c4f9c7459f7715925becc5fb414ec11a5cffa56e251b6ef3cd6ca8b8a70e6",
+        "production_rules_after_restore": 659,
+        "non_web_containers_changed": false,
+        "tracked_source_changed": false,
+        "database_writes": false,
+        "migrations": false
+    },
+    "governance": {
+        "staging_activation_authorized": true,
+        "staging_runtime_proof_complete": true,
+        "production_deployment_authorized": false,
+        "production_redirect_activation_authorized": false
+    },
+    "result": "PASS"
+}
