@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "document_type": "SEO-09 owner decision ledger for reviewed parent-SKU-only cohort",
+  "phase": "SEO-09C",
+  "decision_record_date": "2026-10-08",
+  "decision_source": "User message: APPROVE SEO-09 91/140; HOLD 49/88",
+  "decision_reference": "SEO-09-OWNER-DECISION-20261008",
+  "decision": "APPROVE_301_WITH_HOLDS",
+  "approval_basis": "unique_exact_parent_sku_with_reviewed_product_identity_and_active_variants",
+  "deployment_authorized": false,
+  "production_redirect_activation_authorized": false,
+  "redirects_installed_by_this_record": 0,
+  "nginx_map_changed_by_this_record": false,
+  "runtime_changed_by_this_record": false,
+  "source_manifest": "resources/seo/ortezka/review/seo-09a-20261008/parent-only-candidates-140.json",
+  "source_manifest_sha256": "49ab32c8d3cb236b40e159114504c31d5a4738dea97461ea42e609159afafa75",
+  "frozen_review_path": "resources/seo/ortezka/review/seo-09b-20261008/reviewed-parent-candidates-140.json",
+  "frozen_review_sha256": "64b1cac5d36a50b20d3e2803f3ddfd275b772cabad63d081d430db661d85c141",
+  "counts": {
+    "reviewed_identities": 140,
+    "reviewed_source_paths": 228,
+    "approved_identities": 91,
+    "approved_source_paths": 140,
+    "held_identities": 49,
+    "held_source_paths": 88,
+    "current_approved_products": 445,
+    "current_approved_source_paths": 708,
+    "prospective_combined_products": 536,
+    "prospective_combined_source_paths": 848
+  },
+  "approved_legacy_ids": [
+    "2222",
+    "2774",
+    "3498",
+    "3499",
+    "6608",
+    "6611",
+    "6613",
+    "6614",
+    "6615",
+    "6616",
+    "6618",
+    "6619",
+    "6620",
+    "6621",
+    "6622",
+    "6623",
+    "6624",
+    "6625",
+    "6636",
+    "6639",
+    "6640",
+    "6642",
+    "6643",
+    "6645",
+    "6648",
+    "6653",
+    "6655",
+    "6656",
+    "6657",
+    "6658",
+    "6659",
+    "6660",
+    "6669",
+    "6671",
+    "6676",
+    "6677",
+    "6678",
+    "6679",
+    "6680",
+    "6681",
+    "6682",
+    "6683",
+    "6684",
+    "6685",
+    "6686",
+    "6688",
+    "6689",
+    "6691",
+    "6692",
+    "6693",
+    "6694",
+    "6695",
+    "7473",
+    "7474",
+    "7475",
+    "7476",
+    "7477",
+    "7479",
+    "7480",
+    "7488",
+    "7490",
+    "7500",
+    "8348",
+    "9258",
+    "9617",
+    "10324",
+    "10327",
+    "10328",
+    "10329",
+    "10330",
+    "10417",
+    "10618",
+    "12890",
+    "12897",
+    "12916",
+    "12936",
+    "12957",
+    "12972",
+    "13001",
+    "13019",
+    "13020",
+    "13021",
+    "13022",
+    "13161",
+    "13163",
+    "13166",
+    "13167",
+    "13169",
+    "13661",
+    "13662",
+    "13665"
+  ],
+  "held_legacy_ids": [
+    "444",
+    "457",
+    "4355",
+    "7164",
+    "7171",
+    "7172",
+    "7174",
+    "7175",
+    "7182",
+    "7187",
+    "7189",
+    "7192",
+    "7202",
+    "7203",
+    "7220",
+    "7225",
+    "7227",
+    "7231",
+    "7238",
+    "7240",
+    "7243",
+    "7245",
+    "7535",
+    "7571",
+    "7572",
+    "7574",
+    "7585",
+    "7586",
+    "7588",
+    "7614",
+    "7615",
+    "8089",
+    "9512",
+    "9513",
+    "9514",
+    "9515",
+    "9518",
+    "9519",
+    "9520",
+    "9521",
+    "9523",
+    "9525",
+    "9527",
+    "9528",
+    "9529",
+    "9530",
+    "9531",
+    "9533",
+    "10091"
+  ],
+  "holds": {
+    "444": {
+      "legacy_index": "103",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "457": {
+      "legacy_index": "107",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "4355": {
+      "legacy_index": "7007",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7164": {
+      "legacy_index": "DR-123-1",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7171": {
+      "legacy_index": "DR-W132-1",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7172": {
+      "legacy_index": "DR-W132-2",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7174": {
+      "legacy_index": "DR-W132-4",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7175": {
+      "legacy_index": "DR-W132-6",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7182": {
+      "legacy_index": "DR-W022",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7187": {
+      "legacy_index": "DR-B003",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7189": {
+      "legacy_index": "DR-B033",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7192": {
+      "legacy_index": "DR-A135",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7202": {
+      "legacy_index": "DR-E027",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7203": {
+      "legacy_index": "DR-E028",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7220": {
+      "legacy_index": "SM-702",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7225": {
+      "legacy_index": "7640",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7227": {
+      "legacy_index": "7210",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7231": {
+      "legacy_index": "1741",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7238": {
+      "legacy_index": "6150",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7240": {
+      "legacy_index": "7190",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7243": {
+      "legacy_index": "7120",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7245": {
+      "legacy_index": "7140",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7535": {
+      "legacy_index": "DR-PC107-1",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "7571": {
+      "legacy_index": "K-09",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "7572": {
+      "legacy_index": "K-10",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "7574": {
+      "legacy_index": "K-11",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "7585": {
+      "legacy_index": "L-01",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "7586": {
+      "legacy_index": "L-03",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "7588": {
+      "legacy_index": "C-01",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "7614": {
+      "legacy_index": "B-02",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "7615": {
+      "legacy_index": "B-03",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "8089": {
+      "legacy_index": "630",
+      "review_tier": "IDENTIFIER_NAME_COLLISION",
+      "reason": "Although the external parent SKU matches, the legacy and target product identities are materially different; treat as identifier/data collision pending correction."
+    },
+    "9512": {
+      "legacy_index": "B-10671",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9513": {
+      "legacy_index": "B-111",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9514": {
+      "legacy_index": "B-109",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9515": {
+      "legacy_index": "B-1070",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9518": {
+      "legacy_index": "DR-A001",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9519": {
+      "legacy_index": "DR-A100",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9520": {
+      "legacy_index": "DR-A101",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9521": {
+      "legacy_index": "DR-PC107",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9523": {
+      "legacy_index": "DR-A014",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9525": {
+      "legacy_index": "DR-A202",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9527": {
+      "legacy_index": "DR-K019",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9528": {
+      "legacy_index": "DR-B035",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9529": {
+      "legacy_index": "DR-B047",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9530": {
+      "legacy_index": "DR-B023",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9531": {
+      "legacy_index": "DR-B011-1",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "9533": {
+      "legacy_index": "DR-A010",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    },
+    "10091": {
+      "legacy_index": "665",
+      "review_tier": "BLOCKED_NO_ACTIVE_VARIANTS",
+      "reason": "Exact parent SKU identity is insufficient for redirect activation while the target has zero active variants."
+    }
+  },
+  "governance": {
+    "owner_approval_received": true,
+    "candidate_manifest_generation_authorized": true,
+    "candidate_map_generation_authorized": true,
+    "staging_candidate_activation_authorized": false,
+    "production_deployment_authorized": false,
+    "production_redirect_activation_authorized": false
+  }
+}
