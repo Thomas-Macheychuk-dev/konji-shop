@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-it('retains two independent production deployment locks through the SEO-07 governance gate', function (): void {
+it('retains two independent production deployment locks through the SEO-08 708-source governance gate', function (): void {
     $workflow = (string) file_get_contents(base_path(
         '.github/workflows/deploy-prod.yml',
     ));
 
     expect($workflow)
         ->toContain(
-            'name: Guard SEO-07 659-rule production source HOLD',
+            'name: Guard SEO-08 708-rule production source HOLD',
         )
         ->toContain(
-            'run: bash scripts/deploy/seo07h-production659-source-gate.sh',
+            'run: bash scripts/deploy/seo08f-production708-source-gate.sh',
         );
 
     foreach ([
@@ -33,7 +33,7 @@ it('retains two independent production deployment locks through the SEO-07 gover
 
     expect($workflow)
         ->not->toContain(
-            "if: steps.seo07h_gate.outputs.deploy == 'true'",
+            "if: steps.seo08f_gate.outputs.deploy == 'true'",
         )
         ->not->toContain(
             "if: steps.seo03b_gate.outputs.deploy == 'true'",
