@@ -78,16 +78,16 @@ afterEach(function (): void {
     @unlink(
         base_path(
             'storage/framework/testing/'
-            .'seo06-staging-candidate-full.conf'
+            .'seo07-staging-candidate-full.conf'
         )
     );
 });
 
-it('keeps the staging overlay isolated while the committed production source is the exact approved-400 union', function (): void {
-    $manifest400 =
+it('keeps the staging overlay isolated while the committed production source is the exact approved-659 cohort', function (): void {
+    $manifest659 =
         'resources/seo/ortezka/review/'
-        .'seo-06c-20261006/'
-        .'approved-400-manifest.json';
+        .'seo-07f-20261007/'
+        .'approved-659-manifest.json';
 
     $manifest64 =
         'resources/seo/ortezka/review/'
@@ -96,13 +96,13 @@ it('keeps the staging overlay isolated while the committed production source is 
 
     $temporary =
         'storage/framework/testing/'
-        .'seo06-staging-candidate-full.conf';
+        .'seo07-staging-candidate-full.conf';
 
     expect(
         Artisan::call(
             'seo:generate-legacy-product-redirect-map',
             [
-                '--manifest' => $manifest400,
+                '--manifest' => $manifest659,
                 '--output' => $temporary,
             ],
         )
@@ -160,13 +160,13 @@ it('keeps the staging overlay isolated while the committed production source is 
     expect($baseRules)
         ->toHaveCount(64)
         ->and($productionRules)
-        ->toHaveCount(400)
+        ->toHaveCount(659)
         ->and(hash(
             'sha256',
             $productionMap,
         ))
         ->toBe(
-            '52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009'
+            '2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e'
         )
         ->and($extraRules)
         ->toHaveCount(336)
@@ -178,7 +178,7 @@ it('keeps the staging overlay isolated while the committed production source is 
             '35fd51ac823a1a2695265abd87d6dcfc4ad34f12c17c42cf627e9a57444dd802'
         )
         ->and($candidateRules)
-        ->toHaveCount(400);
+        ->toHaveCount(659);
 
     foreach ($baseRules as $source => $target) {
         expect($productionRules[$source] ?? null)
@@ -194,15 +194,19 @@ it('keeps the staging overlay isolated while the committed production source is 
             ->not->toHaveKey($source);
     }
 
-    $combined = $baseRules + $extraRules;
+    $historical400 = $baseRules + $extraRules;
 
-    ksort($combined, SORT_STRING);
+    expect($historical400)->toHaveCount(400);
+
+    foreach ($historical400 as $source => $target) {
+        expect($productionRules[$source] ?? null)
+            ->toBe($target);
+    }
+
     ksort($productionRules, SORT_STRING);
     ksort($candidateRules, SORT_STRING);
 
-    expect($combined)
-        ->toBe($productionRules)
-        ->and($candidateRules)
+    expect($candidateRules)
         ->toBe($productionRules);
 
     $nginx = (string) file_get_contents(

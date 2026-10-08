@@ -63,7 +63,7 @@ afterEach(function (): void {
     }
 });
 
-it('generates exactly 659 schema-v5 rules without modifying the committed production 400-rule map', function (): void {
+it('generates exactly 659 schema-v5 rules without modifying the committed production 659-rule map', function (): void {
     $manifest = seo07V5Manifest();
 
     expect($manifest['schema_version'])
@@ -90,7 +90,7 @@ it('generates exactly 659 schema-v5 rules without modifying the committed produc
     );
 
     expect($before)->toBe(
-        '52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009',
+        '2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e',
     );
 
     $relative = seo07WriteV5Fixture(
@@ -158,7 +158,7 @@ it('generates exactly 659 schema-v5 rules without modifying the committed produc
         (string) file_get_contents(
             $productionMap,
         ),
-    ))->toBe(400);
+    ))->toBe(659);
 });
 
 it('shares strict schema-v5 validation and fails closed on provenance or record drift', function (): void {
@@ -238,20 +238,17 @@ it('shares strict schema-v5 validation and fails closed on provenance or record 
                 break;
 
             case 'changed_source':
-                $changed['records'][266]
-                    ['source_paths'][0] =
+                $changed['records'][266]['source_paths'][0] =
                     '/unapproved-seo07-source';
                 break;
 
             case 'changed_target':
-                $changed['records'][266]
-                    ['target_path'] =
+                $changed['records'][266]['target_path'] =
                     '/products/unapproved-seo07-target';
                 break;
 
             case 'changed_decision':
-                $changed['records'][266]
-                    ['decision'] =
+                $changed['records'][266]['decision'] =
                     'HOLD';
                 break;
         }
@@ -274,11 +271,9 @@ it('shares strict schema-v5 validation and fails closed on provenance or record 
         $exit = Artisan::call(
             'seo:generate-legacy-product-redirect-map',
             [
-                '--manifest' =>
-                    $relative,
+                '--manifest' => $relative,
 
-                '--output' =>
-                    $output,
+                '--output' => $output,
             ],
         );
 
@@ -339,8 +334,7 @@ it('validates all 415 schema-v5 targets through the shared approved-target gate'
                 .'</h1></body></html>',
                 200,
                 [
-                    'Content-Type' =>
-                        'text/html; charset=utf-8',
+                    'Content-Type' => 'text/html; charset=utf-8',
                 ],
             );
         },
@@ -353,16 +347,13 @@ it('validates all 415 schema-v5 targets through the shared approved-target gate'
     $exit = Artisan::call(
         'seo:validate-approved-product-targets',
         [
-            '--manifest' =>
-                'resources/seo/ortezka/review/'
+            '--manifest' => 'resources/seo/ortezka/review/'
                 .'seo-07f-20261007/'
                 .'approved-659-manifest.json',
 
-            '--base-url' =>
-                'https://staging.example.test',
+            '--base-url' => 'https://staging.example.test',
 
-            '--output' =>
-                $report,
+            '--output' => $report,
         ],
     );
 
@@ -380,18 +371,15 @@ it('validates all 415 schema-v5 targets through the shared approved-target gate'
     );
 
     expect(
-        $data['summary']
-        ['approved_target_products'],
+        $data['summary']['approved_target_products'],
     )->toBe(415)
         ->and($data['summary']['http_200'])
         ->toBe(415)
         ->and(
-            $data['summary']
-            ['canonical_correct'],
+            $data['summary']['canonical_correct'],
         )->toBe(415)
         ->and(
-            $data['summary']
-            ['product_identity_correct'],
+            $data['summary']['product_identity_correct'],
         )->toBe(415);
 
     Http::assertSentCount(415);
@@ -412,8 +400,7 @@ it('validates all 659 schema-v5 mappings through the shared runtime gate', funct
             $record['target_product_name'];
 
         foreach (
-            $record['source_paths']
-            as $source
+            $record['source_paths'] as $source
         ) {
             $sourceTargets[$source] =
                 $record['target_path'];
@@ -450,8 +437,7 @@ it('validates all 659 schema-v5 mappings through the shared runtime gate', funct
                     '',
                     301,
                     [
-                        'Location' =>
-                            'https://staging.example.test'
+                        'Location' => 'https://staging.example.test'
                             .$sourceTargets[$path],
                     ],
                 );
@@ -478,8 +464,7 @@ it('validates all 659 schema-v5 mappings through the shared runtime gate', funct
                     .'</h1></body></html>',
                     200,
                     [
-                        'Content-Type' =>
-                            'text/html; charset=utf-8',
+                        'Content-Type' => 'text/html; charset=utf-8',
                     ],
                 );
             }
@@ -498,16 +483,13 @@ it('validates all 659 schema-v5 mappings through the shared runtime gate', funct
     $exit = Artisan::call(
         'seo:validate-legacy-product-redirect-runtime',
         [
-            '--manifest' =>
-                'resources/seo/ortezka/review/'
+            '--manifest' => 'resources/seo/ortezka/review/'
                 .'seo-07f-20261007/'
                 .'approved-659-manifest.json',
 
-            '--base-url' =>
-                'https://staging.example.test',
+            '--base-url' => 'https://staging.example.test',
 
-            '--output' =>
-                $report,
+            '--output' => $report,
         ],
     );
 
@@ -525,44 +507,34 @@ it('validates all 659 schema-v5 mappings through the shared runtime gate', funct
     );
 
     expect(
-        $data['summary']
-        ['approved_source_paths'],
+        $data['summary']['approved_source_paths'],
     )->toBe(659)
         ->and(
-            $data['summary']
-            ['source_http_301'],
+            $data['summary']['source_http_301'],
         )->toBe(659)
         ->and(
-            $data['summary']
-            ['correct_destinations'],
+            $data['summary']['correct_destinations'],
         )->toBe(659)
         ->and(
-            $data['summary']
-            ['query_strings_dropped'],
+            $data['summary']['query_strings_dropped'],
         )->toBe(659)
         ->and(
-            $data['summary']
-            ['target_http_200'],
+            $data['summary']['target_http_200'],
         )->toBe(659)
         ->and(
-            $data['summary']
-            ['canonical_correct'],
+            $data['summary']['canonical_correct'],
         )->toBe(659)
         ->and(
-            $data['summary']
-            ['product_identity_correct'],
+            $data['summary']['product_identity_correct'],
         )->toBe(659)
         ->and(
-            $data['summary']
-            ['redirect_chains'],
+            $data['summary']['redirect_chains'],
         )->toBe(0)
         ->and(
-            $data['summary']
-            ['redirect_loops'],
+            $data['summary']['redirect_loops'],
         )->toBe(0)
         ->and(
-            $data['control']
-            ['unchanged'],
+            $data['control']['unchanged'],
         )->toBeTrue();
 
     Http::assertSentCount(1319);

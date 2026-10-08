@@ -85,20 +85,16 @@ it('accepts exactly the frozen SEO-07 owner-approved exact-name-only cohort', fu
 it('pins every immutable SEO-07 approval dependency', function (): void {
     $files = [
         'resources/seo/ortezka/review/seo-07b-20261007/'
-            .'exact-name-only-candidates-149.json'
-            => ExactNameOnlyRedirectDecisionLedger::SOURCE_MANIFEST_SHA256,
+            .'exact-name-only-candidates-149.json' => ExactNameOnlyRedirectDecisionLedger::SOURCE_MANIFEST_SHA256,
 
         'resources/seo/ortezka/review/seo-07d-20261007/'
-            .'review-safe-149.json'
-            => ExactNameOnlyRedirectDecisionLedger::REVIEW_SHA256,
+            .'review-safe-149.json' => ExactNameOnlyRedirectDecisionLedger::REVIEW_SHA256,
 
         'resources/seo/ortezka/review/seo-07e-20261007/'
-            .'owner-decision-149.json'
-            => ExactNameOnlyRedirectDecisionLedger::DECISION_SHA256,
+            .'owner-decision-149.json' => ExactNameOnlyRedirectDecisionLedger::DECISION_SHA256,
 
         'resources/seo/ortezka/review/seo-06c-20261006/'
-            .'approved-400-manifest.json'
-            => ExactNameOnlyRedirectDecisionLedger::BASE_MANIFEST_SHA256,
+            .'approved-400-manifest.json' => ExactNameOnlyRedirectDecisionLedger::BASE_MANIFEST_SHA256,
     ];
 
     foreach ($files as $path => $expected) {
@@ -108,13 +104,21 @@ it('pins every immutable SEO-07 approval dependency', function (): void {
         ))->toBe($expected);
     }
 
-    expect(hash_file(
-        'sha256',
-        base_path(
-            'docker/nginx/generated/'
-            .'legacy-seo-product-map.conf',
-        ),
-    ))->toBe(
-        ExactNameOnlyRedirectDecisionLedger::PRODUCTION_MAP_SHA256,
+    $source = json_decode(
+        (string) file_get_contents(base_path(
+            'resources/seo/ortezka/review/seo-07b-20261007/'
+            .'exact-name-only-candidates-149.json',
+        )),
+        true,
+        flags: JSON_THROW_ON_ERROR,
     );
+
+    expect($source['production_map_sha256'])
+        ->toBe(
+            ExactNameOnlyRedirectDecisionLedger::PRODUCTION_MAP_SHA256,
+        )
+        ->and(
+            $source['summary']['current_production_rule_count'],
+        )
+        ->toBe(400);
 });

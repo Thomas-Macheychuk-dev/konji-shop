@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Artisan;
 
-it('keeps the committed deployment-source map exactly bound to the approved-400 schema-v4 manifest', function (): void {
+it('keeps the committed deployment-source map exactly bound to the approved-659 schema-v5 manifest', function (): void {
     $manifestRelative =
         'resources/seo/ortezka/review/'
-        .'seo-06c-20261006/approved-400-manifest.json';
+        .'seo-07f-20261007/approved-659-manifest.json';
 
     $manifestPath = base_path($manifestRelative);
 
@@ -17,9 +17,9 @@ it('keeps the committed deployment-source map exactly bound to the approved-400 
         flags: JSON_THROW_ON_ERROR,
     );
 
-    expect($manifest['schema_version'])->toBe(4)
-        ->and($manifest['product_count'])->toBe(266)
-        ->and($manifest['source_path_count'])->toBe(400)
+    expect($manifest['schema_version'])->toBe(5)
+        ->and($manifest['product_count'])->toBe(415)
+        ->and($manifest['source_path_count'])->toBe(659)
         ->and($manifest['deployment_authorized'])->toBeFalse()
         ->and($manifest['redirects_installed'])->toBe(0);
 
@@ -37,7 +37,7 @@ it('keeps the committed deployment-source map exactly bound to the approved-400 
         }
     }
 
-    expect($expected)->toHaveCount(400);
+    expect($expected)->toHaveCount(659);
 
     $committed = (string) file_get_contents(base_path(
         'docker/nginx/generated/legacy-seo-product-map.conf',
@@ -52,7 +52,7 @@ it('keeps the committed deployment-source map exactly bound to the approved-400 
         PREG_SET_ORDER,
     );
 
-    expect($count)->toBe(400);
+    expect($count)->toBe(659);
 
     $actual = [];
 
@@ -80,7 +80,7 @@ it('keeps the committed deployment-source map exactly bound to the approved-400 
         ->toContain('default "";');
 
     expect(hash('sha256', $committed))->toBe(
-        '52db8dcaf8ca3ecf3cbf0cee1c2444d906ca9df94daae15491f818cfaae56009',
+        '2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e',
     );
 });
 
