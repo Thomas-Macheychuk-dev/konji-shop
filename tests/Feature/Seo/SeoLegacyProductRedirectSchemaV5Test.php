@@ -63,7 +63,7 @@ afterEach(function (): void {
     }
 });
 
-it('generates exactly 659 schema-v5 rules without modifying the committed production 659-rule map', function (): void {
+it('generates exactly 659 historical schema-v5 rules without modifying the committed production 708-rule map', function (): void {
     $manifest = seo07V5Manifest();
 
     expect($manifest['schema_version'])
@@ -90,7 +90,7 @@ it('generates exactly 659 schema-v5 rules without modifying the committed produc
     );
 
     expect($before)->toBe(
-        '2db01640afb64d5fecf257c27eb628c4bb1778f75ee47083679e65ceef7e279e',
+        '059d34d5e2b49301a4da744d904fd4e43a67c9005a10cb54e6ee90b6e2d4edff',
     );
 
     $relative = seo07WriteV5Fixture(
@@ -158,7 +158,7 @@ it('generates exactly 659 schema-v5 rules without modifying the committed produc
         (string) file_get_contents(
             $productionMap,
         ),
-    ))->toBe(659);
+    ))->toBe(708);
 });
 
 it('shares strict schema-v5 validation and fails closed on provenance or record drift', function (): void {
