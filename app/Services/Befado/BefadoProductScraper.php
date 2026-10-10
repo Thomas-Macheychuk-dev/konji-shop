@@ -150,7 +150,7 @@ final class BefadoProductScraper
             'variant_candidates' => $variantCandidates,
             'requires_variants' => $requiresVariants,
             'variants_unresolved' => $variantsUnresolved,
-            'is_medical_device' => $this->isMedicalDevice($html, $categories, $attributes),
+            'is_medical_device' => false,
             'warnings' => array_values(array_unique($warnings)),
             'failed_urls' => $failed,
         ], $productLinkContext);
