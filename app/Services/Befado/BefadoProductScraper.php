@@ -978,8 +978,12 @@ final class BefadoProductScraper
         }
 
         $plain = $this->normalizeLabel(strip_tags($html));
+        // A Shoper theme can render its stock-size picker without any of the
+        // option_ controls above. Do not invent a single default shoe size.
         if (! $requiresVariants
-            && preg_match('/(?:^|\\s)Rozmiar\\s*:/iu', $plain) === 1) {
+            && (preg_match('/(?:^|\\s)Rozmiar\\s*:/iu', $plain) === 1
+                || $sizeMap !== []
+                || preg_match('/(?:buty|kapcie|sandały|sneakersy|tenisówki|balerinki|półbuty|śniegowce|klapki)/iu', $this->extractName($crawler, '')) === 1)) {
             $requiresVariants = true;
         }
 
@@ -1041,7 +1045,7 @@ final class BefadoProductScraper
 
         $size = str_replace(',', '.', $matches[0]);
 
-        return rtrim(rtrim($size, '0'), '.');
+        return str_contains($size, '.') ? rtrim(rtrim($size, '0'), '.') : $size;
     }
 
     private function optionIsUnavailable(Crawler $option): bool
