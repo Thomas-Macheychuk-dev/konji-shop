@@ -246,10 +246,33 @@ final class CrawlBefadoProductDataCommand extends Command
     private function saveJson(string $relativePath, array $result, bool $quiet = false): void
     {
         $relativePath = ltrim($relativePath, '/');
-        Storage::disk('local')->put(
-            $relativePath,
-            json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION)
+        // Source HTML may contain invalid UTF-8 in descriptions. Never allow
+        // json_encode() to silently return false and write an empty file.
+        $encoded = json_encode(
+            $result,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+                | JSON_PRESERVE_ZERO_FRACTION | JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR
         );
+
+        $disk = Storage::disk('local');
+        $temporaryPath = $relativePath.'.tmp';
+        try {
+            if (! $disk->put($temporaryPath, $encoded)) {
+                throw new \RuntimeException('Unable to write Befado JSON temporary file.');
+            }
+
+            // A failed write must not replace the previous valid snapshot.
+            $written = $disk->get($temporaryPath);
+            json_decode($written, true, 512, JSON_THROW_ON_ERROR);
+
+            if (! $disk->move($temporaryPath, $relativePath)) {
+                throw new \RuntimeException('Unable to activate Befado JSON snapshot.');
+            }
+        } finally {
+            if ($disk->exists($temporaryPath)) {
+                $disk->delete($temporaryPath);
+            }
+        }
 
         if (! $quiet) {
             $this->info('Saved full product data to local disk: '.$relativePath);
