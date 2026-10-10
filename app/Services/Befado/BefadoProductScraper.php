@@ -509,6 +509,33 @@ final class BefadoProductScraper
             }
         }
 
+        foreach ([
+            '#box_productfull [itemprop="sku"]',
+            '#box_productfull .product-code',
+            '#box_productfull .productcode',
+            '#box_productfull .code',
+            '.product-code',
+            '.productcode',
+        ] as $selector) {
+            try {
+                $node = $crawler->filter($selector)->first();
+
+                if ($node->count() === 0) {
+                    continue;
+                }
+
+                $sku = $this->normalizeLabel($node->text(''));
+                $sku = preg_replace('/^(?:Kod produktu|Kod|SKU)\\s*:?\\s*/iu', '', $sku) ?? $sku;
+                $sku = trim($sku);
+
+                if ($sku !== '' && mb_strlen($sku) <= 100 && preg_match('/^[A-Za-z0-9._\\/-]+$/u', $sku) === 1) {
+                    return $sku;
+                }
+            } catch (Throwable) {
+                continue;
+            }
+        }
+
         foreach ($attributes as $attribute) {
             if (in_array($attribute['code'], ['kod-produktu', 'sku', 'kod-katalogowy'], true)) {
                 return $attribute['value'];
@@ -787,6 +814,10 @@ final class BefadoProductScraper
                     return;
                 }
 
+                if ($sizeMap !== [] && ! isset($sizeMap[$size])) {
+                    return;
+                }
+
                 $externalVariantId = trim((string) ($input->attr('data-variant-id') ?? ''));
                 $externalVariantId = $externalVariantId !== ''
                     ? 'variant-'.$externalVariantId
@@ -849,6 +880,10 @@ final class BefadoProductScraper
                     $size = $this->sizeFromOptionLabel($label);
 
                     if ($size === null) {
+                        return;
+                    }
+
+                    if ($sizeMap !== [] && ! isset($sizeMap[$size])) {
                         return;
                     }
 
