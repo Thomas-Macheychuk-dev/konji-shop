@@ -640,9 +640,9 @@ final class BefadoProductImporter
         $sku = $this->stringOrNull($scraped['sku'] ?? null)
             ?: $this->stringOrNull($scraped['canonical_url'] ?? null)
                 ?: $this->stringOrNull($scraped['source_url'] ?? null)
-                    ?: 'BUTTERFLY-'.$externalId;
+                    ?: 'BEFADO-'.$externalId;
 
-        return $this->limitDatabaseString($this->normaliseSku($sku) ?: 'BUTTERFLY-'.$externalId);
+        return $this->limitDatabaseString($this->normaliseSku($sku) ?: 'BEFADO-'.$externalId);
     }
 
     /**
@@ -653,7 +653,7 @@ final class BefadoProductImporter
     {
         $sku = $this->stringOrNull($candidate['sku'] ?? null)
             ?: $this->stringOrNull($scraped['sku'] ?? null)
-                ?: 'BUTTERFLY-'.$externalId;
+                ?: 'BEFADO-'.$externalId;
 
         $sku = $this->normaliseSku($sku);
 
@@ -667,7 +667,7 @@ final class BefadoProductImporter
             $sku .= '-'.$this->normaliseSku($sourceExternalId);
         }
 
-        return $sku ?: 'BUTTERFLY-'.$externalId.'-'.$sourceExternalId;
+        return $sku ?: 'BEFADO-'.$externalId.'-'.$sourceExternalId;
     }
 
     /**
@@ -1164,7 +1164,7 @@ final class BefadoProductImporter
 
     private function uniqueSku(string $sku, int $productId, string $externalVariantId): string
     {
-        $sku = $this->limitDatabaseString($this->normaliseSku($sku) ?: 'BUTTERFLY-'.$externalVariantId);
+        $sku = $this->limitDatabaseString($this->normaliseSku($sku) ?: 'BEFADO-'.$externalVariantId);
         $candidate = $sku;
         $suffix = 2;
 
