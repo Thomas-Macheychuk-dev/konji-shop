@@ -1031,16 +1031,16 @@ final class BefadoProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function vatRateForProduct(array $scraped): VatRate
-    {
-        return $this->booleanValue($scraped['is_medical_device'] ?? null) === true
-            ? VatRate::VAT_8
-            : VatRate::VAT_23;
-    }
-
     /**
+     * Befado manufacturer-catalogue products are standard footwear.
+     *
      * @param  array<string, mixed>  $scraped
      */
+    private function vatRateForProduct(array $scraped): VatRate
+    {
+        return VatRate::VAT_23;
+    }
+
     /**
      * @param  array<string, mixed>  $candidate
      * @param  array<string, mixed>  $scraped
