@@ -198,3 +198,23 @@ it('resolves live Befado stock-options radio controls with size labels and stock
         ->and($result['variant_candidates'][1]['availability'])->toBe('in_stock')
         ->and($result['variant_candidates'][2]['attributes'][0]['value'])->toBe('21');
 });
+
+
+it('preserves Shoper cache image paths rather than fabricating unavailable originals', function (): void {
+    $html = <<<'HTML'
+        <html><head>
+            <link rel="canonical" href="https://befado.pl/pl/p/Test/11276">
+            <meta property="og:image" content="/environment/cache/images/productGfx_57969_500_500/110P535.webp">
+        </head><body>
+            <h1>BUTY CHŁOPIĘCE SPEEDY BEFADO</h1>
+            <div class="price"><em class="main-price">66,90 zł</em></div>
+        </body></html>
+    HTML;
+
+    $result = app(BefadoProductScraper::class)->extract($html, 'https://befado.pl/pl/p/Test/11276');
+
+    expect($result['images'])->toContain([
+        'url' => 'https://befado.pl/environment/cache/images/productGfx_57969_500_500/110P535.webp',
+        'alt' => 'BUTY CHŁOPIĘCE SPEEDY BEFADO',
+    ]);
+});
