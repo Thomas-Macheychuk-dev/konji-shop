@@ -598,7 +598,13 @@ final class BefadoProductImporter
             }
         }
 
-        return array_values(array_unique($names));
+        $names = array_values(array_unique($names));
+
+        if ($names === [] || mb_strtolower($names[0]) !== 'befado') {
+            array_unshift($names, 'Befado');
+        }
+
+        return $names;
     }
 
     private function normaliseCategoryName(mixed $value): ?string
