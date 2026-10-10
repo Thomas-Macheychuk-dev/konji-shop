@@ -1305,7 +1305,10 @@ final class BefadoProductScraper
             return null;
         }
 
-        // Preserve the exact image path published in the source HTML. Shoper\n        // cache URLs must not be rewritten to guessed, often nonexistent\n        // /userdata/public/gfx originals.\n        return 'https://'.self::BEFADO_HOST.$path;
+        // Preserve the exact image path published in the source HTML. Shoper
+        // cache URLs must not be rewritten to guessed, often nonexistent
+        // /userdata/public/gfx originals.
+        return 'https://'.self::BEFADO_HOST.$path;
     }
 
     private function preferOriginalAssetPath(string $path): string
