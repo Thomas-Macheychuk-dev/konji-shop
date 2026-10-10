@@ -846,6 +846,7 @@ final class BefadoProductScraper
             '#box_productfull input[name^="option_"][value]',
             '.product-variants input[name^="option_"][value]',
             '.product-options input[name^="option_"][value]',
+            '.stock-options input[name^="option_"][value]',
         ] as $selector) {
             try {
                 $nodes = $crawler->filter($selector);
