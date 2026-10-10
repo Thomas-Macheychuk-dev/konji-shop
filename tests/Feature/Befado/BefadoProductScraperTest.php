@@ -171,9 +171,11 @@ it('resolves live Befado stock-options radio controls with size labels and stock
             <div class="stock-options f-grid-6">
                 <div class="option_radio option_truestock option_required">
                     <input type="radio" id="option_8_79" name="option_8" value="79" data-unavailable>
-                    <label for="option_8_79">18</label>
+                    <label for="option_8_79"></label>
+                    <label style="order:18" data-label-id="79" data-unavailable for="option_8_79">18</label>
                     <input type="radio" id="option_8_80" name="option_8" value="80">
-                    <label for="option_8_80">20</label>
+                    <label for="option_8_80"></label>
+                    <label style="order:19" data-label-id="80" for="option_8_80">20</label>
                     <input type="radio" id="option_8_68" name="option_8" value="68">
                     <label for="option_8_68">21</label>
                 </div>
