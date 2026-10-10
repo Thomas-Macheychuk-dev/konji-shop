@@ -54,6 +54,12 @@ final class BefadoProductImporter
         $this->warnings = [];
         $externalId = $this->externalProductId($scraped);
 
+        if (($scraped['variants_unresolved'] ?? false) === true) {
+            throw new \InvalidArgumentException(
+                'Befado product '.$externalId.' has unresolved source variants.'
+            );
+        }
+
         // Imported footwear must never silently become a single default-size
         // variant when the theme's selector was not understood.
         $name = (string) ($scraped['name'] ?? '');
@@ -62,12 +68,6 @@ final class BefadoProductImporter
                 || $scraped['variant_candidates'] === [])) {
             throw new \InvalidArgumentException(
                 'Befado footwear product '.$externalId.' has no verified size variants.'
-            );
-        }
-
-        if (($scraped['variants_unresolved'] ?? false) === true) {
-            throw new \InvalidArgumentException(
-                'Befado product '.$externalId.' has unresolved source variants.'
             );
         }
 
