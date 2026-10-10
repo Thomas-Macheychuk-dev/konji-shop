@@ -385,6 +385,25 @@ final class BefadoProductScraper
             }
         }
 
+        try {
+            $crawler->filter('.product-attributes__attribute')->each(function (Crawler $row) use (&$attributes): void {
+                $nameNode = $row->filter('.product-attributes__attribute-name')->first();
+                $valueNode = $row->filter('.product-attributes__attribute-value')->first();
+
+                if ($nameNode->count() === 0 || $valueNode->count() === 0) {
+                    return;
+                }
+
+                $this->addAttribute(
+                    $attributes,
+                    $nameNode->text(''),
+                    $valueNode->text(''),
+                );
+            });
+        } catch (Throwable) {
+            // Fall back to legacy table/description parsing below.
+        }
+
         if ($descriptionHtml !== null) {
             $plain = $this->plainTextFromHtml($descriptionHtml) ?? '';
 
@@ -497,11 +516,9 @@ final class BefadoProductScraper
     private function extractSku(Crawler $crawler, string $html, array $attributes): ?string
     {
         foreach ([
-            'meta[itemprop="sku"][content]',
-            'input[name="product_code"][value]',
-            '[data-product-code]',
-        ] as $selector) {
-            $attribute = str_contains($selector, 'content]') ? 'content' : (str_contains($selector, 'value]') ? 'value' : 'data-product-code');
+            'meta[itemprop="sku"][content]' => 'content',
+            'input[name="product_code"][value]' => 'value',
+        ] as $selector => $attribute) {
             $sku = $this->firstAttr($crawler, $selector, $attribute);
 
             if (is_string($sku) && trim($sku) !== '') {
@@ -510,10 +527,17 @@ final class BefadoProductScraper
         }
 
         foreach ([
+            'product-codes [data-product-code="sku"]',
+            'product-codes [data-product-code="code"]',
+            'product-codes [data-product-code="producerCode"]',
+            '.product-codes [data-product-code="sku"]',
+            '.product-codes [data-product-code="code"]',
+            '.product-codes [data-product-code="producerCode"]',
             '#box_productfull [itemprop="sku"]',
             '#box_productfull .product-code',
             '#box_productfull .productcode',
             '#box_productfull .code',
+            '.product-codes__code',
             '.product-code',
             '.productcode',
         ] as $selector) {
@@ -525,7 +549,7 @@ final class BefadoProductScraper
                 }
 
                 $sku = $this->normalizeLabel($node->text(''));
-                $sku = preg_replace('/^(?:Kod produktu|Kod|SKU)\\s*:?\\s*/iu', '', $sku) ?? $sku;
+                $sku = preg_replace('/^(?:Kod produktu|Kod producenta|Kod|SKU)\\s*:?\\s*/iu', '', $sku) ?? $sku;
                 $sku = trim($sku);
 
                 if ($sku !== '' && mb_strlen($sku) <= 100 && preg_match('/^[A-Za-z0-9._\\/-]+$/u', $sku) === 1) {
@@ -537,8 +561,22 @@ final class BefadoProductScraper
         }
 
         foreach ($attributes as $attribute) {
-            if (in_array($attribute['code'], ['kod-produktu', 'sku', 'kod-katalogowy'], true)) {
+            if (in_array($attribute['code'], ['kod-produktu', 'sku', 'kod-katalogowy', 'kod-producenta'], true)) {
                 return $attribute['value'];
+            }
+        }
+
+        foreach ([
+            '/"sku"\\s*:\\s*"([^"]+)"/iu',
+            '/"code"\\s*:\\s*"([^"]+)"/iu',
+            '/"producerCode"\\s*:\\s*"([^"]+)"/iu',
+        ] as $pattern) {
+            if (preg_match($pattern, $html, $matches) === 1) {
+                $sku = $this->normalizeLabel($matches[1]);
+
+                if ($sku !== '') {
+                    return $sku;
+                }
             }
         }
 
@@ -558,6 +596,25 @@ final class BefadoProductScraper
 
             if (is_string($ean) && trim($ean) !== '') {
                 return trim($ean);
+            }
+        }
+
+        foreach ([
+            'product-codes [data-product-code="ean"]',
+            '.product-codes [data-product-code="ean"]',
+        ] as $selector) {
+            try {
+                $node = $crawler->filter($selector)->first();
+
+                if ($node->count() > 0) {
+                    $ean = preg_replace('/\\D+/', '', $node->text('')) ?? '';
+
+                    if ($ean !== '') {
+                        return $ean;
+                    }
+                }
+            } catch (Throwable) {
+                continue;
             }
         }
 
