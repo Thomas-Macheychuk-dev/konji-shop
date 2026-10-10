@@ -54,6 +54,17 @@ final class BefadoProductImporter
         $this->warnings = [];
         $externalId = $this->externalProductId($scraped);
 
+        // Imported footwear must never silently become a single default-size
+        // variant when the theme's selector was not understood.
+        $name = (string) ($scraped['name'] ?? '');
+        if (preg_match('/(?:buty|kapcie|sandały|tenisówki|balerinki|półbuty|śniegowce|klapki)/iu', $name) === 1
+            && (! is_array($scraped['variant_candidates'] ?? null)
+                || $scraped['variant_candidates'] === [])) {
+            throw new \InvalidArgumentException(
+                'Befado footwear product '.$externalId.' has no verified size variants.'
+            );
+        }
+
         if (($scraped['variants_unresolved'] ?? false) === true) {
             throw new \InvalidArgumentException(
                 'Befado product '.$externalId.' has unresolved source variants.'
