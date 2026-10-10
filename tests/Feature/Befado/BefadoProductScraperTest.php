@@ -33,14 +33,32 @@ it('extracts Befado Shoper product data and size stock variants', function (): v
                 <p class="shipping-time">Wysyłka w: 48 godzin</p>
                 <div class="price"><em class="main-price">49,90 zł</em></div>
 
-                <table class="product-params">
-                    <tr><th>Kod produktu</th><td>102X018</td></tr>
-                    <tr><th>Typ obuwia</th><td>Slip-On</td></tr>
-                    <tr><th>Rodzaj zapięcia</th><td>Wsuwany</td></tr>
-                    <tr><th>Kolor</th><td>Różowy</td></tr>
-                    <tr><th>Forma</th><td>Honey</td></tr>
-                    <tr><th>Płeć</th><td>Dziewczęce</td></tr>
-                </table>
+                <product-codes product-id="9664" class="product-codes">
+                    <span class="product-codes__code" data-product-code="sku">102X018</span>
+                </product-codes>
+
+                <div class="product-attributes">
+                    <div class="product-attributes__attribute">
+                        <span class="product-attributes__attribute-name">Typ obuwia</span>
+                        <span class="product-attributes__attribute-value">Slip-On</span>
+                    </div>
+                    <div class="product-attributes__attribute">
+                        <span class="product-attributes__attribute-name">Rodzaj zapięcia</span>
+                        <span class="product-attributes__attribute-value">Wsuwany</span>
+                    </div>
+                    <div class="product-attributes__attribute">
+                        <span class="product-attributes__attribute-name">Kolor</span>
+                        <span class="product-attributes__attribute-value">Różowy</span>
+                    </div>
+                    <div class="product-attributes__attribute">
+                        <span class="product-attributes__attribute-name">Forma</span>
+                        <span class="product-attributes__attribute-value">Honey</span>
+                    </div>
+                    <div class="product-attributes__attribute">
+                        <span class="product-attributes__attribute-name">Płeć</span>
+                        <span class="product-attributes__attribute-value">Dziewczęce</span>
+                    </div>
+                </div>
 
                 <product-variants product-id="9664" variant-id="501">
                     <div class="size-options">
@@ -91,6 +109,12 @@ it('extracts Befado Shoper product data and size stock variants', function (): v
         'is_medical_device' => false,
     ])
         ->and($result['brand'])->toMatchArray(['name' => 'Befado'])
+        ->and($result['attributes'])->toContain([
+            'code' => 'typ-obuwia',
+            'label' => 'Typ obuwia',
+            'value' => 'Slip-On',
+            'slug' => 'slip-on',
+        ])
         ->and($result['variant_candidates'])->toHaveCount(2)
         ->and($result['variant_candidates'][0])->toMatchArray([
             'external_variant_id' => 'option-501',
