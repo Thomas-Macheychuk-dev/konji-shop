@@ -1006,10 +1006,12 @@ final class BefadoProductScraper
                 $xpath = new \DOMXPath($document);
                 $labels = $xpath->query('//label[@for="'.$id.'"]');
 
-                if ($labels !== false && $labels->length > 0) {
-                    $label = $labels->item(0);
+                if ($labels !== false) {
+                    foreach ($labels as $label) {
+                        if (! $label instanceof DOMElement) {
+                            continue;
+                        }
 
-                    if ($label instanceof DOMElement) {
                         $text = $this->normalizeLabel($label->textContent ?? '');
 
                         if ($text !== '') {
