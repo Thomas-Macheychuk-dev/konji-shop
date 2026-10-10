@@ -323,14 +323,25 @@ final class BefadoProductUrlScraper
 
     private function productName(Crawler $node, string $url): string
     {
-        $text = $this->text($node->text(''));
-        if ($text !== '') {
-            return $text;
+        // Listing cards often wrap all sizes inside the product anchor.
+        // Prefer the actual title node rather than its full textContent.
+        foreach (['.productname', '.prodname', '.product-name', '.name', 'h2', 'h3'] as $selector) {
+            try {
+                $titleNode = $node->filter($selector)->first();
+                if ($titleNode->count() > 0) {
+                    $title = $this->text($titleNode->text(''));
+                    if ($title !== '' && ! $this->isSizeOnlyText($title)) {
+                        return $title;
+                    }
+                }
+            } catch (Throwable) {
+                // Continue with label attributes and URL fallback.
+            }
         }
 
         foreach (['title', 'aria-label'] as $attribute) {
             $candidate = $this->text((string) $node->attr($attribute));
-            if ($candidate !== '') {
+            if ($candidate !== '' && ! $this->isSizeOnlyText($candidate)) {
                 return $candidate;
             }
         }
@@ -339,17 +350,28 @@ final class BefadoProductUrlScraper
             $image = $node->filter('img[alt]')->first();
             if ($image->count() > 0) {
                 $candidate = $this->text((string) $image->attr('alt'));
-                if ($candidate !== '') {
+                if ($candidate !== '' && ! $this->isSizeOnlyText($candidate)) {
                     return $candidate;
                 }
             }
         } catch (Throwable) {
         }
 
-        $path = (string) parse_url($url, PHP_URL_PATH);
-        $slug = preg_replace('/_[0-9]+-[0-9]+(?:\\.html)?$/u', '', basename($path));
+        $text = $this->text($node->text(''));
+        if ($text !== '' && ! $this->isSizeOnlyText($text)) {
+            return $text;
+        }
 
-        return Str::headline((string) $slug);
+        $path = (string) parse_url($url, PHP_URL_PATH);
+        $segments = array_values(array_filter(explode('/', trim($path, '/'))));
+        $slug = $segments[count($segments) - 2] ?? basename($path);
+
+        return Str::headline(str_replace('-', ' ', $slug));
+    }
+
+    private function isSizeOnlyText(string $text): bool
+    {
+        return preg_match('/^(?:\\s*(?:1[6-9]|[2-4]\\d|5[0-2])\\s*)+$/u', $text) === 1;
     }
 
     private function priceNearAnchor(Crawler $node): ?float
