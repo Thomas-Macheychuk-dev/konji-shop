@@ -13,7 +13,7 @@ use Throwable;
 
 final class BefadoProductScraper
 {
-    private const BUTTERFLY_HOST = 'befado.pl';
+    private const BEFADO_HOST = 'befado.pl';
 
     private ?Closure $progressCallback = null;
 
@@ -191,7 +191,11 @@ final class BefadoProductScraper
             return null;
         }
 
-        return 'https://'.self::BUTTERFLY_HOST.$path;
+        if (preg_match('#^/pl/p/[^/]+/\\d+$#u', $path) !== 1) {
+            return null;
+        }
+
+        return 'https://'.self::BEFADO_HOST.$path;
     }
 
     /**
@@ -902,7 +906,7 @@ final class BefadoProductScraper
             $document = $input->getNode(0)?->ownerDocument;
 
             if ($document instanceof DOMDocument) {
-                $xpath = new \\DOMXPath($document);
+                $xpath = new \DOMXPath($document);
                 $labels = $xpath->query('//label[@for="'.$id.'"]');
 
                 if ($labels !== false && $labels->length > 0) {
@@ -1153,7 +1157,7 @@ final class BefadoProductScraper
         if (str_starts_with($url, '//')) {
             $url = 'https:'.$url;
         } elseif (str_starts_with($url, '/')) {
-            $url = 'https://'.self::BUTTERFLY_HOST.$url;
+            $url = 'https://'.self::BEFADO_HOST.$url;
         } elseif (! preg_match('#^https?://#i', $url)) {
             if ($baseUrl === null) {
                 return null;
@@ -1202,7 +1206,7 @@ final class BefadoProductScraper
             return null;
         }
 
-        return 'https://'.self::BUTTERFLY_HOST.$this->preferOriginalAssetPath($path);
+        return 'https://'.self::BEFADO_HOST.$this->preferOriginalAssetPath($path);
     }
 
     private function preferOriginalAssetPath(string $path): string
@@ -1236,14 +1240,14 @@ final class BefadoProductScraper
         $host = mb_strtolower($host);
 
         return match ($host) {
-            self::BUTTERFLY_HOST, 'www.'.self::BUTTERFLY_HOST => self::BUTTERFLY_HOST,
+            self::BEFADO_HOST, 'www.'.self::BEFADO_HOST => self::BEFADO_HOST,
             default => null,
         };
     }
 
     private function isBefadoUrl(string $url): bool
     {
-        return $this->normalizeHost((string) parse_url($url, PHP_URL_HOST)) === self::BUTTERFLY_HOST;
+        return $this->normalizeHost((string) parse_url($url, PHP_URL_HOST)) === self::BEFADO_HOST;
     }
 
     private function normalizeLabel(string $label): string
