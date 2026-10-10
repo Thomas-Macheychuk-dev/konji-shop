@@ -158,3 +158,41 @@ it('fails closed when a Befado product requires sizes but concrete variants cann
         ->and($result['variants_unresolved'])->toBeTrue()
         ->and($result['variant_candidates'])->toBe([]);
 });
+
+
+it('resolves live Befado stock-options radio controls with size labels and stock state', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head><link rel="canonical" href="https://befado.pl/pl/p/BUTY-CHLOPIECE-SPEEDY-BEFADO/11276"></head>
+        <body>
+        <h1>BUTY CHŁOPIĘCE SPEEDY BEFADO</h1>
+        <div class="price"><em class="main-price">66,90 zł</em></div>
+        <div class="stocks">
+            <div class="stock-options f-grid-6">
+                <div class="option_radio option_truestock option_required">
+                    <input type="radio" id="option_8_79" name="option_8" value="79" data-unavailable>
+                    <label for="option_8_79">18</label>
+                    <input type="radio" id="option_8_80" name="option_8" value="80">
+                    <label for="option_8_80">20</label>
+                    <input type="radio" id="option_8_68" name="option_8" value="68">
+                    <label for="option_8_68">21</label>
+                </div>
+            </div>
+        </div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(BefadoProductScraper::class)->extract(
+        $html,
+        'https://befado.pl/pl/p/BUTY-CHLOPIECE-SPEEDY-BEFADO/11276',
+    );
+
+    expect($result['requires_variants'])->toBeTrue()
+        ->and($result['variants_unresolved'])->toBeFalse()
+        ->and($result['variant_candidates'])->toHaveCount(3)
+        ->and($result['variant_candidates'][0]['availability'])->toBe('out_of_stock')
+        ->and($result['variant_candidates'][1]['attributes'][0]['value'])->toBe('20')
+        ->and($result['variant_candidates'][1]['availability'])->toBe('in_stock')
+        ->and($result['variant_candidates'][2]['attributes'][0]['value'])->toBe('21');
+});
