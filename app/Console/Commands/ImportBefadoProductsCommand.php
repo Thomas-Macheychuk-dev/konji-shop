@@ -60,9 +60,7 @@ final class ImportBefadoProductsCommand extends Command
         $this->line('Image limit per product: '.($imageLimit === null ? 'none' : (string) $imageLimit));
 
         if ($dryRun) {
-            $this->printDryRunSummary($selectedProducts);
-
-            return self::SUCCESS;
+            return $this->printDryRunSummary($selectedProducts);
         }
 
         $imported = 0;
@@ -137,12 +135,13 @@ final class ImportBefadoProductsCommand extends Command
     /**
      * @param  array<int, mixed>  $products
      */
-    private function printDryRunSummary(array $products): void
+    private function printDryRunSummary(array $products): int
     {
         $categoryKeys = [];
         $imageCount = 0;
         $variantCount = 0;
         $medicalDeviceCount = 0;
+        $blocked = [];
 
         foreach ($products as $product) {
             if (! is_array($product)) {
@@ -162,9 +161,16 @@ final class ImportBefadoProductsCommand extends Command
             }
 
             $imageCount += is_array($product['images'] ?? null) ? count($product['images']) : 0;
-            $variantCount += is_array($product['variant_candidates'] ?? null) && count($product['variant_candidates']) > 0
-                ? count($product['variant_candidates'])
-                : 1;
+            $candidates = is_array($product['variant_candidates'] ?? null) ? $product['variant_candidates'] : [];
+            $variantCount += count($candidates);
+
+            $name = (string) ($product['name'] ?? '[unnamed]');
+            $isFootwear = preg_match('/(?:buty|kapcie|sandały|tenisówki|balerinki|półbuty|śniegowce|klapki)/iu', $name) === 1;
+            if (($product['variants_unresolved'] ?? false) === true
+                || (($product['requires_variants'] ?? false) === true && $candidates === [])
+                || ($isFootwear && $candidates === [])) {
+                $blocked[] = $name.' ('.($product['external_product_id'] ?? '?').')';
+            }
 
             if (filter_var($product['is_medical_device'] ?? false, FILTER_VALIDATE_BOOLEAN)) {
                 $medicalDeviceCount++;
@@ -177,6 +183,19 @@ final class ImportBefadoProductsCommand extends Command
         $this->line('Variants to create/update: '.$variantCount);
         $this->line('Product images discovered: '.$imageCount);
         $this->line('Medical device products: '.$medicalDeviceCount);
+        $this->line('Products blocked by unresolved size variants: '.count($blocked));
+
+        foreach ($blocked as $product) {
+            $this->warn('  BLOCKED: '.$product);
+        }
+
+        if ($blocked !== []) {
+            $this->error('Befado dry-run failed: size variants must be resolved before import.');
+
+            return self::FAILURE;
+        }
+
+        return self::SUCCESS;
     }
 
     /**
