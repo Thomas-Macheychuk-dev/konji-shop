@@ -12,6 +12,8 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Services\Befado\BefadoProductImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -220,4 +222,155 @@ HTML;
         ->not->toContain('agent-turn')
         ->not->toContain('data-testid')
         ->toContain('befado-product-meta');
+});
+
+function befadoImageTestCategories(): void
+{
+    $root = Category::query()->create([
+        'name' => 'Obuwie',
+        'slug' => 'obuwie',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    Category::query()->create([
+        'parent_id' => $root->id,
+        'name' => 'Buty chłopięce',
+        'slug' => 'buty-chlopiece',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+}
+
+function befadoImageTestFixture(array $urls): array
+{
+    $fixture = befadoProductFixture();
+
+    $fixture['images'] = array_map(
+        fn (string $url): array => [
+            'url' => $url,
+            'alt' => 'Befado test image',
+        ],
+        $urls,
+    );
+
+    return $fixture;
+}
+
+function befadoImageTestPng(): string
+{
+    return base64_decode(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScL/nwAAAABJRU5ErkJggg==',
+        true,
+    );
+}
+
+it('imports a Befado gallery idempotently without duplicating images', function (): void {
+    Storage::fake('public');
+    befadoImageTestCategories();
+
+    $url = 'https://befado.pl/userdata/public/gfx/1234/photo.png';
+
+    Http::fake([
+        '*' => Http::response(
+            befadoImageTestPng(),
+            200,
+            ['Content-Type' => 'image/png'],
+        ),
+    ]);
+
+    $importer = app(BefadoProductImporter::class);
+    $fixture = befadoImageTestFixture([$url]);
+
+    $first = $importer->import($fixture, ProductStatus::DRAFT, true);
+    $firstId = $first['product']->images()->firstOrFail()->id;
+
+    $second = $importer->import($fixture, ProductStatus::DRAFT, true);
+
+    $images = $second['product']->images()->get();
+
+    expect($images)->toHaveCount(1)
+        ->and($images->first()->id)->toBe($firstId)
+        ->and($images->first()->is_main)->toBeTrue()
+        ->and($images->first()->mime_type)->toBe('image/png')
+        ->and($second['product']->status)->toBe(ProductStatus::DRAFT);
+});
+
+it('preserves the existing gallery and product data when an image download fails', function (): void {
+    Storage::fake('public');
+    befadoImageTestCategories();
+
+    $oldUrl = 'https://befado.pl/userdata/public/gfx/1234/old.png';
+    $failedUrl = 'https://befado.pl/userdata/public/gfx/1235/missing.png';
+
+    Http::fake([
+        $oldUrl => Http::response(
+            befadoImageTestPng(),
+            200,
+            ['Content-Type' => 'image/png'],
+        ),
+        $failedUrl => Http::response('', 404),
+    ]);
+
+    $importer = app(BefadoProductImporter::class);
+
+    $original = $importer->import(
+        befadoImageTestFixture([$oldUrl]),
+        ProductStatus::DRAFT,
+        true,
+    )['product'];
+
+    $originalImage = $original->images()->firstOrFail();
+
+    $replacement = befadoImageTestFixture([$oldUrl, $failedUrl]);
+    $replacement['name'] = 'THIS CHANGE MUST ROLL BACK';
+
+    expect(fn () => $importer->import(
+        $replacement,
+        ProductStatus::DRAFT,
+        true,
+    ))->toThrow(RuntimeException::class);
+
+    $product = $original->fresh();
+
+    expect($product->name)->toBe('BUTY DZIECIĘCE HONEY BEFADO')
+        ->and($product->images()->count())->toBe(1)
+        ->and($product->images()->firstOrFail()->id)->toBe($originalImage->id)
+        ->and($product->images()->firstOrFail()->source_url)->toBe($oldUrl)
+        ->and(Storage::disk('public')->exists($originalImage->path))
+        ->toBeTrue();
+});
+
+it('rejects duplicate Befado gallery content without removing existing images', function (): void {
+    Storage::fake('public');
+    befadoImageTestCategories();
+
+    $firstUrl = 'https://befado.pl/userdata/public/gfx/1234/first.png';
+    $secondUrl = 'https://befado.pl/userdata/public/gfx/1235/second.png';
+
+    Http::fake([
+        '*' => Http::response(
+            befadoImageTestPng(),
+            200,
+            ['Content-Type' => 'image/png'],
+        ),
+    ]);
+
+    $importer = app(BefadoProductImporter::class);
+
+    $original = $importer->import(
+        befadoImageTestFixture([$firstUrl]),
+        ProductStatus::DRAFT,
+        true,
+    )['product'];
+
+    $originalImageId = $original->images()->firstOrFail()->id;
+
+    expect(fn () => $importer->import(
+        befadoImageTestFixture([$firstUrl, $secondUrl]),
+        ProductStatus::DRAFT,
+        true,
+    ))->toThrow(RuntimeException::class, 'Duplicate Befado gallery content');
+
+    expect($original->fresh()->images()->count())->toBe(1)
+        ->and($original->fresh()->images()->firstOrFail()->id)
+        ->toBe($originalImageId);
 });

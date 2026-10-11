@@ -430,7 +430,15 @@ final class BefadoProductImporter
     {
         $imageRows = [];
         $seenUrls = [];
+        $seenHashes = [];
         $maxImages = $imageLimit !== null && $imageLimit > 0 ? $imageLimit : null;
+
+        if (! is_array($scraped['images'] ?? null)
+            || $scraped['images'] === []) {
+            throw new \RuntimeException(
+                'Empty Befado gallery for product '.$product->external_id
+            );
+        }
 
         foreach (($scraped['images'] ?? []) as $imageData) {
             if (! is_array($imageData)) {
@@ -457,10 +465,23 @@ final class BefadoProductImporter
                     self::IMAGE_ALLOWED_HOSTS,
                 );
             } catch (Throwable $exception) {
-                $this->warnings[] = 'Image skipped for Befado product '.$product->external_id.': '.$url.' — '.$exception->getMessage();
-
-                continue;
+                throw new \RuntimeException(
+                    'Befado image download failed for product '.
+                    $product->external_id.': '.$url,
+                    previous: $exception,
+                );
             }
+
+            $hash = $imported['sha256'];
+
+            if (isset($seenHashes[$hash])) {
+                throw new \RuntimeException(
+                    'Duplicate Befado gallery content for product '.
+                    $product->external_id.': '.$url
+                );
+            }
+
+            $seenHashes[$hash] = true;
 
             $alt = $this->stringOrNull($imageData['alt'] ?? null) ?: $product->name;
 
@@ -476,6 +497,13 @@ final class BefadoProductImporter
                 'sort_order' => count($imageRows),
                 'is_main' => count($imageRows) === 0,
             ];
+        }
+
+        if ($imageRows === []) {
+            throw new \RuntimeException(
+                'No imported gallery images for Befado product '.
+                $product->external_id
+            );
         }
 
         $paths = array_column($imageRows, 'path');
