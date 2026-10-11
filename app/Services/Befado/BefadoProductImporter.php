@@ -132,7 +132,7 @@ final class BefadoProductImporter
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($scraped),
             'description' => $this->productDescriptionHtml($scraped, $externalId, $importDescriptionImages),
-            'seo_title' => $this->stringOrNull($scraped['seo_title'] ?? null) ?: $name,
+            'seo_title' => $this->seoTitle($name),
             'seo_description' => $this->seoDescription($scraped),
             'status' => $status,
             'external_source' => 'befado',
@@ -192,40 +192,64 @@ final class BefadoProductImporter
     /**
      * @param  list<string>  $pathSegments
      */
+    /**
+     * Resolve categories by their actual parent and name.
+     *
+     * Never reparent an existing category merely because its slug matches.
+     *
+     * @param  list<string>  $pathSegments
+     */
     private function resolveCategory(string $name, ?Category $parent, array $pathSegments): Category
     {
-        $baseSlug = Str::slug($name);
+        $query = Category::query()->where('name', $name);
 
-        if ($baseSlug === '') {
-            $baseSlug = 'befado-category-'.substr(sha1(implode('|', $pathSegments)), 0, 10);
+        if ($parent === null) {
+            $query->whereNull('parent_id');
+        } else {
+            $query->where('parent_id', $parent->id);
         }
 
-        $category = Category::withTrashed()->where('slug', $baseSlug)->first();
-
-        if ($category !== null && $parent !== null && $category->parent_id !== null && $category->parent_id !== $parent->id) {
-            $pathSlug = Str::slug(implode(' ', $pathSegments));
-            $category = Category::withTrashed()->where('slug', $pathSlug)->first();
-            $baseSlug = $pathSlug ?: $baseSlug;
-        }
-
-        $attributes = [
-            'parent_id' => $parent?->id,
-            'name' => $name,
-            'status' => CategoryStatus::ACTIVE,
-        ];
+        $category = $query->first();
 
         if ($category !== null) {
-            if ($category->trashed()) {
-                $category->restore();
-            }
-
-            $category->update($attributes);
-
             return $category;
         }
 
-        return Category::query()->create($attributes + [
+        if ($parent === null) {
+            throw new \RuntimeException(
+                'Befado category root does not exist: '.$name
+            );
+        }
+
+        // Do not recreate a footwear group beneath a new parent
+        // until the audited category repair has migrated the old group.
+        if ($parent->slug === 'obuwie'
+            && in_array($name, [
+                'Buty chłopięce',
+                'Buty dziewczęce',
+                'Buty damskie',
+                'Buty męskie',
+            ], true)) {
+            throw new \RuntimeException(
+                'Run befado:repair-categories before importing '.$name
+            );
+        }
+
+        $baseSlug = Str::slug($name);
+
+        if ($baseSlug === '') {
+            $baseSlug = 'befado-category-'.substr(
+                sha1(implode('|', $pathSegments)),
+                0,
+                10
+            );
+        }
+
+        return Category::query()->create([
+            'parent_id' => $parent->id,
+            'name' => $name,
             'slug' => $this->uniqueCategorySlug($baseSlug),
+            'status' => CategoryStatus::ACTIVE,
         ]);
     }
 
@@ -506,6 +530,12 @@ final class BefadoProductImporter
                 continue;
             }
 
+            // Insole length is determined by shoe size.
+            // It must not become a second independent variant selector.
+            if ($this->attributeSlug($label) === 'dlugosc-wkladki') {
+                continue;
+            }
+
             $ids[] = $this->resolveAttributeValue($label, $value)->id;
         }
 
@@ -575,47 +605,56 @@ final class BefadoProductImporter
      */
     private function categoryNames(array $scraped): array
     {
+        $source = $scraped['source_category_path'] ?? [];
+
+        if (! is_array($source) || $source === []) {
+            $source = $scraped['categories'] ?? [];
+        }
+
+        if (! is_array($source)) {
+            $source = [];
+        }
+
         $names = [];
 
-        foreach (($scraped['source_category_path'] ?? []) as $categoryName) {
-            $categoryName = $this->normaliseCategoryName($categoryName);
+        foreach ($source as $value) {
+            $name = $this->normaliseCategoryName($value);
 
-            if ($categoryName !== null) {
-                $names[] = $categoryName;
+            if ($name !== null) {
+                $names[] = $name;
             }
         }
 
-        foreach (($scraped['categories'] ?? []) as $categoryName) {
-            $categoryName = $this->normaliseCategoryName($categoryName);
-
-            if ($categoryName !== null) {
-                $names[] = $categoryName;
-            }
-        }
+        // Supplier navigation is not the shop's category hierarchy.
+        $names = array_values(array_filter(
+            $names,
+            fn (string $name): bool => ! in_array(
+                mb_strtolower($name),
+                ['befado.pl', 'befado'],
+                true
+            )
+        ));
 
         if ($names === []) {
-            foreach ([
-                $scraped['category'] ?? null,
-                $scraped['source_category_name'] ?? null,
-                $scraped['source_top_category_name'] ?? null,
-            ] as $category) {
-                $categoryName = $this->normaliseCategoryName($category);
-
-                if ($categoryName !== null) {
-                    $names[] = $categoryName;
-
-                    break;
-                }
-            }
+            throw new \InvalidArgumentException(
+                'Befado product has no verified footwear category path.'
+            );
         }
 
-        $names = array_values(array_unique($names));
+        $groups = [
+            'Buty chłopięce',
+            'Buty dziewczęce',
+            'Buty damskie',
+            'Buty męskie',
+        ];
 
-        if ($names === [] || mb_strtolower($names[0]) !== 'befado') {
-            array_unshift($names, 'Befado');
+        if (! in_array($names[0], $groups, true)) {
+            throw new \InvalidArgumentException(
+                'Unexpected Befado footwear category: '.$names[0]
+            );
         }
 
-        return $names;
+        return array_merge(['Obuwie'], $names);
     }
 
     private function normaliseCategoryName(mixed $value): ?string
@@ -690,11 +729,32 @@ final class BefadoProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
+    private function seoTitle(string $name): string
+    {
+        $name = html_entity_decode($name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return trim(preg_replace('/\s+/u', ' ', $name) ?? $name);
+    }
+
+    /**
+     * @param  array<string, mixed>  $scraped
+     */
     private function seoDescription(array $scraped): ?string
     {
-        return $this->plainTextSnippet($scraped['seo_description'] ?? null, 300)
-            ?: $this->plainTextSnippet($scraped['short_description'] ?? null, 300)
-                ?: $this->plainTextSnippet($scraped['description'] ?? null, 300);
+        $description = $this->plainTextSnippet(
+            $scraped['description'] ?? null,
+            155
+        );
+
+        if ($description === null) {
+            $description = $this->plainTextSnippet(
+                $scraped['description_html'] ?? null,
+                155
+            );
+        }
+
+        return $description
+            ?: $this->plainTextSnippet($scraped['name'] ?? null, 155);
     }
 
     /**
@@ -702,9 +762,9 @@ final class BefadoProductImporter
      */
     private function shortDescriptionHtml(array $scraped): ?string
     {
-        $summary = $this->plainTextSnippet($scraped['short_description'] ?? null, 500)
-            ?: $this->firstParagraphText($scraped['description_html'] ?? null, 500)
-                ?: $this->plainTextSnippet($scraped['description'] ?? null, 500);
+        $summary = $this->firstParagraphText($scraped['description_html'] ?? null, 500)
+            ?: $this->plainTextSnippet($scraped['description'] ?? null, 500)
+                ?: $this->plainTextSnippet($scraped['short_description'] ?? null, 500);
 
         return $summary === null ? null : '<p>'.e($summary).'</p>';
     }
@@ -728,11 +788,6 @@ final class BefadoProductImporter
         $parameterSection = $this->parameterSection($scraped);
         if ($parameterSection !== null) {
             $sections[] = $parameterSection;
-        }
-
-        $variantSection = $this->variantSection($scraped);
-        if ($variantSection !== null) {
-            $sections[] = $variantSection;
         }
 
         $metaSection = $this->metadataSection($scraped);

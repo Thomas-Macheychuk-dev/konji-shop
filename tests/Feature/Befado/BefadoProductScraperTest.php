@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Services\Befado\BefadoProductScraper;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Http;
 
 it('extracts Befado Shoper product data and size stock variants', function (): void {
     $html = <<<'HTML'
@@ -159,7 +161,6 @@ it('fails closed when a Befado product requires sizes but concrete variants cann
         ->and($result['variant_candidates'])->toBe([]);
 });
 
-
 it('resolves live Befado stock-options radio controls with size labels and stock state', function (): void {
     $html = <<<'HTML'
         <html>
@@ -199,7 +200,6 @@ it('resolves live Befado stock-options radio controls with size labels and stock
         ->and($result['variant_candidates'][2]['attributes'][0]['value'])->toBe('21');
 });
 
-
 it('preserves Shoper cache image paths rather than fabricating unavailable originals', function (): void {
     $html = <<<'HTML'
         <html><head>
@@ -217,4 +217,140 @@ it('preserves Shoper cache image paths rather than fabricating unavailable origi
         'url' => 'https://befado.pl/environment/cache/images/productGfx_57969_500_500/110P535.webp',
         'alt' => 'BUTY CHŁOPIĘCE SPEEDY BEFADO',
     ]);
+});
+
+it('isolates the genuine Befado short description from purchasing controls', function (): void {
+    $html = <<<'HTML'
+        <!doctype html>
+        <html lang="pl">
+        <head>
+            <title>KAPCIE MĘSKIE BEFADO HOME & GO</title>
+            <link rel="canonical" href="https://befado.pl/pl/p/KAPCIE-MESKIE-BEFADO-HOME-GO/10689">
+        </head>
+        <body>
+            <div id="box_productfull">
+                <div class="innerbox">
+                    <h1>KAPCIE MĘSKIE BEFADO HOME & GO</h1>
+                    <div class="price">59,90 zł</div>
+                    <button>Do koszyka</button>
+                    <div>Rozmiar: 39 40 41 42 43</div>
+                </div>
+            </div>
+
+            <div class="product-modules-cols s-row container box">
+                <div class="s-grid-6 short-desc">
+                    <div class="innerbox">
+                        <p>Kapcie męskie to synonim wygody i elegancji.</p>
+                        <p>Wygodne obuwie domowe marki Befado.</p>
+                    </div>
+                </div>
+
+                <div class="s-grid-6 purchase-panel">
+                    <div class="innerbox">
+                        <span>59,90 zł</span>
+                        <button>Do koszyka</button>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(BefadoProductScraper::class)->extract(
+        $html,
+        'https://befado.pl/pl/p/KAPCIE-MESKIE-BEFADO-HOME-GO/10689',
+    );
+
+    $description = $result['description_html'];
+
+    expect($description)->toBeString()
+        ->toContain('Kapcie męskie to synonim wygody i elegancji.')
+        ->toContain('Wygodne obuwie domowe marki Befado.')
+        ->not->toContain('Do koszyka')
+        ->not->toContain('59,90 zł')
+        ->not->toContain('Rozmiar:');
+});
+
+it('upgrades a Befado gallery thumbnail after HTTP verification', function (): void {
+    $pageUrl = 'https://befado.pl/pl/p/Test-Befado/1234';
+    $thumbnail = 'https://befado.pl/environment/cache/images/productGfx_53192_120_120/photo.webp';
+    $hdImage = 'https://befado.pl/environment/cache/images/productGfx_53192_700_700/photo.webp';
+
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical" href="https://befado.pl/pl/p/Test-Befado/1234">
+        </head>
+        <body>
+            <h1>Test Befado</h1>
+            <div class="price"><em class="main-price">59,90 zł</em></div>
+            <div id="box_description">
+                <div class="innerbox"><p>Wygodne obuwie domowe.</p></div>
+            </div>
+            <div class="productimg">
+                <img src="/environment/cache/images/productGfx_53192_120_120/photo.webp">
+            </div>
+        </body>
+        </html>
+    HTML;
+
+    Http::fake([
+        $pageUrl => Http::response($html, 200),
+        $hdImage => Http::response('', 200, [
+            'Content-Type' => 'image/webp',
+        ]),
+    ]);
+
+    $result = app(BefadoProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape($pageUrl);
+
+    expect($result['images'])->toHaveCount(1)
+        ->and($result['images'][0]['url'])->toBe($hdImage);
+
+    Http::assertSent(
+        fn (Request $request) => $request->method() === 'HEAD'
+            && $request->url() === $hdImage
+    );
+});
+
+it('keeps the Befado thumbnail when HD verification fails', function (): void {
+    $pageUrl = 'https://befado.pl/pl/p/Test-Befado/1234';
+    $thumbnail = 'https://befado.pl/environment/cache/images/productGfx_53192_120_120/photo.webp';
+    $hdImage = 'https://befado.pl/environment/cache/images/productGfx_53192_700_700/photo.webp';
+
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical" href="https://befado.pl/pl/p/Test-Befado/1234">
+        </head>
+        <body>
+            <h1>Test Befado</h1>
+            <div class="price"><em class="main-price">59,90 zł</em></div>
+            <div id="box_description">
+                <div class="innerbox"><p>Wygodne obuwie domowe.</p></div>
+            </div>
+            <div class="productimg">
+                <img src="/environment/cache/images/productGfx_53192_120_120/photo.webp">
+            </div>
+        </body>
+        </html>
+    HTML;
+
+    Http::fake([
+        $pageUrl => Http::response($html, 200),
+        $hdImage => Http::response('', 404),
+    ]);
+
+    $result = app(BefadoProductScraper::class)
+        ->withRequestDelayMilliseconds(0)
+        ->scrape($pageUrl);
+
+    expect($result['images'])->toHaveCount(1)
+        ->and($result['images'][0]['url'])->toBe($thumbnail);
+
+    Http::assertSent(
+        fn (Request $request) => $request->method() === 'HEAD'
+            && $request->url() === $hdImage
+    );
 });

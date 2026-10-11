@@ -61,7 +61,11 @@ final class BefadoProductScraper
             return $this->emptyResult($sourceUrl, $productLinkContext, $failed, $warnings);
         }
 
-        return $this->extract($html, $sourceUrl, $productLinkContext, $failed, $warnings);
+        $result = $this->extract($html, $sourceUrl, $productLinkContext, $failed, $warnings);
+
+        $result['images'] = $this->upgradeGalleryImages($result['images']);
+
+        return $result;
     }
 
     /**
@@ -296,11 +300,12 @@ final class BefadoProductScraper
     private function extractDescriptionHtml(Crawler $crawler): ?string
     {
         foreach ([
+            '.product-modules-cols .short-desc > .innerbox',
+            '.short-desc > .innerbox',
             '#box_description .innerbox',
             '#box_description',
             '#box_productfull .productdesc',
             '#box_productfull .description',
-            '#box_productfull .innerbox',
             '.product-description',
             '.productdescription',
             '.tab-content #description',
@@ -762,7 +767,110 @@ final class BefadoProductScraper
             }
         }
 
-        return array_values($images);
+        return $this->deduplicateGalleryImages(array_values($images));
+    }
+
+    /**
+     * @param  list<array{url: string, alt: string|null}>  $images
+     * @return list<array{url: string, alt: string|null}>
+     */
+    private function deduplicateGalleryImages(array $images): array
+    {
+        $result = [];
+        $positions = [];
+        $resolutions = [];
+
+        foreach ($images as $image) {
+            $url = $image['url'];
+
+            if (preg_match(
+                '#/productGfx_(\d+)_(\d+)_(\d+)/#',
+                $url,
+                $matches
+            ) === 1) {
+                $key = 'shoper:'.$matches[1];
+                $resolution = (int) $matches[2] * (int) $matches[3];
+            } else {
+                $key = 'url:'.$url;
+                $resolution = 0;
+            }
+
+            if (! isset($positions[$key])) {
+                $positions[$key] = count($result);
+                $resolutions[$key] = $resolution;
+                $result[] = $image;
+
+                continue;
+            }
+
+            if ($resolution > $resolutions[$key]) {
+                $result[$positions[$key]] = $image;
+                $resolutions[$key] = $resolution;
+            }
+        }
+
+        return array_values($result);
+    }
+
+    /**
+     * Upgrade Shoper thumbnails only when a larger image is verified.
+     *
+     * @param  list<array{url: string, alt: string|null}>  $images
+     * @return list<array{url: string, alt: string|null}>
+     */
+    private function upgradeGalleryImages(array $images): array
+    {
+        $verified = [];
+
+        foreach ($images as &$image) {
+            $originalUrl = $image['url'];
+
+            if (preg_match(
+                '#^https://befado\.pl/environment/cache/images/productGfx_(\d+)_(\d+)_(\d+)/[^/?\#]+$#',
+                $originalUrl,
+                $matches
+            ) !== 1) {
+                continue;
+            }
+
+            if ((int) $matches[2] >= 700 && (int) $matches[3] >= 700) {
+                continue;
+            }
+
+            $candidate = str_replace(
+                'productGfx_'.$matches[1].'_'.$matches[2].'_'.$matches[3].'/',
+                'productGfx_'.$matches[1].'_700_700/',
+                $originalUrl
+            );
+
+            if (! array_key_exists($candidate, $verified)) {
+                $this->pauseBeforeRequest();
+
+                try {
+                    $response = Http::connectTimeout(min(5, $this->timeoutSeconds))
+                        ->timeout($this->timeoutSeconds)
+                        ->withHeaders($this->headers())
+                        ->head($candidate);
+
+                    $contentType = strtolower(
+                        (string) $response->header('Content-Type')
+                    );
+
+                    $verified[$candidate] = $response->successful()
+                        && str_starts_with($contentType, 'image/');
+                } catch (Throwable) {
+                    $verified[$candidate] = false;
+                }
+            }
+
+            if ($verified[$candidate]) {
+                $image['url'] = $candidate;
+            }
+        }
+
+        unset($image);
+
+        return $images;
     }
 
     /**

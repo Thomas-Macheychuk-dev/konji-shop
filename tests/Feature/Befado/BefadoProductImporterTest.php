@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\CategoryStatus;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
@@ -23,6 +24,9 @@ function befadoProductFixture(): array
         'external_product_id' => '9664',
         'slug' => 'BUTY-DZIECIECE-HONEY-BEFADO-',
         'name' => 'BUTY DZIECIĘCE HONEY BEFADO',
+        'seo_title' => 'BUTY DZIECIĘCE HONEY BEFADO - Befado.pl',
+        'seo_description' => 'Sprawdzone buty na każdą stopę - Befado.',
+        'short_description' => 'Sprawdzone buty na każdą stopę - Befado.',
         'brand' => ['name' => 'Befado', 'slug' => 'befado'],
         'price_gross_amount' => 49.90,
         'currency' => 'PLN',
@@ -30,8 +34,17 @@ function befadoProductFixture(): array
         'availability_label' => 'W magazynie',
         'shipping_time' => '48 godzin',
         'sku' => '102X018',
-        'categories' => ['Obuwie dziecięce'],
-        'category' => 'Obuwie dziecięce',
+        'source_category_path' => [
+            'Befado.pl',
+            'Befado',
+            'Buty chłopięce',
+            'Kapcie',
+        ],
+        'categories' => [
+            'Buty chłopięce',
+            'Kapcie',
+        ],
+        'category' => 'Kapcie',
         'description_html' => '<p>Wygodne dziecięce obuwie Befado.</p>',
         'description' => 'Wygodne dziecięce obuwie Befado.',
         'images' => [],
@@ -76,15 +89,40 @@ it('imports Befado products idempotently as draft with per-size stock', function
     $importer = app(BefadoProductImporter::class);
     $fixture = befadoProductFixture();
 
+    $root = Category::query()->create([
+        'name' => 'Obuwie',
+        'slug' => 'obuwie',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    Category::query()->create([
+        'parent_id' => $root->id,
+        'name' => 'Buty chłopięce',
+        'slug' => 'buty-chlopiece',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
     $importer->import($fixture, ProductStatus::DRAFT, false);
     $result = $importer->import($fixture, ProductStatus::DRAFT, false);
 
     expect(Product::query()->where('external_source', 'befado')->count())->toBe(1)
         ->and(ProductVariant::query()->count())->toBe(2)
         ->and(Category::query()->whereNull('parent_id')->pluck('name')->all())
-        ->toContain('Befado');
+        ->toContain('Obuwie')
+        ->not->toContain('Befado');
 
     $product = $result['product']->fresh(['variants.attributeValues.attribute', 'categories']);
+
+    // Supplier SEO text must not leak into Ortezka metadata.
+    expect($product->seo_title)
+        ->toBe('BUTY DZIECIĘCE HONEY BEFADO')
+        ->not->toContain('Befado.pl')
+        ->and($product->seo_description)
+        ->toContain('Wygodne dziecięce obuwie Befado.')
+        ->not->toContain('Sprawdzone buty na każdą stopę')
+        ->and($product->short_description)
+        ->toContain('Wygodne dziecięce obuwie Befado.')
+        ->not->toContain('Sprawdzone buty na każdą stopę');
 
     expect($product->status)->toBe(ProductStatus::DRAFT)
         ->and($product->external_id)->toBe('9664')
@@ -92,6 +130,21 @@ it('imports Befado products idempotently as draft with per-size stock', function
         ->and($product->variants)->toHaveCount(2);
 
     $variants = $product->variants->keyBy('external_variant_id');
+
+    // BEFADO_SELECTABLE_VARIANTS:
+    // Shoe size is selectable; insole length is informational only.
+    foreach ($variants as $variant) {
+        $attributes = $variant->attributeValues
+            ->map(fn ($value) => $value->attribute->name)
+            ->all();
+
+        expect($attributes)->toBe(['Rozmiar']);
+    }
+
+    expect($variants['befado-9664-option-502']->attributeValues
+        ->pluck('value')->all())->toBe(['24'])
+        ->and($variants['befado-9664-option-501']->attributeValues
+            ->pluck('value')->all())->toBe(['23']);
 
     expect($variants['befado-9664-option-502']->status)->toBe(ProductVariantStatus::DRAFT)
         ->and($variants['befado-9664-option-502']->stock_status)->toBe(StockStatus::OUT_OF_STOCK)
