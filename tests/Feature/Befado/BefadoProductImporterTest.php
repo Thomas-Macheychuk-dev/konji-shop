@@ -115,6 +115,15 @@ it('imports Befado products idempotently as draft with per-size stock', function
 
     $product = $result['product']->fresh(['variants.attributeValues.attribute', 'categories']);
 
+    // Insole length must remain visible as product information,
+    // but must not become a second selectable variant attribute.
+    expect($product->description)
+        ->toContain('Tabela rozmiarów i długości wkładki')
+        ->toContain('<th>Rozmiar</th>')
+        ->toContain('<th>Długość wkładki</th>')
+        ->toContain('15.0 cm')
+        ->toContain('15.5 cm');
+
     // Supplier SEO text must not leak into Ortezka metadata.
     expect($product->seo_title)
         ->toBe('BUTY DZIECIĘCE HONEY BEFADO')

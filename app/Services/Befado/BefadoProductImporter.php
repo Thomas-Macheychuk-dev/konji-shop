@@ -818,6 +818,11 @@ final class BefadoProductImporter
             $sections[] = $parameterSection;
         }
 
+        $insoleSection = $this->insoleLengthSection($scraped);
+        if ($insoleSection !== null) {
+            $sections[] = $insoleSection;
+        }
+
         $metaSection = $this->metadataSection($scraped);
         if ($metaSection !== null) {
             $sections[] = $metaSection;
@@ -886,6 +891,77 @@ final class BefadoProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
+    /**
+     * @param  array<string, mixed>  $scraped
+     */
+    private function insoleLengthSection(array $scraped): ?string
+    {
+        $measurements = [];
+
+        foreach (($scraped['variant_candidates'] ?? []) as $candidate) {
+            if (! is_array($candidate)) {
+                continue;
+            }
+
+            $size = null;
+            $length = null;
+
+            foreach (($candidate['attributes'] ?? []) as $attribute) {
+                if (! is_array($attribute)) {
+                    continue;
+                }
+
+                $label = $this->stringOrNull($attribute['label'] ?? null);
+                $value = $this->stringOrNull($attribute['value'] ?? null);
+
+                if ($label === null || $value === null) {
+                    continue;
+                }
+
+                $slug = $this->attributeSlug($label);
+
+                if ($slug === 'rozmiar') {
+                    $size = $value;
+                } elseif ($slug === 'dlugosc-wkladki') {
+                    $length = $value;
+                }
+            }
+
+            if ($size === null || $length === null) {
+                continue;
+            }
+
+            if (isset($measurements[$size])
+                && $measurements[$size] !== $length) {
+                throw new \RuntimeException(
+                    'Conflicting Befado insole measurements for size '.$size
+                );
+            }
+
+            $measurements[$size] = $length;
+        }
+
+        if ($measurements === []) {
+            return null;
+        }
+
+        uksort($measurements, 'strnatcmp');
+
+        $rows = [];
+
+        foreach ($measurements as $size => $length) {
+            $rows[] = '<tr><td>'.e((string) $size).
+                '</td><td>'.e($length).'</td></tr>';
+        }
+
+        return '<section class="befado-insole-lengths">'.
+            '<h2>Tabela rozmiarów i długości wkładki</h2>'.
+            '<table><thead><tr><th>Rozmiar</th>'.
+            '<th>Długość wkładki</th></tr></thead>'.
+            '<tbody>'.implode('', $rows).'</tbody></table>'.
+            '</section>';
+    }
+
     private function variantSection(array $scraped): ?string
     {
         $items = [];
