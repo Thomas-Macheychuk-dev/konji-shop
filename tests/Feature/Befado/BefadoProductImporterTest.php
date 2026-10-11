@@ -171,3 +171,53 @@ it('rejects Befado imports when source variants are unresolved', function (): vo
 
     expect(Product::query()->where('external_source', 'befado')->count())->toBe(0);
 });
+
+it('removes copied ChatGPT interface styling while preserving product content', function (): void {
+    $fixture = befadoProductFixture();
+
+    $fixture['description_html'] = <<<'HTML'
+<div class="resetcss">
+    <h2 class="h3">Kapcie chłopięce Speedy Befado</h2>
+    <div class="qMYqUG_convSearchResultHighlightRoot">
+        <section class="text-token-text-primary w-full" dir="auto">
+            <div class="agent-turn" data-testid="conversation-turn">
+                <p>Wygodne kapcie dla dzieci.</p>
+                <ul><li>Elastyczna podeszwa</li></ul>
+            </div>
+        </section>
+    </div>
+</div>
+HTML;
+
+    $root = Category::query()->create([
+        'name' => 'Obuwie',
+        'slug' => 'obuwie',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    Category::query()->create([
+        'parent_id' => $root->id,
+        'name' => 'Buty chłopięce',
+        'slug' => 'buty-chlopiece',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    $result = app(BefadoProductImporter::class)->import(
+        $fixture,
+        ProductStatus::DRAFT,
+        false,
+    );
+
+    $html = $result['product']->description;
+
+    expect($html)
+        ->toContain('Kapcie chłopięce Speedy Befado')
+        ->toContain('Wygodne kapcie dla dzieci.')
+        ->toContain('Elastyczna podeszwa')
+        ->toContain('<ul>')
+        ->not->toContain('qMYqUG_convSearchResultHighlightRoot')
+        ->not->toContain('text-token-text-primary')
+        ->not->toContain('agent-turn')
+        ->not->toContain('data-testid')
+        ->toContain('befado-product-meta');
+});

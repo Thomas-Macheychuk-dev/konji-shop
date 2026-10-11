@@ -354,3 +354,44 @@ it('keeps the Befado thumbnail when HD verification fails', function (): void {
             && $request->url() === $hdImage
     );
 });
+
+it('prefers original Shoper gallery JPEGs over cached WebP thumbnails', function (): void {
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical" href="https://befado.pl/pl/p/Test-Befado/11276">
+            <meta property="og:image" content="/environment/cache/images/productGfx_57969_500_500/110P535.webp">
+        </head>
+        <body>
+            <h1>BUTY CHŁOPIĘCE SPEEDY BEFADO</h1>
+            <div class="price"><em class="main-price">66,90 zł</em></div>
+            <div id="box_productfull">
+                <div class="productimg">
+                    <img src="/environment/cache/images/productGfx_57969_700_700/110P535.webp">
+                    <div class="smallgallery">
+                        <a class="gallery js__gallery-anchor-image"
+                           href="/userdata/public/gfx/57969/110P535.jpg">
+                            <img src="/environment/cache/images/productGfx_57969_120_120/110P535.webp">
+                        </a>
+                        <a class="gallery js__gallery-anchor-image"
+                           href="/userdata/public/gfx/57968/110P535_2.jpg">
+                            <img src="/environment/cache/images/productGfx_57968_120_120/110P535_2.webp">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(BefadoProductScraper::class)->extract(
+        $html,
+        'https://befado.pl/pl/p/Test-Befado/11276',
+    );
+
+    expect($result['images'])->toHaveCount(2)
+        ->and(array_column($result['images'], 'url'))->toBe([
+            'https://befado.pl/userdata/public/gfx/57969/110P535.jpg',
+            'https://befado.pl/userdata/public/gfx/57968/110P535_2.jpg',
+        ]);
+});

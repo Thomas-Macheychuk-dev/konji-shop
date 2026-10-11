@@ -725,6 +725,7 @@ final class BefadoProductScraper
         $images = [];
 
         foreach ([
+            '#box_productfull a.js__gallery-anchor-image[href]' => 'href',
             'meta[property="og:image"][content]' => 'content',
             '#box_productfull .productimg img[src]' => 'src',
             '#box_productfull .productimg img[data-src]' => 'data-src',
@@ -778,34 +779,41 @@ final class BefadoProductScraper
     {
         $result = [];
         $positions = [];
-        $resolutions = [];
+        $scores = [];
 
         foreach ($images as $image) {
             $url = $image['url'];
 
             if (preg_match(
-                '#/productGfx_(\d+)_(\d+)_(\d+)/#',
+                '#/userdata/public/gfx/(\\d+)/#',
                 $url,
                 $matches
             ) === 1) {
                 $key = 'shoper:'.$matches[1];
-                $resolution = (int) $matches[2] * (int) $matches[3];
+                $score = 1000000;
+            } elseif (preg_match(
+                '#/productGfx_(\\d+)_(\\d+)_(\\d+)/#',
+                $url,
+                $matches
+            ) === 1) {
+                $key = 'shoper:'.$matches[1];
+                $score = (int) $matches[2] * (int) $matches[3];
             } else {
                 $key = 'url:'.$url;
-                $resolution = 0;
+                $score = 0;
             }
 
             if (! isset($positions[$key])) {
                 $positions[$key] = count($result);
-                $resolutions[$key] = $resolution;
+                $scores[$key] = $score;
                 $result[] = $image;
 
                 continue;
             }
 
-            if ($resolution > $resolutions[$key]) {
+            if ($score > $scores[$key]) {
                 $result[$positions[$key]] = $image;
-                $resolutions[$key] = $resolution;
+                $scores[$key] = $score;
             }
         }
 

@@ -782,7 +782,7 @@ final class BefadoProductImporter
         }
 
         if ($mainHtml !== null) {
-            $sections[] = $mainHtml;
+            $sections[] = $this->cleanCopiedInterfaceMarkup($mainHtml);
         }
 
         $parameterSection = $this->parameterSection($scraped);
@@ -901,6 +901,38 @@ final class BefadoProductImporter
         }
 
         return '<section class="befado-product-meta"><h2>Dane produktu</h2><table><tbody>'.implode('', $rows).'</tbody></table></section>';
+    }
+
+    /**
+     * Some supplier descriptions contain HTML copied from a ChatGPT
+     * interface. Keep the semantic elements and text, but discard the
+     * interface's presentation attributes.
+     *
+     * Only apply this transformation when the known interface marker
+     * is present. Normal supplier descriptions remain unchanged.
+     */
+    private function cleanCopiedInterfaceMarkup(string $html): string
+    {
+        if (! str_contains($html, 'qMYqUG_convSearchResultHighlightRoot')) {
+            return $html;
+        }
+
+        // Remove presentation classes without deleting their elements,
+        // text, nested headings, lists, images or links.
+        $html = preg_replace(
+            '/\s+class\s*=\s*("[^"]*"|\'[^\']*\')/iu',
+            '',
+            $html
+        ) ?? $html;
+
+        // Remove interface-specific data attributes and direction hints.
+        $html = preg_replace(
+            '/\s+(?:data-[\w-]+|dir)\s*=\s*("[^"]*"|\'[^\']*\')/iu',
+            '',
+            $html
+        ) ?? $html;
+
+        return $html;
     }
 
     private function cleanImportedHtml(?string $html): ?string
