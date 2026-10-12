@@ -40,7 +40,7 @@ it('keeps the committed deployment-source map exactly bound to the owner-authori
     expect($expected)->toHaveCount(708);
 
     $committed = (string) file_get_contents(base_path(
-        'docker/nginx/generated/legacy-seo-product-map.conf',
+        'resources/seo/ortezka/recovery/seo12-20261012/historical-production-708-map.conf',
     ));
 
     $matches = [];

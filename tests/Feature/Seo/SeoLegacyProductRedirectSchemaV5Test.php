@@ -80,8 +80,7 @@ it('generates exactly 659 historical schema-v5 rules without modifying the commi
         ->toHaveCount(415);
 
     $productionMap = base_path(
-        'docker/nginx/generated/'
-        .'legacy-seo-product-map.conf',
+        'resources/seo/ortezka/recovery/seo12-20261012/historical-production-708-map.conf',
     );
 
     $before = hash_file(

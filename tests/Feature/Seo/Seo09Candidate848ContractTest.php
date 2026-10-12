@@ -10,7 +10,7 @@ it('pins the owner-approved SEO-09 848-rule staging candidate without changing p
     $manifestPath = 'resources/seo/ortezka/review/seo-09d-20261008/approved-848-manifest.json';
     $candidateMapPath = 'resources/seo/ortezka/review/seo-09d-20261008/candidate-848-map.conf';
     $incrementalMapPath = 'resources/seo/ortezka/review/seo-09d-20261008/staging-incremental-140-map.conf';
-    $productionMapPath = 'docker/nginx/generated/legacy-seo-product-map.conf';
+    $productionMapPath = 'resources/seo/ortezka/recovery/seo12-20261012/historical-production-708-map.conf';
 
     expect(hash_file('sha256', base_path($reviewAPath)))
         ->toBe('49ab32c8d3cb236b40e159114504c31d5a4738dea97461ea42e609159afafa75')

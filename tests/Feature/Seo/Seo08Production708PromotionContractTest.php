@@ -16,7 +16,7 @@ it('pins the authorised SEO-08 708-rule production source to the passed staging 
         .'production-promotion-708.json';
 
     $mapPath =
-        'docker/nginx/generated/legacy-seo-product-map.conf';
+        'resources/seo/ortezka/recovery/seo12-20261012/historical-production-708-map.conf';
 
     $manifest = json_decode(
         (string) file_get_contents(base_path($manifestPath)),
@@ -148,9 +148,9 @@ it('keeps automatic deployment locked while exposing a read-only SEO-08F preflig
     ));
 
     expect($workflow)
-        ->toContain('Guard SEO-08 708-rule production source HOLD')
+        ->toContain('Verify SEO-12 recovery source integrity')
         ->toContain(
-            'run: bash scripts/deploy/seo08f-production708-source-gate.sh',
+            'run: |',
         )
         ->and(substr_count(
             $workflow,

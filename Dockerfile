@@ -115,8 +115,9 @@ COPY docker/nginx/generated/legacy-seo-product-map.conf /etc/nginx/conf.d/00-leg
 COPY docker/nginx/generated/legacy-seo-staging-extra-map.conf /etc/nginx/conf.d/00-legacy-seo-staging-extra-map.conf
 COPY docker/nginx/legacy-seo/available/10-product-redirects-enabled.conf /etc/nginx/legacy-seo/available/10-product-redirects-enabled.conf
 COPY docker/nginx/legacy-seo/available/20-staging-candidate-redirects-enabled.conf /etc/nginx/legacy-seo/available/20-staging-candidate-redirects-enabled.conf
+COPY docker/nginx/verify-seo12-map.sh /usr/local/bin/verify-seo12-map
 COPY docker/nginx/start-production.sh /usr/local/bin/konji-nginx-start
-RUN chmod +x /usr/local/bin/konji-nginx-start
+RUN chmod +x /usr/local/bin/konji-nginx-start /usr/local/bin/verify-seo12-map
 COPY public /var/www/html/public
 COPY --from=frontend /app/public/build /var/www/html/public/build
 

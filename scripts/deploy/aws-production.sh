@@ -56,6 +56,31 @@ fi
 echo "Building production images..."
 ${COMPOSE} build --pull app web
 
+echo "=== MANDATORY SEO-12 WEB IMAGE GATE ==="
+
+WEB_IMAGE_TAG="$(${COMPOSE} config --format json | python3 -c '
+import json
+import sys
+config = json.load(sys.stdin)
+print(config["services"]["web"].get("image", ""))
+')"
+
+if [[ -z "$WEB_IMAGE_TAG" ]]; then
+  echo "SEO12_DEPLOYMENT_GATE=FAIL: WEB_IMAGE_TAG_MISSING" >&2
+  exit 1
+fi
+
+WEB_IMAGE_ID="$(docker image inspect "$WEB_IMAGE_TAG" --format '{{.Id}}' 2>/dev/null || true)"
+
+if [[ -z "$WEB_IMAGE_ID" ]]; then
+  echo "SEO12_DEPLOYMENT_GATE=FAIL: WEB_IMAGE_NOT_FOUND" >&2
+  exit 1
+fi
+
+bash scripts/seo/verify-seo12-web-image.sh "$WEB_IMAGE_ID"
+
+echo "SEO12_DEPLOYMENT_GATE=PASS"
+
 echo "Starting Redis and app..."
 ${COMPOSE} up -d redis app
 

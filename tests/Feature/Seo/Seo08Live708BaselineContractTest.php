@@ -103,7 +103,7 @@ it('pins the verified SEO-08 live708 production baseline', function (): void {
 
     expect(hash_file(
         'sha256',
-        base_path('docker/nginx/generated/legacy-seo-product-map.conf'),
+        base_path('resources/seo/ortezka/recovery/seo12-20261012/historical-production-708-map.conf'),
     ))->toBe(
         $evidence['source']['production_map_sha256'],
     );

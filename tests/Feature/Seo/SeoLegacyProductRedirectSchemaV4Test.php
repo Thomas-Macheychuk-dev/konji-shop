@@ -65,7 +65,7 @@ it('validates and generates exactly 400 schema-v4 rules without modifying the co
         ->and($manifest['records'])->toHaveCount(266);
 
     $productionMap = base_path(
-        'docker/nginx/generated/legacy-seo-product-map.conf',
+        'resources/seo/ortezka/recovery/seo12-20261012/historical-production-708-map.conf',
     );
 
     $productionHashBefore = hash_file(

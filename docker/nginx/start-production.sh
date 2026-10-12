@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+/usr/local/bin/verify-seo12-map
+
 runtime_dir=/etc/nginx/legacy-seo/runtime
 runtime_file="$runtime_dir/10-product-redirects.conf"
 available_file=/etc/nginx/legacy-seo/available/10-product-redirects-enabled.conf

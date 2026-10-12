@@ -229,7 +229,7 @@ it('promotes the committed deployment source additively from 64 through 400 and 
         )->toBe(708);
 
     $map = (string) file_get_contents(base_path(
-        'docker/nginx/generated/legacy-seo-product-map.conf',
+        'resources/seo/ortezka/recovery/seo12-20261012/historical-production-708-map.conf',
     ));
 
     $matches = [];

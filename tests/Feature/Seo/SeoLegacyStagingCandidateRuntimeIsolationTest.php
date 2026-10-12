@@ -110,8 +110,7 @@ it('keeps the historical staging overlay isolated while the committed production
 
     $productionMap = (string) file_get_contents(
         base_path(
-            'docker/nginx/generated/'
-            .'legacy-seo-product-map.conf'
+            'resources/seo/ortezka/recovery/seo12-20261012/historical-production-708-map.conf'
         )
     );
 

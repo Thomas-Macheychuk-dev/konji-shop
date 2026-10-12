@@ -58,12 +58,13 @@ jobs:
       - name: Run tests
         run: php artisan test
 
-      - name: Guard SEO-08 708-rule production source HOLD
-        id: seo08f_gate
+      - name: Verify SEO-12 recovery source integrity
+        id: seo12_source_gate
         shell: bash
-        env:
-          PUSH_BEFORE: ${{ github.event.before }}
-        run: bash scripts/deploy/seo08f-production708-source-gate.sh
+        run: |
+          python3 scripts/seo/verify-seo12-recovery.py \
+            --candidate docker/nginx/generated/legacy-seo-product-map.conf
+          test "$(sha256sum docker/nginx/generated/legacy-seo-product-map.conf | cut -d ' ' -f 1)" = "df806bf23d22c0420fda442811b5bf9137bd5c6ed2e64023898eac496cf58bee"
 
       - name: Configure AWS credentials
         if: ${{ false }}

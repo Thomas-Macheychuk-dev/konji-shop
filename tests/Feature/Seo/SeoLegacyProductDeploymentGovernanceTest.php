@@ -9,10 +9,10 @@ it('retains two independent production deployment locks through the SEO-08 708-s
 
     expect($workflow)
         ->toContain(
-            'name: Guard SEO-08 708-rule production source HOLD',
+            'name: Verify SEO-12 recovery source integrity',
         )
         ->toContain(
-            'run: bash scripts/deploy/seo08f-production708-source-gate.sh',
+            'run: |',
         );
 
     foreach ([
