@@ -126,7 +126,7 @@ it('imports Befado products idempotently as draft with per-size stock', function
 
     // Supplier SEO text must not leak into Ortezka metadata.
     expect($product->seo_title)
-        ->toBe('BUTY DZIECIĘCE HONEY BEFADO')
+        ->toBe('BUTY DZIECIĘCE HONEY BEFADO – 102X018')
         ->not->toContain('Befado.pl')
         ->and($product->seo_description)
         ->toContain('Wygodne dziecięce obuwie Befado.')
@@ -382,4 +382,56 @@ it('rejects duplicate Befado gallery content without removing existing images', 
     expect($original->fresh()->images()->count())->toBe(1)
         ->and($original->fresh()->images()->firstOrFail()->id)
         ->toBe($originalImageId);
+});
+
+it('generates distinct Befado SEO titles using SKU prefixes', function (): void {
+    befadoImageTestCategories();
+
+    $first = befadoProductFixture();
+    $first['external_product_id'] = '9664';
+    $first['sku'] = '102X01812300A01';
+
+    $second = befadoProductFixture();
+    $second['external_product_id'] = '9665';
+    $second['sku'] = '102X01912300A01';
+
+    $importer = app(BefadoProductImporter::class);
+
+    $firstProduct = $importer->import(
+        $first,
+        ProductStatus::DRAFT,
+        false,
+    )['product'];
+
+    $secondProduct = $importer->import(
+        $second,
+        ProductStatus::DRAFT,
+        false,
+    )['product'];
+
+    expect($firstProduct->seo_title)
+        ->toBe('BUTY DZIECIĘCE HONEY BEFADO – 102X018')
+        ->and($secondProduct->seo_title)
+        ->toBe('BUTY DZIECIĘCE HONEY BEFADO – 102X019')
+        ->and($firstProduct->seo_title)
+        ->not->toBe($secondProduct->seo_title);
+});
+
+it('does not duplicate an SKU already present in a Befado SEO title', function (): void {
+    befadoImageTestCategories();
+
+    $fixture = befadoProductFixture();
+    $fixture['name'] = 'Półbuty dziecięce Rock Befado 169P036';
+    $fixture['sku'] = '169P036';
+
+    $product = app(BefadoProductImporter::class)->import(
+        $fixture,
+        ProductStatus::DRAFT,
+        false,
+    )['product'];
+
+    expect($product->seo_title)
+        ->toBe('Półbuty dziecięce Rock Befado 169P036')
+        ->and(substr_count($product->seo_title, '169P036'))
+        ->toBe(1);
 });

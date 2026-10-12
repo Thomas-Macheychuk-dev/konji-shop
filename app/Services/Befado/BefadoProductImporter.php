@@ -132,7 +132,7 @@ final class BefadoProductImporter
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($scraped),
             'description' => $this->productDescriptionHtml($scraped, $externalId, $importDescriptionImages),
-            'seo_title' => $this->seoTitle($name),
+            'seo_title' => $this->seoTitle($name, $this->parentSku($scraped, $externalId)),
             'seo_description' => $this->seoDescription($scraped),
             'status' => $status,
             'external_source' => 'befado',
@@ -757,11 +757,29 @@ final class BefadoProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function seoTitle(string $name): string
+    public function seoTitle(string $name, ?string $sku): string
     {
         $name = html_entity_decode($name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $name = trim(preg_replace('/\s+/u', ' ', $name) ?? $name);
 
-        return trim(preg_replace('/\s+/u', ' ', $name) ?? $name);
+        $sku = trim((string) $sku);
+
+        if ($sku === '') {
+            return $name;
+        }
+
+        $identifier = mb_substr($sku, 0, 7);
+
+        if (mb_strlen($identifier) !== 7) {
+            return $name;
+        }
+
+        // Do not duplicate an identifier already present in the name.
+        if (mb_stripos($name, $identifier) !== false) {
+            return $name;
+        }
+
+        return $name.' – '.$identifier;
     }
 
     /**
