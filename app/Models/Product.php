@@ -90,6 +90,12 @@ class Product extends Model
             ->orderBy('id');
     }
 
+    public function documents(): HasMany
+    {
+        return $this->hasMany(ProductDocument::class)
+            ->orderBy('id');
+    }
+
     public function mainImage(): HasOne
     {
         return $this->hasOne(ProductImage::class)
