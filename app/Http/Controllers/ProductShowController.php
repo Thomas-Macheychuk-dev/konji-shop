@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
+use App\Services\Qmed\QmedDescriptionSanitizer;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
 use App\Support\Products\ProductLegalDisclosures;
@@ -27,6 +28,7 @@ class ProductShowController extends Controller
     public function __construct(
         private readonly ShopSettings $shopSettings,
         private readonly StorefrontCache $cache,
+        private readonly QmedDescriptionSanitizer $qmedDescriptionSanitizer,
     ) {}
 
     public function __invoke(Product $product): View
@@ -506,6 +508,10 @@ class ProductShowController extends Controller
     {
         if (! is_string($product->description) || trim($product->description) === '') {
             return null;
+        }
+
+        if ($product->external_source === 'qmed') {
+            return $this->qmedDescriptionSanitizer->sanitize($product->description);
         }
 
         if (! $hasInformationalColors || $product->external_source !== 'vermeiren') {
