@@ -156,7 +156,7 @@ class ImportHerdegenReleaseCommand extends Command
                     $stored = $disk->get($path);
                     $this->check(is_string($stored) && hash('sha256', $stored) === $media['sha256'], 'S3 verification failed: '.$path);
                 }
-                DB::transaction(function () use ($data, $categories): void {
+                DB::transaction(function () use ($data, $categories, $paths): void {
                     foreach ($data['products'] as $p) {
                         $product = Product::query()->create([
                             'external_source' => 'herdegen', 'external_id' => $p['external_id'], 'name' => $p['name'],
@@ -196,12 +196,21 @@ class ImportHerdegenReleaseCommand extends Command
                             }
                         }
                         foreach ($p['images'] ?? [] as $img) {
-                            $product->images()->create($this->imageValues($img));
+                            $product->images()->create(
+                                $this->imageValues($img) + [
+                                    'file_size' => $paths[$img['path']]['size'],
+                                ]
+                            );
                         }
                         foreach ($p['attribute_value_images'] ?? [] as $img) {
                             $key = $img['attribute_slug'].'|'.$img['value_slug'];
                             $this->check(isset($optionIdMap[$key]), 'Missing option for image');
-                            $product->attributeValueImages()->create($this->imageValues($img) + ['attribute_value_id' => $optionIdMap[$key]]);
+                            $product->attributeValueImages()->create(
+                                $this->imageValues($img) + [
+                                    'file_size' => $paths[$img['path']]['size'],
+                                    'attribute_value_id' => $optionIdMap[$key],
+                                ]
+                            );
                         }
                     }
                 });
