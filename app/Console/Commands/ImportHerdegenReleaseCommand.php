@@ -87,6 +87,8 @@ class ImportHerdegenReleaseCommand extends Command
             $allExtVariants = [];
             $allCategories = [];
             $countVariants = 0;
+            $expectedAttributes = [];
+            $expectedValues = [];
             foreach ($data['products'] as $product) {
                 $external = $product['external_id'] ?? null;
                 $this->check(is_string($external) && preg_match('/^[a-f0-9]{32}$/D', $external) === 1 && ! isset($productIds[$external]), 'Invalid/duplicate product');
@@ -114,7 +116,33 @@ class ImportHerdegenReleaseCommand extends Command
                         && is_int($variant['price_net_amount'] ?? null) && $variant['price_net_amount'] > 0, 'Invalid price/tax');
                     foreach ($variant['option_values'] ?? [] as $option) {
                         $this->check(filled($option['attribute_slug'] ?? null) && filled($option['value_slug'] ?? null) && filled($option['value'] ?? null), 'Invalid option');
-                        $optionKeys[$option['attribute_slug'].'|'.$option['value_slug']] = $option;
+                        $attributeSlug = $option['attribute_slug'];
+                        $valueSlug = $option['value_slug'];
+                        $attributeName = $option['attribute_name'] ?? null;
+
+                        $this->check(
+                            is_string($attributeName) && $attributeName !== '',
+                            'Missing attribute name'
+                        );
+
+                        $this->check(
+                            ! isset($expectedAttributes[$attributeSlug])
+                                || $expectedAttributes[$attributeSlug] === $attributeName,
+                            'Conflicting exported attribute: '.$attributeSlug
+                        );
+
+                        $expectedAttributes[$attributeSlug] = $attributeName;
+
+                        $optionKey = $attributeSlug.'|'.$valueSlug;
+
+                        $this->check(
+                            ! isset($expectedValues[$optionKey])
+                                || $expectedValues[$optionKey] === $option['value'],
+                            'Conflicting exported option: '.$optionKey
+                        );
+
+                        $expectedValues[$optionKey] = $option['value'];
+                        $optionKeys[$optionKey] = $option;
                     }
                 }
                 foreach ($product['attribute_value_images'] ?? [] as $img) {
@@ -122,6 +150,60 @@ class ImportHerdegenReleaseCommand extends Command
                 }
             }
             $this->check($countVariants === 79, 'Expected exactly 79 variants');
+            $this->check(
+                count($expectedAttributes) === 22
+                    && count($expectedValues) === 55,
+                'Unexpected attribute inventory'
+            );
+
+            $existingAttributes = Attribute::query()
+                ->whereIn('slug', array_keys($expectedAttributes))
+                ->get()
+                ->keyBy('slug');
+
+            $existingAttributeValues = 0;
+
+            foreach ($existingAttributes as $slug => $attribute) {
+                $this->check(
+                    $attribute->name === $expectedAttributes[$slug],
+                    'Existing attribute name conflict: '.$slug
+                );
+
+                $values = AttributeValue::query()
+                    ->where('attribute_id', $attribute->id)
+                    ->get()
+                    ->keyBy('slug');
+
+                foreach ($expectedValues as $key => $expectedValue) {
+                    [$expectedAttributeSlug, $expectedValueSlug] = explode('|', $key, 2);
+
+                    if ($expectedAttributeSlug !== $slug) {
+                        continue;
+                    }
+
+                    $existing = $values->get($expectedValueSlug);
+
+                    if ($existing === null) {
+                        continue;
+                    }
+
+                    $this->check(
+                        $existing->value === $expectedValue,
+                        'Existing attribute value conflict: '.$key
+                    );
+
+                    $existingAttributeValues++;
+                }
+            }
+
+            $this->line('ATTRIBUTES_EXPECTED=22');
+            $this->line('ATTRIBUTE_VALUES_EXPECTED=55');
+            $this->line('ATTRIBUTES_EXISTING='.$existingAttributes->count());
+            $this->line('ATTRIBUTE_VALUES_EXISTING='.$existingAttributeValues);
+            $this->line('ATTRIBUTES_TO_CREATE='.(22 - $existingAttributes->count()));
+            $this->line('ATTRIBUTE_VALUES_TO_CREATE='.(55 - $existingAttributeValues));
+            $this->line('ATTRIBUTE_COMPATIBILITY=PASS');
+
             $categories = Category::query()->whereIn('slug', array_keys($allCategories))->get()->keyBy('slug');
             $this->check($categories->count() === count($allCategories) && $categories->every(fn ($c) => $c->deleted_at === null && $c->status?->value === 'active'), 'Production categories missing/inactive');
             $this->check(Product::withTrashed()->where('external_source', 'herdegen')->count() === 0, 'Herdegen products already exist; refusing overwrite');
