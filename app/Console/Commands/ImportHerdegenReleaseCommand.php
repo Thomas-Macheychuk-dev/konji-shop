@@ -279,19 +279,19 @@ class ImportHerdegenReleaseCommand extends Command
                         }
                         foreach ($p['images'] ?? [] as $img) {
                             $product->images()->create(
-                                $this->imageValues($img) + [
+                                array_replace($this->imageValues($img), [
                                     'file_size' => $paths[$img['path']]['size'],
-                                ]
+                                ])
                             );
                         }
                         foreach ($p['attribute_value_images'] ?? [] as $img) {
                             $key = $img['attribute_slug'].'|'.$img['value_slug'];
                             $this->check(isset($optionIdMap[$key]), 'Missing option for image');
                             $product->attributeValueImages()->create(
-                                $this->imageValues($img) + [
+                                array_replace($this->imageValues($img), [
                                     'file_size' => $paths[$img['path']]['size'],
                                     'attribute_value_id' => $optionIdMap[$key],
-                                ]
+                                ])
                             );
                         }
                     }
