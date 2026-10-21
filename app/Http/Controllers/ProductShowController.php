@@ -91,6 +91,9 @@ class ProductShowController extends Controller
             'informational_color_groups' => $informationalColorGroups,
             'legal_disclosures' => ProductLegalDisclosures::forProduct($product),
 
+            'is_purchasable' => $product->status?->isActive() === true
+                && $product->published_at !== null
+                && $product->published_at->isPast(),
             'option_groups' => $this->buildOptionGroups($product),
             'variants' => $this->buildVariants($product),
             'default_variant_id' => $defaultVariant?->id,
@@ -592,6 +595,7 @@ class ProductShowController extends Controller
                     'price_net' => $variant->price_net_amount,
                     'currency' => $variant->currency?->value,
                     'stock_status' => $variant->stock_status?->value,
+                    'status' => $variant->status?->value,
                     'is_default' => (bool) $variant->is_default,
                     'option_value_ids' => $optionValueIds,
                     'images' => $variantImages,

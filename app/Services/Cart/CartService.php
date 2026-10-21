@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\Services\Cart;
 
 use App\Enums\CartStatus;
+use App\Enums\ProductStatus;
+use App\Enums\ProductVariantStatus;
+use App\Enums\StockStatus;
+use App\Enums\VatRate;
 use App\Models\Cart;
 use App\Models\ProductVariant;
 use App\Models\User;
@@ -58,6 +62,28 @@ class CartService
     ): void {
         if ($quantity < 1) {
             throw new \InvalidArgumentException('Quantity must be at least 1.');
+        }
+
+        // Fail closed at the cart boundary, including when incrementing existing cart items.
+        // Checkout validation remains a separate final safeguard.
+        $product = $variant->product;
+        if ($product === null || $product->status !== ProductStatus::ACTIVE
+            || $product->published_at === null) {
+            throw new \RuntimeException('Product is not available for purchase.');
+        }
+
+        if ($variant->status !== ProductVariantStatus::ACTIVE
+            || $variant->stock_status === StockStatus::OUT_OF_STOCK) {
+            throw new \RuntimeException('Variant is not available for purchase.');
+        }
+
+        $gross = $variant->grossPriceAmount();
+        if ($gross === null || $gross < 0
+            || ($product->external_source === 'footwave' && $gross === 0)
+            || ! $variant->vat_rate instanceof VatRate
+            || $variant->currency === null
+            || $variant->currency->value !== $cart->currency) {
+            throw new \RuntimeException('Variant has incomplete or incompatible pricing.');
         }
 
         $configurationHash = $this->colorSelectionService->hash($selectedOptions);

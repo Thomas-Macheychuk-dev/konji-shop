@@ -22,6 +22,7 @@ function createSelectableVermeirenProduct(): array
         'name' => 'V500 30',
         'slug' => 'v500-30',
         'status' => ProductStatus::ACTIVE,
+        'published_at' => now()->subMinute(),
         'external_source' => 'vermeiren',
         'external_id' => hash('sha256', 'v500-30'),
     ]);

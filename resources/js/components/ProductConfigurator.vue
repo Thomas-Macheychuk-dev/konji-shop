@@ -247,6 +247,15 @@ function selectOption(groupCode, valueId) {
 }
 
 function handleAddToCartSubmit(event) {
+    if (!canAddToCart.value && (props.product.is_purchasable !== true
+        || (exactSelectedVariant.value && (
+            exactSelectedVariant.value.status !== 'active'
+            || !['in_stock', 'preorder'].includes(exactSelectedVariant.value.stock_status)
+        )))) {
+        selectionError.value = 'Produkt lub wybrany wariant nie jest dostępny do zakupu.';
+        event.preventDefault();
+        return;
+    }
     if (missingInformationalColorGroups.value.length > 0) {
         selectionError.value = `Wybierz: ${missingInformationalColorGroups.value.map((group) => group.label).join(', ')}`;
         event.preventDefault();
@@ -381,10 +390,14 @@ const hasActiveVariants = computed(() => variants.value.length > 0);
 const canAddToCart = computed(() => {
     const variant = exactSelectedVariant.value;
 
-    return variant !== null
+    return props.product.is_purchasable === true
+        && variant !== null
+        && variant.status === 'active'
+        && ['in_stock', 'preorder'].includes(variant.stock_status)
         && variant.price !== null
         && variant.price !== undefined
-        && variant.stock_status !== 'out_of_stock';
+        && Number.isFinite(Number(variant.price))
+        && Number(variant.price) > 0;
 });
 
 initializeSelection();
@@ -515,7 +528,10 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                             v-if="hasActiveVariants"
                             class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-end"
                         >
-                            <div class="flex items-center rounded-xl border border-zinc-300 bg-white shadow-sm">
+                            <div
+                                v-if="canAddToCart"
+                                class="flex items-center rounded-xl border border-zinc-300 bg-white shadow-sm"
+                            >
                                 <button
                                     type="button"
                                     class="inline-flex h-11 w-11 items-center justify-center text-lg font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
@@ -562,7 +578,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                                     <circle cx="10" cy="20" r="1" />
                                     <circle cx="18" cy="20" r="1" />
                                 </svg>
-                                <span>Dodaj do koszyka</span>
+                                <span>{{ canAddToCart ? 'Dodaj do koszyka' : 'Niedostępny' }}</span>
                             </button>
                         </div>
 
