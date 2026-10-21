@@ -56,6 +56,15 @@ final class CartAvailabilityBoundaryTest extends TestCase
         app(CartService::class)->addItem($cart, $variant);
     }
 
+    public function test_rejects_future_published_product(): void
+    {
+        [$cart, $variant] = $this->purchaseCandidate();
+        $variant->product->published_at = Carbon::now()->addDay();
+
+        $this->expectException(RuntimeException::class);
+        app(CartService::class)->addItem($cart, $variant);
+    }
+
     public function test_rejects_draft_variant(): void
     {
         [$cart, $variant] = $this->purchaseCandidate();

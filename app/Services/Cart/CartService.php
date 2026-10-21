@@ -68,7 +68,8 @@ class CartService
         // Checkout validation remains a separate final safeguard.
         $product = $variant->product;
         if ($product === null || $product->status !== ProductStatus::ACTIVE
-            || $product->published_at === null) {
+            || $product->published_at === null
+            || $product->published_at->isFuture()) {
             throw new \RuntimeException('Product is not available for purchase.');
         }
 
