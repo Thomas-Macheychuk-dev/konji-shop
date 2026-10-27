@@ -53,6 +53,41 @@ final class HerdegenDescriptionFormatterTest extends TestCase
         );
     }
 
+    public function test_normalizes_fully_bold_long_paragraphs(): void
+    {
+        $paragraph = str_repeat(
+            'Laska rehabilitacyjna pomaga w codziennym poruszaniu. ',
+            5,
+        );
+
+        $html = '<h2>Opis</h2>'
+            .'<p><strong>Francuska laska aluminiowa</strong></p>'
+            .'<p><b>'.$paragraph.'</b></p>'
+            .'<p>Normalny tekst z <strong>ważnym fragmentem</strong>.</p>';
+
+        $result = $this->formatter()->format($html);
+
+        self::assertStringContainsString(
+            '<p><strong>Francuska laska aluminiowa</strong></p>',
+            $result,
+        );
+
+        self::assertStringContainsString(
+            '<p>'.trim($paragraph).'</p>',
+            $result,
+        );
+
+        self::assertStringNotContainsString(
+            '<p><b>'.$paragraph.'</b></p>',
+            $result,
+        );
+
+        self::assertStringContainsString(
+            '<strong>ważnym fragmentem</strong>',
+            $result,
+        );
+    }
+
     public function test_removes_unsafe_supplier_markup(): void
     {
         $result = $this->formatter()->format(

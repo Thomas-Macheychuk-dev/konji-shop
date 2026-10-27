@@ -46,6 +46,25 @@ final class HerdegenDescriptionFormatter
             $html,
         ) ?? $html;
 
+        // Supplier sometimes wraps whole paragraphs in bold tags.
+        // Preserve inline emphasis, but normalize fully bold paragraphs.
+        $html = preg_replace_callback(
+            '~<p>\s*<(b|strong)>(.*?)</\1>\s*</p>~is',
+            static function (array $matches): string {
+                $content = trim($matches[2]);
+
+                // Preserve short headings and labels.
+                $plain = trim(strip_tags($content));
+
+                if (mb_strlen($plain) <= 100) {
+                    return $matches[0];
+                }
+
+                return '<p>'.$content.'</p>';
+            },
+            $html,
+        ) ?? $html;
+
         return trim($html);
     }
 }
