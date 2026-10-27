@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
+use App\Services\Herdegen\HerdegenDescriptionFormatter;
 use App\Services\Qmed\QmedDescriptionSanitizer;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
@@ -29,6 +30,7 @@ class ProductShowController extends Controller
         private readonly ShopSettings $shopSettings,
         private readonly StorefrontCache $cache,
         private readonly QmedDescriptionSanitizer $qmedDescriptionSanitizer,
+        private readonly HerdegenDescriptionFormatter $herdegenDescriptionFormatter,
     ) {}
 
     public function __invoke(Product $product): View
@@ -130,7 +132,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v4.%s.%d',
+            'product-page.v5.%s.%d',
             Str::lower(request()->getHost()),
             $product->getKey(),
         );
@@ -511,6 +513,10 @@ class ProductShowController extends Controller
     {
         if (! is_string($product->description) || trim($product->description) === '') {
             return null;
+        }
+
+        if ($product->external_source === 'herdegen') {
+            return $this->herdegenDescriptionFormatter->format($product->description);
         }
 
         if ($product->external_source === 'qmed') {
