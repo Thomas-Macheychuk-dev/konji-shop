@@ -209,3 +209,62 @@ it('opens the active category branch in the sidebar', function (): void {
         ->toMatch('/data-category-item="'.$parentCategory->id.'".*?data-category-open-by-default="true"/s')
         ->toMatch('/data-category-item="'.$childCategory->id.'".*?data-category-open-by-default="true"/s');
 });
+
+
+
+it('renders the complete category breadcrumb in root to leaf order', function (): void {
+    $root = createCategoryForProductListingTest('Root department', 'root-department');
+    $parent = createCategoryForProductListingTest('Parent category', 'parent-category', parent: $root);
+    $leaf = createCategoryForProductListingTest('Leaf category', 'leaf-category', parent: $parent);
+
+    $response = $this->get(route('categories.show', $leaf->slug))->assertOk();
+
+    $response->assertViewHas('breadcrumbCategories', fn (array $categories): bool => array_map(fn (Category $category): int => $category->id, $categories) === [$root->id, $parent->id]
+    );
+
+    preg_match('/<nav[^>]*aria-label="Okruszki"[^>]*>(.*?)<\/nav>/s', $response->getContent(), $match);
+
+    expect(preg_replace('/\s+/', ' ', trim(strip_tags($match[1]))))
+        ->toBe('Strona główna / Root department / Parent category / Leaf category');
+});
+
+it('does not expose inactive or deleted ancestors in breadcrumbs', function (): void {
+    foreach (['archived', 'deleted'] as $state) {
+        $root = createCategoryForProductListingTest('Hidden '.$state, 'hidden-'.$state);
+        $leaf = createCategoryForProductListingTest('Visible '.$state, 'visible-'.$state, parent: $root);
+
+        if ($state === 'deleted') {
+            $root->delete();
+        } else {
+            $root->update(['status' => CategoryStatus::ARCHIVED]);
+        }
+
+        $this->get(route('categories.show', $leaf->slug))
+            ->assertOk()
+            ->assertViewHas('breadcrumbCategories', []);
+    }
+});
+
+it('terminates breadcrumb traversal when category ancestors form a cycle', function (): void {
+    $first = createCategoryForProductListingTest('Cycle first', 'cycle-first');
+    $second = createCategoryForProductListingTest('Cycle second', 'cycle-second', parent: $first);
+    $first->update(['parent_id' => $second->id]);
+
+    $controller = app(\App\Http\Controllers\CategoryProductIndexController::class);
+    $method = new ReflectionMethod($controller, 'breadcrumbCategories');
+
+    expect($method->invoke($controller, $second))->toBe([]);
+});
+
+it('redirects an archived duplicate category to its active canonical category', function (): void {
+    $canonical = createCategoryForProductListingTest('Canonical blouse category', 'bluzy-medyczne-damskie');
+    $duplicate = createCategoryForProductListingTest('Old blouse category', 'bluzy-damskie', CategoryStatus::ARCHIVED);
+
+    $this->get(route('categories.show', $duplicate->slug))
+        ->assertStatus(301)
+        ->assertRedirect(route('categories.show', $canonical->slug));
+
+    $canonical->delete();
+
+    $this->get(route('categories.show', $duplicate->slug))->assertNotFound();
+});
