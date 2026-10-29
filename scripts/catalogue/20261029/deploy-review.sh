@@ -6,14 +6,15 @@ stage_dir=/tmp/konji-catalogue-review-20261029
 resource_dir=/tmp/konji-catalogue-review-resources
 cd "$artifact_root"
 docker exec "$container_name" mkdir -p "$stage_dir" "$resource_dir"
-for script in run.php followup.php review.php test-review.php; do
+for script in run.php followup.php review.php test-review.php prepare-review-fixture.php; do
     docker cp "scripts/catalogue/20261029/$script" "$container_name:$stage_dir/$script"
 done
 for resource in plan.json followup.json review.json; do
     docker cp "resources/catalogue/20261029/$resource" "$container_name:$resource_dir/$resource"
 done
+docker exec -w /var/www/html "$container_name" php "$stage_dir/prepare-review-fixture.php"
 docker exec -w /var/www/html "$container_name" php "$stage_dir/test-review.php" \
-    --source=/tmp/category-audit.json \
+    --source=/tmp/konji-review-frozen-source.json \
     --original-plan="$resource_dir/plan.json" \
     --followup="$resource_dir/followup.json" \
     --plan="$resource_dir/review.json"
