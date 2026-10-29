@@ -6,7 +6,9 @@
     $grossPriceAmount = $displayVariant?->grossPriceAmount();
     $currency = $displayVariant?->currency?->value ?? 'PLN';
     $imageUrl = $product->default_image_url;
-    $categoryName = $product->categories->first()?->name;
+    $displayCategory = $product->categories->firstWhere('pivot.is_primary', true)
+        ?? $product->categories->first();
+    $categoryName = $displayCategory?->name;
     $isAvailable = $displayVariant?->stock_status?->isInStock() ?? false;
 @endphp
 

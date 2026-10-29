@@ -1,0 +1,149 @@
+{
+  "repair_id": "catalogue-20261029-followup-v1",
+  "operations": [
+    {
+      "product_id": 9944,
+      "name": "Balkonik czterokołowy z podparciem pod łokcie i hamulcami - JMC-C 3225",
+      "external_source": "timago",
+      "external_id": "3225",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10273,
+      "name": "Kubek pojnik z uchwytem",
+      "external_source": "timago",
+      "external_id": "247",
+      "old_ref": 1178,
+      "new_ref": 1012
+    },
+    {
+      "product_id": 10391,
+      "name": "Chodzik trzykołowy Genewa Premium",
+      "external_source": "rehafund",
+      "external_id": "732",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10396,
+      "name": "Chodzik czterokołowy Denver Premium",
+      "external_source": "rehafund",
+      "external_id": "921",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10397,
+      "name": "Chodzik czterokołowy",
+      "external_source": "rehafund",
+      "external_id": "930",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10398,
+      "name": "Podpórka dwukołowa z siedziskiem",
+      "external_source": "rehafund",
+      "external_id": "952",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10401,
+      "name": "Chodzik czterokołowy Lizbona Premium",
+      "external_source": "rehafund",
+      "external_id": "991",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10405,
+      "name": "Chodzik czterokołowy Palermo Premium",
+      "external_source": "rehafund",
+      "external_id": "1662",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10406,
+      "name": "Chodzik czterokołowy Bogota Premium",
+      "external_source": "rehafund",
+      "external_id": "1663",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10407,
+      "name": "Chodzik czterokołowy Oslo Premium",
+      "external_source": "rehafund",
+      "external_id": "1667",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10412,
+      "name": "Chodzik czterokołowy Sztokholm",
+      "external_source": "rehafund",
+      "external_id": "2438",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10421,
+      "name": "Chodzik czterokołowy Marsylia",
+      "external_source": "rehafund",
+      "external_id": "2384",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10422,
+      "name": "Nasadka na stopkę do kuli, średnica 20 mm, kolor czarny, 10 sztuk",
+      "external_source": "rehafund",
+      "external_id": "2327",
+      "old_ref": 6,
+      "new_ref": 486
+    },
+    {
+      "product_id": 10428,
+      "name": "Chodzik czterokołowy Berlin",
+      "external_source": "rehafund",
+      "external_id": "2382",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10430,
+      "name": "Chodzik trzykołowy Helsinki Premium",
+      "external_source": "rehafund",
+      "external_id": "734",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10431,
+      "name": "Chodzik trzykołowy Barcelona",
+      "external_source": "rehafund",
+      "external_id": "894",
+      "old_ref": -13,
+      "new_ref": 20
+    },
+    {
+      "product_id": 10445,
+      "name": "Nasadka na stopkę do laski, średnica 18 mm, kolor czarny",
+      "external_source": "rehafund",
+      "external_id": "2325",
+      "old_ref": 6,
+      "new_ref": 486
+    },
+    {
+      "product_id": 10446,
+      "name": "Nasadka na stopkę do trójnoga i czwórnoga, średnica 16 mm, kolor czarny, 10 sztu",
+      "external_source": "rehafund",
+      "external_id": "2362",
+      "old_ref": 6,
+      "new_ref": 486
+    }
+  ]
+}
