@@ -327,6 +327,11 @@ Route::view('/complaints-and-warranty', 'pages.legal.complaints-and-warranty')
 Route::view('/delivery-and-payments', 'pages.legal.delivery-and-payments')
     ->name('legal.delivery-payments');
 
+Route::view('/refundacje-nfz', 'pages.legal.nfz', [
+    'seoTitle' => 'Refundacje NFZ',
+    'seoDescription' => 'Zapytaj o realizację zlecenia NFZ i dostępność wybranego wyrobu medycznego. Skontaktuj się z obsługą sklepu.',
+])->name('legal.nfz');
+
 Route::view('/contact', 'pages.legal.contact')
     ->name('legal.contact');
 

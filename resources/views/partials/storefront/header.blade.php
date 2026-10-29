@@ -267,7 +267,7 @@
     </div>
 
     <div class="hidden border-t border-slate-100 lg:block">
-        <div class="mx-auto flex max-w-[1480px] items-center gap-1 overflow-x-auto px-4 py-2 sm:px-6 lg:px-8">
+        <nav class="mx-auto flex max-w-[1480px] flex-wrap items-center gap-1 px-4 py-2 sm:px-6 lg:px-8" aria-label="Informacje dla klientów">
             <a
                 href="{{ route('home') }}#categories"
                 class="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[#155fa8] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#0b3b70]"
@@ -278,23 +278,22 @@
                 Kategorie
             </a>
 
-            @foreach ($navigationCategories->take(7) as $navigationCategory)
-                <a
-                    href="{{ route('categories.show', $navigationCategory->slug) }}"
-                    class="shrink-0 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]"
-                >
-                    {{ $navigationCategory->name }}
-                </a>
-            @endforeach
+            <a href="{{ route('legal.nfz') }}" class="ml-auto rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
+                Refundacje NFZ
+            </a>
 
-            <a href="{{ route('withdrawals.start') }}" class="ml-auto shrink-0 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
+            <a href="{{ route('withdrawals.start') }}" class="rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
                 Odstąp od umowy
             </a>
 
-            <a href="{{ route('legal.delivery-payments') }}" class="shrink-0 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
+            <a href="{{ route('legal.delivery-payments') }}" class="rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
                 Dostawa i płatności
             </a>
-        </div>
+
+            <a href="{{ route('legal.contact') }}" class="rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
+                Kontakt
+            </a>
+        </nav>
     </div>
 
     <div
@@ -324,10 +323,11 @@
             </div>
 
             <div class="mt-5 grid gap-1 border-t border-slate-100 pt-5 sm:grid-cols-2">
-                <a href="{{ route('guest.orders.track.show') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Śledzenie przesyłki</a>
+                <a href="{{ route('legal.nfz') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Refundacje NFZ</a>
                 <a href="{{ route('withdrawals.start') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Odstąp od umowy</a>
-                <a href="{{ route('legal.contact') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Kontakt</a>
                 <a href="{{ route('legal.delivery-payments') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Dostawa i płatności</a>
+                <a href="{{ route('legal.contact') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Kontakt</a>
+                <a href="{{ route('guest.orders.track.show') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Śledzenie przesyłki</a>
 
                 @auth
                     <a href="{{ route('account.orders.index') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Moje zamówienia</a>
