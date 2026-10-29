@@ -1,0 +1,6177 @@
+{
+  "schema_version": 1,
+  "repair_id": "catalogue-20261029-v1",
+  "source_sha256": "3a32ddf54d15c383884c88a440e30957f73983b04bf390426ecf5269ab98990a",
+  "source_counts": {
+    "categories": 1217,
+    "products": 14627,
+    "assignments": 45645
+  },
+  "roots": [
+    {
+      "ref": 186,
+      "name": "Ortezy i stabilizatory",
+      "slug": "ortezy-i-stabilizatory"
+    },
+    {
+      "ref": 587,
+      "name": "Kompresja medyczna",
+      "slug": "kompresja"
+    },
+    {
+      "ref": 391,
+      "name": "Rehabilitacja i ćwiczenia",
+      "slug": "rehabilitacja"
+    },
+    {
+      "ref": -1,
+      "name": "Mobilność i transport",
+      "slug": "mobilnosc-i-transport"
+    },
+    {
+      "ref": -2,
+      "name": "Opieka nad pacjentem",
+      "slug": "opieka-nad-pacjentem"
+    },
+    {
+      "ref": -3,
+      "name": "Higiena i nietrzymanie moczu",
+      "slug": "higiena-i-nietrzymanie-moczu"
+    },
+    {
+      "ref": -4,
+      "name": "Opatrunki i dezynfekcja",
+      "slug": "opatrunki-i-dezynfekcja"
+    },
+    {
+      "ref": 234,
+      "name": "Sprzęt diagnostyczny i medyczny",
+      "slug": "sprzet-medyczny"
+    },
+    {
+      "ref": 1191,
+      "name": "Obuwie i pielęgnacja stóp",
+      "slug": "obuwie"
+    },
+    {
+      "ref": 560,
+      "name": "Odzież medyczna i zawodowa",
+      "slug": "odziez-medyczna"
+    },
+    {
+      "ref": 65,
+      "name": "Peruki i akcesoria",
+      "slug": "peruki"
+    },
+    {
+      "ref": -5,
+      "name": "Zdrowie i pielęgnacja",
+      "slug": "zdrowie-i-pielegnacja"
+    }
+  ],
+  "create_categories": [
+    {
+      "ref": -1,
+      "name": "Mobilność i transport",
+      "slug": "mobilnosc-i-transport",
+      "parent_ref": null,
+      "status": "active"
+    },
+    {
+      "ref": -2,
+      "name": "Opieka nad pacjentem",
+      "slug": "opieka-nad-pacjentem",
+      "parent_ref": null,
+      "status": "active"
+    },
+    {
+      "ref": -3,
+      "name": "Higiena i nietrzymanie moczu",
+      "slug": "higiena-i-nietrzymanie-moczu",
+      "parent_ref": null,
+      "status": "active"
+    },
+    {
+      "ref": -4,
+      "name": "Opatrunki i dezynfekcja",
+      "slug": "opatrunki-i-dezynfekcja",
+      "parent_ref": null,
+      "status": "active"
+    },
+    {
+      "ref": -5,
+      "name": "Zdrowie i pielęgnacja",
+      "slug": "zdrowie-i-pielegnacja",
+      "parent_ref": null,
+      "status": "active"
+    },
+    {
+      "ref": -10,
+      "name": "Tuniki",
+      "slug": "tuniki-medyczne",
+      "parent_ref": 560,
+      "status": "active"
+    },
+    {
+      "ref": -11,
+      "name": "Koszulki",
+      "slug": "koszulki-medyczne",
+      "parent_ref": 560,
+      "status": "active"
+    },
+    {
+      "ref": -12,
+      "name": "Odzież dla gastronomii i hotelarstwa",
+      "slug": "odziez-gastronomia-hotelarstwo",
+      "parent_ref": 560,
+      "status": "active"
+    },
+    {
+      "ref": -13,
+      "name": "Akcesoria do podpórek i balkoników",
+      "slug": "akcesoria-do-podporek-i-balkonikow",
+      "parent_ref": -1,
+      "status": "active"
+    },
+    {
+      "ref": -14,
+      "name": "Akcesoria do pozycjonowania",
+      "slug": "akcesoria-do-pozycjonowania",
+      "parent_ref": -2,
+      "status": "active"
+    },
+    {
+      "ref": -15,
+      "name": "Wkładki sportowe",
+      "slug": "wkladki-sportowe",
+      "parent_ref": 618,
+      "status": "active"
+    },
+    {
+      "ref": -16,
+      "name": "Akcesoria sportowe i osobiste",
+      "slug": "akcesoria-sportowe-i-osobiste",
+      "parent_ref": 391,
+      "status": "active"
+    }
+  ],
+  "update_categories": [
+    {
+      "id": 1,
+      "slug": "wozki-inwalidzkie",
+      "parent_ref": -1,
+      "name": "Wózki inwalidzkie",
+      "status": "active"
+    },
+    {
+      "id": 7,
+      "slug": "sprzet-elektryczny",
+      "parent_ref": -1,
+      "name": "Sprzęt elektryczny",
+      "status": "active"
+    },
+    {
+      "id": 10,
+      "slug": "schodolazy-i-rampy",
+      "parent_ref": -1,
+      "name": "Schodołazy i rampy",
+      "status": "active"
+    },
+    {
+      "id": 18,
+      "slug": "pionizatory-i-parapodia",
+      "parent_ref": 391,
+      "name": "Pionizatory i parapodia",
+      "status": "active"
+    },
+    {
+      "id": 19,
+      "slug": "sprzet-sportowy",
+      "parent_ref": 391,
+      "name": "SPRZĘT SPORTOWY",
+      "status": "active"
+    },
+    {
+      "id": 20,
+      "slug": "podporki-i-balkoniki",
+      "parent_ref": -1,
+      "name": "Podpórki i balkoniki",
+      "status": "active"
+    },
+    {
+      "id": 24,
+      "slug": "profilaktyka-przeciwodlezynowa",
+      "parent_ref": -2,
+      "name": "Profilaktyka przeciwodleżynowa",
+      "status": "active"
+    },
+    {
+      "id": 25,
+      "slug": "produkty-lazienkowe",
+      "parent_ref": -2,
+      "name": "Produkty łazienkowe",
+      "status": "active"
+    },
+    {
+      "id": 30,
+      "slug": "podnosniki-pacjenta",
+      "parent_ref": -1,
+      "name": "Podnośniki pacjenta",
+      "status": "active"
+    },
+    {
+      "id": 34,
+      "slug": "ewakuacja-i-bhp",
+      "parent_ref": 234,
+      "name": "Ewakuacja i BHP",
+      "status": "active"
+    },
+    {
+      "id": 38,
+      "slug": "obuwie-scholl",
+      "parent_ref": 1191,
+      "name": "Obuwie Scholl",
+      "status": "active"
+    },
+    {
+      "id": 46,
+      "slug": "pomoce-orto-reha",
+      "parent_ref": 391,
+      "name": "Pomoce orto-reha",
+      "status": "active"
+    },
+    {
+      "id": 49,
+      "slug": "sprzet-do-transferu",
+      "parent_ref": -1,
+      "name": "Sprzęt do transferu",
+      "status": "active"
+    },
+    {
+      "id": 54,
+      "slug": "bluzy-damskie",
+      "parent_ref": 560,
+      "name": "Bluzy damskie",
+      "status": "active"
+    },
+    {
+      "id": 55,
+      "slug": "fartuchy-damskie",
+      "parent_ref": 560,
+      "name": "Fartuchy damskie",
+      "status": "active"
+    },
+    {
+      "id": 56,
+      "slug": "obuwie-damskie",
+      "parent_ref": 1191,
+      "name": "Obuwie damskie",
+      "status": "active"
+    },
+    {
+      "id": 57,
+      "slug": "spodnie-damskie",
+      "parent_ref": 560,
+      "name": "Spodnie damskie",
+      "status": "active"
+    },
+    {
+      "id": 58,
+      "slug": "zakiety-damskie",
+      "parent_ref": 560,
+      "name": "Żakiety damskie",
+      "status": "active"
+    },
+    {
+      "id": 59,
+      "slug": "odziez-okazje",
+      "parent_ref": 560,
+      "name": "Odzież — okazje",
+      "status": "active"
+    },
+    {
+      "id": 60,
+      "slug": "bluzy-meskie",
+      "parent_ref": 560,
+      "name": "Bluzy męskie",
+      "status": "active"
+    },
+    {
+      "id": 61,
+      "slug": "fartuchy-meskie",
+      "parent_ref": 560,
+      "name": "Fartuchy męskie",
+      "status": "active"
+    },
+    {
+      "id": 62,
+      "slug": "marynarki-meskie",
+      "parent_ref": 560,
+      "name": "Marynarki męskie",
+      "status": "active"
+    },
+    {
+      "id": 63,
+      "slug": "spodnie-meskie",
+      "parent_ref": 560,
+      "name": "Spodnie męskie",
+      "status": "active"
+    },
+    {
+      "id": 64,
+      "slug": "obuwie-meskie",
+      "parent_ref": 1191,
+      "name": "Obuwie męskie",
+      "status": "active"
+    },
+    {
+      "id": 65,
+      "slug": "peruki",
+      "parent_ref": null,
+      "name": "Peruki i akcesoria",
+      "status": "active"
+    },
+    {
+      "id": 102,
+      "slug": "tupety",
+      "parent_ref": 65,
+      "name": "Tupety",
+      "status": "active"
+    },
+    {
+      "id": 105,
+      "slug": "toppery",
+      "parent_ref": 65,
+      "name": "Toppery",
+      "status": "active"
+    },
+    {
+      "id": 108,
+      "slug": "treski-i-dopinki",
+      "parent_ref": 65,
+      "name": "Treski i dopinki",
+      "status": "active"
+    },
+    {
+      "id": 112,
+      "slug": "turbany",
+      "parent_ref": 65,
+      "name": "Turbany",
+      "status": "active"
+    },
+    {
+      "id": 119,
+      "slug": "kosmetyki-do-peruk",
+      "parent_ref": 65,
+      "name": "Kosmetyki do peruk",
+      "status": "active"
+    },
+    {
+      "id": 120,
+      "slug": "kleje-i-plyny",
+      "parent_ref": 65,
+      "name": "Kleje i płyny",
+      "status": "active"
+    },
+    {
+      "id": 121,
+      "slug": "do-peruk",
+      "parent_ref": 65,
+      "name": "Do peruk",
+      "status": "active"
+    },
+    {
+      "id": 122,
+      "slug": "produkty-walker-tape",
+      "parent_ref": 65,
+      "name": "Produkty Walker Tape",
+      "status": "active"
+    },
+    {
+      "id": 123,
+      "slug": "mocowanie",
+      "parent_ref": 65,
+      "name": "Mocowanie",
+      "status": "active"
+    },
+    {
+      "id": 124,
+      "slug": "zageszczanie-wlosow",
+      "parent_ref": 65,
+      "name": "Zagęszczanie włosów",
+      "status": "active"
+    },
+    {
+      "id": 130,
+      "slug": "turbany-i-chusty",
+      "parent_ref": 65,
+      "name": "Turbany i chusty",
+      "status": "active"
+    },
+    {
+      "id": 132,
+      "slug": "konczyna-dolna",
+      "parent_ref": 186,
+      "name": "KOŃCZYNA DOLNA",
+      "status": "active"
+    },
+    {
+      "id": 142,
+      "slug": "konczyna-gorna",
+      "parent_ref": 186,
+      "name": "KOŃCZYNA GÓRNA",
+      "status": "active"
+    },
+    {
+      "id": 148,
+      "slug": "kregoslup",
+      "parent_ref": 186,
+      "name": "KRĘGOSŁUP",
+      "status": "active"
+    },
+    {
+      "id": 156,
+      "slug": "tulow",
+      "parent_ref": 186,
+      "name": "Tułów",
+      "status": "active"
+    },
+    {
+      "id": 162,
+      "slug": "miednica",
+      "parent_ref": 186,
+      "name": "MIEDNICA",
+      "status": "active"
+    },
+    {
+      "id": 167,
+      "slug": "ortezy-pediatryczne",
+      "parent_ref": 186,
+      "name": "ORTEZY PEDIATRYCZNE",
+      "status": "active"
+    },
+    {
+      "id": 168,
+      "slug": "stabilizacja",
+      "parent_ref": 186,
+      "name": "Stabilizacja",
+      "status": "active"
+    },
+    {
+      "id": 170,
+      "slug": "bodymap",
+      "parent_ref": -2,
+      "name": "BodyMap®",
+      "status": "active"
+    },
+    {
+      "id": 172,
+      "slug": "pozycjonowanie",
+      "parent_ref": -2,
+      "name": "Pozycjonowanie",
+      "status": "active"
+    },
+    {
+      "id": 177,
+      "slug": "pasy-transportowe-belticar",
+      "parent_ref": -1,
+      "name": "Pasy transportowe BeltiCar®",
+      "status": "active"
+    },
+    {
+      "id": 180,
+      "slug": "pozostale-wyroby-medyczne",
+      "parent_ref": -2,
+      "name": "POZOSTAŁE WYROBY MEDYCZNE",
+      "status": "active"
+    },
+    {
+      "id": 182,
+      "slug": "materac-rurowy",
+      "parent_ref": -2,
+      "name": "Materac rurowy",
+      "status": "active"
+    },
+    {
+      "id": 183,
+      "slug": "poduszki",
+      "parent_ref": 391,
+      "name": "Poduszki",
+      "status": "active"
+    },
+    {
+      "id": 184,
+      "slug": "akcesoria-do-ortez",
+      "parent_ref": 186,
+      "name": "Akcesoria do ortez",
+      "status": "active"
+    },
+    {
+      "id": 185,
+      "slug": "akcesoria-pozostale",
+      "parent_ref": 391,
+      "name": "Akcesoria pozostałe",
+      "status": "active"
+    },
+    {
+      "id": 186,
+      "slug": "ortezy-i-stabilizatory",
+      "parent_ref": null,
+      "name": "Ortezy i stabilizatory",
+      "status": "active"
+    },
+    {
+      "id": 190,
+      "slug": "opaski-i-pasy-magnetyczne",
+      "parent_ref": 186,
+      "name": "OPASKI I PASY MAGNETYCZNE",
+      "status": "active"
+    },
+    {
+      "id": 199,
+      "slug": "opaski-na-kolano",
+      "parent_ref": 186,
+      "name": "OPASKI NA KOLANO",
+      "status": "active"
+    },
+    {
+      "id": 204,
+      "slug": "akcesoria-do-rehabilitacji",
+      "parent_ref": -4,
+      "name": "Ochraniacze po zabiegach",
+      "status": "active"
+    },
+    {
+      "id": 211,
+      "slug": "ortezy-i-stabilizatory-ortezy-konczyny-dolnej-orteza-stabilizator-na-stope-sprzet-rehabilitacyjny-akcesoria-do-rehabilitacji",
+      "parent_ref": 618,
+      "name": "Wkładki ortopedyczne dziecięce",
+      "status": "active"
+    },
+    {
+      "id": 213,
+      "slug": "buty-ortopedyczne",
+      "parent_ref": 1191,
+      "name": "Buty ortopedyczne — ortezy stopy",
+      "status": "active"
+    },
+    {
+      "id": 214,
+      "slug": "ortezy-i-stabilizatory-ortezy-konczyny-dolnej-buty-ortopedyczne",
+      "parent_ref": 1191,
+      "name": "Buty ortopedyczne i pooperacyjne",
+      "status": "active"
+    },
+    {
+      "id": 218,
+      "slug": "ortezy-i-stabilizatory-ortezy-konczyny-gornej-temblaki-na-reke-sprzet-rehabilitacyjny-akcesoria-do-rehabilitacji",
+      "parent_ref": -4,
+      "name": "Ochraniacze na gips",
+      "status": "active"
+    },
+    {
+      "id": 226,
+      "slug": "odziez-kompresyjna",
+      "parent_ref": 587,
+      "name": "ODZIEŻ KOMPRESYJNA",
+      "status": "active"
+    },
+    {
+      "id": 234,
+      "slug": "sprzet-medyczny",
+      "parent_ref": null,
+      "name": "Sprzęt diagnostyczny i medyczny",
+      "status": "active"
+    },
+    {
+      "id": 240,
+      "slug": "sprzet-pomocniczy-dla-osob-starszych",
+      "parent_ref": -2,
+      "name": "SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH",
+      "status": "active"
+    },
+    {
+      "id": 241,
+      "slug": "balkoniki-i-chodziki-rehabilitacyjne",
+      "parent_ref": -1,
+      "name": "BALKONIKI I CHODZIKI REHABILITACYJNE",
+      "status": "active"
+    },
+    {
+      "id": 244,
+      "slug": "sprzet-pomocniczy-dla-osob-starszych-krzesla-toaletowe-nakladki-gumowe",
+      "parent_ref": -1,
+      "name": "Nasadki do balkoników",
+      "status": "active"
+    },
+    {
+      "id": 247,
+      "slug": "laski-ortopedyczne",
+      "parent_ref": -1,
+      "name": "LASKI ORTOPEDYCZNE",
+      "status": "active"
+    },
+    {
+      "id": 249,
+      "slug": "kule-ortopedyczne",
+      "parent_ref": -1,
+      "name": "KULE ORTOPEDYCZNE",
+      "status": "active"
+    },
+    {
+      "id": 250,
+      "slug": "sprzet-pomocniczy-dla-osob-starszych-nakladki-gumowe",
+      "parent_ref": -1,
+      "name": "Nasadki do kul i lasek",
+      "status": "active"
+    },
+    {
+      "id": 252,
+      "slug": "opaski-na-kostke",
+      "parent_ref": 186,
+      "name": "OPASKI NA KOSTKĘ",
+      "status": "active"
+    },
+    {
+      "id": 253,
+      "slug": "opaski-na-lokiec",
+      "parent_ref": 186,
+      "name": "OPASKI NA ŁOKIEĆ",
+      "status": "active"
+    },
+    {
+      "id": 254,
+      "slug": "opaski-na-bark",
+      "parent_ref": 186,
+      "name": "OPASKI NA BARK",
+      "status": "active"
+    },
+    {
+      "id": 255,
+      "slug": "opaski-na-nadgarstek",
+      "parent_ref": 186,
+      "name": "OPASKI NA NADGARSTEK",
+      "status": "active"
+    },
+    {
+      "id": 256,
+      "slug": "sprzet-sportowy-opaski-sportowe-pasy-brzuszne",
+      "parent_ref": 186,
+      "name": "PASY BRZUSZNE",
+      "status": "active"
+    },
+    {
+      "id": 257,
+      "slug": "opaski-na-lydke",
+      "parent_ref": 186,
+      "name": "OPASKI NA ŁYDKĘ",
+      "status": "active"
+    },
+    {
+      "id": 258,
+      "slug": "opaski-na-udo",
+      "parent_ref": 186,
+      "name": "OPASKI NA UDO",
+      "status": "active"
+    },
+    {
+      "id": 260,
+      "slug": "przeciwzylakowe",
+      "parent_ref": 587,
+      "name": "Przeciwżylakowe",
+      "status": "active"
+    },
+    {
+      "id": 292,
+      "slug": "w-ciazy",
+      "parent_ref": -5,
+      "name": "W ciąży",
+      "status": "active"
+    },
+    {
+      "id": 312,
+      "slug": "przeciwzakrzepowe",
+      "parent_ref": 587,
+      "name": "Przeciwzakrzepowe",
+      "status": "active"
+    },
+    {
+      "id": 322,
+      "slug": "bielizna",
+      "parent_ref": 560,
+      "name": "Bielizna",
+      "status": "active"
+    },
+    {
+      "id": 324,
+      "slug": "damska",
+      "parent_ref": -5,
+      "name": "Damska",
+      "status": "active"
+    },
+    {
+      "id": 327,
+      "slug": "meska",
+      "parent_ref": -5,
+      "name": "Męska",
+      "status": "active"
+    },
+    {
+      "id": 331,
+      "slug": "opaski-welniane-na-stawy",
+      "parent_ref": -5,
+      "name": "Opaski wełniane na stawy",
+      "status": "active"
+    },
+    {
+      "id": 335,
+      "slug": "damskie",
+      "parent_ref": -5,
+      "name": "Damskie",
+      "status": "active"
+    },
+    {
+      "id": 338,
+      "slug": "meskie",
+      "parent_ref": -5,
+      "name": "Męskie",
+      "status": "active"
+    },
+    {
+      "id": 341,
+      "slug": "bielizna-ciazowa",
+      "parent_ref": 560,
+      "name": "Bielizna ciążowa",
+      "status": "active"
+    },
+    {
+      "id": 344,
+      "slug": "bielizna-poporodowa",
+      "parent_ref": 560,
+      "name": "Bielizna poporodowa",
+      "status": "active"
+    },
+    {
+      "id": 347,
+      "slug": "dla-diabetykow",
+      "parent_ref": 1191,
+      "name": "Dla diabetyków",
+      "status": "active"
+    },
+    {
+      "id": 351,
+      "slug": "ortopedyczne",
+      "parent_ref": 186,
+      "name": "Ortopedyczne",
+      "status": "active"
+    },
+    {
+      "id": 352,
+      "slug": "rekawy-kompresyjne",
+      "parent_ref": 587,
+      "name": "Rękawy kompresyjne",
+      "status": "active"
+    },
+    {
+      "id": 365,
+      "slug": "magnetyczne-poduszki-ortopedyczne",
+      "parent_ref": 391,
+      "name": "Magnetyczne poduszki ortopedyczne",
+      "status": "active"
+    },
+    {
+      "id": 366,
+      "slug": "jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 367,
+      "slug": "materace-i-podklady-magnetyczne",
+      "parent_ref": -2,
+      "name": "Zestawy magnetyczne FORTE",
+      "status": "active"
+    },
+    {
+      "id": 368,
+      "slug": "magnetyczne-pasy-na-kregoslup",
+      "parent_ref": 186,
+      "name": "Magnetyczne pasy na kręgosłup",
+      "status": "active"
+    },
+    {
+      "id": 369,
+      "slug": "magnetyczne-pasy-na-kregoslup-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 370,
+      "slug": "pasy-harmonium",
+      "parent_ref": 368,
+      "name": "Pasy Harmonium",
+      "status": "active"
+    },
+    {
+      "id": 371,
+      "slug": "pasy-euromag",
+      "parent_ref": 368,
+      "name": "Pasy Euromag",
+      "status": "active"
+    },
+    {
+      "id": 372,
+      "slug": "magnetyczne-opaski-na-reke",
+      "parent_ref": 186,
+      "name": "Magnetyczne opaski na rękę",
+      "status": "active"
+    },
+    {
+      "id": 373,
+      "slug": "magnetyczne-opaski-na-reke-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 374,
+      "slug": "magnetyczne-opaski-na-kolana",
+      "parent_ref": 186,
+      "name": "Magnetyczne opaski na kolana",
+      "status": "active"
+    },
+    {
+      "id": 375,
+      "slug": "magnetyczne-opaski-na-kolana-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 376,
+      "slug": "magnetyczne-opaski-na-noge",
+      "parent_ref": 186,
+      "name": "Magnetyczne opaski na nogę",
+      "status": "active"
+    },
+    {
+      "id": 377,
+      "slug": "magnetyczne-opaski-na-noge-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 378,
+      "slug": "magnetyczne-opaski-na-glowe",
+      "parent_ref": 391,
+      "name": "Magnetyczne opaski na głowę",
+      "status": "active"
+    },
+    {
+      "id": 379,
+      "slug": "magnetyczne-opaski-na-glowe-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 380,
+      "slug": "opaska-na-glowe",
+      "parent_ref": 378,
+      "name": "Opaska na głowę",
+      "status": "active"
+    },
+    {
+      "id": 381,
+      "slug": "magnetyczne-kompresy-ort-butterfly",
+      "parent_ref": 391,
+      "name": "Magnetyczne Kompresy \"Ort Butterfly\"",
+      "status": "active"
+    },
+    {
+      "id": 382,
+      "slug": "magnetyczne-kompresy-ort-butterfly-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 383,
+      "slug": "materace-i-podklady-magnetyczne-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 384,
+      "slug": "akcesoria-magnetyczne",
+      "parent_ref": -5,
+      "name": "Akcesoria magnetyczne",
+      "status": "active"
+    },
+    {
+      "id": 385,
+      "slug": "akcesoria-magnetyczne-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 386,
+      "slug": "bioaktywator-wody",
+      "parent_ref": 384,
+      "name": "Bioaktywator wody",
+      "status": "active"
+    },
+    {
+      "id": 387,
+      "slug": "okulary-magnetyczne",
+      "parent_ref": 384,
+      "name": "Okulary magnetyczne",
+      "status": "active"
+    },
+    {
+      "id": 388,
+      "slug": "suplementy-diety",
+      "parent_ref": -5,
+      "name": "Suplementy diety",
+      "status": "active"
+    },
+    {
+      "id": 389,
+      "slug": "suplementy-diety-jestes-w",
+      "parent_ref": null,
+      "name": "Jesteś w:",
+      "status": "archived"
+    },
+    {
+      "id": 390,
+      "slug": "magnetyczne-poduszki-ortopedyczne-jestes-w-materace-i-podklady-magnetyczne",
+      "parent_ref": -2,
+      "name": "Zestawy magnetyczne FORTE BIS",
+      "status": "active"
+    },
+    {
+      "id": 391,
+      "slug": "rehabilitacja",
+      "parent_ref": null,
+      "name": "Rehabilitacja i ćwiczenia",
+      "status": "active"
+    },
+    {
+      "id": 392,
+      "slug": "wozki-elektryczne",
+      "parent_ref": -1,
+      "name": "Wózki elektryczne",
+      "status": "active"
+    },
+    {
+      "id": 393,
+      "slug": "wozki-stalowe",
+      "parent_ref": -1,
+      "name": "Wózki stalowe",
+      "status": "active"
+    },
+    {
+      "id": 394,
+      "slug": "wozki-inwalidzkie-aluminiowe",
+      "parent_ref": -1,
+      "name": "Wózki inwalidzkie aluminiowe",
+      "status": "active"
+    },
+    {
+      "id": 395,
+      "slug": "podporki-aluminiowe",
+      "parent_ref": -1,
+      "name": "Podpórki aluminiowe",
+      "status": "active"
+    },
+    {
+      "id": 396,
+      "slug": "podporki-stalowe",
+      "parent_ref": -1,
+      "name": "Podpórki stalowe",
+      "status": "active"
+    },
+    {
+      "id": 397,
+      "slug": "podporki-z-wlokna-weglowego",
+      "parent_ref": -1,
+      "name": "Podpórki z włókna węglowego",
+      "status": "active"
+    },
+    {
+      "id": 398,
+      "slug": "balkoniki",
+      "parent_ref": -1,
+      "name": "Balkoniki",
+      "status": "active"
+    },
+    {
+      "id": 399,
+      "slug": "podnosniki",
+      "parent_ref": -1,
+      "name": "Podnośniki",
+      "status": "active"
+    },
+    {
+      "id": 400,
+      "slug": "materace-przeciwodlezynowe-piankowe",
+      "parent_ref": -2,
+      "name": "Materace przeciwodleżynowe / piankowe",
+      "status": "active"
+    },
+    {
+      "id": 401,
+      "slug": "poduszki-przeciwodlezynowe-piankowe",
+      "parent_ref": -2,
+      "name": "Poduszki przeciwodleżynowe / piankowe",
+      "status": "active"
+    },
+    {
+      "id": 402,
+      "slug": "sprzet-toaletowy",
+      "parent_ref": -2,
+      "name": "Sprzęt toaletowy",
+      "status": "active"
+    },
+    {
+      "id": 403,
+      "slug": "kule-laski-trojnogi-i-czwornogi",
+      "parent_ref": -1,
+      "name": "Kule, laski, trójnogi i czwórnogi",
+      "status": "active"
+    },
+    {
+      "id": 404,
+      "slug": "akcesoria-do-wozkow-kul-i-balkonikow",
+      "parent_ref": -1,
+      "name": "Akcesoria do wózków, kul i balkoników",
+      "status": "active"
+    },
+    {
+      "id": 405,
+      "slug": "sprzet-pomocniczy",
+      "parent_ref": -2,
+      "name": "Sprzęt pomocniczy",
+      "status": "active"
+    },
+    {
+      "id": 406,
+      "slug": "pacjent-bariatryczny-produkty-xxl",
+      "parent_ref": -2,
+      "name": "Pacjent bariatryczny (produkty XXL)",
+      "status": "active"
+    },
+    {
+      "id": 407,
+      "slug": "lozka-rehabilitacyjne",
+      "parent_ref": -2,
+      "name": "Łóżka rehabilitacyjne",
+      "status": "active"
+    },
+    {
+      "id": 408,
+      "slug": "fotele-geriatryczne",
+      "parent_ref": -2,
+      "name": "Fotele geriatryczne",
+      "status": "active"
+    },
+    {
+      "id": 409,
+      "slug": "higiena-pacjenta",
+      "parent_ref": -2,
+      "name": "Higiena pacjenta",
+      "status": "active"
+    },
+    {
+      "id": 410,
+      "slug": "tlenoterapia",
+      "parent_ref": 234,
+      "name": "Tlenoterapia",
+      "status": "active"
+    },
+    {
+      "id": 414,
+      "slug": "elektromedycyna",
+      "parent_ref": 234,
+      "name": "Elektromedycyna",
+      "status": "active"
+    },
+    {
+      "id": 418,
+      "slug": "fitness",
+      "parent_ref": 391,
+      "name": "Fitness",
+      "status": "active"
+    },
+    {
+      "id": 419,
+      "slug": "ortopedia",
+      "parent_ref": 186,
+      "name": "Ortopedia",
+      "status": "active"
+    },
+    {
+      "id": 428,
+      "slug": "unieruchomienie-i-transfer-pacjenta",
+      "parent_ref": -1,
+      "name": "Unieruchomienie i transfer pacjenta",
+      "status": "active"
+    },
+    {
+      "id": 433,
+      "slug": "medycyna-ogolna",
+      "parent_ref": 234,
+      "name": "Medycyna ogólna",
+      "status": "active"
+    },
+    {
+      "id": 434,
+      "slug": "rehabilitacja-dziecieca-foteliki-wozki-rehabilitacyjne",
+      "parent_ref": -2,
+      "name": "Rehabilitacja dziecięca - foteliki / wózki rehabilitacyjne",
+      "status": "active"
+    },
+    {
+      "id": 435,
+      "slug": "wozki-rehabilitacyjne-dzieciece",
+      "parent_ref": -1,
+      "name": "Wózki rehabilitacyjne dziecięce",
+      "status": "active"
+    },
+    {
+      "id": 437,
+      "slug": "akcesoria-do-wozkow",
+      "parent_ref": -1,
+      "name": "Akcesoria do wózków",
+      "status": "active"
+    },
+    {
+      "id": 439,
+      "slug": "stomatologia-modele-dentystyczne-fantomy",
+      "parent_ref": 234,
+      "name": "Stomatologia / Modele dentystyczne / Fantomy",
+      "status": "active"
+    },
+    {
+      "id": 440,
+      "slug": "bezdech-senny",
+      "parent_ref": 234,
+      "name": "Bezdech Senny",
+      "status": "active"
+    },
+    {
+      "id": 441,
+      "slug": "inkontynencja",
+      "parent_ref": -3,
+      "name": "Inkontynencja",
+      "status": "active"
+    },
+    {
+      "id": 442,
+      "slug": "produkty-do-rehabilitacji",
+      "parent_ref": 391,
+      "name": "Produkty do rehabilitacji",
+      "status": "active"
+    },
+    {
+      "id": 443,
+      "slug": "wyroby-z-pianki-i-podklady-wielorazowe",
+      "parent_ref": -2,
+      "name": "Wyroby z pianki i podkłady wielorazowe",
+      "status": "active"
+    },
+    {
+      "id": 449,
+      "slug": "aparaty-korekcyjne-podkladki-i-oslony",
+      "parent_ref": 1191,
+      "name": "Aparaty korekcyjne, podkładki i osłony",
+      "status": "active"
+    },
+    {
+      "id": 451,
+      "slug": "chodziki",
+      "parent_ref": -1,
+      "name": "Chodziki",
+      "status": "active"
+    },
+    {
+      "id": 453,
+      "slug": "sprzet-pomocniczy-i-sanitarny",
+      "parent_ref": -2,
+      "name": "Sprzęt pomocniczy i sanitarny",
+      "status": "active"
+    },
+    {
+      "id": 471,
+      "slug": "laski-czwornogi-trojnogi",
+      "parent_ref": -1,
+      "name": "Laski, czwórnogi, trójnogi",
+      "status": "active"
+    },
+    {
+      "id": 473,
+      "slug": "pneumatyczne-materace-przeciwodlezynowe",
+      "parent_ref": -2,
+      "name": "Pneumatyczne materace przeciwodleżynowe",
+      "status": "active"
+    },
+    {
+      "id": 474,
+      "slug": "wyroby-niemedyczne",
+      "parent_ref": -5,
+      "name": "Wyroby niemedyczne",
+      "status": "active"
+    },
+    {
+      "id": 482,
+      "slug": "sprzet-pomocniczy-i-sanitarny-tlenoterapia-inhalatory-sprzet-sanitarny",
+      "parent_ref": -2,
+      "name": "Sprzęt sanitarny",
+      "status": "active"
+    },
+    {
+      "id": 486,
+      "slug": "akcesoria-do-kul-i-lasek",
+      "parent_ref": -1,
+      "name": "Akcesoria do kul i lasek",
+      "status": "active"
+    },
+    {
+      "id": 492,
+      "slug": "kule-lokciowe",
+      "parent_ref": -1,
+      "name": "Kule łokciowe",
+      "status": "active"
+    },
+    {
+      "id": 494,
+      "slug": "kule-pachowe",
+      "parent_ref": -1,
+      "name": "Kule pachowe",
+      "status": "active"
+    },
+    {
+      "id": 503,
+      "slug": "piankowe-materace-przeciwodlezynowe",
+      "parent_ref": -2,
+      "name": "Piankowe materace przeciwodleżynowe",
+      "status": "active"
+    },
+    {
+      "id": 506,
+      "slug": "tasmy-do-fizjoterapii",
+      "parent_ref": 391,
+      "name": "Taśmy do fizjoterapii",
+      "status": "active"
+    },
+    {
+      "id": 507,
+      "slug": "wkladki-i-podpietki-ortopedyczne",
+      "parent_ref": 1191,
+      "name": "Wkładki i podpiętki ortopedyczne",
+      "status": "active"
+    },
+    {
+      "id": 508,
+      "slug": "wyroby-niemedyczne-akcesoria-do-wozkow-inwalidzkich",
+      "parent_ref": -1,
+      "name": "Akcesoria do wózków inwalidzkich",
+      "status": "active"
+    },
+    {
+      "id": 524,
+      "slug": "wyposazenie-wozkow-i-chodzikow",
+      "parent_ref": -1,
+      "name": "Wyposażenie wózków i chodzików",
+      "status": "active"
+    },
+    {
+      "id": 527,
+      "slug": "pneumatyczny-system-terapii-kompresyjnej",
+      "parent_ref": 234,
+      "name": "Pneumatyczny system terapii kompresyjnej",
+      "status": "active"
+    },
+    {
+      "id": 528,
+      "slug": "srodki-do-pielegnacji",
+      "parent_ref": -3,
+      "name": "Środki do pielęgnacji",
+      "status": "active"
+    },
+    {
+      "id": 539,
+      "slug": "rowery-elektromagnetyczne",
+      "parent_ref": 391,
+      "name": "Rowery elektromagnetyczne",
+      "status": "active"
+    },
+    {
+      "id": 540,
+      "slug": "leje-silikonowe",
+      "parent_ref": -2,
+      "name": "Leje silikonowe",
+      "status": "active"
+    },
+    {
+      "id": 560,
+      "slug": "odziez-medyczna",
+      "parent_ref": null,
+      "name": "Odzież medyczna i zawodowa",
+      "status": "active"
+    },
+    {
+      "id": 575,
+      "slug": "spodnice-medyczne",
+      "parent_ref": 560,
+      "name": "Spódnice medyczne",
+      "status": "active"
+    },
+    {
+      "id": 584,
+      "slug": "obuwie-medyczne",
+      "parent_ref": 1191,
+      "name": "Obuwie medyczne",
+      "status": "active"
+    },
+    {
+      "id": 587,
+      "slug": "kompresja",
+      "parent_ref": null,
+      "name": "Kompresja medyczna",
+      "status": "active"
+    },
+    {
+      "id": 618,
+      "slug": "wkladki-ortopedyczne",
+      "parent_ref": 1191,
+      "name": "Wkładki ortopedyczne",
+      "status": "active"
+    },
+    {
+      "id": 620,
+      "slug": "akcesoria-medi",
+      "parent_ref": 587,
+      "name": "Akcesoria",
+      "status": "active"
+    },
+    {
+      "id": 637,
+      "slug": "kompresy-zelowe",
+      "parent_ref": 391,
+      "name": "Kompresy żelowe",
+      "status": "active"
+    },
+    {
+      "id": 639,
+      "slug": "produkty-medyczne",
+      "parent_ref": 234,
+      "name": "Produkty medyczne",
+      "status": "active"
+    },
+    {
+      "id": 640,
+      "slug": "produkty-opatrunkowe",
+      "parent_ref": -4,
+      "name": "Produkty opatrunkowe",
+      "status": "active"
+    },
+    {
+      "id": 644,
+      "slug": "skarpetki-zdrowotne",
+      "parent_ref": 1191,
+      "name": "Skarpetki zdrowotne",
+      "status": "active"
+    },
+    {
+      "id": 657,
+      "slug": "srodki-ochrony-osobistej",
+      "parent_ref": -4,
+      "name": "Środki ochrony osobistej",
+      "status": "active"
+    },
+    {
+      "id": 680,
+      "slug": "kremy-i-preparaty",
+      "parent_ref": -5,
+      "name": "Kremy i preparaty",
+      "status": "active"
+    },
+    {
+      "id": 681,
+      "slug": "scholl",
+      "parent_ref": 1191,
+      "name": "Scholl",
+      "status": "active"
+    },
+    {
+      "id": 682,
+      "slug": "kremy-i-dezodoranty",
+      "parent_ref": -5,
+      "name": "Kremy i dezodoranty",
+      "status": "active"
+    },
+    {
+      "id": 683,
+      "slug": "aplikatory-preparaty-akcesoria-i-kosmetyki",
+      "parent_ref": -5,
+      "name": "Aplikatory, preparaty, akcesoria i kosmetyki",
+      "status": "active"
+    },
+    {
+      "id": 689,
+      "slug": "naped-elektryczny-do-wozkow-manualnych",
+      "parent_ref": -1,
+      "name": "Napęd elektryczny do wózków manualnych",
+      "status": "active"
+    },
+    {
+      "id": 692,
+      "slug": "wozki-manualne",
+      "parent_ref": -1,
+      "name": "Wózki manualne",
+      "status": "active"
+    },
+    {
+      "id": 703,
+      "slug": "skutery",
+      "parent_ref": -1,
+      "name": "Skutery",
+      "status": "active"
+    },
+    {
+      "id": 704,
+      "slug": "swiat-dziecka",
+      "parent_ref": -2,
+      "name": "Świat dziecka",
+      "status": "active"
+    },
+    {
+      "id": 706,
+      "slug": "urzadzenia-do-pionizacji",
+      "parent_ref": 391,
+      "name": "Urządzenia do pionizacji",
+      "status": "active"
+    },
+    {
+      "id": 707,
+      "slug": "lozka",
+      "parent_ref": -2,
+      "name": "Łóżka",
+      "status": "active"
+    },
+    {
+      "id": 708,
+      "slug": "podporkipomoce-lokomocyjne",
+      "parent_ref": -1,
+      "name": "Podpórki/Pomoce lokomocyjne",
+      "status": "active"
+    },
+    {
+      "id": 716,
+      "slug": "podnosniki-kapielowo-transportowe",
+      "parent_ref": -1,
+      "name": "Podnośniki kąpielowo-transportowe",
+      "status": "active"
+    },
+    {
+      "id": 717,
+      "slug": "sprzet-pomocniczy-rotory",
+      "parent_ref": 391,
+      "name": "Rotory",
+      "status": "active"
+    },
+    {
+      "id": 718,
+      "slug": "rampy",
+      "parent_ref": -1,
+      "name": "Rampy",
+      "status": "active"
+    },
+    {
+      "id": 719,
+      "slug": "sprzet-przeciwodlezynowy",
+      "parent_ref": -2,
+      "name": "Sprzęt przeciwodleżynowy",
+      "status": "active"
+    },
+    {
+      "id": 721,
+      "slug": "materace-przeciwodlwezynowe-pasywne",
+      "parent_ref": 719,
+      "name": "Materace przeciwodleżynowe pasywne",
+      "status": "active"
+    },
+    {
+      "id": 722,
+      "slug": "materace-przeciwodlwezynowe-aktywne",
+      "parent_ref": 719,
+      "name": "Materace przeciwodleżynowe aktywne",
+      "status": "active"
+    },
+    {
+      "id": 723,
+      "slug": "rowery-trojkolowe",
+      "parent_ref": 391,
+      "name": "Rowery trójkołowe",
+      "status": "active"
+    },
+    {
+      "id": 728,
+      "slug": "physipro",
+      "parent_ref": -2,
+      "name": "Physipro",
+      "status": "active"
+    },
+    {
+      "id": 729,
+      "slug": "vicair",
+      "parent_ref": -2,
+      "name": "Vicair",
+      "status": "active"
+    },
+    {
+      "id": 730,
+      "slug": "stabilo",
+      "parent_ref": -2,
+      "name": "Stabilo",
+      "status": "active"
+    },
+    {
+      "id": 736,
+      "slug": "bark",
+      "parent_ref": 186,
+      "name": "Bark",
+      "status": "active"
+    },
+    {
+      "id": 737,
+      "slug": "kolano",
+      "parent_ref": 186,
+      "name": "Kolano",
+      "status": "active"
+    },
+    {
+      "id": 738,
+      "slug": "lokiec",
+      "parent_ref": 186,
+      "name": "Łokieć",
+      "status": "active"
+    },
+    {
+      "id": 739,
+      "slug": "nadgarstek",
+      "parent_ref": 186,
+      "name": "Nadgarstek",
+      "status": "active"
+    },
+    {
+      "id": 740,
+      "slug": "palce",
+      "parent_ref": 186,
+      "name": "Palce",
+      "status": "active"
+    },
+    {
+      "id": 741,
+      "slug": "stopa",
+      "parent_ref": 186,
+      "name": "Stopa",
+      "status": "active"
+    },
+    {
+      "id": 742,
+      "slug": "szyja",
+      "parent_ref": 186,
+      "name": "Szyja",
+      "status": "active"
+    },
+    {
+      "id": 743,
+      "slug": "microlife",
+      "parent_ref": 234,
+      "name": "Microlife",
+      "status": "active"
+    },
+    {
+      "id": 766,
+      "slug": "stabilizatory-na-gorna-czesc-ciala",
+      "parent_ref": 186,
+      "name": "Stabilizatory na górną część ciała",
+      "status": "active"
+    },
+    {
+      "id": 767,
+      "slug": "krioterapia-miejscowa",
+      "parent_ref": 391,
+      "name": "KRIOTERAPIA MIEJSCOWA",
+      "status": "active"
+    },
+    {
+      "id": 768,
+      "slug": "stabilizator-barkowy",
+      "parent_ref": 186,
+      "name": "Stabilizator barkowy",
+      "status": "active"
+    },
+    {
+      "id": 769,
+      "slug": "ortezy-dla-siatkarzy",
+      "parent_ref": 186,
+      "name": "Ortezy dla siatkarzy",
+      "status": "active"
+    },
+    {
+      "id": 770,
+      "slug": "stabilizatory-stawu-kolanowego",
+      "parent_ref": 186,
+      "name": "Stabilizatory stawu kolanowego",
+      "status": "active"
+    },
+    {
+      "id": 771,
+      "slug": "ortezy-dla-biegaczy",
+      "parent_ref": 186,
+      "name": "Ortezy dla biegaczy",
+      "status": "active"
+    },
+    {
+      "id": 773,
+      "slug": "stabilizator-kolana-do-biegania",
+      "parent_ref": 186,
+      "name": "Stabilizator kolana do biegania",
+      "status": "active"
+    },
+    {
+      "id": 774,
+      "slug": "stabilizator-na-kostke-do-koszykowki",
+      "parent_ref": 186,
+      "name": "Stabilizator na kostkę do koszykówki",
+      "status": "active"
+    },
+    {
+      "id": 775,
+      "slug": "ortezy-dla-koszykarzy",
+      "parent_ref": 186,
+      "name": "Ortezy dla koszykarzy",
+      "status": "active"
+    },
+    {
+      "id": 776,
+      "slug": "ortezy-dla-pilkarzy",
+      "parent_ref": 186,
+      "name": "Ortezy dla piłkarzy",
+      "status": "active"
+    },
+    {
+      "id": 778,
+      "slug": "stabilizator-do-koszykowki",
+      "parent_ref": 186,
+      "name": "Stabilizator do koszykówki",
+      "status": "active"
+    },
+    {
+      "id": 780,
+      "slug": "stabilizatory-stawu-skokowego",
+      "parent_ref": 186,
+      "name": "Stabilizatory stawu skokowego",
+      "status": "active"
+    },
+    {
+      "id": 783,
+      "slug": "stabilizator-na-kostke",
+      "parent_ref": 186,
+      "name": "Stabilizator na kostkę",
+      "status": "active"
+    },
+    {
+      "id": 784,
+      "slug": "stabilizator-ledzwiowy",
+      "parent_ref": 186,
+      "name": "Stabilizator lędźwiowy",
+      "status": "active"
+    },
+    {
+      "id": 786,
+      "slug": "stabilizator-na-nadgarstek",
+      "parent_ref": 186,
+      "name": "Stabilizator na nadgarstek",
+      "status": "active"
+    },
+    {
+      "id": 787,
+      "slug": "wyroby-kompresyjne",
+      "parent_ref": 587,
+      "name": "Wyroby kompresyjne",
+      "status": "active"
+    },
+    {
+      "id": 801,
+      "slug": "kompresja-profilaktyczna",
+      "parent_ref": 587,
+      "name": "Kompresja profilaktyczna",
+      "status": "active"
+    },
+    {
+      "id": 821,
+      "slug": "wyroby-ortopedyczne",
+      "parent_ref": 186,
+      "name": "Wyroby ortopedyczne",
+      "status": "active"
+    },
+    {
+      "id": 857,
+      "slug": "produkty-rehabilitacyjne",
+      "parent_ref": 391,
+      "name": "Produkty rehabilitacyjne",
+      "status": "active"
+    },
+    {
+      "id": 858,
+      "slug": "balkoniki-i-podporki",
+      "parent_ref": -1,
+      "name": "Balkoniki i podpórki",
+      "status": "active"
+    },
+    {
+      "id": 859,
+      "slug": "srodki-pomocnicze",
+      "parent_ref": -2,
+      "name": "Środki pomocnicze",
+      "status": "active"
+    },
+    {
+      "id": 862,
+      "slug": "produkty-ortopedyczne",
+      "parent_ref": 186,
+      "name": "Produkty ortopedyczne",
+      "status": "active"
+    },
+    {
+      "id": 873,
+      "slug": "produkty-rehabilitacyjne-wozki-inwalidzkie",
+      "parent_ref": 1,
+      "name": "Wózki inwalidzkie Armedical",
+      "status": "active"
+    },
+    {
+      "id": 876,
+      "slug": "kule-i-laski-inwalidzkie",
+      "parent_ref": -1,
+      "name": "Kule i laski inwalidzkie",
+      "status": "active"
+    },
+    {
+      "id": 878,
+      "slug": "materace-przeciwodlezynowe",
+      "parent_ref": -2,
+      "name": "Materace przeciwodleżynowe",
+      "status": "active"
+    },
+    {
+      "id": 880,
+      "slug": "gipsy-lekkie",
+      "parent_ref": -4,
+      "name": "Gipsy lekkie",
+      "status": "active"
+    },
+    {
+      "id": 882,
+      "slug": "oklady-zimno-cieple",
+      "parent_ref": 391,
+      "name": "Okłady zimno-ciepłe",
+      "status": "active"
+    },
+    {
+      "id": 884,
+      "slug": "produkty-ortopedyczne-poduszki-ortopedyczne",
+      "parent_ref": 231,
+      "name": "Poduszki ortopedyczne Armedical",
+      "status": "active"
+    },
+    {
+      "id": 885,
+      "slug": "produkty-rehabilitacyjne-poduszki-przeciwodlezynowe",
+      "parent_ref": -2,
+      "name": "Poduszki przeciwodleżynowe",
+      "status": "active"
+    },
+    {
+      "id": 891,
+      "slug": "poduszki-ortopedyczne-dr-sapporo",
+      "parent_ref": 391,
+      "name": "Poduszki ortopedyczne Dr Sapporo",
+      "status": "active"
+    },
+    {
+      "id": 892,
+      "slug": "poszewki-na-poduszki-dr-sapporo",
+      "parent_ref": 391,
+      "name": "Poszewki na poduszki Dr Sapporo",
+      "status": "active"
+    },
+    {
+      "id": 893,
+      "slug": "poduszki-ortopedyczne-onsen",
+      "parent_ref": 391,
+      "name": "Poduszki ortopedyczne ONSEN",
+      "status": "active"
+    },
+    {
+      "id": 894,
+      "slug": "poszewki-na-poduszki-onsen",
+      "parent_ref": 391,
+      "name": "Poszewki na poduszki ONSEN",
+      "status": "active"
+    },
+    {
+      "id": 895,
+      "slug": "aparaty-na-haluksy",
+      "parent_ref": 1191,
+      "name": "Aparaty na haluksy",
+      "status": "active"
+    },
+    {
+      "id": 896,
+      "slug": "zaopatrzenie-stopy-cukrzycowej",
+      "parent_ref": 1191,
+      "name": "Zaopatrzenie Stopy Cukrzycowej",
+      "status": "active"
+    },
+    {
+      "id": 898,
+      "slug": "zaopatrzenie-ortopedyczne-stopy",
+      "parent_ref": 1191,
+      "name": "Zaopatrzenie Ortopedyczne Stopy",
+      "status": "active"
+    },
+    {
+      "id": 900,
+      "slug": "zaopatrzenie-po-operacjach-hallux-valgus",
+      "parent_ref": 1191,
+      "name": "Zaopatrzenie po operacjach Hallux Valgus",
+      "status": "active"
+    },
+    {
+      "id": 905,
+      "slug": "zaopatrzenie-stopy-cukrzycowej-darco-walkery-efektywne-unieruchomienie-stopy",
+      "parent_ref": 186,
+      "name": "DARCO - Walkery - efektywne unieruchomienie stopy",
+      "status": "active"
+    },
+    {
+      "id": 908,
+      "slug": "zaopatrzenie-stopy-cukrzycowej-prime-medical-opaski-gipsowe",
+      "parent_ref": -4,
+      "name": "PRIME MEDICAL - Opaski gipsowe",
+      "status": "active"
+    },
+    {
+      "id": 910,
+      "slug": "zaopatrzenie-stopy-cukrzycowej-prime-medical-stokinetka-rekaw-pod-gips",
+      "parent_ref": -4,
+      "name": "PRIME MEDICAL - Stokinetka - rękaw pod gips",
+      "status": "active"
+    },
+    {
+      "id": 914,
+      "slug": "podologia",
+      "parent_ref": 1191,
+      "name": "Podologia",
+      "status": "active"
+    },
+    {
+      "id": 938,
+      "slug": "zaopatrzenie-stopy-cukrzycowej-ochraniacze-przed-woda-i-wilgocia",
+      "parent_ref": -4,
+      "name": "Ochraniacze przed wodą i wilgocią",
+      "status": "active"
+    },
+    {
+      "id": 942,
+      "slug": "zaopatrzenie-stopy-cukrzycowej-ochraniacze-przed-woda-i-wilgocia-oryginal",
+      "parent_ref": 1191,
+      "name": "ORYGINAL",
+      "status": "active"
+    },
+    {
+      "id": 944,
+      "slug": "zaopatrzenie-stopy-cukrzycowej-ochraniacze-przed-woda-i-wilgocia-freedom",
+      "parent_ref": 1191,
+      "name": "FREEDOM",
+      "status": "active"
+    },
+    {
+      "id": 946,
+      "slug": "zaopatrzenie-stopy-cukrzycowej-ochraniacze-przed-woda-i-wilgocia-sport",
+      "parent_ref": 1191,
+      "name": "SPORT",
+      "status": "active"
+    },
+    {
+      "id": 961,
+      "slug": "materialy-do-produkcji-wkladek",
+      "parent_ref": 1191,
+      "name": "Materiały do produkcji wkładek",
+      "status": "active"
+    },
+    {
+      "id": 965,
+      "slug": "podologia-plastry",
+      "parent_ref": -4,
+      "name": "Plastry",
+      "status": "active"
+    },
+    {
+      "id": 970,
+      "slug": "zaopatrzenie-ortopedyczne-stopy-zaopatrzenie-po-operacjach-hallux-valgus",
+      "parent_ref": 186,
+      "name": "Zaopatrzenie po operacjach Hallux Valgus",
+      "status": "active"
+    },
+    {
+      "id": 975,
+      "slug": "zaopatrzenie-ortopedyczne-stopy-splint-nightsplint",
+      "parent_ref": 186,
+      "name": "NightSplint",
+      "status": "active"
+    },
+    {
+      "id": 976,
+      "slug": "zaopatrzenie-ortopedyczne-stopy-splint-posterior-splint",
+      "parent_ref": 186,
+      "name": "Posterior Splint",
+      "status": "active"
+    },
+    {
+      "id": 978,
+      "slug": "materialy-do-produkcji-wkladek-kleje",
+      "parent_ref": -4,
+      "name": "Kleje",
+      "status": "active"
+    },
+    {
+      "id": 979,
+      "slug": "seni24",
+      "parent_ref": null,
+      "name": "Seni24",
+      "status": "archived"
+    },
+    {
+      "id": 980,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna",
+      "parent_ref": -5,
+      "name": "Higiena i pielęgnacja specjalistyczna",
+      "status": "active"
+    },
+    {
+      "id": 983,
+      "slug": "seni24-opatrywanie-i-leczenie-ran",
+      "parent_ref": -4,
+      "name": "Opatrywanie i leczenie ran",
+      "status": "active"
+    },
+    {
+      "id": 986,
+      "slug": "seni24-opatrywanie-i-leczenie-ran-igly-i-strzykawki",
+      "parent_ref": 234,
+      "name": "Igły i strzykawki",
+      "status": "active"
+    },
+    {
+      "id": 991,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-rekawiczki-jednorazowe",
+      "parent_ref": 234,
+      "name": "Rękawiczki jednorazowe",
+      "status": "active"
+    },
+    {
+      "id": 993,
+      "slug": "seni24-opatrywanie-i-leczenie-ran-akcesoria-medyczne",
+      "parent_ref": 234,
+      "name": "Akcesoria medyczne",
+      "status": "active"
+    },
+    {
+      "id": 997,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-srodki-do-dezynfekcji",
+      "parent_ref": -4,
+      "name": "Środki do dezynfekcji",
+      "status": "active"
+    },
+    {
+      "id": 998,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-srodki-do-dezynfekcji-mycie-i-pielegnacja-rak-i-ciala",
+      "parent_ref": -5,
+      "name": "Mycie i pielęgnacja rąk i ciała",
+      "status": "active"
+    },
+    {
+      "id": 1000,
+      "slug": "seni24-drogeria",
+      "parent_ref": -3,
+      "name": "Drogeria",
+      "status": "active"
+    },
+    {
+      "id": 1007,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-podklady-i-posciel",
+      "parent_ref": -3,
+      "name": "Podkłady i pościel",
+      "status": "active"
+    },
+    {
+      "id": 1009,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-produkty-higieniczne-i-ochronne",
+      "parent_ref": -2,
+      "name": "Produkty higieniczne i ochronne",
+      "status": "active"
+    },
+    {
+      "id": 1011,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier",
+      "parent_ref": 391,
+      "name": "Rehabilitacja i likwidacja barier",
+      "status": "active"
+    },
+    {
+      "id": 1022,
+      "slug": "seni24-drogeria-kosmetyki-do-mycia-i-pielegnacji-ciala",
+      "parent_ref": -5,
+      "name": "Kosmetyki do mycia i pielęgnacji ciała",
+      "status": "active"
+    },
+    {
+      "id": 1024,
+      "slug": "seni24-specjalizacje",
+      "parent_ref": 234,
+      "name": "Specjalizacje",
+      "status": "active"
+    },
+    {
+      "id": 1025,
+      "slug": "seni24-specjalizacje-rehabilitacja",
+      "parent_ref": 391,
+      "name": "Rehabilitacja",
+      "status": "active"
+    },
+    {
+      "id": 1026,
+      "slug": "seni24-specjalizacje-rehabilitacja-skarpety-medyczne",
+      "parent_ref": 1191,
+      "name": "Skarpety medyczne",
+      "status": "active"
+    },
+    {
+      "id": 1029,
+      "slug": "seni24-rekawice-dezynfekcja-akcesoria-medyczne",
+      "parent_ref": 234,
+      "name": "Rękawice, dezynfekcja, akcesoria medyczne",
+      "status": "active"
+    },
+    {
+      "id": 1036,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier-produkty-przeciwzylakowe-i-medyczne",
+      "parent_ref": 587,
+      "name": "Produkty przeciwżylakowe i medyczne",
+      "status": "active"
+    },
+    {
+      "id": 1037,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier-produkty-przeciwzylakowe-i-medyczne-skarpetki-medyczne-dla-diabetykow",
+      "parent_ref": 1191,
+      "name": "Skarpetki medyczne dla diabetyków",
+      "status": "active"
+    },
+    {
+      "id": 1047,
+      "slug": "seni24-drogeria-mama-i-dziecko-akcesoria-dla-niemowlat",
+      "parent_ref": -5,
+      "name": "Akcesoria dla niemowląt",
+      "status": "active"
+    },
+    {
+      "id": 1048,
+      "slug": "seni24-drogeria-mama-i-dziecko-zywienie-dziecka",
+      "parent_ref": -5,
+      "name": "Żywienie dziecka",
+      "status": "active"
+    },
+    {
+      "id": 1049,
+      "slug": "seni24-okazje",
+      "parent_ref": -3,
+      "name": "Okazje",
+      "status": "active"
+    },
+    {
+      "id": 1051,
+      "slug": "seni24-okazje-oferty-produkty-przeciwzylakowe",
+      "parent_ref": 587,
+      "name": "Produkty przeciwżylakowe",
+      "status": "active"
+    },
+    {
+      "id": 1054,
+      "slug": "seni24-nietrzymanie-moczu",
+      "parent_ref": -3,
+      "name": "Nietrzymanie moczu",
+      "status": "active"
+    },
+    {
+      "id": 1059,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-odziez-i-maseczki",
+      "parent_ref": 560,
+      "name": "Odzież i maseczki",
+      "status": "active"
+    },
+    {
+      "id": 1068,
+      "slug": "seni24-opatrywanie-i-leczenie-ran-gotowe-zestawy-opatrunkowe-i-zabiegowe-zestawy-zabiegowe",
+      "parent_ref": 234,
+      "name": "Zestawy zabiegowe",
+      "status": "active"
+    },
+    {
+      "id": 1069,
+      "slug": "seni24-materialy-opatrunkowe",
+      "parent_ref": -4,
+      "name": "Materiały opatrunkowe",
+      "status": "active"
+    },
+    {
+      "id": 1071,
+      "slug": "seni24-materialy-opatrunkowe-kompresy-i-gaza-drobny-material-zabiegowy",
+      "parent_ref": 234,
+      "name": "Drobny materiał zabiegowy",
+      "status": "active"
+    },
+    {
+      "id": 1072,
+      "slug": "seni24-dezynfekcja-sterylizacja",
+      "parent_ref": -4,
+      "name": "Dezynfekcja, sterylizacja",
+      "status": "active"
+    },
+    {
+      "id": 1074,
+      "slug": "seni24-dezynfekcja-sterylizacja-mycie-i-pielegnacja-medyczna-srodki-do-mycia-skory",
+      "parent_ref": -5,
+      "name": "Środki do mycia skóry",
+      "status": "active"
+    },
+    {
+      "id": 1088,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-srodki-do-dezynfekcji-akcesoria-pomocnicze-i-dozowniki",
+      "parent_ref": 234,
+      "name": "Akcesoria pomocnicze i dozowniki",
+      "status": "active"
+    },
+    {
+      "id": 1090,
+      "slug": "seni24-nietrzymanie-moczu-podklady-higieniczne-podklady-i-przescieradla-wielorazowe",
+      "parent_ref": -2,
+      "name": "Podkłady i prześcieradła wielorazowe",
+      "status": "active"
+    },
+    {
+      "id": 1092,
+      "slug": "seni24-opatrywanie-i-leczenie-ran-opatrunki-do-unieruchomien-temblaki",
+      "parent_ref": 186,
+      "name": "Temblaki",
+      "status": "active"
+    },
+    {
+      "id": 1103,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier-akcesoria-toaletowe",
+      "parent_ref": -2,
+      "name": "Akcesoria toaletowe",
+      "status": "active"
+    },
+    {
+      "id": 1107,
+      "slug": "seni24-drogeria-kontrola-zdrowia-termoterapia",
+      "parent_ref": 391,
+      "name": "Termoterapia",
+      "status": "active"
+    },
+    {
+      "id": 1110,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier-poduszki-ortopedyczne-i-z-gryki-kliny-dla-kobiet-po-mastektomii",
+      "parent_ref": -2,
+      "name": "Kliny dla kobiet po mastektomii",
+      "status": "active"
+    },
+    {
+      "id": 1113,
+      "slug": "seni24-pomoce-codzienne-i-rehabilitacja",
+      "parent_ref": 391,
+      "name": "Pomoce codzienne i rehabilitacja",
+      "status": "active"
+    },
+    {
+      "id": 1116,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier-produkty-przeciwodlezynowe",
+      "parent_ref": -2,
+      "name": "Produkty przeciwodleżynowe",
+      "status": "active"
+    },
+    {
+      "id": 1119,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier-pomoce-codzienne-dla-diabetykow",
+      "parent_ref": -3,
+      "name": "Dla diabetyków",
+      "status": "active"
+    },
+    {
+      "id": 1135,
+      "slug": "seni24-rekawiczki-odziez-medyczna-oblozenia",
+      "parent_ref": 234,
+      "name": "Rękawiczki, odzież medyczna, obłożenia",
+      "status": "active"
+    },
+    {
+      "id": 1145,
+      "slug": "seni24-drogeria-kontrola-zdrowia-witaminy-i-suplementy-diety",
+      "parent_ref": -5,
+      "name": "Witaminy i suplementy diety",
+      "status": "active"
+    },
+    {
+      "id": 1146,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-zywnosc-medyczna",
+      "parent_ref": -2,
+      "name": "Żywność medyczna",
+      "status": "active"
+    },
+    {
+      "id": 1149,
+      "slug": "seni24-drogeria-apteczka-domowa",
+      "parent_ref": 234,
+      "name": "Apteczka domowa",
+      "status": "active"
+    },
+    {
+      "id": 1151,
+      "slug": "seni24-iniekcja-narzedzia-i-akcesoria-medyczne",
+      "parent_ref": 234,
+      "name": "Iniekcja, narzędzia i akcesoria medyczne",
+      "status": "active"
+    },
+    {
+      "id": 1160,
+      "slug": "seni24-higiena-i-pielegnacja-specjalistyczna-podklady-i-posciel-podklady-jednorazowe-seni",
+      "parent_ref": -2,
+      "name": "Podkłady jednorazowe Seni",
+      "status": "active"
+    },
+    {
+      "id": 1163,
+      "slug": "seni24-specjalizacje-kompresjoterapia",
+      "parent_ref": 587,
+      "name": "Kompresjoterapia",
+      "status": "active"
+    },
+    {
+      "id": 1166,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier-pasy-i-opaski-rehabilitacyjne-pasy-rehabilitacyjne",
+      "parent_ref": 186,
+      "name": "Pasy rehabilitacyjne",
+      "status": "active"
+    },
+    {
+      "id": 1168,
+      "slug": "seni24-drogeria-produkty-higieniczne-podklady-jednorazowe",
+      "parent_ref": -2,
+      "name": "Podkłady jednorazowe",
+      "status": "active"
+    },
+    {
+      "id": 1173,
+      "slug": "seni24-higiena-i-srodki-czystosci",
+      "parent_ref": -3,
+      "name": "Higiena i środki czystości",
+      "status": "active"
+    },
+    {
+      "id": 1178,
+      "slug": "seni24-rehabilitacja-i-likwidacja-barier-pomoce-codzienne-kasetki-i-akcesoria-do-lekow",
+      "parent_ref": -2,
+      "name": "Kasetki i akcesoria do leków",
+      "status": "active"
+    },
+    {
+      "id": 1186,
+      "slug": "akcesoria-do-cwiczen",
+      "parent_ref": 391,
+      "name": "Akcesoria do ćwiczeń",
+      "status": "active"
+    },
+    {
+      "id": 1187,
+      "slug": "inne-produkty",
+      "parent_ref": 1191,
+      "name": "Inne produkty",
+      "status": "active"
+    },
+    {
+      "id": 1188,
+      "slug": "dla-rodziny",
+      "parent_ref": 1191,
+      "name": "Dla rodziny",
+      "status": "active"
+    },
+    {
+      "id": 1189,
+      "slug": "medyczne",
+      "parent_ref": 1191,
+      "name": "Medyczne",
+      "status": "active"
+    },
+    {
+      "id": 1191,
+      "slug": "obuwie",
+      "parent_ref": null,
+      "name": "Obuwie i pielęgnacja stóp",
+      "status": "active"
+    },
+    {
+      "id": 1192,
+      "slug": "befado",
+      "parent_ref": null,
+      "name": "Befado",
+      "status": "archived"
+    },
+    {
+      "id": 1193,
+      "slug": "befadopl",
+      "parent_ref": null,
+      "name": "Befado.pl",
+      "status": "archived"
+    }
+  ],
+  "retire_category_ids": [
+    366,
+    369,
+    373,
+    375,
+    377,
+    379,
+    382,
+    383,
+    385,
+    389,
+    979,
+    1192,
+    1193
+  ],
+  "product_primary_overrides": [
+    {
+      "product_id": 1,
+      "external_source": "eldan",
+      "external_id": "1847",
+      "name": "bluza kosmetyczna damska ze spandexem MIA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 96,
+      "external_source": "mobilex",
+      "external_id": "34386",
+      "name": "Taca do podpórki czterokołowej PUMA AIR",
+      "category_ref": -13,
+      "reason": "Explicit rollator accessory; remove shared clothing ancestry"
+    },
+    {
+      "product_id": 97,
+      "external_source": "mobilex",
+      "external_id": "28736",
+      "name": "Taca do podpórek czterokołowych TIGER, LEOPARD, GEPARD",
+      "category_ref": -13,
+      "reason": "Explicit rollator accessory; remove shared clothing ancestry"
+    },
+    {
+      "product_id": 98,
+      "external_source": "mobilex",
+      "external_id": "28740",
+      "name": "Torba zamykana na suwak do podpórek czterokołowych TIGER, LEOPARD, GEPARD",
+      "category_ref": -13,
+      "reason": "Explicit rollator accessory; remove shared clothing ancestry"
+    },
+    {
+      "product_id": 99,
+      "external_source": "mobilex",
+      "external_id": "28749",
+      "name": "Saszetka zapinana na suwak do podpórek czterokołowych",
+      "category_ref": -13,
+      "reason": "Explicit rollator accessory; remove shared clothing ancestry"
+    },
+    {
+      "product_id": 100,
+      "external_source": "mobilex",
+      "external_id": "28743",
+      "name": "Torba zamykana na suwak do podpórek czterokołowych BUFFALO",
+      "category_ref": -13,
+      "reason": "Explicit rollator accessory; remove shared clothing ancestry"
+    },
+    {
+      "product_id": 101,
+      "external_source": "mobilex",
+      "external_id": "28745",
+      "name": "Światła LED do podpórek czterokołowych Mobilex",
+      "category_ref": -13,
+      "reason": "Explicit rollator accessory; remove shared clothing ancestry"
+    },
+    {
+      "product_id": 311,
+      "external_source": "eldan",
+      "external_id": "15652",
+      "name": "bezrękawnik polarowy damski zapinany na zamek EMI",
+      "category_ref": 578,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 312,
+      "external_source": "eldan",
+      "external_id": "44486",
+      "name": "bluza CARMEN dł. rękaw",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 313,
+      "external_source": "eldan",
+      "external_id": "44485",
+      "name": "bluza CARMEN kr. rękaw",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 314,
+      "external_source": "eldan",
+      "external_id": "4279",
+      "name": "bluza damska medyczna rozpinana krótki rękaw IGA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 315,
+      "external_source": "eldan",
+      "external_id": "2071",
+      "name": "bluza damska medyczna taliowana krótki rękaw RÓŻA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 316,
+      "external_source": "eldan",
+      "external_id": "2085",
+      "name": "bluza damska medyczna taliowana rękaw 3/4 RÓŻA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 317,
+      "external_source": "eldan",
+      "external_id": "39803",
+      "name": "bluza EVELINE",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 318,
+      "external_source": "eldan",
+      "external_id": "1932",
+      "name": "bluza kosmetyczna damska krótki rękaw MIKO",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 319,
+      "external_source": "eldan",
+      "external_id": "1997",
+      "name": "bluza kosmetyczna damska krótki rękaw PAULA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 320,
+      "external_source": "eldan",
+      "external_id": "2028",
+      "name": "bluza kosmetyczna damska krótki rękaw PAULA FLEX",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 321,
+      "external_source": "eldan",
+      "external_id": "48",
+      "name": "bluza kosmetyczna damska z krótkim rękawem SONIA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 322,
+      "external_source": "eldan",
+      "external_id": "44",
+      "name": "bluza medyczna damska oversize BELLA FLEX",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 323,
+      "external_source": "eldan",
+      "external_id": "716",
+      "name": "bluza medyczna damska z krótkim rękawem ANIA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 324,
+      "external_source": "eldan",
+      "external_id": "1788",
+      "name": "bluza medyczna dla pielęgniarek krótki rękaw LILY",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 325,
+      "external_source": "eldan",
+      "external_id": "3513",
+      "name": "bluza medyczna dla pielęgniarek rękaw 3/4 LILY",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 326,
+      "external_source": "eldan",
+      "external_id": "2857",
+      "name": "bluza medyczna rozpinana krótki rękaw IGA FLEX",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 327,
+      "external_source": "eldan",
+      "external_id": "881",
+      "name": "bluza medyczna rozpinana rękaw 3/4 IGA FLEX",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 328,
+      "external_source": "eldan",
+      "external_id": "2753",
+      "name": "bluza medyczna zapinana na zamek długi rękaw EWA",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 329,
+      "external_source": "eldan",
+      "external_id": "795",
+      "name": "bluza medyczna zapinana na zamek krótki rękaw EWA",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 330,
+      "external_source": "eldan",
+      "external_id": "39525",
+      "name": "bluza rozpinana ze spandexem CINDY",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 331,
+      "external_source": "eldan",
+      "external_id": "4503",
+      "name": "damska bluza medyczna zapinana długi rękaw LAURA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 332,
+      "external_source": "eldan",
+      "external_id": "1636",
+      "name": "damska bluza medyczna zapinana krótki rękaw LAURA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 333,
+      "external_source": "eldan",
+      "external_id": "1590",
+      "name": "damska bluza medyczna ze spandexem KIM",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 334,
+      "external_source": "eldan",
+      "external_id": "15688",
+      "name": "damska bluza ze spandexem MELODY",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 335,
+      "external_source": "eldan",
+      "external_id": "2480",
+      "name": "damska sportowa bluza medyczna długi rękaw LEILA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 336,
+      "external_source": "eldan",
+      "external_id": "755",
+      "name": "damska sportowa bluza medyczna krótki rękaw AVA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 337,
+      "external_source": "eldan",
+      "external_id": "43321",
+      "name": "damskie spodnie z szerokimi nogawkami WIDE LEG",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 338,
+      "external_source": "eldan",
+      "external_id": "2623",
+      "name": "ekskluzywna biała spódnica medyczna STYLE",
+      "category_ref": 575,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 339,
+      "external_source": "eldan",
+      "external_id": "2064",
+      "name": "ekskluzywna bluza medycza damska rękaw 3/4 ROSALIE",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 340,
+      "external_source": "eldan",
+      "external_id": "14668",
+      "name": "ekskluzywna bluza medyczna damska LILIANE",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 341,
+      "external_source": "eldan",
+      "external_id": "14318",
+      "name": "ekskluzywna bluzka medyczna CECILE",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 342,
+      "external_source": "eldan",
+      "external_id": "4005",
+      "name": "ekskluzywna sukienka medyczna krótki rękaw LILIANE",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 343,
+      "external_source": "eldan",
+      "external_id": "4930",
+      "name": "ekskluzywna sukienka medyczna krótki rękaw VIVIANE",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 344,
+      "external_source": "eldan",
+      "external_id": "5067",
+      "name": "ekskluzywna tunika medyczna krótki rękaw BRIGITTE",
+      "category_ref": -10,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 345,
+      "external_source": "eldan",
+      "external_id": "2377",
+      "name": "ekskluzywne spodnie damskie medyczne 7/8 ESTETIC",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 346,
+      "external_source": "eldan",
+      "external_id": "345",
+      "name": "elegancka bluza kosmetyczna wiązana na bok LIV",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 347,
+      "external_source": "eldan",
+      "external_id": "1689",
+      "name": "elegancka bluza medyczna damska długi rękaw LENA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 348,
+      "external_source": "eldan",
+      "external_id": "105",
+      "name": "elegancka kelnerska/hotelowa kamizelka ELZA",
+      "category_ref": -12,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 349,
+      "external_source": "eldan",
+      "external_id": "80",
+      "name": "elegancka koszulka z dzianiny krótki rękaw DEMI",
+      "category_ref": -11,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 350,
+      "external_source": "eldan",
+      "external_id": "50",
+      "name": "elegancka medyczna tunika krótki rękaw BIANCA",
+      "category_ref": -10,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 351,
+      "external_source": "eldan",
+      "external_id": "658",
+      "name": "elegancka spódnica medyczna OŁÓWKOWA",
+      "category_ref": 575,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 352,
+      "external_source": "eldan",
+      "external_id": "3911",
+      "name": "elegancka sukienka medyczna długi rękaw LENA",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 353,
+      "external_source": "eldan",
+      "external_id": "31544",
+      "name": "elegancki damski fartuch medyczny dł. ręk. NICOL",
+      "category_ref": 567,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 354,
+      "external_source": "eldan",
+      "external_id": "31551",
+      "name": "elegancki damski fartuch medyczny kr. ręk. NICOL",
+      "category_ref": 567,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 355,
+      "external_source": "eldan",
+      "external_id": "1210",
+      "name": "eleganckie medyczne spodnie damskie PROSTE FLEX",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 356,
+      "external_source": "eldan",
+      "external_id": "1271",
+      "name": "eleganckie spodnie medyczne damskie UNIWERSALNE",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 357,
+      "external_source": "eldan",
+      "external_id": "4945",
+      "name": "farmaceutyczny fartuch damski długi rękaw MAJA",
+      "category_ref": 567,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 358,
+      "external_source": "eldan",
+      "external_id": "4972",
+      "name": "farmaceutyczny fartuch damski z rękawem 3/4 MAJA",
+      "category_ref": 567,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 359,
+      "external_source": "eldan",
+      "external_id": "31",
+      "name": "kobieca bluza medyczna z długim rękawem SOFIA",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 360,
+      "external_source": "eldan",
+      "external_id": "3666",
+      "name": "kobieca bluza medyczna z krótkim rękawem SOFIA",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 361,
+      "external_source": "eldan",
+      "external_id": "3558",
+      "name": "koszulka medyczna z długim rękawem LONGSLEEVE",
+      "category_ref": -11,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 362,
+      "external_source": "eldan",
+      "external_id": "908",
+      "name": "koszulka medyczna z dzianiny krótki rękaw KAMILA",
+      "category_ref": -11,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 363,
+      "external_source": "eldan",
+      "external_id": "114",
+      "name": "luźne damskie spodnie medyczne CARGO FLEX",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 364,
+      "external_source": "eldan",
+      "external_id": "1782",
+      "name": "medyczna bluza damska długi rękaw LENA FLEX",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 365,
+      "external_source": "eldan",
+      "external_id": "3502",
+      "name": "medyczna bluza damska krótki rękaw LENA FLEX",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 366,
+      "external_source": "eldan",
+      "external_id": "3832",
+      "name": "medyczna sukienka zapinana na zamek długi ręk. EWA",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 367,
+      "external_source": "eldan",
+      "external_id": "3839",
+      "name": "medyczna sukienka zapinana na zamek krótki ręk.EWA",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 368,
+      "external_source": "eldan",
+      "external_id": "1217",
+      "name": "medyczne spodnie damskie z wąską nogawką RURKI",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 369,
+      "external_source": "eldan",
+      "external_id": "4938",
+      "name": "nowoczesny damski fartuch medyczny ALICE",
+      "category_ref": 567,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 370,
+      "external_source": "eldan",
+      "external_id": "4053",
+      "name": "polar medyczny damski zapinany na zamek NELI",
+      "category_ref": 578,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 371,
+      "external_source": "eldan",
+      "external_id": "644",
+      "name": "prosta medyczna spódnica przed kolano KLASYCZNA",
+      "category_ref": 575,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 372,
+      "external_source": "eldan",
+      "external_id": "2579",
+      "name": "spódnica DZIANINOWA",
+      "category_ref": 575,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 373,
+      "external_source": "eldan",
+      "external_id": "162",
+      "name": "spodnie dam. CLASSIC",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 374,
+      "external_source": "eldan",
+      "external_id": "284",
+      "name": "spodnie dam. FANCY FIT",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 375,
+      "external_source": "eldan",
+      "external_id": "1505",
+      "name": "spodnie dam. FITNESS",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 376,
+      "external_source": "eldan",
+      "external_id": "941",
+      "name": "spodnie dam. GYM",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 377,
+      "external_source": "eldan",
+      "external_id": "1091",
+      "name": "spodnie dam. KOMFORT",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 378,
+      "external_source": "eldan",
+      "external_id": "1443",
+      "name": "spodnie damskie ze spandexem VIVA",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 379,
+      "external_source": "eldan",
+      "external_id": "1002",
+      "name": "spodnie medyczne damskie JOGGER",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 380,
+      "external_source": "eldan",
+      "external_id": "1165",
+      "name": "spodnie medyczne damskie na gumce KOMFORT FLEX",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 381,
+      "external_source": "eldan",
+      "external_id": "1353",
+      "name": "spodnie medyczne damskie ze ściągaczem VITAL",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 382,
+      "external_source": "eldan",
+      "external_id": "223",
+      "name": "spodnie medyczne dla pielęgniarek DYNAMIC",
+      "category_ref": 572,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 383,
+      "external_source": "eldan",
+      "external_id": "39801",
+      "name": "spodnie MOM FIT",
+      "category_ref": 572,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 384,
+      "external_source": "eldan",
+      "external_id": "39523",
+      "name": "spodnie MOM FIT z DZIANINĄ",
+      "category_ref": 572,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 385,
+      "external_source": "eldan",
+      "external_id": "76",
+      "name": "sportowa bluza medyczna na zamek długi rękaw CLEO",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 386,
+      "external_source": "eldan",
+      "external_id": "4801",
+      "name": "sukienka INEZ, krótki rękaw",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 387,
+      "external_source": "eldan",
+      "external_id": "4012",
+      "name": "sukienka medyczna dla pielęgniarek krót. ręk. LILY",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 388,
+      "external_source": "eldan",
+      "external_id": "5214",
+      "name": "sukienka medyczna dla pielęgniarek rek. 3/4 LILY",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 389,
+      "external_source": "eldan",
+      "external_id": "5014",
+      "name": "tunika medyczna/kosmetyczna krótki rękaw BOGNA",
+      "category_ref": -10,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 390,
+      "external_source": "eldan",
+      "external_id": "3783",
+      "name": "tunika medyczna/kosmetyczna rękaw 3/4 BOGNA",
+      "category_ref": -10,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 391,
+      "external_source": "eldan",
+      "external_id": "44188",
+      "name": "WIDE LEG z DZIANINĄ spodnie damskie z szerokimi nogawkami",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 392,
+      "external_source": "eldan",
+      "external_id": "379",
+      "name": "wygodna bluza medyczna z krótkim rękawem ANA FLEX",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 393,
+      "external_source": "eldan",
+      "external_id": "4903",
+      "name": "wygodna sukienka medyczna długi rękaw LENA FLEX",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 394,
+      "external_source": "eldan",
+      "external_id": "3962",
+      "name": "wygodna sukienka medyczna krótki rękaw LENA FLEX",
+      "category_ref": 570,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 395,
+      "external_source": "eldan",
+      "external_id": "2530",
+      "name": "wygodne medyczne damskie spodnie Z DZIANINĄ",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 396,
+      "external_source": "eldan",
+      "external_id": "3179",
+      "name": "wygodne spodnie medyczne damskie RURKI Z DZIANINĄ",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 397,
+      "external_source": "eldan",
+      "external_id": "39529",
+      "name": "żakiet JULITA",
+      "category_ref": 571,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 398,
+      "external_source": "eldan",
+      "external_id": "39527",
+      "name": "bluza BEN",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 399,
+      "external_source": "eldan",
+      "external_id": "21072",
+      "name": "bluza MANUEL CLASSIC, długi ręk.",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 400,
+      "external_source": "eldan",
+      "external_id": "7948",
+      "name": "bluza medyczna męska z krótkim rękawem KRZYSZTOF",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 401,
+      "external_source": "eldan",
+      "external_id": "39710",
+      "name": "bluza WITOLD długi rękaw",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 402,
+      "external_source": "eldan",
+      "external_id": "36316",
+      "name": "bluza WITOLD krótki rękaw",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 403,
+      "external_source": "eldan",
+      "external_id": "14945",
+      "name": "ekskluzywna bluza medyczna męska dł. ręk. MANUEL",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 404,
+      "external_source": "eldan",
+      "external_id": "14952",
+      "name": "ekskluzywna męska bluza medycza dł. ręk. OLIVIER",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 405,
+      "external_source": "eldan",
+      "external_id": "14959",
+      "name": "ekskluzywna męska bluza medycza kr. ręk. OLIVIER",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 406,
+      "external_source": "eldan",
+      "external_id": "20642",
+      "name": "ekskluzywne spodnie męskie medyczne ELEGANT",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 407,
+      "external_source": "eldan",
+      "external_id": "10755",
+      "name": "elastyczna medyczna bluza męska dł.ręk. MAREK FLEX",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 408,
+      "external_source": "eldan",
+      "external_id": "10736",
+      "name": "elastyczna medyczna bluza męska kr.rek. MAREK FLEX",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 409,
+      "external_source": "eldan",
+      "external_id": "12172",
+      "name": "elegancka bluza medyczna męska długi rękaw OLAF",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 410,
+      "external_source": "eldan",
+      "external_id": "12196",
+      "name": "elegancka bluza medyczna męska krótki rękaw OLAF",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 411,
+      "external_source": "eldan",
+      "external_id": "13746",
+      "name": "elegancki fartuch medyczny męski WOJCIECH",
+      "category_ref": 568,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 412,
+      "external_source": "eldan",
+      "external_id": "10283",
+      "name": "eleganckie męskie spodnie medyczne UNIWERSALNE",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 413,
+      "external_source": "eldan",
+      "external_id": "23233",
+      "name": "farmaceutyczny fartuch męski długi rękaw FILIP",
+      "category_ref": 568,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 414,
+      "external_source": "eldan",
+      "external_id": "15101",
+      "name": "fartuch męs. ANDRE CLASSIC, długi ręk.",
+      "category_ref": 568,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 415,
+      "external_source": "eldan",
+      "external_id": "20423",
+      "name": "luźne męskie spodnie medyczne CARGO FLEX",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 416,
+      "external_source": "eldan",
+      "external_id": "17324",
+      "name": "medyczna męska bluza na napy długi rękaw MAREK",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 417,
+      "external_source": "eldan",
+      "external_id": "11532",
+      "name": "medyczna męska bluza na napy krótki rękaw MAREK",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 418,
+      "external_source": "eldan",
+      "external_id": "17883",
+      "name": "medyczne spodnie męskie z wąską nogawką SLIM",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 419,
+      "external_source": "eldan",
+      "external_id": "10608",
+      "name": "męska bluza medyczna na zamek dł. ręk. WIKTOR FLEX",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 420,
+      "external_source": "eldan",
+      "external_id": "10483",
+      "name": "męska bluza medyczna na zamek kr. ręk. WIKTOR FLEX",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 421,
+      "external_source": "eldan",
+      "external_id": "11377",
+      "name": "męska bluza medyczna zapinana długi rękaw GUCIO",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 422,
+      "external_source": "eldan",
+      "external_id": "11518",
+      "name": "męska bluza medyczna zapinana krótki rękaw GUCIO",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 423,
+      "external_source": "eldan",
+      "external_id": "12281",
+      "name": "męska bluza medyczna ze spandexem TOM",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 424,
+      "external_source": "eldan",
+      "external_id": "15776",
+      "name": "męska bluza ze spandexem SIMON",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 425,
+      "external_source": "eldan",
+      "external_id": "14782",
+      "name": "męska koszulka medyczna długi rękaw LONGSLEEVE",
+      "category_ref": -11,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 426,
+      "external_source": "eldan",
+      "external_id": "9471",
+      "name": "męska koszulka medyczna z dzianiny KAMIL",
+      "category_ref": -11,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 427,
+      "external_source": "eldan",
+      "external_id": "37087",
+      "name": "męska koszulka medyczna z krótkim rękawem T-SHIRT",
+      "category_ref": -11,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 428,
+      "external_source": "eldan",
+      "external_id": "15553",
+      "name": "męska sportowa bluza medyczna długi rękaw LIAM",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 429,
+      "external_source": "eldan",
+      "external_id": "12026",
+      "name": "męska sportowa bluza medyczna krótki rękaw LEO",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 430,
+      "external_source": "eldan",
+      "external_id": "9280",
+      "name": "męskie spodnie medyczne dla lekarzy PROSTE",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 431,
+      "external_source": "eldan",
+      "external_id": "11195",
+      "name": "męskie spodnie medyczne JOGGER",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 432,
+      "external_source": "eldan",
+      "external_id": "10768",
+      "name": "męskie spodnie medyczne na gumce KOMFORT FLEX",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 433,
+      "external_source": "eldan",
+      "external_id": "14915",
+      "name": "nowoczesna męska bluza medyczna kr. ręk. LUCA FLEX",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 434,
+      "external_source": "eldan",
+      "external_id": "12309",
+      "name": "nowoczesny męski fartuch medyczny ANDRE",
+      "category_ref": 568,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 435,
+      "external_source": "eldan",
+      "external_id": "15659",
+      "name": "polar medyczny męski zapinany na zamek VALDI",
+      "category_ref": 577,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 436,
+      "external_source": "eldan",
+      "external_id": "11164",
+      "name": "spodnie medyczne męskie o sportowym kroju POWER",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 437,
+      "external_source": "eldan",
+      "external_id": "13633",
+      "name": "spodnie medyczne męskie ze ściągaczem ENERGY",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 438,
+      "external_source": "eldan",
+      "external_id": "12029",
+      "name": "spodnie medyczne męskie ze ściągaczem SPORTY",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 439,
+      "external_source": "eldan",
+      "external_id": "12815",
+      "name": "sportowa bluza medyczna na zamek długi rękaw IVO",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 440,
+      "external_source": "eldan",
+      "external_id": "12266",
+      "name": "wygodna męska bluza medyczna krótki ręk. KRIS FLEX",
+      "category_ref": 564,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 441,
+      "external_source": "eldan",
+      "external_id": "10083",
+      "name": "wygodne męskie spodnie medyczne Z DZIANINĄ",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 442,
+      "external_source": "eldan",
+      "external_id": "44289",
+      "name": "buty medyczne BAREFOOT KD MED 134",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 443,
+      "external_source": "eldan",
+      "external_id": "44285",
+      "name": "buty medyczne BAREFOOT wiązane KD MED 133",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 444,
+      "external_source": "eldan",
+      "external_id": "6124",
+      "name": "damskie klapki medyczne na koturnie KD MED 66",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 445,
+      "external_source": "eldan",
+      "external_id": "5867",
+      "name": "damskie wygodne skórzane sneakersy KD MED 126",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 446,
+      "external_source": "eldan",
+      "external_id": "6788",
+      "name": "eleganckie klapki męskie ze skóry KM MED 213",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 447,
+      "external_source": "eldan",
+      "external_id": "5839",
+      "name": "eleganckie medyczne buty damskie KD MED 125",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 448,
+      "external_source": "eldan",
+      "external_id": "5247",
+      "name": "klapki damskie skórzane z regulacją KD MED 04",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 449,
+      "external_source": "eldan",
+      "external_id": "5304",
+      "name": "klapki medyczne damskie zakryte skórzane KD MED 09",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 450,
+      "external_source": "eldan",
+      "external_id": "5223",
+      "name": "klapki medyczne zakryte skórzane KD MED 110",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 451,
+      "external_source": "eldan",
+      "external_id": "6000",
+      "name": "kolorowe obuwie medyczne damskie KD MED 54",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 452,
+      "external_source": "eldan",
+      "external_id": "5641",
+      "name": "kolorowe skórzane obuwie medyczne KD MED 111",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 453,
+      "external_source": "eldan",
+      "external_id": "12549",
+      "name": "medyczne skórzane obuwie damskie KD MED 121",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 454,
+      "external_source": "eldan",
+      "external_id": "6869",
+      "name": "męskie klapki medyczne z regulacją KM MED 73",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 455,
+      "external_source": "eldan",
+      "external_id": "6821",
+      "name": "męskie wygodne skórzane sneakersy KD MED 226",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 456,
+      "external_source": "eldan",
+      "external_id": "40543",
+      "name": "obuwie dam. KD MED 129",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 457,
+      "external_source": "eldan",
+      "external_id": "40545",
+      "name": "obuwie dam. KD MED 130",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 458,
+      "external_source": "eldan",
+      "external_id": "40547",
+      "name": "obuwie dam. KD MED 131",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 459,
+      "external_source": "eldan",
+      "external_id": "40642",
+      "name": "obuwie dam. KD MED 132",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 460,
+      "external_source": "eldan",
+      "external_id": "44292",
+      "name": "obuwie dam. KD MED 135",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 461,
+      "external_source": "eldan",
+      "external_id": "5509",
+      "name": "obuwie damskie medyczne skórzane KD MED 104",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 462,
+      "external_source": "eldan",
+      "external_id": "12669",
+      "name": "obuwie medyczne damskie na rzep KD MED 123",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 463,
+      "external_source": "eldan",
+      "external_id": "5696",
+      "name": "obuwie medyczne o sportowym kroju KD MED 115",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 464,
+      "external_source": "eldan",
+      "external_id": "12450",
+      "name": "obuwie medyczne regulowane na rzep KD MED 120",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 465,
+      "external_source": "eldan",
+      "external_id": "5472",
+      "name": "obuwie medyczne skórzane z zapięciem KD MED 101",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 466,
+      "external_source": "eldan",
+      "external_id": "40549",
+      "name": "obuwie męs. KM MED 229",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 467,
+      "external_source": "eldan",
+      "external_id": "5226",
+      "name": "obuwie skórzane z regulacją na rzep KD MED 03",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 468,
+      "external_source": "eldan",
+      "external_id": "6835",
+      "name": "regulowane skórzane klapki męskie KM MED 55",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 469,
+      "external_source": "eldan",
+      "external_id": "6898",
+      "name": "skórzane obuwie medyczne na koturnie KD MED 106",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 470,
+      "external_source": "eldan",
+      "external_id": "6763",
+      "name": "skórzane obuwie medyczne z zapięciem KM MED 201",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 471,
+      "external_source": "eldan",
+      "external_id": "12661",
+      "name": "szpitalne damskie klapki medyczne KD MED 122",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 472,
+      "external_source": "eldan",
+      "external_id": "5955",
+      "name": "szpitalne damskie klapki skórzane KD MED 31",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 473,
+      "external_source": "eldan",
+      "external_id": "12779",
+      "name": "szpitalne męskie klapki KM MED 218",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 474,
+      "external_source": "eldan",
+      "external_id": "5764",
+      "name": "szpitalne wygodne klapki medyczne  KD MED 118",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 475,
+      "external_source": "eldan",
+      "external_id": "6280",
+      "name": "wygodne buty damskie ze skóry KD MED 114",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 476,
+      "external_source": "eldan",
+      "external_id": "6679",
+      "name": "wygodne klapki medyczne dla pielęgniarek KD MED 72",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 477,
+      "external_source": "eldan",
+      "external_id": "7055",
+      "name": "wygodne obuwie damskie z regulacją KD MED 124",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 478,
+      "external_source": "eldan",
+      "external_id": "7022",
+      "name": "wygodne obuwie o sportowym kroju  KD MED 117",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 479,
+      "external_source": "eldan",
+      "external_id": "13330",
+      "name": "wygodne obuwie o sportowym kroju KM MED 217",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 480,
+      "external_source": "eldan",
+      "external_id": "6056",
+      "name": "wygodne skórzane buty medyczne KD MED 57",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 481,
+      "external_source": "eldan",
+      "external_id": "6582",
+      "name": "wygodne skórzane klapki medyczne KD MED 69",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 482,
+      "external_source": "eldan",
+      "external_id": "7495",
+      "name": "wygodne skórzane medyczne klapki męskie KM MED 20",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 483,
+      "external_source": "eldan",
+      "external_id": "5702",
+      "name": "wygodne skórzane trampki damskie KD MED 116",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 484,
+      "external_source": "eldan",
+      "external_id": "6796",
+      "name": "wygodne skórzane trampki męskie KM MED 216",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 485,
+      "external_source": "eldan",
+      "external_id": "5835",
+      "name": "wygodne wiązane damskie buty medyczne KD MED 119",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 486,
+      "external_source": "eldan",
+      "external_id": "6547",
+      "name": "zakryte klapki lekarskie ze skóry KD MED 68",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 487,
+      "external_source": "eldan",
+      "external_id": "5928",
+      "name": "zakryte klapki skórzane z regulacją KD MED 27",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 488,
+      "external_source": "eldan",
+      "external_id": "5558",
+      "name": "zakryte skórzane buty medyczne damskie KD MED 109",
+      "category_ref": 585,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 489,
+      "external_source": "eldan",
+      "external_id": "15780",
+      "name": "spodnie męskie ze spandexem BASIC",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 490,
+      "external_source": "eldan",
+      "external_id": "10843",
+      "name": "bluza EMA, długi ręk. - WYPRZEDAŻ",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 491,
+      "external_source": "eldan",
+      "external_id": "8908",
+      "name": "bluza EMA, krótki ręk. - WYPRZEDAŻ",
+      "category_ref": 561,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 492,
+      "external_source": "eldan",
+      "external_id": "43900",
+      "name": "bluza medyczna damska z krótkim rękawem AGATA",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 493,
+      "external_source": "eldan",
+      "external_id": "831",
+      "name": "IGA bluza damska medyczna rozpinana rękaw 3/4",
+      "category_ref": 562,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 494,
+      "external_source": "eldan",
+      "external_id": "9662",
+      "name": "obuwie męs. KM MED 56 - WYPRZEDAŻ",
+      "category_ref": 586,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 495,
+      "external_source": "eldan",
+      "external_id": "10560",
+      "name": "spodnie dam. DANDYSKI ",
+      "category_ref": 573,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 496,
+      "external_source": "eldan",
+      "external_id": "14832",
+      "name": "spodnie męs. SPORTOWE - WYPRZEDAŻ",
+      "category_ref": 574,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 1036,
+      "external_source": "peruka",
+      "external_id": "8450",
+      "name": "Peruka syntetyczna szampański blond CITY LARGE champagne/mix",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 1187,
+      "external_source": "peruka",
+      "external_id": "20228",
+      "name": "Peruka z włosów syntetycznych orzechowy brąz z odrostem CUBA hazelnut/rooted*",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 2652,
+      "external_source": "peruka",
+      "external_id": "36225",
+      "name": "Peruka krótka damska syntetyczna kawowy brąz z refleksami TAB coffeebrown lighted",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 2653,
+      "external_source": "peruka",
+      "external_id": "36226",
+      "name": "Peruka krótka damska syntetyczna metaliczny blond TAB metallic blonde rooted",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 2654,
+      "external_source": "peruka",
+      "external_id": "36227",
+      "name": "Peruka damska krótka syntetyczna platynowy blond z odrostem TAB platinblonde rooted",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 3568,
+      "external_source": "peruka",
+      "external_id": "17734",
+      "name": "Peruka z włosów naturalnych europejskich kawowy brąz MONDO mocca/mix*",
+      "category_ref": 82,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 5063,
+      "external_source": "peruka",
+      "external_id": "9282",
+      "name": "Peruka z włosów syntetycznych kamienny siwy RUN MONO stonegrey/mix*",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 5064,
+      "external_source": "peruka",
+      "external_id": "9283",
+      "name": "Peruka z włosów syntetycznych mroźny popiel RUN MONO snow/mix*",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 5308,
+      "external_source": "peruka",
+      "external_id": "10783",
+      "name": "Peruka z włosów syntetycznych jasny blond YASMIN LIFE 24/25/23",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 6904,
+      "external_source": "peruka",
+      "external_id": "15894",
+      "name": "Peruka z włosów syntetycznych ciemny rudy z miedzianą poświatą LIMA HI darkcopper/mix*",
+      "category_ref": 68,
+      "reason": "Restore missing category from explicit garment/footwear/material terms"
+    },
+    {
+      "product_id": 8997,
+      "external_source": "reh4mat",
+      "external_id": "74799",
+      "name": "Stabilizator stawu skokowego i stopy AFO PLUS",
+      "category_ref": 141,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 8998,
+      "external_source": "reh4mat",
+      "external_id": "67340",
+      "name": "Pokrowiec do AM-ADS-R",
+      "category_ref": 184,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 8999,
+      "external_source": "reh4mat",
+      "external_id": "91492",
+      "name": "Zestaw mocujący do ortezy AM-OSS-21/CCA",
+      "category_ref": 184,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9356,
+      "external_source": "reh4mat",
+      "external_id": "przescieradlo-z-funkcja-samoszczepna-b-ss",
+      "name": "B-SS Prześcieradło z funkcją samoszczepną",
+      "category_ref": -14,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9362,
+      "external_source": "reh4mat",
+      "external_id": "przedluzacz-do-uniwersalnego-pasa-stabilizujacego-fp-a-1",
+      "name": "FP-A-1 Przedłużacz do uniwersalnego pasa stabilizującego",
+      "category_ref": -14,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9363,
+      "external_source": "reh4mat",
+      "external_id": "dynamiczna-podkladka-odciazajaca-do-pasow-bezpieczenstwa-fp-a-2",
+      "name": "FP-A-2 Dynamiczna podkładka odciążająca do pasów bezpieczeństwa",
+      "category_ref": -14,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9364,
+      "external_source": "reh4mat",
+      "external_id": "dynamiczna-anatomiczna-podkladka-odciazajaca-fp-a-3",
+      "name": "FP-A-3 Dynamiczna anatomiczna podkładka odciążająca",
+      "category_ref": -14,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9365,
+      "external_source": "reh4mat",
+      "external_id": "klamra-o-regulowanej-szerokosci-fp-a-4",
+      "name": "FP-A-4 Klamra o regulowanej szerokości",
+      "category_ref": -14,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9366,
+      "external_source": "reh4mat",
+      "external_id": "fp-a-5",
+      "name": "FP-A-5 Zestaw mocujący 6-punktową dynamiczną kamizelkę air (FP-34) do pasa mocującego belticar FP-40 oraz FP-45",
+      "category_ref": -14,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9367,
+      "external_source": "reh4mat",
+      "external_id": "fp-a-6",
+      "name": "FP-A-6 Zestaw mocujący 6-punktową dynamiczną kamizelkę air ze stabilizatorem miednicy (FP-36) do pasa mocującego belticar FP-40 oraz FP-45",
+      "category_ref": -14,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9382,
+      "external_source": "reh4mat",
+      "external_id": "granulat-sb-wg",
+      "name": "Granulat",
+      "category_ref": -14,
+      "reason": "Split shared clothing-accessory primary by exact product identity"
+    },
+    {
+      "product_id": 9942,
+      "external_source": "timago",
+      "external_id": "1310",
+      "name": "Prysznicowo-toaletowy wózek transportowy 3w1 na małych kołach - SANI-TIM",
+      "category_ref": 29,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 9943,
+      "external_source": "timago",
+      "external_id": "1309",
+      "name": "Deska do transferu pacjenta – EASY-TRANSFER",
+      "category_ref": 49,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 9944,
+      "external_source": "timago",
+      "external_id": "3225",
+      "name": "Balkonik czterokołowy z podparciem pod łokcie i hamulcami - JMC-C 3225",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 9945,
+      "external_source": "timago",
+      "external_id": "540",
+      "name": "Taboret prysznicowy bez oparcia, składany - TGR-R KP 540",
+      "category_ref": 860,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 9946,
+      "external_source": "timago",
+      "external_id": "1306",
+      "name": "Wózek inwalidzki elektryczny - Maya",
+      "category_ref": 392,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 9947,
+      "external_source": "timago",
+      "external_id": "1303",
+      "name": "Ławka obrotowa na wannę - Turn360",
+      "category_ref": 860,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10195,
+      "external_source": "timago",
+      "external_id": "1106",
+      "name": "Długi stabilizator stawu nadgarstkowego - ManuTim Long",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10196,
+      "external_source": "timago",
+      "external_id": "1094",
+      "name": "But marszowy ze stabilizacją pneumatyczną - Sky-Walker Low",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10197,
+      "external_source": "timago",
+      "external_id": "1074",
+      "name": "But marszowy ze stabilizacją pneumatyczną - Sky-Walker",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10198,
+      "external_source": "timago",
+      "external_id": "1072",
+      "name": "Orteza stawu kolanowego - GenuStrap",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10199,
+      "external_source": "timago",
+      "external_id": "1071",
+      "name": "Dwukomorowa krótka orteza sztywna na goleń i stopę - Pro-Walker Low",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10200,
+      "external_source": "timago",
+      "external_id": "1040",
+      "name": "Orteza stawu skokowego MalleoTim Lite",
+      "category_ref": 741,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10250,
+      "external_source": "timago",
+      "external_id": "1245",
+      "name": "Myjka do ciała - gąbka HIGIEMED",
+      "category_ref": 1122,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10251,
+      "external_source": "timago",
+      "external_id": "1244",
+      "name": "Kompres gazowy KOMPRI lux/KOMPRI lux S",
+      "category_ref": 640,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10252,
+      "external_source": "timago",
+      "external_id": "1243",
+      "name": "Kompres włókninowy NONVI lux/NONVI lux S",
+      "category_ref": 640,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10253,
+      "external_source": "timago",
+      "external_id": "1242",
+      "name": "Opaska elastyczna z zapinką - elastoBAND FLEX",
+      "category_ref": 870,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10254,
+      "external_source": "timago",
+      "external_id": "1230",
+      "name": "Płyn do higienicznej i chirurgicznej dezynfekcji rąk i powierzchni",
+      "category_ref": 1072,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10255,
+      "external_source": "timago",
+      "external_id": "1159",
+      "name": "Podkład na materac - DryTim",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10256,
+      "external_source": "timago",
+      "external_id": "1131",
+      "name": "Opatrunek włókninowy z wkładem chłonnym - ELASTOPOR STERIL",
+      "category_ref": 640,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10257,
+      "external_source": "timago",
+      "external_id": "1130",
+      "name": "Igła iniekcyjna",
+      "category_ref": 1151,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10258,
+      "external_source": "timago",
+      "external_id": "1129",
+      "name": "Prześcieradło medyczne",
+      "category_ref": 1007,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10259,
+      "external_source": "timago",
+      "external_id": "1120",
+      "name": "Pojemnik na mocz/kał 2w1, sterylny - TIM-MULTI",
+      "category_ref": 465,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10260,
+      "external_source": "timago",
+      "external_id": "266",
+      "name": "Maska tlenowa",
+      "category_ref": 410,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10261,
+      "external_source": "timago",
+      "external_id": "273",
+      "name": "Plaster tkaninowy z opatrunkiem FABRIPLAST",
+      "category_ref": 640,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10262,
+      "external_source": "timago",
+      "external_id": "280",
+      "name": "Szczotka do mycia rurek tracheotomijnych",
+      "category_ref": 410,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10263,
+      "external_source": "timago",
+      "external_id": "283",
+      "name": "Koc ratunkowy",
+      "category_ref": 34,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10264,
+      "external_source": "timago",
+      "external_id": "886",
+      "name": "Przyrząd do infuzji easyFLOW IS",
+      "category_ref": 1151,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10265,
+      "external_source": "timago",
+      "external_id": "891",
+      "name": "Opaska dziana",
+      "category_ref": 640,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10266,
+      "external_source": "timago",
+      "external_id": "892",
+      "name": "Gaza opatrunkowa kopertowa - GAZA LUX",
+      "category_ref": 640,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10267,
+      "external_source": "timago",
+      "external_id": "870",
+      "name": "Fartuch medyczny z gumką, włókninowy, niejałowy",
+      "category_ref": 1060,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10268,
+      "external_source": "timago",
+      "external_id": "253",
+      "name": "Pojemnik na odpady medyczne",
+      "category_ref": 1144,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10269,
+      "external_source": "timago",
+      "external_id": "252",
+      "name": "Podkład bibułowy 2-warstwowy w rolce",
+      "category_ref": 1007,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10270,
+      "external_source": "timago",
+      "external_id": "251",
+      "name": "Staza automatyczna",
+      "category_ref": 1151,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10271,
+      "external_source": "timago",
+      "external_id": "250",
+      "name": "Staza gumowa w rolce",
+      "category_ref": 1151,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10272,
+      "external_source": "timago",
+      "external_id": "248",
+      "name": "Maseczka chirurgiczna z gumką",
+      "category_ref": 1081,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10273,
+      "external_source": "timago",
+      "external_id": "247",
+      "name": "Kubek pojnik z uchwytem",
+      "category_ref": 1178,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10274,
+      "external_source": "timago",
+      "external_id": "246",
+      "name": "Kieliszek do podawania leków",
+      "category_ref": 1178,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10275,
+      "external_source": "timago",
+      "external_id": "245",
+      "name": "Strzykawka trzyczęściowa Janeta",
+      "category_ref": 1151,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10276,
+      "external_source": "timago",
+      "external_id": "240",
+      "name": "Szpatułka laryngologiczna drewniana",
+      "category_ref": 1151,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10277,
+      "external_source": "timago",
+      "external_id": "238",
+      "name": "Nerka medyczna",
+      "category_ref": 1151,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10278,
+      "external_source": "timago",
+      "external_id": "234",
+      "name": "Worek do lewatywy",
+      "category_ref": 465,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10279,
+      "external_source": "timago",
+      "external_id": "233",
+      "name": "Worek do zbiórki moczu z mocowaniem na nogę",
+      "category_ref": 465,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10280,
+      "external_source": "timago",
+      "external_id": "232",
+      "name": "Worek do zbiórki moczu 2l, z odpływem typu T",
+      "category_ref": 465,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10281,
+      "external_source": "timago",
+      "external_id": "231",
+      "name": "Zgłębnik żołądkowy 100% silikon",
+      "category_ref": 465,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10282,
+      "external_source": "timago",
+      "external_id": "230",
+      "name": "Zgłębnik żołądkowy",
+      "category_ref": 465,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10283,
+      "external_source": "timago",
+      "external_id": "229",
+      "name": "Dren tlenowy",
+      "category_ref": 410,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10284,
+      "external_source": "timago",
+      "external_id": "228",
+      "name": "Cewnik do podawania tlenu przez nos",
+      "category_ref": 465,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10369,
+      "external_source": "rehafund",
+      "external_id": "1002",
+      "name": "Siedzisko do podnośnika kąpielowe",
+      "category_ref": 30,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10370,
+      "external_source": "rehafund",
+      "external_id": "1118",
+      "name": "Wózek inwalidzki Cruiser Areo",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10371,
+      "external_source": "rehafund",
+      "external_id": "1127",
+      "name": "Standardowy wózek inwalidzki aluminiowy",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10372,
+      "external_source": "rehafund",
+      "external_id": "1181",
+      "name": "Standardowy wózek inwalidzki leżakowy",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10373,
+      "external_source": "rehafund",
+      "external_id": "1186",
+      "name": "Wózek inwalidzki Cruiser Liber",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10374,
+      "external_source": "rehafund",
+      "external_id": "1196",
+      "name": "Wózek inwalidzki Cruiser Active 2 B",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10375,
+      "external_source": "rehafund",
+      "external_id": "1213",
+      "name": "Wózek inwalidzki Cruiser Utilis",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10376,
+      "external_source": "rehafund",
+      "external_id": "1258",
+      "name": "Balkonik RF-100",
+      "category_ref": 20,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10377,
+      "external_source": "rehafund",
+      "external_id": "1259",
+      "name": "Balkonik RF-131",
+      "category_ref": 20,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10378,
+      "external_source": "rehafund",
+      "external_id": "1380",
+      "name": "Wózek inwalidzki Cruiser Active",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10379,
+      "external_source": "rehafund",
+      "external_id": "1470",
+      "name": "Poduszka przeciwodleżynowa do siedzenia BioFlote 2 Plus",
+      "category_ref": 885,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10380,
+      "external_source": "rehafund",
+      "external_id": "1735",
+      "name": "Wózek inwalidzki RF-1 Cruiser 1",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10381,
+      "external_source": "rehafund",
+      "external_id": "1739",
+      "name": "Materac pneumatyczny BioFlote™ 2000",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10382,
+      "external_source": "rehafund",
+      "external_id": "1743",
+      "name": "Materac przeciwodleżynowy BioFlote™ 5000",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10383,
+      "external_source": "rehafund",
+      "external_id": "1764",
+      "name": "Materac przeciwodleżynowy BioFlote™ 3000",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10384,
+      "external_source": "rehafund",
+      "external_id": "1769",
+      "name": "Medyczny materac pneumatyczny zmiennociśnieniowy z pompą",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10385,
+      "external_source": "rehafund",
+      "external_id": "1828",
+      "name": "Materac przeciwodleżynowy zmiennociśnieniowy z pompą",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10386,
+      "external_source": "rehafund",
+      "external_id": "1845",
+      "name": "Materac pneumatyczny HF6002+HF62012",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10387,
+      "external_source": "rehafund",
+      "external_id": "2019",
+      "name": "Wózek inwalidzki Cruiser Optima",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10388,
+      "external_source": "rehafund",
+      "external_id": "649",
+      "name": "Balkonik rehabilitacyjny Luca 803/1",
+      "category_ref": 20,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10389,
+      "external_source": "rehafund",
+      "external_id": "655",
+      "name": "Podnośnik Newton",
+      "category_ref": 30,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10390,
+      "external_source": "rehafund",
+      "external_id": "667",
+      "name": "Poduszka przeciwodleżynowa do siedzenia BioFlote 3 Plus",
+      "category_ref": 885,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10391,
+      "external_source": "rehafund",
+      "external_id": "732",
+      "name": "Chodzik trzykołowy Genewa Premium",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10392,
+      "external_source": "rehafund",
+      "external_id": "772",
+      "name": "Balkonik Harry z ławeczką i zestawem toaletowym",
+      "category_ref": 20,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10393,
+      "external_source": "rehafund",
+      "external_id": "774",
+      "name": "Wózek inwalidzki RF-4 Cruiser Active 2 Z",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10394,
+      "external_source": "rehafund",
+      "external_id": "829",
+      "name": "Wózek inwalidzki Cruiser 2",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10395,
+      "external_source": "rehafund",
+      "external_id": "838",
+      "name": "Wózek inwalidzki Cruiser 1 Basic",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10396,
+      "external_source": "rehafund",
+      "external_id": "921",
+      "name": "Chodzik czterokołowy Denver Premium",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10397,
+      "external_source": "rehafund",
+      "external_id": "930",
+      "name": "Chodzik czterokołowy",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10398,
+      "external_source": "rehafund",
+      "external_id": "952",
+      "name": "Podpórka dwukołowa z siedziskiem",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10399,
+      "external_source": "rehafund",
+      "external_id": "953",
+      "name": "Siedzisko do podnosnika standardowe rozmiar M",
+      "category_ref": 30,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10400,
+      "external_source": "rehafund",
+      "external_id": "956",
+      "name": "Siedzisko do podnośnika ze stabilizacją głowy rozmiar L",
+      "category_ref": 30,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10401,
+      "external_source": "rehafund",
+      "external_id": "991",
+      "name": "Chodzik czterokołowy Lizbona Premium",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10402,
+      "external_source": "rehafund",
+      "external_id": "1122",
+      "name": "Wózek inwalidzki Cruiser Smart",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10403,
+      "external_source": "rehafund",
+      "external_id": "1124",
+      "name": "Standardowy wózek inwalidzki stalowy",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10404,
+      "external_source": "rehafund",
+      "external_id": "1651",
+      "name": "Wózek inwalidzki RF-4 Cruiser Active 2",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10405,
+      "external_source": "rehafund",
+      "external_id": "1662",
+      "name": "Chodzik czterokołowy Palermo Premium",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10406,
+      "external_source": "rehafund",
+      "external_id": "1663",
+      "name": "Chodzik czterokołowy Bogota Premium",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10407,
+      "external_source": "rehafund",
+      "external_id": "1667",
+      "name": "Chodzik czterokołowy Oslo Premium",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10408,
+      "external_source": "rehafund",
+      "external_id": "1740",
+      "name": "Materac pneumatyczny BioFlote™ 4000",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10409,
+      "external_source": "rehafund",
+      "external_id": "2316",
+      "name": "Uchwyt do wysięgnika - CAMA/CAMA BASIC",
+      "category_ref": 707,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10410,
+      "external_source": "rehafund",
+      "external_id": "2272",
+      "name": "Koło tylne lane 24\" do wózka inwalidzkiego",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10411,
+      "external_source": "rehafund",
+      "external_id": "2364",
+      "name": "Podnóżek do wózka inwalidzkiego RF-1, kolor czarny, para",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10412,
+      "external_source": "rehafund",
+      "external_id": "2438",
+      "name": "Chodzik czterokołowy Sztokholm",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10413,
+      "external_source": "rehafund",
+      "external_id": "2291",
+      "name": "Komora powietrzna z mikrowentylacją do materaca HF6002",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10414,
+      "external_source": "rehafund",
+      "external_id": "2292",
+      "name": "Komora powietrzna bez mikrowentylacji do materaca HF6002",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10415,
+      "external_source": "rehafund",
+      "external_id": "2320",
+      "name": "Nasadka na stopkę do kuli, średnica 18 mm (10 szt.)",
+      "category_ref": 486,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10416,
+      "external_source": "rehafund",
+      "external_id": "2329",
+      "name": "Łożysko koła przedniego wózka oraz koła tylnego chodzików czterokołowych, 2 sztuki",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10417,
+      "external_source": "rehafund",
+      "external_id": "2294",
+      "name": "Komora powietrzna z mikrowentylacją do materaca BF4000",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10418,
+      "external_source": "rehafund",
+      "external_id": "2463",
+      "name": "Podnóżek do wózka inwalidzkiego RF-3, para",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10419,
+      "external_source": "rehafund",
+      "external_id": "2255",
+      "name": "Lewy podnóżek do wózka inwalidzkiego RF-1",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10420,
+      "external_source": "rehafund",
+      "external_id": "2265",
+      "name": "Łożysko koła przedniego chodzików czterokołowych (2 szt.)",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10421,
+      "external_source": "rehafund",
+      "external_id": "2384",
+      "name": "Chodzik czterokołowy Marsylia",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10422,
+      "external_source": "rehafund",
+      "external_id": "2327",
+      "name": "Nasadka na stopkę do kuli, średnica 20 mm, kolor czarny, 10 sztuk",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10423,
+      "external_source": "rehafund",
+      "external_id": "2330",
+      "name": "Łożysko koła przedniego chodzików czterokołowych, 2 sztuki",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10424,
+      "external_source": "rehafund",
+      "external_id": "2285",
+      "name": "Koszyk do chodzika czterokołowego RF-615",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10425,
+      "external_source": "rehafund",
+      "external_id": "2282",
+      "name": "Deska do krzesełka toaletowego",
+      "category_ref": 875,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10426,
+      "external_source": "rehafund",
+      "external_id": "2309",
+      "name": "Torba do chodzika czterokołowego RF-624 i RF-625",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10427,
+      "external_source": "rehafund",
+      "external_id": "640",
+      "name": "Przeciwodleżynowa poduszka odciążająca",
+      "category_ref": 885,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10428,
+      "external_source": "rehafund",
+      "external_id": "2382",
+      "name": "Chodzik czterokołowy Berlin",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10429,
+      "external_source": "rehafund",
+      "external_id": "650",
+      "name": "Ambonka do chodzenia Atlanta",
+      "category_ref": 20,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10430,
+      "external_source": "rehafund",
+      "external_id": "734",
+      "name": "Chodzik trzykołowy Helsinki Premium",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10431,
+      "external_source": "rehafund",
+      "external_id": "894",
+      "name": "Chodzik trzykołowy Barcelona",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10432,
+      "external_source": "rehafund",
+      "external_id": "1968",
+      "name": "Materac przeciwodleżynowy bez pompy",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10433,
+      "external_source": "rehafund",
+      "external_id": "1911",
+      "name": "Nasadka zimowa, uniwersalna, stalowa do kuli i laski, RF-200/2",
+      "category_ref": 486,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10434,
+      "external_source": "rehafund",
+      "external_id": "2220",
+      "name": "Materac przeciwodleżynowy bez pompy",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10435,
+      "external_source": "rehafund",
+      "external_id": "2274",
+      "name": "Koło 200x35 do chodzika RF-624 i RF-625",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10436,
+      "external_source": "rehafund",
+      "external_id": "2315",
+      "name": "Pilot - CAMA/CAMA BASIC",
+      "category_ref": 707,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10437,
+      "external_source": "rehafund",
+      "external_id": "2287",
+      "name": "Bateria do podnośnika RF-1000",
+      "category_ref": 30,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10438,
+      "external_source": "rehafund",
+      "external_id": "2283",
+      "name": "Torba do chodzika trójkołowego RF-622",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10439,
+      "external_source": "rehafund",
+      "external_id": "2318",
+      "name": "Wspornik transportowy - CAMA/CAMA BASIC (zestaw)",
+      "category_ref": 707,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10440,
+      "external_source": "rehafund",
+      "external_id": "2263",
+      "name": "Wiaderko z przykrywka do krzesła toaletowego",
+      "category_ref": 875,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10441,
+      "external_source": "rehafund",
+      "external_id": "1012",
+      "name": "Wózek inwalidzki Cruiser Active Z",
+      "category_ref": 1,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10442,
+      "external_source": "rehafund",
+      "external_id": "2339",
+      "name": "Kółka do balkonika RF-100, kolor szare, para",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10443,
+      "external_source": "rehafund",
+      "external_id": "2321",
+      "name": "Nasadka na stopkę do balkonika, średnica 25 mm, kolor czarny, 10 sztuk",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10444,
+      "external_source": "rehafund",
+      "external_id": "2323",
+      "name": "Nasadka na stopkę do balkonika, średnica 28 mm, kolor czarny, 10 sztuk",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10445,
+      "external_source": "rehafund",
+      "external_id": "2325",
+      "name": "Nasadka na stopkę do laski, średnica 18 mm, kolor czarny",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10446,
+      "external_source": "rehafund",
+      "external_id": "2362",
+      "name": "Nasadka na stopkę do trójnoga i czwórnoga, średnica 16 mm, kolor czarny, 10 sztu",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10447,
+      "external_source": "rehafund",
+      "external_id": "2268",
+      "name": "Koło do chodzika czterokołowego",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10448,
+      "external_source": "rehafund",
+      "external_id": "2343",
+      "name": "Kółka do balkonika RF-131, kolor szary, para",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10449,
+      "external_source": "rehafund",
+      "external_id": "2314",
+      "name": "Podnóżek do wózka inwalidzkiego RF-6, RF-21, para",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10450,
+      "external_source": "rehafund",
+      "external_id": "2278",
+      "name": "Dętka do wózka inwalidzkiego",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10451,
+      "external_source": "rehafund",
+      "external_id": "2275",
+      "name": "Kółka do balkonika RF-100, kolor szare (2 szt.)",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10452,
+      "external_source": "rehafund",
+      "external_id": "2260",
+      "name": "Koło tylne lane do wózka inwalidzkiego",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10453,
+      "external_source": "rehafund",
+      "external_id": "2261",
+      "name": "Koło tylne pneumatyczne do wózka inwalidzkiego",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10454,
+      "external_source": "rehafund",
+      "external_id": "2253",
+      "name": "Koło przednie do wózka inwalidzkiego oraz chodzika",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10455,
+      "external_source": "rehafund",
+      "external_id": "2266",
+      "name": "Koło przednie do wózka inwalidzkiego",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10456,
+      "external_source": "rehafund",
+      "external_id": "2267",
+      "name": "Koło przednie do wózka inwalidzkiego oraz chodzika",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10457,
+      "external_source": "rehafund",
+      "external_id": "2269",
+      "name": "Przednie koło do chodzika RF-620",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10458,
+      "external_source": "rehafund",
+      "external_id": "2270",
+      "name": "Tylne koło do chodzika RF-620",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10459,
+      "external_source": "rehafund",
+      "external_id": "2271",
+      "name": "Koło tylne pompowane 24\" do wózka inwalidzkiego",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10460,
+      "external_source": "rehafund",
+      "external_id": "2279",
+      "name": "Prawy hamulec do wózka inwalidzkiego RF-1",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10461,
+      "external_source": "rehafund",
+      "external_id": "2281",
+      "name": "Pokrywa deski do krzesełka toaletowego",
+      "category_ref": 875,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10462,
+      "external_source": "rehafund",
+      "external_id": "2284",
+      "name": "Koszyk z przykrywką do chodzika trójkołowego RF-611",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10463,
+      "external_source": "rehafund",
+      "external_id": "2286",
+      "name": "Koszyk do chodzika czterokołowego RF-616",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10464,
+      "external_source": "rehafund",
+      "external_id": "2288",
+      "name": "Bateria w obudowie do wózka elektrycznego DY01109/DH01109",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10465,
+      "external_source": "rehafund",
+      "external_id": "2289",
+      "name": "Ładowarka do wózka elektrycznego DY01109/DH01109",
+      "category_ref": 6,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10466,
+      "external_source": "rehafund",
+      "external_id": "2290",
+      "name": "Podpórka U-kształtny do ambonki RF-141",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10467,
+      "external_source": "rehafund",
+      "external_id": "2295",
+      "name": "Komora powietrzna bez mikrowentylacji do materaca BF5000",
+      "category_ref": 400,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10468,
+      "external_source": "rehafund",
+      "external_id": "2308",
+      "name": "Torba do chodzika trójkołowego RF-611, RF-621",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10469,
+      "external_source": "rehafund",
+      "external_id": "2310",
+      "name": "Torba do chodzika czterokołowego RF-610",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10470,
+      "external_source": "rehafund",
+      "external_id": "2317",
+      "name": "Drewniana listwa - CAMA/CAMA BASIC",
+      "category_ref": 707,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10471,
+      "external_source": "rehafund",
+      "external_id": "2273",
+      "name": "Koło TPR do chodzika RF-622",
+      "category_ref": -13,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10590,
+      "external_source": "rehafund",
+      "external_id": "246",
+      "name": "Pas brzuszny przewiewny \"24cm\" Ventrimax Air",
+      "category_ref": 888,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10591,
+      "external_source": "rehafund",
+      "external_id": "249",
+      "name": "Pas pachwinowo-przepuklinowy jednostronny \"Axilmax\"",
+      "category_ref": 888,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10592,
+      "external_source": "rehafund",
+      "external_id": "265",
+      "name": "Pas pachwinowo-przepuklinowy obustronny \"Axilmax Duo\"",
+      "category_ref": 888,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10593,
+      "external_source": "rehafund",
+      "external_id": "345",
+      "name": "Orteza stopowo-goleniowa długa \"AIR WALKER BASIC LONG\"",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10594,
+      "external_source": "rehafund",
+      "external_id": "349",
+      "name": "Orteza stopowo-goleniowa krótka \"AIR WALKER BASIC SHORT\"",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10595,
+      "external_source": "rehafund",
+      "external_id": "353",
+      "name": "Orteza na ramię i bark typu Dessault \"HUMEROMAX\"",
+      "category_ref": 736,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10596,
+      "external_source": "rehafund",
+      "external_id": "366",
+      "name": "Orteza stawu kolanowego otwarta krótka \"Stabilmax open short\"",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10597,
+      "external_source": "rehafund",
+      "external_id": "380",
+      "name": "Orteza stawu kolanowego otwarta długa \"Stabilmax open long\"",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10598,
+      "external_source": "rehafund",
+      "external_id": "389",
+      "name": "Orteza stawu skokowego „Malleomax”",
+      "category_ref": 741,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10599,
+      "external_source": "rehafund",
+      "external_id": "392",
+      "name": "Orteza stawu skokowego „Malleomax Pro”",
+      "category_ref": 741,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10600,
+      "external_source": "rehafund",
+      "external_id": "546",
+      "name": "Orteza stopowo-goleniowa \"AIR WALKER DUO\" LONG",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10601,
+      "external_source": "rehafund",
+      "external_id": "550",
+      "name": "Orteza stopowo-goleniowa \"AIR WALKER DUO\" SHORT",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10602,
+      "external_source": "rehafund",
+      "external_id": "556",
+      "name": "Orteza nadgarstka krótka \"Manumax Uni Short\"",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10603,
+      "external_source": "rehafund",
+      "external_id": "2162",
+      "name": "Funkcjonalna orteza stawu kolanowego ”DUOMAX”",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10604,
+      "external_source": "rehafund",
+      "external_id": "62",
+      "name": "Orteza stopowo-goleniowa długa \"AIR WALKER LONG\"",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10605,
+      "external_source": "rehafund",
+      "external_id": "63",
+      "name": "Orteza stopowo-goleniowa krótka \"AIR WALKER SHORT\"",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10606,
+      "external_source": "rehafund",
+      "external_id": "64",
+      "name": "Pooperacyjna orteza stawu kolanowego \"T-Max Knee\"",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10607,
+      "external_source": "rehafund",
+      "external_id": "67",
+      "name": "Zegarowa orteza stawu łokciowego \"T-Max Elbow\"",
+      "category_ref": 738,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10608,
+      "external_source": "rehafund",
+      "external_id": "72",
+      "name": "Kołnierz ortopedyczny typu Schanza",
+      "category_ref": 742,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10609,
+      "external_source": "rehafund",
+      "external_id": "73",
+      "name": "Kołnierz sztywny z otworem tracheostomijnym Philadelphia",
+      "category_ref": 742,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10610,
+      "external_source": "rehafund",
+      "external_id": "74",
+      "name": "Elastyczny stabilizator stawu kolanowego z osłoną silikonową i stalkami Genumax",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10611,
+      "external_source": "rehafund",
+      "external_id": "75",
+      "name": "Elastyczny stabilizator stawu kolanowego z zawiasami Genumax Plus",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10612,
+      "external_source": "rehafund",
+      "external_id": "76",
+      "name": "Pas lędźwiowo-krzyżowy „Lumbomax”",
+      "category_ref": 148,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10613,
+      "external_source": "rehafund",
+      "external_id": "77",
+      "name": "Pas lędźwiowo-krzyżowy z pasami dociągowymi \"Lumbomax Plus\"",
+      "category_ref": 148,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10614,
+      "external_source": "rehafund",
+      "external_id": "78",
+      "name": "Wysoka sznurówka półsztywna z podpaszkami \"Lumbomax Spina\"",
+      "category_ref": 148,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10615,
+      "external_source": "rehafund",
+      "external_id": "79",
+      "name": "Wysoka sznurówka półsztywna z pasami dociągowymi „Lumbomax Stabil”",
+      "category_ref": 148,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10616,
+      "external_source": "rehafund",
+      "external_id": "80",
+      "name": "Pas lędźwiowo-krzyżowy z pelotą silikonową \"Lumbomax Skin\"",
+      "category_ref": 148,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10617,
+      "external_source": "rehafund",
+      "external_id": "81",
+      "name": "Pas lędźwiowo-krzyżowy z dociągami \"Lumbomax Disc\"",
+      "category_ref": 148,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10618,
+      "external_source": "rehafund",
+      "external_id": "84",
+      "name": "Orteza stabilizujaca staw skokowy \"Achimax\"",
+      "category_ref": 741,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10619,
+      "external_source": "rehafund",
+      "external_id": "85",
+      "name": "Elastyczny stabilizator nadgarstka \"Manimax\"",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10620,
+      "external_source": "rehafund",
+      "external_id": "87",
+      "name": "Elastyczny stabilizator nadgarstka i kciuka \"Manimax T\"",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10621,
+      "external_source": "rehafund",
+      "external_id": "154",
+      "name": "Pas brzuszny \"24cm\" Ventrimax",
+      "category_ref": 888,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10622,
+      "external_source": "rehafund",
+      "external_id": "165",
+      "name": "Neoprenowy stabilizator stawu skokowego Ligamax Ankle",
+      "category_ref": 741,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10623,
+      "external_source": "rehafund",
+      "external_id": "166",
+      "name": "Neoprenowy stabilizator stawu kolanowego Ligamax Knee",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10624,
+      "external_source": "rehafund",
+      "external_id": "168",
+      "name": "Neoprenowy stabilizator nadgarstka z ujęciem ręki Ligamax Palm",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10625,
+      "external_source": "rehafund",
+      "external_id": "169",
+      "name": "Neoprenowy stabilizator nadgarstka Ligamax Wrist",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10626,
+      "external_source": "rehafund",
+      "external_id": "170",
+      "name": "Neoprenowy stabilizator stawu łokciowego Ligamax Elbow",
+      "category_ref": 738,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10627,
+      "external_source": "rehafund",
+      "external_id": "172",
+      "name": "Orteza palcowa ręki \"Digimax Plus\"",
+      "category_ref": 740,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10628,
+      "external_source": "rehafund",
+      "external_id": "177",
+      "name": "Temblak kończyny górnej",
+      "category_ref": 879,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10629,
+      "external_source": "rehafund",
+      "external_id": "193",
+      "name": "Orteza wielopalcowa ręki \"Digimax\"",
+      "category_ref": 740,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10630,
+      "external_source": "rehafund",
+      "external_id": "224",
+      "name": "Temblak siatkowy",
+      "category_ref": 879,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10631,
+      "external_source": "rehafund",
+      "external_id": "555",
+      "name": "Zegarowa orteza stawu łokciowego z ujęciem dłoni \"T-Max Elbow Plus\"",
+      "category_ref": 738,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10632,
+      "external_source": "rehafund",
+      "external_id": "559",
+      "name": "Orteza nadgarstka długa \"Manumax Uni Long\"",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10633,
+      "external_source": "rehafund",
+      "external_id": "2471",
+      "name": "Opaska elastyczna stawu nadgarstkowego \"Alpha Wrist\"",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10634,
+      "external_source": "rehafund",
+      "external_id": "2474",
+      "name": "Opaska elastyczna stawu nadgarstkowego \"Alpha Wrist Pro\"",
+      "category_ref": 739,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10635,
+      "external_source": "rehafund",
+      "external_id": "2477",
+      "name": "Opaska elastyczna stawu kolanowego \"Alpha Knee\"",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10636,
+      "external_source": "rehafund",
+      "external_id": "2465",
+      "name": "Opaska elastyczna stawu skokowego „Alpha Ankle”",
+      "category_ref": 741,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10637,
+      "external_source": "rehafund",
+      "external_id": "2481",
+      "name": "Opaska elstyczna stawu łokciowego \"Alpha Elbow\"",
+      "category_ref": 738,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10638,
+      "external_source": "rehafund",
+      "external_id": "173",
+      "name": "Dodatkowe usztywnienie palca do ortezy „Digimax”",
+      "category_ref": 740,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10639,
+      "external_source": "rehafund",
+      "external_id": "2014",
+      "name": "Jednoszynowa orteza stawu kolanowego OA \"MONOMAX''",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10640,
+      "external_source": "rehafund",
+      "external_id": "2192",
+      "name": "Orteza stawu biodrowego z regulacją kąta zgięcia i odwodzenia „T-Max Hip”",
+      "category_ref": 135,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10641,
+      "external_source": "rehafund",
+      "external_id": "2017",
+      "name": "Tutor stawu kolanowego \"IMMOBIMAX''",
+      "category_ref": 737,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10642,
+      "external_source": "rehafund",
+      "external_id": "2407",
+      "name": "Orteza ręki i przedramienia z ujęciem kciuka „FlexLoopT”",
+      "category_ref": 736,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10643,
+      "external_source": "rehafund",
+      "external_id": "2404",
+      "name": "Orteza stopowo-goleniowa \"AIR WALKER DUOSHELL\" LONG",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10644,
+      "external_source": "rehafund",
+      "external_id": "2405",
+      "name": "Orteza stopowo-goleniowa \"AIR WALKER DUOSHELL\" SHORT",
+      "category_ref": 886,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10645,
+      "external_source": "rehafund",
+      "external_id": "2406",
+      "name": "Orteza ręki i przedramienia „FlexLoop”",
+      "category_ref": 736,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10864,
+      "external_source": "antar",
+      "external_id": "biustonosz-amelia-4028",
+      "name": "Biustonosz AMELIA 4028",
+      "category_ref": 322,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 10867,
+      "external_source": "antar",
+      "external_id": "biustonosz-lana-4009",
+      "name": "Biustonosz LANA 4009",
+      "category_ref": 322,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11261,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-a-supreme-503",
+      "name": "Proteza piersi A SUPREME 503",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11262,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-bella-571",
+      "name": "Proteza piersi BELLA 571",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11263,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-harmony-silk-triangl-plus-472",
+      "name": "Proteza piersi HARMONY SILK TRIANGL PLUS 472",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11264,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-harmony-silk-triangle-471",
+      "name": "Proteza piersi HARMONY SILK TRIANGLE 471",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11265,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-harmony-silk-xtend-478",
+      "name": "Proteza piersi HARMONY SILK XTEND 478",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11266,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-impressions-ii-101",
+      "name": "Proteza piersi IMPRESSIONS II 101",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11267,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-supreme-475",
+      "name": "Proteza piersi SILK A-SUPREME 475",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11268,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-symphony-633",
+      "name": "Proteza piersi SYMPHONY 508",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 11269,
+      "external_source": "antar",
+      "external_id": "proteza-piersi-triangular-partial-533",
+      "name": "Proteza piersi TRIANGULAR PARTIAL 533",
+      "category_ref": 251,
+      "reason": "Explicit product name resolves broad supplier primary category"
+    },
+    {
+      "product_id": 12646,
+      "external_source": "novicare",
+      "external_id": "da51fc875bc5d125b44477a453d5166d1e302ab260b7934359e97f64ba7776ca",
+      "name": "Tape SM-702",
+      "category_ref": 1186,
+      "reason": "Tape/resistance band: exercise accessory, not compression care"
+    },
+    {
+      "product_id": 12647,
+      "external_source": "novicare",
+      "external_id": "b17abc60109583043606766298b5b4f9a5e6cc9bed015e6df1a04f07fd27093f",
+      "name": "Taśmy oporowe do ćwiczeń DR-RB100",
+      "category_ref": 1186,
+      "reason": "Tape/resistance band: exercise accessory, not compression care"
+    },
+    {
+      "product_id": 14336,
+      "external_source": "footwave",
+      "external_id": "372",
+      "name": "FootWave™ KIDS",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14337,
+      "external_source": "footwave",
+      "external_id": "334",
+      "name": "FootWave™ KIDS SUPI",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14338,
+      "external_source": "footwave",
+      "external_id": "15733",
+      "name": "FootWave™ KIDS SUPI PRO",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14339,
+      "external_source": "footwave",
+      "external_id": "15748",
+      "name": "FootWave™ OSTROGA PIĘTOWA",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14340,
+      "external_source": "footwave",
+      "external_id": "15755",
+      "name": "FootWave™ HALLUX",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14341,
+      "external_source": "footwave",
+      "external_id": "15762",
+      "name": "FootWave™ SUPI",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14342,
+      "external_source": "footwave",
+      "external_id": "15769",
+      "name": "FootWave™ SUPI 3/4",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14343,
+      "external_source": "footwave",
+      "external_id": "15776",
+      "name": "FootWave™ PŁASKOSTOPIE",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14344,
+      "external_source": "footwave",
+      "external_id": "15878",
+      "name": "FootWave™ PŁASKOSTOPIE POPRZECZNE 3/4",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14345,
+      "external_source": "footwave",
+      "external_id": "15884",
+      "name": "FootWave™ MAMA",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14346,
+      "external_source": "footwave",
+      "external_id": "15890",
+      "name": "FootWave™ SOFTY",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14347,
+      "external_source": "footwave",
+      "external_id": "15896",
+      "name": "FootWave™ SPORT",
+      "category_ref": -15,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14348,
+      "external_source": "footwave",
+      "external_id": "15902",
+      "name": "FootWave™ SLIM",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14349,
+      "external_source": "footwave",
+      "external_id": "15908",
+      "name": "FootWave™ FOOTBALL",
+      "category_ref": -15,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14350,
+      "external_source": "footwave",
+      "external_id": "15914",
+      "name": "FootWave™ PLAY",
+      "category_ref": -15,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14351,
+      "external_source": "footwave",
+      "external_id": "19578",
+      "name": "FootWave™ KIDS SUPI 3/4",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14352,
+      "external_source": "footwave",
+      "external_id": "19782",
+      "name": "FootWave™ LADY VERSA",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14353,
+      "external_source": "footwave",
+      "external_id": "19793",
+      "name": "FootWave™ VERSA",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14354,
+      "external_source": "footwave",
+      "external_id": "19878",
+      "name": "FootWave™ LADY HIGH HEEL",
+      "category_ref": 618,
+      "reason": "FootWave insole group: distinguish insoles from footwear"
+    },
+    {
+      "product_id": 14355,
+      "external_source": "footwave",
+      "external_id": "20026",
+      "name": "OS1st WS6 nadgarstek",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14356,
+      "external_source": "footwave",
+      "external_id": "20060",
+      "name": "OS1st CS6 Łydka",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14357,
+      "external_source": "footwave",
+      "external_id": "20074",
+      "name": "OS1st ES6 ramię",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14358,
+      "external_source": "footwave",
+      "external_id": "20103",
+      "name": "OS1st HV3 Bunion Bracing Sleeve",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14359,
+      "external_source": "footwave",
+      "external_id": "20107",
+      "name": "OS1st BR4 Halux",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14360,
+      "external_source": "footwave",
+      "external_id": "20155",
+      "name": "OS1st QS4 stabilizacja uda",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14361,
+      "external_source": "footwave",
+      "external_id": "20204",
+      "name": "OS1st AF7 staw skokowy",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14362,
+      "external_source": "footwave",
+      "external_id": "20213",
+      "name": "OS1st AS6 rękaw na ramię",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14364,
+      "external_source": "footwave",
+      "external_id": "20757",
+      "name": "OrthoSleeve FS6+",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14365,
+      "external_source": "footwave",
+      "external_id": "20783",
+      "name": "OrthoSleeve FS6",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14366,
+      "external_source": "footwave",
+      "external_id": "20792",
+      "name": "OrthoSleeve ES3",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14367,
+      "external_source": "footwave",
+      "external_id": "20795",
+      "name": "OrthoSleeve CS6",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14368,
+      "external_source": "footwave",
+      "external_id": "20798",
+      "name": "OrthoSleeve BR4",
+      "category_ref": 870,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14369,
+      "external_source": "footwave",
+      "external_id": "21540",
+      "name": "Obuwie terapeutyczne FootWave HOME – szare",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14370,
+      "external_source": "footwave",
+      "external_id": "21625",
+      "name": "Zullaz Mens Active – black",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14371,
+      "external_source": "footwave",
+      "external_id": "21650",
+      "name": "Zullaz Womens Active – beżowe",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14375,
+      "external_source": "footwave",
+      "external_id": "22175",
+      "name": "Zullaz Womens Active – różowe",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14376,
+      "external_source": "footwave",
+      "external_id": "22199",
+      "name": "Zullaz Womens Active – black",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14377,
+      "external_source": "footwave",
+      "external_id": "22992",
+      "name": "Obuwie profilowane Sari MAYA – metalic",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14378,
+      "external_source": "footwave",
+      "external_id": "23033",
+      "name": "Obuwie profilowane Sari ANYA – black",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14379,
+      "external_source": "footwave",
+      "external_id": "23052",
+      "name": "Obuwie profilowane Sari DIANA – tan",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14380,
+      "external_source": "footwave",
+      "external_id": "23068",
+      "name": "Obuwie profilowane Sari DIANA – white",
+      "category_ref": 1191,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    },
+    {
+      "product_id": 14381,
+      "external_source": "footwave",
+      "external_id": "36249",
+      "name": "Worek-plecak FootWave",
+      "category_ref": -16,
+      "reason": "Split supplier Other products into footwear, supports or personal accessory; unspecified support stays broad"
+    }
+  ],
+  "membership_policy": "Preserve primary and non-ancestor secondary leaves; discard old ancestor memberships; rebuild ancestors in the repaired graph.",
+  "scope": "Data only. Product names, slugs, statuses, variants, prices, orders, payments and importer code are not changed."
+}

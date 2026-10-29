@@ -1,0 +1,24 @@
+{
+  "root_count": 12,
+  "created_categories": 12,
+  "updated_categories": 314,
+  "primary_overrides": 475,
+  "assignment_count": 51616,
+  "uncategorized": 0,
+  "cycles": 0,
+  "all_product_urls_unchanged": true,
+  "primary_department_counts": {
+    "Odzież medyczna i zawodowa": 555,
+    "Mobilność i transport": 711,
+    "Rehabilitacja i ćwiczenia": 384,
+    "Opieka nad pacjentem": 590,
+    "Sprzęt diagnostyczny i medyczny": 452,
+    "Obuwie i pielęgnacja stóp": 989,
+    "Peruki i akcesoria": 8243,
+    "Ortezy i stabilizatory": 1472,
+    "Opatrunki i dezynfekcja": 407,
+    "Kompresja medyczna": 353,
+    "Zdrowie i pielęgnacja": 186,
+    "Higiena i nietrzymanie moczu": 285
+  }
+}
