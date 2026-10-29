@@ -35,9 +35,21 @@ final class HerdegenReleaseImportTest extends TestCase
 
     private function archivePath(): string
     {
-        $path = storage_path(
-            'app/private/scrapers/herdegen/releases/herdegen18d4-transfer.zip'
-        );
+        $configuredPath = getenv('HERDEGEN_RELEASE_ARCHIVE');
+        $path = is_string($configuredPath) && $configuredPath !== ''
+            ? $configuredPath
+            : storage_path(
+                'app/private/scrapers/herdegen/releases/herdegen18d4-transfer.zip'
+            );
+
+        // This checksum-pinned release is an external operational artifact,
+        // not a fixture included in a fresh checkout. Never skip an explicitly
+        // configured archive: a missing CI/local input must fail visibly.
+        if (($configuredPath === false || $configuredPath === '') && ! is_file($path)) {
+            self::markTestSkipped(
+                'External Herdegen release archive unavailable; set HERDEGEN_RELEASE_ARCHIVE to run this release integration test.'
+            );
+        }
 
         self::assertFileExists($path);
         self::assertSame(self::ARCHIVE_SHA256, hash_file('sha256', $path));
