@@ -6,8 +6,12 @@
         <div class="mx-auto max-w-[1480px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
             <nav class="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-400" aria-label="Okruszki">
                 <a href="{{ route('home') }}" class="transition hover:text-[#155fa8]">Strona główna</a>
+                @foreach ($breadcrumbCategories as $ancestorCategory)
+                    <span aria-hidden="true">/</span>
+                    <a href="{{ route('categories.show', $ancestorCategory->slug) }}" class="transition hover:text-[#155fa8]">{{ $ancestorCategory->name }}</a>
+                @endforeach
                 <span aria-hidden="true">/</span>
-                <span class="text-slate-600">{{ $category->name }}</span>
+                <span class="text-slate-600" aria-current="page">{{ $category->name }}</span>
             </nav>
 
             <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">

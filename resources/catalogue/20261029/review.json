@@ -1,0 +1,4011 @@
+{
+  "repair_id": "catalogue-20261029-review-v1",
+  "category_updates": [
+    {
+      "id": 54,
+      "slug": "bluzy-damskie",
+      "before": {
+        "name": "Bluzy damskie",
+        "status": "active",
+        "parent_slug": "odziez-medyczna"
+      },
+      "after": {
+        "parent_slug": "odziez-medyczna",
+        "name": "Bluzy damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 55,
+      "slug": "fartuchy-damskie",
+      "before": {
+        "name": "Fartuchy damskie",
+        "status": "active",
+        "parent_slug": "odziez-medyczna"
+      },
+      "after": {
+        "parent_slug": "odziez-medyczna",
+        "name": "Fartuchy damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 57,
+      "slug": "spodnie-damskie",
+      "before": {
+        "name": "Spodnie damskie",
+        "status": "active",
+        "parent_slug": "odziez-medyczna"
+      },
+      "after": {
+        "parent_slug": "odziez-medyczna",
+        "name": "Spodnie damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 58,
+      "slug": "zakiety-damskie",
+      "before": {
+        "name": "Żakiety damskie",
+        "status": "active",
+        "parent_slug": "odziez-medyczna"
+      },
+      "after": {
+        "parent_slug": "odziez-medyczna",
+        "name": "Żakiety damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 60,
+      "slug": "bluzy-meskie",
+      "before": {
+        "name": "Bluzy męskie",
+        "status": "active",
+        "parent_slug": "odziez-medyczna"
+      },
+      "after": {
+        "parent_slug": "odziez-medyczna",
+        "name": "Bluzy męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 61,
+      "slug": "fartuchy-meskie",
+      "before": {
+        "name": "Fartuchy męskie",
+        "status": "active",
+        "parent_slug": "odziez-medyczna"
+      },
+      "after": {
+        "parent_slug": "odziez-medyczna",
+        "name": "Fartuchy męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 62,
+      "slug": "marynarki-meskie",
+      "before": {
+        "name": "Marynarki męskie",
+        "status": "active",
+        "parent_slug": "odziez-medyczna"
+      },
+      "after": {
+        "parent_slug": "odziez-medyczna",
+        "name": "Marynarki męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 63,
+      "slug": "spodnie-meskie",
+      "before": {
+        "name": "Spodnie męskie",
+        "status": "active",
+        "parent_slug": "odziez-medyczna"
+      },
+      "after": {
+        "parent_slug": "odziez-medyczna",
+        "name": "Spodnie męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 588,
+      "slug": "skarpety-uciskowe-meskie",
+      "before": {
+        "name": "Skarpety Uciskowe Męskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Uciskowe Męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 590,
+      "slug": "podkolanowki-przeciwzylakowe-ponczochy-uciskowe-meskie",
+      "before": {
+        "name": "Podkolanówki Przeciwżylakowe Pończochy Uciskowe Męskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Podkolanówki Przeciwżylakowe Pończochy Uciskowe Męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 621,
+      "slug": "akcesoria-akcesoria",
+      "before": {
+        "name": "Akcesoria",
+        "status": "active",
+        "parent_slug": "akcesoria-medi"
+      },
+      "after": {
+        "parent_slug": "akcesoria-medi",
+        "name": "Akcesoria",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 592,
+      "slug": "podkolanowki-uciskowe-1-stopnia-damskie",
+      "before": {
+        "name": "Podkolanówki Uciskowe 1 Stopnia Damskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Podkolanówki Uciskowe 1 Stopnia Damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 593,
+      "slug": "podkolanowki-uciskowe-1-stopnia-meskie",
+      "before": {
+        "name": "Podkolanówki Uciskowe 1 Stopnia Męskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Podkolanówki Uciskowe 1 Stopnia Męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 594,
+      "slug": "podkolanowki-uciskowe-2-stopnia-damskie",
+      "before": {
+        "name": "Podkolanówki Uciskowe 2 Stopnia Damskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Podkolanówki Uciskowe 2 Stopnia Damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 595,
+      "slug": "podkolanowki-uciskowe-2-stopnia-meskie",
+      "before": {
+        "name": "Podkolanówki Uciskowe 2 Stopnia Męskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Podkolanówki Uciskowe 2 Stopnia Męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 596,
+      "slug": "podkolanowki-uciskowe-do-biegania",
+      "before": {
+        "name": "Podkolanówki Uciskowe Do Biegania",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Podkolanówki Uciskowe Do Biegania",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 597,
+      "slug": "podkolanowki-uciskowe-do-samolotu",
+      "before": {
+        "name": "Podkolanówki Uciskowe Do Samolotu",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Podkolanówki Uciskowe Do Samolotu",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 598,
+      "slug": "kompresja-ponczochy-uciskowe-1-stopnia",
+      "before": {
+        "name": "Pończochy Uciskowe 1 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Pończochy Uciskowe 1 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 599,
+      "slug": "kompresja-ponczochy-uciskowe-2-stopnia",
+      "before": {
+        "name": "Pończochy Uciskowe 2 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Pończochy Uciskowe 2 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 600,
+      "slug": "ponczochy-uciskowe-2-stopnia-na-lato",
+      "before": {
+        "name": "Pończochy Uciskowe 2 Stopnia Na Lato",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Pończochy Uciskowe 2 Stopnia Na Lato",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 601,
+      "slug": "kompresja-ponczochy-uciskowe-3-stopnia",
+      "before": {
+        "name": "Pończochy Uciskowe 3 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Pończochy Uciskowe 3 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 602,
+      "slug": "ponczochy-uciskowe-damskie",
+      "before": {
+        "name": "Pończochy Uciskowe Damskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Pończochy Uciskowe Damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 603,
+      "slug": "kompresja-rajstopy-uciskowe-1-stopnia",
+      "before": {
+        "name": "Rajstopy Uciskowe 1 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Rajstopy Uciskowe 1 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 604,
+      "slug": "kompresja-rajstopy-uciskowe-2-stopnia",
+      "before": {
+        "name": "Rajstopy Uciskowe 2 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Rajstopy Uciskowe 2 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 605,
+      "slug": "kompresja-rajstopy-uciskowe-3-stopnia",
+      "before": {
+        "name": "Rajstopy Uciskowe 3 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Rajstopy Uciskowe 3 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 606,
+      "slug": "rajstopy-uciskowe-damskie",
+      "before": {
+        "name": "Rajstopy Uciskowe Damskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Rajstopy Uciskowe Damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 607,
+      "slug": "rajstopy-uciskowe-do-samolotu",
+      "before": {
+        "name": "Rajstopy Uciskowe Do Samolotu",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Rajstopy Uciskowe Do Samolotu",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 608,
+      "slug": "skarpety-kompresyjne-damskie-medyczne",
+      "before": {
+        "name": "Skarpety Kompresyjne Damskie Medyczne",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Kompresyjne Damskie Medyczne",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 609,
+      "slug": "skarpety-kompresyjne-do-biegania",
+      "before": {
+        "name": "Skarpety Kompresyjne Do Biegania",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Kompresyjne Do Biegania",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 610,
+      "slug": "skarpety-kompresyjne-do-biegania-damskie",
+      "before": {
+        "name": "Skarpety Kompresyjne Do Biegania Damskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Kompresyjne Do Biegania Damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 611,
+      "slug": "skarpety-kompresyjne-do-biegania-meskie",
+      "before": {
+        "name": "Skarpety Kompresyjne Do Biegania Męskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Kompresyjne Do Biegania Męskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 612,
+      "slug": "skarpety-kompresyjne-do-samolotu",
+      "before": {
+        "name": "Skarpety Kompresyjne Do Samolotu",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Kompresyjne Do Samolotu",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 613,
+      "slug": "skarpety-kompresyjne-na-rower",
+      "before": {
+        "name": "Skarpety Kompresyjne Na Rower",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Kompresyjne Na Rower",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 614,
+      "slug": "skarpety-uciskowe-1-stopnia",
+      "before": {
+        "name": "Skarpety Uciskowe 1 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Uciskowe 1 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 615,
+      "slug": "skarpety-uciskowe-2-stopnia",
+      "before": {
+        "name": "Skarpety Uciskowe 2 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Uciskowe 2 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 616,
+      "slug": "skarpety-uciskowe-3-stopnia",
+      "before": {
+        "name": "Skarpety Uciskowe 3 Stopnia",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Uciskowe 3 Stopnia",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 617,
+      "slug": "skarpety-uciskowe-damskie",
+      "before": {
+        "name": "Skarpety Uciskowe Damskie",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Skarpety Uciskowe Damskie",
+        "status": "archived"
+      }
+    },
+    {
+      "id": 446,
+      "slug": "wyroby-przeciwodlezynowe",
+      "before": {
+        "name": "Wyroby przeciwodleżynowe",
+        "status": "active",
+        "parent_slug": "rehabilitacja"
+      },
+      "after": {
+        "parent_slug": "opieka-nad-pacjentem",
+        "name": "Wyroby przeciwodleżynowe",
+        "status": "active"
+      }
+    },
+    {
+      "id": 447,
+      "slug": "nowosci",
+      "before": {
+        "name": "Nowości",
+        "status": "active",
+        "parent_slug": "wyroby-przeciwodlezynowe"
+      },
+      "after": {
+        "parent_slug": "wyroby-przeciwodlezynowe",
+        "name": "Akcesoria przeciwodleżynowe",
+        "status": "active"
+      }
+    },
+    {
+      "id": 589,
+      "slug": "podkolanowki-do-samolotu",
+      "before": {
+        "name": "Podkolanówki Do Samolotu",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Podkolanówki uciskowe do samolotu",
+        "status": "active"
+      }
+    },
+    {
+      "id": 620,
+      "slug": "akcesoria-medi",
+      "before": {
+        "name": "Akcesoria",
+        "status": "active",
+        "parent_slug": "kompresja"
+      },
+      "after": {
+        "parent_slug": "kompresja",
+        "name": "Akcesoria kompresyjne",
+        "status": "active"
+      }
+    }
+  ],
+  "aliases": {
+    "bluzy-damskie": "bluzy-medyczne-damskie",
+    "fartuchy-damskie": "fartuchy-medyczne-damskie",
+    "spodnie-damskie": "spodnie-medyczne-damskie",
+    "zakiety-damskie": "zakiety-medyczne",
+    "bluzy-meskie": "bluzy-medyczne-meskie",
+    "fartuchy-meskie": "fartuchy-medyczne-meskie",
+    "marynarki-meskie": "marynarki-medyczne-meskie",
+    "spodnie-meskie": "spodnie-medyczne-meskie",
+    "skarpety-uciskowe-meskie": "kompresja-podkolanowki-uciskowe",
+    "podkolanowki-przeciwzylakowe-ponczochy-uciskowe-meskie": "kompresja-podkolanowki-uciskowe",
+    "akcesoria-akcesoria": "akcesoria-do-zakladania-produktow-uciskowych",
+    "podkolanowki-uciskowe-1-stopnia-damskie": "kompresja-podkolanowki-uciskowe",
+    "podkolanowki-uciskowe-1-stopnia-meskie": "kompresja-podkolanowki-uciskowe",
+    "podkolanowki-uciskowe-2-stopnia-damskie": "kompresja-podkolanowki-uciskowe",
+    "podkolanowki-uciskowe-2-stopnia-meskie": "kompresja-podkolanowki-uciskowe",
+    "podkolanowki-uciskowe-do-biegania": "kompresja-podkolanowki-uciskowe",
+    "podkolanowki-uciskowe-do-samolotu": "podkolanowki-do-samolotu",
+    "kompresja-ponczochy-uciskowe-1-stopnia": "kompresja-ponczochy-uciskowe",
+    "kompresja-ponczochy-uciskowe-2-stopnia": "kompresja-ponczochy-uciskowe",
+    "ponczochy-uciskowe-2-stopnia-na-lato": "kompresja-ponczochy-uciskowe",
+    "kompresja-ponczochy-uciskowe-3-stopnia": "kompresja-ponczochy-uciskowe",
+    "ponczochy-uciskowe-damskie": "kompresja-ponczochy-uciskowe",
+    "kompresja-rajstopy-uciskowe-1-stopnia": "kompresja-rajstopy-uciskowe",
+    "kompresja-rajstopy-uciskowe-2-stopnia": "kompresja-rajstopy-uciskowe",
+    "kompresja-rajstopy-uciskowe-3-stopnia": "kompresja-rajstopy-uciskowe",
+    "rajstopy-uciskowe-damskie": "kompresja-rajstopy-uciskowe",
+    "rajstopy-uciskowe-do-samolotu": "kompresja-rajstopy-uciskowe",
+    "skarpety-kompresyjne-damskie-medyczne": "kompresja-podkolanowki-uciskowe",
+    "skarpety-kompresyjne-do-biegania": "kompresja-podkolanowki-uciskowe",
+    "skarpety-kompresyjne-do-biegania-damskie": "kompresja-podkolanowki-uciskowe",
+    "skarpety-kompresyjne-do-biegania-meskie": "kompresja-podkolanowki-uciskowe",
+    "skarpety-kompresyjne-do-samolotu": "kompresja-podkolanowki-uciskowe",
+    "skarpety-kompresyjne-na-rower": "kompresja-podkolanowki-uciskowe",
+    "skarpety-uciskowe-1-stopnia": "kompresja-podkolanowki-uciskowe",
+    "skarpety-uciskowe-2-stopnia": "kompresja-podkolanowki-uciskowe",
+    "skarpety-uciskowe-3-stopnia": "kompresja-podkolanowki-uciskowe",
+    "skarpety-uciskowe-damskie": "kompresja-podkolanowki-uciskowe"
+  },
+  "operations": [
+    {
+      "product": {
+        "id": 497,
+        "name": "Bluza E2002 Wojdak",
+        "slug": "bluza-e2002-wojdak",
+        "external_source": "wojdak",
+        "external_id": "bluza-e2002",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bluzy-medyczne-damskie",
+      "leaf_slugs": [
+        "bluzy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0f647ca413402aacea6f787a63d81eee645e206fe6a977074be10331a718c953"
+    },
+    {
+      "product": {
+        "id": 498,
+        "name": "Bluza E2129 Wojdak",
+        "slug": "bluza-e2129-wojdak",
+        "external_source": "wojdak",
+        "external_id": "bluza-e2129",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bluzy-medyczne-damskie",
+      "leaf_slugs": [
+        "bluzy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0f647ca413402aacea6f787a63d81eee645e206fe6a977074be10331a718c953"
+    },
+    {
+      "product": {
+        "id": 499,
+        "name": "Bluza E2130 Wojdak",
+        "slug": "bluza-e2130-wojdak",
+        "external_source": "wojdak",
+        "external_id": "bluza-e2130",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bluzy-medyczne-damskie",
+      "leaf_slugs": [
+        "bluzy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0f647ca413402aacea6f787a63d81eee645e206fe6a977074be10331a718c953"
+    },
+    {
+      "product": {
+        "id": 500,
+        "name": "Bluza E2133 Wojdak",
+        "slug": "bluza-e2133-wojdak",
+        "external_source": "wojdak",
+        "external_id": "bluza-e2133",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bluzy-medyczne-damskie",
+      "leaf_slugs": [
+        "bluzy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0f647ca413402aacea6f787a63d81eee645e206fe6a977074be10331a718c953"
+    },
+    {
+      "product": {
+        "id": 501,
+        "name": "Bluza R2132 Wojdak",
+        "slug": "bluza-r2132-wojdak",
+        "external_source": "wojdak",
+        "external_id": "bluza-r2132",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bluzy-medyczne-damskie",
+      "leaf_slugs": [
+        "bluzy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0f647ca413402aacea6f787a63d81eee645e206fe6a977074be10331a718c953"
+    },
+    {
+      "product": {
+        "id": 502,
+        "name": "Fartuch M1031 Wojdak",
+        "slug": "fartuch-m1031-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-m1031",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-damskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "d95a924f0edda877c366a167c0d951b1297656c4b2686e5d15fe945f2ff825e3"
+    },
+    {
+      "product": {
+        "id": 509,
+        "name": "Fartuch R1001 Wojdak",
+        "slug": "fartuch-r1001-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-r1001",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-damskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "d95a924f0edda877c366a167c0d951b1297656c4b2686e5d15fe945f2ff825e3"
+    },
+    {
+      "product": {
+        "id": 510,
+        "name": "Spodnie E4006 Wojdak",
+        "slug": "spodnie-e4006-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-e4006",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "spodnie-medyczne-damskie",
+      "leaf_slugs": [
+        "spodnie-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "75eb0230dac44a17fe04c4941455d7c228b4112700bc0dc61974e30623993b9a"
+    },
+    {
+      "product": {
+        "id": 511,
+        "name": "Spodnie E4022 Wojdak",
+        "slug": "spodnie-e4022-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-e4022",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "spodnie-medyczne-damskie",
+      "leaf_slugs": [
+        "spodnie-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "75eb0230dac44a17fe04c4941455d7c228b4112700bc0dc61974e30623993b9a"
+    },
+    {
+      "product": {
+        "id": 512,
+        "name": "Spodnie M4031 Wojdak",
+        "slug": "spodnie-m4031-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-m4031",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "spodnie-medyczne-damskie",
+      "leaf_slugs": [
+        "spodnie-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "75eb0230dac44a17fe04c4941455d7c228b4112700bc0dc61974e30623993b9a"
+    },
+    {
+      "product": {
+        "id": 513,
+        "name": "Żakiet R2094 Wojdak",
+        "slug": "zakiet-r2094-wojdak",
+        "external_source": "wojdak",
+        "external_id": "zakiet-r2094",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "zakiety-medyczne",
+      "leaf_slugs": [
+        "zakiety-medyczne"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "41f0260726f03564f0569fcd1f054d5e2f231a4b870e79c01fe07448ba4e959a"
+    },
+    {
+      "product": {
+        "id": 514,
+        "name": "Żakiet R2118 Wojdak",
+        "slug": "zakiet-r2118-wojdak",
+        "external_source": "wojdak",
+        "external_id": "zakiet-r2118",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "zakiety-medyczne",
+      "leaf_slugs": [
+        "zakiety-medyczne"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "41f0260726f03564f0569fcd1f054d5e2f231a4b870e79c01fe07448ba4e959a"
+    },
+    {
+      "product": {
+        "id": 515,
+        "name": "Żakiet R2171 Wojdak",
+        "slug": "zakiet-r2171-wojdak",
+        "external_source": "wojdak",
+        "external_id": "zakiet-r2171",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "zakiety-medyczne",
+      "leaf_slugs": [
+        "zakiety-medyczne"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "41f0260726f03564f0569fcd1f054d5e2f231a4b870e79c01fe07448ba4e959a"
+    },
+    {
+      "product": {
+        "id": 516,
+        "name": "Żakiet R2175 Wojdak",
+        "slug": "zakiet-r2175-wojdak",
+        "external_source": "wojdak",
+        "external_id": "zakiet-r2175",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "zakiety-medyczne",
+      "leaf_slugs": [
+        "zakiety-medyczne"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "41f0260726f03564f0569fcd1f054d5e2f231a4b870e79c01fe07448ba4e959a"
+    },
+    {
+      "product": {
+        "id": 517,
+        "name": "Fartuch M1071 Wojdak",
+        "slug": "fartuch-m1071-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-m1071",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-damskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "d95a924f0edda877c366a167c0d951b1297656c4b2686e5d15fe945f2ff825e3"
+    },
+    {
+      "product": {
+        "id": 518,
+        "name": "Fartuch T1062 Wojdak",
+        "slug": "fartuch-t1062-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-t1062",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-damskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "d95a924f0edda877c366a167c0d951b1297656c4b2686e5d15fe945f2ff825e3"
+    },
+    {
+      "product": {
+        "id": 519,
+        "name": "Fartuch T1068 Wojdak",
+        "slug": "fartuch-t1068-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-t1068",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-damskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "d95a924f0edda877c366a167c0d951b1297656c4b2686e5d15fe945f2ff825e3"
+    },
+    {
+      "product": {
+        "id": 520,
+        "name": "Fartuch T1072 Wojdak",
+        "slug": "fartuch-t1072-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-t1072",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-damskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "d95a924f0edda877c366a167c0d951b1297656c4b2686e5d15fe945f2ff825e3"
+    },
+    {
+      "product": {
+        "id": 521,
+        "name": "Fartuch T1075 Wojdak",
+        "slug": "fartuch-t1075-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-t1075",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-damskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "d95a924f0edda877c366a167c0d951b1297656c4b2686e5d15fe945f2ff825e3"
+    },
+    {
+      "product": {
+        "id": 527,
+        "name": "Sukienka T1069 Wojdak",
+        "slug": "sukienka-t1069-wojdak",
+        "external_source": "wojdak",
+        "external_id": "sukienka-t1069",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-damskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "d95a924f0edda877c366a167c0d951b1297656c4b2686e5d15fe945f2ff825e3"
+    },
+    {
+      "product": {
+        "id": 540,
+        "name": "Spodnie S4039 Wojdak",
+        "slug": "spodnie-s4039-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-s4039",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "spodnie-medyczne-damskie",
+      "leaf_slugs": [
+        "spodnie-medyczne-damskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "75eb0230dac44a17fe04c4941455d7c228b4112700bc0dc61974e30623993b9a"
+    },
+    {
+      "product": {
+        "id": 565,
+        "name": "Bluza E6001 Wojdak",
+        "slug": "bluza-e6001-wojdak",
+        "external_source": "wojdak",
+        "external_id": "bluza-e6001",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bluzy-medyczne-meskie",
+      "leaf_slugs": [
+        "bluzy-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "f4c7754549f0481043bd5b1b062a911a2f580084c6d7d1a57cd0aec093a22bf3"
+    },
+    {
+      "product": {
+        "id": 566,
+        "name": "Bluza E6017 Wojdak",
+        "slug": "bluza-e6017-wojdak",
+        "external_source": "wojdak",
+        "external_id": "bluza-e6017",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bluzy-medyczne-meskie",
+      "leaf_slugs": [
+        "bluzy-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "f4c7754549f0481043bd5b1b062a911a2f580084c6d7d1a57cd0aec093a22bf3"
+    },
+    {
+      "product": {
+        "id": 567,
+        "name": "Fartuch M5001 Wojdak",
+        "slug": "fartuch-m5001-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-m5001",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-meskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "b41e1ff375020c533f6b70c075c5a1739cc8971af09e48717998bf64fb79eae7"
+    },
+    {
+      "product": {
+        "id": 568,
+        "name": "Marynarka M6002 Wojdak",
+        "slug": "marynarka-m6002-wojdak",
+        "external_source": "wojdak",
+        "external_id": "marynarka-m6002",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "marynarki-medyczne-meskie",
+      "leaf_slugs": [
+        "marynarki-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "8570aeab72cafd51da52c0e69b06e4bb1df9b4a114abb5eeda8368b8b3037aad"
+    },
+    {
+      "product": {
+        "id": 569,
+        "name": "Marynarka M6003 Wojdak",
+        "slug": "marynarka-m6003-wojdak",
+        "external_source": "wojdak",
+        "external_id": "marynarka-m6003",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "marynarki-medyczne-meskie",
+      "leaf_slugs": [
+        "marynarki-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "8570aeab72cafd51da52c0e69b06e4bb1df9b4a114abb5eeda8368b8b3037aad"
+    },
+    {
+      "product": {
+        "id": 570,
+        "name": "Spodnie E7627 Wojdak",
+        "slug": "spodnie-e7627-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-e7627",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "spodnie-medyczne-meskie",
+      "leaf_slugs": [
+        "spodnie-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "5475daab5bb438c8091445b16d76c4f7639a56fe636b55a8bb3632538e14de29"
+    },
+    {
+      "product": {
+        "id": 571,
+        "name": "Spodnie M7631 Wojdak",
+        "slug": "spodnie-m7631-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-m7631",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "spodnie-medyczne-meskie",
+      "leaf_slugs": [
+        "spodnie-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "5475daab5bb438c8091445b16d76c4f7639a56fe636b55a8bb3632538e14de29"
+    },
+    {
+      "product": {
+        "id": 572,
+        "name": "Fartuch M5022 Wojdak",
+        "slug": "fartuch-m5022-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-m5022",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "fartuchy-medyczne-meskie",
+      "leaf_slugs": [
+        "fartuchy-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "b41e1ff375020c533f6b70c075c5a1739cc8971af09e48717998bf64fb79eae7"
+    },
+    {
+      "product": {
+        "id": 573,
+        "name": "Marynarka M6034 Wojdak",
+        "slug": "marynarka-m6034-wojdak",
+        "external_source": "wojdak",
+        "external_id": "marynarka-m6034",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "marynarki-medyczne-meskie",
+      "leaf_slugs": [
+        "marynarki-medyczne-meskie"
+      ],
+      "reason": "Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "8570aeab72cafd51da52c0e69b06e4bb1df9b4a114abb5eeda8368b8b3037aad"
+    },
+    {
+      "product": {
+        "id": 9715,
+        "name": "2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "2x-kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips",
+        "external_source": "medreha",
+        "external_id": "725",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kule-ortopedyczne",
+      "leaf_slugs": [
+        "kule-ortopedyczne"
+      ],
+      "reason": "Exact product identity corrects clinically unrelated category",
+      "before_assignment_sha256": "ebc3f08713f0020f75bf8411502ea19258b5ffd522e724b3fd0bcab39983a532"
+    },
+    {
+      "product": {
+        "id": 10842,
+        "name": "Antyrotacyjna podkładka pod nogę AT03030",
+        "slug": "antyrotacyjna-podkladka-pod-noge-at03030",
+        "external_source": "antar",
+        "external_id": "antyrotacyjna_podkladka_pod_noge_at03030",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "nowosci",
+      "leaf_slugs": [
+        "nowosci"
+      ],
+      "reason": "Rebuild pressure-care ancestry after moving its branch to patient care",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 10973,
+        "name": "Krążek przeciwodleżynowy AT03029",
+        "slug": "krazek-przeciwodlezynowy-at03029",
+        "external_source": "antar",
+        "external_id": "krazek-przeciwodlezynowy-at03029",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "nowosci",
+      "leaf_slugs": [
+        "nowosci"
+      ],
+      "reason": "Rebuild pressure-care ancestry after moving its branch to patient care",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11205,
+        "name": "Podkładka ochronna pod piętę AT03028",
+        "slug": "podkladka-pod-piety-przeciwodlezynowa-z-pianki-at03028-2",
+        "external_source": "antar",
+        "external_id": "podkladka-pod-piety-przeciwodlezynowa-z-pianki-at03028-2",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "nowosci",
+      "leaf_slugs": [
+        "nowosci"
+      ],
+      "reason": "Rebuild pressure-care ancestry after moving its branch to patient care",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11675,
+        "name": "Bluza polarowa męska biała Malfini JACKET 501",
+        "slug": "bluza-polarowa-meska-biala-malfini-jacket-501",
+        "external_source": "apolonia",
+        "external_id": "3356",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary-meskie",
+      "leaf_slugs": [
+        "polary-meskie"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11676,
+        "name": "Bluza polarowa męska chabrowa Malfini JACKET 501",
+        "slug": "bluza-polarowa-meska-chabrowa-malfini-jacket-501",
+        "external_source": "apolonia",
+        "external_id": "3362",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary-meskie",
+      "leaf_slugs": [
+        "polary-meskie"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11677,
+        "name": "Bluza polarowa męska granatowa Malfini JACKET 501",
+        "slug": "bluza-polarowa-meska-granatowa-malfini-jacket-501",
+        "external_source": "apolonia",
+        "external_id": "3360",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary-meskie",
+      "leaf_slugs": [
+        "polary-meskie"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11678,
+        "name": "Bluza medyczna polarowa męska zapinana na zamek morska Speedway",
+        "slug": "bluza-medyczna-polarowa-meska-zapinana-na-zamek-morska-speedway",
+        "external_source": "apolonia",
+        "external_id": "1804",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary-meskie",
+      "leaf_slugs": [
+        "polary-meskie"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11684,
+        "name": "Bluza polarowa damska biała Malfini JACKET 504",
+        "slug": "bluza-polarowa-damska-biala-malfini-jacket-504",
+        "external_source": "apolonia",
+        "external_id": "3321",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary-damskie",
+      "leaf_slugs": [
+        "polary-damskie"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11685,
+        "name": "Bluza polarowa damska chabrowa Malfini JACKET 504",
+        "slug": "bluza-polarowa-damska-chabrowa-malfini-jacket-504",
+        "external_source": "apolonia",
+        "external_id": "3329",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary-damskie",
+      "leaf_slugs": [
+        "polary-damskie"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11686,
+        "name": "Bluza polarowa damska granatowa Malfini JACKET 504",
+        "slug": "bluza-polarowa-damska-granatowa-malfini-jacket-504",
+        "external_source": "apolonia",
+        "external_id": "3327",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary-damskie",
+      "leaf_slugs": [
+        "polary-damskie"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11687,
+        "name": "Kamizelka polarowa biała unisex Malfini NEXT 518",
+        "slug": "kamizelka-polarowa-biala-unisex-malfini-next-518",
+        "external_source": "apolonia",
+        "external_id": "2869",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary",
+      "leaf_slugs": [
+        "polary"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11688,
+        "name": "Kamizelka polarowa chabrowa unisex Malfini NEXT 518",
+        "slug": "kamizelka-polarowa-chabrowa-unisex-malfini-next-518",
+        "external_source": "apolonia",
+        "external_id": "3189",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary",
+      "leaf_slugs": [
+        "polary"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11689,
+        "name": "Kamizelka polarowa granatowa unisex Malfini NEXT 518",
+        "slug": "kamizelka-polarowa-granatowa-unisex-malfini-next-518",
+        "external_source": "apolonia",
+        "external_id": "3168",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary",
+      "leaf_slugs": [
+        "polary"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11691,
+        "name": "Bluza polarowa damska zapinana na zamek biała Speedway Lady",
+        "slug": "bluza-polarowa-damska-zapinana-na-zamek-biala-speedway-lady",
+        "external_source": "apolonia",
+        "external_id": "1784",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "polary-damskie",
+      "leaf_slugs": [
+        "polary-damskie"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11776,
+        "name": "Gumka do włosów scrunchie beżowa",
+        "slug": "gumka-do-wlosow-scrunchie-bezowa",
+        "external_source": "apolonia",
+        "external_id": "3499",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11777,
+        "name": "Gumka do włosów scrunchie beż nude",
+        "slug": "gumka-do-wlosow-scrunchie-bez-nude",
+        "external_source": "apolonia",
+        "external_id": "739",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11778,
+        "name": "Gumka do włosów scrunchie biała",
+        "slug": "gumka-do-wlosow-scrunchie-biala",
+        "external_source": "apolonia",
+        "external_id": "3488",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11779,
+        "name": "Gumka do włosów scrunchie, butelkowa zieleń",
+        "slug": "gumka-do-wlosow-scrunchie-butelkowa-zielen",
+        "external_source": "apolonia",
+        "external_id": "3491",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11780,
+        "name": "Gumka do włosów scrunchie błękitna",
+        "slug": "gumka-do-wlosow-scrunchie-blekitna",
+        "external_source": "apolonia",
+        "external_id": "3443",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11781,
+        "name": "Gumka do włosów scrunchie, ciepły szary",
+        "slug": "gumka-do-wlosow-scrunchie-cieply-szary",
+        "external_source": "apolonia",
+        "external_id": "3477",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11782,
+        "name": "Gumka do włosów scrunchie czarna",
+        "slug": "gumka-do-wlosow-scrunchie-czarna",
+        "external_source": "apolonia",
+        "external_id": "3478",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11783,
+        "name": "Gumka do włosów scrunchie granatowa",
+        "slug": "gumka-do-wlosow-scrunchie-granatowa",
+        "external_source": "apolonia",
+        "external_id": "3479",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11784,
+        "name": "Gumka do włosów scrunchie koralowa",
+        "slug": "gumka-do-wlosow-scrunchie-koralowa",
+        "external_source": "apolonia",
+        "external_id": "3487",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11785,
+        "name": "Gumka do włosów scrunchie lawendowa",
+        "slug": "gumka-do-wlosow-scrunchie-lawendowa",
+        "external_source": "apolonia",
+        "external_id": "3444",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11786,
+        "name": "Gumka do włosów scrunchie mokka",
+        "slug": "gumka-do-wlosow-scrunchie-mokka",
+        "external_source": "apolonia",
+        "external_id": "3445",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11787,
+        "name": "Gumka do włosów scrunchie ocean",
+        "slug": "gumka-do-wlosow-scrunchie-ocean",
+        "external_source": "apolonia",
+        "external_id": "3446",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11788,
+        "name": "Gumka do włosów scrunchie rubinowa",
+        "slug": "gumka-do-wlosow-scrunchie-rubinowa",
+        "external_source": "apolonia",
+        "external_id": "3447",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria",
+      "leaf_slugs": [
+        "akcesoria"
+      ],
+      "reason": "Remove clothing/hair accessories from shared Nowości pressure-care branch",
+      "before_assignment_sha256": "ae6d2e405dd94807a479a649dd0c488469344a13f10df3870ac7155d6119448e"
+    },
+    {
+      "product": {
+        "id": 11914,
+        "name": "duomed®",
+        "slug": "15",
+        "external_source": "medi",
+        "external_id": "1073185",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11915,
+        "name": "Genumedi® PA",
+        "slug": "151-medi-1172788",
+        "external_source": "medi",
+        "external_id": "1172788",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 11916,
+        "name": "wkładki medi footsupport Heel Pain pro",
+        "slug": "172",
+        "external_source": "medi",
+        "external_id": "1172518",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 11917,
+        "name": "Achimed",
+        "slug": "achimed-stabilizator-kostki-1",
+        "external_source": "medi",
+        "external_id": "928962",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 11918,
+        "name": "medi Butler do rajstop",
+        "slug": "butler-dla-rajstop-pomoc-w-zakladaniu",
+        "external_source": "medi",
+        "external_id": "1067880",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "akcesoria-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 11919,
+        "name": "medi Big (XXL) Butler",
+        "slug": "butler-duzy-pomoc-w-zakladaniu",
+        "external_source": "medi",
+        "external_id": "924844",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "akcesoria-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 11920,
+        "name": "Butler Export",
+        "slug": "butler-export-pomoc-w-zakladaniu",
+        "external_source": "medi",
+        "external_id": "924839",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "akcesoria-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 11921,
+        "name": "medi Butler off",
+        "slug": "butler-off-pomoc-w-zdejmowaniu",
+        "external_source": "medi",
+        "external_id": "924832",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "akcesoria-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 11922,
+        "name": "duomed® smooth",
+        "slug": "dumoed-smooth-rajstopy-kompresyjne-new",
+        "external_source": "medi",
+        "external_id": "1184488",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 11923,
+        "name": "duomed®",
+        "slug": "duomed-ponczochy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1073186",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 11924,
+        "name": "duomed®",
+        "slug": "duomed-rajstopy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1073184",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 11925,
+        "name": "duomed® smooth %",
+        "slug": "duomed-smooth-po-czochy-kompresyjne-sale",
+        "external_source": "medi",
+        "external_id": "1171327",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 11926,
+        "name": "duomed® smooth",
+        "slug": "duomed-smooth-po-czochy-kompresyjne",
+        "external_source": "medi",
+        "external_id": "1177172",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 11927,
+        "name": "duomed® smooth",
+        "slug": "duomed-smooth-podkolan-wki-kompresyjne-new",
+        "external_source": "medi",
+        "external_id": "1184489",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11928,
+        "name": "Epicomed® E⁺motion® 3.0",
+        "slug": "epicomed-e-motion-3-0-stabilizator-lokcia",
+        "external_source": "medi",
+        "external_id": "928113",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-lokcia",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-lokcia"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "18e69c7a30fd254ec7f2c7b19af6207943f2b7d0ff765565b81d8827fb30ff0c"
+    },
+    {
+      "product": {
+        "id": 11929,
+        "name": "Epicomed",
+        "slug": "epicomed-stabilizator-lokcia-3fx",
+        "external_source": "medi",
+        "external_id": "928111",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-lokcia",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-lokcia"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "18e69c7a30fd254ec7f2c7b19af6207943f2b7d0ff765565b81d8827fb30ff0c"
+    },
+    {
+      "product": {
+        "id": 11930,
+        "name": "Genumedi® E⁺motion® 3.0",
+        "slug": "genumedi-emotion-3-0-stabilizator-kolana",
+        "external_source": "medi",
+        "external_id": "928568",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "70045d4cd92acea26bb5ca910261d34b1188929fa4e06fa10fcf77e3036d190e"
+    },
+    {
+      "product": {
+        "id": 11931,
+        "name": "Genumedi® plus",
+        "slug": "genumedi-plus-stabilizator-kolana",
+        "external_source": "medi",
+        "external_id": "1172787",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "70045d4cd92acea26bb5ca910261d34b1188929fa4e06fa10fcf77e3036d190e"
+    },
+    {
+      "product": {
+        "id": 11932,
+        "name": "Genumedi® pro",
+        "slug": "genumedi-pro-orteza-kolana",
+        "external_source": "medi",
+        "external_id": "928574",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "70045d4cd92acea26bb5ca910261d34b1188929fa4e06fa10fcf77e3036d190e"
+    },
+    {
+      "product": {
+        "id": 11933,
+        "name": "Genumedi® PSS %",
+        "slug": "genumedi-pss-stabilizator-kolana-sale",
+        "external_source": "medi",
+        "external_id": "1185298",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 11934,
+        "name": "Genumedi® PSS",
+        "slug": "genumedi-pss-stabilizator-kolana",
+        "external_source": "medi",
+        "external_id": "928572",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "70045d4cd92acea26bb5ca910261d34b1188929fa4e06fa10fcf77e3036d190e"
+    },
+    {
+      "product": {
+        "id": 11935,
+        "name": "Genumedi® PT",
+        "slug": "genumedi-pt-stabilizator-kolana",
+        "external_source": "medi",
+        "external_id": "928573",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "70045d4cd92acea26bb5ca910261d34b1188929fa4e06fa10fcf77e3036d190e"
+    },
+    {
+      "product": {
+        "id": 11936,
+        "name": "Genumedi®",
+        "slug": "genumedi-stabilizator-kolana",
+        "external_source": "medi",
+        "external_id": "928567",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "70045d4cd92acea26bb5ca910261d34b1188929fa4e06fa10fcf77e3036d190e"
+    },
+    {
+      "product": {
+        "id": 11937,
+        "name": "Legginsy kompresyjne Victoria",
+        "slug": "legginsy-kompresyjne-victoria",
+        "external_source": "medi",
+        "external_id": "1172369",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bielizna-kompresyjna",
+      "leaf_slugs": [
+        "bielizna-kompresyjna"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "fbe982b2a8221df3c6745bd391156129f35b3f43808c474f7b78a4100fd3cfaa"
+    },
+    {
+      "product": {
+        "id": 11938,
+        "name": "Levamed® active",
+        "slug": "levamed-active-stabilizator-stawu-skokowego",
+        "external_source": "medi",
+        "external_id": "928964",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 11939,
+        "name": "Levamed® E⁺motion® 3.0",
+        "slug": "levamed-emotion-3-0-stabilizator-kostki",
+        "external_source": "medi",
+        "external_id": "928967",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 11940,
+        "name": "Levamed®",
+        "slug": "levamed-stabilizator-kostki",
+        "external_source": "medi",
+        "external_id": "928957",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 11941,
+        "name": "Lumbamed active",
+        "slug": "lumbamed-active-stabilizatory-kregoslup",
+        "external_source": "medi",
+        "external_id": "1172671",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-plecow",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-plecow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4c5da1b2f44980315f56d5c2a4506bda6e2e5afc90f889861d400c39f6ea41ef"
+    },
+    {
+      "product": {
+        "id": 11942,
+        "name": "Lumbamed basic",
+        "slug": "lumbamed-basic-stabilizatory-kregoslup-1",
+        "external_source": "medi",
+        "external_id": "927722",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-plecow",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-plecow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4c5da1b2f44980315f56d5c2a4506bda6e2e5afc90f889861d400c39f6ea41ef"
+    },
+    {
+      "product": {
+        "id": 11943,
+        "name": "Lumbamed® maternity",
+        "slug": "lumbamed-maternity-pas-ciazowy",
+        "external_source": "medi",
+        "external_id": "927717",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-plecow",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-plecow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4c5da1b2f44980315f56d5c2a4506bda6e2e5afc90f889861d400c39f6ea41ef"
+    },
+    {
+      "product": {
+        "id": 11944,
+        "name": "Lumbamed® plus E⁺motion® 3.0",
+        "slug": "lumbamed-plus-emotion-3-0-stabilizatory-kregoslup",
+        "external_source": "medi",
+        "external_id": "927719",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-plecow",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-plecow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4c5da1b2f44980315f56d5c2a4506bda6e2e5afc90f889861d400c39f6ea41ef"
+    },
+    {
+      "product": {
+        "id": 11945,
+        "name": "M.step® kidz",
+        "slug": "m-step-kidz-orteza-kostka",
+        "external_source": "medi",
+        "external_id": "928972",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortopedia-dziecieca",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki",
+        "ortopedia-dziecieca"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "2535222a0add579ab5ef10a66f285aaee2e9252d5dce8e8e7a873a5782e0eab9"
+    },
+    {
+      "product": {
+        "id": 11946,
+        "name": "M.step®",
+        "slug": "m-step-ortezy-kostka",
+        "external_source": "medi",
+        "external_id": "928952",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 11947,
+        "name": "Malleocare Pro",
+        "slug": "malleocare-pro-orteza-stawu-skokowego",
+        "external_source": "medi",
+        "external_id": "1172875",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 11948,
+        "name": "Manumed active E⁺motion® 3.0",
+        "slug": "manumed-active-e-motion-3-0-stabilizator-nadgarstka",
+        "external_source": "medi",
+        "external_id": "1071398",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-nadgarstka",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-nadgarstka"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3e0e054c572f01e560f4765f011c37eaab558fbb9b399f8997826d2be199d665"
+    },
+    {
+      "product": {
+        "id": 11949,
+        "name": "Manumed active",
+        "slug": "manumed-active-stabilizator-nadgarstka",
+        "external_source": "medi",
+        "external_id": "928109",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-nadgarstka",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-nadgarstka"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3e0e054c572f01e560f4765f011c37eaab558fbb9b399f8997826d2be199d665"
+    },
+    {
+      "product": {
+        "id": 11950,
+        "name": "Manumed Kidz",
+        "slug": "manumed-kidz-stabilizator-nadgarstka",
+        "external_source": "medi",
+        "external_id": "928114",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortopedia-dziecieca",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-nadgarstka",
+        "ortopedia-dziecieca"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "7126f366a9b1d15de7513ec4de6ce1e979f17e898de62412d9856dbf55e194e1"
+    },
+    {
+      "product": {
+        "id": 11951,
+        "name": "Manumed RFX",
+        "slug": "manumed-rfx-orteza-nadgarstka",
+        "external_source": "medi",
+        "external_id": "manumed-rfx-orteza-nadgarstka",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-nadgarstka",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-nadgarstka"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3e0e054c572f01e560f4765f011c37eaab558fbb9b399f8997826d2be199d665"
+    },
+    {
+      "product": {
+        "id": 11952,
+        "name": "Manumed",
+        "slug": "manumed-stabilizator-nadgarstka",
+        "external_source": "medi",
+        "external_id": "928104",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-nadgarstka",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-nadgarstka"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3e0e054c572f01e560f4765f011c37eaab558fbb9b399f8997826d2be199d665"
+    },
+    {
+      "product": {
+        "id": 11953,
+        "name": "Manumed T",
+        "slug": "manumed-t-orteza-nadgarstka",
+        "external_source": "medi",
+        "external_id": "928106",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-nadgarstka",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-nadgarstka"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3e0e054c572f01e560f4765f011c37eaab558fbb9b399f8997826d2be199d665"
+    },
+    {
+      "product": {
+        "id": 11954,
+        "name": "Maxis Lifting Briefs",
+        "slug": "maxis-lifting-briefs-bielizna-kompresyjna-bielizna-kompresyjna",
+        "external_source": "medi",
+        "external_id": "1172368",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bielizna-kompresyjna",
+      "leaf_slugs": [
+        "bielizna-kompresyjna"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "fbe982b2a8221df3c6745bd391156129f35b3f43808c474f7b78a4100fd3cfaa"
+    },
+    {
+      "product": {
+        "id": 11955,
+        "name": "MAXIS MICRO",
+        "slug": "maxis-micro-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "1171321",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11956,
+        "name": "MAXIS MICRO %",
+        "slug": "maxis-micro-ponczochy-uciskowe-sale",
+        "external_source": "medi",
+        "external_id": "1171324",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 11957,
+        "name": "MAXIS MICRO",
+        "slug": "maxis-micro-ponczochy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1171323",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 11958,
+        "name": "MAXIS MICRO %",
+        "slug": "maxis-micro-rajstopy-uciskowe-sale",
+        "external_source": "medi",
+        "external_id": "1171320",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 11959,
+        "name": "MAXIS MICRO",
+        "slug": "maxis-micro-rajstopy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1171319",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 11960,
+        "name": "medi Arm Butler",
+        "slug": "medi-arm-butler-stala-do-zak-adania-r-kaw-w-uciskowych",
+        "external_source": "medi",
+        "external_id": "924847",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "akcesoria-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 11961,
+        "name": "medi arm sling Kidz",
+        "slug": "medi-arm-sling-kidz-stabilizator-ramie",
+        "external_source": "medi",
+        "external_id": "929315",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "stabilizatory-ramienia",
+      "leaf_slugs": [
+        "ortopedia-dziecieca",
+        "stabilizatory-ramienia"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "5bd9c75a532100cd2322c92cdca9233b302798ed560263e5e12f44d92bb95485"
+    },
+    {
+      "product": {
+        "id": 11962,
+        "name": "medi Butler regulowany",
+        "slug": "medi-butler-regulowany-pomoc-w-zak-adaniu",
+        "external_source": "medi",
+        "external_id": "924843",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "akcesoria-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 11963,
+        "name": "medi classic Kidz",
+        "slug": "medi-classic-kidz-orteza-kolana",
+        "external_source": "medi",
+        "external_id": "928575",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortopedia-dziecieca",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan",
+        "ortopedia-dziecieca"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "af07e955966dbf9341fa5d15cb64ef8a21387d4ad4f1e4e50d44cd1f54e28729"
+    },
+    {
+      "product": {
+        "id": 11964,
+        "name": "medi clavicle support Kidz",
+        "slug": "medi-clavicle-support-kidz-stabilizator-obojczyka",
+        "external_source": "medi",
+        "external_id": "929316",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "stabilizatory-ramienia",
+      "leaf_slugs": [
+        "ortopedia-dziecieca",
+        "stabilizatory-ramienia"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "5bd9c75a532100cd2322c92cdca9233b302798ed560263e5e12f44d92bb95485"
+    },
+    {
+      "product": {
+        "id": 11965,
+        "name": "medi clean",
+        "slug": "medi-clean",
+        "external_source": "medi",
+        "external_id": "1067883",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "pielegnacja-produktow",
+      "leaf_slugs": [
+        "pielegnacja-produktow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "7659a1265d78d809de9c533196f752ac33bb3a629d477f0f53984678b388add2"
+    },
+    {
+      "product": {
+        "id": 11966,
+        "name": "medi collar soft Kidz %",
+        "slug": "medi-collar-soft-kidz-kolnierz-ortopedyczny-sale",
+        "external_source": "medi",
+        "external_id": "1185396",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortopedia-dziecieca",
+      "leaf_slugs": [
+        "ortopedia-dziecieca"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 11967,
+        "name": "medi collar soft Kidz",
+        "slug": "medi-collar-soft-kidz-kolnierz-ortopedyczny",
+        "external_source": "medi",
+        "external_id": "929257",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortopedia-dziecieca",
+      "leaf_slugs": [
+        "kolnierze-ortopedyczne",
+        "ortopedia-dziecieca"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "697c9b040365f7aeebe27e559f5f4c75015c87bdb2968f149f880693f114af3c"
+    },
+    {
+      "product": {
+        "id": 11968,
+        "name": "medi CTS",
+        "slug": "medi-cts-orteza-nadgarstka",
+        "external_source": "medi",
+        "external_id": "928101",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-nadgarstka",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-nadgarstka"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3e0e054c572f01e560f4765f011c37eaab558fbb9b399f8997826d2be199d665"
+    },
+    {
+      "product": {
+        "id": 11969,
+        "name": "medi day",
+        "slug": "medi-day-el-na-dzie-150ml-1",
+        "external_source": "medi",
+        "external_id": "924861",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kosmetyki-do-pielegnacji-ciala",
+      "leaf_slugs": [
+        "kosmetyki-do-pielegnacji-ciala"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3fde801d705081d3aa1adf379e6b3e37a9f66401c2bfd5861aadda07fbb4c100"
+    },
+    {
+      "product": {
+        "id": 11970,
+        "name": "medi easy sling",
+        "slug": "medi-easy-sling-stabilizator-ramie-1",
+        "external_source": "medi",
+        "external_id": "1071670",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "stabilizatory-ramienia",
+      "leaf_slugs": [
+        "stabilizatory-ramienia"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "5aa6ac54f34764a8c19e4bd9e673df094ea2ecba6f6591bb92c05168b95c1030"
+    },
+    {
+      "product": {
+        "id": 11971,
+        "name": "medi elastic ankle support",
+        "slug": "medi-elastic-ankle-support-stabilizator-kostki",
+        "external_source": "medi",
+        "external_id": "928953",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 11972,
+        "name": "medi Epibrace",
+        "slug": "medi-epibrace-stabilizator-lokcia",
+        "external_source": "medi",
+        "external_id": "1071399",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-lokcia",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-lokcia"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "18e69c7a30fd254ec7f2c7b19af6207943f2b7d0ff765565b81d8827fb30ff0c"
+    },
+    {
+      "product": {
+        "id": 11973,
+        "name": "medi fix",
+        "slug": "medi-fix-emulsja-adhezyjna",
+        "external_source": "medi",
+        "external_id": "1067881",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "pielegnacja-produktow",
+      "leaf_slugs": [
+        "pielegnacja-produktow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "7659a1265d78d809de9c533196f752ac33bb3a629d477f0f53984678b388add2"
+    },
+    {
+      "product": {
+        "id": 11974,
+        "name": "medi footsupport Comfort",
+        "slug": "medi-footsupport-comfort-foot-orthotic",
+        "external_source": "medi",
+        "external_id": "927223",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 11975,
+        "name": "medi footsupport comfort pro",
+        "slug": "medi-footsupport-comfort-pro-dla-diabetykow-i-stop-wrazliwych-1",
+        "external_source": "medi",
+        "external_id": "1172513",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 11976,
+        "name": "medi footsupport High Heels",
+        "slug": "medi-footsupport-high-heels-do-but-w-na-wysokim-obcasie",
+        "external_source": "medi",
+        "external_id": "1172516",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 11977,
+        "name": "medi footsupport High Heels pro",
+        "slug": "medi-footsupport-high-heels-pro-do-butow-na-wysokim-obcasie",
+        "external_source": "medi",
+        "external_id": "1172517",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 11978,
+        "name": "medi fresh",
+        "slug": "medi-fresh-spray-ch-odz-cy-100ml-1",
+        "external_source": "medi",
+        "external_id": "924862",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kosmetyki-do-pielegnacji-ciala",
+      "leaf_slugs": [
+        "kosmetyki-do-pielegnacji-ciala"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3fde801d705081d3aa1adf379e6b3e37a9f66401c2bfd5861aadda07fbb4c100"
+    },
+    {
+      "product": {
+        "id": 11979,
+        "name": "medi night",
+        "slug": "medi-night-krem-na-noc",
+        "external_source": "medi",
+        "external_id": "924860",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kosmetyki-do-pielegnacji-ciala",
+      "leaf_slugs": [
+        "kosmetyki-do-pielegnacji-ciala"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3fde801d705081d3aa1adf379e6b3e37a9f66401c2bfd5861aadda07fbb4c100"
+    },
+    {
+      "product": {
+        "id": 11980,
+        "name": "medi Orthocox",
+        "slug": "medi-orthocox-stabilizator-biodra",
+        "external_source": "medi",
+        "external_id": "928381",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "stabilizatory-biodra",
+      "leaf_slugs": [
+        "stabilizatory-biodra"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "de2dd167e328d4912c3b7a6104920cab3383052d8e11ff37595e045c436471c3"
+    },
+    {
+      "product": {
+        "id": 11981,
+        "name": "medi Posture plus force",
+        "slug": "medi-posture-plus-force-koszulka-koryguj-ca-postaw",
+        "external_source": "medi",
+        "external_id": "1071227",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "koszulki-korygujace-postawe",
+      "leaf_slugs": [
+        "koszulki-korygujace-postawe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4e764d65d65a9cb01d9bc16628a1adbb8b7c9a81f0b80b8704dde6ddfe47a1a0"
+    },
+    {
+      "product": {
+        "id": 11982,
+        "name": "medi rękawiczki tekstylne",
+        "slug": "medi-r-kawiczki-tekstylne-pomoc-w-zak-adaniu",
+        "external_source": "medi",
+        "external_id": "1067882",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "rekawiczki-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "rekawiczki-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 11983,
+        "name": "medi Rehab One",
+        "slug": "medi-rehab-one-podkolan-wki-uciskowe-zamkniete-palce",
+        "external_source": "medi",
+        "external_id": "medi-rehab-one-podkolan-wki-uciskowe-zamkniete-palce",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11984,
+        "name": "medi soft",
+        "slug": "medi-soft-pianka-piel-gnuj-ca-125ml",
+        "external_source": "medi",
+        "external_id": "1067885",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kosmetyki-do-pielegnacji-ciala",
+      "leaf_slugs": [
+        "kosmetyki-do-pielegnacji-ciala"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "3fde801d705081d3aa1adf379e6b3e37a9f66401c2bfd5861aadda07fbb4c100"
+    },
+    {
+      "product": {
+        "id": 11985,
+        "name": "medi spot ex",
+        "slug": "medi-spot-ex-sztyft-do-usuwania-plam-15ml",
+        "external_source": "medi",
+        "external_id": "1067884",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "pielegnacja-produktow",
+      "leaf_slugs": [
+        "pielegnacja-produktow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "7659a1265d78d809de9c533196f752ac33bb3a629d477f0f53984678b388add2"
+    },
+    {
+      "product": {
+        "id": 11986,
+        "name": "medi travel dla kobiet",
+        "slug": "medi-travel-dla-kobiet-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "927396",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe",
+        "podkolanowki-do-samolotu"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11987,
+        "name": "medi travel dla mężczyzn",
+        "slug": "medi-travel-dla-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "927395",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe",
+        "podkolanowki-do-samolotu"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11988,
+        "name": "medi 2in1",
+        "slug": "medi2in1-pomoc-dokrecania",
+        "external_source": "medi",
+        "external_id": "924857",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "akcesoria-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 11989,
+        "name": "mediven® active",
+        "slug": "mediven-active-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "1076386",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11990,
+        "name": "mediven angio",
+        "slug": "mediven-angio-podkolan-wki-uciskowe",
+        "external_source": "medi",
+        "external_id": "mediven-angio-podkolan-wki-uciskowe",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11991,
+        "name": "mediven® comfort",
+        "slug": "mediven-comfort-podkolan-wki-uciskowe",
+        "external_source": "medi",
+        "external_id": "1076387",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11992,
+        "name": "mediven® comfort",
+        "slug": "mediven-comfort-ponczochy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1080550",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 11993,
+        "name": "mediven® comfort",
+        "slug": "mediven-comfort-rajstopy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1075227",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 11994,
+        "name": "mediven® cotton",
+        "slug": "mediven-cotton-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "1076389",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11995,
+        "name": "mediven® cotton",
+        "slug": "mediven-cotton-ponczochy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1080551",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 11996,
+        "name": "mediven® cotton",
+        "slug": "mediven-cotton-rajstopy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1075229",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 11997,
+        "name": "mediven® elegance",
+        "slug": "mediven-elegance-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "1010423",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 11998,
+        "name": "mediven® elegance %",
+        "slug": "mediven-elegance-ponczochy-uciskowe-sale",
+        "external_source": "medi",
+        "external_id": "1176233",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 11999,
+        "name": "mediven® elegance",
+        "slug": "mediven-elegance-ponczochy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1029449",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 12000,
+        "name": "mediven® elegance",
+        "slug": "mediven-elegance-rajstopy-ciazowe",
+        "external_source": "medi",
+        "external_id": "941495",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 12001,
+        "name": "mediven® elegance",
+        "slug": "mediven-elegance-rajstopy-uciskowe",
+        "external_source": "medi",
+        "external_id": "941494",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 12002,
+        "name": "mediven® for men",
+        "slug": "mediven-for-men-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "958471",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 12003,
+        "name": "mediven® forte",
+        "slug": "mediven-forte-podkolan-wki-uciskowe-1",
+        "external_source": "medi",
+        "external_id": "989335",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 12004,
+        "name": "mediven® forte",
+        "slug": "mediven-forte-podkolan-wki-uciskowe",
+        "external_source": "medi",
+        "external_id": "941493",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 12005,
+        "name": "mediven® forte",
+        "slug": "mediven-forte-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "966778",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 12006,
+        "name": "mediven® plus",
+        "slug": "mediven-plus-kalesony-meskie",
+        "external_source": "medi",
+        "external_id": "1174104",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "bielizna-kompresyjna",
+      "leaf_slugs": [
+        "bielizna-kompresyjna"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 12007,
+        "name": "mediven® plus",
+        "slug": "mediven-plus-podkolan-wki-uciskowe-1",
+        "external_source": "medi",
+        "external_id": "1085320",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 12008,
+        "name": "mediven® plus",
+        "slug": "mediven-plus-podkolan-wki-uciskowe",
+        "external_source": "medi",
+        "external_id": "941497",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 12009,
+        "name": "mediven® plus",
+        "slug": "mediven-plus-ponczochy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1092393",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 12010,
+        "name": "mediven® sheer & soft %",
+        "slug": "mediven-sheer-and-soft-rajstopy-uciskowe-sale",
+        "external_source": "medi",
+        "external_id": "1174101",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 12011,
+        "name": "mediven® sheer & soft",
+        "slug": "mediven-sheer-and-soft-rajstopy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1075228",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-rajstopy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-rajstopy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "0461a474df2064caec8b9da800b55524d1a0ae0855497b544ed3a7082c3b3135"
+    },
+    {
+      "product": {
+        "id": 12012,
+        "name": "mediven® sheer & soft",
+        "slug": "mediven-sheer-soft-po-czochy-uciskowe",
+        "external_source": "medi",
+        "external_id": "1116838",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-ponczochy-uciskowe",
+      "leaf_slugs": [
+        "kompresja-ponczochy-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9a1b44c0e72b2c4a9dff6871c562a78ff58dff27a59b9b22b363382ef02fc37e"
+    },
+    {
+      "product": {
+        "id": 12013,
+        "name": "mediven® sheer & soft",
+        "slug": "mediven-sheer-soft-podkolanowki-uciskowe",
+        "external_source": "medi",
+        "external_id": "1076388",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-podkolanowki-uciskowe",
+      "leaf_slugs": [
+        "kompresja-podkolanowki-uciskowe"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "9cc07d55be5b3b81d596a41b0e96885491885801de5db1199100ce519ecfff0d"
+    },
+    {
+      "product": {
+        "id": 12014,
+        "name": "mediven® struva® 23",
+        "slug": "mediven-struva-23-szpitalna-po-czocha-uciskowa-23mmhg",
+        "external_source": "medi",
+        "external_id": "925101",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-szpitalna",
+      "leaf_slugs": [
+        "kompresja-szpitalna"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "dbfd50fc94cc249a5117ae21fd25170376963f558c430666c8710a39b7418401"
+    },
+    {
+      "product": {
+        "id": 12015,
+        "name": "mediven® struva® 23",
+        "slug": "mediven-struva-23-szpitalna-ponczocha-uciskowa-23mmhg",
+        "external_source": "medi",
+        "external_id": "1171328",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-szpitalna",
+      "leaf_slugs": [
+        "kompresja-szpitalna"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "dbfd50fc94cc249a5117ae21fd25170376963f558c430666c8710a39b7418401"
+    },
+    {
+      "product": {
+        "id": 12016,
+        "name": "mediven® Thrombexin 18",
+        "slug": "mediven-thrombexin-18-po-czochy-przeciwzakrzepowe",
+        "external_source": "medi",
+        "external_id": "1068078",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kompresja-szpitalna",
+      "leaf_slugs": [
+        "kompresja-szpitalna"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "dbfd50fc94cc249a5117ae21fd25170376963f558c430666c8710a39b7418401"
+    },
+    {
+      "product": {
+        "id": 12017,
+        "name": "Omomed",
+        "slug": "omomed-stabilizator-barku",
+        "external_source": "medi",
+        "external_id": "929314",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "stabilizatory-ramienia",
+      "leaf_slugs": [
+        "stabilizatory-ramienia"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "5aa6ac54f34764a8c19e4bd9e673df094ea2ecba6f6591bb92c05168b95c1030"
+    },
+    {
+      "product": {
+        "id": 12018,
+        "name": "Pas do pończoch",
+        "slug": "pas-do-ponczoch-dla-produktow-niesamonosnych-bez-silikonu",
+        "external_source": "medi",
+        "external_id": "1170534",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "akcesoria-medi",
+      "leaf_slugs": [
+        "akcesoria-medi"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 12019,
+        "name": "protect.Abdominal support",
+        "slug": "protect-abdominal-support-stabilizatory-kr-gos-up",
+        "external_source": "medi",
+        "external_id": "927714",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-plecow",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-plecow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4c5da1b2f44980315f56d5c2a4506bda6e2e5afc90f889861d400c39f6ea41ef"
+    },
+    {
+      "product": {
+        "id": 12020,
+        "name": "protect.Achi",
+        "slug": "protect-achi-stabilizator-kostki-na-sciegno-achillesa",
+        "external_source": "medi",
+        "external_id": "928961",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 12021,
+        "name": "protect.Ankle air foam %",
+        "slug": "protect-ankle-air-foam-ortezy-kostka-sale",
+        "external_source": "medi",
+        "external_id": "1185364",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 12022,
+        "name": "protect.Ankle air foam",
+        "slug": "protect-ankle-air-foam-ortezy-kostka",
+        "external_source": "medi",
+        "external_id": "928956",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 12023,
+        "name": "protect.Ankle foot orthosis",
+        "slug": "protect-ankle-foot-orthosis-ortezy-kostka",
+        "external_source": "medi",
+        "external_id": "1071625",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 12024,
+        "name": "protect.CSB",
+        "slug": "protect-csb-prostotrzymacz-korektor-postawy",
+        "external_source": "medi",
+        "external_id": "1071222",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-plecow",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-plecow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4c5da1b2f44980315f56d5c2a4506bda6e2e5afc90f889861d400c39f6ea41ef"
+    },
+    {
+      "product": {
+        "id": 12025,
+        "name": "protect.Epi",
+        "slug": "protect-epi-elbow-support-3fk",
+        "external_source": "medi",
+        "external_id": "928110",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-lokcia",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-lokcia"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "18e69c7a30fd254ec7f2c7b19af6207943f2b7d0ff765565b81d8827fb30ff0c"
+    },
+    {
+      "product": {
+        "id": 12026,
+        "name": "protect.Forefoot cushion",
+        "slug": "protect-forefoot-cushion-poduszeczka-silikonowa",
+        "external_source": "medi",
+        "external_id": "1172874",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12027,
+        "name": "protect.Heel soft",
+        "slug": "protect-heel-soft-silikonowe-podpi-tki",
+        "external_source": "medi",
+        "external_id": "928968",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12028,
+        "name": "protect.Heel wedge",
+        "slug": "protect-heel-wedge-wkladka-silikonowa",
+        "external_source": "medi",
+        "external_id": "928969",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12029,
+        "name": "protect.Leva Strap",
+        "slug": "protect-leva-strap-stabilizator-kostki-z-dodatkowym-pasem",
+        "external_source": "medi",
+        "external_id": "928960",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 12030,
+        "name": "protect.Lumbaforte",
+        "slug": "protect-lumbaforte-pas-l-d-wiowy",
+        "external_source": "medi",
+        "external_id": "927713",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-plecow",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-plecow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4c5da1b2f44980315f56d5c2a4506bda6e2e5afc90f889861d400c39f6ea41ef"
+    },
+    {
+      "product": {
+        "id": 12031,
+        "name": "protect.Maternity belt",
+        "slug": "protect-maternity-belt-stabilizatory-kregoslup",
+        "external_source": "medi",
+        "external_id": "927711",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-plecow",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-plecow"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "4c5da1b2f44980315f56d5c2a4506bda6e2e5afc90f889861d400c39f6ea41ef"
+    },
+    {
+      "product": {
+        "id": 12032,
+        "name": "protect.Silicone insole",
+        "slug": "protect-silicon-insole-wk-adki-silikonowe",
+        "external_source": "medi",
+        "external_id": "927217",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12033,
+        "name": "protect.Toe spreader",
+        "slug": "protect-toe-spreader-separator-palc-w",
+        "external_source": "medi",
+        "external_id": "1172873",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12034,
+        "name": "protect.Genu",
+        "slug": "protectgenu-stabilizator-kolana",
+        "external_source": "medi",
+        "external_id": "928569",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kolan",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kolan"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "70045d4cd92acea26bb5ca910261d34b1188929fa4e06fa10fcf77e3036d190e"
+    },
+    {
+      "product": {
+        "id": 12035,
+        "name": "protect.Leva",
+        "slug": "protectleva-stabilizator-kostki",
+        "external_source": "medi",
+        "external_id": "928959",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 12036,
+        "name": "medi rękawiczki gumowe",
+        "slug": "rekawiczki-pomoc-w-zakladaniu",
+        "external_source": "medi",
+        "external_id": "924856",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "rekawiczki-do-zakladania-produktow-uciskowych",
+      "leaf_slugs": [
+        "rekawiczki-do-zakladania-produktow-uciskowych"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "d9eb1ee224f270e510fd4ae992147fb4397f48a512e4f5d968711a8a8c404cb6"
+    },
+    {
+      "product": {
+        "id": 12037,
+        "name": "Rhizomed soft",
+        "slug": "rhizomed-soft-stabilizator-kciuka",
+        "external_source": "medi",
+        "external_id": "1172717",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "stabilizatory-kciuk",
+      "leaf_slugs": [
+        "stabilizatory-kciuk"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "96a2ad7d0d1ff8cfc1f3bac382b928789945dfa1a6ae8b48de66f7c18e576ad2"
+    },
+    {
+      "product": {
+        "id": 12038,
+        "name": "Simple Walker",
+        "slug": "simple-walker-orteza-stopowo-goleniowa",
+        "external_source": "medi",
+        "external_id": "1172876",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "ortezy-i-stabilizatory-kostki",
+      "leaf_slugs": [
+        "ortezy-i-stabilizatory-kostki"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "8c92f7c66170494dd56a4fc21412ab036fb4b716daa01484e94e822a71c3e90e"
+    },
+    {
+      "product": {
+        "id": 12039,
+        "name": "Próbka kosmetyku",
+        "slug": "sp-1",
+        "external_source": "medi",
+        "external_id": "1170526",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "kosmetyki-do-pielegnacji-ciala",
+      "leaf_slugs": [
+        "kosmetyki-do-pielegnacji-ciala"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 12040,
+        "name": "Pilnik do paznokci",
+        "slug": "sp-28",
+        "external_source": "medi",
+        "external_id": "1170531",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "zdrowie-i-pielegnacja",
+      "leaf_slugs": [
+        "zdrowie-i-pielegnacja"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender; Consolidate duplicate garment categories while preserving their old URLs",
+      "before_assignment_sha256": "a793ded301283c8caa44a928298ff5b98a61271a5d9e852edd69d52074d98b8d"
+    },
+    {
+      "product": {
+        "id": 12041,
+        "name": "medi footsupport Active",
+        "slug": "wkladki-medi-footsupport-active",
+        "external_source": "medi",
+        "external_id": "927219",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12042,
+        "name": "medi footsupport Ballerinas pro",
+        "slug": "wkladki-medi-footsupport-ballerinas-pro-1",
+        "external_source": "medi",
+        "external_id": "927222",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12043,
+        "name": "medi footsupport Control slim",
+        "slug": "wkladki-medi-footsupport-control-slim",
+        "external_source": "medi",
+        "external_id": "1172515",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12044,
+        "name": "medi footsupport control",
+        "slug": "wkladki-medi-footsupport-control",
+        "external_source": "medi",
+        "external_id": "1172514",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12045,
+        "name": "medi footsupport Gentlemen pro",
+        "slug": "wkladki-medi-footsupport-gentlemen-pro-1",
+        "external_source": "medi",
+        "external_id": "927225",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12046,
+        "name": "wkładki medi footsupport Heel Pain",
+        "slug": "wkladki-medi-footsupport-heel-pain",
+        "external_source": "medi",
+        "external_id": "927226",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 12047,
+        "name": "medi footsupport Junior",
+        "slug": "wkladki-medi-footsupport-junior-1",
+        "external_source": "medi",
+        "external_id": "927224",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "wkladki-ortopedyczne",
+      "leaf_slugs": [
+        "ortopedia",
+        "wkladki-ortopedyczne"
+      ],
+      "reason": "Remove scraped navigation memberships; reviewed product type, without inferred compression class or gender",
+      "before_assignment_sha256": "cd6c7dd767d4f43d97681986cbba7e5a088d32421e909a6c4055d3127710e65d"
+    },
+    {
+      "product": {
+        "id": 13635,
+        "name": "Tupfery niejałowe z gazy z nitką RTG Kaptur Worek polietylenowy",
+        "slug": "tupfery-niejalowe-z-gazy-z-nitka-rtg-kaptur-worek-polietylenowy",
+        "external_source": "seni24",
+        "external_id": "20816",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "seni24-opatrywanie-i-leczenie-ran-gaza-i-kompresy-chlonne-kompresy-z-gazy",
+      "leaf_slugs": [
+        "seni24-opatrywanie-i-leczenie-ran-gaza-i-kompresy-chlonne-kompresy-z-gazy"
+      ],
+      "reason": "Exact product identity corrects clinically unrelated category",
+      "before_assignment_sha256": "defa8ae65e7dad8472fa49aaae3f325510492fb3ffae6750fe64f3d5adc5e0ac"
+    },
+    {
+      "product": {
+        "id": 13698,
+        "name": "Maść końska rozgrzewająca Herbamedicus",
+        "slug": "herbamedicus-konska-masc-rozgrzewajaca-150-ml",
+        "external_source": "seni24",
+        "external_id": "7656",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "seni24-higiena-i-pielegnacja-specjalistyczna-kremy-i-masci-ziolowe-kosmetyki",
+      "leaf_slugs": [
+        "seni24-higiena-i-pielegnacja-specjalistyczna-kremy-i-masci-ziolowe-kosmetyki"
+      ],
+      "reason": "Exact product identity corrects clinically unrelated category",
+      "before_assignment_sha256": "defa8ae65e7dad8472fa49aaae3f325510492fb3ffae6750fe64f3d5adc5e0ac"
+    },
+    {
+      "product": {
+        "id": 13912,
+        "name": "Cewnik Foley 2-drożny 100% silikon podwójnie pakowany 1 szt.",
+        "slug": "cewnik-foley-2-drozny-100-silikon-podwojnie-pakowany",
+        "external_source": "seni24",
+        "external_id": "7292",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "seni24-opatrywanie-i-leczenie-ran-akcesoria-medyczne-cewniki",
+      "leaf_slugs": [
+        "seni24-opatrywanie-i-leczenie-ran-akcesoria-medyczne-cewniki"
+      ],
+      "reason": "Exact product identity corrects clinically unrelated category",
+      "before_assignment_sha256": "fac2a0976cfc0d5e291d436423688532758a18659cb202bc56e90186f2e52194"
+    },
+    {
+      "product": {
+        "id": 14023,
+        "name": "Smoczki LOVI Prime 2 szt.",
+        "slug": "smoczki-lovi-prime-2-szt",
+        "external_source": "seni24",
+        "external_id": "24960",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "seni24-drogeria-mama-i-dziecko-akcesoria-dla-niemowlat",
+      "leaf_slugs": [
+        "seni24-drogeria-mama-i-dziecko-akcesoria-dla-niemowlat"
+      ],
+      "reason": "Exact product identity corrects clinically unrelated category",
+      "before_assignment_sha256": "defa8ae65e7dad8472fa49aaae3f325510492fb3ffae6750fe64f3d5adc5e0ac"
+    },
+    {
+      "product": {
+        "id": 14177,
+        "name": "Elastyczna mikrokaniula do wypełniaczy skóry twarzy DermaSculpt",
+        "slug": "dermasculpt-elastyczna-mikrokaniula",
+        "external_source": "seni24",
+        "external_id": "18864",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "seni24-iniekcja-narzedzia-i-akcesoria-medyczne",
+      "leaf_slugs": [
+        "seni24-iniekcja-narzedzia-i-akcesoria-medyczne"
+      ],
+      "reason": "Exact product identity corrects clinically unrelated category",
+      "before_assignment_sha256": "defa8ae65e7dad8472fa49aaae3f325510492fb3ffae6750fe64f3d5adc5e0ac"
+    },
+    {
+      "product": {
+        "id": 14239,
+        "name": "Strzykawka 3-częściowa Braun Omnifix do pomp 50ml, Luer",
+        "slug": "strzykawka-3-czesciowa-do-pomp-50-ml-braun-omnifix-luer-bez-pcv-1-szt",
+        "external_source": "seni24",
+        "external_id": "6336",
+        "status": "active",
+        "deleted_at": null
+      },
+      "primary_slug": "seni24-iniekcja-narzedzia-i-akcesoria-medyczne-igly-i-strzykawki-strzykawki",
+      "leaf_slugs": [
+        "seni24-iniekcja-narzedzia-i-akcesoria-medyczne-igly-i-strzykawki-strzykawki"
+      ],
+      "reason": "Exact product identity corrects clinically unrelated category",
+      "before_assignment_sha256": "7c9ed22fbf1c0b7e8ed5982631efd64a6331a56ff6dbe2556984bf94d21b65be"
+    }
+  ]
+}
