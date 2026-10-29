@@ -1,5 +1,7 @@
 # Shared new-shop catalogue: data repair, 29 October 2026
 
+> The first repair has been applied and verified on the shared new shop. Do not rerun it. Live verification found 18 mappings and the product-card label that need the separate [follow-up correction](category-data-followup-20261029.md). The original manifest remains unchanged for its receipt and rollback.
+
 This is a data-only repair for the shared application serving staging.ortezka.pl and, after launch, ortezka.pl. The owner authorized repairing this shared catalogue. Importers and scrapers are deliberately unchanged. There are no schema migrations or application image rebuilds in this procedure.
 
 ## Frozen source and scope
