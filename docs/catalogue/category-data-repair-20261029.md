@@ -48,12 +48,13 @@ Use `git archive` to extract only the repair files from the repair branch. Do no
 cd /var/www/konji-shop
 git fetch origin fix/catalogue-data-repair-20261029
 mkdir -p /tmp/konji-catalogue-repair-20261029
-git archive origin/fix/catalogue-data-repair-20261029 \
+git archive 8e4176028f96180ae31d64d3bd500f2ab1c88347 \
   scripts/catalogue/20261029 \
   resources/catalogue/20261029 \
   | tar -x -C /tmp/konji-catalogue-repair-20261029
 
-docker cp /tmp/konji-catalogue-repair-20261029/scripts/catalogue/20261029 \
+docker exec konji-shop-prod-app-1 mkdir -p /tmp/konji-catalogue-repair-20261029
+docker cp /tmp/konji-catalogue-repair-20261029/scripts/catalogue/20261029/. \
   konji-shop-prod-app-1:/tmp/konji-catalogue-repair-20261029
 docker cp /tmp/konji-catalogue-repair-20261029/resources/catalogue/20261029/plan.json \
   konji-shop-prod-app-1:/tmp/konji-catalogue-plan-20261029.json
