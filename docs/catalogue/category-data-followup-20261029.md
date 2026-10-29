@@ -31,4 +31,15 @@ The template patch is a targeted fix to the current running container. It is als
 
 ## Validation
 
-PHP syntax checks passed for the runner, test and atomic template patcher. The complete first-repair simulation was used to validate all 18 corrections: fourteen complete walking aids move to walkers, actual spare wheels stay accessories, wheelchair footrest/brake stay accessories, three tips move to crutch/stick accessories, and the drinking aid moves to daily-living aids. The test checks all 14,627 primary assignments, 51,614 resulting memberships, valid category paths, identity-drift rejection and arbitrary production category-ID resolution from the original receipt. Live MySQL follow-up execution and verification of the updated card label remain pending until the owner runs this follow-up.
+PHP syntax checks passed for the runner, test and atomic template patcher. The complete first-repair simulation was used to validate all 18 corrections: fourteen complete walking aids move to walkers, actual spare wheels stay accessories, wheelchair footrest/brake stay accessories, three tips move to crutch/stick accessories, and the drinking aid moves to daily-living aids. The test checks all 14,627 primary assignments, 51,614 resulting memberships, valid category paths, identity-drift rejection and arbitrary production category-ID resolution from the original receipt. The owner subsequently ran FOLLOWUP_APPLY=PASS, FOLLOWUP_VERIFY=PASS and PRODUCT_CARD_PATCH=PASS, cleared compiled views and gracefully reloaded PHP-FPM. The live checks below confirmed the resulting storefront.
+
+## Completed live acceptance — 29 October 2026
+
+- The owner supplied successful MySQL apply/verification receipts for both repair stages; backups remain in persistent application storage.
+- The refreshed homepage displays the 12 departments and no empty supplier roots.
+- Clothing lists 555 products. The EMI fleece card now shows Polary damskie, the AMELIA/LANA bras show Bielizna, and BEN shows Bluzy medyczne. The EMI product breadcrumb was verified through clothing, fleeces and women's fleeces.
+- Rollator accessories list 29 products, with spare wheels, baskets, bags, trays, lights and other accessories. Complete walkers are no longer in that list.
+- Podpórki i balkoniki lists 32 products, including JMC-C 3225 and the corrected RehaFund walkers. Page two displays products 25–32 and includes the two-wheel support with a seat.
+- The FootWave sports-insole category was verified with FOOTBALL, PLAY and SPORT; the recovered Butterfly FORTE category displays its product.
+
+This completes the structural/data repair and sampled live storefront acceptance. It is not an exhaustive editorial review of every product indication or a complete merge of all synonymous subcategories. Importer/scraper changes remain explicitly deferred, and their category synchronization can still overwrite mappings on a later re-import. The runtime template patch must be included from this PR in the next image build.
