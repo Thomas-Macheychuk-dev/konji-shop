@@ -132,8 +132,8 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v5.%s.%d',
-            Str::lower(request()->getHost()),
+            'product-page.v6.%s.%d',
+            Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
     }
