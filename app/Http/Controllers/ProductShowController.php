@@ -203,10 +203,6 @@ class ProductShowController extends Controller
             'name' => $product->name,
             'description' => $seoDescription,
             'url' => $canonicalUrl,
-            'brand' => [
-                '@type' => 'Brand',
-                'name' => $this->shopSettings->shopName(),
-            ],
         ];
 
         if ($images !== []) {

@@ -40,3 +40,11 @@ it('renders homepage SEO metadata, structured data and category links', function
         ->assertSee(route('categories.show', $category->slug), false)
         ->assertDontSee('Archived supports');
 });
+
+it('uses the visible storefront name rather than an old shop-setting name in website schema', function (): void {
+    Config::set('app.name', 'Ortezka.pl');
+    Config::set('legal.seller.shop_name', 'Konji Shop');
+    $response = $this->get('https://ortezka.pl')->assertOk();
+
+    expect($response->viewData('structuredData')[0]['name'])->toBe('Ortezka.pl');
+});

@@ -5,7 +5,9 @@
     @foreach ($urls as $url)
         <url>
             <loc>{{ $url['loc'] }}</loc>
-            <lastmod>{{ $url['lastmod']->toAtomString() }}</lastmod>
+            @if (! empty($url['lastmod']))
+                <lastmod>{{ $url['lastmod']->toAtomString() }}</lastmod>
+            @endif
             <changefreq>{{ $url['changefreq'] }}</changefreq>
             <priority>{{ $url['priority'] }}</priority>
         </url>

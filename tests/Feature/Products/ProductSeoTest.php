@@ -277,3 +277,30 @@ it('uses only active variants for product SEO and page payload', function (): vo
         ->assertSee('"price": "24.60"', false)
         ->assertDontSee('INACTIVE-DEFAULT-SKU');
 });
+
+it('does not claim that the retailer is the brand of every product', function (): void {
+    Config::set('legal.seller.shop_name', 'Ortezka.pl');
+    Config::set('legal.seller.identity_address', '');
+    Config::set('legal.seller.company_name', 'MAX-CORP sp. z o.o.');
+    $product = Product::query()->create([
+        'name' => 'Manufacturer product',
+        'slug' => 'manufacturer-product',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+    ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'MANUFACTURER-SKU',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => 10000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+    $response = $this->get(route('products.show', $product->slug))->assertOk();
+    $schema = $response->viewData('structuredData')[0];
+
+    expect($schema)->not->toHaveKey('brand');
+    expect($schema['offers']['seller']['name'])->toBe('MAX-CORP sp. z o.o.');
+    expect($schema['offers']['price'])->toBe('123.00');
+});

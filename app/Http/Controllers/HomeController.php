@@ -167,7 +167,7 @@ SQL,
         return [
             '@context' => 'https://schema.org',
             '@type' => 'WebSite',
-            'name' => $this->shopSettings->shopName(),
+            'name' => config('app.name') ?: $this->shopSettings->shopName(),
             'url' => $canonicalUrl,
         ];
     }
