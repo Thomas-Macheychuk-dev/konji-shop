@@ -29,43 +29,41 @@ final class SitemapController extends Controller
         $staticUrls = collect([
             [
                 'loc' => route('home'),
-                'lastmod' => now(),
                 'changefreq' => 'daily',
                 'priority' => '1.0',
             ],
             [
                 'loc' => route('legal.terms'),
-                'lastmod' => now(),
                 'changefreq' => 'monthly',
                 'priority' => '0.3',
             ],
             [
                 'loc' => route('legal.privacy'),
-                'lastmod' => now(),
                 'changefreq' => 'monthly',
                 'priority' => '0.3',
             ],
             [
                 'loc' => route('legal.returns'),
-                'lastmod' => now(),
                 'changefreq' => 'monthly',
                 'priority' => '0.3',
             ],
             [
                 'loc' => route('legal.complaints'),
-                'lastmod' => now(),
                 'changefreq' => 'monthly',
                 'priority' => '0.3',
             ],
             [
                 'loc' => route('legal.delivery-payments'),
-                'lastmod' => now(),
+                'changefreq' => 'monthly',
+                'priority' => '0.3',
+            ],
+            [
+                'loc' => route('legal.nfz'),
                 'changefreq' => 'monthly',
                 'priority' => '0.3',
             ],
             [
                 'loc' => route('legal.contact'),
-                'lastmod' => now(),
                 'changefreq' => 'monthly',
                 'priority' => '0.3',
             ],
@@ -89,7 +87,6 @@ final class SitemapController extends Controller
             ->keys()
             ->map(fn (string $slug): array => [
                 'loc' => route('legacy-products.placeholder', ['slug' => $slug]),
-                'lastmod' => now(),
                 'changefreq' => 'monthly',
                 'priority' => '0.6',
             ]);

@@ -51,3 +51,24 @@ it('renders an XML sitemap with public pages, active categories and active produ
         ->assertDontSee(route('categories.show', $inactiveCategory->slug), false)
         ->assertDontSee(route('products.show', $inactiveProduct->slug), false);
 });
+
+it('includes the NFZ page and uses recorded modification dates only', function (): void {
+    $product = Product::query()->create([
+        'name' => 'Dated product',
+        'slug' => 'dated-product',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+    $updatedAt = $product->updated_at->toAtomString();
+    $this->travel(1)->days();
+    $response = $this->get(route('sitemap'))->assertOk();
+    $xml = simplexml_load_string($response->getContent());
+    $urls = [];
+    foreach ($xml->url as $entry) {
+        $urls[(string) $entry->loc] = $entry;
+    }
+
+    expect($urls)->toHaveKey(route('legal.nfz'));
+    expect($urls[route('home')]->lastmod->count())->toBe(0);
+    expect($urls[route('legal.contact')]->lastmod->count())->toBe(0);
+    expect((string) $urls[route('products.show', $product->slug)]->lastmod)->toBe($updatedAt);
+});

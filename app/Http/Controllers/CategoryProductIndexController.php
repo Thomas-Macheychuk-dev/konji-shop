@@ -88,7 +88,7 @@ final class CategoryProductIndexController extends Controller
 
         $products = $this->cache->rememberVersioned(
             StorefrontCache::NAMESPACE_CATALOGUE,
-            sprintf('category.%d.page.%d.v1', $category->getKey(), $page),
+            sprintf('category.v2.%s.%d.page.%d', strtolower(request()->getSchemeAndHttpHost()), $category->getKey(), $page),
             fn () => Product::query()
                 ->where('status', ProductStatus::ACTIVE->value)
                 ->whereHas('categories', function ($query) use ($categoryIds): void {
@@ -110,15 +110,28 @@ final class CategoryProductIndexController extends Controller
             $this->cache->categoryPageTtlSeconds(),
         );
 
-        $products->withQueryString();
+        abort_if($page > 1 && $products->isEmpty(), 404);
+
+        // The paginator is cached as an object. Keep request-specific URL state
+        // out of the cached instance and retain only the pagination parameter.
+        $products = clone $products;
+        $categoryUrl = route('categories.show', $category->slug);
+        $products->withPath($categoryUrl);
 
         $seoTitle = $this->limitText($category->seo_title ?: $category->name, 70);
         $seoDescription = $this->seoDescription($category);
-        $canonicalUrl = route('categories.show', $category->slug);
+        $canonicalUrl = $page > 1
+            ? route('categories.show', ['category' => $category->slug, 'page' => $page])
+            : $categoryUrl;
+        $breadcrumbCategories = $this->breadcrumbCategories($category);
+
+        if ($page > 1) {
+            $seoTitle .= ' — Strona '.$page;
+        }
 
         return view('pages.categories.show', [
             'category' => $category,
-            'breadcrumbCategories' => $this->breadcrumbCategories($category),
+            'breadcrumbCategories' => $breadcrumbCategories,
             'products' => $products,
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
@@ -126,6 +139,7 @@ final class CategoryProductIndexController extends Controller
             'openGraphTitle' => $seoTitle,
             'openGraphDescription' => $seoDescription,
             'openGraphType' => 'website',
+            'structuredData' => [$this->breadcrumbStructuredData($category, $breadcrumbCategories, $canonicalUrl)],
         ]);
     }
 
@@ -155,12 +169,35 @@ final class CategoryProductIndexController extends Controller
         return array_reverse($ancestors);
     }
 
-    private function seoDescription(Category $category): ?string
+    /** @param list<Category> $ancestors */
+    private function breadcrumbStructuredData(Category $category, array $ancestors, string $canonicalUrl): array
+    {
+        $items = [['name' => 'Strona główna', 'url' => route('home')]];
+
+        foreach ($ancestors as $ancestor) {
+            $items[] = ['name' => $ancestor->name, 'url' => route('categories.show', $ancestor->slug)];
+        }
+
+        $items[] = ['name' => $category->name, 'url' => $canonicalUrl];
+
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => array_map(fn (array $item, int $index): array => [
+                '@type' => 'ListItem',
+                'position' => $index + 1,
+                'name' => $item['name'],
+                'item' => $item['url'],
+            ], $items, array_keys($items)),
+        ];
+    }
+
+    private function seoDescription(Category $category): string
     {
         $description = $category->seo_description ?: $category->description;
 
         if (! filled($description)) {
-            return null;
+            $description = 'Przeglądaj kategorię '.$category->name.'. Sprawdź produkty, dostępne warianty i szczegóły oferty.';
         }
 
         return $this->limitText((string) $description, 160);
@@ -168,6 +205,6 @@ final class CategoryProductIndexController extends Controller
 
     private function limitText(string $text, int $limit): string
     {
-        return Str::limit(trim(strip_tags($text)), $limit, '');
+        return Str::limit(Str::squish(strip_tags($text)), $limit, '');
     }
 }
