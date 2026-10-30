@@ -27,12 +27,15 @@ Extract this commit with git archive, retaining its paths. Include these paths:
 
 - app/Http/Controllers/CategoryProductIndexController.php
 - resources/views/pages/categories/show.blade.php
+- resources/views/components/storefront/product-card.blade.php
+- resources/views/partials/storefront/header.blade.php
+- scripts/deploy/sync-catalogue-views-20261030.sh
 - scripts/catalogue/20261029
 - resources/catalogue/20261029
 
 Run `bash scripts/catalogue/20261029/deploy-review.sh` from the extracted tree on the EC2 host. It targets `konji-shop-prod-app-1` by default, or `KONJI_REVIEW_CONTAINER` when explicitly set. It reconstructs the relevant original export fields from the persistent, checksummed first-repair backup and the unchanged product identities verified against both receipts. This read-only preparation does not depend on an old `/tmp` file surviving container recreation.
 
-Order: verify receipts and reconstruct simulation input without database writes, replay simulation, live data dry-run, checksum-guarded controller/view patch, transactional data apply, receipt verification and versioned storefront cache invalidation. The source patch compiles views and gracefully reloads PHP-FPM for production OPcache. The data runner refuses to archive categories until the exact alias-capable controller and breadcrumb view are installed. A drift failure stops the sequence; do not bypass it. Export/review a fresh catalogue if the previous follow-up receipt no longer matches.
+Order: verify receipts and reconstruct simulation input without database writes, replay simulation, live data dry-run, checksum-guarded source synchronization across app, queue and scheduler, transactional data apply, receipt verification and versioned storefront cache invalidation. The source patch compiles views and gracefully reloads PHP-FPM for production OPcache. The data runner refuses to archive categories until the exact alias-capable controller and breadcrumb view are installed. A drift failure stops the sequence; do not bypass it. Export/review a fresh catalogue if the previous follow-up receipt no longer matches.
 
 The PHP runner supports `--mode=dry-run|apply|verify|rollback` and `--plan=/absolute/path/review.json`. It requires MySQL and the preceding follow-up receipt's database fingerprint, product identity and full category/assignment state. It verifies the checksummed plan and writes exclusive backups; existing backups are never overwritten. All writes happen in a DB transaction and unrelated categories, assignments and product rows are checked unchanged. Cache invalidation runs after commit; if it fails, retry verify rather than apply.
 
@@ -55,3 +58,11 @@ Guarded data rollback uses the same command with `--mode=rollback`; it refuses t
 This patches the current app container. Merge the source PR and include it in the next image so container recreation retains the controller/view changes. The database repair is deliberately not a migration and must not run automatically at startup.
 
 After apply: verify the three remaining pressure-care products; 579 clothing products; Foley, syringe, skin-care and Medi labels; archive redirects; category breadcrumbs; the preserved walker accessory corrections; pagination and narrow-screen navigation. The current browser review was desktop only.
+
+## Shared-view correction after apply — 30 October 2026
+
+The data apply and receipt verification passed. Live product paths reflected the corrections, but several category pages still rendered the old breadcrumb template and generic product-card labels. The production Compose configuration shares the storage volume (including compiled Blade views) between app, queue and scheduler. Queue exits every hour and its entrypoint clears/rebuilds views from its own image. Patching only app source leaves older queue/scheduler templates able to replace the shared compiled files. PHP-FPM has timestamp validation disabled, so rebuilding files without a reload is also insufficient.
+
+Use scripts/deploy/sync-catalogue-views-20261030.sh with the same four reviewed source files. It validates all 12 deployed file hashes before mutation, accepts only the known previous or reviewed versions, saves an exclusive per-role backup in the shared private storage, installs matching source in all three containers, validates the results, rebuilds views once from app and reloads PHP-FPM. It attempts restoration of all source files if applying or rebuilding fails. It does not restart queue/scheduler, run optimize:clear, flush Redis or touch the database. Container recreation still requires images built from merged main; writable-layer patches do not survive replacement with an older image.
+
+After a completed data repair, run only this view-sync script. Do not rerun the data deployment. The primary workflow now uses the multi-container synchronization before any data apply. Success, preflight-drift rejection and simulated-copy-failure rollback are covered by the filesystem-only Docker stub in tests/Fixtures/Deployment/test-catalogue-view-sync.py. The test runs in CI.

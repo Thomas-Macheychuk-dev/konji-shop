@@ -20,7 +20,7 @@ docker exec -w /var/www/html "$container_name" php "$stage_dir/test-review.php" 
     --plan="$resource_dir/review.json"
 docker exec -w /var/www/html "$container_name" php "$stage_dir/review.php" \
     --mode=dry-run --plan="$resource_dir/review.json"
-bash scripts/catalogue/20261029/apply-review-code.sh
+bash scripts/deploy/sync-catalogue-views-20261030.sh
 docker exec -w /var/www/html "$container_name" php "$stage_dir/review.php" \
     --mode=apply --plan="$resource_dir/review.json"
 docker exec -w /var/www/html "$container_name" php "$stage_dir/review.php" \
