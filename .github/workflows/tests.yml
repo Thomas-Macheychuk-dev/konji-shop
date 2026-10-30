@@ -60,6 +60,8 @@ jobs:
         run: |
           bash -n scripts/deploy/sync-catalogue-views-20261030.sh
           python3 tests/Fixtures/Deployment/test-catalogue-view-sync.py
+          bash -n scripts/deploy/sync-product-page-cache-20261030.sh
+          python3 tests/Fixtures/Deployment/test-product-page-cache-patch.py
 
       - name: Run Tests
         run: ./vendor/bin/pest
