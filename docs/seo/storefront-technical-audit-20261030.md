@@ -46,3 +46,15 @@ The earlier pinned catalogue view-sync script accepts specific source hashes. It
 - [Google: pagination and incremental page loading](https://developers.google.com/search/docs/specialty/ecommerce/pagination-and-incremental-page-loading)
 - [Google: product structured data](https://developers.google.com/search/docs/appearance/structured-data/product)
 - [Google: sitemap lastmod guidance](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping)
+
+## Observed server baseline after PR 111 was merged
+
+The supplied server report records 14,627 active products and 1,119 active categories. All active categories lack both dedicated SEO descriptions and category descriptions. Product counts: 319 lack dedicated SEO titles, 320 lack dedicated SEO descriptions, one lacks all description sources, 1,981 lack an active variant with a positive stored gross or net price, and 13,183 lack a publication date. These are baseline database counts, not a confirmation that PR 111 is deployed. Publication dates affect the storefront's purchase eligibility and require a separate review before mass changes.
+
+There are 269 groups sharing an effective title after the controller's 70-character truncation. Samples include legitimate colour variants and dimensions cut off by truncation. This is not proof that the underlying products should be merged or redirected. The follow-up audit also reports untruncated duplicate groups and importer-level counts.
+
+Origin HTTP checks returned 200 for `/`, `/robots.txt` and `/sitemap.xml` on both hosts. All three staging responses include `X-Robots-Tag: noindex, nofollow, noarchive`; the corresponding apex responses do not. This establishes origin header behaviour, not public DNS cutover or Search Console indexing status.
+
+The installed map contains 1,070 rules with SHA-256 `df806bf23d22c0420fda442811b5bf9137bd5c6ed2e64023898eac496cf58bee`. Its runtime include is present. The diagnostic did not exhaustively verify redirect destinations or compare this hash to an approved release receipt.
+
+The initial direct controller-render probe reported `Undefined variable $errors`. That probe bypassed the web middleware that supplies the validation error bag, so this exception does not diagnose the previously observed browser 500. The revised probe supplies the error bag and a non-persisted session context, labels its result as a controller render, and separately checks the actual product HTTP response on both hosts.

@@ -22,7 +22,7 @@ fi
 # Origin-only checks use explicit SNI/Host and preserve TLS verification.
 # They do not modify public DNS, the application, or any redirect map.
 for audit_host in staging.ortezka.pl ortezka.pl; do
-    for audit_path in / /robots.txt /sitemap.xml; do
+    for audit_path in / /robots.txt /sitemap.xml /products/mediven-forte-podkolan-wki-uciskowe-1; do
         echo "ORIGIN_URL=https://$audit_host$audit_path"
         curl --silent --show-error --max-time 30 \
             --resolve "$audit_host:443:127.0.0.1" \
@@ -32,5 +32,5 @@ for audit_host in staging.ortezka.pl ortezka.pl; do
     done
 done
 echo 'DATABASE_WRITES=0'
-echo 'RUNTIME_MUTATIONS=0'
+echo 'CONFIGURATION_CHANGES=0'
 echo 'SEO_AUDIT=COMPLETE'
