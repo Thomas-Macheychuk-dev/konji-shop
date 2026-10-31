@@ -11,7 +11,12 @@ final class ProductSeoMetadata
         $text = preg_replace('~</?(?:p|div|li|br|h[1-6])\b[^>]*>~iu', ' ', $text) ?? '';
         $text = html_entity_decode(strip_tags($text), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
-        return trim(preg_replace('/[\s\x{00a0}\x{200b}]+/u', ' ', $text) ?? '');
+        return trim(preg_replace('/[\s\x{00a0}\x{200b}\x{feff}\x{3164}\x{1160}]+/u', ' ', $text) ?? '');
+    }
+
+    public static function placeholder(string $text): bool
+    {
+        return $text === '' || (bool) preg_match('/^(?:0|[-–—.]+|n\/?a|null|undefined|brak(?: opisu)?|opis produktu|produkt|test|strona główna|sklep internetowy)$/iu', $text);
     }
 
     public static function foreignReference(string $text): bool
@@ -61,6 +66,9 @@ final class ProductSeoMetadata
         $reasons = [];
         $oldTitle = self::plain($product['seo_title'] ?? null);
         $name = self::cleanTitle($product['name']);
+        if (self::placeholder($name)) {
+            $name = '';
+        }
         $title = self::cleanTitle($oldTitle);
         $entry = $reviewed[$product['id']] ?? null;
         if ($entry !== null) {
@@ -74,21 +82,21 @@ final class ProductSeoMetadata
         if ($entry !== null) {
             $title = self::plain($entry['title']);
             $reasons[] = 'persist_reviewed_title';
-        } elseif ($oldTitle === '' || $title === '' || self::promotional($oldTitle) || preg_match('/^(?:produkt|strona główna|sklep internetowy)$/iu', $title)) {
+        } elseif (self::placeholder($oldTitle) || self::placeholder($title) || self::promotional($oldTitle)) {
             $title = $name;
             $reasons[] = $oldTitle === '' ? 'fill_title' : 'replace_promotional_or_generic_title';
         } elseif ($title !== ($product['seo_title'] ?? null)) {
             $reasons[] = 'clean_title';
         }
         $title = self::fit($title, 255);
-        if ($title === '' || self::foreignReference($title)) {
+        if (self::placeholder($title) || self::foreignReference($title)) {
             throw new RuntimeException('No safe title for product '.$product['id']);
         }
 
         $description = self::plain($product['seo_description'] ?? null);
         $minimal = false;
         $disclaimer = (bool) preg_match('/^(?:to jest wyrób medyczny\b|(?:używaj|używać)\b.*instrukc)/iu', $description);
-        if ($description === '' || self::foreignReference($description) || self::promotional($description) || $disclaimer) {
+        if (self::placeholder($description) || self::foreignReference($description) || self::promotional($description) || $disclaimer) {
             $reasons[] = $description === '' ? 'fill_description' : 'replace_contaminated_description';
             $subject = $entry !== null ? $title : ($name !== '' ? $name : $title);
             $description = rtrim(self::fit($subject, 140), ' .').'.';

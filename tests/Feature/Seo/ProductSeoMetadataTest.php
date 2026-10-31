@@ -46,3 +46,11 @@ it('retains distinguishing suffixes within the database title limit', function (
     expect($result['after']['seo_title'])->toEndWith('MODEL-Z 200×45 mm');
     expect($result['after']['seo_description'])->not->toBeEmpty();
 });
+
+it('replaces zero and placeholder metadata instead of treating it as useful content', function (): void {
+    $result = ProductSeoMetadata::propose(seoMetadataFixture(['seo_title' => '0', 'seo_description' => 'brak opisu']));
+    expect($result['after']['seo_title'])->toBe('Poduszka model ABC');
+    expect($result['after']['seo_description'])->toContain('Poduszka model ABC');
+    expect(fn () => ProductSeoMetadata::propose(seoMetadataFixture(['name' => '0', 'seo_title' => '0'])))
+        ->toThrow(RuntimeException::class, 'No safe title');
+});
