@@ -1,0 +1,3011 @@
+[
+  {
+    "group": 1,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 153,
+        "name": "ULTRAGRIP CLOG Scholl",
+        "slug": "ultragrip-clog-black",
+        "before_title": "ULTRAGRIP CLOG - GaleriaZdrowia.pl",
+        "after_title": "ULTRAGRIP CLOG Scholl",
+        "corrected": true
+      },
+      {
+        "id": 154,
+        "name": "ULTRAGRIP CLOG Scholl",
+        "slug": "ultragrip-clog-granat",
+        "before_title": "ULTRAGRIP CLOG - GaleriaZdrowia.pl",
+        "after_title": "ULTRAGRIP CLOG Scholl – kolor granatowy",
+        "corrected": true
+      },
+      {
+        "id": 155,
+        "name": "ULTRAGRIP CLOG Scholl",
+        "slug": "ultragrip-clog-white",
+        "before_title": "ULTRAGRIP CLOG - GaleriaZdrowia.pl",
+        "after_title": "ULTRAGRIP CLOG Scholl – kolor biały",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 2,
+    "status": "held",
+    "products": [
+      {
+        "id": 158,
+        "name": "Clog Back Guard Scholl",
+        "slug": "clog-back-guard-2",
+        "before_title": "Clog Back Guard - GaleriaZdrowia.pl",
+        "after_title": "Clog Back Guard - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 159,
+        "name": "Clog Back Guard Scholl",
+        "slug": "clog-back-guard",
+        "before_title": "Clog Back Guard - GaleriaZdrowia.pl",
+        "after_title": "Clog Back Guard - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      158,
+      159
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 3,
+    "status": "partially_corrected",
+    "products": [
+      {
+        "id": 160,
+        "name": "EVOFLEX Scholl",
+        "slug": "evoflex-zielony",
+        "before_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "after_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 161,
+        "name": "EVOFLEX Scholl",
+        "slug": "evoflex-fuksja",
+        "before_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "after_title": "EVOFLEX Scholl – kolor fuksja",
+        "corrected": true
+      },
+      {
+        "id": 162,
+        "name": "EVOFLEX Scholl",
+        "slug": "evoflex-bialy",
+        "before_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "after_title": "EVOFLEX Scholl – kolor biały",
+        "corrected": true
+      },
+      {
+        "id": 164,
+        "name": "EVOFLEX Scholl",
+        "slug": "evoflex-czarny",
+        "before_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "after_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 165,
+        "name": "EVOFLEX Scholl",
+        "slug": "evoflex-granatowy",
+        "before_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "after_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 166,
+        "name": "EVOFLEX Scholl",
+        "slug": "evoflex-zolty",
+        "before_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "after_title": "EVOFLEX - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      160,
+      164,
+      165,
+      166
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 4,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 163,
+        "name": "ULTRAGRIP SHOE Scholl",
+        "slug": "ultragrip-shoe-white",
+        "before_title": "ULTRAGRIP SHOE - GaleriaZdrowia.pl",
+        "after_title": "ULTRAGRIP SHOE Scholl – kolor biały",
+        "corrected": true
+      },
+      {
+        "id": 267,
+        "name": "ULTRAGRIP SHOE Scholl",
+        "slug": "ultragrip-shoe-black",
+        "before_title": "ULTRAGRIP SHOE - GaleriaZdrowia.pl",
+        "after_title": "ULTRAGRIP SHOE Scholl – kolor czarny",
+        "corrected": true
+      },
+      {
+        "id": 268,
+        "name": "ULTRAGRIP SHOE Scholl",
+        "slug": "ultragrip-shoe-granat",
+        "before_title": "ULTRAGRIP SHOE - GaleriaZdrowia.pl",
+        "after_title": "ULTRAGRIP SHOE Scholl – kolor granatowy",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 5,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 170,
+        "name": "NILLA BUCKLE MED Scholl",
+        "slug": "nilla-buckle-med-czarny",
+        "before_title": "NILLA BUCKLE MED - GaleriaZdrowia.pl",
+        "after_title": "NILLA BUCKLE MED Scholl – kolor czarny",
+        "corrected": true
+      },
+      {
+        "id": 171,
+        "name": "NILLA BUCKLE MED Scholl",
+        "slug": "nilla-buckle-med-bialy",
+        "before_title": "NILLA BUCKLE MED - GaleriaZdrowia.pl",
+        "after_title": "NILLA BUCKLE MED Scholl – kolor biały",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 6,
+    "status": "held",
+    "products": [
+      {
+        "id": 174,
+        "name": "LUSAKA 2.0 MED Health and Fashion Shoes Italia S",
+        "slug": "lusaka-2-0-med-granat",
+        "before_title": "LUSAKA 2.0 MED - GaleriaZdrowia.pl",
+        "after_title": "LUSAKA 2.0 MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 181,
+        "name": "LUSAKA 2.0 MED Health and Fashion Shoes Italia S",
+        "slug": "lusaka-2-0-med-bialy",
+        "before_title": "LUSAKA 2.0 MED - GaleriaZdrowia.pl",
+        "after_title": "LUSAKA 2.0 MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 182,
+        "name": "LUSAKA 2.0 MED Health and Fashion Shoes Italia S",
+        "slug": "lusaka-med-black",
+        "before_title": "LUSAKA 2.0 MED - GaleriaZdrowia.pl",
+        "after_title": "LUSAKA 2.0 MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      174,
+      181,
+      182
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 7,
+    "status": "held",
+    "products": [
+      {
+        "id": 175,
+        "name": "NEW BOGOTA’ WEDGE MED Health and Fashion Shoes Italia S",
+        "slug": "new-bogota-wedge-med-silver-pewter",
+        "before_title": "NEW BOGOTA' WEDGE MED - GaleriaZdrowia.pl",
+        "after_title": "NEW BOGOTA' WEDGE MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 176,
+        "name": "NEW BOGOTA’ WEDGE MED Health and Fashion Shoes Italia S",
+        "slug": "new-bogota-wedge-med-black-multi",
+        "before_title": "NEW BOGOTA' WEDGE MED - GaleriaZdrowia.pl",
+        "after_title": "NEW BOGOTA' WEDGE MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 222,
+        "name": "NEW BOGOTA’ WEDGE MED Health and Fashion Shoes Italia S",
+        "slug": "new-bogota-wedge-med-dk-red",
+        "before_title": "NEW BOGOTA' WEDGE MED - GaleriaZdrowia.pl",
+        "after_title": "NEW BOGOTA' WEDGE MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      175,
+      176,
+      222
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 8,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 177,
+        "name": "BOGOTA SANDAL MED Health and Fashion Shoes Italia S",
+        "slug": "bogota-sandal-med-navy-blue",
+        "before_title": "BOGOTA SANDAL MED - GaleriaZdrowia.pl",
+        "after_title": "BOGOTA SANDAL MED Scholl – kolor niebieski",
+        "corrected": true
+      },
+      {
+        "id": 178,
+        "name": "BOGOTA SANDAL MED Health and Fashion Shoes Italia S",
+        "slug": "bogota-sandal-med-brown",
+        "before_title": "BOGOTA SANDAL MED - GaleriaZdrowia.pl",
+        "after_title": "BOGOTA SANDAL MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [
+      178
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 9,
+    "status": "held",
+    "products": [
+      {
+        "id": 179,
+        "name": "MOLDAVA WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "moldava-wedge-ad-med-pale-pink",
+        "before_title": "MOLDAVA WEDGE AD MED - GaleriaZdrowia.pl",
+        "after_title": "MOLDAVA WEDGE AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 186,
+        "name": "MOLDAVA WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "moldava-wedge-ad-med-bordowy",
+        "before_title": "MOLDAVA WEDGE AD MED - GaleriaZdrowia.pl",
+        "after_title": "MOLDAVA WEDGE AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 223,
+        "name": "MOLDAVA WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "moldava-wedge-ad-med-czarny",
+        "before_title": "MOLDAVA WEDGE AD MED - GaleriaZdrowia.pl",
+        "after_title": "MOLDAVA WEDGE AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      179,
+      186,
+      223
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 10,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 188,
+        "name": "BAHIA MED Health and Fashion Shoes Italia S",
+        "slug": "bahia-med-bubblegum",
+        "before_title": "BAHIA MED - GaleriaZdrowia.pl",
+        "after_title": "BAHIA MED Scholl – kolor różowy",
+        "corrected": true
+      },
+      {
+        "id": 189,
+        "name": "BAHIA MED Health and Fashion Shoes Italia S",
+        "slug": "bahia-med-tangerine",
+        "before_title": "BAHIA MED - GaleriaZdrowia.pl",
+        "after_title": "BAHIA MED Scholl – kolor pomarańczowy",
+        "corrected": true
+      },
+      {
+        "id": 193,
+        "name": "BAHIA MED Health and Fashion Shoes Italia S",
+        "slug": "bahia-med-lemon",
+        "before_title": "BAHIA MED - GaleriaZdrowia.pl",
+        "after_title": "BAHIA MED Scholl – kolor żółty",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 11,
+    "status": "held",
+    "products": [
+      {
+        "id": 190,
+        "name": "BAHIA FLIP-FLOP MED Health and Fashion Shoes Italia S",
+        "slug": "bahia-flip-flop-med-bubblegum",
+        "before_title": "BAHIA FLIP-FLOP MED - GaleriaZdrowia.pl",
+        "after_title": "BAHIA FLIP-FLOP MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 191,
+        "name": "BAHIA FLIP-FLOP MED Health and Fashion Shoes Italia S",
+        "slug": "bahia-flip-flop-med-tangerine",
+        "before_title": "BAHIA FLIP-FLOP MED - GaleriaZdrowia.pl",
+        "after_title": "BAHIA FLIP-FLOP MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 192,
+        "name": "BAHIA FLIP-FLOP MED Health and Fashion Shoes Italia S",
+        "slug": "bahia-flip-flop-med-lemon",
+        "before_title": "BAHIA FLIP-FLOP MED - GaleriaZdrowia.pl",
+        "after_title": "BAHIA FLIP-FLOP MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      190,
+      191,
+      192
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 12,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 196,
+        "name": "BORA 2 STRAPS MED Health and Fashion Shoes Italia S",
+        "slug": "bora-2-straps-med-ivory",
+        "before_title": "BORA 2 STRAPS MED - GaleriaZdrowia.pl",
+        "after_title": "BORA 2 STRAPS MED Scholl – kolor kość słoniowa",
+        "corrected": true
+      },
+      {
+        "id": 197,
+        "name": "BORA 2 STRAPS MED Health and Fashion Shoes Italia S",
+        "slug": "bora-2-straps-med-tobacco",
+        "before_title": "BORA 2 STRAPS MED - GaleriaZdrowia.pl",
+        "after_title": "BORA 2 STRAPS MED Scholl – kolor tobacco",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 13,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 198,
+        "name": "BORA MULE MED Health and Fashion Shoes Italia S",
+        "slug": "bora-mule-med-antique-pink",
+        "before_title": "BORA MULE MED - GaleriaZdrowia.pl",
+        "after_title": "BORA MULE MED Scholl – kolor różowy",
+        "corrected": true
+      },
+      {
+        "id": 199,
+        "name": "BORA MULE MED Health and Fashion Shoes Italia S",
+        "slug": "bora-mule-med-ivory",
+        "before_title": "BORA MULE MED - GaleriaZdrowia.pl",
+        "after_title": "BORA MULE MED Scholl – kolor kość słoniowa",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 14,
+    "status": "held",
+    "products": [
+      {
+        "id": 208,
+        "name": "LISBOA 2 STRAPS MED Health and Fashion Shoes Italia S",
+        "slug": "lisboa-2-straps-med",
+        "before_title": "LISBOA 2 STRAPS MED - GaleriaZdrowia.pl",
+        "after_title": "LISBOA 2 STRAPS MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 209,
+        "name": "LISBOA 2 STRAPS MED Health and Fashion Shoes Italia S",
+        "slug": "lisboa-2-straps-med-black",
+        "before_title": "LISBOA 2 STRAPS MED - GaleriaZdrowia.pl",
+        "after_title": "LISBOA 2 STRAPS MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      208,
+      209
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 15,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 210,
+        "name": "MONTEREY MULE MED Health and Fashion Shoes Italia S",
+        "slug": "monterey-mule-med-khaki",
+        "before_title": "MONTEREY MULE MED - GaleriaZdrowia.pl",
+        "after_title": "MONTEREY MULE MED Scholl – kolor khaki",
+        "corrected": true
+      },
+      {
+        "id": 211,
+        "name": "MONTEREY MULE MED Health and Fashion Shoes Italia S",
+        "slug": "monterey-mule-med-black",
+        "before_title": "MONTEREY MULE MED - GaleriaZdrowia.pl",
+        "after_title": "MONTEREY MULE MED Scholl – kolor czarny",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 16,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 212,
+        "name": "MONTEREY 2 STRAPS AD MED Health and Fashion Shoes Italia S",
+        "slug": "monterey-2-straps-med-ivory",
+        "before_title": "MONTEREY 2 STRAPS AD MED - GaleriaZdrowia.pl",
+        "after_title": "MONTEREY 2 STRAPS AD MED Scholl – kolor kość słoniowa",
+        "corrected": true
+      },
+      {
+        "id": 213,
+        "name": "MONTEREY 2 STRAPS AD MED Health and Fashion Shoes Italia S",
+        "slug": "monterey-2-straps-ad-med-camel",
+        "before_title": "MONTEREY 2 STRAPS AD MED - GaleriaZdrowia.pl",
+        "after_title": "MONTEREY 2 STRAPS AD MED Scholl – kolor karmelowy",
+        "corrected": true
+      },
+      {
+        "id": 214,
+        "name": "MONTEREY 2 STRAPS AD MED Health and Fashion Shoes Italia S",
+        "slug": "monterey-2-straps-ad-med-black",
+        "before_title": "MONTEREY 2 STRAPS AD MED - GaleriaZdrowia.pl",
+        "after_title": "MONTEREY 2 STRAPS AD MED Scholl – kolor czarny",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 17,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 216,
+        "name": "BOA VISTA WIDE MED Health and Fashion Shoes Italia S",
+        "slug": "boa-vista-wide-med-black",
+        "before_title": "BOA VISTA WIDE MED - GaleriaZdrowia.pl",
+        "after_title": "BOA VISTA WIDE MED Scholl – kolor czarny",
+        "corrected": true
+      },
+      {
+        "id": 217,
+        "name": "BOA VISTA WIDE MED Health and Fashion Shoes Italia S",
+        "slug": "boa-vista-wide-med-white",
+        "before_title": "BOA VISTA WIDE MED - GaleriaZdrowia.pl",
+        "after_title": "BOA VISTA WIDE MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [
+      217
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 18,
+    "status": "held",
+    "products": [
+      {
+        "id": 220,
+        "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+        "slug": "air-bag-med-wisniowy",
+        "before_title": "AIR BAG MED - GaleriaZdrowia.pl",
+        "after_title": "AIR BAG MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 221,
+        "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+        "slug": "air-bag-med-granatowy",
+        "before_title": "AIR BAG MED - GaleriaZdrowia.pl",
+        "after_title": "AIR BAG MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 244,
+        "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+        "slug": "air-bag-3",
+        "before_title": "AIR BAG MED - GaleriaZdrowia.pl",
+        "after_title": "AIR BAG MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 247,
+        "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+        "slug": "air-bag",
+        "before_title": "AIR BAG MED - GaleriaZdrowia.pl",
+        "after_title": "AIR BAG MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      220,
+      221,
+      244,
+      247
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 19,
+    "status": "held",
+    "products": [
+      {
+        "id": 227,
+        "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+        "slug": "heaven-med-granatowy",
+        "before_title": "HEAVEN AD MED - GaleriaZdrowia.pl",
+        "after_title": "HEAVEN AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 232,
+        "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+        "slug": "heaven",
+        "before_title": "HEAVEN AD MED - GaleriaZdrowia.pl",
+        "after_title": "HEAVEN AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 234,
+        "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+        "slug": "heaven-3",
+        "before_title": "HEAVEN AD MED - GaleriaZdrowia.pl",
+        "after_title": "HEAVEN AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 237,
+        "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+        "slug": "sandaly-heaven-2",
+        "before_title": "HEAVEN AD MED - GaleriaZdrowia.pl",
+        "after_title": "HEAVEN AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      227,
+      232,
+      234,
+      237
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 20,
+    "status": "partially_corrected",
+    "products": [
+      {
+        "id": 229,
+        "name": "RIO WEDGE AD MED Scholl",
+        "slug": "rio-wedge-ad-med-red",
+        "before_title": "RIO WEDGE AD MED - GaleriaZdrowia.pl",
+        "after_title": "RIO WEDGE AD MED Scholl – kolor czerwony",
+        "corrected": true
+      },
+      {
+        "id": 238,
+        "name": "RIO WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "rio-wedge-ad-med-niebieski-3",
+        "before_title": "RIO WEDGE AD MED - GaleriaZdrowia.pl",
+        "after_title": "RIO WEDGE AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 239,
+        "name": "RIO WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "rio-wedge-ad-med-pale-blue",
+        "before_title": "RIO WEDGE AD MED - GaleriaZdrowia.pl",
+        "after_title": "RIO WEDGE AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 240,
+        "name": "RIO WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "rio-wedge-ad-med-green-pale",
+        "before_title": "RIO WEDGE AD MED - GaleriaZdrowia.pl",
+        "after_title": "RIO WEDGE AD MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      238,
+      239,
+      240
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 21,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 245,
+        "name": "Weekend Scholl",
+        "slug": "weekend-3",
+        "before_title": "Weekend - GaleriaZdrowia.pl",
+        "after_title": "Weekend Scholl – kolor granatowy",
+        "corrected": true
+      },
+      {
+        "id": 248,
+        "name": "Weekend Scholl",
+        "slug": "weekend",
+        "before_title": "Weekend - GaleriaZdrowia.pl",
+        "after_title": "Weekend Scholl – kolor biały",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 22,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 246,
+        "name": "New Massage Scholl",
+        "slug": "new-massage-2",
+        "before_title": "New Massage - GaleriaZdrowia.pl",
+        "after_title": "New Massage - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 249,
+        "name": "New Massage Scholl",
+        "slug": "new-massage",
+        "before_title": "New Massage - GaleriaZdrowia.pl",
+        "after_title": "New Massage Scholl – kolor biały",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [
+      246
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 23,
+    "status": "held",
+    "products": [
+      {
+        "id": 250,
+        "name": "ANTONIA ELASTIC MED Health and Fashion Shoes Italia S",
+        "slug": "antonia-elastic-med-light-taupe",
+        "before_title": "ANTONIA ELASTIC MED - GaleriaZdrowia.pl",
+        "after_title": "ANTONIA ELASTIC MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 258,
+        "name": "ANTONIA ELASTIC MED Health and Fashion Shoes Italia S",
+        "slug": "antonia-elastic-med-czarny",
+        "before_title": "ANTONIA ELASTIC MED - GaleriaZdrowia.pl",
+        "after_title": "ANTONIA ELASTIC MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      250,
+      258
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 24,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 251,
+        "name": "LAYE HIGH MED Scholl",
+        "slug": "laye-high-med-brazowy",
+        "before_title": "LAYE HIGH MED - GaleriaZdrowia.pl",
+        "after_title": "LAYE HIGH MED Scholl – kolor brązowy",
+        "corrected": true
+      },
+      {
+        "id": 252,
+        "name": "LAYE HIGH MED Scholl",
+        "slug": "laye-high-med-fuksja",
+        "before_title": "LAYE HIGH MED - GaleriaZdrowia.pl",
+        "after_title": "LAYE HIGH MED Scholl – kolor różowy",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 25,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 253,
+        "name": "ANTONIA SANDAL MED Health and Fashion Shoes Italia S",
+        "slug": "antonia-sandal-med-navy-blue",
+        "before_title": "ANTONIA SANDAL MED - GaleriaZdrowia.pl",
+        "after_title": "ANTONIA SANDAL MED Scholl – kolor granatowy",
+        "corrected": true
+      },
+      {
+        "id": 254,
+        "name": "ANTONIA SANDAL MED Health and Fashion Shoes Italia S",
+        "slug": "antonia-sandal-med-platinum",
+        "before_title": "ANTONIA SANDAL MED - GaleriaZdrowia.pl",
+        "after_title": "ANTONIA SANDAL MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [
+      254
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 26,
+    "status": "held",
+    "products": [
+      {
+        "id": 257,
+        "name": "Nautilus Scholl",
+        "slug": "nautilus-navy-blue",
+        "before_title": "Nautilus - GaleriaZdrowia.pl",
+        "after_title": "Nautilus - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 266,
+        "name": "Nautilus Scholl",
+        "slug": "nautilus",
+        "before_title": "Nautilus - GaleriaZdrowia.pl",
+        "after_title": "Nautilus - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      257,
+      266
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 27,
+    "status": "held",
+    "products": [
+      {
+        "id": 259,
+        "name": "ABERDEEN MAN MED Health and Fashion Shoes Italia S",
+        "slug": "aberdeen-man-med-dk-brown",
+        "before_title": "ABERDEEN MAN MED - GaleriaZdrowia.pl",
+        "after_title": "ABERDEEN MAN MED - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 260,
+        "name": "ABERDEEN MAN MED Health and Fashion Shoes Italia S",
+        "slug": "aberdeen-man-med-navy-blue",
+        "before_title": "ABERDEEN MAN MED - GaleriaZdrowia.pl",
+        "after_title": "ABERDEEN MAN MED - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      259,
+      260
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 28,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 269,
+        "name": "JUMP PRO SOCK Scholl",
+        "slug": "jump-pro-sock-white",
+        "before_title": "JUMP PRO SOCK - GaleriaZdrowia.pl",
+        "after_title": "JUMP PRO SOCK Scholl – kolor biały",
+        "corrected": true
+      },
+      {
+        "id": 274,
+        "name": "JUMP PRO SOCK Scholl",
+        "slug": "jump-pro-sock-black",
+        "before_title": "JUMP PRO SOCK - GaleriaZdrowia.pl",
+        "after_title": "JUMP PRO SOCK Scholl – kolor czarny",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 29,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 270,
+        "name": "JUMP PRO LACES Scholl",
+        "slug": "jump-pro-laces-white",
+        "before_title": "JUMP PRO LACES - GaleriaZdrowia.pl",
+        "after_title": "JUMP PRO LACES Scholl – kolor biały",
+        "corrected": true
+      },
+      {
+        "id": 271,
+        "name": "JUMP PRO LACES Scholl",
+        "slug": "jump-pro-laces-black",
+        "before_title": "JUMP PRO LACES - GaleriaZdrowia.pl",
+        "after_title": "JUMP PRO LACES - GaleriaZdrowia.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [
+      271
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 30,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 272,
+        "name": "JUMP PRO STRAPS Scholl",
+        "slug": "jump-pro-straps-white",
+        "before_title": "JUMP PRO STRAPS - GaleriaZdrowia.pl",
+        "after_title": "JUMP PRO STRAPS - GaleriaZdrowia.pl",
+        "corrected": false
+      },
+      {
+        "id": 273,
+        "name": "JUMP PRO STRAPS Scholl",
+        "slug": "jump-pro-straps-black",
+        "before_title": "JUMP PRO STRAPS - GaleriaZdrowia.pl",
+        "after_title": "JUMP PRO STRAPS Scholl – kolor czarny",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [
+      272
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 31,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 299,
+        "name": "Mata zapobiegająca ześlizgiwaniu się z wózka inwalidzkiego Petermann GmbH",
+        "slug": "mata-zapobiegajaca-zeslizgiwaniu-sie-z-wozka-inwalidzkiego",
+        "before_title": "Mata zapobiegająca ześlizgiwaniu się z wózka inwalidzkiego - GaleriaZdrowia.pl",
+        "after_title": "Mata Petermann PM 2070 – 50×45 cm",
+        "corrected": true
+      },
+      {
+        "id": 301,
+        "name": "Mata zapobiegająca ześlizgiwaniu się z wózka inwalidzkiego Petermann GmbH",
+        "slug": "mata-zapobiegajaca-zeslizgiwaniu-sie-z-wozka-inwalidzkiego-2",
+        "before_title": "Mata zapobiegająca ześlizgiwaniu się z wózka inwalidzkiego - GaleriaZdrowia.pl",
+        "after_title": "Mata Petermann PM 2076 – 130×45 cm",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 32,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 848,
+        "name": "Peruka naturalna średni brąz włosy słowiańskie niemodyfikowane BRUNEA 4/6",
+        "slug": "brunea-4-6",
+        "before_title": "Naturalna peruka słowiańska - niemodyfikowane włosy | Peruka.pl",
+        "after_title": "Peruka naturalna średni brąz włosy słowiańskie niemodyfikowane BRUNEA 4/6",
+        "corrected": true
+      },
+      {
+        "id": 3666,
+        "name": "Peruka naturalna damska z włosów słowiańskich virgin blond PRIA 14/16",
+        "slug": "pria-14-16",
+        "before_title": "Naturalna peruka słowiańska - niemodyfikowane włosy | Peruka.pl",
+        "after_title": "Peruka naturalna damska z włosów słowiańskich virgin blond PRIA 14/16",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 33,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 849,
+        "name": "Peruka naturalna włosy słowiańskie ciemny blond i refleksy TULZA 8/12+14/16H",
+        "slug": "tulza-8-12-14-16h",
+        "before_title": "Peruka naturalna słowiańska - średni brąz z refleksami | Peruka.pl",
+        "after_title": "Peruka naturalna włosy słowiańskie ciemny blond i refleksy TULZA 8/12+14/16H",
+        "corrected": true
+      },
+      {
+        "id": 3556,
+        "name": "Peruka naturalna włosy słowiańskie, średni brąz i blond refleksy TERI S 12R+14/16H",
+        "slug": "teri-s-8-12r-14-16h",
+        "before_title": "Peruka naturalna słowiańska - średni brąz z refleksami | Peruka.pl",
+        "after_title": "Peruka naturalna włosy słowiańskie, średni brąz i blond refleksy TERI S 12R+14/16H",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 34,
+    "status": "held",
+    "products": [
+      {
+        "id": 1419,
+        "name": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12",
+        "slug": "cara-small-deluxe-14-12-peruka-syntetyczna",
+        "before_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12 | Peruka.pl",
+        "after_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12 | Peruka.pl",
+        "corrected": false
+      },
+      {
+        "id": 4530,
+        "name": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12",
+        "slug": "cara-small-deluxe-darksand-mix-14-12-peruka-syntetyczna",
+        "before_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12 | Peruka.pl",
+        "after_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12 | Peruka.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      1419,
+      4530
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 35,
+    "status": "held",
+    "products": [
+      {
+        "id": 1568,
+        "name": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE black",
+        "slug": "wine-black-dopinka",
+        "before_title": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE # black | Peruka.pl",
+        "after_title": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE # black | Peruka.pl",
+        "corrected": false
+      },
+      {
+        "id": 7988,
+        "name": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE black",
+        "slug": "sangria-black-dopinka",
+        "before_title": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE # black | Peruka.pl",
+        "after_title": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE # black | Peruka.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      1568,
+      7988
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 36,
+    "status": "held",
+    "products": [
+      {
+        "id": 2828,
+        "name": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix",
+        "slug": "aletta-mono-part-rubyred-mix",
+        "before_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix | Peruka.pl",
+        "after_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix | Peruka.pl",
+        "corrected": false
+      },
+      {
+        "id": 2829,
+        "name": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix",
+        "slug": "aletta-mono-part-silkgrey-mix",
+        "before_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix | Peruka.pl",
+        "after_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix | Peruka.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      2828,
+      2829
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 37,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 3520,
+        "name": "Peruka z włosów słowiańskich virgin blond z odrostem OMARI S 12R+14/16",
+        "slug": "omari-s-12r-14-16",
+        "before_title": "Peruka słowiańska blond z odrostem – krótka fryzura",
+        "after_title": "Peruka z włosów słowiańskich virgin blond z odrostem OMARI S 12R+14/16",
+        "corrected": true
+      },
+      {
+        "id": 3528,
+        "name": "Peruka z włosów słowiańskich virgin blond z odrostem OMARI S 10R+14/16",
+        "slug": "omari-s-10r-14-16",
+        "before_title": "Peruka słowiańska blond z odrostem – krótka fryzura",
+        "after_title": "Peruka z włosów słowiańskich virgin blond z odrostem OMARI S 10R+14/16",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 38,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 3549,
+        "name": "Peruka naturalna długie włosy słowiańskie blond z odrostem TERI S 6/8R+12/14",
+        "slug": "teri-s-6-8r-12-14",
+        "before_title": "Peruka Teri 50 cm blond z odrostem – słowiańskie włosy",
+        "after_title": "Peruka naturalna długie włosy słowiańskie blond z odrostem TERI S 6/8R+12/14",
+        "corrected": true
+      },
+      {
+        "id": 3550,
+        "name": "Peruka z włosów naturalnych słowiańskich blond z odrostem TERI S 10R+14/16",
+        "slug": "teri-s-10r-14-16",
+        "before_title": "Peruka Teri 50 cm blond z odrostem – słowiańskie włosy",
+        "after_title": "Peruka z włosów naturalnych słowiańskich blond z odrostem TERI S 10R+14/16",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 39,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 3638,
+        "name": "Damska peruka naturalna słowiańska blond z odrostem 25cm KYA S XY 8/12R+14/16",
+        "slug": "kya-s-xy-25cm-8-12r-14-16",
+        "before_title": "Naturalna peruka blond - włosy słowiańskie z odrostem | Peruka.pl",
+        "after_title": "Damska peruka naturalna słowiańska blond z odrostem 25cm KYA S XY 8/12R+14/16",
+        "corrected": true
+      },
+      {
+        "id": 3648,
+        "name": "Peruka naturalna słowiańska blond z odrostem SAMOA 12R+10/16/L16",
+        "slug": "samoa-12r-10-16-l16",
+        "before_title": "Naturalna peruka blond - włosy słowiańskie z odrostem | Peruka.pl",
+        "after_title": "Peruka naturalna słowiańska blond z odrostem SAMOA 12R+10/16/L16",
+        "corrected": true
+      },
+      {
+        "id": 3653,
+        "name": "Peruka naturalna włosy słowiańskie blond z odrostem SAMOA 8/10R+10/16",
+        "slug": "samoa-8-10r-10-16",
+        "before_title": "Naturalna peruka blond - włosy słowiańskie z odrostem | Peruka.pl",
+        "after_title": "Peruka naturalna włosy słowiańskie blond z odrostem SAMOA 8/10R+10/16",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 40,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 3646,
+        "name": "Peruka damska włosy słowiańskie blond z odrostem SAMOA 10R+14/L16",
+        "slug": "samoa-10r-14-l16",
+        "before_title": "Naturalna peruka blond - linia rozmyta, odrost | Peruka.pl",
+        "after_title": "Peruka damska włosy słowiańskie blond z odrostem SAMOA 10R+14/L16",
+        "corrected": true
+      },
+      {
+        "id": 3663,
+        "name": "Peruka naturalna damska z włosów słowiańskich virgin blond PRIA 10/16ASHR+L16",
+        "slug": "pria-10-16ashr-l16",
+        "before_title": "Naturalna peruka blond - linia rozmyta, odrost | Peruka.pl",
+        "after_title": "Peruka naturalna damska z włosów słowiańskich virgin blond PRIA 10/16ASHR+L16",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 41,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 3650,
+        "name": "Peruka damska średnia długość włosy słowiańskie virgin bardzo ciemny brąz SAMOA 2/4",
+        "slug": "samoa-2-4",
+        "before_title": "Damska peruka słowiańska virgin - bardzo ciemny brąz | Peruka.pl",
+        "after_title": "Peruka damska średnia długość włosy słowiańskie virgin bardzo ciemny brąz SAMOA 2/4",
+        "corrected": true
+      },
+      {
+        "id": 3677,
+        "name": "Peruka damska ciemny brąz włosy słowiańskie niemodyfikowane TULZA 4/6",
+        "slug": "tulza-4-6",
+        "before_title": "Damska peruka słowiańska virgin - bardzo ciemny brąz | Peruka.pl",
+        "after_title": "Peruka damska ciemny brąz włosy słowiańskie niemodyfikowane TULZA 4/6",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 42,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 3651,
+        "name": "Damska peruka naturalna włosy słowiańskie średni brąz jasne pasemka SAMOA 8/10+14H",
+        "slug": "samoa-8-10-14h",
+        "before_title": "Naturalna peruka - średni brąz, jasne pasemka | Peruka.pl",
+        "after_title": "Damska peruka naturalna włosy słowiańskie średni brąz jasne pasemka SAMOA 8/10+14H",
+        "corrected": true
+      },
+      {
+        "id": 3692,
+        "name": "Peruka naturalna włosy słowiańskie średni brąz jasne pasemka MARII S 6/8/10+12/14H",
+        "slug": "marii-s-6-8-10-12-14h",
+        "before_title": "Naturalna peruka - średni brąz, jasne pasemka | Peruka.pl",
+        "after_title": "Peruka naturalna włosy słowiańskie średni brąz jasne pasemka MARII S 6/8/10+12/14H",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 43,
+    "status": "held",
+    "products": [
+      {
+        "id": 6744,
+        "name": "Peruka syntetyczna jasny miodowy blond ALASKA lighthoney/mix*",
+        "slug": "alaska-hotchocolate-mix-peruka-syntetyczna",
+        "before_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix* | Peruka.pl",
+        "after_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix* | Peruka.pl",
+        "corrected": false
+      },
+      {
+        "id": 6745,
+        "name": "Peruka syntetyczna jasny miodowy blond ALASKA lighthoney/mix*",
+        "slug": "alaska-lighthoney-mix-peruka-syntetyczna",
+        "before_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix* | Peruka.pl",
+        "after_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix* | Peruka.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      6744,
+      6745
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 44,
+    "status": "held",
+    "products": [
+      {
+        "id": 7951,
+        "name": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*",
+        "slug": "frappe-dark-blonde-dopinka",
+        "before_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown* | Peruka.pl",
+        "after_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown* | Peruka.pl",
+        "corrected": false
+      },
+      {
+        "id": 7952,
+        "name": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*",
+        "slug": "frappe-dark-brown-dopinka",
+        "before_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown* | Peruka.pl",
+        "after_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown* | Peruka.pl",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      7951,
+      7952
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 45,
+    "status": "held",
+    "products": [
+      {
+        "id": 8869,
+        "name": "Orteza kończyny dolnej SPARTAN",
+        "slug": "orteza-konczyny-dolnej-spartan",
+        "before_title": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "after_title": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "corrected": false
+      },
+      {
+        "id": 8870,
+        "name": "Orteza kończyny dolnej SPARTAN",
+        "slug": "orteza-konczyny-dolnej-spartan-2",
+        "before_title": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "after_title": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      8869,
+      8870
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 46,
+    "status": "held",
+    "products": [
+      {
+        "id": 9066,
+        "name": "Orteza nadgarstka AM-OSN-U-02",
+        "slug": "usztywniona-orteza-na-dlon-i-przedramie-z-ujeciem-kciuka-am-osn-u-02",
+        "before_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "after_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "corrected": false
+      },
+      {
+        "id": 9067,
+        "name": "Orteza nadgarstka AM-OSN-U-02",
+        "slug": "orteza-nadgarstka-am-osn-u-02",
+        "before_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "after_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9066,
+      9067
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 47,
+    "status": "held",
+    "products": [
+      {
+        "id": 9092,
+        "name": "Uniwersalny temblak OKG-25",
+        "slug": "uniwersalny-temblak-okg-25",
+        "before_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "after_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "corrected": false
+      },
+      {
+        "id": 9093,
+        "name": "Uniwersalny temblak OKG-25",
+        "slug": "uniwersalny-temblak-okg-25-2",
+        "before_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "after_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9092,
+      9093
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 48,
+    "status": "held",
+    "products": [
+      {
+        "id": 9094,
+        "name": "Separator neurologiczny",
+        "slug": "separator-neurologiczny",
+        "before_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "after_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "corrected": false
+      },
+      {
+        "id": 9095,
+        "name": "Separator neurologiczny",
+        "slug": "separator-neurologiczny-cz",
+        "before_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "after_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9094,
+      9095
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 49,
+    "status": "held",
+    "products": [
+      {
+        "id": 9309,
+        "name": "FP-25 Stabilizator kończyn",
+        "slug": "stabilizator-konczyn-fp-25",
+        "before_title": "FP-25 Stabilizator kończyn",
+        "after_title": "FP-25 Stabilizator kończyn",
+        "corrected": false
+      },
+      {
+        "id": 9332,
+        "name": "FP-25 Stabilizator kończyn",
+        "slug": "stabilizator-konczyn-fp-25-2",
+        "before_title": "FP-25 Stabilizator kończyn",
+        "after_title": "FP-25 Stabilizator kończyn",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9309,
+      9332
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 50,
+    "status": "held",
+    "products": [
+      {
+        "id": 9447,
+        "name": "2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "slug": "2x-elastyczna-opaska-na-kolano-sciagacz-wciagana-zamiast-bandazu-orteza",
+        "before_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "after_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "corrected": false
+      },
+      {
+        "id": 9448,
+        "name": "2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "slug": "2x-elastyczna-opaska-na-kolano-sciagacz-wciagana-zamiast-bandazu-orteza-medreha-709",
+        "before_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "after_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9447,
+      9448
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 51,
+    "status": "held",
+    "products": [
+      {
+        "id": 9449,
+        "name": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "slug": "2x-stabilizator-orteza-sciagacz-kolana-orteza-2szt",
+        "before_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "after_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "corrected": false
+      },
+      {
+        "id": 9735,
+        "name": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "slug": "2x-stabilizator-orteza-sciagacz-kolana-orteza-2szt-medreha-539",
+        "before_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "after_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "corrected": false
+      },
+      {
+        "id": 9736,
+        "name": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "slug": "2x-stabilizator-orteza-sciagacz-kolana-orteza-2szt-medreha-540",
+        "before_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "after_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "corrected": false
+      },
+      {
+        "id": 9737,
+        "name": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "slug": "2x-stabilizator-orteza-sciagacz-kolana-orteza-2szt-medreha-551",
+        "before_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "after_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9449,
+      9735,
+      9736,
+      9737
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 52,
+    "status": "held",
+    "products": [
+      {
+        "id": 9551,
+        "name": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "slug": "orteza-lokcia-stabilizator-stawu-lokciowego-opaska",
+        "before_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "after_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "corrected": false
+      },
+      {
+        "id": 9552,
+        "name": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "slug": "orteza-lokcia-stabilizator-stawu-lokciowego-opaska-medreha-506",
+        "before_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "after_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "corrected": false
+      },
+      {
+        "id": 9553,
+        "name": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "slug": "orteza-lokcia-stabilizator-stawu-lokciowego-opaska-medreha-511",
+        "before_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "after_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9551,
+      9552,
+      9553
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 53,
+    "status": "held",
+    "products": [
+      {
+        "id": 9562,
+        "name": "Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "slug": "stabilizator-szynowy-orteza-na-palec",
+        "before_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "after_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "corrected": false
+      },
+      {
+        "id": 9563,
+        "name": "Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "slug": "stabilizator-szynowy-orteza-palca-szyna-na-palec",
+        "before_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "after_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9562,
+      9563
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 54,
+    "status": "held",
+    "products": [
+      {
+        "id": 9590,
+        "name": "Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "slug": "korektor-wad-postawy-orteza-plecow-proste-plecy-garbienie-sie-praca-biurowa",
+        "before_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "after_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "corrected": false
+      },
+      {
+        "id": 9751,
+        "name": "Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "slug": "korektor-wad-postawy-orteza-plecow-proste-plecy-garbienie-sie-praca-biurowa-medreha-773",
+        "before_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "after_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9590,
+      9751
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 55,
+    "status": "held",
+    "products": [
+      {
+        "id": 9612,
+        "name": "2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "slug": "2xopaska-magnetyczna-turmalinem-stabilizator-kolana-orteza-na-kolano-para",
+        "before_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "after_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "corrected": false
+      },
+      {
+        "id": 9613,
+        "name": "2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "slug": "2xopaska-magnetyczna-turmalinem-stabilizator-kolana-orteza-na-kolano-para-medreha-616",
+        "before_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "after_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9612,
+      9613
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 56,
+    "status": "held",
+    "products": [
+      {
+        "id": 9620,
+        "name": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "slug": "nakladka-na-toalete-nasadka-na-sedes-po-operacji-biodra-podwyzszajaca-wc",
+        "before_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "after_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "corrected": false
+      },
+      {
+        "id": 9940,
+        "name": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "slug": "nakladka-na-toalete-nasadka-na-sedes-po-operacji-biodra-podwyzszajaca-wc-medreha-819",
+        "before_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "after_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9620,
+      9940
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 57,
+    "status": "held",
+    "products": [
+      {
+        "id": 9625,
+        "name": "Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "slug": "stolik-przylozkowy-na-kolkach-dla-chorego-z-regulacja-mobilny-solidny-blat",
+        "before_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "after_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "corrected": false
+      },
+      {
+        "id": 9636,
+        "name": "Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "slug": "stolik-przylozkowy-na-kolkach-dla-chorego-z-regulacja-mobilny-solidny-blat-medreha-747",
+        "before_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "after_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9625,
+      9636
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 58,
+    "status": "held",
+    "products": [
+      {
+        "id": 9630,
+        "name": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "slug": "bandaz-elastyczny-kompresyjny-na-kolano-nadgarstek-reke-opatrunek-na-rane-stluczenie",
+        "before_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "after_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "corrected": false
+      },
+      {
+        "id": 9631,
+        "name": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "slug": "bandaz-elastyczny-kompresyjny-na-kolano-nadgarstek-reke-opatrunek-na-rane-stluczenie-medreha-743",
+        "before_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "after_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "corrected": false
+      },
+      {
+        "id": 9632,
+        "name": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "slug": "bandaz-elastyczny-kompresyjny-na-kolano-nadgarstek-reke-opatrunek-na-rane-stluczenie-medreha-744",
+        "before_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "after_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9630,
+      9631,
+      9632
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 59,
+    "status": "held",
+    "products": [
+      {
+        "id": 9713,
+        "name": "Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "slug": "laska-rehabilitacyjna-skladana-stabilna-spacerowa-dla-seniora-spacer-mocna",
+        "before_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "after_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "corrected": false
+      },
+      {
+        "id": 9714,
+        "name": "Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "slug": "laska-rehabilitacyjna-skladana-stabilna-spacerowa-dla-seniora-spacer-mocna-medreha-746",
+        "before_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "after_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9713,
+      9714
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 60,
+    "status": "held",
+    "products": [
+      {
+        "id": 9715,
+        "name": "2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "2x-kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips",
+        "before_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "after_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "corrected": false
+      },
+      {
+        "id": 9728,
+        "name": "2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "2x-kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips-medreha-724",
+        "before_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "after_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9715,
+      9728
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 61,
+    "status": "held",
+    "products": [
+      {
+        "id": 9729,
+        "name": "Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips",
+        "before_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "after_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "corrected": false
+      },
+      {
+        "id": 9730,
+        "name": "Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips-medreha-726",
+        "before_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "after_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9729,
+      9730
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 62,
+    "status": "held",
+    "products": [
+      {
+        "id": 9738,
+        "name": "Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "slug": "stabilizator-orteza-opaska-kolana-neopren-sport",
+        "before_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "after_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "corrected": false
+      },
+      {
+        "id": 9739,
+        "name": "Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "slug": "stabilizator-orteza-opaska-kolana-neopren-sport-medreha-528",
+        "before_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "after_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9738,
+      9739
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 63,
+    "status": "held",
+    "products": [
+      {
+        "id": 9743,
+        "name": "Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "slug": "stabilizator-lokcia-orteza-opaska-lokiec-tenisisty",
+        "before_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "after_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "corrected": false
+      },
+      {
+        "id": 9744,
+        "name": "Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "slug": "stabilizator-lokcia-orteza-opaska-lokiec-tenisisty-medreha-547",
+        "before_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "after_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9743,
+      9744
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 64,
+    "status": "held",
+    "products": [
+      {
+        "id": 9749,
+        "name": "Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "slug": "stabilizator-opaska-orteza-sciagacz-barku-sport",
+        "before_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "after_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "corrected": false
+      },
+      {
+        "id": 9750,
+        "name": "Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "slug": "stabilizator-opaska-orteza-sciagacz-barku-sport-medreha-534",
+        "before_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "after_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9749,
+      9750
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 65,
+    "status": "held",
+    "products": [
+      {
+        "id": 9752,
+        "name": "2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "slug": "2x-stabilizator-orteza-nadgarstka-opaska-reki-2szt",
+        "before_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "after_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "corrected": false
+      },
+      {
+        "id": 9753,
+        "name": "2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "slug": "2x-stabilizator-orteza-nadgarstka-opaska-reki-2szt-medreha-527",
+        "before_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "after_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9752,
+      9753
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 66,
+    "status": "held",
+    "products": [
+      {
+        "id": 9754,
+        "name": "2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "slug": "2xstabilizator-nadgarstka-orteza-opaska-sport-2szt",
+        "before_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "after_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "corrected": false
+      },
+      {
+        "id": 9755,
+        "name": "2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "slug": "2xstabilizator-nadgarstka-orteza-opaska-sport-2szt-medreha-531",
+        "before_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "after_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9754,
+      9755
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 67,
+    "status": "held",
+    "products": [
+      {
+        "id": 9758,
+        "name": "Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "slug": "pas-brzuszny-wyszczuplajacy-silownia-sport-neopren",
+        "before_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "after_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "corrected": false
+      },
+      {
+        "id": 9759,
+        "name": "Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "slug": "pas-brzuszny-wyszczuplajacy-silownia-sport-neopren-medreha-537",
+        "before_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "after_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9758,
+      9759
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 68,
+    "status": "held",
+    "products": [
+      {
+        "id": 9760,
+        "name": "Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "slug": "pas-brzuszny-gorset-wyszczuplajacy-sport-neopren",
+        "before_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "after_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "corrected": false
+      },
+      {
+        "id": 9761,
+        "name": "Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "slug": "pas-brzuszny-gorset-wyszczuplajacy-sport-neopren-medreha-536",
+        "before_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "after_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9760,
+      9761
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 69,
+    "status": "held",
+    "products": [
+      {
+        "id": 9766,
+        "name": "Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "slug": "rekawiczki-sportowe-na-silownie-rower-do-cwiczen-silowych-fitness",
+        "before_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "after_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "corrected": false
+      },
+      {
+        "id": 9767,
+        "name": "Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "slug": "rekawiczki-sportowe-na-silownie-rower-do-cwiczen-silowych-fitness-medreha-715",
+        "before_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "after_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9766,
+      9767
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 70,
+    "status": "held",
+    "products": [
+      {
+        "id": 9983,
+        "name": "Podpórka czterokołowa aluminiowa - RANGER",
+        "slug": "podporka-czterokolowa-aluminiowa-ranger",
+        "before_title": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+        "after_title": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+        "corrected": false
+      },
+      {
+        "id": 9986,
+        "name": "Podpórka czterokołowa aluminiowa - RANGER",
+        "slug": "ranger-podporka-czterokolowa-aluminiowa",
+        "before_title": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+        "after_title": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      9983,
+      9986
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 71,
+    "status": "held",
+    "products": [
+      {
+        "id": 10048,
+        "name": "Nasadka toaletowa z klapą",
+        "slug": "nasadka-toaletowa-king-10l-20-z-klapa",
+        "before_title": "Nasadka toaletowa z klapą - LM Global",
+        "after_title": "Nasadka toaletowa z klapą - LM Global",
+        "corrected": false
+      },
+      {
+        "id": 10145,
+        "name": "Nasadka toaletowa z klapą",
+        "slug": "nasadka-toaletowa-king-15l-20-z-klapa",
+        "before_title": "Nasadka toaletowa z klapą - LM Global",
+        "after_title": "Nasadka toaletowa z klapą - LM Global",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      10048,
+      10145
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 72,
+    "status": "held",
+    "products": [
+      {
+        "id": 10104,
+        "name": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052",
+        "slug": "laska-inwalidzka-aluminiowa-skladana-model-jmc-c-2052",
+        "before_title": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+        "after_title": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+        "corrected": false
+      },
+      {
+        "id": 10107,
+        "name": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052",
+        "slug": "laska-inwalidzka-aluminiowa-skladana",
+        "before_title": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+        "after_title": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      10104,
+      10107
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 73,
+    "status": "held",
+    "products": [
+      {
+        "id": 10226,
+        "name": "Opaska elastyczna stawu nadgarstkowego",
+        "slug": "opaska-elastyczna-stawu-nadgarstkowego-01",
+        "before_title": "Opaska elastyczna stawu nadgarstkowego - Timago",
+        "after_title": "Opaska elastyczna stawu nadgarstkowego - Timago",
+        "corrected": false
+      },
+      {
+        "id": 10232,
+        "name": "Opaska elastyczna stawu nadgarstkowego",
+        "slug": "opaska-elastyczna-stawu-nadgarstkowego",
+        "before_title": "Opaska elastyczna stawu nadgarstkowego - Timago",
+        "after_title": "Opaska elastyczna stawu nadgarstkowego - Timago",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      10226,
+      10232
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 74,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 10432,
+        "name": "Materac przeciwodleżynowy bez pompy",
+        "slug": "materac-pneumatyczny-bioflote-2000-bez-pompy-bf",
+        "before_title": "Materac przeciwodleżynowy bez pompy - Części Rehabilitacja",
+        "after_title": "Materac przeciwodleżynowy bez pompy – BF 2000/M",
+        "corrected": true
+      },
+      {
+        "id": 10434,
+        "name": "Materac przeciwodleżynowy bez pompy",
+        "slug": "materac-przeciwodlezynowy-bez-pomy",
+        "before_title": "Materac przeciwodleżynowy bez pompy - Części Rehabilitacja",
+        "after_title": "Materac przeciwodleżynowy bez pompy – HF6001",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 75,
+    "status": "held",
+    "products": [
+      {
+        "id": 10479,
+        "name": "Maska podnosowa AirFit N30i",
+        "slug": "maska-podnosowa-airfit-n30i-rozm-s",
+        "before_title": "Maska podnosowa AirFit N30i - U.02.02.00",
+        "after_title": "Maska podnosowa AirFit N30i - U.02.02.00",
+        "corrected": false
+      },
+      {
+        "id": 10523,
+        "name": "Maska podnosowa AirFit N30i",
+        "slug": "maska-podnosowa-airfit-n30i-rozmiar-s-63880",
+        "before_title": "Maska podnosowa AirFit N30i - U.02.02.00",
+        "after_title": "Maska podnosowa AirFit N30i - U.02.02.00",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      10479,
+      10523
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 76,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 10758,
+        "name": "Pokrowiec bawełniany elastyczny nieprzemakalny",
+        "slug": "pokrowiec-bawelniany-elastyczny-nieprzemakalny-wy",
+        "before_title": "Pokrowiec bawełniany elastyczny nieprzemakalny - POKROWCE i POSZEWKI",
+        "after_title": "Pokrowiec bawełniany elastyczny nieprzemakalny – 15/P/BEN/7/B",
+        "corrected": true
+      },
+      {
+        "id": 10759,
+        "name": "Pokrowiec bawełniany elastyczny nieprzemakalny",
+        "slug": "pokrowiec-bawelniany-elastyczny-nieprzemakalny-wy-rehafund-1833",
+        "before_title": "Pokrowiec bawełniany elastyczny nieprzemakalny - POKROWCE i POSZEWKI",
+        "after_title": "Pokrowiec bawełniany elastyczny nieprzemakalny – 15/P/BEN/10/B",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 77,
+    "status": "held",
+    "products": [
+      {
+        "id": 11039,
+        "name": "Opaska kompresyjna na twarz AT04702",
+        "slug": "opaska-kompresyjna-na-twarz-at04702-kopia",
+        "before_title": "Opaska kompresyjna na twarz AT04702 - Antar",
+        "after_title": "Opaska kompresyjna na twarz AT04702 - Antar",
+        "corrected": false
+      },
+      {
+        "id": 11040,
+        "name": "Opaska kompresyjna na twarz AT04702",
+        "slug": "opaska-kompresyjna-na-twarz-at04702",
+        "before_title": "Opaska kompresyjna na twarz AT04702 - Antar",
+        "after_title": "Opaska kompresyjna na twarz AT04702 - Antar",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      11039,
+      11040
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 78,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 11938,
+        "name": "Levamed® active",
+        "slug": "levamed-active-stabilizator-stawu-skokowego",
+        "before_title": "Levamed active stabilizator stawu skokowego | medi sklep internetowy",
+        "after_title": "Levamed® active – stabilizator stawu skokowego",
+        "corrected": true
+      },
+      {
+        "id": 12035,
+        "name": "protect.Leva",
+        "slug": "protectleva-stabilizator-kostki",
+        "before_title": "Levamed active stabilizator stawu skokowego | medi sklep internetowy",
+        "after_title": "protect.Leva – stabilizator kostki",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 79,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 12004,
+        "name": "mediven® forte",
+        "slug": "mediven-forte-podkolan-wki-uciskowe",
+        "before_title": "mediven forte podkolanówki uciskowe | medi sklep internetowy",
+        "after_title": "mediven® forte – rajstopy uciskowe",
+        "corrected": true
+      },
+      {
+        "id": 12005,
+        "name": "mediven® forte",
+        "slug": "mediven-forte-podkolanowki-uciskowe",
+        "before_title": "mediven forte podkolanówki uciskowe | medi sklep internetowy",
+        "after_title": "mediven® forte – podkolanówki uciskowe",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 80,
+    "status": "held",
+    "products": [
+      {
+        "id": 12021,
+        "name": "protect.Ankle air foam %",
+        "slug": "protect-ankle-air-foam-ortezy-kostka-sale",
+        "before_title": "protect.Ankle air foam",
+        "after_title": "protect.Ankle air foam",
+        "corrected": false
+      },
+      {
+        "id": 12022,
+        "name": "protect.Ankle air foam",
+        "slug": "protect-ankle-air-foam-ortezy-kostka",
+        "before_title": "protect.Ankle air foam",
+        "after_title": "protect.Ankle air foam",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12021,
+      12022
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 81,
+    "status": "held",
+    "products": [
+      {
+        "id": 12424,
+        "name": "V500 Light",
+        "slug": "v500-light",
+        "before_title": "V500 Light | Vermeiren Polska",
+        "after_title": "V500 Light | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12427,
+        "name": "V500 Light",
+        "slug": "v500-light-321fc813",
+        "before_title": "V500 Light | Vermeiren Polska",
+        "after_title": "V500 Light | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12424,
+      12427
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 82,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 12429,
+        "name": "TRIGO S",
+        "slug": "trigo-s",
+        "before_title": "TRIGO S | Vermeiren Polska",
+        "after_title": "TRIGO S – wózek inwalidzki dla dorosłych",
+        "corrected": true
+      },
+      {
+        "id": 12462,
+        "name": "TRIGO S",
+        "slug": "trigo-s-9148f718",
+        "before_title": "TRIGO S | Vermeiren Polska",
+        "after_title": "TRIGO S – wózek inwalidzki dla dzieci",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 83,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 12430,
+        "name": "TRIGO T",
+        "slug": "trigo-t",
+        "before_title": "TRIGO T | Vermeiren Polska",
+        "after_title": "TRIGO T – wózek inwalidzki dla dorosłych",
+        "corrected": true
+      },
+      {
+        "id": 12463,
+        "name": "TRIGO T",
+        "slug": "trigo-t-33692ac7",
+        "before_title": "TRIGO T | Vermeiren Polska",
+        "after_title": "TRIGO T – wózek inwalidzki dla dzieci",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 84,
+    "status": "held",
+    "products": [
+      {
+        "id": 12503,
+        "name": "PEPI",
+        "slug": "pepi",
+        "before_title": "PEPI | Vermeiren Polska",
+        "after_title": "PEPI | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12562,
+        "name": "PEPI",
+        "slug": "pepi-f7d0cf03",
+        "before_title": "PEPI | Vermeiren Polska",
+        "after_title": "PEPI | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12503,
+      12562
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 85,
+    "status": "held",
+    "products": [
+      {
+        "id": 12581,
+        "name": "VICAIR LIBERTY",
+        "slug": "vicair-liberty",
+        "before_title": "VICAIR LIBERTY | Vermeiren Polska",
+        "after_title": "VICAIR LIBERTY | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12617,
+        "name": "VICAIR LIBERTY",
+        "slug": "vicair-liberty-e00d9c3c",
+        "before_title": "VICAIR LIBERTY | Vermeiren Polska",
+        "after_title": "VICAIR LIBERTY | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12581,
+      12617
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 86,
+    "status": "held",
+    "products": [
+      {
+        "id": 12582,
+        "name": "VICAIR LIBERTY PROFILE",
+        "slug": "vicair-liberty-profile",
+        "before_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+        "after_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12618,
+        "name": "VICAIR LIBERTY PROFILE",
+        "slug": "vicair-liberty-profile-4b912b06",
+        "before_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+        "after_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12582,
+      12618
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 87,
+    "status": "held",
+    "products": [
+      {
+        "id": 12583,
+        "name": "VICAIR ACTIVE O2",
+        "slug": "vicair-active-o2",
+        "before_title": "VICAIR ACTIVE O2 | Vermeiren Polska",
+        "after_title": "VICAIR ACTIVE O2 | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12619,
+        "name": "VICAIR ACTIVE O2",
+        "slug": "vicair-active-o2-42a57ba6",
+        "before_title": "VICAIR ACTIVE O2 | Vermeiren Polska",
+        "after_title": "VICAIR ACTIVE O2 | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12583,
+      12619
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 88,
+    "status": "held",
+    "products": [
+      {
+        "id": 12584,
+        "name": "VICAIR VECTOR O2",
+        "slug": "vicair-vector-o2",
+        "before_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+        "after_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12620,
+        "name": "VICAIR VECTOR 02",
+        "slug": "vicair-vector-02",
+        "before_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+        "after_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12584,
+      12620
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 89,
+    "status": "held",
+    "products": [
+      {
+        "id": 12585,
+        "name": "VICAIR ADJUSTER O2",
+        "slug": "vicair-adjuster-o2",
+        "before_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+        "after_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12621,
+        "name": "VICAIR ADJUSTER O2",
+        "slug": "vicair-adjuster-o2-87cb2898",
+        "before_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+        "after_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12585,
+      12621
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 90,
+    "status": "held",
+    "products": [
+      {
+        "id": 12586,
+        "name": "VICAIR MULTIFUNCTIONAL O2",
+        "slug": "vicair-multifunctional-o2",
+        "before_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+        "after_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12622,
+        "name": "VICAIR MULTIFUNCTIONAL O2",
+        "slug": "vicair-multifunctional-o2-b604a48b",
+        "before_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+        "after_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12586,
+      12622
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 91,
+    "status": "held",
+    "products": [
+      {
+        "id": 12587,
+        "name": "VICAIR ALLROUNDER O2",
+        "slug": "vicair-allrounder-o2",
+        "before_title": "VICAIR ALLROUNDER | Vermeiren Polska",
+        "after_title": "VICAIR ALLROUNDER | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12623,
+        "name": "VICAIR ALLROUNDER 02",
+        "slug": "vicair-allrounder-02",
+        "before_title": "VICAIR ALLROUNDER | Vermeiren Polska",
+        "after_title": "VICAIR ALLROUNDER | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12587,
+      12623
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 92,
+    "status": "held",
+    "products": [
+      {
+        "id": 12588,
+        "name": "VICAIR® LIBERTY BACK",
+        "slug": "vicair-liberty-back",
+        "before_title": "VICAIR LIBERTY BACK | Vermeiren Polska",
+        "after_title": "VICAIR LIBERTY BACK | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12624,
+        "name": "Vicair Liberty Back",
+        "slug": "vicair-liberty-back-5614ac49",
+        "before_title": "VICAIR LIBERTY BACK | Vermeiren Polska",
+        "after_title": "VICAIR LIBERTY BACK | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12588,
+      12624
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 93,
+    "status": "held",
+    "products": [
+      {
+        "id": 12589,
+        "name": "VICAIR® ANATOMIC BACK",
+        "slug": "vicair-anatomic-back",
+        "before_title": "VICAIR ANATOMY BACK | Vermeiren Polska",
+        "after_title": "VICAIR ANATOMY BACK | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12625,
+        "name": "Vicair Anatomic back",
+        "slug": "vicair-anatomic-back-c2cf2d5e",
+        "before_title": "VICAIR ANATOMY BACK | Vermeiren Polska",
+        "after_title": "VICAIR ANATOMY BACK | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12589,
+      12625
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 94,
+    "status": "held",
+    "products": [
+      {
+        "id": 12590,
+        "name": "VICAIR® MULTIFUNCTIONAL BACK O2",
+        "slug": "vicair-multifunctional-back-o2",
+        "before_title": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+        "after_title": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+        "corrected": false
+      },
+      {
+        "id": 12626,
+        "name": "Vicair Multifunctional back",
+        "slug": "vicair-multifunctional-back",
+        "before_title": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+        "after_title": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      12590,
+      12626
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 95,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 12826,
+        "name": "WatchBP O3 AFIB Ambulatory",
+        "slug": "watchbp-o3-ambulatory-afib-1",
+        "before_title": "WatchBP O3 Ambulatory 24-hours blood pressure monitor - Microlife AG",
+        "after_title": "WatchBP O3 AFIB Ambulatory",
+        "corrected": true
+      },
+      {
+        "id": 12827,
+        "name": "WatchBP O3 Ambulatory",
+        "slug": "watchbp-o3-ambulatory-1",
+        "before_title": "WatchBP O3 Ambulatory 24-hours blood pressure monitor - Microlife AG",
+        "after_title": "WatchBP O3 Ambulatory",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  },
+  {
+    "group": 96,
+    "status": "held",
+    "products": [
+      {
+        "id": 13026,
+        "name": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+        "slug": "wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana",
+        "before_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+        "after_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+        "corrected": false
+      },
+      {
+        "id": 13064,
+        "name": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana",
+        "slug": "wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-sigvaris-106307",
+        "before_title": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana",
+        "after_title": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      13026,
+      13064
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 97,
+    "status": "held",
+    "products": [
+      {
+        "id": 13201,
+        "name": "Poduszka ortopedyczna profilowana „AloeVera Dream”",
+        "slug": "poduszka-ortopedyczna-profilowana-aloevera-dream",
+        "before_title": "Poduszka ortopedyczna profilowana „AloeVera Dream” - ARmedical",
+        "after_title": "Poduszka ortopedyczna profilowana „AloeVera Dream” - ARmedical",
+        "corrected": false
+      },
+      {
+        "id": 13246,
+        "name": "Poduszka ortopedyczna profilowana „AloeVera Dream”",
+        "slug": "poduszka-ortopedyczna-profilowanaaloevera-dream",
+        "before_title": "Poduszka ortopedyczna profilowana „AloeVera Dream” - ARmedical",
+        "after_title": "Poduszka ortopedyczna profilowana „AloeVera Dream” - ARmedical",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      13201,
+      13246
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 98,
+    "status": "held",
+    "products": [
+      {
+        "id": 13203,
+        "name": "Poduszka ortopedyczna profilowana „BAMBOO DREAM”",
+        "slug": "poduszka-ortopedyczna-profilowana-bamboo-dream-2",
+        "before_title": "Poduszka ortopedyczna profilowana „BAMBOO DREAM” - ARmedical",
+        "after_title": "Poduszka ortopedyczna profilowana „BAMBOO DREAM” - ARmedical",
+        "corrected": false
+      },
+      {
+        "id": 13204,
+        "name": "Poduszka ortopedyczna profilowana „BAMBOO DREAM”",
+        "slug": "poduszka-ortopedyczna-profilowana-bamboo-dream",
+        "before_title": "Poduszka ortopedyczna profilowana „BAMBOO DREAM” - ARmedical",
+        "after_title": "Poduszka ortopedyczna profilowana „BAMBOO DREAM” - ARmedical",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      13203,
+      13204
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 99,
+    "status": "held",
+    "products": [
+      {
+        "id": 13211,
+        "name": "Poduszka ortopedyczna tradycyjna „EXCLUSIVE DREAM”",
+        "slug": "poduszka-ortopedyczna-tradycyjna-exclusive-dream-2",
+        "before_title": "Poduszka ortopedyczna tradycyjna „EXCLUSIVE DREAM” - ARmedical",
+        "after_title": "Poduszka ortopedyczna tradycyjna „EXCLUSIVE DREAM” - ARmedical",
+        "corrected": false
+      },
+      {
+        "id": 13212,
+        "name": "Poduszka ortopedyczna tradycyjna „EXCLUSIVE DREAM”",
+        "slug": "poduszka-ortopedyczna-tradycyjna-exclusive-dream",
+        "before_title": "Poduszka ortopedyczna tradycyjna „EXCLUSIVE DREAM” - ARmedical",
+        "after_title": "Poduszka ortopedyczna tradycyjna „EXCLUSIVE DREAM” - ARmedical",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      13211,
+      13212
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 100,
+    "status": "held",
+    "products": [
+      {
+        "id": 13243,
+        "name": "Poduszka ortopedyczna lędźwiowa „EXCLUSIVE SUPPORT”",
+        "slug": "poduszka-ortopedyczna-ledzwiowaexclusive-support",
+        "before_title": "Poduszka ortopedyczna lędźwiowa „EXCLUSIVE SUPPORT” - ARmedical",
+        "after_title": "Poduszka ortopedyczna lędźwiowa „EXCLUSIVE SUPPORT” - ARmedical",
+        "corrected": false
+      },
+      {
+        "id": 13244,
+        "name": "Poduszka ortopedyczna lędźwiowa „EXCLUSIVE SUPPORT”",
+        "slug": "poduszka-ortopedyczna-ledzwiowa-exclusive-support",
+        "before_title": "Poduszka ortopedyczna lędźwiowa „EXCLUSIVE SUPPORT” - ARmedical",
+        "after_title": "Poduszka ortopedyczna lędźwiowa „EXCLUSIVE SUPPORT” - ARmedical",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      13243,
+      13244
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 101,
+    "status": "held",
+    "products": [
+      {
+        "id": 13717,
+        "name": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "slug": "dr-max-plyn-do-mycia-szyb-przeciw-parowaniu-500-ml",
+        "before_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "after_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "corrected": false
+      },
+      {
+        "id": 13718,
+        "name": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "slug": "dr-max-plyn-do-mycia-szyb-przeciw-parowaniu-zielony-500-ml",
+        "before_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "after_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      13717,
+      13718
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 102,
+    "status": "held",
+    "products": [
+      {
+        "id": 14106,
+        "name": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "slug": "matovlies-niejalowe-kompresy-z-wlokniny-100-szt",
+        "before_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "after_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "corrected": false
+      },
+      {
+        "id": 14279,
+        "name": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "slug": "kompresy-z-wlokniny-matovlies-niejalowe-100-sztuk",
+        "before_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "after_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "corrected": false
+      }
+    ],
+    "note": "Brak pewnego rozróżnienia albo sprzeczne pola. Bez łączenia produktów, przekierowań i dopisywania domyślnych wariantów.",
+    "unchanged_product_ids": [
+      14106,
+      14279
+    ],
+    "identity_review_required": true
+  },
+  {
+    "group": 103,
+    "status": "resolved",
+    "products": [
+      {
+        "id": 14652,
+        "name": "Poduszka pozycjonująca Klé - profilaktyka przeciwodleżynowa, dobre podparcie ciała - poduszka do siedzenia (Kwadrat 410185)",
+        "slug": "herdegen-poduszka-pozycjonujaca-kle-profilaktyka-przeciwodlezynowa-dobre-podparcie-ciala-poduszka-do-siedzenia-kwadrat-410185-041f3bdfd096",
+        "before_title": "Poduszka pozycjonująca Klé - profilaktyka przeciwodleżynowa,",
+        "after_title": "Poduszka pozycjonująca Klé – Kwadrat 410185 – Herdegen",
+        "corrected": true
+      },
+      {
+        "id": 14657,
+        "name": "Poduszka pozycjonująca Klé - profilaktyka przeciwodleżynowa, odciążenie ciała, utrzymanie pozycji półbocznej - łatwo zmywalny pokrowiec (Cylinder S)",
+        "slug": "herdegen-poduszka-pozycjonujaca-kle-profilaktyka-przeciwodlezynowa-odciazenie-ciala-utrzymanie-pozycji-polbocznej-latwo-zmywalny-pokrow-1c00927e176f",
+        "before_title": "Poduszka pozycjonująca Klé - profilaktyka przeciwodleżynowa,",
+        "after_title": "Poduszka pozycjonująca Klé – Cylinder S – Herdegen",
+        "corrected": true
+      },
+      {
+        "id": 14685,
+        "name": "Poduszka pozycjonująca Klé - profilaktyka przeciwodleżynowa, dobre podparcie głowy, odciążenie kończyn - nieprzemakalny pokrowiec (Klassik)",
+        "slug": "herdegen-poduszka-pozycjonujaca-kle-profilaktyka-przeciwodlezynowa-dobre-podparcie-glowy-odciazenie-konczyn-nieprzemakalny-pokrowiec-kl-ab1fbff74eb0",
+        "before_title": "Poduszka pozycjonująca Klé - profilaktyka przeciwodleżynowa,",
+        "after_title": "Poduszka pozycjonująca Klé – Klassik – Herdegen",
+        "corrected": true
+      },
+      {
+        "id": 14697,
+        "name": "Poduszka pozycjonująca Klé - profilaktyka przeciwodleżynowa, odciążenie ciała, dobre podparcie pleców, ramion i lędźwi - nieprzemakalny pokrowiec (Półksiężyc)",
+        "slug": "herdegen-poduszka-pozycjonujaca-kle-profilaktyka-przeciwodlezynowa-odciazenie-ciala-dobre-podparcie-plecow-ramion-i-ledzwi-nieprzemakal-ff4374135c55",
+        "before_title": "Poduszka pozycjonująca Klé - profilaktyka przeciwodleżynowa,",
+        "after_title": "Poduszka pozycjonująca Klé – Półksiężyc – Herdegen",
+        "corrected": true
+      }
+    ],
+    "note": "Wspierane danymi rozróżnienie tytułów.",
+    "unchanged_product_ids": [],
+    "identity_review_required": false
+  }
+]

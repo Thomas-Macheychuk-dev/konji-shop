@@ -89,7 +89,7 @@ it('round trips a 2688 variant product through a serialized cache without model 
     expect($expectedPayload['is_purchasable'])->toBeTrue();
 
     $cache = app(StorefrontCache::class);
-    $key = $cache->versionedKey(StorefrontCache::NAMESPACE_CATALOGUE, 'product-page.v8.https://staging.ortezka.pl.'.$product->id);
+    $key = $cache->versionedKey(StorefrontCache::NAMESPACE_CATALOGUE, 'product-page.v9.https://staging.ortezka.pl.'.$product->id);
     $snapshot = Cache::store('array')->get($key);
     expect($snapshot)->toBeArray();
     $assertPlainData = function ($item) use (&$assertPlainData): void {
