@@ -102,3 +102,21 @@ it('accepts the frozen reviewed copy and preserves explicit holds for conflictin
     expect($entries->get(13985)['after']['seo_description'])->not->toContain('cynku');
     expect($entries->get(14060)['after']['seo_description'])->not->toContain('cynku');
 });
+
+
+it('rejects a reviewed title that collides with an untargeted active product', function (): void {
+    [$products, $manifest] = editorialFixture();
+    Product::query()->create(['name' => 'Other', 'slug' => 'editorial-untargeted', 'status' => ProductStatus::ACTIVE, 'seo_title' => 'Shared reviewed title', 'seo_description' => 'Existing authored description.']);
+    $manifest['entries'][0]['after']['seo_title'] = 'Shared reviewed title';
+    expect(fn () => (new ProductSeoEditorialRepair($manifest))->plan())->toThrow(RuntimeException::class, 'introduce a collision');
+    expect($products[0]->fresh()->seo_title)->toBe($manifest['entries'][0]['expected']['seo_title']);
+});
+
+it('rejects tampered original timestamps before applying the repair', function (): void {
+    [$products, $manifest] = editorialFixture();
+    $repair = new ProductSeoEditorialRepair($manifest);
+    $plan = $repair->plan();
+    $plan['operations'][0]['before']['updated_at'] = '2000-01-01 00:00:00';
+    expect(fn () => $repair->apply($plan))->toThrow(RuntimeException::class, 'Tampered backup');
+    expect($products[0]->fresh()->seo_description)->toBe($manifest['entries'][0]['expected']['seo_description']);
+});

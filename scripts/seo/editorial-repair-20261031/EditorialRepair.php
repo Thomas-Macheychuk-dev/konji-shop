@@ -94,6 +94,13 @@ final class ProductSeoEditorialRepair
             $groups[mb_strtolower(ProductSeoMetadata::plain($title))][] = $id;
         }
 
+        foreach ($this->manifest['entries'] as $entry) {
+            if ($entry['after']['seo_title'] !== $entry['expected']['seo_title']
+                && count($groups[mb_strtolower(ProductSeoMetadata::plain($entry['after']['seo_title']))] ?? []) > 1) {
+                throw new RuntimeException('Reviewed title would introduce a collision: '.$entry['id']);
+            }
+        }
+
         return [
             'repair' => self::REPAIR, 'manifest_sha256' => hash('sha256', json_encode($this->manifest, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR)),
             'source_sha256' => hash_final($hash), 'operations' => $operations,
@@ -138,6 +145,9 @@ final class ProductSeoEditorialRepair
             }
             // Re-derive the writable values from the reviewed manifest inside the transaction.
             foreach ($live['operations'] as $index => $operation) {
+                if ($operation['before'] !== $plan['operations'][$index]['before']) {
+                    throw new RuntimeException('Tampered backup values.');
+                }
                 $after = $operation['after'];
                 $after['updated_at'] = $plan['operations'][$index]['after']['updated_at'];
                 if (DB::table('products')->where('id', $operation['id'])->update($after) !== 1) {
