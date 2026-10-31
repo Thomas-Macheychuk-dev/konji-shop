@@ -43,8 +43,8 @@ final class ProductSeoMetadata
     {
         $text = self::plain($text);
         $text = preg_replace('/\s*[|–—-]\s*(?:medi\s+)?sklep\s+internetowy\b.*$/iu', '', $text) ?? '';
-        $text = preg_replace('/galeria\s*zdrowia(?:\.pl)?|seni24(?:\.pl)?/iu', '', $text) ?? '';
         $text = preg_replace('~\b(?:https?://)?(?:www\.)?[\pL\d-]+(?:\.[\pL\d-]+)*\.(?:pl|com|eu|net|org|de|cz|nl|uk|shop|store)(?:/\S*)?~iu', '', $text) ?? '';
+        $text = preg_replace('/galeria\s*zdrowia(?:\.pl)?|seni24(?:\.pl)?/iu', '', $text) ?? '';
 
         return trim(preg_replace('/[\s|–—-]+$/u', '', self::plain($text)) ?? '');
     }
