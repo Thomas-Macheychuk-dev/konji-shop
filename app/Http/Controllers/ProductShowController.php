@@ -45,11 +45,53 @@ class ProductShowController extends Controller
             : $this->cache->rememberVersioned(
                 StorefrontCache::NAMESPACE_CATALOGUE,
                 $this->productPageCacheKey($product),
-                fn (): array => $this->buildViewData($product->fresh() ?? $product, false),
+                fn (): array => $this->cacheableViewData($product->fresh() ?? $product),
                 $this->cache->productPageTtlSeconds(),
             );
 
+        if (! $isAdminPreview) {
+            $viewData = $this->restoreViewData($viewData);
+        }
+
         return view('pages.products.show', $viewData);
+    }
+
+    /**
+     * Cache scalar snapshots rather than serializing thousands of related
+     * Eloquent models. Only the product, its images and default variant are
+     * needed as models by the Blade view; configurator data is already arrays.
+     *
+     * @return array<string, mixed>
+     */
+    private function cacheableViewData(Product $product): array
+    {
+        $data = $this->buildViewData($product, false);
+        $data['product'] = [
+            'attributes' => $product->getAttributes(),
+            'images' => $product->images->map(fn (ProductImage $image): array => $image->getAttributes())->all(),
+            'attributeValueImages' => $product->attributeValueImages->map(fn (ProductAttributeValueImage $image): array => $image->getAttributes())->all(),
+        ];
+        $data['defaultVariant'] = $data['defaultVariant']?->getAttributes();
+
+        return $data;
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    private function restoreViewData(array $data): array
+    {
+        $snapshot = $data['product'];
+        $product = (new Product)->newFromBuilder($snapshot['attributes']);
+        $product->setRelation('images', ProductImage::hydrate($snapshot['images']));
+        $product->setRelation('attributeValueImages', ProductAttributeValueImage::hydrate($snapshot['attributeValueImages']));
+        $data['product'] = $product;
+        $data['defaultVariant'] = $data['defaultVariant'] === null
+            ? null
+            : (new ProductVariant)->newFromBuilder($data['defaultVariant']);
+
+        return $data;
     }
 
     /**
@@ -132,7 +174,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v6.%s.%d',
+            'product-page.v7.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
