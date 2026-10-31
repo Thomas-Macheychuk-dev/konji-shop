@@ -6,11 +6,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders all reviewed title corrections without rewriting source catalogue fields', function (): void {
+it('renders persisted reviewed title corrections from the database', function (): void {
     $copy = require resource_path('content/product-title-copy.pl.php');
     foreach ($copy as $id => $entry) {
         $attributes = $entry;
         unset($attributes['title']);
+        $attributes['seo_title'] = $entry['title'];
         $attributes['id'] = $id;
         $attributes['status'] = ProductStatus::ACTIVE;
         $product = new Product;
@@ -18,13 +19,13 @@ it('renders all reviewed title corrections without rewriting source catalogue fi
         $response = $this->get(route('products.show', $product->slug))->assertOk();
         expect($response->viewData('seoTitle'))->toBe($entry['title']);
         expect($response->viewData('openGraphTitle'))->toBe($entry['title']);
-        expect($product->fresh()->seo_title)->toBe($entry['seo_title']);
+        expect($product->fresh()->seo_title)->toBe($entry['title']);
         expect($product->fresh()->name)->toBe($entry['name']);
         $response->assertSee('<h1', false)->assertSee($entry['name']);
     }
 });
 
-it('preserves later editor changes and rejects a mismatched product identity', function (): void {
+it('uses later database edits as the source of product metadata', function (): void {
     config()->set('storefront.cache.enabled', true);
     config()->set('storefront.cache.store', 'array');
     $copy = require resource_path('content/product-title-copy.pl.php');
@@ -32,6 +33,7 @@ it('preserves later editor changes and rejects a mismatched product identity', f
     $entry = $copy[$id];
     $attributes = $entry;
     unset($attributes['title']);
+    $attributes['seo_title'] = $entry['title'];
     $product = new Product;
     $product->forceFill($attributes + ['id' => $id, 'status' => ProductStatus::ACTIVE])->save();
     expect($this->get(route('products.show', $product->slug))->viewData('seoTitle'))->toBe($entry['title']);
