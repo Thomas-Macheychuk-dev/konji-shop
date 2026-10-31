@@ -1,6 +1,7 @@
 @extends('layouts.storefront')
 
 @section('content')
+    @php($descriptionParagraphs = preg_split('/\R\s*\R/u', strip_tags($categoryDescription ?? ''), -1, PREG_SPLIT_NO_EMPTY))
     <x-storefront.category-page-shell>
     <section class="border-b border-slate-200 bg-white">
         <div class="mx-auto max-w-[1480px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
@@ -21,9 +22,9 @@
                         {{ $category->name }}
                     </h1>
 
-                    @if (filled($category->description))
+                    @if (filled($categoryDescription))
                         <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
-                            {{ strip_tags($category->description) }}
+                            {{ $descriptionParagraphs[0] ?? '' }}
                         </p>
                     @endif
                 </div>
@@ -100,5 +101,15 @@
             @endif
         </div>
     </section>
+    @if ($products->currentPage() === 1 && count($descriptionParagraphs) > 1)
+        <section class="border-t border-slate-200 bg-white" aria-label="Informacje o kategorii">
+            <div class="mx-auto max-w-[1480px] space-y-4 px-4 py-10 sm:px-6 lg:px-8">
+                <h2 class="text-xl font-bold text-slate-950">{{ $category->name }} — informacje przed wyborem</h2>
+                @foreach (array_slice($descriptionParagraphs, 1) as $paragraph)
+                    <p class="max-w-4xl text-sm leading-7 text-slate-600">{{ $paragraph }}</p>
+                @endforeach
+            </div>
+        </section>
+    @endif
     </x-storefront.category-page-shell>
 @endsection

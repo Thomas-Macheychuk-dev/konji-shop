@@ -174,7 +174,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v7.%s.%d',
+            'product-page.v8.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -187,10 +187,7 @@ class ProductShowController extends Controller
 
     private function seoTitle(Product $product): string
     {
-        return $this->limitText(
-            $product->seo_title ?: $product->name,
-            70
-        );
+        return Str::squish(strip_tags($product->seo_title ?: $product->name));
     }
 
     private function seoDescription(Product $product): string
