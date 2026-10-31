@@ -69,6 +69,7 @@ jobs:
           bash -n scripts/deploy/sync-product-seo-database-20261031.sh
           bash -n scripts/seo/product-database-20261031/repair.sh
           python3 tests/Fixtures/Deployment/test-product-seo-database-patch.py
+          python3 scripts/seo/editorial-review-20261031/test_download.py
 
       - name: Run Tests
         run: ./vendor/bin/pest
