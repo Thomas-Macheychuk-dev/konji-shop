@@ -119,7 +119,15 @@ final class CategoryProductIndexController extends Controller
         $products->withPath($categoryUrl);
 
         $seoTitle = $this->limitText($category->seo_title ?: $category->name, 70);
-        $seoDescription = $this->seoDescription($category);
+        $editorialCopy = require resource_path('content/category-copy.pl.php');
+        $copy = $editorialCopy[$category->slug] ?? [];
+        if (($copy['name'] ?? null) !== $category->name) {
+            $copy = [];
+        }
+        $categoryDescription = filled($category->description)
+            ? $category->description
+            : ($copy['description'] ?? null);
+        $seoDescription = $this->seoDescription($category, $categoryDescription, $copy['meta'] ?? null);
         $canonicalUrl = $page > 1
             ? route('categories.show', ['category' => $category->slug, 'page' => $page])
             : $categoryUrl;
@@ -131,6 +139,7 @@ final class CategoryProductIndexController extends Controller
 
         return view('pages.categories.show', [
             'category' => $category,
+            'categoryDescription' => $categoryDescription,
             'breadcrumbCategories' => $breadcrumbCategories,
             'products' => $products,
             'seoTitle' => $seoTitle,
@@ -192,9 +201,10 @@ final class CategoryProductIndexController extends Controller
         ];
     }
 
-    private function seoDescription(Category $category): string
+    private function seoDescription(Category $category, ?string $description, ?string $editorialMeta): string
     {
-        $description = $category->seo_description ?: $category->description;
+        $description = $category->seo_description
+            ?: (filled($category->description) ? $category->description : ($editorialMeta ?: $description));
 
         if (! filled($description)) {
             $description = 'Przeglądaj kategorię '.$category->name.'. Sprawdź produkty, dostępne warianty i szczegóły oferty.';
