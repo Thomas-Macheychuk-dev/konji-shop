@@ -35,6 +35,7 @@ it('rebuilds foreign shop price and shipping promises without inventing stock or
     expect($result['after']['seo_title'])->toBe('Model ABC');
     expect($result['after']['seo_description'])->toContain('Poduszka model ABC');
     expect($result['after']['seo_description'])->not->toContain('12,99', 'Seni24', '24h', 'Darmowa', 'InStock');
+    expect(ProductSeoMetadata::cleanTitle('Model ABC - GaleriaZdrowia.com'))->toBe('Model ABC');
     expect(ProductSeoMetadata::foreignReference('Sprawdź produkt w Ortezka.pl.'))->toBeFalse();
     expect(ProductSeoMetadata::foreignReference('Sprawdź produkt w GaleriaZdrowia.pl'))->toBeTrue();
 });
