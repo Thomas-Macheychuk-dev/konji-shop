@@ -174,7 +174,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v9.%s.%d',
+            'product-page.v10.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -187,25 +187,16 @@ class ProductShowController extends Controller
 
     private function seoTitle(Product $product): string
     {
-        $reviewedTitles = require resource_path('content/product-title-copy.pl.php');
-        $copy = $reviewedTitles[$product->getKey()] ?? null;
-
-        if ($copy !== null) {
-            foreach (['name', 'slug', 'external_source', 'external_id', 'seo_title'] as $field) {
-                if ($product->getAttribute($field) !== $copy[$field]) {
-                    $copy = null;
-                    break;
-                }
-            }
-        }
-
-        return Str::squish(strip_tags($copy['title'] ?? ($product->seo_title ?: $product->name)));
+        return Str::squish(strip_tags($product->seo_title ?: $product->name));
     }
 
     private function seoDescription(Product $product): string
     {
-        $description = $product->seo_description
-            ?: $product->short_description
+        if (filled($product->seo_description)) {
+            return Str::squish(strip_tags($product->seo_description));
+        }
+
+        $description = $product->short_description
                 ?: $product->description
                     ?: $product->name;
 

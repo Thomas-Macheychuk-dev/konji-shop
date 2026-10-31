@@ -66,6 +66,9 @@ jobs:
           python3 tests/Fixtures/Deployment/test-seo-content-patch.py
           bash -n scripts/deploy/sync-reviewed-seo-20261031.sh
           python3 tests/Fixtures/Deployment/test-reviewed-seo-patch.py
+          bash -n scripts/deploy/sync-product-seo-database-20261031.sh
+          bash -n scripts/seo/product-database-20261031/repair.sh
+          python3 tests/Fixtures/Deployment/test-product-seo-database-patch.py
 
       - name: Run Tests
         run: ./vendor/bin/pest
