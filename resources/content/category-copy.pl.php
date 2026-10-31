@@ -247,4 +247,172 @@ Sprawdź wymiary, materiał, liczbę warstw lub sztuk oraz oznaczenie sterylnoś
 
 Sprawdź postać produktu, pojemność oraz to, czy jest gotowy do użycia, czy wymaga przygotowania. Czas działania i zasady bezpiecznego stosowania odczytaj z dokumentacji konkretnego preparatu. Nazwa działu nie oznacza, że każdy środek nadaje się do wszystkich zastosowań.',
     ],
+    'treski-i-dopinki' => [
+        'name' => 'Treski i dopinki',
+        'meta' => 'Treski i dopinki do włosów: porównaj rodzaj włókna, długość i mocowanie. Sprawdź odcień oraz zasady pielęgnacji wybranego modelu.',
+        'description' => 'Treski i dopinki różnią się długością, objętością oraz sposobem mocowania. Porównując produkty, sprawdź, czy dany model jest zakładany na klips, grzebyk, gumkę czy inne zapięcie opisane w karcie.
+
+Odcień dobieraj według oznaczenia producenta, uwzględniając także pasemka i odrost. Włókno syntetyczne i włosy naturalne mogą wymagać innych kosmetyków oraz metod stylizacji. Informację o dopuszczalnej temperaturze sprawdzaj dla konkretnego modelu, zamiast zakładać ją na podstawie rodzaju fryzury.',
+    ],
+    'treski-syntetyczne' => [
+        'name' => 'Treski syntetyczne',
+        'meta' => 'Treski syntetyczne: sprawdź długość, strukturę włókna, kolor i zapięcie. Porównaj instrukcje mycia, suszenia oraz stylizacji.',
+        'description' => 'Wybierając treskę syntetyczną, porównaj długość, strukturę fryzury i rodzaj zapięcia. W karcie produktu znajdziesz oznaczenie koloru oraz informacje o konstrukcji konkretnego modelu.
+
+Nie każde włókno syntetyczne nadaje się do stylizacji na ciepło. Przed użyciem urządzeń sprawdź instrukcję i podany zakres temperatury, jeśli producent go określa. Kosmetyki oraz sposób rozczesywania dobieraj do włókna i wykończenia treski.',
+    ],
+    'toppery-naturalne' => [
+        'name' => 'Toppery naturalne',
+        'meta' => 'Toppery naturalne: porównaj rozmiary bazy, długości, kolory i mocowanie. Sprawdź informacje o włosach oraz pielęgnacji modelu.',
+        'description' => 'Przy topperze z włosów naturalnych ważne są wymiary bazy, jej konstrukcja i rozmieszczenie mocowań. Długość włosów oraz kolor porównuj według oznaczenia konkretnego modelu.
+
+Sprawdź, jaki obszar obejmuje baza i czy sposób zakładania odpowiada Twoim potrzebom. Naturalne włosy również mają określone zasady pielęgnacji oraz stylizacji. Informacje o myciu, suszeniu i doborze kosmetyków odczytaj z zaleceń dla wybranego toppera.',
+    ],
+    'toppery-syntetyczne' => [
+        'name' => 'Toppery syntetyczne',
+        'meta' => 'Toppery syntetyczne w różnych długościach i kolorach. Porównaj konstrukcję bazy, mocowania oraz informacje o rodzaju włókna.',
+        'description' => 'Toppery syntetyczne porównuj według rozmiaru bazy i jej konstrukcji. W karcie modelu sprawdzisz mocowania, długość fryzury oraz dostępne kolory z oznaczeniami producenta.
+
+Zwróć uwagę na rodzaj włókna i dopuszczalne sposoby stylizacji. Informacja o odporności na temperaturę musi dotyczyć konkretnego modelu. Kosmetyki i akcesoria wybieraj według zgodności z włóknem, a pielęgnację prowadź zgodnie z instrukcją toppera.',
+    ],
+    'turbany' => [
+        'name' => 'Turbany',
+        'meta' => 'Turbany: porównaj kroje, kolory i skład tkanin. Sprawdź wymiary, możliwość regulacji oraz zasady prania danego modelu.',
+        'description' => 'Turbany występują w różnych fasonach i wykończeniach. Porównaj sposób zakładania, skład tkaniny i informacje o rozmiarze, zamiast kierować się wyłącznie zdjęciem produktu.
+
+Sprawdź, czy model ma stały kształt, wiązanie czy dodatkowe elementy do ułożenia. Warianty kolorów odczytaj z karty produktu. Zasady prania i suszenia mogą różnić się w zależności od tkaniny oraz ozdobnych wykończeń.',
+    ],
+    'peruki-meskie' => [
+        'name' => 'Peruki męskie',
+        'meta' => 'Peruki męskie: porównaj fryzury, kolory, rodzaje włosów i konstrukcje czepka. Sprawdź rozmiar oraz sposób mocowania modelu.',
+        'description' => 'Peruki męskie porównuj według rodzaju włosów, długości oraz konstrukcji czepka. W karcie modelu sprawdzisz dostępne kolory i informacje o wykończeniu linii włosów.
+
+Przed wyborem zweryfikuj rozmiar i zakres regulacji. Sposób zakładania oraz ewentualne akcesoria do mocowania zależą od konstrukcji peruki. Kosmetyki i stylizację dobieraj do rodzaju włosów oraz zasad podanych przez producenta.',
+    ],
+    'peruki-dzieciece' => [
+        'name' => 'Peruki dziecięce',
+        'meta' => 'Peruki dziecięce: sprawdź rozmiar czepka, regulację, rodzaj włosów i kolory. Porównaj konstrukcje oraz zasady pielęgnacji modeli.',
+        'description' => 'W kategorii peruk dziecięcych porównuj przede wszystkim rozmiar i konstrukcję czepka. Sama nazwa działu nie określa obwodu, dlatego sprawdź wymiary i możliwości regulacji konkretnego modelu.
+
+Porównaj rodzaj włosów, długość i sposób wykończenia fryzury. Odcienie oraz dostępne warianty znajdziesz w karcie produktu. Dobór akcesoriów do mocowania i pielęgnacji powinien odpowiadać konstrukcji oraz instrukcji wybranej peruki.',
+    ],
+    'polperuki' => [
+        'name' => 'Półperuki',
+        'meta' => 'Półperuki: porównaj zakres pokrycia, konstrukcję bazy i mocowanie. Sprawdź rodzaj włosów, długość oraz dostępne odcienie.',
+        'description' => 'Półperuki mają inny zakres pokrycia niż pełne peruki. W karcie produktu sprawdź konstrukcję bazy, sposób zakładania i mocowania oraz wymiary konkretnego modelu.
+
+Przy łączeniu z własnymi włosami porównaj długość, strukturę fryzury i oznaczenie koloru. Zwróć uwagę na to, które akcesoria są potrzebne do mocowania. Mycie, rozczesywanie i stylizację dobieraj do rodzaju włosów oraz zaleceń producenta.',
+    ],
+    'tupety' => [
+        'name' => 'Tupety',
+        'meta' => 'Tupety do włosów: porównaj wielkość bazy, długości, kolory i sposoby mocowania. Sprawdź konstrukcję oraz instrukcję pielęgnacji.',
+        'description' => 'Tupety porównuj według wymiarów i konstrukcji bazy, rodzaju włosów oraz sposobu mocowania. Poszczególne modele mogą obejmować różne obszary i wymagać innych akcesoriów.
+
+Przed wyborem sprawdź długość, strukturę włosów i oznaczenia kolorów. Taśmy, kleje i preparaty dobieraj według zgodności z bazą oraz instrukcji ich producenta. Zasady zdejmowania, mycia i pielęgnacji odczytaj z dokumentacji wybranego systemu.',
+    ],
+    'kosmetyki-do-peruk' => [
+        'name' => 'Kosmetyki do peruk',
+        'meta' => 'Kosmetyki do peruk i systemów włosów. Porównaj przeznaczenie, rodzaj włókna, pojemność oraz sposób użycia preparatu.',
+        'description' => 'Kosmetyki do peruk dobieraj według rodzaju włosów i przeznaczenia konkretnego preparatu. Szampon, odżywka i produkt do stylizacji mają inne zadania oraz mogą mieć odmienne instrukcje.
+
+Sprawdź zgodność z włóknem syntetycznym lub włosami naturalnymi, pojemność i sposób aplikacji. Nie zakładaj, że kosmetyk odpowiedni do jednej peruki będzie właściwy dla wszystkich systemów. Informacje o spłukiwaniu i suszeniu odczytaj z etykiety produktu.',
+    ],
+    'kleje-i-plyny' => [
+        'name' => 'Kleje i płyny',
+        'meta' => 'Kleje i płyny do systemów włosów. Sprawdź przeznaczenie, zgodność z bazą, pojemność oraz instrukcje aplikacji i usuwania.',
+        'description' => 'Kleje i płyny do systemów włosów porównuj według funkcji wskazanej przez producenta. Preparat do mocowania, oczyszczania lub usuwania kleju nie jest automatycznie zamiennikiem pozostałych produktów.
+
+Sprawdź zgodność z rodzajem bazy i akcesoriami oraz wymagany sposób przygotowania. Czas aplikacji, zdejmowanie i ograniczenia użytkowania odczytaj z etykiety konkretnego preparatu. Przed zakupem upewnij się, jaka pojemność i postać produktu są objęte ofertą.',
+    ],
+    'obuwie-medyczne' => [
+        'name' => 'Obuwie medyczne',
+        'meta' => 'Obuwie medyczne do pracy: porównaj fasony, rozmiary i materiały. Sprawdź wkładki, zapięcia oraz zasady czyszczenia modelu.',
+        'description' => 'Obuwie medyczne obejmuje modele o różnych fasonach, zapięciach i konstrukcjach podeszwy. Porównując produkty, sprawdź materiał cholewki, długość wkładki i oferowane warianty rozmiaru.
+
+Zwróć uwagę na informacje o wkładce oraz zasadach czyszczenia. Właściwości takie jak możliwość sterylizacji czy konkretna norma muszą być potwierdzone dla danego modelu. Nie wynikają automatycznie z umieszczenia obuwia w tej kategorii.',
+    ],
+    'obuwie-scholl' => [
+        'name' => 'Obuwie Scholl',
+        'meta' => 'Obuwie Scholl: porównaj fasony, kolory, rozmiary i rodzaje wkładek. Sprawdź materiał, zapięcia oraz informacje o pielęgnacji.',
+        'description' => 'Modele obuwia Scholl porównuj według fasonu, konstrukcji podeszwy i rodzaju wkładki. W karcie konkretnego produktu sprawdzisz wariant koloru, rozmiary oraz informacje o cholewce.
+
+Numeracja i rozwiązania regulacyjne mogą różnić się między seriami. Przed wyborem porównaj długość wkładki, zapięcia i zasady czyszczenia. Właściwości materiałów odczytaj z opisu danego modelu, zamiast przenosić je z innego produktu tej samej marki.',
+    ],
+    'buty-chlopiece' => [
+        'name' => 'Buty chłopięce',
+        'meta' => 'Buty chłopięce: porównaj długości wkładek, fasony i zapięcia. Sprawdź materiały, wariant rozmiaru oraz zasady czyszczenia.',
+        'description' => 'Buty chłopięce możesz porównać według fasonu i sposobu zapięcia. W karcie modelu sprawdzisz materiał, dostępne rozmiary i informacje o długości wkładki.
+
+Przy wyborze uwzględnij wymiary podane przez producenta oraz miejsce potrzebne wewnątrz konkretnego buta. Sam numer rozmiaru nie musi być jednakowy między seriami. Porównaj też rodzaj podeszwy i zasady pielęgnacji odpowiednie dla zastosowanych materiałów.',
+    ],
+    'buty-dziewczece' => [
+        'name' => 'Buty dziewczęce',
+        'meta' => 'Buty dziewczęce: sprawdź długość wkładki, fason, materiał i zapięcia. Porównaj rozmiary i kolory poszczególnych modeli.',
+        'description' => 'Buty dziewczęce różnią się fasonem, wysokością cholewki i sposobem zapinania. Wybór modelu zacznij od porównania wymiarów oraz informacji o wkładce podanych przez producenta.
+
+Sprawdź materiał, rodzaj podeszwy i możliwość regulacji zapięcia. Dostępne kolory i rozmiary mogą zależeć od serii. Pielęgnację dobieraj do materiału konkretnego buta, a nie wyłącznie do jego wyglądu na zdjęciu.',
+    ],
+    'bluzy-medyczne-damskie' => [
+        'name' => 'Bluzy medyczne damskie',
+        'meta' => 'Damskie bluzy medyczne: porównaj krój, dekolt, kieszenie i tkaniny. Sprawdź tabelę wymiarów oraz kolory wybranego modelu.',
+        'description' => 'Damskie bluzy medyczne porównuj według kroju, dekoltu i układu kieszeni. W karcie modelu sprawdzisz wariant koloru, skład tkaniny i oferowane rozmiary.
+
+Przy dopasowaniu korzystaj z wymiarów konkretnego producenta, zwłaszcza obwodów i długości bluzy. Jeśli kompletujesz zestaw, sprawdź serię oraz oznaczenie koloru spodni. Zasady prania i suszenia odczytaj z informacji dotyczących danego ubrania.',
+    ],
+    'bluzy-medyczne-meskie' => [
+        'name' => 'Bluzy medyczne męskie',
+        'meta' => 'Męskie bluzy medyczne: sprawdź fason, kieszenie, skład tkaniny i rozmiary. Porównaj długości oraz dostępne warianty kolorów.',
+        'description' => 'Męskie bluzy medyczne różnią się fasonem, sposobem wykończenia dekoltu i rozmieszczeniem kieszeni. Porównaj wymiary, skład materiału oraz dostępne kolory konkretnej serii.
+
+Przed wyborem sprawdź długość bluzy i rękawa oraz zakres obwodów w tabeli producenta. Przy zestawie ze spodniami zwróć uwagę na zgodność kolekcji i oznaczenia koloru. Informacje o pielęgnacji odnoszą się do konkretnej tkaniny i modelu.',
+    ],
+    'spodnie-medyczne-damskie' => [
+        'name' => 'Spodnie medyczne damskie',
+        'meta' => 'Damskie spodnie medyczne: porównaj nogawki, pas, kieszenie i długość. Sprawdź skład materiału oraz tabelę wymiarów producenta.',
+        'description' => 'Damskie spodnie medyczne możesz porównać według fasonu nogawek, konstrukcji pasa i rozmieszczenia kieszeni. Dostępne kolory oraz rozmiary sprawdzisz w karcie wybranego modelu.
+
+Zwróć uwagę na obwody, długość nogawki i zakres regulacji pasa. Kompletując strój, porównaj oznaczenia kolekcji i koloru bluzy oraz spodni. Skład tkaniny i zasady prania sprawdzaj dla danego ubrania, ponieważ mogą różnić się między seriami.',
+    ],
+    'spodnie-medyczne-meskie' => [
+        'name' => 'Spodnie medyczne męskie',
+        'meta' => 'Męskie spodnie medyczne: sprawdź krój nogawek, regulację pasa i kieszenie. Porównaj długości, materiały oraz rozmiary modeli.',
+        'description' => 'Męskie spodnie medyczne różnią się krojem, długością i sposobem regulacji pasa. W opisie modelu sprawdzisz układ kieszeni, skład tkaniny i dostępne warianty.
+
+Porównaj wymiary z tabelą producenta, zwracając uwagę także na długość nogawki. Dobierając spodnie do bluzy, sprawdź serię i kolor obu elementów. Pielęgnację oraz temperaturę prania odczytaj z informacji dla konkretnego materiału.',
+    ],
+    'tuniki-medyczne' => [
+        'name' => 'Tuniki',
+        'meta' => 'Tuniki medyczne: porównaj długości, fasony, zapięcia i kieszenie. Sprawdź skład tkaniny, kolory oraz tabelę rozmiarów modelu.',
+        'description' => 'Tuniki porównuj według długości, kroju oraz sposobu zakładania lub zapinania. W karcie produktu sprawdzisz skład materiału, kieszenie i oferowane kolory.
+
+Przed wyborem zweryfikuj obwody i długość w tabeli producenta. Zwróć uwagę na to, czy dany model jest opisany jako samodzielne ubranie, czy element zestawu. Warunki prania i suszenia zależą od konkretnego materiału oraz wykończenia tuniki.',
+    ],
+    'koszulki-medyczne' => [
+        'name' => 'Koszulki',
+        'meta' => 'Koszulki do odzieży zawodowej: sprawdź fason, rękawy i skład materiału. Porównaj kolory, wymiary oraz instrukcje pielęgnacji.',
+        'description' => 'Koszulki w dziale odzieży zawodowej porównuj według kroju, dekoltu i długości rękawów. Dostępne kolory oraz rozmiary znajdziesz w karcie konkretnego modelu.
+
+Sprawdź skład tkaniny, długość i obwody w tabeli producenta. Dobierając koszulkę do pozostałych elementów stroju, uwzględnij krój i oznaczenie koloru. Zasady prania i suszenia odczytaj z informacji dla wybranego ubrania.',
+    ],
+    'fartuchy-medyczne-damskie' => [
+        'name' => 'Fartuchy medyczne damskie',
+        'meta' => 'Damskie fartuchy medyczne: porównaj krój, długości, zapięcia i kieszenie. Sprawdź tkaninę, tabelę rozmiarów oraz zasady prania.',
+        'description' => 'Damskie fartuchy medyczne różnią się długością, fasonem i sposobem zapinania. W opisie modelu sprawdzisz rozmieszczenie kieszeni, wykończenie rękawów oraz skład tkaniny.
+
+Przed wyborem porównaj wymiary producenta z preferowanym dopasowaniem. Zwróć uwagę na informacje o pielęgnacji i temperaturze prania. Właściwości konkretnej tkaniny nie muszą odnosić się do wszystkich fartuchów w tej podkategorii.',
+    ],
+    'fartuchy-medyczne-meskie' => [
+        'name' => 'Fartuchy medyczne męskie',
+        'meta' => 'Męskie fartuchy medyczne: sprawdź fason, długość, rękawy i kieszenie. Porównaj rozmiary, skład tkaniny oraz sposób zapięcia.',
+        'description' => 'Męskie fartuchy medyczne porównuj według długości, kroju i zapięcia. Informacje o kieszeniach, rękawach, materiale oraz dostępnych rozmiarach znajdziesz w karcie modelu.
+
+Sprawdź wymiary właściwe dla danego producenta i serii. Sposób pielęgnacji może zależeć od składu tkaniny oraz wykończenia ubrania. Temperaturę prania i inne wymagania odczytaj z opisu konkretnego fartucha.',
+    ],
+    'odziez-gastronomia-hotelarstwo' => [
+        'name' => 'Odzież dla gastronomii i hotelarstwa',
+        'meta' => 'Odzież dla gastronomii i hotelarstwa: porównaj fasony, tkaniny i rozmiary. Sprawdź zapięcia, kieszenie oraz zasady pielęgnacji.',
+        'description' => 'Odzież dla gastronomii i hotelarstwa możesz porównać według rodzaju ubrania, kroju i składu materiału. W kartach produktów sprawdzisz dostępne warianty rozmiaru oraz koloru.
+
+Zwróć uwagę na zapięcia, rozmieszczenie kieszeni i tabelę wymiarów. Przy kompletowaniu stroju porównaj kolekcję i oznaczenia poszczególnych elementów. Wymagania dotyczące prania, suszenia i prasowania sprawdź dla konkretnego materiału.',
+    ],
 ];
