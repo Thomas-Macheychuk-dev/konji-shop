@@ -19,6 +19,7 @@ use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -186,7 +187,7 @@ final class VermeirenProductImporter
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($scraped),
             'description' => $this->productDescriptionHtml($scraped, $documentContext),
-            'seo_title' => $this->stringOrNull($scraped['seo_title'] ?? null) ?: $name,
+            'seo_title' => SupplierTitleSuffix::normalize($this->stringOrNull($scraped['seo_title'] ?? null)) ?: $name,
             'seo_description' => $this->seoDescription($scraped),
             'status' => $status,
             'external_source' => 'vermeiren',
