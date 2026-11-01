@@ -1,0 +1,103 @@
+{
+  "version": "product-seo-consolidation-preservation-20261101-v1",
+  "prior_backup": "storage/app/private/seo-repairs/identity-review-20261101.pOGcEG",
+  "prior_plan_sha256": "b3fe38efba39fce3ae697aebb3ebe9bf0a8f8cd553dd414613031605977d7ba3",
+  "scope": "Read-only evidence gathering. No winner selection, archiving, copying, rewriting or redirects.",
+  "groups": [
+    {
+      "label": "Timago RANGER",
+      "products": [
+        {
+          "id": 9983,
+          "name": "Podpórka czterokołowa aluminiowa - RANGER",
+          "slug": "podporka-czterokolowa-aluminiowa-ranger",
+          "external_source": "timago",
+          "external_id": "1132"
+        },
+        {
+          "id": 9986,
+          "name": "Podpórka czterokołowa aluminiowa - RANGER",
+          "slug": "ranger-podporka-czterokolowa-aluminiowa",
+          "external_source": "timago",
+          "external_id": "1046"
+        }
+      ]
+    },
+    {
+      "label": "Timago JMC-C 2052",
+      "products": [
+        {
+          "id": 10104,
+          "name": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052",
+          "slug": "laska-inwalidzka-aluminiowa-skladana-model-jmc-c-2052",
+          "external_source": "timago",
+          "external_id": "2052"
+        },
+        {
+          "id": 10107,
+          "name": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052",
+          "slug": "laska-inwalidzka-aluminiowa-skladana",
+          "external_source": "timago",
+          "external_id": "698"
+        }
+      ]
+    },
+    {
+      "label": "Vicair Active O2",
+      "products": [
+        {
+          "id": 12583,
+          "name": "VICAIR ACTIVE O2",
+          "slug": "vicair-active-o2",
+          "external_source": "vermeiren",
+          "external_id": "4cc06b957f85db0f571ab2385e10d2ac159bf4581684dee94bfec4ec82911c73"
+        },
+        {
+          "id": 12619,
+          "name": "VICAIR ACTIVE O2",
+          "slug": "vicair-active-o2-42a57ba6",
+          "external_source": "vermeiren",
+          "external_id": "9f1c5c4535267ee4d2de8d3c874c14511af9cab0373af39ba253f62c59163919"
+        }
+      ]
+    },
+    {
+      "label": "Vicair Allrounder O2",
+      "products": [
+        {
+          "id": 12587,
+          "name": "VICAIR ALLROUNDER O2",
+          "slug": "vicair-allrounder-o2",
+          "external_source": "vermeiren",
+          "external_id": "f0befb2a7160b4dd8644718d72fadc309e43e8553684433f385239e3e23a3253"
+        },
+        {
+          "id": 12623,
+          "name": "VICAIR ALLROUNDER 02",
+          "slug": "vicair-allrounder-02",
+          "external_source": "vermeiren",
+          "external_id": "eabc30673a7a7c73077d7ed10845ae4d5b19bdcadc9375a8da8d43ef1a653f23"
+        }
+      ]
+    },
+    {
+      "label": "Vicair Multifunctional Back",
+      "products": [
+        {
+          "id": 12590,
+          "name": "VICAIR® MULTIFUNCTIONAL BACK O2",
+          "slug": "vicair-multifunctional-back-o2",
+          "external_source": "vermeiren",
+          "external_id": "83934569f6ea38d2652e53adc1e304b19887531fcd0004b8fae8993693d351c5"
+        },
+        {
+          "id": 12626,
+          "name": "Vicair Multifunctional back",
+          "slug": "vicair-multifunctional-back",
+          "external_source": "vermeiren",
+          "external_id": "eb2a17476bc6297f064d394c02e04b565a57e3313aa7265322b23b561280213a"
+        }
+      ]
+    }
+  ]
+}
