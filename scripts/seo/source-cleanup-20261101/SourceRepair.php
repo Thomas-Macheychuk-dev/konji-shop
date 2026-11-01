@@ -122,7 +122,7 @@ final class ProductSourceCleanup
             $expected = $this->manifest['detach_attribute_values'][$index];
             if ($link['expected'] !== $expected || $link['before']['product_id'] !== $expected['product_id']
                 || $link['before']['attribute_value_id'] !== $expected['attribute_value_id']
-                || $link['value'] !== ['id' => $expected['attribute_value_id'], 'attribute_id' => $expected['attribute_id'], 'value' => $expected['expected_value']]) {
+                || ! $this->attributeValueMatches($link['value'], $expected)) {
                 throw new RuntimeException('Tampered attribute backup.');
             }
         }
@@ -186,6 +186,12 @@ final class ProductSourceCleanup
         }
     }
 
+    private function attributeValueMatches(array $value, array $expected): bool
+    {
+        return $value['id'] === $expected['attribute_value_id'] && $value['attribute_id'] === $expected['attribute_id']
+            && ProductSeoMetadata::plain($value['value']) === $expected['expected_value'];
+    }
+
     private function attributeLinks(bool $lock = false, bool $applied = false): array
     {
         $links = [];
@@ -198,7 +204,7 @@ final class ProductSourceCleanup
             }
             $value = $valueQuery->first(['id', 'attribute_id', 'value']);
             $pivot = $pivotQuery->get();
-            if ($value === null || (array) $value !== ['id' => $expected['attribute_value_id'], 'attribute_id' => $expected['attribute_id'], 'value' => $expected['expected_value']]
+            if ($value === null || ! $this->attributeValueMatches((array) $value, $expected)
                 || $pivot->count() !== ($applied ? 0 : 1)) {
                 throw new RuntimeException('Attribute evidence or link changed.');
             }

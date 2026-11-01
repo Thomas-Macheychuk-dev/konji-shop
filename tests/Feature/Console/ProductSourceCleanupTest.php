@@ -30,7 +30,7 @@ function sourceCleanupFixture(): array
 
     ProductAttribute::query()->forceCreate(['id' => 498, 'name' => 'Indeks', 'slug' => 'source-cleanup-indeks', 'display_type' => 'text']);
     foreach ($manifest['detach_attribute_values'] as $link) {
-        AttributeValue::query()->forceCreate(['id' => $link['attribute_value_id'], 'attribute_id' => 498, 'value' => $link['expected_value'], 'slug' => 'source-cleanup-'.$link['attribute_value_id']]);
+        AttributeValue::query()->forceCreate(['id' => $link['attribute_value_id'], 'attribute_id' => 498, 'value' => '<span>'.htmlspecialchars($link['expected_value'], ENT_NOQUOTES, 'UTF-8').'</span>', 'slug' => 'source-cleanup-'.$link['attribute_value_id']]);
         DB::table('product_attribute_value')->insert(['product_id' => $link['product_id'], 'attribute_value_id' => $link['attribute_value_id'], 'created_at' => now(), 'updated_at' => now()]);
     }
 
