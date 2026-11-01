@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-import hashlib,html,json
+import argparse,hashlib,html,json
 from pathlib import Path
 
 ROOT=Path(__file__).parent
-DATA=ROOT.parent/'upload/konji-seo-editorial-review.json'
 MED={12116:('1139','10 × 10 cm',1),12117:('1140','10 × 20 cm',1),12118:('1137','5 × 5 cm',1),12119:('1138','7,5 × 7,5 cm',1),12157:('1139','10 × 10 cm',25),12158:('1140','10 × 20 cm',25),12159:('1137','5 × 5 cm',25),12160:('1138','7,5 × 7,5 cm',25)}
 SOURCES={
  'meditrade':{'url':'https://www.meditrade.de/wp-content/uploads/Meditrade_Katalog_DE_2020-09.pdf','printed_page':69,'checked_at':'2026-11-01','facts':'References 1137–1140: sterile four-layer nonwoven compresses, packed in pairs, external wound care. Retail pack, percentages and precautions come from each supplied product record.'},
@@ -59,8 +58,15 @@ def build(data, prior_manifests):
         'sources':SOURCES,'entries':entries,'detach_attribute_values':[{'product_id':i,'attribute_value_id':v['value_id'],'attribute_id':v['attribute_id'],'expected_value':v['value']} for i in [13961,14229] for v in products[i]['product_attributes'] if v['attribute_id']==498]}
 
 if __name__=='__main__':
-    data=json.loads(DATA.read_text());old=[json.loads((ROOT.parent/n/'review.json').read_text()) for n in ['seo-editorial-repair','seo-editorial-followup','seo-manufacturer-review','seo-colour-correction']]
-    manifest=build(data,old);(ROOT/'review.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
-    ids={e['id'] for e in manifest['entries']}
-    (ROOT/'source-fixture.json').write_text(json.dumps([{k:p[k] for k in ['id','description','short_description','product_attributes']} for p in data['products'] if p['id'] in ids],ensure_ascii=False,indent=2)+'\n')
-    print('PRODUCTS=13 LONG=10 SHORT=3 SEO_FIELDS_CHANGED=0')
+    parser=argparse.ArgumentParser(description='Build the frozen source cleanup from the targeted export and four prior manifests.')
+    parser.add_argument('source',type=Path);parser.add_argument('output',type=Path)
+    parser.add_argument('--prior-root',type=Path,default=ROOT.parent)
+    parser.add_argument('--fixture-output',type=Path)
+    args=parser.parse_args()
+    data=json.loads(args.source.read_text())
+    old=[json.loads((args.prior_root/n/'review.json').read_text()) for n in ['editorial-repair-20261031','editorial-followup-20261031','manufacturer-review-20261101','colour-correction-20261101']]
+    manifest=build(data,old);args.output.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+    if args.fixture_output:
+        ids={e['id'] for e in manifest['entries']}
+        args.fixture_output.write_text(json.dumps([{k:p[k] for k in ['id','description','short_description','product_attributes']} for p in data['products'] if p['id'] in ids],ensure_ascii=False,indent=2)+'\n')
+    print('PRODUCTS=13 LONG=10 SHORT=3 SEO_FIELDS_CHANGED=0 ATTRIBUTE_DETACHES=2')
