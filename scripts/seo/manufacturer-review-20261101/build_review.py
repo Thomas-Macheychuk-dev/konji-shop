@@ -64,7 +64,7 @@ def build(data, first, previous, source_sha):
             subject=re.sub(r'\s*\|\s*Sklep$', '',r['seo_title']).rstrip(' .')
             after['seo_description']=subject+'. Skład włókniny: 65% wiskozy i 35% poliestru.'
             evidence.append({'field':'description','quote':'65% wiskoza i 35% poliester','fact':'Material percentages from this product, not a clinical claim.'})
-            evidence.append({'field':'manufacturer_catalogue','url':'https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf','printed_page':69,'reference':ref,'table':'einfach steril; 4-fach; zu 2 Stück verpackt','checked_at':'2026-11-01','scope':'Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied.'})
+            evidence.append({'field':'manufacturer_catalogue','url':'https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf','printed_page':69,'reference':ref,'table':'Sterile reference table: four layers; individual pairs.','checked_at':'2026-11-01','scope':'Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied.'})
         if i==13961: assert '4032651217014' in r['description']
         if i in TITLES:
             title,quote=TITLES[i]; assert quote.casefold() in r['description'].casefold(), (i,quote)
