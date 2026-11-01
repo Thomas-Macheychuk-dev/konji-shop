@@ -10,7 +10,16 @@ uses(RefreshDatabase::class);
 
 it('renders reviewed category copy in the page and metadata without writing catalogue fields', function (): void {
     $copy = require resource_path('content/category-copy.pl.php');
-    foreach ($copy as $slug => $entry) {
+    // Every hand-reviewed entry plus every 25th generated entry; scripts/seo/category-copy-20261101/test_build.py
+    // validates all generated copy without rendering 1,000+ pages.
+    $sample = array_slice($copy, 0, 59, true);
+    foreach (array_keys(array_slice($copy, 59, null, true)) as $index => $slug) {
+        if ($index % 25 === 0) {
+            $sample[$slug] = $copy[$slug];
+        }
+    }
+    expect(count($copy))->toBeGreaterThan(1000)->and(count($sample))->toBeGreaterThan(59);
+    foreach ($sample as $slug => $entry) {
         $category = Category::query()->create([
             'name' => $entry['name'],
             'slug' => $slug,
