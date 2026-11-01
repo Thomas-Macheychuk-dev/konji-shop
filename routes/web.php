@@ -311,6 +311,12 @@ Route::post('/payments/paynow/notifications', PaynowNotificationController::clas
 Route::redirect('/content/7-regulamin', '/terms-and-conditions', 301);
 Route::redirect('/content/19-reklamacje-i-zwroty', '/returns-and-withdrawal', 301);
 Route::redirect('/content/9-warunki-dostawy', '/delivery-and-payments', 301);
+Route::redirect('/content/16-polityka-prywatnosci', '/privacy-policy', 301);
+Route::redirect('/content/8-refundacja-nfz', '/refundacje-nfz', 301);
+Route::redirect('/content/15-kontakt', '/contact', 301);
+// The contact page carries the seller identity that the legacy "O nas" page described.
+Route::redirect('/content/6-o-nas', '/contact', 301);
+Route::redirect('/content/17-wkladki-ortopedyczne-indywidualne', '/categories/wkladki-ortopedyczne', 301);
 
 Route::view('/terms-and-conditions', 'pages.legal.terms-and-conditions')
     ->name('legal.terms');

@@ -58,7 +58,17 @@ it('redirects legacy PrestaShop legal URLs permanently', function (string $legac
     ['/content/7-regulamin', 'legal.terms'],
     ['/content/19-reklamacje-i-zwroty', 'legal.returns'],
     ['/content/9-warunki-dostawy', 'legal.delivery-payments'],
+    ['/content/16-polityka-prywatnosci', 'legal.privacy'],
+    ['/content/8-refundacja-nfz', 'legal.nfz'],
+    ['/content/15-kontakt', 'legal.contact'],
+    ['/content/6-o-nas', 'legal.contact'],
 ]);
+
+it('redirects the legacy custom insoles page to the insoles category', function (): void {
+    $this->get('/content/17-wkladki-ortopedyczne-indywidualne')
+        ->assertStatus(301)
+        ->assertRedirect('/categories/wkladki-ortopedyczne');
+});
 
 it('shows legal footer links on the storefront', function (): void {
     $this
