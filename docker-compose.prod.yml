@@ -57,6 +57,7 @@ services:
     environment:
       LEGACY_SEO_REDIRECTS_ENABLED: "${LEGACY_SEO_REDIRECTS_ENABLED:-false}"
       LEGACY_SEO_STAGING_CANDIDATE_ENABLED: "${LEGACY_SEO_STAGING_CANDIDATE_ENABLED:-false}"
+      LEGACY_SEO_FALLBACK_REDIRECTS_ENABLED: "${LEGACY_SEO_FALLBACK_REDIRECTS_ENABLED:-false}"
     volumes:
       - app_storage:/var/www/html/storage
       - /etc/letsencrypt:/etc/letsencrypt:ro

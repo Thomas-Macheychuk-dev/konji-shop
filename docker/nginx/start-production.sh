@@ -2,6 +2,7 @@
 set -eu
 
 /usr/local/bin/verify-seo12-map
+/usr/local/bin/verify-legacy-fallback-map
 
 runtime_dir=/etc/nginx/legacy-seo/runtime
 runtime_file="$runtime_dir/10-product-redirects.conf"
@@ -39,6 +40,25 @@ case "${LEGACY_SEO_STAGING_CANDIDATE_ENABLED:-false}" in
         ;;
     *)
         echo "ERROR: LEGACY_SEO_STAGING_CANDIDATE_ENABLED must be true/false, 1/0, yes/no, or on/off." >&2
+        exit 1
+        ;;
+esac
+
+fallback_runtime_file="$runtime_dir/30-fallback-redirects.conf"
+fallback_available_file=/etc/nginx/legacy-seo/available/30-fallback-redirects-enabled.conf
+
+case "${LEGACY_SEO_FALLBACK_REDIRECTS_ENABLED:-false}" in
+    1|true|TRUE|True|yes|YES|Yes|on|ON|On)
+        cp "$fallback_available_file" "$fallback_runtime_file"
+        echo "Legacy SEO category and product fallback redirects: ENABLED" >&2
+        ;;
+    0|false|FALSE|False|no|NO|No|off|OFF|Off|"")
+        printf '%s
+' '# Legacy SEO category and product fallback redirects disabled.' > "$fallback_runtime_file"
+        echo "Legacy SEO category and product fallback redirects: disabled" >&2
+        ;;
+    *)
+        echo "ERROR: LEGACY_SEO_FALLBACK_REDIRECTS_ENABLED must be true/false, 1/0, yes/no, or on/off." >&2
         exit 1
         ;;
 esac
