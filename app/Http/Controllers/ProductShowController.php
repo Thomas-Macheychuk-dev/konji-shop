@@ -19,7 +19,9 @@ use App\Services\Qmed\QmedDescriptionSanitizer;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
 use App\Support\Products\ProductLegalDisclosures;
+use App\Support\Seo\ReviewedProductAliases;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -33,8 +35,13 @@ class ProductShowController extends Controller
         private readonly HerdegenDescriptionFormatter $herdegenDescriptionFormatter,
     ) {}
 
-    public function __invoke(Product $product): View
+    public function __invoke(Product $product): View|RedirectResponse
     {
+        $destination = app(ReviewedProductAliases::class)->destination($product);
+        if ($destination !== null) {
+            return redirect()->to($destination, 301);
+        }
+
         $isActive = $product->status?->isActive() === true;
         $isAdminPreview = ! $isActive && $this->currentUserCanPreviewInactiveProducts();
 
@@ -710,3 +717,4 @@ class ProductShowController extends Controller
         };
     }
 }
+
