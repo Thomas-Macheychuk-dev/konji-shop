@@ -1,0 +1,1034 @@
+[
+  {
+    "product_id": 164,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004_4.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004_1.png"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 314,
+          "value": "Scholl"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/34599",
+      "primary_identity": {
+        "id": 34599,
+        "permalink": "https://galeriazdrowia.pl/produkt/evoflex-czarny/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 2944,
+                "name": "F293781004",
+                "slug": "f293781004"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 284,
+                "name": "Cały czarny",
+                "slug": "caly-czarny"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 74,
+                "name": "Klapki",
+                "slug": "klapki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 165,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040-scaled.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040_1-scaled.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040_2-scaled.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 314,
+          "value": "Scholl"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/26506",
+      "primary_identity": {
+        "id": 26506,
+        "permalink": "https://galeriazdrowia.pl/produkt/evoflex-granatowy/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 2102,
+                "name": "F293781040",
+                "slug": "f293781040"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 92,
+                "name": "Granatowy",
+                "slug": "granatowy"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 74,
+                "name": "Klapki",
+                "slug": "klapki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 220,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2020/12/LOW-F215311014.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2020/12/202012_SCHOLL_SS20-151-b.png",
+        "https://galeriazdrowia.pl/wp-content/uploads/2020/12/202012_SCHOLL_SS20-188-b.png"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 327,
+          "value": "Health and Fashion Shoes Italia S"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/25784",
+      "primary_identity": {
+        "id": 25784,
+        "permalink": "https://galeriazdrowia.pl/produkt/air-bag-med-wisniowy/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 2036,
+                "name": "MF215311014",
+                "slug": "mf215311014"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 187,
+                "name": "Fuksja",
+                "slug": "fuksja"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 74,
+                "name": "Klapki",
+                "slug": "klapki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 221,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2020/12/LOW-F215311017.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 327,
+          "value": "Health and Fashion Shoes Italia S"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/25797",
+      "primary_identity": {
+        "id": 25797,
+        "permalink": "https://galeriazdrowia.pl/produkt/air-bag-med-granatowy/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 2038,
+                "name": "MF215311017",
+                "slug": "mf215311017"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 92,
+                "name": "Granatowy",
+                "slug": "granatowy"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 74,
+                "name": "Klapki",
+                "slug": "klapki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 234,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_2-scaled.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_1-scaled.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_6.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 327,
+          "value": "Health and Fashion Shoes Italia S"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/16505",
+      "primary_identity": {
+        "id": 16505,
+        "permalink": "https://galeriazdrowia.pl/produkt/heaven-3/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 1259,
+                "name": "MF230091004",
+                "slug": "mf230091004"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 133,
+                "name": "Czarny",
+                "slug": "czarny"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 134,
+                "name": "Sandałki",
+                "slug": "sandalki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 237,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_2.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_3.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_4-scaled.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 327,
+          "value": "Health and Fashion Shoes Italia S"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/16492",
+      "primary_identity": {
+        "id": 16492,
+        "permalink": "https://galeriazdrowia.pl/produkt/sandaly-heaven-2/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 194,
+                "name": "F230091011",
+                "slug": "f230091011"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 117,
+                "name": "Brązowy",
+                "slug": "brazowy"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 134,
+                "name": "Sandałki",
+                "slug": "sandalki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 244,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/air_bag_czarny.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-AIR-BAG-F215311004_1-scaled.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-AIR-BAG-F215311004_2.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 327,
+          "value": "Health and Fashion Shoes Italia S"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/16812",
+      "primary_identity": {
+        "id": 16812,
+        "permalink": "https://galeriazdrowia.pl/produkt/air-bag-3/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 2321,
+                "name": "MF215311004",
+                "slug": "mf215311004"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 133,
+                "name": "Czarny",
+                "slug": "czarny"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 74,
+                "name": "Klapki",
+                "slug": "klapki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 247,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/air_bag_braz.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/F215311016_2_4b3f7569-76ac-43ab-b2b8-9c54c96cda84_1296x.webp",
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/F215311016_3_1296x.webp"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 327,
+          "value": "Health and Fashion Shoes Italia S"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/16779",
+      "primary_identity": {
+        "id": 16779,
+        "permalink": "https://galeriazdrowia.pl/produkt/air-bag/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 253,
+                "name": "F215311016",
+                "slug": "f215311016"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 117,
+                "name": "Brązowy",
+                "slug": "brazowy"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 74,
+                "name": "Klapki",
+                "slug": "klapki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 257,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2024/11/nautilus-500x500-1.png",
+        "https://galeriazdrowia.pl/wp-content/uploads/2024/11/F305791040_1-.jpg",
+        "https://galeriazdrowia.pl/wp-content/uploads/2024/11/F305791040_2-.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/35293",
+      "primary_identity": {
+        "id": 35293,
+        "permalink": "https://galeriazdrowia.pl/produkt/nautilus-navy-blue/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 2990,
+                "name": "MF305791040",
+                "slug": "mf305791040"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 92,
+                "name": "Granatowy",
+                "slug": "granatowy"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 74,
+                "name": "Klapki",
+                "slug": "klapki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 266,
+    "evidence": {
+      "media_samples": [
+        "https://galeriazdrowia.pl/wp-content/uploads/2017/07/NAUTILUs-3.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 314,
+          "value": "Scholl"
+        }
+      ],
+      "source": "source_shop_product_id",
+      "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/17070",
+      "primary_identity": {
+        "id": 17070,
+        "permalink": "https://galeriazdrowia.pl/produkt/nautilus/",
+        "attributes": [
+          {
+            "id": 3,
+            "name": "Kod",
+            "taxonomy": "pa_kod",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 1575,
+                "name": "F243541040",
+                "slug": "f243541040"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Kolor",
+            "taxonomy": "pa_kolor",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 92,
+                "name": "Granatowy",
+                "slug": "granatowy"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "Rodzaj",
+            "taxonomy": "pa_rodzaj",
+            "has_variations": false,
+            "terms": [
+              {
+                "id": 74,
+                "name": "Klapki",
+                "slug": "klapki"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "product_id": 1419,
+    "evidence": {
+      "media_samples": [
+        "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/000832-25804.jpg",
+        "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/Cara-100-Deluxe-Small-Deluxe-3.jpg",
+        "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/Cara-100-Deluxe-Small-Deluxe-4.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "source_product_id_and_mpn",
+      "primary_identity": {
+        "url": "https://www.peruka.pl/cara-small-deluxe-14-12-peruka-syntetyczna.html",
+        "canonical": [
+          "https://www.peruka.pl/cara-small-deluxe-14-12-peruka-syntetyczna.html"
+        ],
+        "product_id": "7331",
+        "source_mpn": "4048924102482"
+      }
+    }
+  },
+  {
+    "product_id": 2828,
+    "evidence": {
+      "media_samples": [
+        "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/aletta-mono-ruby-red-mix-bs.jpg",
+        "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/aletta-mono-ruby-red-mix.jpg",
+        "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/MOD000053-58125.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "source_selected_colour_and_mpn",
+      "primary_identity": {
+        "url": "https://www.peruka.pl/aletta-mono-part-rubyred-mix.html",
+        "canonical": [
+          "https://www.peruka.pl/aletta-mono-part-rubyred-mix.html"
+        ],
+        "product_id": "19628",
+        "selected_colour": "rubyred/mix",
+        "selected_images": [
+          "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/thumbnail/gallery_aletta-mono-ruby-red-mix-bs.jpg?lm=1790174826"
+        ],
+        "source_mpn": "4048924683066"
+      }
+    }
+  },
+  {
+    "product_id": 2829,
+    "evidence": {
+      "media_samples": [
+        "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/aletta-mono-silk-grey-mix-bs.jpg",
+        "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/aletta-mono-silk-grey-mix.jpg",
+        "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/MOD000001-58116.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "source_selected_colour_and_mpn",
+      "primary_identity": {
+        "url": "https://www.peruka.pl/aletta-mono-part-silkgrey-mix.html",
+        "canonical": [
+          "https://www.peruka.pl/aletta-mono-part-silkgrey-mix.html"
+        ],
+        "product_id": "19629",
+        "selected_colour": "silkgrey/mix",
+        "selected_images": [
+          "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/thumbnail/gallery_aletta-mono-silk-grey-mix-bs.jpg?lm=1790174826"
+        ],
+        "source_mpn": "4048924683073"
+      }
+    }
+  },
+  {
+    "product_id": 4530,
+    "evidence": {
+      "media_samples": [
+        "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/cara-small-deluxe-darksand-mix.jpg",
+        "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/cara-small-deluxe-darksand-mix-bs.jpg",
+        "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/Cara-100-Deluxe-Small-Deluxe-3.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "source_product_id_and_mpn",
+      "primary_identity": {
+        "url": "https://www.peruka.pl/cara-small-deluxe-darksand-mix-14-12-peruka-syntetyczna.html",
+        "canonical": [
+          "https://www.peruka.pl/cara-small-deluxe-darksand-mix-14-12-peruka-syntetyczna.html"
+        ],
+        "product_id": "8862",
+        "source_mpn": "4048924643855"
+      }
+    }
+  },
+  {
+    "product_id": 6744,
+    "evidence": {
+      "media_samples": [
+        "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/RAQ001953-26944.jpg",
+        "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/rw-alaska-02.jpg",
+        "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/rw-alaska-03.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "source_selected_colour_and_mpn",
+      "primary_identity": {
+        "url": "https://www.peruka.pl/alaska-hotchocolate-mix-peruka-syntetyczna.html",
+        "canonical": [
+          "https://www.peruka.pl/alaska-hotchocolate-mix-peruka-syntetyczna.html"
+        ],
+        "product_id": "7139",
+        "selected_colour": "hotchocolate/mix",
+        "selected_images": [
+          "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/thumbnail/gallery_RAQ001953-26944.jpg?lm=1790275584"
+        ],
+        "source_mpn": "4048924197204"
+      }
+    }
+  },
+  {
+    "product_id": 7951,
+    "evidence": {
+      "media_samples": [
+        "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/10-ew-pp-dark-blonde.jpg",
+        "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/68e4d2884e379-Frappe-2.jpg",
+        "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/frappe-nougat-mix-cap.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "source_selected_colour_and_mpn",
+      "primary_identity": {
+        "url": "https://www.peruka.pl/frappe-dark-blonde-dopinka.html",
+        "canonical": [
+          "https://www.peruka.pl/frappe-dark-blonde-dopinka.html"
+        ],
+        "product_id": "13895",
+        "selected_colour": "dark blonde",
+        "selected_images": [
+          "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/thumbnail/gallery_10-ew-pp-dark-blonde.jpg?lm=1790194466"
+        ],
+        "source_mpn": "4048924615524"
+      }
+    }
+  },
+  {
+    "product_id": 7952,
+    "evidence": {
+      "media_samples": [
+        "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/02-ew-pp-dark-brown.jpg",
+        "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/Frappe-2.jpg",
+        "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/frappe-nougat-mix-cap.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "source_selected_colour_and_mpn",
+      "primary_identity": {
+        "url": "https://www.peruka.pl/frappe-dark-brown-dopinka.html",
+        "canonical": [
+          "https://www.peruka.pl/frappe-dark-brown-dopinka.html"
+        ],
+        "product_id": "13896",
+        "selected_colour": "dark brown",
+        "selected_images": [
+          "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/thumbnail/gallery_02-ew-pp-dark-brown.jpg?lm=1790194466"
+        ],
+        "source_mpn": "4048924615562"
+      }
+    }
+  },
+  {
+    "product_id": 9066,
+    "evidence": {
+      "media_samples": [
+        "https://www.reh4mat.com/uploads/2012/08/4T7A2505-1.jpg",
+        "http://www.reh4mat.com/uploads/2012/08/lock3points.png",
+        "https://www.reh4mat.com/uploads/2012/08/4T7A2513.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "manufacturer_colour_selector_and_visual_review",
+      "primary_identity": {
+        "id": 1188,
+        "url": "https://www.reh4mat.com/?p=1188",
+        "canonical": [
+          "https://www.reh4mat.com/produkt/ortezy-pediatryczne/usztywniona-orteza-na-dlon-i-przedramie-z-ujeciem-kciuka-am-osn-u-02/"
+        ],
+        "title": "Orteza nadgarstka AM-OSN-U-02",
+        "colour_selector_links": [
+          "https://www.reh4mat.com/produkt/ortezy-pediatryczne/orteza-nadgarstka-am-osn-u-02/"
+        ]
+      },
+      "reviewed_main_photo": "https://www.reh4mat.com/uploads/2012/08/4T7A2505-1.jpg",
+      "reviewed_photo_sha256": "5bd90a0a701f5f6a48056efa1de98a2bb322b8205dde80e562897c1321bf9f25",
+      "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+    }
+  },
+  {
+    "product_id": 9067,
+    "evidence": {
+      "media_samples": [
+        "https://www.reh4mat.com/uploads/2023/05/4T7A2525.jpg",
+        "http://www.reh4mat.com/uploads/2012/08/lock3points.png",
+        "https://www.reh4mat.com/uploads/2023/05/4T7A2531.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "manufacturer_colour_selector_and_visual_review",
+      "primary_identity": {
+        "id": 313671,
+        "url": "https://www.reh4mat.com/?p=313671",
+        "canonical": [
+          "https://www.reh4mat.com/produkt/ortezy-pediatryczne/orteza-nadgarstka-am-osn-u-02/"
+        ],
+        "title": "Orteza nadgarstka AM-OSN-U-02",
+        "colour_selector_links": [
+          "https://www.reh4mat.com/produkt/ortezy-pediatryczne/usztywniona-orteza-na-dlon-i-przedramie-z-ujeciem-kciuka-am-osn-u-02/"
+        ]
+      },
+      "reviewed_main_photo": "https://www.reh4mat.com/uploads/2023/05/4T7A2525.jpg",
+      "reviewed_photo_sha256": "152c677af79c8997cdfa51676c94dcf9683db885e3387b5d82693258aab279cd",
+      "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+    }
+  },
+  {
+    "product_id": 9092,
+    "evidence": {
+      "media_samples": [
+        "https://www.reh4mat.com/uploads/2023/06/4T7A5482.jpg",
+        "https://www.reh4mat.com/uploads/2023/06/4T7A5483.jpg",
+        "https://www.reh4mat.com/uploads/2023/06/4T7A5484.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "manufacturer_colour_selector_and_visual_review",
+      "primary_identity": {
+        "id": 313813,
+        "url": "https://www.reh4mat.com/?p=313813",
+        "canonical": [
+          "https://www.reh4mat.com/produkt/nadgarstek-akcesoria/uniwersalny-temblak-okg-25/"
+        ],
+        "title": "Uniwersalny temblak OKG-25",
+        "colour_selector_links": [
+          "https://www.reh4mat.com/produkt/nadgarstek-akcesoria/uniwersalny-temblak-okg-25-2/"
+        ]
+      },
+      "reviewed_main_photo": "https://www.reh4mat.com/uploads/2023/06/4T7A5482.jpg",
+      "reviewed_photo_sha256": "e6c2596568c97fdab54049285166c9a4eedc0f80fd95b8378501715a9c7cecf8",
+      "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+    }
+  },
+  {
+    "product_id": 9093,
+    "evidence": {
+      "media_samples": [
+        "https://www.reh4mat.com/uploads/2023/07/4T7A5509.jpg",
+        "https://www.reh4mat.com/uploads/2023/07/4T7A5482-baner-szare-kopia-scaled.jpg",
+        "https://www.reh4mat.com/uploads/2023/07/4T7A5508.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "manufacturer_colour_selector_and_visual_review",
+      "primary_identity": {
+        "id": 316311,
+        "url": "https://www.reh4mat.com/?p=316311",
+        "canonical": [
+          "https://www.reh4mat.com/produkt/nadgarstek-akcesoria/uniwersalny-temblak-okg-25-2/"
+        ],
+        "title": "Uniwersalny temblak OKG-25",
+        "colour_selector_links": [
+          "https://www.reh4mat.com/produkt/nadgarstek-akcesoria/uniwersalny-temblak-okg-25/"
+        ]
+      },
+      "reviewed_main_photo": "https://www.reh4mat.com/uploads/2023/07/4T7A5509.jpg",
+      "reviewed_photo_sha256": "e89283eb1b7853d3751d46d71e04262bf443f68230b10d329ad9046b398f77b2",
+      "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+    }
+  },
+  {
+    "product_id": 9094,
+    "evidence": {
+      "media_samples": [
+        "https://www.reh4mat.com/uploads/2014/12/separator-tlo-1-1.jpg",
+        "http://www.reh4mat.com/uploads/2014/12/separator-pl.jpg",
+        "https://www.reh4mat.com/uploads/2014/12/separator1.jpg"
+      ],
+      "producer_attributes": [],
+      "source": "manufacturer_colour_selector_and_visual_review",
+      "primary_identity": {
+        "id": 41493,
+        "url": "https://www.reh4mat.com/?p=41493",
+        "canonical": [
+          "https://www.reh4mat.com/produkt/reka-akcesoria/separator-neurologiczny/"
+        ],
+        "title": "Separator neurologiczny",
+        "colour_selector_links": [
+          "https://www.reh4mat.com/produkt/reka-akcesoria/separator-neurologiczny-cz/"
+        ]
+      },
+      "reviewed_main_photo": "https://www.reh4mat.com/uploads/2014/12/separator-tlo-1-1.jpg",
+      "reviewed_photo_sha256": "0ef1b328525dedbd4eaed615a7e3d299d66b902e780b741aaab551524c0f37ff",
+      "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+    }
+  },
+  {
+    "product_id": 9095,
+    "evidence": {
+      "media_samples": [
+        "https://www.reh4mat.com/uploads/2022/04/separator-neurologiczny-cz.jpg",
+        "http://www.reh4mat.com/uploads/2014/12/separator-pl.jpg",
+        "https://www.reh4mat.com/uploads/2014/12/separator_m-e1709633204160.png"
+      ],
+      "producer_attributes": [],
+      "source": "manufacturer_colour_selector_and_visual_review",
+      "primary_identity": {
+        "id": 290460,
+        "url": "https://www.reh4mat.com/?p=290460",
+        "canonical": [
+          "https://www.reh4mat.com/produkt/reka-akcesoria/separator-neurologiczny-cz/"
+        ],
+        "title": "Separator neurologiczny",
+        "colour_selector_links": [
+          "https://www.reh4mat.com/produkt/reka-akcesoria/separator-neurologiczny/"
+        ]
+      },
+      "reviewed_main_photo": "https://www.reh4mat.com/uploads/2022/04/separator-neurologiczny-cz.jpg",
+      "reviewed_photo_sha256": "2b1ddb7065ada55fc6fbca629d0abd2effdd3d2552d2c1e8b83dee3782b8eeca",
+      "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+    }
+  },
+  {
+    "product_id": 9620,
+    "evidence": {
+      "media_samples": [
+        "https://sklep.medreha.pl/environment/cache/images/productGfx_3793_500_500/011.jpg",
+        "https://sklep.medreha.pl/environment/cache/images/productGfx_3794_500_500/012.jpg",
+        "https://sklep.medreha.pl/environment/cache/images/productGfx_3686_500_500/08002__1_-removebg-preview.png"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Wyrób medyczny",
+          "value_id": 692,
+          "value": "Tak"
+        },
+        {
+          "attribute": "Producent",
+          "value_id": 756,
+          "value": "MASO"
+        }
+      ],
+      "source": "own_body_and_frozen_assortment"
+    }
+  },
+  {
+    "product_id": 9940,
+    "evidence": {
+      "media_samples": [
+        "https://sklep.medreha.pl/environment/cache/images/productGfx_4461_500_500/NAKLADKA-NA-TOALETE-NASADKA-NA-SEDES-PO-OPERACJI-BIODRA-PODWYZSZAJACA-WC-5CM.jpg",
+        "https://sklep.medreha.pl/environment/cache/images/productGfx_4460_500_500/NAKLADKA-NA-TOALETE-NASADKA-NA-SEDES-PO-OPERACJI-BIODRA-PODWYZSZAJACA-WC-5CM.jpg",
+        "https://sklep.medreha.pl/environment/cache/images/productGfx_4462_500_500/4179.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Kolor",
+          "value_id": 1,
+          "value": "Biały"
+        },
+        {
+          "attribute": "Wyrób medyczny",
+          "value_id": 692,
+          "value": "Tak"
+        },
+        {
+          "attribute": "Producent",
+          "value_id": 697,
+          "value": "OrthoVisions"
+        }
+      ],
+      "source": "own_body_and_frozen_assortment"
+    }
+  },
+  {
+    "product_id": 13026,
+    "evidence": {
+      "media_samples": [
+        "https://www.sklep-sigvaris.com/2759-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg",
+        "https://www.sklep-sigvaris.com/291-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg",
+        "https://www.sklep-sigvaris.com/978-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 6246,
+          "value": "SIGVARIS S.A."
+        }
+      ],
+      "source": "own_body_and_frozen_assortment"
+    }
+  },
+  {
+    "product_id": 13064,
+    "evidence": {
+      "media_samples": [
+        "https://www.sklep-sigvaris.com/1620-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana.jpg",
+        "https://www.sklep-sigvaris.com/1621-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana.jpg"
+      ],
+      "producer_attributes": [
+        {
+          "attribute": "Producent",
+          "value_id": 6246,
+          "value": "SIGVARIS S.A."
+        }
+      ],
+      "source": "own_body_and_frozen_assortment"
+    }
+  }
+]

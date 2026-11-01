@@ -1,0 +1,3796 @@
+[
+  {
+    "id": 164,
+    "name": "EVOFLEX Scholl",
+    "slug": "evoflex-czarny",
+    "external_source": "mobilex",
+    "external_id": "34599",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "EVOFLEX",
+    "seo_description": "Scholl EVOFLEX profesjonalne obuwie do pracy dla kobiet i mężczyzn. Unisex. Zdrowotne buty do wielogodzinnego użytkowania. Obuwie zawodowe.",
+    "description": "Rewelacyjny model Scholl, który w ostatnim czasie zdobył serca wielu klientów. Zapewnia najwyższy komfort, spełniając przy tym wiele wymogów obuwia zawodowego. Główną innowacją jest szeroki zapiętek, który można ustawić z tyłu na różnych wysokościach bądź po porostu przełożyć na przód. Buty EVOFLEX są wyposażone w antybakteryjną podeszwę, a cały but wraz z wyjmowaną dziurkowaną wkładką można uprać w 90°C i wysterylizować w autoklawie w 134°C. Wszystko dla utrzymania jak największej higieny. Kolejną zaletą EVOFLEX jest innowacyjny, łatwy w czyszczeniu wierzch, który zapobiega gromadzeniu się płynów i brudu. Buty typu EVOFLEX można stosować na salach operacyjnych. W naszej ofercie występują w bardzo atrakcyjnej kolorystyce i w rozmiarach 35-46 . Charakterystyka: antypoślizgowe oddychające pochłaniają energię przez piętę antystatyczne EN ISO 20347:2012 obuwie ESD – EN61340 posiadają możliwość sterylizacji do 134°C mają możliwość prania do 90°C są wolne od niklu anatomicznie dopasowane mają regulowany pasek wyposażone w wyjmowaną wkładkę",
+    "short_description": "Scholl EVOFLEX profesjonalne obuwie do pracy dla kobiet i mężczyzn. Unisex. Zdrowotne buty do wielogodzinnego użytkowania. Obuwie zawodowe.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "9759a7ccb3dbcdab14b9ff6239f9c4c51916426d1add85588130345da1307f11",
+    "description_truncated": false,
+    "short_description_sha256": "5bbb39d50dd703444ddaec184f26ffd1d2f22da5c2f89c40b1fbbd0daa8b08ea",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 314,
+        "value": "Scholl",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 522,
+        "product_id": 164,
+        "sku": "17DSSLAH36L",
+        "external_variant_id": "34601",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 523,
+        "product_id": 164,
+        "sku": "17DSSLAH37L",
+        "external_variant_id": "34602",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 316,
+            "value": "37",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 524,
+        "product_id": 164,
+        "sku": "17DSSLAH38L",
+        "external_variant_id": "34603",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 317,
+            "value": "38",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 525,
+        "product_id": 164,
+        "sku": "17DSSLAH39L",
+        "external_variant_id": "34604",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 318,
+            "value": "39",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 526,
+        "product_id": 164,
+        "sku": "17DSSLAH40L",
+        "external_variant_id": "34605",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 319,
+            "value": "40",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 527,
+        "product_id": 164,
+        "sku": "17DSSLAH41L",
+        "external_variant_id": "34606",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 320,
+            "value": "41",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 528,
+        "product_id": 164,
+        "sku": "17DSSLAH42L",
+        "external_variant_id": "34607",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 321,
+            "value": "42",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 529,
+        "product_id": 164,
+        "sku": "17DSSLAH43L",
+        "external_variant_id": "34608",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 322,
+            "value": "43",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 530,
+        "product_id": 164,
+        "sku": "17DSSLAH44L",
+        "external_variant_id": "34609",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 323,
+            "value": "44",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 531,
+        "product_id": 164,
+        "sku": "17DSSLAH45L",
+        "external_variant_id": "34610",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 324,
+            "value": "45",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 532,
+        "product_id": 164,
+        "sku": "17DSSLAH46L",
+        "external_variant_id": "34611",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 325,
+            "value": "46",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 11,
+    "active_variant_identity_sha256": "69df30f0e6d75139a5ff71bc7508998e370aa95c55ced9d5bb883efbb5f03096",
+    "active_variant_options_sha256": "64af8d7f63ed0440ffaf6f846e8e538b553aebf08be48b77c30615174b791807",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/34599/gallery/766e458c3438b011f5826eabac0e09849ea4467b3734008b7a34e5aacffd27ae.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004.jpg",
+        "alt_text": "EVOFLEX Scholl"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/34599/gallery/37abb01b00c532f0f8d2ad538b2255738268507b3939544091ae5e6e5e62f19c.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004_4.jpg",
+        "alt_text": "EVOFLEX Scholl"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/34599/gallery/2a2751b03aa2d2b422888cb8bd4716d677e6219441c62696bba6725e266d4786.png",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004_1.png",
+        "alt_text": "EVOFLEX Scholl"
+      }
+    ]
+  },
+  {
+    "id": 165,
+    "name": "EVOFLEX Scholl",
+    "slug": "evoflex-granatowy",
+    "external_source": "mobilex",
+    "external_id": "26506",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "EVOFLEX",
+    "seo_description": "Scholl EVOFLEX profesjonalne obuwie do pracy dla kobiet i mężczyzn. Unisex. Zdrowotne buty do wielogodzinnego użytkowania. Obuwie zawodowe.",
+    "description": "Rewelacyjny model Scholl, który w ostatnim czasie zdobył serca wielu klientów. Zapewnia najwyższy komfort, spełniając przy tym wiele wymogów obuwia zawodowego. Główną innowacją jest szeroki zapiętek, który można ustawić z tyłu na różnych wysokościach bądź po porostu przełożyć na przód. Buty EVOFLEX są wyposażone w antybakteryjną podeszwę, a cały but wraz z wyjmowaną dziurkowaną wkładką można uprać w 90°C i wysterylizować w autoklawie w 134°C. Wszystko dla utrzymania jak największej higieny. Kolejną zaletą EVOFLEX jest innowacyjny, łatwy w czyszczeniu wierzch, który zapobiega gromadzeniu się płynów i brudu. Buty typu EVOFLEX można stosować na salach operacyjnych. W naszej ofercie występują w bardzo atrakcyjnej kolorystyce i w rozmiarach 36-46 . Charakterystyka: antypoślizgowe oddychające pochłaniają energię przez piętę antystatyczne EN ISO 20347:2012 obuwie ESD – EN61340 posiadają możliwość sterylizacji do 134°C mają możliwość prania do 90°C są wolne od niklu anatomicznie dopasowane mają regulowany pasek wyposażone w wyjmowaną wkładkę",
+    "short_description": "Scholl EVOFLEX profesjonalne obuwie do pracy dla kobiet i mężczyzn. Unisex. Zdrowotne buty do wielogodzinnego użytkowania. Obuwie zawodowe.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "e839683f428805898adec5dc929167579a006cbd84b0a35a1f2a423b72b427b7",
+    "description_truncated": false,
+    "short_description_sha256": "5bbb39d50dd703444ddaec184f26ffd1d2f22da5c2f89c40b1fbbd0daa8b08ea",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 314,
+        "value": "Scholl",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 533,
+        "product_id": 165,
+        "sku": "17DSSLAH36G",
+        "external_variant_id": "26508",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 534,
+        "product_id": 165,
+        "sku": "17DSSLAH37G",
+        "external_variant_id": "26509",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 316,
+            "value": "37",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 535,
+        "product_id": 165,
+        "sku": "17DSSLAH38G",
+        "external_variant_id": "26510",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 317,
+            "value": "38",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 536,
+        "product_id": 165,
+        "sku": "17DSSLAH39G",
+        "external_variant_id": "26511",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 318,
+            "value": "39",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 537,
+        "product_id": 165,
+        "sku": "17DSSLAH40G",
+        "external_variant_id": "26512",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 319,
+            "value": "40",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 538,
+        "product_id": 165,
+        "sku": "17DSSLAH41G",
+        "external_variant_id": "26513",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 320,
+            "value": "41",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 539,
+        "product_id": 165,
+        "sku": "17DSSLAH42G",
+        "external_variant_id": "26514",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 321,
+            "value": "42",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 540,
+        "product_id": 165,
+        "sku": "17DSSLAH43G",
+        "external_variant_id": "26515",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 322,
+            "value": "43",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 541,
+        "product_id": 165,
+        "sku": "17DSSLAH44G",
+        "external_variant_id": "26516",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 323,
+            "value": "44",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 542,
+        "product_id": 165,
+        "sku": "17DSSLAH45G",
+        "external_variant_id": "26517",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 324,
+            "value": "45",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 543,
+        "product_id": 165,
+        "sku": "17DSSLAH46G",
+        "external_variant_id": "26518",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 24309,
+        "price_gross_amount": 29900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 325,
+            "value": "46",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 11,
+    "active_variant_identity_sha256": "4d8ac4dd1db397cef268fc08a24ccfc098ba566de6aa8d48337c8e98dc8d8d60",
+    "active_variant_options_sha256": "64af8d7f63ed0440ffaf6f846e8e538b553aebf08be48b77c30615174b791807",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/26506/gallery/64b48b79461782d0dc3669d56c74abb79ba523bfac49feabe1cf92f89997638a.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040-scaled.jpg",
+        "alt_text": "Scholl EVOFLEX profesjonalne obuwie do pracy"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/26506/gallery/dde10dc48a5a1e9d8d5b621e32b038f3ccaed02f0ee6928ae4c2ce8d137dc63f.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040_1-scaled.jpg",
+        "alt_text": "Scholl EVOFLEX profesjonalne obuwie do pracy"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/26506/gallery/b14397aafbf572c8a2f4f08da548cb13e4d66186aa5c0fd3c6af5065df32857f.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040_2-scaled.jpg",
+        "alt_text": "Scholl EVOFLEX profesjonalne obuwie do pracy"
+      }
+    ]
+  },
+  {
+    "id": 220,
+    "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+    "slug": "air-bag-med-wisniowy",
+    "external_source": "mobilex",
+    "external_id": "25784",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "AIR BAG MED",
+    "seo_description": "AIR BAG MED Klapki damskie Scholl AIR BAG to klasyka gatunku. Wyprofilowana skórzana wkładka. Elegancki wygląd i wygoda codziennego stosowania. Sprawdź rozmiary!",
+    "description": "AIR BAG MED Energetyczne, klasyczne klapki Scholl ze skórzaną wkładką. Pięknie wykonane, trwałe i dbające o zdrowie stóp. Wyprofilowana wkładka mająca zagłębienie na piętę zapewnia stabilność stopy w czasie chodzenia.",
+    "short_description": "AIR BAG MED Klapki damskie Scholl AIR BAG to klasyka gatunku. Wyprofilowana skórzana wkładka. Elegancki wygląd i wygoda codziennego stosowania. Sprawdź rozmiary!",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "daa062b674ee5e62ec649361298431132dddd6c728fbabe8af91211c2fd2accf",
+    "description_truncated": false,
+    "short_description_sha256": "d83b1334dd07abbafa60428f315264021a2ace14eabd8684d792744766438215",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 327,
+        "value": "Health and Fashion Shoes Italia S",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 740,
+        "product_id": 220,
+        "sku": "17CSSL0136A",
+        "external_variant_id": "25785",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 9756,
+        "price_gross_amount": 12000,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "4336702be4a4ed6fa8d63bf7c1ba3dfee21f55d7effd16217c3160cbd04b1f91",
+    "active_variant_options_sha256": "1669d4c09d7fdd7910593137706017d3ced706440128c1375542b872c4d909f0",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/25784/gallery/e40cc1286cb8519f15a780c6fc64d6b2da242ebadd3fa3da39a730eacd65863d.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2020/12/LOW-F215311014.jpg",
+        "alt_text": "air bag wiśniowy"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/25784/gallery/00b7063a1d8da47d3e03de761c2047ff67ffbf9e61ff0260e0cd840bafcbeb66.png",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2020/12/202012_SCHOLL_SS20-151-b.png",
+        "alt_text": "AIR BAG MED Health and Fashion Shoes Italia S"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/25784/gallery/e8310f1913af2913a7ba8ec99b1ca9bc24fbb054cbc294ae63e94c7b001e3770.png",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2020/12/202012_SCHOLL_SS20-188-b.png",
+        "alt_text": "AIR BAG MED Health and Fashion Shoes Italia S"
+      }
+    ]
+  },
+  {
+    "id": 221,
+    "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+    "slug": "air-bag-med-granatowy",
+    "external_source": "mobilex",
+    "external_id": "25797",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "AIR BAG MED",
+    "seo_description": "Klasyczne klapki dla mężczyzn i kobiet z zagłębieniem na piętę. Wyjątkowa jakość od Scholl. Wyrób medyczny.",
+    "description": "AIR BAG MED Uniwersalne klapki skórzane z wyprofilowaną wkładką. Wygodne i funkcjonalne, dla kobiet i mężczyzn.",
+    "short_description": "Klasyczne klapki dla mężczyzn i kobiet z zagłębieniem na piętę. Wyjątkowa jakość od Scholl. Wyrób medyczny.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "2a196effe380b323e35a8d912390952a79976204a714444e665cc17cc2cc5420",
+    "description_truncated": false,
+    "short_description_sha256": "3310b2bc07a80b4a28cb424ee9a5825b29e5ee711b5648c838cbdd1826afa988",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 327,
+        "value": "Health and Fashion Shoes Italia S",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 741,
+        "product_id": 221,
+        "sku": "17CSSL0135B",
+        "external_variant_id": "25798",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 9756,
+        "price_gross_amount": 12000,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 326,
+            "value": "35",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 742,
+        "product_id": 221,
+        "sku": "17CSSL0136B",
+        "external_variant_id": "25799",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 9756,
+        "price_gross_amount": 12000,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 743,
+        "product_id": 221,
+        "sku": "17CSSL0145B",
+        "external_variant_id": "25808",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 9756,
+        "price_gross_amount": 12000,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 324,
+            "value": "45",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 744,
+        "product_id": 221,
+        "sku": "17CSSL0146B",
+        "external_variant_id": "25807",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 9756,
+        "price_gross_amount": 12000,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 325,
+            "value": "46",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 4,
+    "active_variant_identity_sha256": "112164f12f52ecfffffa03865f31a29504bbdb43a5719be6b1ae21d33ece7869",
+    "active_variant_options_sha256": "1329f4b1ff9e3970cc82beff1479b43494488a40b968824b16f212aa39eb49af",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/25797/gallery/f3e27e84cf0ffd732f2d8241189486489350ca3981c42ade6349fd9fe0e4e99c.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2020/12/LOW-F215311017.jpg",
+        "alt_text": "LOW-F215311017"
+      }
+    ]
+  },
+  {
+    "id": 234,
+    "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+    "slug": "heaven-3",
+    "external_source": "mobilex",
+    "external_id": "16505",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "HEAVEN AD MED",
+    "seo_description": "HEAVEN AD MED Sandały sportowe Scholl dla kobiet i mężczyzn. Wyrób medyczny - z wyprofilowaną wkładką. Szeroka oferta obuwia zdrowotnego: klapków i sandałów Scholl.",
+    "description": "HEAVEN AD MED Skórzane sandały z funkcjonalnie wyprofilowaną wkładką zapewniającą prawidłowe ułożenie stopy, dzięki zagłębieniu na piętę i odpowiednim łukom. Sandały zarówno dla kobiet, jak i mężczyzn.",
+    "short_description": "HEAVEN AD MED Sandały sportowe Scholl dla kobiet i mężczyzn. Wyrób medyczny - z wyprofilowaną wkładką. Szeroka oferta obuwia zdrowotnego: klapków i sandałów Scholl.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "7d4e04bb322420acfebef93de6b04f06d42993431606faac51465910c6c287b9",
+    "description_truncated": false,
+    "short_description_sha256": "7646ef52e171e57b0e176d48af305ee65856491b1713c944e4ed52390ef0173d",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 327,
+        "value": "Health and Fashion Shoes Italia S",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 793,
+        "product_id": 234,
+        "sku": "17CSSL1735M",
+        "external_variant_id": "16506",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 326,
+            "value": "35",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 794,
+        "product_id": 234,
+        "sku": "17CSSL1736M",
+        "external_variant_id": "16507",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 795,
+        "product_id": 234,
+        "sku": "17CSSL1737M",
+        "external_variant_id": "16508",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 316,
+            "value": "37",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 796,
+        "product_id": 234,
+        "sku": "17CSSL1738M",
+        "external_variant_id": "16509",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 317,
+            "value": "38",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 797,
+        "product_id": 234,
+        "sku": "17CSSL1739M",
+        "external_variant_id": "16510",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 318,
+            "value": "39",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 798,
+        "product_id": 234,
+        "sku": "17CSSL1740M",
+        "external_variant_id": "16511",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 319,
+            "value": "40",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 799,
+        "product_id": 234,
+        "sku": "17CSSL1741M",
+        "external_variant_id": "16512",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 320,
+            "value": "41",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 800,
+        "product_id": 234,
+        "sku": "17CSSL1742M",
+        "external_variant_id": "16513",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 321,
+            "value": "42",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 801,
+        "product_id": 234,
+        "sku": "17CSSL1743M",
+        "external_variant_id": "16514",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 322,
+            "value": "43",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 802,
+        "product_id": 234,
+        "sku": "17CSSL1744M",
+        "external_variant_id": "16515",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 323,
+            "value": "44",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 803,
+        "product_id": 234,
+        "sku": "17CSSL1745M",
+        "external_variant_id": "16516",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 324,
+            "value": "45",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 804,
+        "product_id": 234,
+        "sku": "17CSSL1746M",
+        "external_variant_id": "16517",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 325,
+            "value": "46",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 12,
+    "active_variant_identity_sha256": "05fd0d455d8ed432a7ab7761d280078bb3879624af77105a703b114b456131d3",
+    "active_variant_options_sha256": "26d1b6455075e765993c031ddb17153a52cba7400b1ce7e74586414be2c5e612",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/16505/gallery/9a5967868fb178c305559378b4411addade829f2be7d98438df5dcd78ea574d1.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_2-scaled.jpg",
+        "alt_text": "Sandały sportowe Scholl HEAVEN unisex czarne"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/16505/gallery/e688fb267ec38b59a030901f4acfd707c87abb108a9aeb04c30a0328e35436ba.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_1-scaled.jpg",
+        "alt_text": "Sandały sportowe Scholl HEAVEN unisex czarne"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/16505/gallery/1e6908013b210b53f30886421f2893094da3c9413bf337ec41f8d031ccb58cc7.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_6.jpg",
+        "alt_text": "Sandały sportowe Scholl HEAVEN unisex czarne"
+      }
+    ]
+  },
+  {
+    "id": 237,
+    "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+    "slug": "sandaly-heaven-2",
+    "external_source": "mobilex",
+    "external_id": "16492",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "HEAVEN AD MED",
+    "seo_description": "HEAVEN AD MED Sportowe sandały damskie i męskie Scholl. Wyrób medyczny - z wyprofilowaną wkładką. Szeroka oferta obuwia zdrowotnego: klapków i sandałów Scholl.",
+    "description": "HEAVEN AD MED Sportowe sandały unisex – pasują kobietom i mężczyznom.Wysokiej jakości sandały HEAVEN od Scholl.",
+    "short_description": "HEAVEN AD MED Sportowe sandały damskie i męskie Scholl. Wyrób medyczny - z wyprofilowaną wkładką. Szeroka oferta obuwia zdrowotnego: klapków i sandałów Scholl.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "3f8a4221d95b2df35af806e6330df55169edfdbfbb21ac0713ec874e787d002e",
+    "description_truncated": false,
+    "short_description_sha256": "69c3d90f40a6dc1a015168bdb6513469263bcd8903563c1fb225bdc5f43f7809",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 327,
+        "value": "Health and Fashion Shoes Italia S",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 809,
+        "product_id": 237,
+        "sku": "17DSSL0236M",
+        "external_variant_id": "16494",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 810,
+        "product_id": 237,
+        "sku": "17DSSL0237M",
+        "external_variant_id": "16495",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 316,
+            "value": "37",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 811,
+        "product_id": 237,
+        "sku": "17DSSL0238M",
+        "external_variant_id": "16496",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 317,
+            "value": "38",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 812,
+        "product_id": 237,
+        "sku": "17DSSL0239M",
+        "external_variant_id": "16497",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 318,
+            "value": "39",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 813,
+        "product_id": 237,
+        "sku": "17DSSL0240M",
+        "external_variant_id": "16498",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 319,
+            "value": "40",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 814,
+        "product_id": 237,
+        "sku": "17DSSL0241M",
+        "external_variant_id": "16499",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 320,
+            "value": "41",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 815,
+        "product_id": 237,
+        "sku": "17DSSL0242M",
+        "external_variant_id": "16500",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 321,
+            "value": "42",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 816,
+        "product_id": 237,
+        "sku": "17DSSL0243M",
+        "external_variant_id": "16501",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 322,
+            "value": "43",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 817,
+        "product_id": 237,
+        "sku": "17DSSL0244M",
+        "external_variant_id": "16502",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 323,
+            "value": "44",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 818,
+        "product_id": 237,
+        "sku": "17DSSL0245M",
+        "external_variant_id": "16503",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 324,
+            "value": "45",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 819,
+        "product_id": 237,
+        "sku": "17DSSL0246M",
+        "external_variant_id": "16504",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21057,
+        "price_gross_amount": 25900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 325,
+            "value": "46",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 11,
+    "active_variant_identity_sha256": "cc305e8dd5df749d5e5261d0baae2f3d76f82e850f1a50d614338cfcbb19bd0d",
+    "active_variant_options_sha256": "64af8d7f63ed0440ffaf6f846e8e538b553aebf08be48b77c30615174b791807",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/16492/gallery/6f35c48610c4051c2904d2fcdcb3be7a63fb37df535e13ebbb1ed8828d5b23fd.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_2.jpg",
+        "alt_text": "Sandały Scholl HEAVEN wyprofilowane sportowe"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/16492/gallery/21287b227cda78884eefc741a5c561514e9469597100a1a3aefdabe9705120d2.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_3.jpg",
+        "alt_text": "Sandały Scholl HEAVEN wyprofilowane sportowe"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/16492/gallery/ba2a4b858bd85b7ef591875aeb86de95630c8a452fe8cba238e65ec414acd358.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_4-scaled.jpg",
+        "alt_text": "Sandały Scholl HEAVEN wyprofilowane sportowe"
+      }
+    ]
+  },
+  {
+    "id": 244,
+    "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+    "slug": "air-bag-3",
+    "external_source": "mobilex",
+    "external_id": "16812",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "AIR BAG MED",
+    "seo_description": "AIR BAG MED Klapki damskie i męskie Scholl. Buty męskie z wyprofilowaną wkładką z zagłębieniem na piętę. Wyrób medyczny.",
+    "description": "AIR BAG MED Klapki damskie / męskie regulowane na szerokość. Klasyczne, na dwa paski.",
+    "short_description": "AIR BAG MED Klapki damskie i męskie Scholl. Buty męskie z wyprofilowaną wkładką z zagłębieniem na piętę. Wyrób medyczny.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "91b784dfe8d7026daa7200682f236e6b4024b82d776d3482bc93170fce0e624f",
+    "description_truncated": false,
+    "short_description_sha256": "3c85ed91bdc8e74b8626339be43e1dedbfc4851e238dd2574ec5386dfd7f9ac2",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 327,
+        "value": "Health and Fashion Shoes Italia S",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 842,
+        "product_id": 244,
+        "sku": "17CSSL0135M",
+        "external_variant_id": "29633",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 326,
+            "value": "35",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 843,
+        "product_id": 244,
+        "sku": "17CSSL0136M",
+        "external_variant_id": "16813",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 844,
+        "product_id": 244,
+        "sku": "17CSSL0137M",
+        "external_variant_id": "16814",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 316,
+            "value": "37",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 845,
+        "product_id": 244,
+        "sku": "17CSSL0138M",
+        "external_variant_id": "16815",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 317,
+            "value": "38",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 846,
+        "product_id": 244,
+        "sku": "17CSSL0139M",
+        "external_variant_id": "16816",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 318,
+            "value": "39",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 847,
+        "product_id": 244,
+        "sku": "17CSSL0140M",
+        "external_variant_id": "16817",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 319,
+            "value": "40",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 848,
+        "product_id": 244,
+        "sku": "17CSSL0141M",
+        "external_variant_id": "16818",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 320,
+            "value": "41",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 849,
+        "product_id": 244,
+        "sku": "17CSSL0142M",
+        "external_variant_id": "16819",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 321,
+            "value": "42",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 850,
+        "product_id": 244,
+        "sku": "17CSSL0143M",
+        "external_variant_id": "16820",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 322,
+            "value": "43",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 851,
+        "product_id": 244,
+        "sku": "17CSSL0144M",
+        "external_variant_id": "16821",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 323,
+            "value": "44",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 852,
+        "product_id": 244,
+        "sku": "17CSSL0145M",
+        "external_variant_id": "16822",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 324,
+            "value": "45",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 853,
+        "product_id": 244,
+        "sku": "17CSSL0146M",
+        "external_variant_id": "16823",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 325,
+            "value": "46",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 12,
+    "active_variant_identity_sha256": "36585e0b9d669c3799c8062d981219b61afc1a53a893d8e40e879b673e4f9d7c",
+    "active_variant_options_sha256": "26d1b6455075e765993c031ddb17153a52cba7400b1ce7e74586414be2c5e612",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/16812/gallery/315a9f94634146d13769d6f819a4464c52af3de418fc6ef61e085bf91f89bfca.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/air_bag_czarny.jpg",
+        "alt_text": "air_bag_czarny"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/16812/gallery/5a49dff7d556383e70bd7cd2e273cf444ea7d52c45b35424e5f78504b3683da5.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-AIR-BAG-F215311004_1-scaled.jpg",
+        "alt_text": "Klapki Scholl damskie i męskie czarne"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/16812/gallery/ac36caa8854dd7dc719bcda7512d0e7fe4008b760308f84eebbe71a47e41a9fb.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-AIR-BAG-F215311004_2.jpg",
+        "alt_text": "Klapki Scholl damskie i męskie czarne"
+      }
+    ]
+  },
+  {
+    "id": 247,
+    "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+    "slug": "air-bag",
+    "external_source": "mobilex",
+    "external_id": "16779",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "AIR BAG MED",
+    "seo_description": "Klapki męskie Scholl z wyprofilowaną wkładką. Regulowane paski. Specjalistyczna wkładka z zagłębieniem na piętę zapewnia stabilność stopy. Wyrób medyczny.",
+    "description": "AIR BAG MED Klapki uniwersalne regulowane na szerokość.",
+    "short_description": "Klapki męskie Scholl z wyprofilowaną wkładką. Regulowane paski. Specjalistyczna wkładka z zagłębieniem na piętę zapewnia stabilność stopy. Wyrób medyczny.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "2a1e87ed8cbec8331ff81306ad9640c336c51d8bb5b319344e590a4ec60003f6",
+    "description_truncated": false,
+    "short_description_sha256": "8db46ff20816fed9199253f734d606953b26bc1eb19db6ab3f73d4928309123c",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 327,
+        "value": "Health and Fashion Shoes Italia S",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 869,
+        "product_id": 247,
+        "sku": "17DSSL0136M",
+        "external_variant_id": "16780",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 870,
+        "product_id": 247,
+        "sku": "17DSSL0137M",
+        "external_variant_id": "16781",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 316,
+            "value": "37",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 871,
+        "product_id": 247,
+        "sku": "17DSSL0138M",
+        "external_variant_id": "16782",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 317,
+            "value": "38",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 872,
+        "product_id": 247,
+        "sku": "17DSSL0139M",
+        "external_variant_id": "16783",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 318,
+            "value": "39",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 873,
+        "product_id": 247,
+        "sku": "17DSSL0140M",
+        "external_variant_id": "16784",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 319,
+            "value": "40",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 874,
+        "product_id": 247,
+        "sku": "17DSSL0141M",
+        "external_variant_id": "16785",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 320,
+            "value": "41",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 875,
+        "product_id": 247,
+        "sku": "17DSSL0142M",
+        "external_variant_id": "16786",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 321,
+            "value": "42",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 876,
+        "product_id": 247,
+        "sku": "17DSSL0143M",
+        "external_variant_id": "16787",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 322,
+            "value": "43",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 877,
+        "product_id": 247,
+        "sku": "17DSSL0144M",
+        "external_variant_id": "16788",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 323,
+            "value": "44",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 878,
+        "product_id": 247,
+        "sku": "17DSSL0145M",
+        "external_variant_id": "16789",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 324,
+            "value": "45",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 879,
+        "product_id": 247,
+        "sku": "17DSSL0146M",
+        "external_variant_id": "16790",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30488,
+        "price_gross_amount": 37500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 325,
+            "value": "46",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 11,
+    "active_variant_identity_sha256": "8806562d1177ea04138a80335d0861e1ab4400400e6a379ac06dc2721bcac000",
+    "active_variant_options_sha256": "64af8d7f63ed0440ffaf6f846e8e538b553aebf08be48b77c30615174b791807",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/16779/gallery/8a81cc55cb5460091c8b06016c95216ba8bc9cbcbe945f0b4f08085bca8354d7.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/air_bag_braz.jpg",
+        "alt_text": "air bag brązowy"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/16779/gallery/e62db3fe911d8d02821366f92134eec1529d757678e63cc880e336c8fd90427f.webp",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/F215311016_2_4b3f7569-76ac-43ab-b2b8-9c54c96cda84_1296x.webp",
+        "alt_text": "AIR BAG MED Health and Fashion Shoes Italia S"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/16779/gallery/5f67c7b80d121b1d5c637635560d1dc1aef8d576de543073e0b08bc77dbf59f5.webp",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/F215311016_3_1296x.webp",
+        "alt_text": "AIR BAG MED Health and Fashion Shoes Italia S"
+      }
+    ]
+  },
+  {
+    "id": 257,
+    "name": "Nautilus Scholl",
+    "slug": "nautilus-navy-blue",
+    "external_source": "mobilex",
+    "external_id": "35293",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Nautilus",
+    "seo_description": "Nautilus firmy Scholl granatowe klapki na basen - dla kobiet i mężczyzn. Wyposażone są w ergonomiczną wkładkę Fitness, która wspiera stopę.",
+    "description": "Klapki basenowe Nautilus – Komfort i stabilność na każdą okazję Poznaj granatowe klapki basenowe Nautilus, które łączą funkcjonalność z wygodą. Zaprojektowane z myślą o użytkownikach ceniących praktyczność i komfort, świetnie sprawdzą się zarówno na basenie, jak i w codziennym użytkowaniu. Cechy klapek Nautilus Regulowane zapięcie na rzep Dostosuj klapki do swoich potrzeb dzięki łatwemu w użyciu zapięciu na rzep, które gwarantuje idealne dopasowanie i stabilność podczas noszenia. Zagłębienie na piętę Specjalne zagłębienie zapewnia lepsze podparcie stopy i zapobiega przesuwaniu się, co zwiększa komfort użytkowania. Wkładka Fitness Klapki wyposażone są w ergonomiczną wkładkę Fitness, która wspiera stopę, zapewniając wygodę nawet podczas długiego noszenia. Stylowy granatowy kolor Klasyczny granatowy odcień nadaje klapkom uniwersalny i elegancki wygląd, idealny zarówno dla mężczyzn, jak i kobiet. Przeznaczenie Klapki Nautilus są doskonałym wyborem na basen, plażę, siłownię lub do codziennego użytku w domu. Dzięki swojej trwałości i praktycznym rozwiązaniom spełnią oczekiwania nawet najbardziej wymagających użytkowników. Postaw na wygodę i funkcjonalność – wybierz klapki basenowe Nautilus i ciesz się komfortem na co dzień!",
+    "short_description": "Nautilus firmy Scholl granatowe klapki na basen - dla kobiet i mężczyzn. Wyposażone są w ergonomiczną wkładkę Fitness, która wspiera stopę.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "cfa4e4c2d01e5c8675e17093484867f480ae277635a1d4f9305e4d89cc685f09",
+    "description_truncated": false,
+    "short_description_sha256": "8fc304ce6f3157a0cfe1589cc45359d1bed5a9cb39ed9001a09dd4524cd13bfc",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 902,
+        "product_id": 257,
+        "sku": "17DSSL3536G",
+        "external_variant_id": "35294",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 903,
+        "product_id": 257,
+        "sku": "17DSSL3537G",
+        "external_variant_id": "35295",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 316,
+            "value": "37",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 904,
+        "product_id": 257,
+        "sku": "17DSSL3538G",
+        "external_variant_id": "35296",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 317,
+            "value": "38",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 905,
+        "product_id": 257,
+        "sku": "17DSSL3539G",
+        "external_variant_id": "35297",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 318,
+            "value": "39",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 906,
+        "product_id": 257,
+        "sku": "17DSSL3540G",
+        "external_variant_id": "35298",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 319,
+            "value": "40",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 907,
+        "product_id": 257,
+        "sku": "17DSSL3541G",
+        "external_variant_id": "35299",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 320,
+            "value": "41",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 908,
+        "product_id": 257,
+        "sku": "17DSSL3542G",
+        "external_variant_id": "35300",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 321,
+            "value": "42",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 909,
+        "product_id": 257,
+        "sku": "17DSSL3543G",
+        "external_variant_id": "35301",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 322,
+            "value": "43",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 910,
+        "product_id": 257,
+        "sku": "17DSSL3544G",
+        "external_variant_id": "35302",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 323,
+            "value": "44",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 911,
+        "product_id": 257,
+        "sku": "17DSSL3545G",
+        "external_variant_id": "35303",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 324,
+            "value": "45",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 912,
+        "product_id": 257,
+        "sku": "17DSSL3546G",
+        "external_variant_id": "35304",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 13415,
+        "price_gross_amount": 16500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 325,
+            "value": "46",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 11,
+    "active_variant_identity_sha256": "1201c252c38fd1e27e61606515ca3a3bf04080d77a583a4a8377f63e2590b98f",
+    "active_variant_options_sha256": "64af8d7f63ed0440ffaf6f846e8e538b553aebf08be48b77c30615174b791807",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/35293/gallery/8dee732578a6eb703147f149dd4985d5b336496cd1b412904b1421d6f58c076d.png",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2024/11/nautilus-500x500-1.png",
+        "alt_text": "Nautilus Scholl"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/35293/gallery/c9b1cb55c8126b4f7466c7fd0e1a3ce2f95108d4d4e36e295ed88a1c0545c912.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2024/11/F305791040_1-.jpg",
+        "alt_text": "Nautilus Scholl"
+      },
+      {
+        "disk": "public",
+        "path": "products/mobilex/35293/gallery/490fa17fc24a39fd0550b4b6ce59cd1d6b16e3eb8fc337556d54be0f54279e2d.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2024/11/F305791040_2-.jpg",
+        "alt_text": "Nautilus Scholl"
+      }
+    ]
+  },
+  {
+    "id": 266,
+    "name": "Nautilus Scholl",
+    "slug": "nautilus",
+    "external_source": "mobilex",
+    "external_id": "17070",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Nautilus",
+    "seo_description": "Nautilus klapki na basen Scholl - dla kobiet i mężczyzn. Klapki unisex. Idealne na basen, na plażę. Granatowe. Wyprofilowane.",
+    "description": "Klapki Scholl na basen dla kobiet i mężczyzn. Wyprofilowane, na grubszej podeszwie. Kolor granatowy. Regulowane na szerokość (rzep).",
+    "short_description": "Nautilus klapki na basen Scholl - dla kobiet i mężczyzn. Klapki unisex. Idealne na basen, na plażę. Granatowe. Wyprofilowane.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "0260e543110483eb9855b63aef5acf5b1860d7a04a6cfdd81caff85c07ce30a3",
+    "description_truncated": false,
+    "short_description_sha256": "2e9ad727610eed4a66c14a524891a8cea10f06bef479218b1612801da0574c3d",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 314,
+        "value": "Scholl",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 940,
+        "product_id": 266,
+        "sku": "17DSSL3536M",
+        "external_variant_id": "17071",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 8049,
+        "price_gross_amount": 9900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 315,
+            "value": "36",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 941,
+        "product_id": 266,
+        "sku": "17DSSL3537M",
+        "external_variant_id": "17072",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 8049,
+        "price_gross_amount": 9900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 316,
+            "value": "37",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 942,
+        "product_id": 266,
+        "sku": "17DSSL3540M",
+        "external_variant_id": "17075",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 8049,
+        "price_gross_amount": 9900,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wariant",
+            "value_id": 319,
+            "value": "40",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 3,
+    "active_variant_identity_sha256": "e4cbd98c2314c824bac01e2312a128675babdcd2b89489adb9f81da111f92c55",
+    "active_variant_options_sha256": "ca1ff9eb1193512c0c3bdf1fdd7f40b78f72f3b026c3e9f5cecdd196d0d33675",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/mobilex/17070/gallery/08d2444572b80c2d085aa52a78c5fbef8da507226afdd222b195ceef0bd0618f.jpg",
+        "source_url": "https://galeriazdrowia.pl/wp-content/uploads/2017/07/NAUTILUs-3.jpg",
+        "alt_text": "Nautilus Scholl"
+      }
+    ]
+  },
+  {
+    "id": 1419,
+    "name": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12",
+    "slug": "cara-small-deluxe-14-12-peruka-syntetyczna",
+    "external_source": "peruka",
+    "external_id": "7331",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+    "seo_description": "SMALL - oznacza perukę w małym rozmiarze.Wybierz, jeśli standardowe modele są dla Ciebie zbyt duże. Kolekcja HAIRPOWER",
+    "description": "Model Cara Small Deluxe to peruka z włosów syntetycznych utkanych na bazie, którą charakteryzuje wykonanie ręczne na tiulu, mikroskóra na górnej części głowy oraz linia rozmyta z przodu. Specjalne włókno syntetyczne doskonale imituje prawdziwe włosy. Kolor oferowanej fryzury pokazany jest w kwadracie obok zdjęcia z modelką. Dzięki bazie peruki Cara Small Deluxe zyskujesz: naturalny prześwit skóry na górze głowy wrażenie, że włosy wyrastają ze skóry głowy nieco mniejszą gęstość włosów w górnej części możliwość zmiany uczesania (ułożenia górnej partii włosów w różnych kierunkach) wrażenie, że na linii czoła włosy wyrastają z prawdziwej skóry głowy możliwość zaczesywania włosów do góry możliwość noszenia fryzury bez grzywki troskę o wrażliwą skórę głowy i komfort codziennego noszenia Ponadto peruka syntetyczna Cara Small Deluxe zachowuje kształt i nie wymaga modelowania - wystarczy ją założyć i przeczesać palcami, aby fryzura dobrze wyglądała. Modelka na zdjęciu nosi kolor darksand/mix.",
+    "short_description": "SMALL - oznacza perukę w małym rozmiarze. Wybierz, jeśli standardowe modele są dla Ciebie zbyt duże. Kolekcja HAIRPOWER",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "81cb571843b793f42bf9d9f451dcbf8c17d956ed918691c25d82a29313af825b",
+    "description_truncated": false,
+    "short_description_sha256": "c4c0b64e76872e277e23e56b59add5c53b1ad9c23444a1d83a4a5728e62db77c",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 12986,
+        "product_id": 1419,
+        "sku": "7331",
+        "external_variant_id": "peruka-7331-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 84861,
+        "price_gross_amount": 91650,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "9bd58184f1742dbfc8c75012c021a5d87d24bdc9035f8d6ba9b06a2480596977",
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/peruka/7331/gallery/ed111d4bb2f8e29aaa0947b33873d16f2a420eef11e6dbbacd5359263feaaccc.jpg",
+        "source_url": "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/000832-25804.jpg",
+        "alt_text": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/7331/gallery/60c56f87e11cb86cec90cb6ca63e27c2dd017d07d80201a36a84865484e6d0fd.jpg",
+        "source_url": "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/Cara-100-Deluxe-Small-Deluxe-3.jpg",
+        "alt_text": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/7331/gallery/8232ea7c475cde9f41df3c0686e20a96b8c442059bd9b18448abba5d37c5279a.jpg",
+        "source_url": "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/Cara-100-Deluxe-Small-Deluxe-4.jpg",
+        "alt_text": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12"
+      }
+    ]
+  },
+  {
+    "id": 2828,
+    "name": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix",
+    "slug": "aletta-mono-part-rubyred-mix",
+    "external_source": "peruka",
+    "external_id": "19628",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+    "seo_description": "Kolekcja MODIXX",
+    "description": "Peruka syntetyczna termoodporna Model Aletta Mono Part to peruka z włosów syntetycznych o podwyższonej odporności na ciepło utkanych na bazie, którą charakteryzuje wykonanie maszynowe na tresach, mikroskóra na linii przedziałka oraz linia rozmyta z przodu. Specjalne włókno syntetyczne doskonale imituje prawdziwe włosy. Kolor oferowanej fryzury pokazany jest w kwadracie obok zdjęcia z modelką. Dzięki bazie peruki termoodpornej Aletta Mono Part zyskujesz: naturalny prześwit skóry na linii przedziałka wrażenie, że włosy wyrastają ze skóry głowy na linii przedziałka wrażenie, że na linii czoła włosy wyrastają z prawdziwej skóry głowy możliwość zaczesywania włosów do góry możliwość noszenia fryzury bez grzywki Ponadto peruka syntetyczna Aletta Mono Part zachowuje kształt i nie wymaga modelowania - wystarczy ją założyć i przeczesać palcami, aby fryzura dobrze wyglądała. Jednak w razie potrzeby można modelować ją w temperaturze do 130°. Modelka na zdjęciu nosi kolor pastelrose/shad.",
+    "short_description": "Kolekcja MODIXX",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "37d9e4ce4cae6e934de2044695a36b85bea2582c3db8b1905182bf2af622c997",
+    "description_truncated": false,
+    "short_description_sha256": "33507fb326784cd8d640321e7ee6dbc09526595c2d02bd71707e5e75a3e4b1c6",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 14395,
+        "product_id": 2828,
+        "sku": "19628",
+        "external_variant_id": "peruka-19628-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 130556,
+        "price_gross_amount": 141000,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "35a113eceb811d4bd1802e594d564857e6246d60e3bf7acce24e3c1367b91580",
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/peruka/19628/gallery/c958ae185f0f217eedab2e3c8510f7c4c055dfa06dfedb4500dfa870d6cb7515.jpg",
+        "source_url": "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/aletta-mono-ruby-red-mix-bs.jpg",
+        "alt_text": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/19628/gallery/90a2ffcff7af66ef891bc51f44b401aff7e01954093c57041068eb8882fb8f0b.jpg",
+        "source_url": "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/aletta-mono-ruby-red-mix.jpg",
+        "alt_text": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/19628/gallery/6a4e1eaf25a9c285fe3feffbee82d0ae002a0edef3dd3174879a518c305a78d8.jpg",
+        "source_url": "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/MOD000053-58125.jpg",
+        "alt_text": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix"
+      }
+    ]
+  },
+  {
+    "id": 2829,
+    "name": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix",
+    "slug": "aletta-mono-part-silkgrey-mix",
+    "external_source": "peruka",
+    "external_id": "19629",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+    "seo_description": "Kolekcja MODIXX",
+    "description": "Peruka syntetyczna termoodporna Model Aletta Mono Part to peruka z włosów syntetycznych o podwyższonej odporności na ciepło utkanych na bazie, którą charakteryzuje wykonanie maszynowe na tresach, mikroskóra na linii przedziałka oraz linia rozmyta z przodu. Specjalne włókno syntetyczne doskonale imituje prawdziwe włosy. Kolor oferowanej fryzury pokazany jest w kwadracie obok zdjęcia z modelką. Dzięki bazie peruki termoodpornej Aletta Mono Part zyskujesz: naturalny prześwit skóry na linii przedziałka wrażenie, że włosy wyrastają ze skóry głowy na linii przedziałka wrażenie, że na linii czoła włosy wyrastają z prawdziwej skóry głowy możliwość zaczesywania włosów do góry możliwość noszenia fryzury bez grzywki Ponadto peruka syntetyczna Aletta Mono Part zachowuje kształt i nie wymaga modelowania - wystarczy ją założyć i przeczesać palcami, aby fryzura dobrze wyglądała. Jednak w razie potrzeby można modelować ją w temperaturze do 130°. Modelka na zdjęciu nosi kolor pastelrose/shad.",
+    "short_description": "Kolekcja MODIXX",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "37d9e4ce4cae6e934de2044695a36b85bea2582c3db8b1905182bf2af622c997",
+    "description_truncated": false,
+    "short_description_sha256": "33507fb326784cd8d640321e7ee6dbc09526595c2d02bd71707e5e75a3e4b1c6",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 14396,
+        "product_id": 2829,
+        "sku": "19629",
+        "external_variant_id": "peruka-19629-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 130556,
+        "price_gross_amount": 141000,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "5d7e0608df0c9dcc302bbd0ff674dde41f52d9508353894bdcb15284cc3c3f2b",
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/peruka/19629/gallery/9966f9eeb81e4a788db7a05c27fce33e351e0621384d2e87a1c6765c27741a27.jpg",
+        "source_url": "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/aletta-mono-silk-grey-mix-bs.jpg",
+        "alt_text": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/19629/gallery/a27dbad0d7ba90709e04bbafdb4c525dfe634e2460ae08378adc7eca2305d60a.jpg",
+        "source_url": "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/aletta-mono-silk-grey-mix.jpg",
+        "alt_text": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/19629/gallery/6a4e1eaf25a9c285fe3feffbee82d0ae002a0edef3dd3174879a518c305a78d8.jpg",
+        "source_url": "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/MOD000001-58116.jpg",
+        "alt_text": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix"
+      }
+    ]
+  },
+  {
+    "id": 4530,
+    "name": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12",
+    "slug": "cara-small-deluxe-darksand-mix-14-12-peruka-syntetyczna",
+    "external_source": "peruka",
+    "external_id": "8862",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+    "seo_description": "SMALL - oznacza perukę w małym rozmiarze.Wybierz, jeśli standardowe modele są dla Ciebie zbyt duże. Kolekcja HAIRPOWER",
+    "description": "Model Cara Small Deluxe to peruka z włosów syntetycznych utkanych na bazie, którą charakteryzuje wykonanie ręczne na tiulu, mikroskóra na górnej części głowy oraz linia rozmyta z przodu. Specjalne włókno syntetyczne doskonale imituje prawdziwe włosy. Kolor oferowanej fryzury pokazany jest w kwadracie obok zdjęcia z modelką. Dzięki bazie peruki Cara Small Deluxe zyskujesz: naturalny prześwit skóry na górze głowy wrażenie, że włosy wyrastają ze skóry głowy nieco mniejszą gęstość włosów w górnej części możliwość zmiany uczesania (ułożenia górnej partii włosów w różnych kierunkach) wrażenie, że na linii czoła włosy wyrastają z prawdziwej skóry głowy możliwość zaczesywania włosów do góry możliwość noszenia fryzury bez grzywki troskę o wrażliwą skórę głowy i komfort codziennego noszenia Ponadto peruka syntetyczna Cara Small Deluxe zachowuje kształt i nie wymaga modelowania - wystarczy ją założyć i przeczesać palcami, aby fryzura dobrze wyglądała. Modelka na zdjęciu nosi kolor darksand/mix.",
+    "short_description": "SMALL - oznacza perukę w małym rozmiarze. Wybierz, jeśli standardowe modele są dla Ciebie zbyt duże. Kolekcja HAIRPOWER",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "81cb571843b793f42bf9d9f451dcbf8c17d956ed918691c25d82a29313af825b",
+    "description_truncated": false,
+    "short_description_sha256": "c4c0b64e76872e277e23e56b59add5c53b1ad9c23444a1d83a4a5728e62db77c",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 16097,
+        "product_id": 4530,
+        "sku": "8862",
+        "external_variant_id": "peruka-8862-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 169722,
+        "price_gross_amount": 183300,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "bcab3f32c94f7683f4a8a806b32005e44eabdf469353e5aed0975fe0585322ef",
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/peruka/8862/gallery/480d1b48b3b9639ec21d2ec40cf0e3c6886cc3e8adbc04a28f7108b6bdc445dc.jpg",
+        "source_url": "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/cara-small-deluxe-darksand-mix.jpg",
+        "alt_text": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/8862/gallery/74e62a990bfa0f67bb4ec1bcbce2924894ea3fcd3e846a3c5890cde25cae1f9f.jpg",
+        "source_url": "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/cara-small-deluxe-darksand-mix-bs.jpg",
+        "alt_text": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/8862/gallery/60c56f87e11cb86cec90cb6ca63e27c2dd017d07d80201a36a84865484e6d0fd.jpg",
+        "source_url": "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/Cara-100-Deluxe-Small-Deluxe-3.jpg",
+        "alt_text": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12"
+      }
+    ]
+  },
+  {
+    "id": 6744,
+    "name": "Peruka syntetyczna jasny miodowy blond ALASKA lighthoney/mix*",
+    "slug": "alaska-hotchocolate-mix-peruka-syntetyczna",
+    "external_source": "peruka",
+    "external_id": "7139",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix*",
+    "seo_description": "Model Alaska to peruka z włosów syntetycznych utkanych na bazie, którą charakteryzuje wykonanie maszynowe na tresach oraz mikroskóra na czubku głowy. Specjalne włókno syn",
+    "description": "Model Alaska to peruka z włosów syntetycznych utkanych na bazie, którą charakteryzuje wykonanie maszynowe na tresach oraz mikroskóra na czubku głowy. Specjalne włókno syntetyczne doskonale imituje prawdziwe włosy. Kolor oferowanej fryzury pokazany jest w kwadracie obok zdjęcia poglądowego z manekinem. Dzięki bazie peruki Alaska zyskujesz: naturalny prześwit skóry w miejscu rozejścia się włosów (\"wicherek\") wrażenie, że włosy wyrastają ze skóry głowy w miejscu \"wicherka\" łatwą w użytkowaniu fryzurę bez mocno odkrytego czoła włosy umieszczane tak, żeby nie było widać bazy Ponadto peruka syntetyczna Alaska zachowuje kształt i nie wymaga modelowania - wystarczy ją założyć i przeczesać palcami, aby fryzura dobrze wyglądała. Modelka na zdjęciu nosi kolor champagne/rooted.",
+    "short_description": "Model Alaska to peruka z włosów syntetycznych utkanych na bazie, którą charakteryzuje wykonanie maszynowe na tresach oraz mikroskóra na czubku głowy. Specjalne włókno syn",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "ed4b8121c39dce9953dc1742311d119615e631b271155f21bcbec57b02c3e875",
+    "description_truncated": false,
+    "short_description_sha256": "98c73c7350085605dc3ba11c0a3896e004ab38cdbc82e6cce5d5f2a9a839099d",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 18311,
+        "product_id": 6744,
+        "sku": "7139",
+        "external_variant_id": "peruka-7139-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 30463,
+        "price_gross_amount": 32900,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "23012572be2e8a1dc7d13dd243047922bebbaa032600af63af2cbf19eb06e1b5",
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/peruka/7139/gallery/658f5e6f8c1c2ce0edfa87f2cd35ee1e9db4e67b63a706a4c6e56920ebb492e5.jpg",
+        "source_url": "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/RAQ001953-26944.jpg",
+        "alt_text": "Peruka syntetyczna jasny miodowy blond ALASKA lighthoney/mix*"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/7139/gallery/eb2a96e9a934cd10de0b0f116c5eff980ea6c57a0b0e055c1281ad284624f43e.jpg",
+        "source_url": "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/rw-alaska-02.jpg",
+        "alt_text": "Peruka syntetyczna jasny miodowy blond ALASKA lighthoney/mix*"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/7139/gallery/376bc3cf31dbff3bb5842eac0c401089230826c97ea41d9e7ba0bcd10fb643a5.jpg",
+        "source_url": "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/rw-alaska-03.jpg",
+        "alt_text": "Peruka syntetyczna jasny miodowy blond ALASKA lighthoney/mix*"
+      }
+    ]
+  },
+  {
+    "id": 7951,
+    "name": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*",
+    "slug": "frappe-dark-blonde-dopinka",
+    "external_source": "peruka",
+    "external_id": "13895",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+    "seo_description": "Kolekcja POWER PIECES",
+    "description": "Treska wykonana z włosa syntetycznego o mocnym pofalowaniu. Treska jest szybko i łatwo mocowana na własnych włosach za pomocą klamry. Modelka ze zdjęcia prezentuje dopinkę w kolorze light blonde. Kolor oferowanej treski jest pokazany w kwadracie z wycinkiem włosów. Długość włosa: 12 cm Długość całej fryzury: 20 cm",
+    "short_description": "Kolekcja POWER PIECES",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "64b1b3e9bc719f19c81da2d12515862a0ab888dc219d73109710338ac126d178",
+    "description_truncated": false,
+    "short_description_sha256": "227c583a649433bd9c35429c60175f3b569c7aea6ace6d3c36554a3e961da85f",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 19518,
+        "product_id": 7951,
+        "sku": "13895",
+        "external_variant_id": "peruka-13895-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 16049,
+        "price_gross_amount": 19740,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "1bdccc4ae48aa636d2f19f4721d1cd33e6f66a6d5111984e4af7b4d0869dafc4",
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/peruka/13895/gallery/748262dd5618f62652834b426f6e437509a243ad529aaf38de8b04b67029b385.jpg",
+        "source_url": "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/10-ew-pp-dark-blonde.jpg",
+        "alt_text": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/13895/gallery/a094a4bee0f3f236c47ca705e943f8a0266a41e15233e2b746ec26b7282e54ab.jpg",
+        "source_url": "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/68e4d2884e379-Frappe-2.jpg",
+        "alt_text": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/13895/gallery/c1ad5bb7b7d6d6ca6ec0733d2f0be7e77b6da7156960c590d9fbe18ac1c1f8ee.jpg",
+        "source_url": "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/frappe-nougat-mix-cap.jpg",
+        "alt_text": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*"
+      }
+    ]
+  },
+  {
+    "id": 7952,
+    "name": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*",
+    "slug": "frappe-dark-brown-dopinka",
+    "external_source": "peruka",
+    "external_id": "13896",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+    "seo_description": "Kolekcja POWER PIECES",
+    "description": "Treska wykonana z włosa syntetycznego o mocnym pofalowaniu. Treska jest szybko i łatwo mocowana na własnych włosach za pomocą klamry. Modelka ze zdjęcia prezentuje dopinkę w kolorze light blonde. Kolor oferowanej treski jest pokazany w kwadracie z wycinkiem włosów. Długość włosa: 12 cm Długość całej fryzury: 20 cm",
+    "short_description": "Kolekcja POWER PIECES",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "64b1b3e9bc719f19c81da2d12515862a0ab888dc219d73109710338ac126d178",
+    "description_truncated": false,
+    "short_description_sha256": "227c583a649433bd9c35429c60175f3b569c7aea6ace6d3c36554a3e961da85f",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 19519,
+        "product_id": 7952,
+        "sku": "13896",
+        "external_variant_id": "peruka-13896-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 16049,
+        "price_gross_amount": 19740,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "e2d91cfac785878e6c02b49de9de9c49c6245b1a0b1cceb4f3b26648a928bfd7",
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/peruka/13896/gallery/d21d1eb30905724fee8a5850e3d52f23090d8f0b44dc579754b2303ebcfb7c21.jpg",
+        "source_url": "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/02-ew-pp-dark-brown.jpg",
+        "alt_text": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/13896/gallery/a094a4bee0f3f236c47ca705e943f8a0266a41e15233e2b746ec26b7282e54ab.jpg",
+        "source_url": "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/Frappe-2.jpg",
+        "alt_text": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*"
+      },
+      {
+        "disk": "public",
+        "path": "products/peruka/13896/gallery/c1ad5bb7b7d6d6ca6ec0733d2f0be7e77b6da7156960c590d9fbe18ac1c1f8ee.jpg",
+        "source_url": "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/frappe-nougat-mix-cap.jpg",
+        "alt_text": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*"
+      }
+    ]
+  },
+  {
+    "id": 9066,
+    "name": "Orteza nadgarstka AM-OSN-U-02",
+    "slug": "usztywniona-orteza-na-dlon-i-przedramie-z-ujeciem-kciuka-am-osn-u-02",
+    "external_source": "reh4mat",
+    "external_id": "1188",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+    "seo_description": "Otwarta orteza nadgarstka została wykonana według nowego bardziej anatomicznego kształtu, dzięki czemu lepiej stabilizuje staw promieniowo-nadgarstkowy i nadgarstek.",
+    "description": "Otwarta orteza nadgarstka została wykonana według nowego bardziej anatomicznego kształtu, dzięki czemu lepiej stabilizuje staw promieniowo-nadgarstkowy i nadgarstek. Wyrób posiada konstrukcję otwartą, co ułatwia jego zakładanie na kończynę oraz regulowane zapięcie przednie, co czyni ortezę jeszcze bardziej uniwersalną i ułatwia dopasowanie do każdego kształtu dłoni. W górnej części wyrobu zainstalowano dwie fiszbiny ortopedyczne, które wraz z łyżką dłoniową przekrojowo tworzą trzy obwodowe punkty podparcia kończyny górnej. Taki sposób stabilizacji przedramienia jest sposobem najbardziej skutecznym. Zapięcia wyrobu wykonano przy użyciu zespołu dwóch szerokich taśm obwodowych oraz jednej wąskiej taśmy dłoniowej. Zakres regulacji zapięć jest bardzo duży i dzięki temu gwarantuje on szeroki zakres regulacji i stabilizacji. Orteza została w całości wykonana z nowego innowacyjnego surowca AirSanmed II™. W dłoniowej części ortezy zainstalowano miękką elastyczną poduszkę poprawiającą komfort użytkowania wyrobu. Konstrukcja ortezy oraz użyte surowce przeciwdziałają wystąpieniu u jej użytkowników zespołu cieśni nadgarstka. W wyrobie zamontowano taśmę stabilizującą kciuk, której nadmiar po dopasowaniu należy odciąć. Dodatkowo w wyrobie zainstalowano aluminiową szynę boczną ze stabilizatorem, której zadaniem jest funkcja odwiedzenia kciuka. Zakres i sposób jego odwiedzenia może być dowolnie kształtowany przez odpowiednie przegięcie szyny. Stabilizacja 3 punktowa L3P (LOCK 3 POINTS) W dolnej części wyrobu zastosowano anatomicznie wyprofilowaną szynę dłoniową, która galwanicznie została zabezpieczona przed działaniem ludzkiego potu. W górnej części wyrobu zainstalowano dwie fiszbiny z tworzywa sztucznego, które wraz z łyżką dłoniową przekrojowo tworzą trzy obwodowe punkty podparcia kończyny górnej. Taki sposób stabilizacji przedramienia jest sposobem najbardziej skutecznym. Właściwości Doskonała stabilizacja – dzięki zastosowaniu trzech usztywnień rozmieszczonych na obwodzie wyrobu, uzyskano doskonałą jego stabilizację. Komfort użytkowania – dzięki zastosowaniu nowego surowca AirSanmed II, pot od ciała pacjenta jest skutecznie odprowadzany. Łatwość użytkowania – prosty sposób zakładania i zdejmowania wyrobu przez pacjenta. Utrzymanie właściwej higieny – ze względu na łatwość zdemontowania wyrobu nie ma problemu z jego praniem i konserwacją. Przeznaczenie po przebytych urazach stawu promieniowo nadgarstkowego w zapaleniach kaletek ścięgnistych, w zmianach przeciążeniowych, zwyrodnieniowych i zapalnych profilaktycznie w sporcie Rozmiary Rozmiar Obwód nadgarstka Sposób dokonywania pomiaru XS 11-13 cm S 13-15 cm M 15-17 cm L 17-19 cm XL 19-21 cm Wyrób występuje jako prawy / lewy. Całkowita długość ortezy: 24 cm Kolorystyka Orteza nadgarstka AM-OSN-U-02 Galeria Kliknij na zdjęcie aby powiększyć Technologia SUROWCE AirSanmed II™ AirSanmed II™ to wielowarstwowy surowiec ortopedyczny nowej generacji, który doskonale nadaje się do produkcji ortez ortopedycznych, poprawiając ich funkcjonalność, jakość i komfort użytkowania. Z zewnątrz surowca znajduje się zmywalny, paroizolacyjny laminat medyczny, który może być dezynfekowany chemicznie lub parowo. Laminat ten został zlaminowany z pianką odciążającą i dodatkowo wyperforowany, dzięki czemu została poprawiona przewiewność surowca oraz komfort odciążenia szyn i stalek ortopedycznych od ciała pacjenta. Do pianki odciążającej została doklejona warstwa miękkiej pianki komfortowej, która skutecznie poprawia komfort użytkowania ortezy, niwelując wolne przestrzenie powstające pomiędzy ortezą a ciałem pacjenta. Do miękkiej pianki komfortowej od strony ciała doklejono miękką, przewiewną dzianinę bawełnianą o odczynniku pH zgodnym z naturalnym odczynnikiem pH skóry człowieka. Dzianina ta dodatkowo posiada atest OekoTex Standard100 gwarantujący, że wyrób został wykonany z surowców przyjaznych dla skóry pacjenta. Wyroby wykonane z tego surowca można dezynfekować środkami dezynfekcyjnymi stosowanymi powszechnie w służbie zdrowia. Mogą być dezynfekowane zarówno chemicznie jak i parowo. Poniższa tabela przedstawia metody i środki dopuszczone do dezynfekcji. ŚRODKI DOZWOLONE !!! Rodzaj środka aktywnego lub powierzchniowo-czynnego Maksymalna zawartość w środku dezynfekcyjnym Spryskać powierzchnię wyrobu środkiem dezynfekcyjnym, pozostawić na czas działania środka, po czym należy zmyć wodą i wysuszyć 2-propanol 35% 1-propanol 25% Etanol 10% Chlorek benzyloalkiloamonowy 0,2% Glukoprotamina 25% SYSTEMY TECHNOLOGICZNE CTSyndrome - System cieśni nadgarstka Zespół cieśni nadgarstka to najczęstsza neuropatia uciskowa spotykana w gabinetach lekarskich. Spowodowana jest uciskiem nerwu, który biegnie wzdłuż kanału nadgarstka. Najczęstszą przyczyną pojawienia się cieśni jest zapalenie pochewki ścięgna zginaczy, reumatoidalne zapalenie stawów, ciąża, amyloidoza oraz bezpośredni ucisk, spowodowany niekorzystną pozycją nadgarstka. Zespół cieśni nadgarstka objawia się bólem, drętwieniem, osłabieniem ręki i parestezją, promieniującą do kciuka, palca wskazującego, środkowego i serdecznego. Najlepszym sposobem na zwalczanie zespołu cieśni nadgarstka jest stosowanie ortezy, wyposażonej w stalkę anatomiczną. Natomiast, wielu pacjentów nie zdaje sobie sprawy, że stosując tradycyjną ortezę nadgarstka, pogarszają swój stan! Bezpośredni ucisk, który dostarcza stalka, powoduje pogłębienie problemu i zwiększenie dolegliwości bólowych. Co więcej pacjent, który nigdy nie miał zespołu cieśni nadgarstka, stosujący zwykłą ortezę z powodu np. złamania w obrębie nadgarstka, po kilkutygodniowym okresie unieruchomienia stawu i ciągłej kompresji troczka, w większości przypadków zacznie cierpieć z powodu cieśni. Dlatego, niezmiernie ważne jest stosowanie ortez nadgarstka z odciążeniem kanału nadgarstka. REH4MAT, jako lider w dziedzinie zaopatrzenia ortopedycznego, wprowadził do większości swoich ortez rozwiązanie o nazwie CTSyndrome. Jest to specjalna pelota, umieszczona na stalce i zabezpieczająca kanał nadgarstka przed bezpośrednim uciskiem oraz zapewniająca swobodny przepływ impulsów elektrycznych w nerwie pośrodkowym. USZTYWNIENIA Fiszbiny plastikowe Fiszbiny plastikowe występują w różnych szerokościach i grubościach, wykonane są z różnego rodzaju tworzyw sztucznych, takich jak poliamid, ABS czy akryl, a cechy te decydują o ich sztywności. Dzięki takiej konstrukcji są odporne na wodę, wilgoć i pot. Wyroby wyposażone w nie mogą być prane bez konieczności ich wymontowywania z ortezy. Nasze fiszbiny plastikowe pracują tylko w jednym kierunku doskonale stabilizują bocznie zabezpieczoną część ciała dopasowując się jednocześnie do niego oraz posiadają pamięć, dzięki której zawsze powracają do pierwotnego kształtu. Funkcja ta powoduje, że fiszbiny w ortezie tak samo stabilizują kończynę opuchniętą bezpośrednio po urazie, jak i po zejściu opuchlizny. Nie podlegają one możliwości doginania i korygowania przez to postawy ciała lub zabezpieczonego stawu. Łyżki nadgarstków Łyżki nadgarstkowe, to specjalnie ukształtowane usztywnienie odzwierciedlające ukształtowanie tej części ciała od spodu. Posiadają one wsparcie śródręcza oraz przedramienia. Wykonane są ze specjalnie usztywnionego aluminium oraz w zależności od przeznaczenia posiadają różne rozmiary, różne kształty, różną szerokość i grubość. Ich końce są mocno zaokrąglone co skutecznie zabobiega przebiciu tunela w którym zostały zamontowane. Usztywnienie kciuka Usztywnienia kciuka stosowane są do produkcji niektórych typów ortez nadgarstka, zostały wykonane ze stali, wyoblone, wstępnie wyprofilowane anatomicznie i wyposażone w ażurowy stabilizator kciuka. Usztywnienia montowane są w elementy miękkie ortez nadgarstka w specjalnie do tego przygotowane kanały. W celu zabezpieczenia usztywnień przed szkodliwym działaniem potu i wody, zostały one ocynkowane. Bardzo ważną kwestią jest fakt, aby usztywnienia kciuka zostały tylko uformowane wstępnie, w celu umożliwienia przymierzenia pacjentowi ortezy, po właściwym doborze jej rozmiaru, wymagane jest precyzyjne dogięcie stabilizatora, w celu uzyskania pożądanego przez lekarza lub terapeutę ustawienia kciuka pacjenta. Sposób zakładania Do pobrania Deklaracja zgodności Instrukcja użytkowania Instrukcja użytkowania (inne języki) Sposób zakładania Akcesoria AKCESORIA/PRODUKTY DO STOSOWANIA RAZEM Z WYROBEM Orteza kończyny górnej OKG-03 SZARY Orteza kończyny górnej OKG-07 SZARY Rękaw ochronny pod ortezę AM-RB Prezentacja wyrobu z akcesorium OKG-07 Dane produktu Kod katalogowyAM-OSN-U-02Nazwa handlowaORTEZA NADGARSTKAModelAM-OSN-U-02UNSPSC42241806UMDNS17911NFZJ.02.01.00, J.02.01.01 Piktogramy produktu Orteza nadgarstka i przedramienia Alternatywa gipsu Anatomiczna szyna dłoniowa Innowacyjny Wodoodporny Wyrób medyczny kl.I Zespół cieśni nadgarstka Oznaczenia medyczne CE — Wyrób Medyczny klasy I zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2017/745 z dnia 5 kwietnia 2017r. w sprawie wyrobów medycznych. MD — Wyrób Medyczny klasy I zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2017/745 z dnia 5 kwietnia 2017r. w sprawie wyrobów medycznych. Do pobrania Deklaracja zgodności Instrukcja użytkowania Instrukcja użytkowania (inne języki) AM-OSN-U-02-1 TO JEST WYRÓB MEDYCZNY. UŻYWAJ GO ZGODNIE Z INSTRUKCJĄ UŻYWANIA LUB ETYKIETĄ.",
+    "short_description": "Otwarta orteza nadgarstka została wykonana według nowego bardziej anatomicznego kształtu, dzięki czemu lepiej stabilizuje staw promieniowo-nadgarstkowy i nadgarstek.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "ffa19410367f54499e97305d036f4bbc3d9452f4a38245cced95f0a067ca7927",
+    "description_truncated": false,
+    "short_description_sha256": "b4e5daece7b74701b25d52d3955e305d422a226e4acfcf16012ed7ce1bf26ee4",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 20633,
+        "product_id": 9066,
+        "sku": "AM-OSN-U-02",
+        "external_variant_id": "reh4mat-1188-default",
+        "status": "draft",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": null,
+        "price_gross_amount": null,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 0,
+    "active_variant_identity_sha256": null,
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/reh4mat/1188/gallery/5bd90a0a701f5f6a48056efa1de98a2bb322b8205dde80e562897c1321bf9f25.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2012/08/4T7A2505-1.jpg",
+        "alt_text": "Orteza nadgarstka AM-OSN-U-02"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/1188/gallery/a3990cc652aa9a764b1de929e87d8aa319f6582c54962bb4663704b042245e8c.png",
+        "source_url": "http://www.reh4mat.com/uploads/2012/08/lock3points.png",
+        "alt_text": "Orteza nadgarstka AM-OSN-U-02"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/1188/gallery/86859c86f78696e5ba688bcd475286cd6609fe4bd7c9de5e6fb91db0a5a0b2e5.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2012/08/4T7A2513.jpg",
+        "alt_text": "/"
+      }
+    ]
+  },
+  {
+    "id": 9067,
+    "name": "Orteza nadgarstka AM-OSN-U-02",
+    "slug": "orteza-nadgarstka-am-osn-u-02",
+    "external_source": "reh4mat",
+    "external_id": "313671",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+    "seo_description": "Otwarta orteza nadgarstka została wykonana według nowego bardziej anatomicznego kształtu, dzięki czemu lepiej stabilizuje staw promieniowo-nadgarstkowy i nadgarstek.",
+    "description": "Otwarta orteza nadgarstka została wykonana według nowego bardziej anatomicznego kształtu, dzięki czemu lepiej stabilizuje staw promieniowo-nadgarstkowy i nadgarstek. Wyrób posiada konstrukcję otwartą, co ułatwia jego zakładanie na kończynę oraz regulowane zapięcie przednie, co czyni ortezę jeszcze bardziej uniwersalną i ułatwia dopasowanie do każdego kształtu dłoni. W górnej części wyrobu zainstalowano dwie fiszbiny ortopedyczne, które wraz z łyżką dłoniową przekrojowo tworzą trzy obwodowe punkty podparcia kończyny górnej. Taki sposób stabilizacji przedramienia jest sposobem najbardziej skutecznym. Zapięcia wyrobu wykonano przy użyciu zespołu dwóch szerokich taśm obwodowych oraz jednej wąskiej taśmy dłoniowej. Zakres regulacji zapięć jest bardzo duży i dzięki temu gwarantuje on szeroki zakres regulacji i stabilizacji. Orteza została w całości wykonana z nowego innowacyjnego surowca AirSanmed II™. W dłoniowej części ortezy zainstalowano miękką elastyczną poduszkę poprawiającą komfort użytkowania wyrobu. Konstrukcja ortezy oraz użyte surowce przeciwdziałają wystąpieniu u jej użytkowników zespołu cieśni nadgarstka. W wyrobie zamontowano taśmę stabilizującą kciuk, której nadmiar po dopasowaniu należy odciąć. Dodatkowo w wyrobie zainstalowano aluminiową szynę boczną ze stabilizatorem, której zadaniem jest funkcja odwiedzenia kciuka. Zakres i sposób jego odwiedzenia może być dowolnie kształtowany przez odpowiednie przegięcie szyny. Stabilizacja 3 punktowa L3P (LOCK 3 POINTS) W dolnej części wyrobu zastosowano anatomicznie wyprofilowaną szynę dłoniową, która galwanicznie została zabezpieczona przed działaniem ludzkiego potu. W górnej części wyrobu zainstalowano dwie fiszbiny z tworzywa sztucznego, które wraz z łyżką dłoniową przekrojowo tworzą trzy obwodowe punkty podparcia kończyny górnej. Taki sposób stabilizacji przedramienia jest sposobem najbardziej skutecznym. Właściwości Doskonała stabilizacja – dzięki zastosowaniu trzech usztywnień rozmieszczonych na obwodzie wyrobu, uzyskano doskonałą jego stabilizację. Komfort użytkowania – dzięki zastosowaniu nowego surowca AirSanmed II, pot od ciała pacjenta jest skutecznie odprowadzany. Łatwość użytkowania – prosty sposób zakładania i zdejmowania wyrobu przez pacjenta. Utrzymanie właściwej higieny – ze względu na łatwość zdemontowania wyrobu nie ma problemu z jego praniem i konserwacją. Przeznaczenie po przebytych urazach stawu promieniowo nadgarstkowego w zapaleniach kaletek ścięgnistych, w zmianach przeciążeniowych, zwyrodnieniowych i zapalnych profilaktycznie w sporcie Rozmiary Rozmiar Obwód nadgarstka Sposób dokonywania pomiaru XS 11-13 cm S 13-15 cm M 15-17 cm L 17-19 cm XL 19-21 cm Wyrób występuje jako prawy / lewy. Całkowita długość ortezy: 24 cm Kolorystyka Orteza nadgarstka AM-OSN-U-02 Galeria Kliknij na zdjęcie aby powiększyć Technologia SUROWCE AirSanmed II™ AirSanmed II™ to wielowarstwowy surowiec ortopedyczny nowej generacji, który doskonale nadaje się do produkcji ortez ortopedycznych, poprawiając ich funkcjonalność, jakość i komfort użytkowania. Z zewnątrz surowca znajduje się zmywalny, paroizolacyjny laminat medyczny, który może być dezynfekowany chemicznie lub parowo. Laminat ten został zlaminowany z pianką odciążającą i dodatkowo wyperforowany, dzięki czemu została poprawiona przewiewność surowca oraz komfort odciążenia szyn i stalek ortopedycznych od ciała pacjenta. Do pianki odciążającej została doklejona warstwa miękkiej pianki komfortowej, która skutecznie poprawia komfort użytkowania ortezy, niwelując wolne przestrzenie powstające pomiędzy ortezą a ciałem pacjenta. Do miękkiej pianki komfortowej od strony ciała doklejono miękką, przewiewną dzianinę bawełnianą o odczynniku pH zgodnym z naturalnym odczynnikiem pH skóry człowieka. Dzianina ta dodatkowo posiada atest OekoTex Standard100 gwarantujący, że wyrób został wykonany z surowców przyjaznych dla skóry pacjenta. Wyroby wykonane z tego surowca można dezynfekować środkami dezynfekcyjnymi stosowanymi powszechnie w służbie zdrowia. Mogą być dezynfekowane zarówno chemicznie jak i parowo. Poniższa tabela przedstawia metody i środki dopuszczone do dezynfekcji. ŚRODKI DOZWOLONE !!! Rodzaj środka aktywnego lub powierzchniowo-czynnego Maksymalna zawartość w środku dezynfekcyjnym Spryskać powierzchnię wyrobu środkiem dezynfekcyjnym, pozostawić na czas działania środka, po czym należy zmyć wodą i wysuszyć 2-propanol 35% 1-propanol 25% Etanol 10% Chlorek benzyloalkiloamonowy 0,2% Glukoprotamina 25% SYSTEMY TECHNOLOGICZNE CTSyndrome - System cieśni nadgarstka Zespół cieśni nadgarstka to najczęstsza neuropatia uciskowa spotykana w gabinetach lekarskich. Spowodowana jest uciskiem nerwu, który biegnie wzdłuż kanału nadgarstka. Najczęstszą przyczyną pojawienia się cieśni jest zapalenie pochewki ścięgna zginaczy, reumatoidalne zapalenie stawów, ciąża, amyloidoza oraz bezpośredni ucisk, spowodowany niekorzystną pozycją nadgarstka. Zespół cieśni nadgarstka objawia się bólem, drętwieniem, osłabieniem ręki i parestezją, promieniującą do kciuka, palca wskazującego, środkowego i serdecznego. Najlepszym sposobem na zwalczanie zespołu cieśni nadgarstka jest stosowanie ortezy, wyposażonej w stalkę anatomiczną. Natomiast, wielu pacjentów nie zdaje sobie sprawy, że stosując tradycyjną ortezę nadgarstka, pogarszają swój stan! Bezpośredni ucisk, który dostarcza stalka, powoduje pogłębienie problemu i zwiększenie dolegliwości bólowych. Co więcej pacjent, który nigdy nie miał zespołu cieśni nadgarstka, stosujący zwykłą ortezę z powodu np. złamania w obrębie nadgarstka, po kilkutygodniowym okresie unieruchomienia stawu i ciągłej kompresji troczka, w większości przypadków zacznie cierpieć z powodu cieśni. Dlatego, niezmiernie ważne jest stosowanie ortez nadgarstka z odciążeniem kanału nadgarstka. REH4MAT, jako lider w dziedzinie zaopatrzenia ortopedycznego, wprowadził do większości swoich ortez rozwiązanie o nazwie CTSyndrome. Jest to specjalna pelota, umieszczona na stalce i zabezpieczająca kanał nadgarstka przed bezpośrednim uciskiem oraz zapewniająca swobodny przepływ impulsów elektrycznych w nerwie pośrodkowym. USZTYWNIENIA Fiszbiny plastikowe Fiszbiny plastikowe występują w różnych szerokościach i grubościach, wykonane są z różnego rodzaju tworzyw sztucznych, takich jak poliamid, ABS czy akryl, a cechy te decydują o ich sztywności. Dzięki takiej konstrukcji są odporne na wodę, wilgoć i pot. Wyroby wyposażone w nie mogą być prane bez konieczności ich wymontowywania z ortezy. Nasze fiszbiny plastikowe pracują tylko w jednym kierunku doskonale stabilizują bocznie zabezpieczoną część ciała dopasowując się jednocześnie do niego oraz posiadają pamięć, dzięki której zawsze powracają do pierwotnego kształtu. Funkcja ta powoduje, że fiszbiny w ortezie tak samo stabilizują kończynę opuchniętą bezpośrednio po urazie, jak i po zejściu opuchlizny. Nie podlegają one możliwości doginania i korygowania przez to postawy ciała lub zabezpieczonego stawu. Łyżki nadgarstków Łyżki nadgarstkowe, to specjalnie ukształtowane usztywnienie odzwierciedlające ukształtowanie tej części ciała od spodu. Posiadają one wsparcie śródręcza oraz przedramienia. Wykonane są ze specjalnie usztywnionego aluminium oraz w zależności od przeznaczenia posiadają różne rozmiary, różne kształty, różną szerokość i grubość. Ich końce są mocno zaokrąglone co skutecznie zabobiega przebiciu tunela w którym zostały zamontowane. Usztywnienie kciuka Usztywnienia kciuka stosowane są do produkcji niektórych typów ortez nadgarstka, zostały wykonane ze stali, wyoblone, wstępnie wyprofilowane anatomicznie i wyposażone w ażurowy stabilizator kciuka. Usztywnienia montowane są w elementy miękkie ortez nadgarstka w specjalnie do tego przygotowane kanały. W celu zabezpieczenia usztywnień przed szkodliwym działaniem potu i wody, zostały one ocynkowane. Bardzo ważną kwestią jest fakt, aby usztywnienia kciuka zostały tylko uformowane wstępnie, w celu umożliwienia przymierzenia pacjentowi ortezy, po właściwym doborze jej rozmiaru, wymagane jest precyzyjne dogięcie stabilizatora, w celu uzyskania pożądanego przez lekarza lub terapeutę ustawienia kciuka pacjenta. Sposób zakładania Do pobrania Deklaracja zgodności Instrukcja użytkowania Instrukcja użytkowania (inne języki) Sposób zakładania Akcesoria AKCESORIA/PRODUKTY DO STOSOWANIA RAZEM Z WYROBEM Orteza kończyny górnej OKG-03 CZARNY Orteza kończyny górnej OKG-07 CZARNY Rękaw ochronny pod ortezę AM-RB Dane produktu Kod katalogowyAM-OSN-U-02Nazwa handlowaORTEZA NADGARSTKAModelAM-OSN-U-02UMDNS17911NFZJ.02.01.00, J.02.01.01 Piktogramy produktu Orteza łokcia i przedramienia Alternatywa gipsu Anatomiczna szyna dłoniowa Innowacyjny Wodoodporny Wyrób medyczny kl.I Zespół cieśni nadgarstka Oznaczenia medyczne CE — Wyrób Medyczny klasy I zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2017/745 z dnia 5 kwietnia 2017r. w sprawie wyrobów medycznych. MD — Wyrób Medyczny klasy I zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2017/745 z dnia 5 kwietnia 2017r. w sprawie wyrobów medycznych. Do pobrania Deklaracja zgodności Instrukcja użytkowania Instrukcja użytkowania (inne języki) AM-OSN-U-02 TO JEST WYRÓB MEDYCZNY. UŻYWAJ GO ZGODNIE Z INSTRUKCJĄ UŻYWANIA LUB ETYKIETĄ.",
+    "short_description": "Otwarta orteza nadgarstka została wykonana według nowego bardziej anatomicznego kształtu, dzięki czemu lepiej stabilizuje staw promieniowo-nadgarstkowy i nadgarstek.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "da60520883e42a2ad4201d924e03526a22d1e535bdedb6cbf66f227395419f48",
+    "description_truncated": false,
+    "short_description_sha256": "b4e5daece7b74701b25d52d3955e305d422a226e4acfcf16012ed7ce1bf26ee4",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 20634,
+        "product_id": 9067,
+        "sku": "AM-OSN-U-02-2",
+        "external_variant_id": "reh4mat-313671-default",
+        "status": "draft",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": null,
+        "price_gross_amount": null,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 0,
+    "active_variant_identity_sha256": null,
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/reh4mat/313671/gallery/152c677af79c8997cdfa51676c94dcf9683db885e3387b5d82693258aab279cd.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2023/05/4T7A2525.jpg",
+        "alt_text": "Orteza nadgarstka AM-OSN-U-02"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/313671/gallery/a3990cc652aa9a764b1de929e87d8aa319f6582c54962bb4663704b042245e8c.png",
+        "source_url": "http://www.reh4mat.com/uploads/2012/08/lock3points.png",
+        "alt_text": "Orteza nadgarstka AM-OSN-U-02"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/313671/gallery/59144cfe0b1fbe219923e6ba935ace15b3cae580c5d37cfa3b8dc46701a2c383.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2023/05/4T7A2531.jpg",
+        "alt_text": "/"
+      }
+    ]
+  },
+  {
+    "id": 9092,
+    "name": "Uniwersalny temblak OKG-25",
+    "slug": "uniwersalny-temblak-okg-25",
+    "external_source": "reh4mat",
+    "external_id": "313813",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+    "seo_description": "Urazy w obrębie kończyny górnej są stosunkowo częste. Wyróżniamy zarówno ostre jak i przewlekłe uszkodzenia.",
+    "description": "URAZY KOŃCZYNY GÓRNEJ Urazy w obrębie kończyny górnej są stosunkowo częste. Wyróżniamy zarówno ostre jak i przewlekłe uszkodzenia. Przewlekłe urazy kończyny górnej związane jest z przeciążeniem mięśni czy więzadeł na skutek wykonywania codziennych prac. Zbyt duży nacisk na mięśnie czy kości, powoduje bolesność i obrzęk stawu. Urazy ostre mogą być spowodowane bezpośrednim uderzeniem lub upadkiem. Mogą też wystąpić w wyniku skręcenia, szarpnięcia, zakleszczenia lub nieprawidłowego zgięcia kończyny. Ból może być nagły i silny. Siniaki i obrzęk mogą pojawić się wkrótce po urazie. Zarówno ostre jak i przewlekłe urazy zwykle wymagają szybkiej opieki medycznej i unieruchomienia kończyny. W tym celu doskonale sprawdzi się nasz uniwersalny temblak OKG-25. Charakterystyka produktu: Temblak kończyny górnej OKG-25 powstał z myślą o szybkim i skutecznym unieruchomieniu ręki. Zapewnia wsparcie dla barku, łokcia i nadgarstka oraz zapobiega rotacji kończyny. Dzięki innowacyjnej konstrukcji, temblak posiada jeden, uniwersalny rozmiar, który odpowiada większości użytkowników. Temblak OKG-25 przebiega przez tułów użytkownika omijając okolice karku. Takie rozwiązanie nie obciąża kręgów szyjnych i zdecydowanie zwiększa komfort użytkowania. Połączenie pasa z rzepowym zapięciem na haczyk zapewnia użytkownikom i pacjentom łatwą regulację podparcia ramienia. Innowacyjny projekt pozwala na skuteczne unieruchomienie całej kończyny górnej. Zastosowanie specjalnej przeplatanej konstrukcji zapobiega niekontrolowanemu odwiedzeniu kończyny górnej od tułowia, rotacji barku czy przedramienia. Optymalna długość produktu, pozwala na jego łatwe przycięcie do pożądanej długości, aby spełnić indywidualne potrzeby użytkownika. Orteza kończyny górnej OKG-25 została wykonana z lekkiego i oddychającego materiału. Produkt pasuje zarówno na prawe lub lewe ramię. Temblak OKG-25 jest niezwykle prosty w użyciu. Zapięcie na haczyk i pętlę ułatwia zakładanie tylko jedną ręką i pozwala precyzyjnie dopasować długość do ciała. To doskonały wielofunkcyjny produkt, który sprawdzi się w każdym przypadku urazu w obrębie kończyny górnej. Przeznaczenie: rekonwalescencja pooperacyjna złamania zwichnięcia/podwichnięcia uraz stożka rotatorów urazy ramienia lub dłoni Rozmiary Rozmiar Obwód klatki piersiowej Sposób dokonywania pomiaru Uniwersalny max 140 cm Wyrób uniwersalny na prawą i lewą rękę. Kolorystyka Uniwersalny temblak OKG-25 Galeria Kliknij na zdjęcie aby powiększyć Technologia SUROWCE ActiveDistance™ ActiveDistance™ to trójwarstwowy aktywny surowiec, który składa się z pianki komfortowej oraz dwóch bardzo mocnych nierozciągliwych okładzin poliamidowych. Specyfika surowca ActiveDistance™ polega na tym, że nie jest on elastyczny przez co polepsza stabilizację zabezpieczonej części ciała. Dzięki zastosowaniu w surowcu pianki komfortowej, jest on bardzo miękki, co poprawia komfort użytkowania wyrobów z niego wykonanych. Dodatkowym atutem surowca ActiveDistance™ jest fakt, że posiada on obustronną funkcję samoszczepną, co zdecydowanie ułatwia jego użytkowanie. Sposób zakładania Do pobrania Deklaracja zgodności Instrukcja użytkowania Instrukcja użytkowania (inne języki) Sposób zakładania Dane produktu Kod katalogowyOKG-25Nazwa handlowaUNIWERSALNY TEMBLAKModelOKG-25 Piktogramy produktu Orteza kończyny górnej 24h terapia Dwustronność Innowacyjny Przyjazny dla skóry Wyrób medyczny kl.I Oznaczenia medyczne CE — Wyrób Medyczny klasy I zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2017/745 z dnia 5 kwietnia 2017r. w sprawie wyrobów medycznych. MD — Wyrób Medyczny klasy I zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2017/745 z dnia 5 kwietnia 2017r. w sprawie wyrobów medycznych. Do pobrania Deklaracja zgodności Instrukcja użytkowania Instrukcja użytkowania (inne języki) OKG-25-2024 TO JEST WYRÓB MEDYCZNY. UŻYWAJ GO ZGODNIE Z INSTRUKCJĄ UŻYWANIA LUB ETYKIETĄ.",
+    "short_description": "Urazy w obrębie kończyny górnej są stosunkowo częste. Wyróżniamy zarówno ostre jak i przewlekłe uszkodzenia.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "1fcd1b21f07a7d6041880ac3d53d4f828f37f4f1d0adaab830eb4eca52467bd9",
+    "description_truncated": false,
+    "short_description_sha256": "ab0b242121bc62c92906a0d0afe158121b5714c9d5eb55b3778dc1ec74e42ae7",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 20659,
+        "product_id": 9092,
+        "sku": "OKG-25",
+        "external_variant_id": "reh4mat-313813-default",
+        "status": "draft",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": null,
+        "price_gross_amount": null,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 0,
+    "active_variant_identity_sha256": null,
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/reh4mat/313813/gallery/e6c2596568c97fdab54049285166c9a4eedc0f80fd95b8378501715a9c7cecf8.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2023/06/4T7A5482.jpg",
+        "alt_text": "Uniwersalny temblak OKG-25"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/313813/gallery/b8f2ca49a22b09e48b4940600b5436c933f6be2ca8aa5778b08224ec4c352a7c.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2023/06/4T7A5483.jpg",
+        "alt_text": "/"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/313813/gallery/086d39df83d372c6c35f33958e900f6efaee09fec1ae977272a2a70c68e71aa7.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2023/06/4T7A5484.jpg",
+        "alt_text": "/"
+      }
+    ]
+  },
+  {
+    "id": 9093,
+    "name": "Uniwersalny temblak OKG-25",
+    "slug": "uniwersalny-temblak-okg-25-2",
+    "external_source": "reh4mat",
+    "external_id": "316311",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+    "seo_description": "Urazy w obrębie kończyny górnej są stosunkowo częste. Wyróżniamy zarówno ostre jak i przewlekłe uszkodzenia.",
+    "description": "URAZY KOŃCZYNY GÓRNEJ Urazy w obrębie kończyny górnej są stosunkowo częste. Wyróżniamy zarówno ostre jak i przewlekłe uszkodzenia. Przewlekłe urazy kończyny górnej związane jest z przeciążeniem mięśni czy więzadeł na skutek wykonywania codziennych prac. Zbyt duży nacisk na mięśnie czy kości, powoduje bolesność i obrzęk stawu. Urazy ostre mogą być spowodowane bezpośrednim uderzeniem lub upadkiem. Mogą też wystąpić w wyniku skręcenia, szarpnięcia, zakleszczenia lub nieprawidłowego zgięcia kończyny. Ból może być nagły i silny. Siniaki i obrzęk mogą pojawić się wkrótce po urazie. Zarówno ostre jak i przewlekłe urazy zwykle wymagają szybkiej opieki medycznej i unieruchomienia kończyny. W tym celu doskonale sprawdzi się nasz uniwersalny temblak OKG-25. Charakterystyka produktu: Temblak kończyny górnej OKG-25 powstał z myślą o szybkim i skutecznym unieruchomieniu ręki. Zapewnia wsparcie dla barku, łokcia i nadgarstka oraz zapobiega rotacji kończyny. Dzięki innowacyjnej konstrukcji, temblak posiada jeden, uniwersalny rozmiar, który odpowiada większości użytkowników. Temblak OKG-25 przebiega przez tułów użytkownika omijając okolice karku. Takie rozwiązanie nie obciąża kręgów szyjnych i zdecydowanie zwiększa komfort użytkowania. Połączenie pasa z rzepowym zapięciem na haczyk zapewnia użytkownikom i pacjentom łatwą regulację podparcia ramienia. Innowacyjny projekt pozwala na skuteczne unieruchomienie całej kończyny górnej. Zastosowanie specjalnej przeplatanej konstrukcji zapobiega niekontrolowanemu odwiedzeniu kończyny górnej od tułowia, rotacji barku czy przedramienia. Optymalna długość produktu, pozwala na jego łatwe przycięcie do pożądanej długości, aby spełnić indywidualne potrzeby użytkownika. Orteza kończyny górnej OKG-25 została wykonana z lekkiego i oddychającego materiału. Produkt pasuje zarówno na prawe lub lewe ramię. Temblak OKG-25 jest niezwykle prosty w użyciu. Zapięcie na haczyk i pętlę ułatwia zakładanie tylko jedną ręką i pozwala precyzyjnie dopasować długość do ciała. To doskonały wielofunkcyjny produkt, który sprawdzi się w każdym przypadku urazu w obrębie kończyny górnej. Przeznaczenie: rekonwalescencja pooperacyjna złamania zwichnięcia/podwichnięcia uraz stożka rotatorów urazy ramienia lub dłoni Rozmiary Rozmiar Obwód nadgarstka Sposób dokonywania pomiaru Uniwersalny max 140 cm Wyrób uniwersalny na prawą i lewą rękę. Kolorystyka Uniwersalny temblak OKG-25 Galeria Kliknij na zdjęcie aby powiększyć Technologia SUROWCE ActiveDistance™ ActiveDistance™ to trójwarstwowy aktywny surowiec, który składa się z pianki komfortowej oraz dwóch bardzo mocnych nierozciągliwych okładzin poliamidowych. Specyfika surowca ActiveDistance™ polega na tym, że nie jest on elastyczny przez co polepsza stabilizację zabezpieczonej części ciała. Dzięki zastosowaniu w surowcu pianki komfortowej, jest on bardzo miękki, co poprawia komfort użytkowania wyrobów z niego wykonanych. Dodatkowym atutem surowca ActiveDistance™ jest fakt, że posiada on obustronną funkcję samoszczepną, co zdecydowanie ułatwia jego użytkowanie. Sposób zakładania Do pobrania Deklaracja zgodności Instrukcja użytkowania Instrukcja użytkowania (inne języki) Sposób zakładania Dane produktu Kod katalogowyOKG-25Nazwa handlowaUNIWERSALNY TEMBLAKModelOKG-25 Piktogramy produktu Orteza kończyny górnej 24h terapia Dwustronność Innowacyjny Przyjazny dla skóry Wyrób medyczny kl.I Oznaczenia medyczne CE — Wyrób Medyczny klasy I zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2017/745 z dnia 5 kwietnia 2017r. w sprawie wyrobów medycznych. MD — Wyrób Medyczny klasy I zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2017/745 z dnia 5 kwietnia 2017r. w sprawie wyrobów medycznych. Do pobrania Deklaracja zgodności Instrukcja użytkowania Instrukcja użytkowania (inne języki) OKG-25-2024 TO JEST WYRÓB MEDYCZNY. UŻYWAJ GO ZGODNIE Z INSTRUKCJĄ UŻYWANIA LUB ETYKIETĄ.",
+    "short_description": "Urazy w obrębie kończyny górnej są stosunkowo częste. Wyróżniamy zarówno ostre jak i przewlekłe uszkodzenia.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "0bd120ff7c3912b6c4ad9a8a58daf8fd2bb6965a76793e488581382f4636a6ba",
+    "description_truncated": false,
+    "short_description_sha256": "ab0b242121bc62c92906a0d0afe158121b5714c9d5eb55b3778dc1ec74e42ae7",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 20660,
+        "product_id": 9093,
+        "sku": "OKG-25-2",
+        "external_variant_id": "reh4mat-316311-default",
+        "status": "draft",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": null,
+        "price_gross_amount": null,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 0,
+    "active_variant_identity_sha256": null,
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/reh4mat/316311/gallery/e89283eb1b7853d3751d46d71e04262bf443f68230b10d329ad9046b398f77b2.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2023/07/4T7A5509.jpg",
+        "alt_text": "Uniwersalny temblak OKG-25"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/316311/gallery/ccdcc4b661695e718ee21df0228afcf63f06c43cf0be79baee9e8b3e31ac9c47.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2023/07/4T7A5482-baner-szare-kopia-scaled.jpg",
+        "alt_text": "Uniwersalny temblak OKG-25"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/316311/gallery/a7519abacb74cc304e1a2fd484cc5bb07fb4893691629db36a6e10226d9b664e.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2023/07/4T7A5508.jpg",
+        "alt_text": "/"
+      }
+    ]
+  },
+  {
+    "id": 9094,
+    "name": "Separator neurologiczny",
+    "slug": "separator-neurologiczny",
+    "external_source": "reh4mat",
+    "external_id": "41493",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+    "seo_description": "Separator neurologiczny występuje jako dodatkowe wyposażenie do ortez ręki i przedramienia firmy Reh4Mat.",
+    "description": "Separator neurologiczny występuje jako dodatkowe wyposażenie do ortez ręki i przedramienia firmy Reh4Mat. Zapewnia on prawidłowe ułożenie palców i utrzymuje optymalne odwiedzenie paliczków bliższych w sytuacji zmian neurologicznych lub zwyrodnieniowych. W przypadku wzmożonej spastyki, separator zabezpiecza palce przed ich nadmiernym „ściskaniem”. W sytuacji tzw. „łabędziej ręki” w RZS, konstrukcja wyrobu ze specjalnym zapięciem koryguje ustawienie palców ze strony dołokciowej do pozycji neutralnej. Utrzymanie takiej optymalnej neutralnej pozycji ręki pozwala na zahamowanie procesu zmian neurologicznych i zwyrodnieniowych u chorego. Całkowita wysokość wyrobu: 4 cm Kolorystyka Separator neurologiczny Galeria Przykładowy wygląd wyrobu Produkty Produkt można stosować z następującymi wyrobami: Orteza kończyny górnej AM-KG-AM/1RE Orteza nadgarstka AM-SDP-K-01 Orteza nadgarstka AM-SDP-K-02 Piktogramy produktu Akcesorium Dodatkowe Przyjazny dla skóry To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "Separator neurologiczny występuje jako dodatkowe wyposażenie do ortez ręki i przedramienia firmy Reh4Mat.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "0c267258a4adbc0f55966c0b4d0194ff8fe8464e5baa050dd85017e51a1b83a8",
+    "description_truncated": false,
+    "short_description_sha256": "e65f825fc7ca9b3b5f7f83c7aae4290ec9297eae56703f6b52f2d8d6febef84f",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 20661,
+        "product_id": 9094,
+        "sku": "REH4MAT-41493",
+        "external_variant_id": "reh4mat-41493-default",
+        "status": "draft",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": null,
+        "price_gross_amount": null,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 0,
+    "active_variant_identity_sha256": null,
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/reh4mat/41493/gallery/0ef1b328525dedbd4eaed615a7e3d299d66b902e780b741aaab551524c0f37ff.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2014/12/separator-tlo-1-1.jpg",
+        "alt_text": "Separator neurologiczny"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/41493/gallery/bcf08d146136bfb90cae93090eafca85ae58427bdf3e913196bcfaf755638b34.jpg",
+        "source_url": "http://www.reh4mat.com/uploads/2014/12/separator-pl.jpg",
+        "alt_text": "Separator neurologiczny"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/41493/gallery/f9ad2614e4bf0aeff6895b95dc5bb115011f06e80640caff5b0fa6f6bac533e8.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2014/12/separator1.jpg",
+        "alt_text": "Separator/"
+      }
+    ]
+  },
+  {
+    "id": 9095,
+    "name": "Separator neurologiczny",
+    "slug": "separator-neurologiczny-cz",
+    "external_source": "reh4mat",
+    "external_id": "290460",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+    "seo_description": "Separator neurologiczny występuje jako dodatkowe wyposażenie do ortez ręki i przedramienia firmy Reh4Mat.",
+    "description": "Separator neurologiczny występuje jako dodatkowe wyposażenie do ortez ręki i przedramienia firmy Reh4Mat. Zapewnia on prawidłowe ułożenie palców i utrzymuje optymalne odwiedzenie paliczków bliższych w sytuacji zmian neurologicznych lub zwyrodnieniowych. W przypadku wzmożonej spastyki, separator zabezpiecza palce przed ich nadmiernym „ściskaniem”. W sytuacji tzw. „łabędziej ręki” w RZS, konstrukcja wyrobu ze specjalnym zapięciem koryguje ustawienie palców ze strony dołokciowej do pozycji neutralnej. Utrzymanie takiej optymalnej neutralnej pozycji ręki pozwala na zahamowanie procesu zmian neurologicznych i zwyrodnieniowych u chorego. Całkowita wysokość wyrobu: 4 cm Kolorystyka Separator neurologiczny Produkty Produkt można stosować z następującymi wyrobami: Orteza nadgarstka AM-OSN-L-06 To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "Separator neurologiczny występuje jako dodatkowe wyposażenie do ortez ręki i przedramienia firmy Reh4Mat.",
+    "updated_at": "2026-10-31 20:58:59",
+    "description_sha256": "efd729b85eff74ffbec2337bd799b91dc5c7a5f4da1e54f6346cb4410301349a",
+    "description_truncated": false,
+    "short_description_sha256": "e65f825fc7ca9b3b5f7f83c7aae4290ec9297eae56703f6b52f2d8d6febef84f",
+    "short_description_truncated": false,
+    "product_attributes": [],
+    "variants": [
+      {
+        "id": 20662,
+        "product_id": 9095,
+        "sku": "REH4MAT-290460",
+        "external_variant_id": "reh4mat-290460-default",
+        "status": "draft",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": null,
+        "price_gross_amount": null,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 0,
+    "active_variant_identity_sha256": null,
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/reh4mat/290460/gallery/2b1ddb7065ada55fc6fbca629d0abd2effdd3d2552d2c1e8b83dee3782b8eeca.jpg",
+        "source_url": "https://www.reh4mat.com/uploads/2022/04/separator-neurologiczny-cz.jpg",
+        "alt_text": "Separator neurologiczny"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/290460/gallery/bcf08d146136bfb90cae93090eafca85ae58427bdf3e913196bcfaf755638b34.jpg",
+        "source_url": "http://www.reh4mat.com/uploads/2014/12/separator-pl.jpg",
+        "alt_text": "Separator neurologiczny"
+      },
+      {
+        "disk": "public",
+        "path": "products/reh4mat/290460/gallery/765556910d703ed80315438d459ea221d323590447773df419e31106b02599f4.png",
+        "source_url": "https://www.reh4mat.com/uploads/2014/12/separator_m-e1709633204160.png",
+        "alt_text": "Separator neurologiczny"
+      }
+    ]
+  },
+  {
+    "id": 9620,
+    "name": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+    "slug": "nakladka-na-toalete-nasadka-na-sedes-po-operacji-biodra-podwyzszajaca-wc",
+    "external_source": "medreha",
+    "external_id": "681",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+    "seo_description": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY",
+    "description": "NASADKA NA TOALETĘ Z KLAPĄ - 10 cm Wytrzymały plastik formowany rozdmuchowo. To podwyższane siedzisko sedesowe podnosi sedes o 10 cm wyżej niż zwykłe siedzisko sedesowe. Zaprojektowany tak, aby pasował do większości standardowych siedzisk sedesowych. Nasadka zapewniają łatwiejszy i bezpieczniejszy sposób wchodzenia i schodzenia z sedesu. Zawiera klapę, która wygląda i wydaje się taka sama jak przy zwykłym siedzisku sedesowym. Można je bezpiecznie przymocować do większości toalet o regularnym kształcie, a montaż nie wymaga użycia narzędzi. Udźwig nasadki to 150kg. Nasadka podwyższająca na sedes jest bardzo praktycznym rozwiązaniem dla osób po operacji biodra, ponieważ ułatwia korzystanie z toalety, zmniejszając konieczność schylania się i przechodzenia przez ból. Oto kilka informacji i wskazówek dotyczących takich nasadek: ⭐ Wysokość: Nasadka ma 10 cm wysokości, warto dostosować wybór do własnych potrzeb, aby zapewnić komfort i bezpieczeństwo. ⭐ Montaż: Nasadka jest łatwa w instalacji i można ją szybko zamontować na standardowym sedesie bez potrzeby użycia narzędzi. ⭐ Stabilność: Upewnij się, że nasadka dobrze przylega do sedesu, aby zapewnić stabilność i bezpieczeństwo użytkownika. ⭐ Materiał: Nasadka jest wykonana z łatwego do czyszczenia materiału, co jest istotne z punktu widzenia higieny. Przed zakupem warto skonsultować się z fizjoterapeutą lub lekarzem, aby dobrać najlepszą opcję zgodnie z indywidualnymi potrzebami. Nasadka podwyższająca na sedes to bardzo przydatne urządzenie, szczególnie dla osób, które przeszły operację biodra lub mają problemy z poruszaniem się. Jej zastosowanie przynosi szereg korzyści: ✅ Ułatwienie wsiadania i zsiadania: Podwyższona toaleta zmniejsza dystans, jaki osoba musi pokonać, aby usiąść lub wstać, co jest szczególnie ważne po operacji biodra, gdy ruchy mogą być ograniczone lub bolesne. ✅ Zminimalizowanie ryzyka urazów: Dzięki łatwiejszemu dostępowi do toalety ryzyko upadków i urazów, które mogą wystąpić podczas trudności z poruszaniem się, jest znacznie mniejsze. ✅ Wsparcie w rehabilitacji: Osoby po operacji biodra często muszą przez pewien czas unikać głębokiego siadu czy skakania. Nasadka umożliwia dostosowanie wysokości toalety do komfortu pacjenta, co wspiera proces rehabilitacji.Korzystanie z nasadki podwyższającej na sedes jest ważnym krokiem w zapewnieniu komfortu oraz bezpieczeństwa dla osób po operacjach biodra i innych schorzeniach. Zawsze warto skonsultować się z lekarzem lub specjalistą rehabilitacji w celu wyboru najodpowiedniejszego rozwiązania. PARAMETRY TECHNICZNE: ✅ Wysokość: 10 cm ✅ Szerokość 34 cm ✅ Głębokość 40 cm ✅ Szerokość otworu: 22 cm WYRÓB MEDYCZNY CE - DEKLARACJA ZGODNOŚCI z unijnymi normami, które potwierdzają bezpieczeństwo i jakość produktu. Deklaracja zgodności wynika z przepisów dyrektyw Unii Europejskiej i każdy produkt wprowadzony na rynek UE powinien posiadać takie oznaczenia Produkt jest zarejestrowany przez Urząd Rejestracji Produktów Leczniczych, Wyrobów Medycznych i Produktów Biobójczych jako WYRÓB MEDYCZNY i spełnia wynikające z tego bardzo rygorystyczne normy, gwarantuje bezpieczeństwo i jakość UWAGA - Produkt może nie być dopasowany do twoich potrzeb, przed kupnem zalecamy zasięgnąć opinii lekarza. Produkt zawiera etykietę oraz instrukcje w języku polskim. Etykietę produktu wyślemy na życzenie klienta. Dla bezpieczeństwa używaj wyrób zgodnie z instrukcją lub etykietą. W przypadku wątpliwości skonsultuj się ze specjalistą. Parametry produktu MateriałNasadka jest wykonana z łatwego do czyszczenia materiału, co jest istotne z punktu widzenia higieny. Przed zakupem warto skonsultować się z fizjoterapeutą lub lekarzem, aby dobrać najlepszą opcję zgodnie z indywidualnymi potrzebami. Nasadka podwyższająca na sedes to bardzo przydatne urządzenie, szczególnie dla osób, które przeszły operację biodra lub mają problemy z poruszaniem się. Dane produktu ProducentMASOSKU08002 To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY",
+    "updated_at": "2026-09-28 05:49:30",
+    "description_sha256": "ce91089d7c0b081bc3bf5e174dac506153e957ddbb2f10ce9bfcbf9244ad2e52",
+    "description_truncated": false,
+    "short_description_sha256": "7f8eb09c420d60d59b0db5afdfdfccaf704755688f6d594d199b6dbca340575a",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 16,
+        "attribute": "Wyrób medyczny",
+        "value_id": 692,
+        "value": "Tak",
+        "value_truncated": false
+      },
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 756,
+        "value": "MASO",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 21930,
+        "product_id": 9620,
+        "sku": "08002",
+        "external_variant_id": "medreha-681-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 6481,
+        "price_gross_amount": 7000,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ],
+    "active_variant_count": 1,
+    "active_variant_identity_sha256": "023b0a76d0bae2265efefc5b5edb7da75e21f1835558017330e17f4e9435fdc9",
+    "active_variant_options_sha256": null,
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/medreha/681/gallery/2f45285c951107e83f7f8b28d968642fa1c13b077123cc7de9a300050dfaef42.jpg",
+        "source_url": "https://sklep.medreha.pl/environment/cache/images/productGfx_3793_500_500/011.jpg",
+        "alt_text": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC"
+      },
+      {
+        "disk": "public",
+        "path": "products/medreha/681/gallery/ad4a03fa783bc59e4329f4c3e58bf744533b61c513bebec47beddb1e535b08fb.jpg",
+        "source_url": "https://sklep.medreha.pl/environment/cache/images/productGfx_3794_500_500/012.jpg",
+        "alt_text": "012.JPG"
+      },
+      {
+        "disk": "public",
+        "path": "products/medreha/681/gallery/0e9af482f62c84eded6db32c8777214ea88f51eda3a1e11a481f5f2023e11dea.png",
+        "source_url": "https://sklep.medreha.pl/environment/cache/images/productGfx_3686_500_500/08002__1_-removebg-preview.png",
+        "alt_text": "08002__1_-removebg-preview.png"
+      }
+    ]
+  },
+  {
+    "id": 9940,
+    "name": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+    "slug": "nakladka-na-toalete-nasadka-na-sedes-po-operacji-biodra-podwyzszajaca-wc-medreha-819",
+    "external_source": "medreha",
+    "external_id": "819",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+    "seo_description": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY",
+    "description": "NASADKA NA TOALETĘ Z KLAPĄ - 5 cm Wytrzymały plastik formowany rozdmuchowo. To podwyższenie siedzisko sedesowe podnosi sedes o 5 cm wyżej niż zwykłe siedzisko sedesowe. Zaprojektowany tak, aby pasował do większości standardowych siedzisk sedesowych. Nasadka zapewniają łatwiejszy i bezpieczniejszy sposób wchodzenia i schodzenia z sedesu. Zawiera klapę, która wygląda i wydaje się taka sama jak przy zwykłym siedzisku sedesowym. Można je bezpiecznie przymocować do większości toalet o regularnym kształcie, a montaż nie wymaga użycia narzędzi. Nasadka podwyższająca na sedes jest bardzo praktycznym rozwiązaniem dla osób po operacji biodra, ponieważ ułatwia korzystanie z toalety, zmniejszając konieczność schylania się i przechodzenia przez ból. Oto kilka informacji i wskazówek dotyczących takich nasadek: ⭐ Wysokość: Nasadka ma 5 cm wysokości, warto dostosować wybór do własnych potrzeb, aby zapewnić komfort i bezpieczeństwo. ⭐ Montaż: Nasadka jest łatwa w instalacji i można ją szybko zamontować na standardowym sedesie bez potrzeby użycia narzędzi. ⭐ Stabilność: Upewnij się, że nasadka dobrze przylega do sedesu, aby zapewnić stabilność i bezpieczeństwo użytkownika. ⭐ Materiał: Nasadka jest wykonana z łatwego do czyszczenia materiału, co jest istotne z punktu widzenia higieny. Przed zakupem warto skonsultować się z fizjoterapeutą lub lekarzem, aby dobrać najlepszą opcję zgodnie z indywidualnymi potrzebami. Nasadka podwyższająca na sedes to bardzo przydatne urządzenie, szczególnie dla osób, które przeszły operację biodra lub mają problemy z poruszaniem się. Jej zastosowanie przynosi szereg korzyści: ✅ Ułatwienie wsiadania i zsiadania: Podwyższona toaleta zmniejsza dystans, jaki osoba musi pokonać, aby usiąść lub wstać, co jest szczególnie ważne po operacji biodra, gdy ruchy mogą być ograniczone lub bolesne. ✅ Zminimalizowanie ryzyka urazów: Dzięki łatwiejszemu dostępowi do toalety ryzyko upadków i urazów, które mogą wystąpić podczas trudności z poruszaniem się, jest znacznie mniejsze. ✅ Wsparcie w rehabilitacji: Osoby po operacji biodra często muszą przez pewien czas unikać głębokiego siadu czy skakania. Nasadka umożliwia dostosowanie wysokości toalety do komfortu pacjenta, co wspiera proces rehabilitacji. Korzystanie z nasadki podwyższającej na sedes jest ważnym krokiem w zapewnieniu komfortu oraz bezpieczeństwa dla osób po operacjach biodra i innych schorzeniach. Zawsze warto skonsultować się z lekarzem lub specjalistą rehabilitacji w celu wyboru najodpowiedniejszego rozwiązania. Nakładka na sedes z klapą - łatwy montaż podwyższenie ⭐⭐⭐⭐⭐ ➡️ SPECYFIKACJA: ✔️ Stan: Nowy ✔️ Kolor: biały ✔️ Materiał: PP (tworzywo sztuczne) ✔️ Wysokość: 5 cm ✔️ Szerokość: 37 cm ✔️ Głębokość: 41 cm ✔️ Szerokość otworu: 23 cm ✔️ Głębokość otworu: 26 cm ✔️ Udźwig: 200 kg ✔️ Waga: ok. 1,3 kg ✔️ Produkt Medyczny ✅ ✔️ Certyfikat CE ✅ WYRÓB MEDYCZNY CE - DEKLARACJA ZGODNOŚCI z unijnymi normami, które potwierdzają bezpieczeństwo i jakość produktu. Deklaracja zgodności wynika z przepisów dyrektyw Unii Europejskiej i każdy produkt wprowadzony na rynek UE powinien posiadać takie oznaczenia Produkt jest zarejestrowany przez Urząd Rejestracji Produktów Leczniczych, Wyrobów Medycznych i Produktów Biobójczych jako WYRÓB MEDYCZNY i spełnia wynikające z tego bardzo rygorystyczne normy, gwarantuje bezpieczeństwo i jakość UWAGA - Produkt może nie być dopasowany do twoich potrzeb, przed kupnem zalecamy zasięgnąć opinii lekarza. Produkt zawiera etykietę oraz instrukcje w języku polskim. Etykietę produktu wyślemy na życzenie klienta. Dla bezpieczeństwa używaj wyrób zgodnie z instrukcją lub etykietą. W przypadku wątpliwości skonsultuj się ze specjalistą NAKŁADKA NA TOALETĘ NASADKA NA SEDES PO OPERACJI BIODRA PODWYŻSZAJĄCA WC 5CM Parametry produktu MateriałNasadka jest wykonana z łatwego do czyszczenia materiału, co jest istotne z punktu widzenia higieny. Przed zakupem warto skonsultować się z fizjoterapeutą lub lekarzem, aby dobrać najlepszą opcję zgodnie z indywidualnymi potrzebami. Nasadka podwyższająca na sedes to bardzo przydatne urządzenie, szczególnie dla osób, które przeszły operację biodra lub mają problemy z poruszaniem się.Kolorbiały ✔️ Dostępne warianty 5 cm 10 cm 15 cm Dane produktu ProducentOrthoVisionsSKUNAKŁADKAEAN5903902635392 To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY",
+    "updated_at": "2026-09-28 05:49:30",
+    "description_sha256": "1a0e0622927c749d10381bccaf90620d6433312f8f9ba4e2d6e558b0512c6984",
+    "description_truncated": false,
+    "short_description_sha256": "7f8eb09c420d60d59b0db5afdfdfccaf704755688f6d594d199b6dbca340575a",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 1,
+        "attribute": "Kolor",
+        "value_id": 1,
+        "value": "Biały",
+        "value_truncated": false
+      },
+      {
+        "attribute_id": 16,
+        "attribute": "Wyrób medyczny",
+        "value_id": 692,
+        "value": "Tak",
+        "value_truncated": false
+      },
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 697,
+        "value": "OrthoVisions",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 26688,
+        "product_id": 9940,
+        "sku": "NAK-ADKA-5-CM",
+        "external_variant_id": "medreha-819-162",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 5463,
+        "price_gross_amount": 5900,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wysokość",
+            "value_id": 1043,
+            "value": "5 cm",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 26689,
+        "product_id": 9940,
+        "sku": "NAK-ADKA-10-CM",
+        "external_variant_id": "medreha-819-163",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 5463,
+        "price_gross_amount": 5900,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wysokość",
+            "value_id": 1044,
+            "value": "10 cm",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 26690,
+        "product_id": 9940,
+        "sku": "NAK-ADKA-15-CM",
+        "external_variant_id": "medreha-819-164",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 5463,
+        "price_gross_amount": 5900,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Wysokość",
+            "value_id": 1045,
+            "value": "15 cm",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 3,
+    "active_variant_identity_sha256": "f88778e3bbc8e7a997a5f2b48a61cfb9ac465976ebfde04e134f271674b99db9",
+    "active_variant_options_sha256": "28d359d3bf47257e695d7d3b84345fd270d4180ee92cf7870290da149d814418",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/medreha/819/gallery/d8c84713a177b3a8e44a9d473186dccd3ede8ca685fcf6a655ae1470d335ea1f.jpg",
+        "source_url": "https://sklep.medreha.pl/environment/cache/images/productGfx_4461_500_500/NAKLADKA-NA-TOALETE-NASADKA-NA-SEDES-PO-OPERACJI-BIODRA-PODWYZSZAJACA-WC-5CM.jpg",
+        "alt_text": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC"
+      },
+      {
+        "disk": "public",
+        "path": "products/medreha/819/gallery/f6f75f664eaaaa92fe0c93b2a8345f31d0e671a80c9bba1409164bf3718759e5.jpg",
+        "source_url": "https://sklep.medreha.pl/environment/cache/images/productGfx_4460_500_500/NAKLADKA-NA-TOALETE-NASADKA-NA-SEDES-PO-OPERACJI-BIODRA-PODWYZSZAJACA-WC-5CM.jpg",
+        "alt_text": "NAKŁADKA NA TOALETĘ NASADKA NA SEDES PO OPERACJI BIODRA PODWYŻSZAJĄCA WC 5CM"
+      },
+      {
+        "disk": "public",
+        "path": "products/medreha/819/gallery/6b08a600962c7905b042d6bb4a63da968a4fc9f49ee642135efe15f375c46fc1.jpg",
+        "source_url": "https://sklep.medreha.pl/environment/cache/images/productGfx_4462_500_500/4179.jpg",
+        "alt_text": "4179.jpg"
+      }
+    ]
+  },
+  {
+    "id": 13026,
+    "name": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+    "slug": "wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana",
+    "external_source": "sigvaris",
+    "external_id": "23940",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+    "seo_description": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana | Panie Teresa Medica Szukasz wsparcia dla kręgosłupa w odcinku piersiowo-lędźwiowo-krzyżowym? Wysoka or",
+    "description": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana | Panie Teresa Medica Szukasz wsparcia dla kręgosłupa w odcinku piersiowo-lędźwiowo-krzyżowym? Wysoka orteza piersiowo-lędźwiowo-krzyżowa od Panie Teresa Medica to idealne rozwiązanie dla osób wymagających stabilizacji i ochrony tego odcinka kręgosłupa. Dzięki regulowanemu systemowi dopasowania, orteza zapewnia wygodę noszenia, odpowiednią kompresję oraz doskonałe wsparcie podczas rehabilitacji i leczenia urazów. Produkt wykonany jest z wysokiej jakości, oddychających materiałów, które minimalizują ryzyko podrażnień skóry. Orteza doskonale sprawdza się w przypadku schorzeń kręgosłupa, dyskopatii, kontuzji oraz po operacjach. Cechy produktu regulowana konstrukcja dla indywidualnego dopasowania stabilizacja odcinka piersiowego, lędźwiowego i krzyżowego wysokiej jakości, oddychające materiały wspomaga rehabilitację oraz leczenie urazów i schorzeń kręgosłupa produkt idealny do codziennego noszenia Wybierz profesjonalną ochronę dla swojego kręgosłupa z Panie Teresa Medica i ciesz się komfortem każdego dnia. Materiały produktu ŚRODKI OSTROŻNOŚCI TABELA ROZMIARÓW",
+    "short_description": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana | Panie Teresa Medica Szukasz wsparcia dla kręgosłupa w odcinku piersiowo-lędźwiowo-krzyżowym? Wysoka or",
+    "updated_at": "2026-09-28 05:49:30",
+    "description_sha256": "0b2677777c20fb26c4c7f9b5b91a8fe8282b0ac1e33b66c97906bf5d6988794c",
+    "description_truncated": false,
+    "short_description_sha256": "2bcaac0d99259620a27694b704ef27983a3627d31dfdc79a077e0288f52041dd",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 6246,
+        "value": "SIGVARIS S.A.",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 65828,
+        "product_id": 13026,
+        "sku": "SIGVARIS-23940-23941",
+        "external_variant_id": "sigvaris-23940-23941",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 30360,
+        "price_gross_amount": 32789,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 19,
+            "value": "S",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Kolor",
+            "value_id": 6254,
+            "value": "Beż",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 65829,
+        "product_id": 13026,
+        "sku": "SIGVARIS-23940-23942",
+        "external_variant_id": "sigvaris-23940-23942",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30360,
+        "price_gross_amount": 32789,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 20,
+            "value": "M",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Kolor",
+            "value_id": 6254,
+            "value": "Beż",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 65830,
+        "product_id": 13026,
+        "sku": "SIGVARIS-23940-23943",
+        "external_variant_id": "sigvaris-23940-23943",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30360,
+        "price_gross_amount": 32789,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 21,
+            "value": "L",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Kolor",
+            "value_id": 6254,
+            "value": "Beż",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 65831,
+        "product_id": 13026,
+        "sku": "SIGVARIS-23940-23944",
+        "external_variant_id": "sigvaris-23940-23944",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30360,
+        "price_gross_amount": 32789,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 22,
+            "value": "XL",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Kolor",
+            "value_id": 6254,
+            "value": "Beż",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 65832,
+        "product_id": 13026,
+        "sku": "SIGVARIS-23940-23945",
+        "external_variant_id": "sigvaris-23940-23945",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 30360,
+        "price_gross_amount": 32789,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 23,
+            "value": "XXL",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Kolor",
+            "value_id": 6254,
+            "value": "Beż",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 5,
+    "active_variant_identity_sha256": "2928d6a48f78cbbaecec5e833510c5f501c41c32c51a098dc78d21d4f9de33ea",
+    "active_variant_options_sha256": "f43c73742e7b00993801546eab35a5af6e0aeda8b49e25f60eefc90f1b14e3b3",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/sigvaris/23940/gallery/b4762201439e2e58f67e2d71bbb01e0832e15aa096d6ce3ba1175688a7510ebd.jpg",
+        "source_url": "https://www.sklep-sigvaris.com/2759-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg",
+        "alt_text": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana"
+      },
+      {
+        "disk": "public",
+        "path": "products/sigvaris/23940/gallery/534c067b452ab6b2e605a74787ad2a03edaf89713e1381bb13c864e8f898f102.jpg",
+        "source_url": "https://www.sklep-sigvaris.com/291-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg",
+        "alt_text": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana"
+      },
+      {
+        "disk": "public",
+        "path": "products/sigvaris/23940/gallery/ef351846198d11465031e6f004c2fe5656ffc50bef2dafb00c9ff567b5778809.jpg",
+        "source_url": "https://www.sklep-sigvaris.com/978-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg",
+        "alt_text": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana"
+      }
+    ]
+  },
+  {
+    "id": 13064,
+    "name": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana",
+    "slug": "wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-sigvaris-106307",
+    "external_source": "sigvaris",
+    "external_id": "106307",
+    "status": "active",
+    "deleted_at": null,
+    "published_at": null,
+    "seo_title": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana",
+    "seo_description": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa - Optymalne Wsparcie dla Twojego Kręgosłupa Zapewnij sobie najlepszą ochronę i wsparcie dla kręgosłupa z naszą Wysoką",
+    "description": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa - Optymalne Wsparcie dla Twojego Kręgosłupa Zapewnij sobie najlepszą ochronę i wsparcie dla kręgosłupa z naszą Wysoką Ortezą Piersiowo-Lędźwiowo-Krzyżową. Idealna dla osób cierpiących na bóle pleców, zapewnia stabilizację i ulgę, umożliwiając ci kontynuowanie codziennych aktywności bez obaw. Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa Pani TERESA MEDICA to niezbędny produkt dla każdego, kto zmaga się z bólami piersiowej i lędźwiowo-krzyżowej części kręgosłupa. Dzięki wykorzystaniu nowoczesnych materiałów, orteza zapewnia nie tylko skuteczną stabilizację, ale także komfort noszenia przez cały dzień. Idealna dla osób po operacjach, w trakcie rehabilitacji oraz cierpiących na chroniczne bóle kręgosłupa. Dlaczego warto kupić Wysoką Ortezę Piersiowo-Lędźwiowo-Krzyżową? Ergonomiczny design: Profilowana konstrukcja pasuje idealnie do kształtu ciała, zapewniając maksymalną efektywność bez ograniczania ruchów. Regulacja ucisku: Szeroki zakres regulacji pasów umożliwia indywidualne dopasowanie poziomu wsparcia. Oddychające materiały: Materiały oraz siatki dystansowe zapewniają komfort nawet przy długotrwałym użytkowaniu. Uniwersalność zastosowania: Idealna dla osób aktywnych fizycznie oraz w okresie rekonwalescencji po urazach kręgosłupa. Zastosowanie: Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa Pani TERESA MEDICA znajduje zastosowanie w wielu sytuacjach - od leczenia ostrych i przewlekłych bólów kręgosłupa, poprzez wsparcie podczas ciężkiej pracy fizycznej, aż po użytkowanie pooperacyjne. Jest to wszechstronny produkt, który poprawia jakość życia użytkowników. WSKAZANIA: pooperacyjnie w wybranych przypadkach leczenia odcinka piersiowego i lędźwiowego kręgosłupa pourazowo w obrębie odcinka piersiowego oraz lędźwiowego kręgosłupa następstwa stabilnych, kompresyjnych złamań patologicznych o podłożu osteoporotycznym, nowotworowym w obrębie odcinka piersiowego oraz lędźwiowego kręgosłupa stany zapalne w obrębie stawów kręgosłupa odcinka piersiowego i lędźwiowego choroby krążka międzykręgowego przepuklina jądra miażdżystego kręgozmyk rwa kulszowa choroby Scheuermanna osteoporoza ZZSK choroba zwyrodnieniowa kręgosłupa w odcinku piersiowym i lędźwiowym ostre, podostre i przewlekłe zespoły bólowe odcinka piersiowego i lędźwiowego kręgosłupa hiperkifoza piersiowa niestabilność kręgosłupa wzmożone napięcie mięśniowe w wyniku wielopoziomowej dyskopatii w procesie rehabilitacji pourazowej Zakup już dziś! Nie pozwól, aby ból kręgosłupa ograniczał Twoje życie. Kup naszą Wysoką Ortezę Piersiowo-Lędźwiowo-Krzyżową już teraz i pozbądź się bólu. Materiały produktu ŚRODKI OSTROŻNOŚCI TABELA ROZMIARÓW",
+    "short_description": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa - Optymalne Wsparcie dla Twojego Kręgosłupa Zapewnij sobie najlepszą ochronę i wsparcie dla kręgosłupa z naszą Wysoką",
+    "updated_at": "2026-09-28 05:49:30",
+    "description_sha256": "33deb08fce3daa7f1474c2e74b8b02e34f28197fd86913fafeeb2934ec4fc2d1",
+    "description_truncated": false,
+    "short_description_sha256": "df823e0c853447ee8ff61d4b0ca3967be0d21ae7f9cc1b9ab67f88627715665a",
+    "short_description_truncated": false,
+    "product_attributes": [
+      {
+        "attribute_id": 3,
+        "attribute": "Producent",
+        "value_id": 6246,
+        "value": "SIGVARIS S.A.",
+        "value_truncated": false
+      }
+    ],
+    "variants": [
+      {
+        "id": 66104,
+        "product_id": 13064,
+        "sku": "SIGVARIS-106307-140862",
+        "external_variant_id": "sigvaris-106307-140862",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 21720,
+        "price_gross_amount": 23458,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 18,
+            "value": "XS",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 66105,
+        "product_id": 13064,
+        "sku": "SIGVARIS-106307-140863",
+        "external_variant_id": "sigvaris-106307-140863",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21720,
+        "price_gross_amount": 23458,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 19,
+            "value": "S",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 66106,
+        "product_id": 13064,
+        "sku": "SIGVARIS-106307-140864",
+        "external_variant_id": "sigvaris-106307-140864",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21720,
+        "price_gross_amount": 23458,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 20,
+            "value": "M",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 66107,
+        "product_id": 13064,
+        "sku": "SIGVARIS-106307-140865",
+        "external_variant_id": "sigvaris-106307-140865",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21720,
+        "price_gross_amount": 23458,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 21,
+            "value": "L",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 66108,
+        "product_id": 13064,
+        "sku": "SIGVARIS-106307-140866",
+        "external_variant_id": "sigvaris-106307-140866",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21720,
+        "price_gross_amount": 23458,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 22,
+            "value": "XL",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 66109,
+        "product_id": 13064,
+        "sku": "SIGVARIS-106307-140867",
+        "external_variant_id": "sigvaris-106307-140867",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21720,
+        "price_gross_amount": 23458,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 23,
+            "value": "XXL",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 66110,
+        "product_id": 13064,
+        "sku": "SIGVARIS-106307-140868",
+        "external_variant_id": "sigvaris-106307-140868",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 21720,
+        "price_gross_amount": 23458,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 693,
+            "value": "XXXL",
+            "value_truncated": false
+          }
+        ]
+      }
+    ],
+    "active_variant_count": 7,
+    "active_variant_identity_sha256": "18d572536d276adc5ddbfbcdbd5aded359dc0257ca6d0d044c324ba7499cc652",
+    "active_variant_options_sha256": "590b1ccd7fc330094eba8d3c2067a47deab76d7fd91d481dff47a7ba30f1b2be",
+    "images": [
+      {
+        "disk": "public",
+        "path": "products/sigvaris/106307/gallery/2362746f61759744c807c2a23c3f13bf2e584eae4e5a0cb39830edec6bfb0958.jpg",
+        "source_url": "https://www.sklep-sigvaris.com/1620-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana.jpg",
+        "alt_text": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana"
+      },
+      {
+        "disk": "public",
+        "path": "products/sigvaris/106307/gallery/3c5f6f0af7590586b3c1e3263388874a5d06e5e157ed35420ff31654ddb4cc75.jpg",
+        "source_url": "https://www.sklep-sigvaris.com/1621-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana.jpg",
+        "alt_text": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana"
+      }
+    ]
+  }
+]

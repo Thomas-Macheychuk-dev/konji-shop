@@ -89,9 +89,15 @@ jobs:
           bash -n scripts/seo/consolidation-20261101/repair.sh
           bash -n scripts/seo/consolidation-20261101/patch-runtime.sh
           python3 scripts/seo/consolidation-20261101/test_content.py
+          bash -n scripts/seo/identity-review-20261101/repair.sh
+          python3 scripts/seo/identity-review-20261101/test_content.py
+
+      - name: Validate reviewed product identity repair
+        run: ./vendor/bin/pest tests/Feature/Console/ProductSeoIdentityReviewTest.php
 
       - name: Run Tests
         run: ./vendor/bin/pest
+
 
 
 

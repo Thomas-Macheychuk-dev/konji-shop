@@ -1,0 +1,3401 @@
+{
+  "repair": "product-seo-editorial-20261031-v1",
+  "batch": "product-seo-identity-review-20261101-v1",
+  "prior_backup": "storage/app/private/seo-repairs/consolidation-20261101.NoHbjP",
+  "prior_plan_sha256": "d6bca0e0b9dd1f6ef21535ae1ef7638000a8215ba0501b0cb32a0f2b8ccab7e2",
+  "reviewed_at": "2026-11-01",
+  "entries": [
+    {
+      "id": 164,
+      "expected": {
+        "name": "EVOFLEX Scholl",
+        "slug": "evoflex-czarny",
+        "external_source": "mobilex",
+        "external_id": "34599",
+        "seo_title": "EVOFLEX",
+        "seo_description": "Scholl EVOFLEX profesjonalne obuwie do pracy dla kobiet i mężczyzn. Unisex. Zdrowotne buty do wielogodzinnego użytkowania. Obuwie zawodowe."
+      },
+      "source_description_sha256": "9759a7ccb3dbcdab14b9ff6239f9c4c51916426d1add85588130345da1307f11",
+      "source_short_description_sha256": "5bbb39d50dd703444ddaec184f26ffd1d2f22da5c2f89c40b1fbbd0daa8b08ea",
+      "after": {
+        "seo_title": "EVOFLEX Scholl – obuwie czarne",
+        "seo_description": "EVOFLEX Scholl w kolorze czarnym. Kod produktu F293781004."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 522,
+            "sku": "17DSSLAH36L",
+            "external_variant_id": "34601",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 523,
+            "sku": "17DSSLAH37L",
+            "external_variant_id": "34602",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 316,
+                "value": "37"
+              }
+            ]
+          },
+          {
+            "id": 524,
+            "sku": "17DSSLAH38L",
+            "external_variant_id": "34603",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 317,
+                "value": "38"
+              }
+            ]
+          },
+          {
+            "id": 525,
+            "sku": "17DSSLAH39L",
+            "external_variant_id": "34604",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 318,
+                "value": "39"
+              }
+            ]
+          },
+          {
+            "id": 526,
+            "sku": "17DSSLAH40L",
+            "external_variant_id": "34605",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 319,
+                "value": "40"
+              }
+            ]
+          },
+          {
+            "id": 527,
+            "sku": "17DSSLAH41L",
+            "external_variant_id": "34606",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 320,
+                "value": "41"
+              }
+            ]
+          },
+          {
+            "id": 528,
+            "sku": "17DSSLAH42L",
+            "external_variant_id": "34607",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 321,
+                "value": "42"
+              }
+            ]
+          },
+          {
+            "id": 529,
+            "sku": "17DSSLAH43L",
+            "external_variant_id": "34608",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 322,
+                "value": "43"
+              }
+            ]
+          },
+          {
+            "id": 530,
+            "sku": "17DSSLAH44L",
+            "external_variant_id": "34609",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 323,
+                "value": "44"
+              }
+            ]
+          },
+          {
+            "id": 531,
+            "sku": "17DSSLAH45L",
+            "external_variant_id": "34610",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 324,
+                "value": "45"
+              }
+            ]
+          },
+          {
+            "id": 532,
+            "sku": "17DSSLAH46L",
+            "external_variant_id": "34611",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 325,
+                "value": "46"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004_4.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2024/08/F293781004_1.png"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 314,
+            "value": "Scholl"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/34599",
+        "primary_identity": {
+          "id": 34599,
+          "permalink": "https://galeriazdrowia.pl/produkt/evoflex-czarny/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 2944,
+                  "name": "F293781004",
+                  "slug": "f293781004"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 284,
+                  "name": "Cały czarny",
+                  "slug": "caly-czarny"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 74,
+                  "name": "Klapki",
+                  "slug": "klapki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 165,
+      "expected": {
+        "name": "EVOFLEX Scholl",
+        "slug": "evoflex-granatowy",
+        "external_source": "mobilex",
+        "external_id": "26506",
+        "seo_title": "EVOFLEX",
+        "seo_description": "Scholl EVOFLEX profesjonalne obuwie do pracy dla kobiet i mężczyzn. Unisex. Zdrowotne buty do wielogodzinnego użytkowania. Obuwie zawodowe."
+      },
+      "source_description_sha256": "e839683f428805898adec5dc929167579a006cbd84b0a35a1f2a423b72b427b7",
+      "source_short_description_sha256": "5bbb39d50dd703444ddaec184f26ffd1d2f22da5c2f89c40b1fbbd0daa8b08ea",
+      "after": {
+        "seo_title": "EVOFLEX Scholl – obuwie granatowe",
+        "seo_description": "EVOFLEX Scholl w kolorze granatowym. Kod produktu F293781040."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 533,
+            "sku": "17DSSLAH36G",
+            "external_variant_id": "26508",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 534,
+            "sku": "17DSSLAH37G",
+            "external_variant_id": "26509",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 316,
+                "value": "37"
+              }
+            ]
+          },
+          {
+            "id": 535,
+            "sku": "17DSSLAH38G",
+            "external_variant_id": "26510",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 317,
+                "value": "38"
+              }
+            ]
+          },
+          {
+            "id": 536,
+            "sku": "17DSSLAH39G",
+            "external_variant_id": "26511",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 318,
+                "value": "39"
+              }
+            ]
+          },
+          {
+            "id": 537,
+            "sku": "17DSSLAH40G",
+            "external_variant_id": "26512",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 319,
+                "value": "40"
+              }
+            ]
+          },
+          {
+            "id": 538,
+            "sku": "17DSSLAH41G",
+            "external_variant_id": "26513",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 320,
+                "value": "41"
+              }
+            ]
+          },
+          {
+            "id": 539,
+            "sku": "17DSSLAH42G",
+            "external_variant_id": "26514",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 321,
+                "value": "42"
+              }
+            ]
+          },
+          {
+            "id": 540,
+            "sku": "17DSSLAH43G",
+            "external_variant_id": "26515",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 322,
+                "value": "43"
+              }
+            ]
+          },
+          {
+            "id": 541,
+            "sku": "17DSSLAH44G",
+            "external_variant_id": "26516",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 323,
+                "value": "44"
+              }
+            ]
+          },
+          {
+            "id": 542,
+            "sku": "17DSSLAH45G",
+            "external_variant_id": "26517",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 324,
+                "value": "45"
+              }
+            ]
+          },
+          {
+            "id": 543,
+            "sku": "17DSSLAH46G",
+            "external_variant_id": "26518",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 325,
+                "value": "46"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040-scaled.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040_1-scaled.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2021/03/Scholl-evoflex-granatowy-F293781040_2-scaled.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 314,
+            "value": "Scholl"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/26506",
+        "primary_identity": {
+          "id": 26506,
+          "permalink": "https://galeriazdrowia.pl/produkt/evoflex-granatowy/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 2102,
+                  "name": "F293781040",
+                  "slug": "f293781040"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 92,
+                  "name": "Granatowy",
+                  "slug": "granatowy"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 74,
+                  "name": "Klapki",
+                  "slug": "klapki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 220,
+      "expected": {
+        "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+        "slug": "air-bag-med-wisniowy",
+        "external_source": "mobilex",
+        "external_id": "25784",
+        "seo_title": "AIR BAG MED",
+        "seo_description": "AIR BAG MED Klapki damskie Scholl AIR BAG to klasyka gatunku. Wyprofilowana skórzana wkładka. Elegancki wygląd i wygoda codziennego stosowania. Sprawdź rozmiary!"
+      },
+      "source_description_sha256": "daa062b674ee5e62ec649361298431132dddd6c728fbabe8af91211c2fd2accf",
+      "source_short_description_sha256": "d83b1334dd07abbafa60428f315264021a2ace14eabd8684d792744766438215",
+      "after": {
+        "seo_title": "AIR BAG MED Scholl – MF215311014, fuksja",
+        "seo_description": "Klapki AIR BAG MED Scholl. Kod produktu MF215311014, kolor fuksja."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 740,
+            "sku": "17CSSL0136A",
+            "external_variant_id": "25785",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2020/12/LOW-F215311014.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2020/12/202012_SCHOLL_SS20-151-b.png",
+          "https://galeriazdrowia.pl/wp-content/uploads/2020/12/202012_SCHOLL_SS20-188-b.png"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 327,
+            "value": "Health and Fashion Shoes Italia S"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/25784",
+        "primary_identity": {
+          "id": 25784,
+          "permalink": "https://galeriazdrowia.pl/produkt/air-bag-med-wisniowy/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 2036,
+                  "name": "MF215311014",
+                  "slug": "mf215311014"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 187,
+                  "name": "Fuksja",
+                  "slug": "fuksja"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 74,
+                  "name": "Klapki",
+                  "slug": "klapki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 221,
+      "expected": {
+        "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+        "slug": "air-bag-med-granatowy",
+        "external_source": "mobilex",
+        "external_id": "25797",
+        "seo_title": "AIR BAG MED",
+        "seo_description": "Klasyczne klapki dla mężczyzn i kobiet z zagłębieniem na piętę. Wyjątkowa jakość od Scholl. Wyrób medyczny."
+      },
+      "source_description_sha256": "2a196effe380b323e35a8d912390952a79976204a714444e665cc17cc2cc5420",
+      "source_short_description_sha256": "3310b2bc07a80b4a28cb424ee9a5825b29e5ee711b5648c838cbdd1826afa988",
+      "after": {
+        "seo_title": "AIR BAG MED Scholl – klapki granatowe",
+        "seo_description": "Klapki AIR BAG MED Scholl w kolorze granatowym. Kod produktu MF215311017."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 741,
+            "sku": "17CSSL0135B",
+            "external_variant_id": "25798",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 326,
+                "value": "35"
+              }
+            ]
+          },
+          {
+            "id": 742,
+            "sku": "17CSSL0136B",
+            "external_variant_id": "25799",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 743,
+            "sku": "17CSSL0145B",
+            "external_variant_id": "25808",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 324,
+                "value": "45"
+              }
+            ]
+          },
+          {
+            "id": 744,
+            "sku": "17CSSL0146B",
+            "external_variant_id": "25807",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 325,
+                "value": "46"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2020/12/LOW-F215311017.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 327,
+            "value": "Health and Fashion Shoes Italia S"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/25797",
+        "primary_identity": {
+          "id": 25797,
+          "permalink": "https://galeriazdrowia.pl/produkt/air-bag-med-granatowy/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 2038,
+                  "name": "MF215311017",
+                  "slug": "mf215311017"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 92,
+                  "name": "Granatowy",
+                  "slug": "granatowy"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 74,
+                  "name": "Klapki",
+                  "slug": "klapki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 234,
+      "expected": {
+        "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+        "slug": "heaven-3",
+        "external_source": "mobilex",
+        "external_id": "16505",
+        "seo_title": "HEAVEN AD MED",
+        "seo_description": "HEAVEN AD MED Sandały sportowe Scholl dla kobiet i mężczyzn. Wyrób medyczny - z wyprofilowaną wkładką. Szeroka oferta obuwia zdrowotnego: klapków i sandałów Scholl."
+      },
+      "source_description_sha256": "7d4e04bb322420acfebef93de6b04f06d42993431606faac51465910c6c287b9",
+      "source_short_description_sha256": "7646ef52e171e57b0e176d48af305ee65856491b1713c944e4ed52390ef0173d",
+      "after": {
+        "seo_title": "HEAVEN AD MED Scholl – sandały czarne",
+        "seo_description": "Sandały HEAVEN AD MED Scholl w kolorze czarnym. Kod produktu MF230091004."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 793,
+            "sku": "17CSSL1735M",
+            "external_variant_id": "16506",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 326,
+                "value": "35"
+              }
+            ]
+          },
+          {
+            "id": 794,
+            "sku": "17CSSL1736M",
+            "external_variant_id": "16507",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 795,
+            "sku": "17CSSL1737M",
+            "external_variant_id": "16508",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 316,
+                "value": "37"
+              }
+            ]
+          },
+          {
+            "id": 796,
+            "sku": "17CSSL1738M",
+            "external_variant_id": "16509",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 317,
+                "value": "38"
+              }
+            ]
+          },
+          {
+            "id": 797,
+            "sku": "17CSSL1739M",
+            "external_variant_id": "16510",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 318,
+                "value": "39"
+              }
+            ]
+          },
+          {
+            "id": 798,
+            "sku": "17CSSL1740M",
+            "external_variant_id": "16511",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 319,
+                "value": "40"
+              }
+            ]
+          },
+          {
+            "id": 799,
+            "sku": "17CSSL1741M",
+            "external_variant_id": "16512",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 320,
+                "value": "41"
+              }
+            ]
+          },
+          {
+            "id": 800,
+            "sku": "17CSSL1742M",
+            "external_variant_id": "16513",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 321,
+                "value": "42"
+              }
+            ]
+          },
+          {
+            "id": 801,
+            "sku": "17CSSL1743M",
+            "external_variant_id": "16514",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 322,
+                "value": "43"
+              }
+            ]
+          },
+          {
+            "id": 802,
+            "sku": "17CSSL1744M",
+            "external_variant_id": "16515",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 323,
+                "value": "44"
+              }
+            ]
+          },
+          {
+            "id": 803,
+            "sku": "17CSSL1745M",
+            "external_variant_id": "16516",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 324,
+                "value": "45"
+              }
+            ]
+          },
+          {
+            "id": 804,
+            "sku": "17CSSL1746M",
+            "external_variant_id": "16517",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 325,
+                "value": "46"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_2-scaled.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_1-scaled.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-czarny-F230091004_6.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 327,
+            "value": "Health and Fashion Shoes Italia S"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/16505",
+        "primary_identity": {
+          "id": 16505,
+          "permalink": "https://galeriazdrowia.pl/produkt/heaven-3/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 1259,
+                  "name": "MF230091004",
+                  "slug": "mf230091004"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 133,
+                  "name": "Czarny",
+                  "slug": "czarny"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 134,
+                  "name": "Sandałki",
+                  "slug": "sandalki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 237,
+      "expected": {
+        "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+        "slug": "sandaly-heaven-2",
+        "external_source": "mobilex",
+        "external_id": "16492",
+        "seo_title": "HEAVEN AD MED",
+        "seo_description": "HEAVEN AD MED Sportowe sandały damskie i męskie Scholl. Wyrób medyczny - z wyprofilowaną wkładką. Szeroka oferta obuwia zdrowotnego: klapków i sandałów Scholl."
+      },
+      "source_description_sha256": "3f8a4221d95b2df35af806e6330df55169edfdbfbb21ac0713ec874e787d002e",
+      "source_short_description_sha256": "69c3d90f40a6dc1a015168bdb6513469263bcd8903563c1fb225bdc5f43f7809",
+      "after": {
+        "seo_title": "HEAVEN AD MED Scholl – sandały brązowe",
+        "seo_description": "Sandały HEAVEN AD MED Scholl w kolorze brązowym. Kod produktu F230091011."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 809,
+            "sku": "17DSSL0236M",
+            "external_variant_id": "16494",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 810,
+            "sku": "17DSSL0237M",
+            "external_variant_id": "16495",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 316,
+                "value": "37"
+              }
+            ]
+          },
+          {
+            "id": 811,
+            "sku": "17DSSL0238M",
+            "external_variant_id": "16496",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 317,
+                "value": "38"
+              }
+            ]
+          },
+          {
+            "id": 812,
+            "sku": "17DSSL0239M",
+            "external_variant_id": "16497",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 318,
+                "value": "39"
+              }
+            ]
+          },
+          {
+            "id": 813,
+            "sku": "17DSSL0240M",
+            "external_variant_id": "16498",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 319,
+                "value": "40"
+              }
+            ]
+          },
+          {
+            "id": 814,
+            "sku": "17DSSL0241M",
+            "external_variant_id": "16499",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 320,
+                "value": "41"
+              }
+            ]
+          },
+          {
+            "id": 815,
+            "sku": "17DSSL0242M",
+            "external_variant_id": "16500",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 321,
+                "value": "42"
+              }
+            ]
+          },
+          {
+            "id": 816,
+            "sku": "17DSSL0243M",
+            "external_variant_id": "16501",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 322,
+                "value": "43"
+              }
+            ]
+          },
+          {
+            "id": 817,
+            "sku": "17DSSL0244M",
+            "external_variant_id": "16502",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 323,
+                "value": "44"
+              }
+            ]
+          },
+          {
+            "id": 818,
+            "sku": "17DSSL0245M",
+            "external_variant_id": "16503",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 324,
+                "value": "45"
+              }
+            ]
+          },
+          {
+            "id": 819,
+            "sku": "17DSSL0246M",
+            "external_variant_id": "16504",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 325,
+                "value": "46"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_2.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_3.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-Heaven-brazowy-F230091011_4-scaled.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 327,
+            "value": "Health and Fashion Shoes Italia S"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/16492",
+        "primary_identity": {
+          "id": 16492,
+          "permalink": "https://galeriazdrowia.pl/produkt/sandaly-heaven-2/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 194,
+                  "name": "F230091011",
+                  "slug": "f230091011"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 117,
+                  "name": "Brązowy",
+                  "slug": "brazowy"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 134,
+                  "name": "Sandałki",
+                  "slug": "sandalki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 244,
+      "expected": {
+        "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+        "slug": "air-bag-3",
+        "external_source": "mobilex",
+        "external_id": "16812",
+        "seo_title": "AIR BAG MED",
+        "seo_description": "AIR BAG MED Klapki damskie i męskie Scholl. Buty męskie z wyprofilowaną wkładką z zagłębieniem na piętę. Wyrób medyczny."
+      },
+      "source_description_sha256": "91b784dfe8d7026daa7200682f236e6b4024b82d776d3482bc93170fce0e624f",
+      "source_short_description_sha256": "3c85ed91bdc8e74b8626339be43e1dedbfc4851e238dd2574ec5386dfd7f9ac2",
+      "after": {
+        "seo_title": "AIR BAG MED Scholl – klapki czarne",
+        "seo_description": "Klapki AIR BAG MED Scholl w kolorze czarnym. Kod produktu MF215311004."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 842,
+            "sku": "17CSSL0135M",
+            "external_variant_id": "29633",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 326,
+                "value": "35"
+              }
+            ]
+          },
+          {
+            "id": 843,
+            "sku": "17CSSL0136M",
+            "external_variant_id": "16813",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 844,
+            "sku": "17CSSL0137M",
+            "external_variant_id": "16814",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 316,
+                "value": "37"
+              }
+            ]
+          },
+          {
+            "id": 845,
+            "sku": "17CSSL0138M",
+            "external_variant_id": "16815",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 317,
+                "value": "38"
+              }
+            ]
+          },
+          {
+            "id": 846,
+            "sku": "17CSSL0139M",
+            "external_variant_id": "16816",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 318,
+                "value": "39"
+              }
+            ]
+          },
+          {
+            "id": 847,
+            "sku": "17CSSL0140M",
+            "external_variant_id": "16817",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 319,
+                "value": "40"
+              }
+            ]
+          },
+          {
+            "id": 848,
+            "sku": "17CSSL0141M",
+            "external_variant_id": "16818",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 320,
+                "value": "41"
+              }
+            ]
+          },
+          {
+            "id": 849,
+            "sku": "17CSSL0142M",
+            "external_variant_id": "16819",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 321,
+                "value": "42"
+              }
+            ]
+          },
+          {
+            "id": 850,
+            "sku": "17CSSL0143M",
+            "external_variant_id": "16820",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 322,
+                "value": "43"
+              }
+            ]
+          },
+          {
+            "id": 851,
+            "sku": "17CSSL0144M",
+            "external_variant_id": "16821",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 323,
+                "value": "44"
+              }
+            ]
+          },
+          {
+            "id": 852,
+            "sku": "17CSSL0145M",
+            "external_variant_id": "16822",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 324,
+                "value": "45"
+              }
+            ]
+          },
+          {
+            "id": 853,
+            "sku": "17CSSL0146M",
+            "external_variant_id": "16823",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 325,
+                "value": "46"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/air_bag_czarny.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-AIR-BAG-F215311004_1-scaled.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/Scholl-AIR-BAG-F215311004_2.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 327,
+            "value": "Health and Fashion Shoes Italia S"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/16812",
+        "primary_identity": {
+          "id": 16812,
+          "permalink": "https://galeriazdrowia.pl/produkt/air-bag-3/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 2321,
+                  "name": "MF215311004",
+                  "slug": "mf215311004"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 133,
+                  "name": "Czarny",
+                  "slug": "czarny"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 74,
+                  "name": "Klapki",
+                  "slug": "klapki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 247,
+      "expected": {
+        "name": "AIR BAG MED Health and Fashion Shoes Italia S",
+        "slug": "air-bag",
+        "external_source": "mobilex",
+        "external_id": "16779",
+        "seo_title": "AIR BAG MED",
+        "seo_description": "Klapki męskie Scholl z wyprofilowaną wkładką. Regulowane paski. Specjalistyczna wkładka z zagłębieniem na piętę zapewnia stabilność stopy. Wyrób medyczny."
+      },
+      "source_description_sha256": "2a1e87ed8cbec8331ff81306ad9640c336c51d8bb5b319344e590a4ec60003f6",
+      "source_short_description_sha256": "8db46ff20816fed9199253f734d606953b26bc1eb19db6ab3f73d4928309123c",
+      "after": {
+        "seo_title": "AIR BAG MED Scholl – klapki brązowe",
+        "seo_description": "Klapki AIR BAG MED Scholl w kolorze brązowym. Kod produktu F215311016."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 869,
+            "sku": "17DSSL0136M",
+            "external_variant_id": "16780",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 870,
+            "sku": "17DSSL0137M",
+            "external_variant_id": "16781",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 316,
+                "value": "37"
+              }
+            ]
+          },
+          {
+            "id": 871,
+            "sku": "17DSSL0138M",
+            "external_variant_id": "16782",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 317,
+                "value": "38"
+              }
+            ]
+          },
+          {
+            "id": 872,
+            "sku": "17DSSL0139M",
+            "external_variant_id": "16783",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 318,
+                "value": "39"
+              }
+            ]
+          },
+          {
+            "id": 873,
+            "sku": "17DSSL0140M",
+            "external_variant_id": "16784",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 319,
+                "value": "40"
+              }
+            ]
+          },
+          {
+            "id": 874,
+            "sku": "17DSSL0141M",
+            "external_variant_id": "16785",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 320,
+                "value": "41"
+              }
+            ]
+          },
+          {
+            "id": 875,
+            "sku": "17DSSL0142M",
+            "external_variant_id": "16786",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 321,
+                "value": "42"
+              }
+            ]
+          },
+          {
+            "id": 876,
+            "sku": "17DSSL0143M",
+            "external_variant_id": "16787",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 322,
+                "value": "43"
+              }
+            ]
+          },
+          {
+            "id": 877,
+            "sku": "17DSSL0144M",
+            "external_variant_id": "16788",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 323,
+                "value": "44"
+              }
+            ]
+          },
+          {
+            "id": 878,
+            "sku": "17DSSL0145M",
+            "external_variant_id": "16789",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 324,
+                "value": "45"
+              }
+            ]
+          },
+          {
+            "id": 879,
+            "sku": "17DSSL0146M",
+            "external_variant_id": "16790",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 325,
+                "value": "46"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/air_bag_braz.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/F215311016_2_4b3f7569-76ac-43ab-b2b8-9c54c96cda84_1296x.webp",
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/F215311016_3_1296x.webp"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 327,
+            "value": "Health and Fashion Shoes Italia S"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/16779",
+        "primary_identity": {
+          "id": 16779,
+          "permalink": "https://galeriazdrowia.pl/produkt/air-bag/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 253,
+                  "name": "F215311016",
+                  "slug": "f215311016"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 117,
+                  "name": "Brązowy",
+                  "slug": "brazowy"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 74,
+                  "name": "Klapki",
+                  "slug": "klapki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 257,
+      "expected": {
+        "name": "Nautilus Scholl",
+        "slug": "nautilus-navy-blue",
+        "external_source": "mobilex",
+        "external_id": "35293",
+        "seo_title": "Nautilus",
+        "seo_description": "Nautilus firmy Scholl granatowe klapki na basen - dla kobiet i mężczyzn. Wyposażone są w ergonomiczną wkładkę Fitness, która wspiera stopę."
+      },
+      "source_description_sha256": "cfa4e4c2d01e5c8675e17093484867f480ae277635a1d4f9305e4d89cc685f09",
+      "source_short_description_sha256": "8fc304ce6f3157a0cfe1589cc45359d1bed5a9cb39ed9001a09dd4524cd13bfc",
+      "after": {
+        "seo_title": "Nautilus Scholl – MF305791040, granatowe",
+        "seo_description": "Granatowe klapki Nautilus Scholl. Kod produktu MF305791040."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 902,
+            "sku": "17DSSL3536G",
+            "external_variant_id": "35294",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 903,
+            "sku": "17DSSL3537G",
+            "external_variant_id": "35295",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 316,
+                "value": "37"
+              }
+            ]
+          },
+          {
+            "id": 904,
+            "sku": "17DSSL3538G",
+            "external_variant_id": "35296",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 317,
+                "value": "38"
+              }
+            ]
+          },
+          {
+            "id": 905,
+            "sku": "17DSSL3539G",
+            "external_variant_id": "35297",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 318,
+                "value": "39"
+              }
+            ]
+          },
+          {
+            "id": 906,
+            "sku": "17DSSL3540G",
+            "external_variant_id": "35298",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 319,
+                "value": "40"
+              }
+            ]
+          },
+          {
+            "id": 907,
+            "sku": "17DSSL3541G",
+            "external_variant_id": "35299",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 320,
+                "value": "41"
+              }
+            ]
+          },
+          {
+            "id": 908,
+            "sku": "17DSSL3542G",
+            "external_variant_id": "35300",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 321,
+                "value": "42"
+              }
+            ]
+          },
+          {
+            "id": 909,
+            "sku": "17DSSL3543G",
+            "external_variant_id": "35301",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 322,
+                "value": "43"
+              }
+            ]
+          },
+          {
+            "id": 910,
+            "sku": "17DSSL3544G",
+            "external_variant_id": "35302",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 323,
+                "value": "44"
+              }
+            ]
+          },
+          {
+            "id": 911,
+            "sku": "17DSSL3545G",
+            "external_variant_id": "35303",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 324,
+                "value": "45"
+              }
+            ]
+          },
+          {
+            "id": 912,
+            "sku": "17DSSL3546G",
+            "external_variant_id": "35304",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 325,
+                "value": "46"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2024/11/nautilus-500x500-1.png",
+          "https://galeriazdrowia.pl/wp-content/uploads/2024/11/F305791040_1-.jpg",
+          "https://galeriazdrowia.pl/wp-content/uploads/2024/11/F305791040_2-.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/35293",
+        "primary_identity": {
+          "id": 35293,
+          "permalink": "https://galeriazdrowia.pl/produkt/nautilus-navy-blue/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 2990,
+                  "name": "MF305791040",
+                  "slug": "mf305791040"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 92,
+                  "name": "Granatowy",
+                  "slug": "granatowy"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 74,
+                  "name": "Klapki",
+                  "slug": "klapki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 266,
+      "expected": {
+        "name": "Nautilus Scholl",
+        "slug": "nautilus",
+        "external_source": "mobilex",
+        "external_id": "17070",
+        "seo_title": "Nautilus",
+        "seo_description": "Nautilus klapki na basen Scholl - dla kobiet i mężczyzn. Klapki unisex. Idealne na basen, na plażę. Granatowe. Wyprofilowane."
+      },
+      "source_description_sha256": "0260e543110483eb9855b63aef5acf5b1860d7a04a6cfdd81caff85c07ce30a3",
+      "source_short_description_sha256": "2e9ad727610eed4a66c14a524891a8cea10f06bef479218b1612801da0574c3d",
+      "after": {
+        "seo_title": "Nautilus Scholl – F243541040, granatowe",
+        "seo_description": "Granatowe klapki Nautilus Scholl. Kod produktu F243541040."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 940,
+            "sku": "17DSSL3536M",
+            "external_variant_id": "17071",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 315,
+                "value": "36"
+              }
+            ]
+          },
+          {
+            "id": 941,
+            "sku": "17DSSL3537M",
+            "external_variant_id": "17072",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 316,
+                "value": "37"
+              }
+            ]
+          },
+          {
+            "id": 942,
+            "sku": "17DSSL3540M",
+            "external_variant_id": "17075",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wariant",
+                "value_id": 319,
+                "value": "40"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://galeriazdrowia.pl/wp-content/uploads/2017/07/NAUTILUs-3.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 314,
+            "value": "Scholl"
+          }
+        ],
+        "source": "source_shop_product_id",
+        "primary_url": "https://galeriazdrowia.pl/wp-json/wc/store/v1/products/17070",
+        "primary_identity": {
+          "id": 17070,
+          "permalink": "https://galeriazdrowia.pl/produkt/nautilus/",
+          "attributes": [
+            {
+              "id": 3,
+              "name": "Kod",
+              "taxonomy": "pa_kod",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 1575,
+                  "name": "F243541040",
+                  "slug": "f243541040"
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "name": "Kolor",
+              "taxonomy": "pa_kolor",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 92,
+                  "name": "Granatowy",
+                  "slug": "granatowy"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "name": "Rodzaj",
+              "taxonomy": "pa_rodzaj",
+              "has_variations": false,
+              "terms": [
+                {
+                  "id": 74,
+                  "name": "Klapki",
+                  "slug": "klapki"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 1419,
+      "expected": {
+        "name": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12",
+        "slug": "cara-small-deluxe-14-12-peruka-syntetyczna",
+        "external_source": "peruka",
+        "external_id": "7331",
+        "seo_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+        "seo_description": "SMALL - oznacza perukę w małym rozmiarze.Wybierz, jeśli standardowe modele są dla Ciebie zbyt duże. Kolekcja HAIRPOWER"
+      },
+      "source_description_sha256": "81cb571843b793f42bf9d9f451dcbf8c17d956ed918691c25d82a29313af825b",
+      "source_short_description_sha256": "c4c0b64e76872e277e23e56b59add5c53b1ad9c23444a1d83a4a5728e62db77c",
+      "after": {
+        "seo_title": "CARA SMALL DELUXE – kod 4048924102482",
+        "seo_description": "Peruka syntetyczna CARA SMALL DELUXE. Mały rozmiar. Kod produktu 4048924102482."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 12986,
+            "sku": "7331",
+            "external_variant_id": "peruka-7331-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/000832-25804.jpg",
+          "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/Cara-100-Deluxe-Small-Deluxe-3.jpg",
+          "https://www.peruka.pl/media/products/60f74562ec6cab539cf82c8264d545a9/images/Cara-100-Deluxe-Small-Deluxe-4.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "source_product_id_and_mpn",
+        "primary_identity": {
+          "url": "https://www.peruka.pl/cara-small-deluxe-14-12-peruka-syntetyczna.html",
+          "canonical": [
+            "https://www.peruka.pl/cara-small-deluxe-14-12-peruka-syntetyczna.html"
+          ],
+          "product_id": "7331",
+          "source_mpn": "4048924102482"
+        }
+      }
+    },
+    {
+      "id": 2828,
+      "expected": {
+        "name": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix",
+        "slug": "aletta-mono-part-rubyred-mix",
+        "external_source": "peruka",
+        "external_id": "19628",
+        "seo_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+        "seo_description": "Kolekcja MODIXX"
+      },
+      "source_description_sha256": "37d9e4ce4cae6e934de2044695a36b85bea2582c3db8b1905182bf2af622c997",
+      "source_short_description_sha256": "33507fb326784cd8d640321e7ee6dbc09526595c2d02bd71707e5e75a3e4b1c6",
+      "after": {
+        "seo_title": "ALETTA MONO PART – peruka rubyred/mix",
+        "seo_description": "Peruka syntetyczna termoodporna ALETTA MONO PART w kolorze rubyred/mix. Kod produktu 4048924683066."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 14395,
+            "sku": "19628",
+            "external_variant_id": "peruka-19628-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/aletta-mono-ruby-red-mix-bs.jpg",
+          "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/aletta-mono-ruby-red-mix.jpg",
+          "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/MOD000053-58125.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "source_selected_colour_and_mpn",
+        "primary_identity": {
+          "url": "https://www.peruka.pl/aletta-mono-part-rubyred-mix.html",
+          "canonical": [
+            "https://www.peruka.pl/aletta-mono-part-rubyred-mix.html"
+          ],
+          "product_id": "19628",
+          "selected_colour": "rubyred/mix",
+          "selected_images": [
+            "https://www.peruka.pl/media/products/b3db0001c578464d15f55029df5d0f44/images/thumbnail/gallery_aletta-mono-ruby-red-mix-bs.jpg?lm=1790174826"
+          ],
+          "source_mpn": "4048924683066"
+        }
+      },
+      "after_name": "Peruka syntetyczna termoodporna ALETTA MONO PART rubyred/mix",
+      "after_image_caption": "Peruka syntetyczna ALETTA MONO PART – zdjęcie produktu"
+    },
+    {
+      "id": 2829,
+      "expected": {
+        "name": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART silkgrey/mix",
+        "slug": "aletta-mono-part-silkgrey-mix",
+        "external_source": "peruka",
+        "external_id": "19629",
+        "seo_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+        "seo_description": "Kolekcja MODIXX"
+      },
+      "source_description_sha256": "37d9e4ce4cae6e934de2044695a36b85bea2582c3db8b1905182bf2af622c997",
+      "source_short_description_sha256": "33507fb326784cd8d640321e7ee6dbc09526595c2d02bd71707e5e75a3e4b1c6",
+      "after": {
+        "seo_title": "ALETTA MONO PART – peruka silkgrey/mix",
+        "seo_description": "Peruka syntetyczna termoodporna ALETTA MONO PART w kolorze silkgrey/mix. Kod produktu 4048924683073."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 14396,
+            "sku": "19629",
+            "external_variant_id": "peruka-19629-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/aletta-mono-silk-grey-mix-bs.jpg",
+          "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/aletta-mono-silk-grey-mix.jpg",
+          "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/MOD000001-58116.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "source_selected_colour_and_mpn",
+        "primary_identity": {
+          "url": "https://www.peruka.pl/aletta-mono-part-silkgrey-mix.html",
+          "canonical": [
+            "https://www.peruka.pl/aletta-mono-part-silkgrey-mix.html"
+          ],
+          "product_id": "19629",
+          "selected_colour": "silkgrey/mix",
+          "selected_images": [
+            "https://www.peruka.pl/media/products/94140beeab18bcedd3c1c69cd45ac176/images/thumbnail/gallery_aletta-mono-silk-grey-mix-bs.jpg?lm=1790174826"
+          ],
+          "source_mpn": "4048924683073"
+        }
+      }
+    },
+    {
+      "id": 4530,
+      "expected": {
+        "name": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE darksand/mix _ 14.12",
+        "slug": "cara-small-deluxe-darksand-mix-14-12-peruka-syntetyczna",
+        "external_source": "peruka",
+        "external_id": "8862",
+        "seo_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+        "seo_description": "SMALL - oznacza perukę w małym rozmiarze.Wybierz, jeśli standardowe modele są dla Ciebie zbyt duże. Kolekcja HAIRPOWER"
+      },
+      "source_description_sha256": "81cb571843b793f42bf9d9f451dcbf8c17d956ed918691c25d82a29313af825b",
+      "source_short_description_sha256": "c4c0b64e76872e277e23e56b59add5c53b1ad9c23444a1d83a4a5728e62db77c",
+      "after": {
+        "seo_title": "CARA SMALL DELUXE – kod 4048924643855",
+        "seo_description": "Peruka syntetyczna CARA SMALL DELUXE. Mały rozmiar. Kod produktu 4048924643855."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 16097,
+            "sku": "8862",
+            "external_variant_id": "peruka-8862-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/cara-small-deluxe-darksand-mix.jpg",
+          "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/cara-small-deluxe-darksand-mix-bs.jpg",
+          "https://www.peruka.pl/media/products/8a6cf698feb6936ea889ccae22b283e9/images/Cara-100-Deluxe-Small-Deluxe-3.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "source_product_id_and_mpn",
+        "primary_identity": {
+          "url": "https://www.peruka.pl/cara-small-deluxe-darksand-mix-14-12-peruka-syntetyczna.html",
+          "canonical": [
+            "https://www.peruka.pl/cara-small-deluxe-darksand-mix-14-12-peruka-syntetyczna.html"
+          ],
+          "product_id": "8862",
+          "source_mpn": "4048924643855"
+        }
+      }
+    },
+    {
+      "id": 6744,
+      "expected": {
+        "name": "Peruka syntetyczna jasny miodowy blond ALASKA lighthoney/mix*",
+        "slug": "alaska-hotchocolate-mix-peruka-syntetyczna",
+        "external_source": "peruka",
+        "external_id": "7139",
+        "seo_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix*",
+        "seo_description": "Model Alaska to peruka z włosów syntetycznych utkanych na bazie, którą charakteryzuje wykonanie maszynowe na tresach oraz mikroskóra na czubku głowy. Specjalne włókno syn"
+      },
+      "source_description_sha256": "ed4b8121c39dce9953dc1742311d119615e631b271155f21bcbec57b02c3e875",
+      "source_short_description_sha256": "98c73c7350085605dc3ba11c0a3896e004ab38cdbc82e6cce5d5f2a9a839099d",
+      "after": {
+        "seo_title": "ALASKA – peruka hotchocolate/mix",
+        "seo_description": "Peruka syntetyczna ALASKA w kolorze hotchocolate/mix. Kod produktu 4048924197204."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 18311,
+            "sku": "7139",
+            "external_variant_id": "peruka-7139-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/RAQ001953-26944.jpg",
+          "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/rw-alaska-02.jpg",
+          "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/rw-alaska-03.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "source_selected_colour_and_mpn",
+        "primary_identity": {
+          "url": "https://www.peruka.pl/alaska-hotchocolate-mix-peruka-syntetyczna.html",
+          "canonical": [
+            "https://www.peruka.pl/alaska-hotchocolate-mix-peruka-syntetyczna.html"
+          ],
+          "product_id": "7139",
+          "selected_colour": "hotchocolate/mix",
+          "selected_images": [
+            "https://www.peruka.pl/media/products/e7a188028cdbacb9e90a0bdd6f586e56/images/thumbnail/gallery_RAQ001953-26944.jpg?lm=1790275584"
+          ],
+          "source_mpn": "4048924197204"
+        }
+      },
+      "after_name": "Peruka syntetyczna ALASKA hotchocolate/mix",
+      "after_image_caption": "Peruka syntetyczna ALASKA – zdjęcie produktu"
+    },
+    {
+      "id": 7951,
+      "expected": {
+        "name": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*",
+        "slug": "frappe-dark-blonde-dopinka",
+        "external_source": "peruka",
+        "external_id": "13895",
+        "seo_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+        "seo_description": "Kolekcja POWER PIECES"
+      },
+      "source_description_sha256": "64b1b3e9bc719f19c81da2d12515862a0ab888dc219d73109710338ac126d178",
+      "source_short_description_sha256": "227c583a649433bd9c35429c60175f3b569c7aea6ace6d3c36554a3e961da85f",
+      "after": {
+        "seo_title": "FRAPPE – treska dark blonde",
+        "seo_description": "Treska syntetyczna FRAPPE w kolorze dark blonde, mocowana klamrą. Kod produktu 4048924615524."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 19518,
+            "sku": "13895",
+            "external_variant_id": "peruka-13895-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/10-ew-pp-dark-blonde.jpg",
+          "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/68e4d2884e379-Frappe-2.jpg",
+          "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/frappe-nougat-mix-cap.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "source_selected_colour_and_mpn",
+        "primary_identity": {
+          "url": "https://www.peruka.pl/frappe-dark-blonde-dopinka.html",
+          "canonical": [
+            "https://www.peruka.pl/frappe-dark-blonde-dopinka.html"
+          ],
+          "product_id": "13895",
+          "selected_colour": "dark blonde",
+          "selected_images": [
+            "https://www.peruka.pl/media/products/16c44a9ad3d1f8b4889d561991be36c8/images/thumbnail/gallery_10-ew-pp-dark-blonde.jpg?lm=1790194466"
+          ],
+          "source_mpn": "4048924615524"
+        }
+      },
+      "after_name": "Treska syntetyczna FRAPPE dark blonde",
+      "after_image_caption": "Treska syntetyczna FRAPPE – zdjęcie produktu"
+    },
+    {
+      "id": 7952,
+      "expected": {
+        "name": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE dark brown*",
+        "slug": "frappe-dark-brown-dopinka",
+        "external_source": "peruka",
+        "external_id": "13896",
+        "seo_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+        "seo_description": "Kolekcja POWER PIECES"
+      },
+      "source_description_sha256": "64b1b3e9bc719f19c81da2d12515862a0ab888dc219d73109710338ac126d178",
+      "source_short_description_sha256": "227c583a649433bd9c35429c60175f3b569c7aea6ace6d3c36554a3e961da85f",
+      "after": {
+        "seo_title": "FRAPPE – treska dark brown",
+        "seo_description": "Treska syntetyczna FRAPPE w kolorze dark brown, mocowana klamrą. Kod produktu 4048924615562."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 19519,
+            "sku": "13896",
+            "external_variant_id": "peruka-13896-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/02-ew-pp-dark-brown.jpg",
+          "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/Frappe-2.jpg",
+          "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/frappe-nougat-mix-cap.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "source_selected_colour_and_mpn",
+        "primary_identity": {
+          "url": "https://www.peruka.pl/frappe-dark-brown-dopinka.html",
+          "canonical": [
+            "https://www.peruka.pl/frappe-dark-brown-dopinka.html"
+          ],
+          "product_id": "13896",
+          "selected_colour": "dark brown",
+          "selected_images": [
+            "https://www.peruka.pl/media/products/bff664f5f938f3defc234dec1ee1e314/images/thumbnail/gallery_02-ew-pp-dark-brown.jpg?lm=1790194466"
+          ],
+          "source_mpn": "4048924615562"
+        }
+      }
+    },
+    {
+      "id": 9066,
+      "expected": {
+        "name": "Orteza nadgarstka AM-OSN-U-02",
+        "slug": "usztywniona-orteza-na-dlon-i-przedramie-z-ujeciem-kciuka-am-osn-u-02",
+        "external_source": "reh4mat",
+        "external_id": "1188",
+        "seo_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "seo_description": "Otwarta orteza nadgarstka została wykonana według nowego bardziej anatomicznego kształtu, dzięki czemu lepiej stabilizuje staw promieniowo-nadgarstkowy i nadgarstek."
+      },
+      "source_description_sha256": "ffa19410367f54499e97305d036f4bbc3d9452f4a38245cced95f0a067ca7927",
+      "source_short_description_sha256": "b4e5daece7b74701b25d52d3955e305d422a226e4acfcf16012ed7ce1bf26ee4",
+      "after": {
+        "seo_title": "Reh4Mat AM-OSN-U-02 – orteza szara",
+        "seo_description": "Szara orteza nadgarstka Reh4Mat AM-OSN-U-02. Otwarta konstrukcja z regulowanymi zapięciami."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 20633,
+            "sku": "AM-OSN-U-02",
+            "external_variant_id": "reh4mat-1188-default",
+            "status": "draft",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.reh4mat.com/uploads/2012/08/4T7A2505-1.jpg",
+          "http://www.reh4mat.com/uploads/2012/08/lock3points.png",
+          "https://www.reh4mat.com/uploads/2012/08/4T7A2513.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "manufacturer_colour_selector_and_visual_review",
+        "primary_identity": {
+          "id": 1188,
+          "url": "https://www.reh4mat.com/?p=1188",
+          "canonical": [
+            "https://www.reh4mat.com/produkt/ortezy-pediatryczne/usztywniona-orteza-na-dlon-i-przedramie-z-ujeciem-kciuka-am-osn-u-02/"
+          ],
+          "title": "Orteza nadgarstka AM-OSN-U-02",
+          "colour_selector_links": [
+            "https://www.reh4mat.com/produkt/ortezy-pediatryczne/orteza-nadgarstka-am-osn-u-02/"
+          ]
+        },
+        "reviewed_main_photo": "https://www.reh4mat.com/uploads/2012/08/4T7A2505-1.jpg",
+        "reviewed_photo_sha256": "5bd90a0a701f5f6a48056efa1de98a2bb322b8205dde80e562897c1321bf9f25",
+        "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+      }
+    },
+    {
+      "id": 9067,
+      "expected": {
+        "name": "Orteza nadgarstka AM-OSN-U-02",
+        "slug": "orteza-nadgarstka-am-osn-u-02",
+        "external_source": "reh4mat",
+        "external_id": "313671",
+        "seo_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "seo_description": "Otwarta orteza nadgarstka została wykonana według nowego bardziej anatomicznego kształtu, dzięki czemu lepiej stabilizuje staw promieniowo-nadgarstkowy i nadgarstek."
+      },
+      "source_description_sha256": "da60520883e42a2ad4201d924e03526a22d1e535bdedb6cbf66f227395419f48",
+      "source_short_description_sha256": "b4e5daece7b74701b25d52d3955e305d422a226e4acfcf16012ed7ce1bf26ee4",
+      "after": {
+        "seo_title": "Reh4Mat AM-OSN-U-02 – orteza czarna",
+        "seo_description": "Czarna orteza nadgarstka Reh4Mat AM-OSN-U-02. Otwarta konstrukcja z regulowanymi zapięciami."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 20634,
+            "sku": "AM-OSN-U-02-2",
+            "external_variant_id": "reh4mat-313671-default",
+            "status": "draft",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.reh4mat.com/uploads/2023/05/4T7A2525.jpg",
+          "http://www.reh4mat.com/uploads/2012/08/lock3points.png",
+          "https://www.reh4mat.com/uploads/2023/05/4T7A2531.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "manufacturer_colour_selector_and_visual_review",
+        "primary_identity": {
+          "id": 313671,
+          "url": "https://www.reh4mat.com/?p=313671",
+          "canonical": [
+            "https://www.reh4mat.com/produkt/ortezy-pediatryczne/orteza-nadgarstka-am-osn-u-02/"
+          ],
+          "title": "Orteza nadgarstka AM-OSN-U-02",
+          "colour_selector_links": [
+            "https://www.reh4mat.com/produkt/ortezy-pediatryczne/usztywniona-orteza-na-dlon-i-przedramie-z-ujeciem-kciuka-am-osn-u-02/"
+          ]
+        },
+        "reviewed_main_photo": "https://www.reh4mat.com/uploads/2023/05/4T7A2525.jpg",
+        "reviewed_photo_sha256": "152c677af79c8997cdfa51676c94dcf9683db885e3387b5d82693258aab279cd",
+        "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+      }
+    },
+    {
+      "id": 9092,
+      "expected": {
+        "name": "Uniwersalny temblak OKG-25",
+        "slug": "uniwersalny-temblak-okg-25",
+        "external_source": "reh4mat",
+        "external_id": "313813",
+        "seo_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "seo_description": "Urazy w obrębie kończyny górnej są stosunkowo częste. Wyróżniamy zarówno ostre jak i przewlekłe uszkodzenia."
+      },
+      "source_description_sha256": "1fcd1b21f07a7d6041880ac3d53d4f828f37f4f1d0adaab830eb4eca52467bd9",
+      "source_short_description_sha256": "ab0b242121bc62c92906a0d0afe158121b5714c9d5eb55b3778dc1ec74e42ae7",
+      "after": {
+        "seo_title": "Reh4Mat OKG-25 – temblak czarny",
+        "seo_description": "Czarny uniwersalny temblak Reh4Mat OKG-25 z regulowanym zapięciem."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 20659,
+            "sku": "OKG-25",
+            "external_variant_id": "reh4mat-313813-default",
+            "status": "draft",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.reh4mat.com/uploads/2023/06/4T7A5482.jpg",
+          "https://www.reh4mat.com/uploads/2023/06/4T7A5483.jpg",
+          "https://www.reh4mat.com/uploads/2023/06/4T7A5484.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "manufacturer_colour_selector_and_visual_review",
+        "primary_identity": {
+          "id": 313813,
+          "url": "https://www.reh4mat.com/?p=313813",
+          "canonical": [
+            "https://www.reh4mat.com/produkt/nadgarstek-akcesoria/uniwersalny-temblak-okg-25/"
+          ],
+          "title": "Uniwersalny temblak OKG-25",
+          "colour_selector_links": [
+            "https://www.reh4mat.com/produkt/nadgarstek-akcesoria/uniwersalny-temblak-okg-25-2/"
+          ]
+        },
+        "reviewed_main_photo": "https://www.reh4mat.com/uploads/2023/06/4T7A5482.jpg",
+        "reviewed_photo_sha256": "e6c2596568c97fdab54049285166c9a4eedc0f80fd95b8378501715a9c7cecf8",
+        "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+      }
+    },
+    {
+      "id": 9093,
+      "expected": {
+        "name": "Uniwersalny temblak OKG-25",
+        "slug": "uniwersalny-temblak-okg-25-2",
+        "external_source": "reh4mat",
+        "external_id": "316311",
+        "seo_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "seo_description": "Urazy w obrębie kończyny górnej są stosunkowo częste. Wyróżniamy zarówno ostre jak i przewlekłe uszkodzenia."
+      },
+      "source_description_sha256": "0bd120ff7c3912b6c4ad9a8a58daf8fd2bb6965a76793e488581382f4636a6ba",
+      "source_short_description_sha256": "ab0b242121bc62c92906a0d0afe158121b5714c9d5eb55b3778dc1ec74e42ae7",
+      "after": {
+        "seo_title": "Reh4Mat OKG-25 – temblak szary",
+        "seo_description": "Szary uniwersalny temblak Reh4Mat OKG-25 z regulowanym zapięciem."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 20660,
+            "sku": "OKG-25-2",
+            "external_variant_id": "reh4mat-316311-default",
+            "status": "draft",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.reh4mat.com/uploads/2023/07/4T7A5509.jpg",
+          "https://www.reh4mat.com/uploads/2023/07/4T7A5482-baner-szare-kopia-scaled.jpg",
+          "https://www.reh4mat.com/uploads/2023/07/4T7A5508.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "manufacturer_colour_selector_and_visual_review",
+        "primary_identity": {
+          "id": 316311,
+          "url": "https://www.reh4mat.com/?p=316311",
+          "canonical": [
+            "https://www.reh4mat.com/produkt/nadgarstek-akcesoria/uniwersalny-temblak-okg-25-2/"
+          ],
+          "title": "Uniwersalny temblak OKG-25",
+          "colour_selector_links": [
+            "https://www.reh4mat.com/produkt/nadgarstek-akcesoria/uniwersalny-temblak-okg-25/"
+          ]
+        },
+        "reviewed_main_photo": "https://www.reh4mat.com/uploads/2023/07/4T7A5509.jpg",
+        "reviewed_photo_sha256": "e89283eb1b7853d3751d46d71e04262bf443f68230b10d329ad9046b398f77b2",
+        "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+      }
+    },
+    {
+      "id": 9094,
+      "expected": {
+        "name": "Separator neurologiczny",
+        "slug": "separator-neurologiczny",
+        "external_source": "reh4mat",
+        "external_id": "41493",
+        "seo_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "seo_description": "Separator neurologiczny występuje jako dodatkowe wyposażenie do ortez ręki i przedramienia firmy Reh4Mat."
+      },
+      "source_description_sha256": "0c267258a4adbc0f55966c0b4d0194ff8fe8464e5baa050dd85017e51a1b83a8",
+      "source_short_description_sha256": "e65f825fc7ca9b3b5f7f83c7aae4290ec9297eae56703f6b52f2d8d6febef84f",
+      "after": {
+        "seo_title": "Reh4Mat – separator neurologiczny szary",
+        "seo_description": "Szary separator neurologiczny Reh4Mat, zakładany na dłoń."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 20661,
+            "sku": "REH4MAT-41493",
+            "external_variant_id": "reh4mat-41493-default",
+            "status": "draft",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.reh4mat.com/uploads/2014/12/separator-tlo-1-1.jpg",
+          "http://www.reh4mat.com/uploads/2014/12/separator-pl.jpg",
+          "https://www.reh4mat.com/uploads/2014/12/separator1.jpg"
+        ],
+        "producer_attributes": [],
+        "source": "manufacturer_colour_selector_and_visual_review",
+        "primary_identity": {
+          "id": 41493,
+          "url": "https://www.reh4mat.com/?p=41493",
+          "canonical": [
+            "https://www.reh4mat.com/produkt/reka-akcesoria/separator-neurologiczny/"
+          ],
+          "title": "Separator neurologiczny",
+          "colour_selector_links": [
+            "https://www.reh4mat.com/produkt/reka-akcesoria/separator-neurologiczny-cz/"
+          ]
+        },
+        "reviewed_main_photo": "https://www.reh4mat.com/uploads/2014/12/separator-tlo-1-1.jpg",
+        "reviewed_photo_sha256": "0ef1b328525dedbd4eaed615a7e3d299d66b902e780b741aaab551524c0f37ff",
+        "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+      }
+    },
+    {
+      "id": 9095,
+      "expected": {
+        "name": "Separator neurologiczny",
+        "slug": "separator-neurologiczny-cz",
+        "external_source": "reh4mat",
+        "external_id": "290460",
+        "seo_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+        "seo_description": "Separator neurologiczny występuje jako dodatkowe wyposażenie do ortez ręki i przedramienia firmy Reh4Mat."
+      },
+      "source_description_sha256": "efd729b85eff74ffbec2337bd799b91dc5c7a5f4da1e54f6346cb4410301349a",
+      "source_short_description_sha256": "e65f825fc7ca9b3b5f7f83c7aae4290ec9297eae56703f6b52f2d8d6febef84f",
+      "after": {
+        "seo_title": "Reh4Mat – separator neurologiczny czarny",
+        "seo_description": "Czarny separator neurologiczny Reh4Mat, zakładany na dłoń."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 20662,
+            "sku": "REH4MAT-290460",
+            "external_variant_id": "reh4mat-290460-default",
+            "status": "draft",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://www.reh4mat.com/uploads/2022/04/separator-neurologiczny-cz.jpg",
+          "http://www.reh4mat.com/uploads/2014/12/separator-pl.jpg",
+          "https://www.reh4mat.com/uploads/2014/12/separator_m-e1709633204160.png"
+        ],
+        "producer_attributes": [],
+        "source": "manufacturer_colour_selector_and_visual_review",
+        "primary_identity": {
+          "id": 290460,
+          "url": "https://www.reh4mat.com/?p=290460",
+          "canonical": [
+            "https://www.reh4mat.com/produkt/reka-akcesoria/separator-neurologiczny-cz/"
+          ],
+          "title": "Separator neurologiczny",
+          "colour_selector_links": [
+            "https://www.reh4mat.com/produkt/reka-akcesoria/separator-neurologiczny/"
+          ]
+        },
+        "reviewed_main_photo": "https://www.reh4mat.com/uploads/2022/04/separator-neurologiczny-cz.jpg",
+        "reviewed_photo_sha256": "2b1ddb7065ada55fc6fbca629d0abd2effdd3d2552d2c1e8b83dee3782b8eeca",
+        "inference": "Colour observed on the main manufacturer product photograph with reciprocal colour-selector linkage. No age, clinical or construction distinction inferred."
+      }
+    },
+    {
+      "id": 9620,
+      "expected": {
+        "name": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "slug": "nakladka-na-toalete-nasadka-na-sedes-po-operacji-biodra-podwyzszajaca-wc",
+        "external_source": "medreha",
+        "external_id": "681",
+        "seo_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "seo_description": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "ce91089d7c0b081bc3bf5e174dac506153e957ddbb2f10ce9bfcbf9244ad2e52",
+      "source_short_description_sha256": "7f8eb09c420d60d59b0db5afdfdfccaf704755688f6d594d199b6dbca340575a",
+      "after": {
+        "seo_title": "Nasadka na sedes MASO 08002 – 10 cm",
+        "seo_description": "Nasadka na sedes MASO 08002 z klapą. Wysokość 10 cm."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 21930,
+            "sku": "08002",
+            "external_variant_id": "medreha-681-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ],
+        "media_samples": [
+          "https://sklep.medreha.pl/environment/cache/images/productGfx_3793_500_500/011.jpg",
+          "https://sklep.medreha.pl/environment/cache/images/productGfx_3794_500_500/012.jpg",
+          "https://sklep.medreha.pl/environment/cache/images/productGfx_3686_500_500/08002__1_-removebg-preview.png"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 756,
+            "value": "MASO"
+          }
+        ],
+        "source": "own_body_and_frozen_assortment"
+      }
+    },
+    {
+      "id": 9940,
+      "expected": {
+        "name": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "slug": "nakladka-na-toalete-nasadka-na-sedes-po-operacji-biodra-podwyzszajaca-wc-medreha-819",
+        "external_source": "medreha",
+        "external_id": "819",
+        "seo_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+        "seo_description": "Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "1a0e0622927c749d10381bccaf90620d6433312f8f9ba4e2d6e558b0512c6984",
+      "source_short_description_sha256": "7f8eb09c420d60d59b0db5afdfdfccaf704755688f6d594d199b6dbca340575a",
+      "after": {
+        "seo_title": "Nasadka na sedes OrthoVisions – 5, 10 lub 15 cm",
+        "seo_description": "Nasadka na sedes OrthoVisions z klapą. Oferta obejmuje warianty wysokości 5, 10 i 15 cm."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 26688,
+            "sku": "NAK-ADKA-5-CM",
+            "external_variant_id": "medreha-819-162",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wysokość",
+                "value_id": 1043,
+                "value": "5 cm"
+              }
+            ]
+          },
+          {
+            "id": 26689,
+            "sku": "NAK-ADKA-10-CM",
+            "external_variant_id": "medreha-819-163",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wysokość",
+                "value_id": 1044,
+                "value": "10 cm"
+              }
+            ]
+          },
+          {
+            "id": 26690,
+            "sku": "NAK-ADKA-15-CM",
+            "external_variant_id": "medreha-819-164",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Wysokość",
+                "value_id": 1045,
+                "value": "15 cm"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://sklep.medreha.pl/environment/cache/images/productGfx_4461_500_500/NAKLADKA-NA-TOALETE-NASADKA-NA-SEDES-PO-OPERACJI-BIODRA-PODWYZSZAJACA-WC-5CM.jpg",
+          "https://sklep.medreha.pl/environment/cache/images/productGfx_4460_500_500/NAKLADKA-NA-TOALETE-NASADKA-NA-SEDES-PO-OPERACJI-BIODRA-PODWYZSZAJACA-WC-5CM.jpg",
+          "https://sklep.medreha.pl/environment/cache/images/productGfx_4462_500_500/4179.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Kolor",
+            "value_id": 1,
+            "value": "Biały"
+          },
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 697,
+            "value": "OrthoVisions"
+          }
+        ],
+        "source": "own_body_and_frozen_assortment"
+      }
+    },
+    {
+      "id": 13026,
+      "expected": {
+        "name": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+        "slug": "wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana",
+        "external_source": "sigvaris",
+        "external_id": "23940",
+        "seo_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+        "seo_description": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana | Panie Teresa Medica Szukasz wsparcia dla kręgosłupa w odcinku piersiowo-lędźwiowo-krzyżowym? Wysoka or"
+      },
+      "source_description_sha256": "0b2677777c20fb26c4c7f9b5b91a8fe8282b0ac1e33b66c97906bf5d6988794c",
+      "source_short_description_sha256": "2bcaac0d99259620a27694b704ef27983a3627d31dfdc79a077e0288f52041dd",
+      "after": {
+        "seo_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – beż, S–XXL",
+        "seo_description": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa z regulacją. Oferta w kolorze beżowym, w rozmiarach S, M, L, XL i XXL."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 65828,
+            "sku": "SIGVARIS-23940-23941",
+            "external_variant_id": "sigvaris-23940-23941",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 19,
+                "value": "S"
+              },
+              {
+                "attribute": "Kolor",
+                "value_id": 6254,
+                "value": "Beż"
+              }
+            ]
+          },
+          {
+            "id": 65829,
+            "sku": "SIGVARIS-23940-23942",
+            "external_variant_id": "sigvaris-23940-23942",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 20,
+                "value": "M"
+              },
+              {
+                "attribute": "Kolor",
+                "value_id": 6254,
+                "value": "Beż"
+              }
+            ]
+          },
+          {
+            "id": 65830,
+            "sku": "SIGVARIS-23940-23943",
+            "external_variant_id": "sigvaris-23940-23943",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 21,
+                "value": "L"
+              },
+              {
+                "attribute": "Kolor",
+                "value_id": 6254,
+                "value": "Beż"
+              }
+            ]
+          },
+          {
+            "id": 65831,
+            "sku": "SIGVARIS-23940-23944",
+            "external_variant_id": "sigvaris-23940-23944",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 22,
+                "value": "XL"
+              },
+              {
+                "attribute": "Kolor",
+                "value_id": 6254,
+                "value": "Beż"
+              }
+            ]
+          },
+          {
+            "id": 65832,
+            "sku": "SIGVARIS-23940-23945",
+            "external_variant_id": "sigvaris-23940-23945",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 23,
+                "value": "XXL"
+              },
+              {
+                "attribute": "Kolor",
+                "value_id": 6254,
+                "value": "Beż"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://www.sklep-sigvaris.com/2759-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg",
+          "https://www.sklep-sigvaris.com/291-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg",
+          "https://www.sklep-sigvaris.com/978-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-thoraco-lumbosacralorthosis.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 6246,
+            "value": "SIGVARIS S.A."
+          }
+        ],
+        "source": "own_body_and_frozen_assortment"
+      }
+    },
+    {
+      "id": 13064,
+      "expected": {
+        "name": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana",
+        "slug": "wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana-sigvaris-106307",
+        "external_source": "sigvaris",
+        "external_id": "106307",
+        "seo_title": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa – Regulowana",
+        "seo_description": "Wysoka Orteza Piersiowo-Lędźwiowo-Krzyżowa - Optymalne Wsparcie dla Twojego Kręgosłupa Zapewnij sobie najlepszą ochronę i wsparcie dla kręgosłupa z naszą Wysoką"
+      },
+      "source_description_sha256": "33deb08fce3daa7f1474c2e74b8b02e34f28197fd86913fafeeb2934ec4fc2d1",
+      "source_short_description_sha256": "df823e0c853447ee8ff61d4b0ca3967be0d21ae7f9cc1b9ab67f88627715665a",
+      "after": {
+        "seo_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – XS–XXXL",
+        "seo_description": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa z regulacją. Oferta w rozmiarach XS, S, M, L, XL, XXL i XXXL."
+      },
+      "evidence": {
+        "variant_snapshot": [
+          {
+            "id": 66104,
+            "sku": "SIGVARIS-106307-140862",
+            "external_variant_id": "sigvaris-106307-140862",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 18,
+                "value": "XS"
+              }
+            ]
+          },
+          {
+            "id": 66105,
+            "sku": "SIGVARIS-106307-140863",
+            "external_variant_id": "sigvaris-106307-140863",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 19,
+                "value": "S"
+              }
+            ]
+          },
+          {
+            "id": 66106,
+            "sku": "SIGVARIS-106307-140864",
+            "external_variant_id": "sigvaris-106307-140864",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 20,
+                "value": "M"
+              }
+            ]
+          },
+          {
+            "id": 66107,
+            "sku": "SIGVARIS-106307-140865",
+            "external_variant_id": "sigvaris-106307-140865",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 21,
+                "value": "L"
+              }
+            ]
+          },
+          {
+            "id": 66108,
+            "sku": "SIGVARIS-106307-140866",
+            "external_variant_id": "sigvaris-106307-140866",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 22,
+                "value": "XL"
+              }
+            ]
+          },
+          {
+            "id": 66109,
+            "sku": "SIGVARIS-106307-140867",
+            "external_variant_id": "sigvaris-106307-140867",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 23,
+                "value": "XXL"
+              }
+            ]
+          },
+          {
+            "id": 66110,
+            "sku": "SIGVARIS-106307-140868",
+            "external_variant_id": "sigvaris-106307-140868",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 693,
+                "value": "XXXL"
+              }
+            ]
+          }
+        ],
+        "media_samples": [
+          "https://www.sklep-sigvaris.com/1620-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana.jpg",
+          "https://www.sklep-sigvaris.com/1621-large_default/wysoka-orteza-piersiowo-ledzwiowo-krzyzowa-regulowana.jpg"
+        ],
+        "producer_attributes": [
+          {
+            "attribute": "Producent",
+            "value_id": 6246,
+            "value": "SIGVARIS S.A."
+          }
+        ],
+        "source": "own_body_and_frozen_assortment"
+      }
+    }
+  ],
+  "identity_review": [
+    {
+      "product_ids": [
+        164,
+        165
+      ],
+      "title_before": "EVOFLEX",
+      "decision": "distinct_colours",
+      "action": "Keep both; source parent IDs/codes and colour attributes identify black versus navy.",
+      "metadata_correction_ids": [
+        164,
+        165
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        220,
+        221,
+        244,
+        247
+      ],
+      "title_before": "AIR BAG MED",
+      "decision": "distinct_colours",
+      "action": "Keep four. Exact shop parent IDs identify different source catalogue codes. 220 is labelled fuksja at source; its cherry slug is not evidence for colour. The similar Mobilex air-bag-3 page is a different code and is not used.",
+      "metadata_correction_ids": [
+        220,
+        221,
+        244,
+        247
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        234,
+        237
+      ],
+      "title_before": "HEAVEN AD MED",
+      "decision": "distinct_colours",
+      "action": "Keep both; source code/colour fields identify black versus brown.",
+      "metadata_correction_ids": [
+        234,
+        237
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        257,
+        266
+      ],
+      "title_before": "Nautilus",
+      "decision": "distinct_source_catalogue_references",
+      "action": "Keep both navy offers; MF305791040 and F243541040 are different source catalogue references. Do not deduplicate by colour/name.",
+      "metadata_correction_ids": [
+        257,
+        266
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        1419,
+        4530
+      ],
+      "title_before": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+      "decision": "distinct_source_codes_price_identity_hold",
+      "action": "CARA pages publish different MPN values, 4048924102482 and 4048924643855, and prices differ (91650 versus 183300 grosz). Keep both offers and differentiate exact source codes. Confirm packaging/generation and price policy before any consolidation; shared model/colour is not enough.",
+      "metadata_correction_ids": [
+        1419,
+        4530
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        2828,
+        2829
+      ],
+      "title_before": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+      "decision": "distinct_selected_colours",
+      "action": "Selected source swatches/source MPNs identify rubyred/mix versus silkgrey/mix despite repeated source headlines. Correct 2828 name and matching image text.",
+      "metadata_correction_ids": [
+        2828,
+        2829
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        6744,
+        6745
+      ],
+      "title_before": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix*",
+      "decision": "one_verified_colour_companion_unavailable",
+      "action": "7139 is selected hotchocolate/mix with its own source MPN. Correct 6744 name and image text. The old 7175 honey page is currently unavailable; do not change 6745 price/status or infer equivalence.",
+      "metadata_correction_ids": [
+        6744
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        7951,
+        7952
+      ],
+      "title_before": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+      "decision": "distinct_selected_colours",
+      "action": "Selected source swatches and source MPNs identify dark blonde versus dark brown. Correct 7951 name and matching image text.",
+      "metadata_correction_ids": [
+        7951,
+        7952
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        8869,
+        8870
+      ],
+      "title_before": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "decision": "design_generation_confirmation",
+      "action": "Manufacturer photographs show different frame/hinge designs as well as colour. Retain both SPARTAN records until the manufacturer confirms generation/configuration equivalence.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        9066,
+        9067
+      ],
+      "title_before": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "decision": "distinct_manufacturer_colour_pages",
+      "action": "Reciprocal manufacturer colour selectors link grey and black AM-OSN-U-02 pages. Colour is visually reviewed on main product photographs, not inferred from recommended accessories or a pediatric URL segment.",
+      "metadata_correction_ids": [
+        9066,
+        9067
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        9092,
+        9093
+      ],
+      "title_before": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "decision": "distinct_manufacturer_colour_pages",
+      "action": "Reciprocal manufacturer colour selectors and main photographs identify 9092 black and 9093 grey OKG-25. Keep both.",
+      "metadata_correction_ids": [
+        9092,
+        9093
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        9094,
+        9095
+      ],
+      "title_before": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "decision": "distinct_manufacturer_colour_pages",
+      "action": "Reciprocal colour selectors and main photographs identify grey and black separators. Keep both.",
+      "metadata_correction_ids": [
+        9094,
+        9095
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        9309,
+        9332
+      ],
+      "title_before": "FP-25 Stabilizator kończyn",
+      "decision": "duplicate_candidate_missing_identity",
+      "action": "Same FP-25 copy and unpriced draft variants, but no images and no numeric source product IDs. Obtain the exact source product identity before choosing a canonical record.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        9620,
+        9940
+      ],
+      "title_before": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+      "decision": "distinct_brand_and_assortment",
+      "action": "MASO 08002 single 10 cm offer versus OrthoVisions 5/10/15 cm assortment. Own body and producer attributes agree. Keep both; do not merge based on generic title.",
+      "metadata_correction_ids": [
+        9620,
+        9940
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        9983,
+        9986
+      ],
+      "title_before": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+      "decision": "duplicate_confirmed_prepare_consolidation",
+      "action": "Both current Timago pages identify RANGER with the same specification. Keep complete galleries/categories and validate live references when preparing a reversible merge; different image URLs are not a distinct model.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        10104,
+        10107
+      ],
+      "title_before": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+      "decision": "duplicate_confirmed_prepare_consolidation",
+      "action": "Both current Timago pages identify JMC-C 2052 with identical copy/attributes. External ID 2052 is not proof of manufacturer identity by itself. Preserve the larger gallery before consolidation.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        10479,
+        10523
+      ],
+      "title_before": "Maska podnosowa AirFit N30i - U.02.02.00",
+      "decision": "kit_configuration_confirmation",
+      "action": "Shared source EAN 619498638802, but symbols 63880/63816 versus 63880 and different draft option sets. Confirm complete kit versus cushion/frame component mapping with supplier; no invented mask distinction.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        11039,
+        11040
+      ],
+      "title_before": "Opaska kompresyjna na twarz AT04702 - Antar",
+      "decision": "duplicate_candidate_priced_offer",
+      "action": "Same AT04702 photographs/copy, but the copy-slug record has the active priced variant and the clean-slug record is unpriced. Confirm source catalogue code/offer mapping; do not archive the purchasable record or silently choose its price.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        12021,
+        12022
+      ],
+      "title_before": "protect.Ankle air foam",
+      "decision": "same_variant_price_decision",
+      "action": "Equal active options and same source product imagery, but 5600 versus 20000 grosz. Business decision on clearance versus regular offers is required before consolidation.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        12503,
+        12562
+      ],
+      "title_before": "PEPI | Vermeiren Polska",
+      "decision": "duplicate_candidate_specification_confirmation",
+      "action": "PEPI imagery and attributes agree; one body additionally gives dimensions/load. Confirm those are the same configuration and preserve complete information before consolidation.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        12583,
+        12619
+      ],
+      "title_before": "VICAIR ACTIVE O2 | Vermeiren Polska",
+      "decision": "duplicate_confirmed_prepare_consolidation",
+      "action": "Vicair Active O2 model, sampled manufacturer images, attributes and dimensions agree; copy differences are punctuation and orientation labels. Require live complete gallery/reference checks before archival.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        12587,
+        12623
+      ],
+      "title_before": "VICAIR ALLROUNDER | Vermeiren Polska",
+      "decision": "duplicate_confirmed_prepare_consolidation",
+      "action": "Vicair Allrounder O2 shares sampled images/model; additional copy explains how to measure the same size range. Preserve useful instructions and full galleries during consolidation.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        12588,
+        12624
+      ],
+      "title_before": "VICAIR LIBERTY BACK | Vermeiren Polska",
+      "decision": "model_code_conflict",
+      "action": "Liberty Back body codes LBS/1–3 versus LBC/1–3 conflict. Identical sampled imagery is insufficient to choose whether a cover or configuration differs. Ask manufacturer/supplier before merging.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        12589,
+        12625
+      ],
+      "title_before": "VICAIR ANATOMY BACK | Vermeiren Polska",
+      "decision": "duplicate_candidate_configuration_confirmation",
+      "action": "Anatomic Back sampled images/model agree, but rewritten copy adds size/order claims. Confirm complete size/configuration equivalence and preserve verified facts before consolidation.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": true
+    },
+    {
+      "product_ids": [
+        12590,
+        12626
+      ],
+      "title_before": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+      "decision": "duplicate_confirmed_prepare_consolidation",
+      "action": "Multifunctional Back shares sampled images/model/dimensions; one body adds only a training-link paragraph. Require full live media/reference checks and preserve data in the consolidation plan.",
+      "metadata_correction_ids": [],
+      "title_group_resolved_by_this_batch": false,
+      "requires_further_identity_or_business_review": false
+    },
+    {
+      "product_ids": [
+        13026,
+        13064
+      ],
+      "title_before": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+      "decision": "distinct_current_assortments_model_unconfirmed",
+      "action": "Current S–XXL beige assortment differs from XS–XXXL assortment without a colour option. Differentiate the actual offers; supplier model identity still needs confirmation. No inference that an internal SIGVARIS SKU is a manufacturer model code.",
+      "metadata_correction_ids": [
+        13026,
+        13064
+      ],
+      "title_group_resolved_by_this_batch": true,
+      "requires_further_identity_or_business_review": true
+    }
+  ],
+  "scope": "27 title/description corrections, three wrong colour names and only image caption text matching those wrong names. No archive, pricing, stock, variant, source body, slug, category or redirect changes. Expected remaining duplicate-title groups: 13; this does not imply remaining physical identity questions are solved."
+}
