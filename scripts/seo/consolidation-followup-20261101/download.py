@@ -3,7 +3,7 @@
 import argparse,base64,gzip,hashlib,importlib.util,json,re,shlex,shutil,sys
 from pathlib import Path
 ROOT=Path(__file__).parent
-path=ROOT.parent/'variant-review-20261101/shared-download.py'
+path=ROOT.parent/'editorial-review-20261031/download.py'
 spec=importlib.util.spec_from_file_location('duplicate_transport',path)
 transport=importlib.util.module_from_spec(spec);spec.loader.exec_module(transport)
 VERSION='product-seo-consolidation-preservation-20261101-v1'
