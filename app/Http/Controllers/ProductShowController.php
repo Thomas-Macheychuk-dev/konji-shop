@@ -181,7 +181,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v11.%s.%d',
+            'product-page.v12.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -680,11 +680,9 @@ class ProductShowController extends Controller
             ->map(fn (ProductAttributeValueImage $image): array => $this->imagePayload($image, $variant->sku ?: $product->name))
             ->values();
 
-        if ($matchedImages->isNotEmpty()) {
-            return $matchedImages->all();
-        }
-
-        return $this->baseImages($product);
+        // Without variant-specific images the configurator shows base_images. Repeating the full gallery
+        // on every variant made a 2,688-variant product page 3.7 MB.
+        return $matchedImages->all();
     }
 
     private function normalizeAttributeCode(AttributeValue $value): string
