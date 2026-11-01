@@ -1,0 +1,160 @@
+{
+  "version": "product-seo-remaining-identities-20261101-v1",
+  "prior_backup": "storage/app/private/seo-repairs/consolidation-final-20261101.Cmcdoi",
+  "prior_plan_sha256": "f94e4f51499cbb2f6b5e920c1248d83fa3b4c9403660b2ee4490c9a9c26727be",
+  "scope": "SELECT-only full preservation evidence for the eight remaining title groups. No merge, archive, price or metadata decision is applied.",
+  "groups": [
+    {
+      "label": "SPARTAN",
+      "products": [
+        {
+          "id": 8869,
+          "name": "Orteza kończyny dolnej SPARTAN",
+          "slug": "orteza-konczyny-dolnej-spartan",
+          "external_source": "reh4mat",
+          "external_id": "25342"
+        },
+        {
+          "id": 8870,
+          "name": "Orteza kończyny dolnej SPARTAN",
+          "slug": "orteza-konczyny-dolnej-spartan-2",
+          "external_source": "reh4mat",
+          "external_id": "336966"
+        }
+      ]
+    },
+    {
+      "label": "FP-25",
+      "products": [
+        {
+          "id": 9309,
+          "name": "FP-25 Stabilizator kończyn",
+          "slug": "stabilizator-konczyn-fp-25",
+          "external_source": "reh4mat",
+          "external_id": "stabilizator-konczyn-fp-25"
+        },
+        {
+          "id": 9332,
+          "name": "FP-25 Stabilizator kończyn",
+          "slug": "stabilizator-konczyn-fp-25-2",
+          "external_source": "reh4mat",
+          "external_id": "stabilizator-konczyn-fp-25-2"
+        }
+      ]
+    },
+    {
+      "label": "AirFit N30i",
+      "products": [
+        {
+          "id": 10479,
+          "name": "Maska podnosowa AirFit N30i",
+          "slug": "maska-podnosowa-airfit-n30i-rozm-s",
+          "external_source": "rehafund",
+          "external_id": "2108"
+        },
+        {
+          "id": 10523,
+          "name": "Maska podnosowa AirFit N30i",
+          "slug": "maska-podnosowa-airfit-n30i-rozmiar-s-63880",
+          "external_source": "rehafund",
+          "external_id": "212"
+        }
+      ]
+    },
+    {
+      "label": "Antar AT04702",
+      "products": [
+        {
+          "id": 11039,
+          "name": "Opaska kompresyjna na twarz AT04702",
+          "slug": "opaska-kompresyjna-na-twarz-at04702-kopia",
+          "external_source": "antar",
+          "external_id": "opaska-kompresyjna-na-twarz-at04702-kopia"
+        },
+        {
+          "id": 11040,
+          "name": "Opaska kompresyjna na twarz AT04702",
+          "slug": "opaska-kompresyjna-na-twarz-at04702",
+          "external_source": "antar",
+          "external_id": "opaska-kompresyjna-na-twarz-at04702"
+        }
+      ]
+    },
+    {
+      "label": "protect.Ankle air foam",
+      "products": [
+        {
+          "id": 12021,
+          "name": "protect.Ankle air foam %",
+          "slug": "protect-ankle-air-foam-ortezy-kostka-sale",
+          "external_source": "medi",
+          "external_id": "1185364"
+        },
+        {
+          "id": 12022,
+          "name": "protect.Ankle air foam",
+          "slug": "protect-ankle-air-foam-ortezy-kostka",
+          "external_source": "medi",
+          "external_id": "928956"
+        }
+      ]
+    },
+    {
+      "label": "PEPI",
+      "products": [
+        {
+          "id": 12503,
+          "name": "PEPI",
+          "slug": "pepi",
+          "external_source": "vermeiren",
+          "external_id": "485a044b2a50403b2c113688b16bba6432e636333f71779cb86549404638216f"
+        },
+        {
+          "id": 12562,
+          "name": "PEPI",
+          "slug": "pepi-f7d0cf03",
+          "external_source": "vermeiren",
+          "external_id": "0086784691637d0db04c9c303923eca917b6deb9c142ab0d34eed9f50d0ad9e5"
+        }
+      ]
+    },
+    {
+      "label": "Vicair Liberty Back",
+      "products": [
+        {
+          "id": 12588,
+          "name": "VICAIR® LIBERTY BACK",
+          "slug": "vicair-liberty-back",
+          "external_source": "vermeiren",
+          "external_id": "21d016d5c3773f29fd4a5086326ef82b1ef5c8a930b45f062f21b4261181ca9c"
+        },
+        {
+          "id": 12624,
+          "name": "Vicair Liberty Back",
+          "slug": "vicair-liberty-back-5614ac49",
+          "external_source": "vermeiren",
+          "external_id": "a84c07e9b8db0ee43cfb00d600a022df70e2fe8a6edd09d85c41c20cb5b8c7fd"
+        }
+      ]
+    },
+    {
+      "label": "Vicair Anatomic Back",
+      "products": [
+        {
+          "id": 12589,
+          "name": "VICAIR® ANATOMIC BACK",
+          "slug": "vicair-anatomic-back",
+          "external_source": "vermeiren",
+          "external_id": "10d41a6ec2602eb8c90bcf9831a549037f5c265f0518a741a3a50cc96ce45f70"
+        },
+        {
+          "id": 12625,
+          "name": "Vicair Anatomic back",
+          "slug": "vicair-anatomic-back-c2cf2d5e",
+          "external_source": "vermeiren",
+          "external_id": "350732b8860095687f624d7f482d1a9cca46dc88fce507b080edad7e82e0a0a5"
+        }
+      ]
+    }
+  ]
+}
