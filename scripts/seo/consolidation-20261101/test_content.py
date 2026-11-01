@@ -11,7 +11,7 @@ class ConsolidationEvidenceTests(unittest.TestCase):
   self.assertEqual(6,len(M['pairs']));self.assertEqual(26,len(M['held_groups']))
   aliases=ROOT.parents[2]/'resources/seo/ortezka/reviewed-product-aliases-20261101.json'
   if not aliases.exists():aliases=ROOT/'aliases.json'
-  mapping=json.loads(aliases.read_text())['pairs'];self.assertEqual(6,len(mapping))
+  mapping=json.loads(aliases.read_text())['pairs'];self.assertGreaterEqual(len(mapping),6)
   for pair,alias in zip(M['pairs'],mapping):
    a,b=[rows[pair[k]['id']] for k in ['target','source']];ids.extend([a['id'],b['id']]);self.assertEqual(a['description'],b['description']);self.assertEqual(a['product_attributes'],b['product_attributes'])
    self.assertEqual({i['source_url'] for i in a['image_evidence']},{i['source_url'] for i in b['image_evidence']});self.assertTrue(pair['manufacturer_image_samples'])
@@ -28,7 +28,11 @@ class ConsolidationEvidenceTests(unittest.TestCase):
    candidates={'ReviewedProductAliases.php':'app/Support/Seo/ReviewedProductAliases.php','aliases.json':'resources/seo/ortezka/reviewed-product-aliases-20261101.json','ProductShowController.php':'app/Http/Controllers/ProductShowController.php'}
    p=ROOT.parents[2]/candidates[path]
    if not p.exists():p=ROOT/path
-   self.assertEqual(h,hashlib.sha256(p.read_bytes()).hexdigest())
+   content=p.read_bytes()
+   if path=='aliases.json':
+    # Later approved batches append aliases; reconstruct this original six-pair bundle.
+    data=json.loads(content);data['pairs']=data['pairs'][:6];content=(json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode()
+   self.assertEqual(h,hashlib.sha256(content).hexdigest())
   self.assertIn('ALL_CONTAINER_PREFLIGHT=PASS',script);self.assertIn('restore_sources',script)
   self.assertIn('df806bf23d22c0420fda442811b5bf9137bd5c6ed2e64023898eac496cf58bee',script)
 if __name__=='__main__':unittest.main()
