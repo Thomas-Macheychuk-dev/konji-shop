@@ -1,0 +1,1201 @@
+{
+  "repair": "product-seo-editorial-20261031-v1",
+  "batch": "product-seo-variant-review-20261101-v1",
+  "prior_backup": "storage/app/private/seo-repairs/duplicate-codes-20261101.FLNjoA",
+  "prior_plan_sha256": "6c34bbfad5916164c634761a19b6c753537eff738f8c9646ed10dc3f9b01f758",
+  "source_export_sha256": "e6c326bb57d07beee7a58eb12baebf5758991f27b312f758cf4d2070925211fc",
+  "entries": [
+    {
+      "id": 7988,
+      "expected": {
+        "name": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE black",
+        "slug": "sangria-black-dopinka",
+        "external_source": "peruka",
+        "external_id": "13810",
+        "seo_title": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE # black",
+        "seo_description": "Kolekcja POWER PIECES"
+      },
+      "source_description_sha256": "8f58df3a42706e72f3138a08871677dd907e24487787a4fa1ca462bf57f70430",
+      "source_short_description_sha256": "227c583a649433bd9c35429c60175f3b569c7aea6ace6d3c36554a3e961da85f",
+      "after": {
+        "seo_title": "Treska syntetyczna na klamrze – pasma 35–60 cm",
+        "seo_description": "Kręcona treska z włosa syntetycznego, mocowana jedną klamrą. Cieniowane pasma o długości 35–60 cm."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "pasma cieniowane od 35 do 60 cm",
+          "na jedną klamrę"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 19555,
+            "sku": "13810",
+            "external_variant_id": "peruka-13810-default",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": []
+          }
+        ]
+      }
+    },
+    {
+      "id": 11925,
+      "expected": {
+        "name": "duomed® smooth %",
+        "slug": "duomed-smooth-po-czochy-kompresyjne-sale",
+        "external_source": "medi",
+        "external_id": "1171327",
+        "seo_title": "Duomed® smooth pończochy kompresyjne",
+        "seo_description": "medi - lider w produkcji medycznej, oferujący najwyższej jakości wyroby kompresyjne i ortopedyczne, poprawiające codzienne życie. medi. Czuję się lepiej."
+      },
+      "source_description_sha256": "d504af917d5a5d6906799706ca67a1aba2110780dd1b30d1c542a0ed459f0b70",
+      "source_short_description_sha256": "cdbee2818cdfcd8927a86a193ab90094b74bed69e6b37b0b973b0376b8a2624f",
+      "after": {
+        "seo_title": "Duomed smooth pończochy – XXL, krótkie, czarne",
+        "seo_description": "Pończochy kompresyjne Duomed smooth: rozmiar XXL, długość krótka, kolor czarny, palce zamknięte. Klasa ucisku CCL2."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "RozmiarXXLDługośćkrótka"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 32665,
+            "sku": "XW51516",
+            "external_variant_id": "medi-1171327-1170710",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Kolor",
+                "value_id": 16,
+                "value": "Czarny"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 23,
+                "value": "XXL"
+              },
+              {
+                "attribute": "Długość",
+                "value_id": 4378,
+                "value": "Krótka"
+              },
+              {
+                "attribute": "Palce",
+                "value_id": 4380,
+                "value": "zamknięte"
+              },
+              {
+                "attribute": "CCL",
+                "value_id": 4381,
+                "value": "CCL2"
+              },
+              {
+                "attribute": "Rodzaj ściągacza",
+                "value_id": 4418,
+                "value": "podstawowy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 11933,
+      "expected": {
+        "name": "Genumedi® PSS %",
+        "slug": "genumedi-pss-stabilizator-kolana-sale",
+        "external_source": "medi",
+        "external_id": "1185298",
+        "seo_title": "Genumedi PSS stabilizator kolana",
+        "seo_description": "Uzyskaj skuteczne wsparcie kolana dzięki Genumedi PSS Knee Support 2022 od Medi Shop. Wygodne i regulowane, idealne do urazów pooperacyjnych lub sportowych. Kupuj teraz!"
+      },
+      "source_description_sha256": "a729350d58d9504ae739ce1fe228d88321a55cd55be218e00d632edd2cbe8d86",
+      "source_short_description_sha256": "cf2293b62a2ae9e7d3b7a7c738624a34d47178ea235b3f3ff5e1e474799a5463",
+      "after": {
+        "seo_title": "Genumedi PSS – rozmiar V, standard, lyons blue",
+        "seo_description": "Stabilizator kolana Genumedi PSS w kolorze lyons blue. Rozmiar V, obwód standard."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "Kolorlyons blueObwódstandardRozmiarV"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 32861,
+            "sku": "K150305",
+            "external_variant_id": "medi-1185298-1185294",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Obwód",
+                "value_id": 4387,
+                "value": "Standard"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 4396,
+                "value": "V"
+              },
+              {
+                "attribute": "Kolor",
+                "value_id": 4423,
+                "value": "lyons blue"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 11956,
+      "expected": {
+        "name": "MAXIS MICRO %",
+        "slug": "maxis-micro-ponczochy-uciskowe-sale",
+        "external_source": "medi",
+        "external_id": "1171324",
+        "seo_title": "MAXIS MICRO pończochy uciskowe",
+        "seo_description": "medi - lider w produkcji medycznej, oferujący najwyższej jakości wyroby kompresyjne i ortopedyczne, poprawiające codzienne życie. medi. Czuję się lepiej."
+      },
+      "source_description_sha256": "261dd88539f91d4bbf476436f1f13f26a1d2c5641bad6fe205cd90e23163860f",
+      "source_short_description_sha256": "bbd03df32f839fce463c0c3360f925924d3b7ad6e455bb0046d1bcd54291405d",
+      "after": {
+        "seo_title": "MAXIS MICRO pończochy – I, czarne, CCL2",
+        "seo_description": "Pończochy uciskowe MAXIS MICRO: rozmiar I, kolor czarny, długość normalna, palce zamknięte. Klasa ucisku CCL2."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "MAXIS Micro"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 33134,
+            "sku": "XB69511",
+            "external_variant_id": "medi-1171324-1170763",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Kolor",
+                "value_id": 16,
+                "value": "Czarny"
+              },
+              {
+                "attribute": "Palce",
+                "value_id": 4380,
+                "value": "zamknięte"
+              },
+              {
+                "attribute": "CCL",
+                "value_id": 4381,
+                "value": "CCL2"
+              },
+              {
+                "attribute": "Długość",
+                "value_id": 4382,
+                "value": "normalna"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 4393,
+                "value": "I"
+              },
+              {
+                "attribute": "Rodzaj ściągacza",
+                "value_id": 4418,
+                "value": "podstawowy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 11958,
+      "expected": {
+        "name": "MAXIS MICRO %",
+        "slug": "maxis-micro-rajstopy-uciskowe-sale",
+        "external_source": "medi",
+        "external_id": "1171320",
+        "seo_title": "MAXIS MICRO rajstopy uciskowe",
+        "seo_description": "medi - lider w produkcji medycznej, oferujący najwyższej jakości wyroby kompresyjne i ortopedyczne, poprawiające codzienne życie. medi. Czuję się lepiej."
+      },
+      "source_description_sha256": "458aa6ebae41debbd9b05712e428e4dea8a3fa2049dca1a60c7d0de1e4c3dcea",
+      "source_short_description_sha256": "a22201951ca47b432b9bbd2a757a8668a299eac5e442fc903e78cc7611fbc9f6",
+      "after": {
+        "seo_title": "MAXIS MICRO rajstopy – I, krótkie, brązowe",
+        "seo_description": "Rajstopy uciskowe MAXIS MICRO: rozmiar I, kolor brązowy, długość krótka, palce zamknięte. Klasa ucisku CCL2."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "Rajstopy MAXIS Micro"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 33391,
+            "sku": "XB17611",
+            "external_variant_id": "medi-1171320-1170816",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Kolor",
+                "value_id": 828,
+                "value": "Brązowy"
+              },
+              {
+                "attribute": "Długość",
+                "value_id": 4378,
+                "value": "Krótka"
+              },
+              {
+                "attribute": "Palce",
+                "value_id": 4380,
+                "value": "zamknięte"
+              },
+              {
+                "attribute": "CCL",
+                "value_id": 4381,
+                "value": "CCL2"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 4393,
+                "value": "I"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 11966,
+      "expected": {
+        "name": "medi collar soft Kidz %",
+        "slug": "medi-collar-soft-kidz-kolnierz-ortopedyczny-sale",
+        "external_source": "medi",
+        "external_id": "1185396",
+        "seo_title": "medi collar soft Kidz kołnierz ortopedyczny",
+        "seo_description": "medi - lider w produkcji medycznej, oferujący najwyższej jakości wyroby kompresyjne i ortopedyczne, poprawiające codzienne życie. medi. Czuję się lepiej."
+      },
+      "source_description_sha256": "d59508a75792d5c7d366ec653a0e4c0ce351129acc1b5b482a4aa732ac667817",
+      "source_short_description_sha256": "58e1686c75c5482d56c0b3337b2cd90117847bd1d50d9505613a246f5ed2669c",
+      "after": {
+        "seo_title": "medi collar soft Kidz – III, 7 cm, niebieski",
+        "seo_description": "Kołnierz ortopedyczny medi collar soft Kidz: rozmiar III, głębokość 7 cm, kolor niebieski."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "RozmiarIIIGłębokość7 cm"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 33531,
+            "sku": "R222013",
+            "external_variant_id": "medi-1185396-1185391",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Kolor",
+                "value_id": 2,
+                "value": "Niebieski"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 4397,
+                "value": "III"
+              },
+              {
+                "attribute": "Głębokość",
+                "value_id": 4457,
+                "value": "7 cm"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 11998,
+      "expected": {
+        "name": "mediven® elegance %",
+        "slug": "mediven-elegance-ponczochy-uciskowe-sale",
+        "external_source": "medi",
+        "external_id": "1176233",
+        "seo_title": "mediven elegance pończochy uciskowe",
+        "seo_description": "medi - lider w produkcji medycznej, oferujący najwyższej jakości wyroby kompresyjne i ortopedyczne, poprawiające codzienne życie. medi. Czuję się lepiej."
+      },
+      "source_description_sha256": "0b237f5bf1bef3c99e7c263e015de1f837d7a4f5fcf0e9d952cf7376574d3272",
+      "source_short_description_sha256": "bbd03df32f839fce463c0c3360f925924d3b7ad6e455bb0046d1bcd54291405d",
+      "after": {
+        "seo_title": "mediven elegance pończochy – VII, kaszmirowe, CCL2",
+        "seo_description": "Pończochy uciskowe mediven elegance: rozmiar VII, kolor kaszmirowy, długość normalna, palce otwarte. Klasa ucisku CCL2."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "mediven"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 37505,
+            "sku": "0269C07",
+            "external_variant_id": "medi-1176233-1185288",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Palce",
+                "value_id": 4377,
+                "value": "otwarte"
+              },
+              {
+                "attribute": "CCL",
+                "value_id": 4381,
+                "value": "CCL2"
+              },
+              {
+                "attribute": "Długość",
+                "value_id": 4382,
+                "value": "normalna"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 4394,
+                "value": "VII"
+              },
+              {
+                "attribute": "Rodzaj ściągacza",
+                "value_id": 4418,
+                "value": "podstawowy"
+              },
+              {
+                "attribute": "Kolor",
+                "value_id": 4497,
+                "value": "kaszmirowy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 12010,
+      "expected": {
+        "name": "mediven® sheer & soft %",
+        "slug": "mediven-sheer-and-soft-rajstopy-uciskowe-sale",
+        "external_source": "medi",
+        "external_id": "1174101",
+        "seo_title": "Mediven® sheer & soft rajstopy uciskowe",
+        "seo_description": "medi - lider w produkcji medycznej, oferujący najwyższej jakości wyroby kompresyjne i ortopedyczne, poprawiające codzienne życie. medi. Czuję się lepiej."
+      },
+      "source_description_sha256": "4259a0cd20a5fbfb342acc93c334f9d43690b5508f4e597e1a473a795fb44299",
+      "source_short_description_sha256": "a22201951ca47b432b9bbd2a757a8668a299eac5e442fc903e78cc7611fbc9f6",
+      "after": {
+        "seo_title": "mediven sheer & soft rajstopy – I, czarne, 15–20 mmHg",
+        "seo_description": "Rajstopy uciskowe mediven sheer & soft: rozmiar I, kolor czarny, długość normalna, palce zamknięte. Ucisk 15–20 mmHg."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "RozmiarIDługośćnormalnaCCL15 - 20 mmHG"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 49294,
+            "sku": "O110511",
+            "external_variant_id": "medi-1174101-1173599",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Kolor",
+                "value_id": 16,
+                "value": "Czarny"
+              },
+              {
+                "attribute": "Palce",
+                "value_id": 4380,
+                "value": "zamknięte"
+              },
+              {
+                "attribute": "Długość",
+                "value_id": 4382,
+                "value": "normalna"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 4393,
+                "value": "I"
+              },
+              {
+                "attribute": "CCL",
+                "value_id": 4512,
+                "value": "15 - 20 mmHG"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 13717,
+      "expected": {
+        "name": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "slug": "dr-max-plyn-do-mycia-szyb-przeciw-parowaniu-500-ml",
+        "external_source": "seni24",
+        "external_id": "16499",
+        "seo_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "seo_description": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml. Do okien, luster i innych powierzchni zmywalnych. Forma sprayu."
+      },
+      "source_description_sha256": "a06418ae7d72528d1f518fdd1600acf3f8ce317970caabdbffcb83108b6823cd",
+      "source_short_description_sha256": "8dc193f0ba35517227b690f920fcf2082943ac93510296f102b22cfb22ccf374",
+      "after": {
+        "seo_title": "Dr Max płyn do szyb 500 ml – CH-221-S500-N08",
+        "seo_description": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml. Do okien, luster i innych powierzchni zmywalnych. Forma sprayu."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "IndeksCH-221-S500-N08"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 67950,
+            "sku": "S24-16499-21997",
+            "external_variant_id": "seni24-16499-21997",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Pojemność",
+                "value_id": 6949,
+                "value": "500 ml"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 13718,
+      "expected": {
+        "name": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "slug": "dr-max-plyn-do-mycia-szyb-przeciw-parowaniu-zielony-500-ml",
+        "external_source": "seni24",
+        "external_id": "16500",
+        "seo_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+        "seo_description": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml. Do okien, luster i innych powierzchni zmywalnych. Forma sprayu."
+      },
+      "source_description_sha256": "281ea2b51a944da9e4c6db8a9192dabd03ab25a1741af0167dcf40986eb46a64",
+      "source_short_description_sha256": "8dc193f0ba35517227b690f920fcf2082943ac93510296f102b22cfb22ccf374",
+      "after": {
+        "seo_title": "Dr Max płyn do szyb 500 ml – CH-221-S500-Z01",
+        "seo_description": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml. Do okien, luster i innych powierzchni zmywalnych. Forma sprayu."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "IndeksCH-221-S500-Z01"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 67951,
+            "sku": "S24-16500-21998",
+            "external_variant_id": "seni24-16500-21998",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Pojemność",
+                "value_id": 6949,
+                "value": "500 ml"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 14106,
+      "expected": {
+        "name": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "slug": "matovlies-niejalowe-kompresy-z-wlokniny-100-szt",
+        "external_source": "seni24",
+        "external_id": "899",
+        "seo_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "seo_description": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt. Producent: TZMO S.A. Numer jednostki notyfikowanej 2274."
+      },
+      "source_description_sha256": "268fefcbe5d480cd26c5ecd002d22b5fcb10f5426c6d10197c60052694f8b5cd",
+      "source_short_description_sha256": "b8bef062d5ffbd004e22a0037c269decd1cbd3ba7c7bc0af559188f710200ab8",
+      "after": {
+        "seo_title": "Matovlies – kompresy niejałowe 100 szt., 4 warstwy",
+        "seo_description": "Niejałowe kompresy z włókniny Matovlies, 100 sztuk. Warianty czterowarstwowe o wymiarach 5×5, 7,5×7,5 lub 10×10 cm."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "Warstwowość 4 Jałowość Niejałowe"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 69166,
+            "sku": "S24-899-10040",
+            "external_variant_id": "seni24-899-10040",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Gramatura",
+                "value_id": 7748,
+                "value": "30g"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7752,
+                "value": "5x5cm"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9323,
+                "value": "4"
+              }
+            ]
+          },
+          {
+            "id": 69167,
+            "sku": "S24-899-10041",
+            "external_variant_id": "seni24-899-10041",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Gramatura",
+                "value_id": 7749,
+                "value": "40g"
+              },
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7752,
+                "value": "5x5cm"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9323,
+                "value": "4"
+              }
+            ]
+          },
+          {
+            "id": 69168,
+            "sku": "S24-899-10043",
+            "external_variant_id": "seni24-899-10043",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7132,
+                "value": "7.5x7.5cm"
+              },
+              {
+                "attribute": "Gramatura",
+                "value_id": 7749,
+                "value": "40g"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9323,
+                "value": "4"
+              }
+            ]
+          },
+          {
+            "id": 69169,
+            "sku": "S24-899-10042",
+            "external_variant_id": "seni24-899-10042",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7132,
+                "value": "7.5x7.5cm"
+              },
+              {
+                "attribute": "Gramatura",
+                "value_id": 7748,
+                "value": "30g"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9323,
+                "value": "4"
+              }
+            ]
+          },
+          {
+            "id": 69170,
+            "sku": "S24-899-10036",
+            "external_variant_id": "seni24-899-10036",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7129,
+                "value": "10x10cm"
+              },
+              {
+                "attribute": "Gramatura",
+                "value_id": 7748,
+                "value": "30g"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9323,
+                "value": "4"
+              }
+            ]
+          },
+          {
+            "id": 69171,
+            "sku": "S24-899-10037",
+            "external_variant_id": "seni24-899-10037",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7129,
+                "value": "10x10cm"
+              },
+              {
+                "attribute": "Gramatura",
+                "value_id": 7749,
+                "value": "40g"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9323,
+                "value": "4"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 14279,
+      "expected": {
+        "name": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "slug": "kompresy-z-wlokniny-matovlies-niejalowe-100-sztuk",
+        "external_source": "seni24",
+        "external_id": "22442",
+        "seo_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+        "seo_description": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt. Producent: TZMO S.A. Numer jednostki notyfikowanej 2274."
+      },
+      "source_description_sha256": "b33cb6df4e716319755b9bddfad68454915c13e531238aa1f4a1a946eb513000",
+      "source_short_description_sha256": "6c8159f17c53a1842b35b7a32e2c6b430c70c0230e8473e8debe7278d50b3ede",
+      "after": {
+        "seo_title": "Matovlies – kompresy niejałowe 100 szt., 4 lub 6 warstw",
+        "seo_description": "Niejałowe kompresy z włókniny Matovlies, 100 sztuk. Warianty: 10×20 cm, 4 warstwy lub 10×10 cm, 6 warstw. Torebka papierowo-foliowa."
+      },
+      "evidence": {
+        "source": "own_body_and_frozen_variant_options",
+        "quotes": [
+          "Warstwowość 4, 6",
+          "Opakowanie Torebka papierowo-foliowa"
+        ],
+        "variant_snapshot": [
+          {
+            "id": 69741,
+            "sku": "S24-22442-25317",
+            "external_variant_id": "seni24-22442-25317",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7581,
+                "value": "10x20cm"
+              },
+              {
+                "attribute": "Gramatura",
+                "value_id": 7748,
+                "value": "30g"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9323,
+                "value": "4"
+              }
+            ]
+          },
+          {
+            "id": 69742,
+            "sku": "S24-22442-25320",
+            "external_variant_id": "seni24-22442-25320",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7129,
+                "value": "10x10cm"
+              },
+              {
+                "attribute": "Gramatura",
+                "value_id": 7748,
+                "value": "30g"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9866,
+                "value": "6"
+              }
+            ]
+          },
+          {
+            "id": 69743,
+            "sku": "S24-22442-25321",
+            "external_variant_id": "seni24-22442-25321",
+            "status": "active",
+            "deleted_at": null,
+            "attributes": [
+              {
+                "attribute": "Rozmiar",
+                "value_id": 7581,
+                "value": "10x20cm"
+              },
+              {
+                "attribute": "Gramatura",
+                "value_id": 7749,
+                "value": "40g"
+              },
+              {
+                "attribute": "Warstwowość",
+                "value_id": 9323,
+                "value": "4"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "duplicate_review": [
+    {
+      "product_ids": [
+        164,
+        165
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        220,
+        221,
+        244,
+        247
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        234,
+        237
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        257,
+        266
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        1419,
+        4530
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        1568,
+        7988
+      ],
+      "status": "neutral_copy_for_conflicting_model_identity",
+      "changed_product_ids": [
+        7988
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        2828,
+        2829
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        6744,
+        6745
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        7951,
+        7952
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        8869,
+        8870
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        9066,
+        9067
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        9092,
+        9093
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        9094,
+        9095
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        9309,
+        9332
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        9620,
+        9940
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        9983,
+        9986
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        10104,
+        10107
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        10479,
+        10523
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        11039,
+        11040
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        11925,
+        11926
+      ],
+      "status": "variant_specific_offer",
+      "changed_product_ids": [
+        11925
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        11933,
+        11934
+      ],
+      "status": "variant_specific_offer",
+      "changed_product_ids": [
+        11933
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        11956,
+        11957
+      ],
+      "status": "variant_specific_offer",
+      "changed_product_ids": [
+        11956
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        11958,
+        11959
+      ],
+      "status": "variant_specific_offer",
+      "changed_product_ids": [
+        11958
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        11966,
+        11967
+      ],
+      "status": "variant_specific_offer",
+      "changed_product_ids": [
+        11966
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        11998,
+        11999
+      ],
+      "status": "variant_specific_offer",
+      "changed_product_ids": [
+        11998
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        12010,
+        12011
+      ],
+      "status": "variant_specific_offer",
+      "changed_product_ids": [
+        12010
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        12021,
+        12022
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12424,
+        12427
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12503,
+        12562
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12581,
+        12617
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12582,
+        12618
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12583,
+        12619
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12584,
+        12620
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12585,
+        12621
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12586,
+        12622
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12587,
+        12623
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12588,
+        12624
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12589,
+        12625
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        12590,
+        12626
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        13026,
+        13064
+      ],
+      "status": "held_for_identity_and_reference_review",
+      "changed_product_ids": [],
+      "remaining_duplicate": true
+    },
+    {
+      "product_ids": [
+        13717,
+        13718
+      ],
+      "status": "explicit_source_code",
+      "changed_product_ids": [
+        13717,
+        13718
+      ],
+      "remaining_duplicate": false
+    },
+    {
+      "product_ids": [
+        14106,
+        14279
+      ],
+      "status": "different_variant_ranges",
+      "changed_product_ids": [
+        14106,
+        14279
+      ],
+      "remaining_duplicate": false
+    }
+  ],
+  "scope": "12 titles, 10 descriptions; expected remaining duplicate title groups 32. No model renaming, consolidation, status, URL, price or source-body changes."
+}
