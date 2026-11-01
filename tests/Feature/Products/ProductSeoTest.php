@@ -304,3 +304,27 @@ it('does not claim that the retailer is the brand of every product', function ()
     expect($schema['offers']['seller']['name'])->toBe('MAX-CORP sp. z o.o.');
     expect($schema['offers']['price'])->toBe('123.00');
 });
+
+it('omits Product structured data when no active variant has a price', function (): void {
+    $product = Product::query()->create([
+        'name' => 'Price on request wheelchair',
+        'slug' => 'price-on-request-wheelchair',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+    ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'POR-WHEELCHAIR',
+        'status' => ProductVariantStatus::ACTIVE,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_8,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+
+    $response = $this->get(route('products.show', $product->slug))
+        ->assertOk()
+        ->assertSee('"@type": "BreadcrumbList"', false)
+        ->assertDontSee('"@type": "Product"', false);
+
+    expect($response->viewData('structuredData'))->toHaveCount(1);
+});
