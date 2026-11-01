@@ -26,8 +26,8 @@ class ConsolidationEvidenceTests(unittest.TestCase):
   script=(ROOT/'patch-runtime.sh').read_text();hashes=re.search(r'new_hashes=\(([^)]*)\)',script).group(1).split()
   for path,h in zip(['ReviewedProductAliases.php','aliases.json','ProductShowController.php'],hashes):
    candidates={'ReviewedProductAliases.php':'app/Support/Seo/ReviewedProductAliases.php','aliases.json':'resources/seo/ortezka/reviewed-product-aliases-20261101.json','ProductShowController.php':'app/Http/Controllers/ProductShowController.php'}
-   p=ROOT.parents[2]/candidates[path]
-   if not p.exists():p=ROOT/path
+   # The controller is frozen beside the bundle: later application changes must not invalidate this applied patch.
+   p=ROOT/path if (ROOT/path).exists() else ROOT.parents[2]/candidates[path]
    content=p.read_bytes()
    if path=='aliases.json':
     # Later approved batches append aliases; reconstruct this original six-pair bundle.
