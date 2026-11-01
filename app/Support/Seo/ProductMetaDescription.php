@@ -33,6 +33,11 @@ final class ProductMetaDescription
      */
     private const PAGE_SENTENCE = '/zdjęci|kwadraci|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w sklepie/iu';
 
+    /**
+     * Manufacturer, importer and contact blocks ("Producent: …, ul. …, 03-310 Warszawa, www…") are not product descriptions.
+     */
+    private const CONTACT_SENTENCE = '/\b(producent|wytwórca|dystrybutor|importer|podmiot odpowiedzialny)\b\s*:|www\.|https?:|@|e-?mail|\btel\.|\bul\.\s|\b\d{2}-\d{3}\b|\bsp\.\s*z\s*o\.?\s*o/iu';
+
     public static function isWeak(?string $meta): bool
     {
         $plain = self::squish((string) $meta);
@@ -76,7 +81,8 @@ final class ProductMetaDescription
                 // Skip fragments, lines that only repeat the product name and sentences about the page itself.
                 if (mb_strlen($sentence) < 25
                     || mb_strtolower(rtrim($sentence, '.')) === mb_strtolower($name)
-                    || preg_match(self::PAGE_SENTENCE, $sentence) === 1) {
+                    || preg_match(self::PAGE_SENTENCE, $sentence) === 1
+                    || preg_match(self::CONTACT_SENTENCE, $sentence) === 1) {
                     continue;
                 }
 
