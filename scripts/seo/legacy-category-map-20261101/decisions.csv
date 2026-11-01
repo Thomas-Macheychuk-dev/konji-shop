@@ -1,0 +1,235 @@
+legacy_id,legacy_path,legacy_name,legacy_parents,decision,approved_target_slug,reviewer_note,decided_by
+3,/medycyna-naturalna-cat-3,Medycyna naturalna,,map,zdrowie-i-pielegnacja,"Konchy, honey and creams; no closer category.",claude-draft
+5,/sprzet-do-masazu-cat-5,Sprzęt do masażu,,map,seni24-rehabilitacja-i-likwidacja-barier-akcesoria-do-cwiczen-i-rehabilitacji-akcesoria-do-masazu-i-rehabilitacji,,claude-draft
+6,/rehabilitacja-i-ortopedia-cat-6,Rehabilitacja i ortopedia,,map,rehabilitacja,,claude-draft
+7,/urzadzenia-medyczne-cat-7,Urządzenia medyczne,,map,sprzet-medyczny,,claude-draft
+8,/wyposazenie-gabinetow-cat-8,Wyposażenie gabinetów,,map,sprzet-medyczny,"Drip stands, stools and treatment trolleys; no clinic-furniture category.",claude-draft
+9,/dla-dzieci-cat-9,Dla dzieci,,map,obuwie,Products were almost entirely Befado children's shoes; the new shop has no children's department.,claude-draft
+15,/konchy-cat-15,Konchy,Medycyna naturalna,parent,,,claude-draft
+16,/pozostale-cat-16,Pozostałe,Medycyna naturalna,parent,,,claude-draft
+32,/fotele-masujace-cat-32,Fotele masujące,Sprzęt do masażu,parent,,,claude-draft
+33,/hydromasaz-ozonacja-cat-33,"Hydromasaż, ozonacja",Sprzęt do masażu,parent,,,claude-draft
+34,/masazery-cat-34,Masażery,Sprzęt do masażu,parent,,,claude-draft
+35,/maty-i-poduszki-masujace-cat-35,Maty i poduszki masujące,Sprzęt do masażu,parent,,,claude-draft
+36,/stoly-i-lozka-do-masazu-cat-36,Stoły i łóżka do masażu,Sprzęt do masażu,parent,,,claude-draft
+37,/pozostale-cat-37,Pozostałe,Sprzęt do masażu,parent,,,claude-draft
+39,/kule-i-laski-cat-39,Kule i laski,Rehabilitacja i ortopedia,map,kule-laski-trojnogi-i-czwornogi,"Kule, laski has only 2 products on staging.",claude-draft
+40,/likwidacja-barier-cat-40,Likwidacja barier,Rehabilitacja i ortopedia,map,mobilnosc-i-transport,,claude-draft
+41,/materace-przeciwodlezynow-cat-41,Materace przeciwodleżynow,Rehabilitacja i ortopedia,map,materace-przeciwodlezynowe,,claude-draft
+43,/skutery-inwalidzkie-cat-43,Skutery inwalidzkie,Rehabilitacja i ortopedia,map,skutery,,claude-draft
+44,/ortezy-i-stabilizatory-cat-44,Ortezy i stabilizatory,Rehabilitacja i ortopedia,map,ortezy-i-stabilizatory,,claude-draft
+46,/pozostale-cat-46,Pozostałe,Rehabilitacja i ortopedia,parent,,,claude-draft
+48,/cisnieniomierze-cat-48,Ciśnieniomierze,Urządzenia medyczne,map,cisnieniomierze,,claude-draft
+49,/glukometry-i-akcesoria-cat-49,Glukometry i akcesoria,Urządzenia medyczne,map,seni24-rehabilitacja-i-likwidacja-barier-pomoce-codzienne-dla-diabetykow,,claude-draft
+50,/inhalatory-cat-50,Inhalatory,Urządzenia medyczne,map,tlenoterapia,,claude-draft
+51,/nawilzacze-powietrza-cat-51,Nawilżacze powietrza,Urządzenia medyczne,parent,,,claude-draft
+52,/termofory-i-maty-grzewcze-cat-52,Termofory i maty grzewcze,Urządzenia medyczne,map,termofory,,claude-draft
+53,/termometry-cat-53,Termometry,Urządzenia medyczne,map,termometry,,claude-draft
+54,/pozostale-cat-54,Pozostałe,Urządzenia medyczne,parent,,,claude-draft
+55,/akcesoria-i-przybory-cat-55,Akcesoria i przybory,Wyposażenie gabinetów,parent,,,claude-draft
+56,/lampy-diagnostyczne-cat-56,Lampy Diagnostyczne,Wyposażenie gabinetów,parent,,,claude-draft
+57,/odziez-ochronna-cat-57,Odzież ochronna,Wyposażenie gabinetów,map,ochrona-odziezy,,claude-draft
+58,/rekawiczki-cat-58,Rękawiczki,Wyposażenie gabinetów,map,rekawice-medyczne,,claude-draft
+59,/urzadzenia-cat-59,Urządzenia,Wyposażenie gabinetów,parent,,,claude-draft
+60,/meble-medyczne-cat-60,Meble medyczne,Wyposażenie gabinetów,parent,,,claude-draft
+61,/pozostale-cat-61,Pozostałe,Wyposażenie gabinetów,parent,,,claude-draft
+62,/bielizna-cat-62,Bielizna,,map,bielizna,,claude-draft
+63,/damska-cat-63,Damska,Bielizna,parent,,,claude-draft
+64,/meska-cat-64,Męska,Bielizna,parent,,,claude-draft
+66,/osuszacze-powietrza-cat-66,Osuszacze powietrza,Urządzenia medyczne,parent,,,claude-draft
+67,/lozka-rehabilitacyjne-cat-67,Łóżka rehabilitacyjne,Rehabilitacja i ortopedia,map,lozka-rehabilitacyjne,,claude-draft
+68,/poduszki-przeciwodlezynow-cat-68,Poduszki przeciwodleżynow,Rehabilitacja i ortopedia,map,poduszki-przeciwodlezynowe,,claude-draft
+69,/rowery-rehabilitacyjne-cat-69,Rowery rehabilitacyjne,Rehabilitacja i ortopedia,parent,,,claude-draft
+70,/miody-cat-70,Miody,Medycyna naturalna,parent,,,claude-draft
+71,/kosmetyki-cat-71,Kosmetyki,,map,seni24-higiena-i-pielegnacja-specjalistyczna,Seni Care creams and hygiene items.,claude-draft
+72,/pielegnacja-wlosow-cat-72,Pielęgnacja włosów,Kosmetyki,map,seni24-drogeria-kosmetyki-do-mycia-i-pielegnacji-ciala-szampony-i-odzywki-do-wlosow,,claude-draft
+73,/materace-i-poduszki-cat-73,Materace i poduszki,,map,poduszki-ortopedyczne,Mixed mattresses and pillows; pillows dominate.,claude-draft
+74,/materace-z-luska-gryki-cat-74,Materace z łuską gryki,Materace i poduszki,map,seni24-rehabilitacja-i-likwidacja-barier-poduszki-ortopedyczne-i-z-gryki-poduszki-z-gryki-i-orkiszu,Products are buckwheat pillows despite the old name.,claude-draft
+75,/materace-gorczycowe-cat-75,Materace gorczycowe,Materace i poduszki,parent,,,claude-draft
+76,/poduszki-z-luska-gryki-cat-76,Poduszki z łuską gryki,Materace i poduszki,map,seni24-rehabilitacja-i-likwidacja-barier-poduszki-ortopedyczne-i-z-gryki-poduszki-z-gryki-i-orkiszu,,claude-draft
+77,/koncentratory-tlenu-cat-77,Koncentratory tlenu,Urządzenia medyczne,map,tlenoterapia,,claude-draft
+78,/pulsometry-cat-78,Pulsometry,Urządzenia medyczne,parent,,,claude-draft
+79,/oczyszczacze-powietrza-cat-79,Oczyszczacze powietrza,Urządzenia medyczne,parent,,,claude-draft
+80,/ssaki-medyczne-cat-80,Ssaki medyczne,Urządzenia medyczne,map,ssaki-elektryczne,,claude-draft
+81,/odziez-medyczna-cat-81,Odzież medyczna,,map,odziez-medyczna,,claude-draft
+83,/wozki-rehabilitacyjne-cat-83,Wózki rehabilitacyjne,Dla dzieci,map,rehabilitacja-dziecieca-foteliki-wozki-rehabilitacyjne,,claude-draft
+84,/foteliki-samochodowe-cat-84,Foteliki samochodowe,Dla dzieci,map,foteliki-samochodowe,,claude-draft
+85,/lozka-terapeutyczne-cat-85,Łóżka terapeutyczne,Dla dzieci,map,lozka-rehabilitacyjne,,claude-draft
+86,/akcesoria-do-wozkow-cat-86,Akcesoria do wózków,Dla dzieci > Wózki rehabilitacyjne,map,akcesoria-do-wozkow,,claude-draft
+87,/akcesoria-do-fotelikow-cat-87,Akcesoria do fotelików,Dla dzieci > Foteliki samochodowe,map,akcesoria-do-fotelikow,,claude-draft
+88,/pulsoksymetry-cat-88,Pulsoksymetry,Urządzenia medyczne,map,tlenoterapia,,claude-draft
+89,/szafki-i-stoliki--cat-89,Szafki i stoliki,Rehabilitacja i ortopedia > Łóżka rehabilitacyjne,map,wyroby-pomocnicze,,claude-draft
+90,/obuwie-cat-90,Obuwie,Dla dzieci,parent,,,claude-draft
+91,/kosmetyki-do-pielegnacji-cat-91,Kosmetyki do pielęgnacji,,map,zdrowie-i-pielegnacja,,claude-draft
+92,/meska-cat-92,Męska,Odzież medyczna,parent,,,claude-draft
+93,/damska-cat-93,Damska,Odzież medyczna,parent,,,claude-draft
+94,/bluzy-cat-94,Bluzy,Odzież medyczna > Męska,map,bluzy-medyczne-meskie,,claude-draft
+95,/spodnie-cat-95,Spodnie,Odzież medyczna > Męska,map,spodnie-medyczne-meskie,,claude-draft
+96,/fartuchy-cat-96,Fartuchy,Odzież medyczna > Męska,map,fartuchy-medyczne-meskie,,claude-draft
+97,/akcesoria-cat-97,Akcesoria,Odzież medyczna > Męska,map,akcesoria,,claude-draft
+98,/bluzy-cat-98,Bluzy,Odzież medyczna > Damska,map,bluzy-medyczne-damskie,,claude-draft
+99,/spodnie-cat-99,Spodnie,Odzież medyczna > Damska,map,spodnie-medyczne-damskie,,claude-draft
+100,/akcesoria-cat-100,Akcesoria,Odzież medyczna > Damska,map,akcesoria,,claude-draft
+101,/fartuchy-medyczne-cat-101,Fartuchy Medyczne,Odzież medyczna > Damska,map,fartuchy-medyczne-damskie,,claude-draft
+102,/obuwie-medyczne-cat-102,Obuwie medyczne,Odzież medyczna > Damska,map,obuwie-medyczne-obuwie-medyczne-damskie,,claude-draft
+103,/obuwie-medyczne-meskie-cat-103,Obuwie medyczne męskie,Odzież medyczna > Męska,map,obuwie-medyczne-meskie,,claude-draft
+106,/szyja-cat-106,Szyja,Rehabilitacja i ortopedia > Ortezy i stabilizatory,map,ortezy-kregoslupa-szyjnego-co,,claude-draft
+107,/tulow-cat-107,Tułów,Rehabilitacja i ortopedia > Ortezy i stabilizatory,map,tulow,,claude-draft
+108,/konczyna-gorna-cat-108,Kończyna górna,Rehabilitacja i ortopedia > Ortezy i stabilizatory,map,konczyna-gorna,,claude-draft
+109,/konczyna-dolna-cat-109,Kończyna dolna,Rehabilitacja i ortopedia > Ortezy i stabilizatory,map,konczyna-dolna,,claude-draft
+114,/pieluchy-i-pieluchomajtki-cat-114,Pieluchy i pieluchomajtki,,map,seni24-nietrzymanie-moczu,,claude-draft
+115,/majtki-chlonne-cat-115,Majtki chłonne,Pieluchy i pieluchomajtki,map,seni24-nietrzymanie-moczu-majtki-chlonne,,claude-draft
+116,/pieluchy-anatomiczne-cat-116,Pieluchy anatomiczne,Pieluchy i pieluchomajtki,map,seni24-nietrzymanie-moczu-pieluchy-anatomiczne,,claude-draft
+117,/pieluchomajtki-cat-117,Pieluchomajtki,Pieluchy i pieluchomajtki,map,seni24-nietrzymanie-moczu-pieluchomajtki,,claude-draft
+118,/wyroby-magnetyczne-cat-118,Wyroby magnetyczne,,map,opaski-i-pasy-magnetyczne,Mostly magnetic bands.,claude-draft
+119,/magnetyczne-poduszki-cat-119,Magnetyczne poduszki,Wyroby magnetyczne,map,magnetyczne-poduszki-ortopedyczne,,claude-draft
+120,/magnetyczne-pasy-cat-120,Magnetyczne pasy,Wyroby magnetyczne,map,magnetyczne-pasy-na-kregoslup,,claude-draft
+121,/magnetyczne-opaski-cat-121,Magnetyczne opaski,Wyroby magnetyczne,parent,,,claude-draft
+122,/magnetyczne-kompresy-cat-122,Magnetyczne kompresy,Wyroby magnetyczne,map,magnetyczne-kompresy-ort-butterfly,,claude-draft
+123,/magnetyczne-materace-cat-123,Magnetyczne materace,Wyroby magnetyczne,map,materace-i-podklady-magnetyczne,,claude-draft
+124,/ortezy-i-stabilizatory-cat-124,Ortezy i stabilizatory,,map,ortezy-i-stabilizatory,,claude-draft
+125,/lozka-rehabilitacyjne-cat-125,Łóżka rehabilitacyjne,,map,lozka-rehabilitacyjne,,claude-draft
+126,/wozki-inwalidzkie-cat-126,Wózki inwalidzkie,,map,wozki-inwalidzkie,,claude-draft
+127,/balkoniki-i-chodziki-cat-127,Balkoniki i chodziki,,map,podporki-i-balkoniki,,claude-draft
+128,/produkty-uciskowe-cat-128,Produkty uciskowe,,map,kompresja,,claude-draft
+132,/pozostale-cat-132,Pozostałe,Produkty uciskowe,map,skarpety-kompresyjne,Mostly sport compression socks.,claude-draft
+133,/podkolanowki-cat-133,Podkolanówki,Produkty uciskowe > 1 Klasa kompresji,map,podkolanowki-uciskowe-1-stopnia,,claude-draft
+135,/rajstopy-cat-135,Rajstopy,Produkty uciskowe > 1 Klasa kompresji,map,rajstopy-uciskowe-1-stopnia,,claude-draft
+136,/podkolanowki-cat-136,Podkolanówki,Produkty uciskowe > 2 Klasa kompresji,map,podkolanowki-uciskowe-2-stopnia,,claude-draft
+138,/rajstopy-cat-138,Rajstopy,Produkty uciskowe > 2 Klasa kompresji,map,rajstopy-uciskowe-2-stopnia,,claude-draft
+139,/ortezy-szyi-cat-139,Ortezy szyi,Ortezy i stabilizatory,map,ortezy-kregoslupa-szyjnego-co,,claude-draft
+140,/ortezy-tulowia-cat-140,Ortezy tułowia,Ortezy i stabilizatory,map,kregoslup,,claude-draft
+141,/konczyna-gorna-cat-141,Kończyna górna,Ortezy i stabilizatory,map,konczyna-gorna,,claude-draft
+142,/konczyna-dolna-cat-142,Kończyna dolna,Ortezy i stabilizatory,map,konczyna-dolna,,claude-draft
+143,/inhalatory-i-nebulizatory-cat-143,Inhalatory i nebulizatory,,map,tlenoterapia,NEBULIZATORY I INHALATORY has 1 product; Tlenoterapia contains the inhalers.,claude-draft
+144,/dzieciece-terapeutyczne-cat-144,Dziecięce terapeutyczne,Łóżka rehabilitacyjne,parent,,,claude-draft
+145,/szafki-i-stoliki-cat-145,Szafki i stoliki,Łóżka rehabilitacyjne,map,wyroby-pomocnicze,Bedside cabinets and hospital furniture; Stoliki has only 2 products.,claude-draft
+146,/wozki-elektryczne-cat-146,Wózki elektryczne,Wózki inwalidzkie,map,wozki-z-napedem-elektrycznym,,claude-draft
+147,/pomoc-sanitarna-cat-147,Pomoc sanitarna,,map,sprzet-pomocniczy-i-sanitarny,,claude-draft
+148,/nakladki-na-sedes-cat-148,Nakładki na sedes,Pomoc sanitarna,map,nakladki-sedesowe,,claude-draft
+149,/krzesla-toaletowe-cat-149,Krzesła toaletowe,Pomoc sanitarna,map,krzesla-toaletowe,,claude-draft
+150,/siedziska-i-laweczki-cat-150,Siedziska i ławeczki,Pomoc sanitarna,map,lawki-nawannowe,,claude-draft
+151,/krzesla-i-taborety-cat-151,Krzesła i taborety,Pomoc sanitarna,map,krzesla-taborety-toaletowe,,claude-draft
+152,/poduszki-ortopedyczne-cat-152,Poduszki ortopedyczne,Materace i poduszki,map,poduszki-ortopedyczne,,claude-draft
+154,/wozki-dzieciece-cat-154,Wózki dziecięce,Wózki inwalidzkie,map,wozki-spacerowe-dla-dzieci,,claude-draft
+155,/wozki-klasyczne-cat-155,Wózki klasyczne,Wózki inwalidzkie,map,wozki-podstawowe,,claude-draft
+156,/wozki-pielegnacyjne-cat-156,Wózki pielęgnacyjne,Wózki inwalidzkie,parent,,,claude-draft
+157,/wozki-specjalne-cat-157,Wózki specjalne,Wózki inwalidzkie,map,specjalne,,claude-draft
+160,/produkty-kapielowe-cat-160,Produkty kąpielowe,,map,produkty-lazienkowe,,claude-draft
+161,/pionizatory-cat-161,Pionizatory,Rehabilitacja i ortopedia,map,pionizatory-i-parapodia,,claude-draft
+162,/stabilizatory-barku-cat-162,Stabilizatory barku,Wyroby magnetyczne,parent,,,claude-draft
+163,/magnetyczne-rekawice-cat-163,Magnetyczne rękawice,Wyroby magnetyczne,parent,,,claude-draft
+164,/stabilizatory-kostki-cat-164,Stabilizatory kostki,Wyroby magnetyczne,parent,,,claude-draft
+165,/magnetyczne-skarpety-cat-165,Magnetyczne skarpety,Wyroby magnetyczne,parent,,,claude-draft
+166,/opaski-na-glowe-cat-166,Opaski na głowę,Wyroby magnetyczne,map,magnetyczne-opaski-na-glowe,,claude-draft
+167,/inne-cat-167,Inne,Wyroby magnetyczne,parent,,,claude-draft
+168,/produkty-toaletowe-cat-168,Produkty Toaletowe,,map,sprzet-toaletowy,,claude-draft
+169,/podklady-na-materace-cat-169,Podkłady na materace,Materace i poduszki,parent,,,claude-draft
+170,/bandaze-gipsy-syntetyczne-cat-170,Bandaże Gipsy Syntetyczne,,map,seni24-opatrywanie-i-leczenie-ran-opatrunki-do-unieruchomien,Gipsy lekkie has only 2 products.,claude-draft
+171,/skutery-inwalidzkie-cat-171,Skutery Inwalidzkie,,map,skutery,skutery elektryczne has 2 products; Skutery has 15.,claude-draft
+172,/pomoc-codzienna-cat-172,Pomoc codzienna,,map,seni24-rehabilitacja-i-likwidacja-barier-pomoce-codzienne,,claude-draft
+173,/pozostale-produkty-cat-173,Pozostałe produkty,,map,opatrunki-i-dezynfekcja,"Mostly casts, stockinette and bandages.",claude-draft
+174,/obuwie-ortopedyczne-cat-174,Obuwie ortopedyczne,Rehabilitacja i ortopedia,map,ortezy-i-stabilizatory-ortezy-konczyny-dolnej-buty-ortopedyczne,Obuwie ortopedyczne has 1 product.,claude-draft
+175,/wkladki-ortopedyczne-cat-175,Wkładki ortopedyczne,Rehabilitacja i ortopedia,map,wkladki-ortopedyczne,,claude-draft
+176,/poduszki-dla-dzieci-cat-176,Poduszki dla dzieci,Dla dzieci,map,poduszki-ortopedyczne,,claude-draft
+177,/wozki-aktywne-cat-177,Wózki aktywne,Wózki inwalidzkie,map,wozki-aktywne,,claude-draft
+178,/wozki-lekkie-cat-178,Wózki lekkie,Wózki inwalidzkie,map,manualne-aluminiowe-wozki-inwalidzkie,,claude-draft
+179,/foteliki-rehabilitacyjne-cat-179,Foteliki rehabilitacyjne,,map,rehabilitacja-dziecieca-foteliki-wozki-rehabilitacyjne,,claude-draft
+180,/schodolazy-cat-180,Schodołazy,Rehabilitacja i ortopedia,map,schodolazy-i-rampy,,claude-draft
+181,/wklady-anatomiczne-cat-181,Wkłady anatomiczne,Pieluchy i pieluchomajtki,map,seni24-nietrzymanie-moczu-wklady-chlonne-i-majtki-wielorazowe,,claude-draft
+182,/podklady-anatomiczne-cat-182,Podkłady anatomiczne,Pieluchy i pieluchomajtki,map,seni24-higiena-i-pielegnacja-specjalistyczna-podklady-i-posciel,Seni podkłady branch has 1 product; Podkłady i pościel has 63.,claude-draft
+183,/fotele-geriatryczne-cat-183,Fotele Geriatryczne,Pomoc codzienna,map,sprzet-pomocniczy-fotele-geriatryczne,,claude-draft
+184,/stretchery-cat-184,Stretchery,Rehabilitacja i ortopedia,map,sprzet-do-rehabilitacji-i-fizjoterapii,,claude-draft
+185,/pasy-przepuklinowe-cat-185,Pasy przepuklinowe,Ortezy i stabilizatory,map,pasy-przepuklinowe,,claude-draft
+186,/tasmy-do-fizjoterapii-cat-186,Taśmy do fizjoterapii,Rehabilitacja i ortopedia,map,tasmy-do-fizjoterapii,,claude-draft
+187,/oklady-zimno-cieple-cat-187,Okłady zimno-ciepłe,Rehabilitacja i ortopedia,map,oklady-zimno-cieple,,claude-draft
+188,/stetoskopy-cat-188,Stetoskopy,Urządzenia medyczne,parent,,No stethoscope category in the new shop.,claude-draft
+189,/stetoskopy-internistyczne-cat-189,Stetoskopy internistyczne,Urządzenia medyczne > Stetoskopy,parent,,,claude-draft
+190,/stetoskopy-pediatryczne-cat-190,Stetoskopy pediatryczne,Urządzenia medyczne > Stetoskopy,parent,,,claude-draft
+191,/stetoskopy-pielegniarskie-cat-191,Stetoskopy pielęgniarskie,Urządzenia medyczne > Stetoskopy,parent,,,claude-draft
+192,/specjalistyczne-cat-192,Specjalistyczne,Urządzenia medyczne > Stetoskopy,parent,,,claude-draft
+193,/witaminy-cat-193,Witaminy,,map,seni24-higiena-i-pielegnacja-specjalistyczna-zywnosc-medyczna,Nutricomp drinks.,claude-draft
+194,/podnosniki-jezdne-cat-194,Podnośniki jezdne,Rehabilitacja i ortopedia > Likwidacja barier,map,podnosniki-pacjenta,,claude-draft
+195,/podnosniki-sufitowe-cat-195,Podnośniki sufitowe,Rehabilitacja i ortopedia > Likwidacja barier,map,podnosniki-pacjenta,,claude-draft
+196,/podnosniki-scienne-cat-196,Podnośniki ścienne,Rehabilitacja i ortopedia > Likwidacja barier,map,podnosniki-pacjenta,,claude-draft
+197,/3-klasa-kompresji-cat-197,3 Klasa kompresji,Produkty uciskowe,map,przeciwzylakowe,,claude-draft
+198,/podkolanowki-cat-198,Podkolanówki,Produkty uciskowe > 3 Klasa kompresji,map,podkolanowki-uciskowe-3-stopnia,,claude-draft
+199,/ponczochy-cat-199,Pończochy,Produkty uciskowe > 3 Klasa kompresji,map,ponczochy-uciskowe-3-stopnia,,claude-draft
+200,/rajstopy-cat-200,Rajstopy,Produkty uciskowe > 3 Klasa kompresji,map,rajstopy-uciskowe-3-stopnia,,claude-draft
+202,/produkty-jednorazowe-cat-202,Produkty Jednorazowe,,map,seni24-opatrywanie-i-leczenie-ran-akcesoria-medyczne,,claude-draft
+203,/cewniki-cat-203,Cewniki,Produkty Jednorazowe,map,cewniki,,claude-draft
+204,/worki-do-zbiorki-moczu-cat-204,Worki do zbiórki moczu,Produkty Jednorazowe,map,worki-na-mocz,,claude-draft
+207,/ortezy-biodra-cat-207,Ortezy biodra,Ortezy i stabilizatory > Kończyna dolna,map,ortezy-biodra,,claude-draft
+208,/ortezy-uda-cat-208,Ortezy uda,Ortezy i stabilizatory > Kończyna dolna,map,ortezy-uda,,claude-draft
+209,/ortezy-kolana-cat-209,Ortezy kolana,Ortezy i stabilizatory > Kończyna dolna,map,ortezy-kolana,,claude-draft
+210,/ortezy-lydki-cat-210,Ortezy łydki,Ortezy i stabilizatory > Kończyna dolna,map,ortezy-podudzia,,claude-draft
+211,/ortezy-stawu-skokowego-cat-211,Ortezy stawu skokowego,Ortezy i stabilizatory > Kończyna dolna,map,ortezy-stawu-skokowego-i-stopy,,claude-draft
+212,/ortezy-dloni-cat-212,Ortezy dłoni,Ortezy i stabilizatory > Kończyna górna,map,ortezy-dloni,,claude-draft
+213,/ortezy-stawu-lokciowego-cat-213,Ortezy stawu łokciowego,Ortezy i stabilizatory > Kończyna górna,map,ortezy-lokcia,,claude-draft
+214,/ortezy-stawu-barkowego-cat-214,Ortezy stawu barkowego,Ortezy i stabilizatory > Kończyna górna,map,ortezy-barku-i-obojczyka,,claude-draft
+215,/ortezy-nadgarstka-cat-215,Ortezy nadgarstka,Ortezy i stabilizatory > Kończyna górna,map,ortezy-nadgarstka-i-przedramienia,,claude-draft
+216,/ortezy-przedramienia-cat-216,Ortezy przedramienia,Ortezy i stabilizatory > Kończyna górna,map,ortezy-nadgarstka-i-przedramienia,,claude-draft
+217,/ortezy-palca-cat-217,Ortezy palca,Ortezy i stabilizatory > Kończyna górna,map,ortezy-dloni,,claude-draft
+218,/ortezy-kciuka-cat-218,Ortezy kciuka,Ortezy i stabilizatory > Kończyna górna,map,ortezy-dloni,,claude-draft
+219,/temblaki-cat-219,Temblaki,Ortezy i stabilizatory,map,temblaki-na-reke,,claude-draft
+220,/aparaty-na-haluksy-cat-220,Aparaty na haluksy,Ortezy i stabilizatory > Kończyna dolna,map,aparaty-na-haluksy,,claude-draft
+221,/buty-typu-walker-cat-221,Buty typu Walker,Ortezy i stabilizatory > Kończyna dolna,map,walkery,,claude-draft
+222,/ortezy-na-stope-i-golen-cat-222,Ortezy na stopę i goleń,Ortezy i stabilizatory > Kończyna dolna,map,ortezy-podudzia,,claude-draft
+223,/ortezy-na-opadajaca-stope-cat-223,Ortezy na opadającą stopę,Ortezy i stabilizatory > Kończyna dolna,map,ortezy-stawu-skokowego-i-stopy,,claude-draft
+224,/skalpele-chirurgiczne-cat-224,Skalpele chirurgiczne,Urządzenia medyczne,map,seni24-iniekcja-narzedzia-i-akcesoria-medyczne-narzedzia-chirurgiczne-i-zabiegowe,,claude-draft
+225,/sprzet-do-cwiczen-cat-225,Sprzęt do ćwiczeń,Rehabilitacja i ortopedia,map,sprzet-do-rehabilitacji-i-fizjoterapii,,claude-draft
+226,/wagi-medyczne-cat-226,Wagi medyczne,Urządzenia medyczne,parent,,,claude-draft
+227,/sukienki-medyczne-cat-227,Sukienki medyczne,Odzież medyczna > Damska,map,sukienki-medyczne,,claude-draft
+228,/spodnice-medyczne-cat-228,Spódnice medyczne,Odzież medyczna > Damska,map,spodnice-medyczne,,claude-draft
+229,/otoskopy-cat-229,Otoskopy,Urządzenia medyczne,parent,,,claude-draft
+230,/laryngoskopy-cat-230,Laryngoskopy,Urządzenia medyczne,parent,,,claude-draft
+231,/zakiety-medyczne-cat-231,Żakiety medyczne,Odzież medyczna > Damska,map,zakiety-medyczne,,claude-draft
+232,/marynarki-medyczne-cat-232,Marynarki medyczne,Odzież medyczna > Męska,map,marynarki-medyczne-meskie,,claude-draft
+233,/pasy-ciazowe-cat-233,Pasy ciążowe,Ortezy i stabilizatory,map,pasy-ciazowe,,claude-draft
+235,/terapia-zimnem-i-cieplem-cat-235,Terapia zimnem i ciepłem,,map,oklady-zimno-cieple,,claude-draft
+236,/materace-przeciwodlezynowe-cat-236,Materace przeciwodleżynowe,Materace i poduszki,map,materace-przeciwodlezynowe,,claude-draft
+237,/korektory-postawy-cat-237,Korektory Postawy,Ortezy i stabilizatory,map,korektory-wad-postawy,,claude-draft
+238,/walki-rehabilitacyjne-cat-238,Wałki rehabilitacyjne,Rehabilitacja i ortopedia > Sprzęt do ćwiczeń,map,walki-rehabilitacyjne,,claude-draft
+240,/chusty-i-turbany-po-chemioterapii-cat-240,Chusty i turbany po chemioterapii,,map,turbany-i-chusty,,claude-draft
+241,/turbany-po-chemioterapii-cat-241,Turbany po chemioterapii,Chusty i turbany po chemioterapii,map,turbany,,claude-draft
+242,/chusty-po-chemioterapii-cat-242,Chusty po chemioterapii,Chusty i turbany po chemioterapii,map,chusty,,claude-draft
+243,/na-dzien-babci-i-dziadka-cat-243,Na dzień babci i dziadka,,gone,,Seasonal gift page with no products.,claude-draft
+244,/prezenty-na-dzien-kobiet-cat-244,Prezenty na Dzień Kobiet,,gone,,Seasonal gift page with no products.,claude-draft
+245,/zaopatrzenie-stopy-cukrzycowej-cat-245,Zaopatrzenie stopy cukrzycowej,,map,zaopatrzenie-stopy-cukrzycowej,,claude-draft
+246,/pikflometry-cat-246,Pikflometry,Urządzenia medyczne,map,pikflometry,,claude-draft
+247,/poduszki-z-luska-prosa-cat-247,Poduszki z łuską prosa,Materace i poduszki,map,pozostale-poduszki,,claude-draft
+248,/akcesoria-do-wozkow-inwalidzkich-cat-248,Akcesoria do wózków inwalidzkich,Wózki inwalidzkie,map,akcesoria-do-wozkow-inwalidzkich,,claude-draft
+249,/peruki-po-chemioterapii-cat-249,Peruki po chemioterapii,,map,peruki,,claude-draft
+250,/peruki-syntetyczne-cat-250,Peruki syntetyczne,Peruki po chemioterapii,map,peruki-syntetyczne,,claude-draft
+251,/peruki-z-wlosa-naturalnego-cat-251,Peruki z włosa naturalnego,Peruki po chemioterapii,map,peruki-naturalne,,claude-draft
+252,/ortezy-glowy-cat-252,Ortezy głowy,Ortezy i stabilizatory,parent,,,claude-draft
+253,/kliny-rehabilitacyjne-cat-253,Kliny rehabilitacyjne,Rehabilitacja i ortopedia,map,kliny-rehabilitacyjne,,claude-draft
+254,/odziez-korygujaca-postawe-cat-254,Odzież korygująca postawę,Rehabilitacja i ortopedia,map,koszulki-korygujace-postawe,,claude-draft
+255,/tuniki-medyczne-cat-255,Tuniki medyczne,Odzież medyczna > Damska,map,tuniki-medyczne,,claude-draft
+256,/produkty-do-dezynfekcji-cat-256,Produkty do dezynfekcji,,map,seni24-higiena-i-pielegnacja-specjalistyczna-srodki-do-dezynfekcji,,claude-draft
+257,/produkty-ochronne-cat-257,Produkty ochronne,,map,srodki-ochrony-osobistej,,claude-draft
+258,/przylbice-cat-258,Przyłbice,Produkty ochronne,parent,,,claude-draft
+259,/maseczki-ochronne-cat-259,Maseczki ochronne,Produkty ochronne,parent,,,claude-draft
+260,/rekawiczki-ochronne-cat-260,Rękawiczki ochronne,Produkty ochronne,map,rekawice-medyczne,,claude-draft
+261,/poduszki-z-lawenda-cat-261,Poduszki z lawendą,Materace i poduszki,map,pozostale-poduszki,,claude-draft
+262,/walki-do-spania-cat-262,Wałki do spania,Materace i poduszki,map,poduszki-do-spania,,claude-draft
+263,/poduszki-do-medytacji-cat-263,Poduszki do medytacji,Materace i poduszki,map,pozostale-poduszki,,claude-draft
+264,/ortezy-rzepki-cat-264,Ortezy rzepki,Ortezy i stabilizatory > Kończyna dolna,map,ortezy-kolana,,claude-draft
+265,/4-klasa-kompresji-cat-265,4 klasa kompresji,Produkty uciskowe,map,przeciwzylakowe,No class-4 category.,claude-draft
+266,/ponczochy-cat-266,Pończochy,Produkty uciskowe > 4 klasa kompresji,parent,,,claude-draft
+267,/podkolanowki-cat-267,Podkolanówki,Produkty uciskowe > 4 klasa kompresji,parent,,,claude-draft
+268,/irygatory-cat-268,Irygatory,Urządzenia medyczne,parent,,,claude-draft
+269,/kosmetyki-do-pielegnacji-peruk-cat-269,Kosmetyki do pielęgnacji peruk,Peruki po chemioterapii,map,kosmetyki-do-peruk,,claude-draft
+270,/zywnosc-medyczna-cat-270,Żywność medyczna,,map,seni24-higiena-i-pielegnacja-specjalistyczna-zywnosc-medyczna,,claude-draft
+271,/zywnosc-dojelitowa-cat-271,Żywność dojelitowa,Żywność medyczna,parent,,,claude-draft
+272,/tasmy-do-tapingu-cat-272,Taśmy do tapingu,,map,rehabilitacja,Kinesiology tapes; no taping category. Taśmy do fizjoterapii are exercise bands.,claude-draft
+273,/outlet-cat-273,Outlet,,map,odziez-medyczna,Outlet held discounted medical tops.,claude-draft
+274,/bodymap-system-cat-274,Bodymap System,Materace i poduszki,map,bodymap,,claude-draft
+275,/bluzy-we-wzorki-cat-275,Bluzy we wzorki,Odzież medyczna > Damska,map,bluzy-medyczne-damskie-we-wzorki,,claude-draft
+276,/komplety-medyczne-cat-276,Komplety medyczne,Odzież medyczna,parent,,,claude-draft
+277,/czepki-medyczne-cat-277,Czepki medyczne,Odzież medyczna,map,czepki-chirurgiczne,,claude-draft
+278,/system-kompresji-cat-278,System kompresji,Produkty uciskowe,map,pneumatyczny-system-terapii-kompresyjnej,,claude-draft
+279,/protezy-piersi-cat-279,Protezy piersi,,map,protezy-piersi-biustonosze,,claude-draft
+280,/legginsy-cat-280,Legginsy,Produkty uciskowe > 1 Klasa kompresji,parent,,,claude-draft
+281,/legginsy-cat-281,Legginsy,Produkty uciskowe > 2 Klasa kompresji,parent,,,claude-draft
+282,/biustonosze-cat-282,Biustonosze,Bielizna > Damska,parent,,,claude-draft
