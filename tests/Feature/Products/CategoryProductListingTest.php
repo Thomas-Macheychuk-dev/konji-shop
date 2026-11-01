@@ -59,7 +59,24 @@ function createProductForProductListingTest(
     return $product;
 }
 
-it('shows a nested active category tree in the storefront sidebar', function (): void {
+it('shows only top-level categories in the sidebar outside a category branch', function (): void {
+    $activeCategory = createCategoryForProductListingTest();
+    $childCategory = createCategoryForProductListingTest(
+        'Bluzy medyczne',
+        'bluzy-medyczne',
+        CategoryStatus::ACTIVE,
+        $activeCategory,
+    );
+
+    $html = $this->get(route('home'))->assertOk()->getContent();
+
+    expect($html)
+        ->toContain('data-category-link="'.$activeCategory->id.'"')
+        ->not->toContain('data-category-toggle=')
+        ->not->toContain('data-category-item="'.$childCategory->id.'"');
+});
+
+it('shows the nested active branch of the current category in the storefront sidebar', function (): void {
     $activeCategory = createCategoryForProductListingTest();
     $childCategory = createCategoryForProductListingTest(
         'Bluzy medyczne',
@@ -83,7 +100,7 @@ it('shows a nested active category tree in the storefront sidebar', function ():
     );
 
     $this
-        ->get(route('home'))
+        ->get(route('categories.show', $grandchildCategory->slug))
         ->assertOk()
         ->assertSee('data-category-sidebar', false)
         ->assertSee('Kategorie produktów')

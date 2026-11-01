@@ -2,10 +2,12 @@
     $children = $category->relationLoaded('children')
         ? $category->children
         : collect();
-    $hasChildren = $children->isNotEmpty();
     $isCurrent = $currentCategoryId !== null && (int) $category->id === $currentCategoryId;
     $containsCurrent = $containsCurrentCategory($category);
-    $openByDefault = $hasChildren && $containsCurrent;
+    // Only the current branch is expanded into the HTML: rendering the whole tree on every page
+    // produced ~1.5 MB of markup. Other categories link to their own page, which lists its children.
+    $hasChildren = $children->isNotEmpty() && $containsCurrent;
+    $openByDefault = $hasChildren;
     $itemId = $sidebarIdPrefix.'-category-'.$category->id;
     $indentClass = match (true) {
         $level >= 3 => 'pl-8',
