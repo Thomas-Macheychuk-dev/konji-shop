@@ -287,4 +287,11 @@ final class ProductSeoConsolidationRepair
         return $scanner->verifyRenderedMetadata();
     }
 
+
+    public static function invalidateCache(): void
+    {
+        ProductSeoEditorialRepair::invalidateCache();
+        app(\App\Services\Storefront\StorefrontCache::class)->bump(\App\Services\Storefront\StorefrontCache::NAMESPACE_NAVIGATION);
+    }
+
 }

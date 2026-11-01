@@ -73,7 +73,7 @@ try {
         }
         if ($mode === 'apply') {
             if (($receipt['state'] ?? null) === 'applied') {
-                ProductSeoEditorialRepair::invalidateCache();
+                ProductSeoConsolidationRepair::invalidateCache();
                 $result = $repair->verify($plan);
                 echo 'ALREADY_APPLIED=PASS'.PHP_EOL;
             } else {
@@ -94,7 +94,7 @@ try {
                 }
                 $write($receiptPath, ['state' => 'applied', 'plan_sha256' => hash_file('sha256', $path), 'committed_at' => now()->toIso8601String(), 'changed_products' => count($plan['operations'])]);
                 echo ($alreadyMatches ? 'DATABASE_ALREADY_MATCHES=PASS' : 'DATABASE_COMMIT=PASS').PHP_EOL;
-                ProductSeoEditorialRepair::invalidateCache();
+                ProductSeoConsolidationRepair::invalidateCache();
                 $result = $repair->verify($plan);
             }
             echo 'CACHE_INVALIDATION=PASS'.PHP_EOL;
@@ -106,7 +106,7 @@ try {
             $result = $repair->verify($plan);
             $matched = $repair->verifyRenderedMetadata();
             // Also repairs cache invalidation if a previous post-commit cache call failed.
-            ProductSeoEditorialRepair::invalidateCache();
+            ProductSeoConsolidationRepair::invalidateCache();
             echo json_encode($result, JSON_THROW_ON_ERROR).PHP_EOL.'RENDERED_METADATA_MATCH='.$matched.PHP_EOL.'PRODUCT_SEO_CONSOLIDATION_VERIFY=PASS'.PHP_EOL;
         } else {
             if (($receipt['state'] ?? null) !== 'applied') {
@@ -116,7 +116,7 @@ try {
             $receipt['rolled_back_at'] = now()->toIso8601String();
             $receipt['state'] = 'rolled_back';
             $write($receiptPath, $receipt);
-            ProductSeoEditorialRepair::invalidateCache();
+            ProductSeoConsolidationRepair::invalidateCache();
             echo 'PRODUCT_SEO_CONSOLIDATION_ROLLBACK=PASS'.PHP_EOL;
         }
         echo 'BACKUP='.$path.PHP_EOL.'RECEIPT='.$receiptPath.PHP_EOL;
