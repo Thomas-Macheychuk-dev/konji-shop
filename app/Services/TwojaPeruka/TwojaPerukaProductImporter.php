@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
@@ -96,7 +97,7 @@ final class TwojaPerukaProductImporter
                 $this->stringOrNull($scraped['description_html'] ?? null)
                 ?: $this->stringOrNull($scraped['description'] ?? null)
             ),
-            'seo_title' => $this->stringOrNull($scraped['seo_title'] ?? null),
+            'seo_title' => SupplierTitleSuffix::normalize($this->stringOrNull($scraped['seo_title'] ?? null)),
             'seo_description' => $this->stringOrNull($scraped['seo_description'] ?? null),
             'status' => $status,
             'external_source' => 'twojaperuka',

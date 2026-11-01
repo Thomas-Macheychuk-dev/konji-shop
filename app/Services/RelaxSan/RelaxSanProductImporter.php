@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -107,7 +108,7 @@ final class RelaxSanProductImporter
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($scraped),
             'description' => $this->productDescriptionHtml($scraped, $externalId, $importDescriptionImages),
-            'seo_title' => $this->stringOrNull($scraped['seo_title'] ?? null) ?: $name,
+            'seo_title' => SupplierTitleSuffix::normalize($this->stringOrNull($scraped['seo_title'] ?? null)) ?: $name,
             'seo_description' => $this->seoDescription($scraped),
             'status' => $status,
             'external_source' => 'relaxsan',

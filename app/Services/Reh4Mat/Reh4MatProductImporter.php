@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -137,7 +138,7 @@ final class Reh4MatProductImporter
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($scraped, $downloadContext),
             'description' => $this->productDescriptionHtml($scraped, $downloadContext),
-            'seo_title' => $this->stringOrNull($scraped['seo_title'] ?? null) ?: $name,
+            'seo_title' => SupplierTitleSuffix::normalize($this->stringOrNull($scraped['seo_title'] ?? null)) ?: $name,
             'seo_description' => $this->seoDescription($scraped),
             'status' => $status,
             'external_source' => 'reh4mat',

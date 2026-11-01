@@ -64,7 +64,7 @@ it('imports Peruka product-data as independent products with one default variant
     expect($firstProduct->name)->toBe('Turban z oryginalnym węzłem różowy VERBENA ME12+B61')
         ->and($firstProduct->slug)->toBe('turban-verbena-me12-flower')
         ->and($firstProduct->status)->toBe(ProductStatus::ACTIVE)
-        ->and($firstProduct->seo_title)->toBe('Turban z oryginalnym węzłem różowy VERBENA # ME12+B61 | Peruka.pl')
+        ->and($firstProduct->seo_title)->toBe('Turban z oryginalnym węzłem różowy VERBENA # ME12+B61')
         ->and($firstProduct->description)->toContain('<h2>Turban z oryginalnym węzłem różowy VERBENA ME12+B61</h2>')
         ->and($firstProduct->external_parent_sku)->toBe('https://www.peruka.pl/turban-verbena-me12-flower.html')
         ->and($secondProduct->external_id)->toBe('38773');

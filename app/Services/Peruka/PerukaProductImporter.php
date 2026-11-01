@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
@@ -93,7 +94,7 @@ final class PerukaProductImporter
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $shortDescriptionHtml ?: $shortDescription,
             'description' => $descriptionHtml,
-            'seo_title' => $this->stringOrNull($productData['seo_title'] ?? null),
+            'seo_title' => SupplierTitleSuffix::normalize($this->stringOrNull($productData['seo_title'] ?? null)),
             'seo_description' => $this->stringOrNull($productData['seo_description'] ?? null),
             'status' => $productStatus,
             'external_source' => 'peruka',

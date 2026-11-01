@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -169,7 +170,7 @@ final class ZamstProductImporter
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->shortDescriptionHtml($productData),
             'description' => $this->productDescriptionHtml($mapped),
-            'seo_title' => $this->stringOrNull($productData['seo_title'] ?? null) ?: $name,
+            'seo_title' => SupplierTitleSuffix::normalize($this->stringOrNull($productData['seo_title'] ?? null)) ?: $name,
             'seo_description' => $this->seoDescription($productData),
             'status' => ProductStatus::DRAFT,
             'published_at' => null,

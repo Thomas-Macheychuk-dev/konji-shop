@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
@@ -96,7 +97,7 @@ final class MobilexProductImporter
             'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
             'short_description' => $this->cleanHtml($this->stringOrNull($normalized['short_description'] ?? null)),
             'description' => $this->cleanHtml($this->stringOrNull($normalized['description_html'] ?? null)),
-            'seo_title' => $this->stringOrNull($normalized['seo_title'] ?? null),
+            'seo_title' => SupplierTitleSuffix::normalize($this->stringOrNull($normalized['seo_title'] ?? null)),
             'seo_description' => $this->stringOrNull($normalized['seo_description'] ?? null),
             'status' => ProductStatus::ACTIVE,
             'external_source' => 'mobilex',
