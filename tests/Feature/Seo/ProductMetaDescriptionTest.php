@@ -42,6 +42,17 @@ it('removes supplier shop wording and cuts a single long sentence at a word boun
         ->and($meta)->not->toContain('Sklep');
 });
 
+it('never uses manufacturer or contact details as the meta description', function (): void {
+    $html = '<p>Materac HF6001 bez pompy.</p><p>Producent: Reha Fund sp. z o. o., ul. Staniewicka 14, 03-310 Warszawa, www.rehafund.pl, e-mail: info@rehafund.pl.</p>';
+
+    expect(ProductMetaDescription::build($html, null, 'Materac HF6001'))->toBeNull();
+
+    $html .= '<p>Materac przeciwodleżynowy o konstrukcji bąbelkowej wykonany z PVC, przeznaczony do stosowania z pompą zmiennociśnieniową.</p>';
+
+    expect(ProductMetaDescription::build($html, null, 'Materac HF6001'))
+        ->toBe('Materac HF6001 bez pompy. Materac przeciwodleżynowy o konstrukcji bąbelkowej wykonany z PVC, przeznaczony do stosowania z pompą zmiennociśnieniową.');
+});
+
 it('returns nothing when the description is too thin to describe the product', function (): void {
     expect(ProductMetaDescription::build('<p>Orteza kolana.</p>', 'Orteza.', 'Orteza kolana'))->toBeNull();
 });
