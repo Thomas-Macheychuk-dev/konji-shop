@@ -76,6 +76,8 @@ jobs:
           python3 scripts/seo/editorial-followup-20261031/test_content.py
           bash -n scripts/seo/manufacturer-review-20261101/repair.sh
           python3 scripts/seo/manufacturer-review-20261101/test_content.py
+          bash -n scripts/seo/colour-correction-20261101/repair.sh
+          python3 scripts/seo/colour-correction-20261101/test_content.py
 
       - name: Run Tests
         run: ./vendor/bin/pest
