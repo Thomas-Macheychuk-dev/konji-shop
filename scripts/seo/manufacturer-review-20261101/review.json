@@ -1,0 +1,2098 @@
+{
+  "repair": "product-seo-editorial-20261031-v1",
+  "batch": "product-seo-manufacturer-review-20261101-v1",
+  "source_sha256": "0a59c69ae0ef6de112a215087579cd98e5cdd22bf4c2464e8e2f3d0e66a9ce5d",
+  "previous_batches": [
+    {
+      "manifest": "editorial-repair-20261031/review.json",
+      "backup": "storage/app/private/seo-repairs/editorial-20261031.laIBDn",
+      "plan_sha256": "0d90883956719cee4cfbf3805e3de024ea74c8e807d01669e113c54aef8ec762"
+    },
+    {
+      "manifest": "editorial-followup-20261031/review.json",
+      "backup": "storage/app/private/seo-repairs/editorial-followup-20261031.DIgHOK",
+      "plan_sha256": "882ffe06d2236e163b9b1c6a64d65708fd569e331f6a36d3c4b4050f4d7f9857"
+    }
+  ],
+  "entries": [
+    {
+      "id": 174,
+      "expected": {
+        "name": "LUSAKA 2.0 MED Health and Fashion Shoes Italia S",
+        "slug": "lusaka-2-0-med-granat",
+        "external_source": "mobilex",
+        "external_id": "35584",
+        "seo_title": "LUSAKA 2.0 MED",
+        "seo_description": "LUSAKA 2.0 MED Klapki damskie Scholl z zagłębieniem na piętę i wyprofilowaną skórzaną wkładką. Wyrób medyczny dla zdrowia stóp."
+      },
+      "source_description_sha256": "4980d4fcdc9ee66c716ce30bb4885cf62415e0a420603f93256c63f15275e5cd",
+      "source_short_description_sha256": "c2767b7b16a51dacde02ddb9281f9a0caeabe36770be0822ddb4b8e507f1acda",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "LUSAKA 2.0 MED Scholl – klapki ciemnoniebieskie",
+        "seo_description": "LUSAKA 2.0 MED Klapki damskie Scholl z zagłębieniem na piętę i wyprofilowaną skórzaną wkładką. Wyrób medyczny dla zdrowia stóp."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "ciemno niebieskie",
+          "fact": "LUSAKA 2.0 MED Scholl – klapki ciemnoniebieskie"
+        }
+      ]
+    },
+    {
+      "id": 176,
+      "expected": {
+        "name": "NEW BOGOTA’ WEDGE MED Health and Fashion Shoes Italia S",
+        "slug": "new-bogota-wedge-med-black-multi",
+        "external_source": "mobilex",
+        "external_id": "35615",
+        "seo_title": "NEW BOGOTA' WEDGE MED",
+        "seo_description": "NEW BOGOTA' WEDGE MED marki Scholl. Klapki damskie z koralikami. Wygodne i stabilnie utrzymujące stopę. Wyrób medyczny."
+      },
+      "source_description_sha256": "e125a480250b3e061afafeeeb36d1d4606fddab924e90d438189aec538eea4d9",
+      "source_short_description_sha256": "1967f1660ad78da695941730f74bb04bac10cc4b49c76a4d88c9c9964d79c325",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "NEW BOGOTA WEDGE MED Scholl – klapki czarne",
+        "seo_description": "NEW BOGOTA' WEDGE MED marki Scholl. Klapki damskie z koralikami. Wygodne i stabilnie utrzymujące stopę. Wyrób medyczny."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "czarne klapki",
+          "fact": "NEW BOGOTA WEDGE MED Scholl – klapki czarne"
+        }
+      ]
+    },
+    {
+      "id": 179,
+      "expected": {
+        "name": "MOLDAVA WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "moldava-wedge-ad-med-pale-pink",
+        "external_source": "mobilex",
+        "external_id": "35574",
+        "seo_title": "MOLDAVA WEDGE AD MED",
+        "seo_description": "MOLDAVA WEDGE AD MED damskie klapki Scholl w kolorze jasnoniebieskim. Regulowane na szerokość. Wyrób medyczny. Wyprofilowana wkładka."
+      },
+      "source_description_sha256": "d70e3f65258c5df747e208bc8be3410abec501a20bbe551d5e327d3527a6811a",
+      "source_short_description_sha256": "a090b120297f4a2371a1bbd4e5799ca61c23d661cbd70600d26278540cf265a7",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "MOLDAVA WEDGE AD MED Scholl – klapki jasnoróżowe",
+        "seo_description": "MOLDAVA WEDGE AD MED damskie klapki Scholl w kolorze jasnoniebieskim. Regulowane na szerokość. Wyrób medyczny. Wyprofilowana wkładka."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "jasnoróżowe",
+          "fact": "MOLDAVA WEDGE AD MED Scholl – klapki jasnoróżowe"
+        }
+      ]
+    },
+    {
+      "id": 181,
+      "expected": {
+        "name": "LUSAKA 2.0 MED Health and Fashion Shoes Italia S",
+        "slug": "lusaka-2-0-med-bialy",
+        "external_source": "mobilex",
+        "external_id": "33586",
+        "seo_title": "LUSAKA 2.0 MED",
+        "seo_description": "LUSAKA 2.0 MED Klapki damskie Scholl z zagłębieniem na piętę i wyprofilowaną skórzaną wkładką. Wyrób medyczny dla zdrowia stóp."
+      },
+      "source_description_sha256": "61361cce0d1646ab22b2192cda509740b8c214d14363ed9459f8b8deb1397feb",
+      "source_short_description_sha256": "c2767b7b16a51dacde02ddb9281f9a0caeabe36770be0822ddb4b8e507f1acda",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "LUSAKA 2.0 MED Scholl – klapki białe",
+        "seo_description": "LUSAKA 2.0 MED Klapki damskie Scholl z zagłębieniem na piętę i wyprofilowaną skórzaną wkładką. Wyrób medyczny dla zdrowia stóp."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "białe klapki",
+          "fact": "LUSAKA 2.0 MED Scholl – klapki białe"
+        }
+      ]
+    },
+    {
+      "id": 182,
+      "expected": {
+        "name": "LUSAKA 2.0 MED Health and Fashion Shoes Italia S",
+        "slug": "lusaka-med-black",
+        "external_source": "mobilex",
+        "external_id": "33597",
+        "seo_title": "LUSAKA 2.0 MED",
+        "seo_description": "LUSAKA 2.0 MED Klapki dla kobiet. Funkcjonalne i wygodne na kilka sezonów. Wyrób medyczny - wyprofilowana wkładka zapewnia stabilność stopy."
+      },
+      "source_description_sha256": "79356d377b5909f3ce1c2a095b2fdecbf123e5fde3158f96b5ed30694f03062d",
+      "source_short_description_sha256": "d38115f929c1926f6929dc1834e0fab22f62a5bac85b29b945954fe5b196592a",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "LUSAKA 2.0 MED Scholl – klapki czarne",
+        "seo_description": "LUSAKA 2.0 MED Klapki dla kobiet. Funkcjonalne i wygodne na kilka sezonów. Wyrób medyczny - wyprofilowana wkładka zapewnia stabilność stopy."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "Czarne.",
+          "fact": "LUSAKA 2.0 MED Scholl – klapki czarne"
+        }
+      ]
+    },
+    {
+      "id": 186,
+      "expected": {
+        "name": "MOLDAVA WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "moldava-wedge-ad-med-bordowy",
+        "external_source": "mobilex",
+        "external_id": "29174",
+        "seo_title": "MOLDAVA WEDGE AD MED",
+        "seo_description": "Klapki damskie na lato. Wysoka jakość od Scholl. Wyprofilowane wkładki dbają o stopy. Wyrób medyczny. Sprawdź dostępne rozmiary."
+      },
+      "source_description_sha256": "801be19cf47186597df313bad9524718364511113458dedb9f06b9185ac9e838",
+      "source_short_description_sha256": "c8a88757a2c3aba412823e96719303c607aea3747daa670e87e2538e5f9fb9c2",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "MOLDAVA WEDGE AD MED Scholl – klapki bordowe",
+        "seo_description": "Klapki damskie na lato. Wysoka jakość od Scholl. Wyprofilowane wkładki dbają o stopy. Wyrób medyczny. Sprawdź dostępne rozmiary."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "Bordowe",
+          "fact": "MOLDAVA WEDGE AD MED Scholl – klapki bordowe"
+        }
+      ]
+    },
+    {
+      "id": 222,
+      "expected": {
+        "name": "NEW BOGOTA’ WEDGE MED Health and Fashion Shoes Italia S",
+        "slug": "new-bogota-wedge-med-dk-red",
+        "external_source": "mobilex",
+        "external_id": "33654",
+        "seo_title": "NEW BOGOTA' WEDGE MED",
+        "seo_description": "NEW BOGOTA' WEDGE MED Klapki damskie z koralikami. Wygodne i stabilnie utrzymujące stopę. Wyrób medyczny."
+      },
+      "source_description_sha256": "aa8dbbcce1eb93c1f9b717c2a9e6d2189776bab82ff50d97916fd7eb046e4919",
+      "source_short_description_sha256": "44a86e9d4258010eb4522c60c36a54e270ed61637941261d26f336d12babacb5",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "NEW BOGOTA WEDGE MED Scholl – klapki czerwone",
+        "seo_description": "NEW BOGOTA' WEDGE MED Klapki damskie z koralikami. Wygodne i stabilnie utrzymujące stopę. Wyrób medyczny."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "czerwone klapki",
+          "fact": "NEW BOGOTA WEDGE MED Scholl – klapki czerwone"
+        }
+      ]
+    },
+    {
+      "id": 227,
+      "expected": {
+        "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+        "slug": "heaven-med-granatowy",
+        "external_source": "mobilex",
+        "external_id": "19837",
+        "seo_title": "HEAVEN AD MED",
+        "seo_description": "Sandały sportowe Scholl dla kobiet i mężczyzn. Wyrób medyczny - z wyprofilowaną wkładką. Szeroka oferta obuwia zdrowotnego: klapków i sandałów Scholl."
+      },
+      "source_description_sha256": "66a60e2d00bddb4bdc1ca20c93d94f823703b108c703d1dcfc53aa53847d7e0f",
+      "source_short_description_sha256": "3a96208b254464483ff2b96fb0b9568999285d39746d98f921271c46d78a95c9",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "HEAVEN AD MED Scholl – sandały granatowe",
+        "seo_description": "Sandały sportowe Scholl dla kobiet i mężczyzn. Wyrób medyczny - z wyprofilowaną wkładką. Szeroka oferta obuwia zdrowotnego: klapków i sandałów Scholl."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "Granatowe sandały",
+          "fact": "HEAVEN AD MED Scholl – sandały granatowe"
+        }
+      ]
+    },
+    {
+      "id": 232,
+      "expected": {
+        "name": "HEAVEN AD MED Health and Fashion Shoes Italia S",
+        "slug": "heaven",
+        "external_source": "mobilex",
+        "external_id": "16374",
+        "seo_title": "HEAVEN AD MED",
+        "seo_description": "HEAVEN AD MED Sandały sportowe Scholl dla kobiet i mężczyzn. Wyrób medyczny - z wyprofilowaną wkładką. Klasyczne sandały z paskami."
+      },
+      "source_description_sha256": "1c352d3382b22711e417cd313c59366bf7f68ab7cf38874888c29013ce5acc3d",
+      "source_short_description_sha256": "22b7718b66396744a9e212a7d47c5c8cb3ed9428440c5a86eacc97113efa33d7",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "HEAVEN AD MED Scholl – sandały czerwone",
+        "seo_description": "HEAVEN AD MED Sandały sportowe Scholl dla kobiet i mężczyzn. Wyrób medyczny - z wyprofilowaną wkładką. Klasyczne sandały z paskami."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "Czerwone, skórzane sandały",
+          "fact": "HEAVEN AD MED Scholl – sandały czerwone"
+        }
+      ]
+    },
+    {
+      "id": 239,
+      "expected": {
+        "name": "RIO WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "rio-wedge-ad-med-pale-blue",
+        "external_source": "mobilex",
+        "external_id": "35528",
+        "seo_title": "RIO WEDGE AD MED",
+        "seo_description": "RIO WEDGE AD MED Klapki niebieskie Scholl dla kobiet. Damskie klapki ze skórzaną wkładką. Wyrób medyczny. Sprawdź dostępne rozmiary."
+      },
+      "source_description_sha256": "7c5bb9dc0068fc14e535c25d7228db6dca2a2ee1db14c92c8b341e3a07e1cb2a",
+      "source_short_description_sha256": "822d540c9c33ba5f79f3abf24a46fceda9cceaf7a5847e379e9406cb1fede0bb",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "RIO WEDGE AD MED Scholl – klapki jasnoniebieskie",
+        "seo_description": "RIO WEDGE AD MED Klapki niebieskie Scholl dla kobiet. Damskie klapki ze skórzaną wkładką. Wyrób medyczny. Sprawdź dostępne rozmiary."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "jasnoniebieskie",
+          "fact": "RIO WEDGE AD MED Scholl – klapki jasnoniebieskie"
+        }
+      ]
+    },
+    {
+      "id": 240,
+      "expected": {
+        "name": "RIO WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "rio-wedge-ad-med-green-pale",
+        "external_source": "mobilex",
+        "external_id": "35558",
+        "seo_title": "RIO WEDGE AD MED",
+        "seo_description": "RIO WEDGE AD MED Klapki różowe Scholl dla kobiet. Damskie skórzane klapki ze skórzaną wkładką. Wyrób medyczny. Sprawdź dostępne rozmiary."
+      },
+      "source_description_sha256": "9ccd0d0ce520b52e19cfbfbf2e873a81000ae0d22ff0c512a874c5c15e970acc",
+      "source_short_description_sha256": "aec584b1593c1a79f026d79a1e55c49ae8e4764d8649340543dd3bf6be4d3779",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "RIO WEDGE AD MED Scholl – klapki jasnozielone",
+        "seo_description": "RIO WEDGE AD MED Klapki różowe Scholl dla kobiet. Damskie skórzane klapki ze skórzaną wkładką. Wyrób medyczny. Sprawdź dostępne rozmiary."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "jasnozielone",
+          "fact": "RIO WEDGE AD MED Scholl – klapki jasnozielone"
+        }
+      ]
+    },
+    {
+      "id": 250,
+      "expected": {
+        "name": "ANTONIA ELASTIC MED Health and Fashion Shoes Italia S",
+        "slug": "antonia-elastic-med-light-taupe",
+        "external_source": "mobilex",
+        "external_id": "36082",
+        "seo_title": "ANTONIA ELASTIC MED",
+        "seo_description": "ANTONIA ELASTIC MED Damskie zamszowe klapki Scholl na podwyższonej podeszwie dla kobiet ceniących sobie wygodę, wysoką jakość i funkcjonalność."
+      },
+      "source_description_sha256": "b8b87eab56e1b4c3b6079deaeb584aaffe4afba1ce6336716a02fcef97af5006",
+      "source_short_description_sha256": "0e1da7b60979435514b4224afc8f2113fc759a6d4804d2c35419e87aa6706548",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "ANTONIA ELASTIC MED Scholl – light taupe",
+        "seo_description": "ANTONIA ELASTIC MED Damskie zamszowe klapki Scholl na podwyższonej podeszwie dla kobiet ceniących sobie wygodę, wysoką jakość i funkcjonalność."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "kolor light taupe",
+          "fact": "ANTONIA ELASTIC MED Scholl – light taupe"
+        }
+      ]
+    },
+    {
+      "id": 260,
+      "expected": {
+        "name": "ABERDEEN MAN MED Health and Fashion Shoes Italia S",
+        "slug": "aberdeen-man-med-navy-blue",
+        "external_source": "mobilex",
+        "external_id": "36030",
+        "seo_title": "ABERDEEN MAN MED",
+        "seo_description": "Klapki dla mężczyzn od Scholl - ABERDEEN MAN MED idealne na ciepłe dni. Klapki męskie z granatowego nubucku. Regulowane, z zagłębieniem na piętę."
+      },
+      "source_description_sha256": "a232ab9c3f1dc087e491d7b265d30831c8a8965b4f1bd401c06a2ab8a142ff07",
+      "source_short_description_sha256": "127ee4c402ac56d47506ab8eaffef2f538f33c3564f33694cedf067fe5a28dc5",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "ABERDEEN MAN MED Scholl – klapki granatowe",
+        "seo_description": "Klapki dla mężczyzn od Scholl - ABERDEEN MAN MED idealne na ciepłe dni. Klapki męskie z granatowego nubucku. Regulowane, z zagłębieniem na piętę."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "z granatowego nubucku",
+          "fact": "ABERDEEN MAN MED Scholl – klapki granatowe"
+        }
+      ]
+    },
+    {
+      "id": 460,
+      "expected": {
+        "name": "obuwie dam. KD MED 135",
+        "slug": "kd-med-135-obuwie-dam-kd-med-135",
+        "external_source": "eldan",
+        "external_id": "44292",
+        "seo_title": "obuwie dam. KD MED 135",
+        "seo_description": "obuwie dam. KD MED 135. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "d0763fb4a39551b3fbb15e131fef2d746efc6bab03e116e940220be5fdaef135",
+      "source_short_description_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "obuwie dam. KD MED 135",
+        "seo_description": "obuwie dam. KD MED 135. Klapki medyczne damskie ze skóry ekologicznej."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://eldan.pl/klapki-medyczne-damskie",
+          "manufacturer_model": "KD MED 135",
+          "quote": "klapki medyczne ze skóry ekologicznej",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    },
+    {
+      "id": 518,
+      "expected": {
+        "name": "Fartuch T1062 Wojdak",
+        "slug": "fartuch-t1062-wojdak",
+        "external_source": "wojdak",
+        "external_id": "fartuch-t1062",
+        "seo_title": "Fartuch T1062 Wojdak",
+        "seo_description": "Fartuch T1062 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Fartuch T1062 Wojdak",
+        "seo_description": "Fartuch T1062 Wojdak. Zapięcie na napy. Dwie dolne kieszenie i kieszonka na piersi."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://wojdak.pl/produkt/fartuch-damski-1062-dlugi-rekaw-rofinor-44",
+          "manufacturer_model": "1062",
+          "quote": "Zapinany jest na trwałe nierdzewne springi (napy)",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    },
+    {
+      "id": 528,
+      "expected": {
+        "name": "Tunika T2117 Wojdak",
+        "slug": "tunika-t2117-wojdak",
+        "external_source": "wojdak",
+        "external_id": "tunika-t2117",
+        "seo_title": "Tunika T2117 Wojdak",
+        "seo_description": "Tunika T2117 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Tunika T2117 Wojdak",
+        "seo_description": "Tunika T2117 Wojdak. Dekolt V ze stójką. Zapięcie na napy, dwie dolne kieszenie i kieszonka na piersi."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://wojdak.pl/produkt/tunika-damska-2117-krotki-rekaw-rofinor-179",
+          "manufacturer_model": "2117",
+          "quote": "Dekolt w kształcie litery V z delikatną stójką",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    },
+    {
+      "id": 538,
+      "expected": {
+        "name": "Żakiet T2091 Wojdak",
+        "slug": "zakiet-t2091-wojdak",
+        "external_source": "wojdak",
+        "external_id": "zakiet-t2091",
+        "seo_title": "Żakiet T2091 Wojdak",
+        "seo_description": "Żakiet T2091 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Żakiet T2091 Wojdak",
+        "seo_description": "Żakiet T2091 Wojdak. Kryte zapięcie na napy. Dwie dolne kieszenie i kieszonka na piersi."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://wojdak.pl/produkt/zakiet-damski-2091-krotki-rekaw-rofinor-99",
+          "manufacturer_model": "2091",
+          "quote": "Kryte zapięcie na trwałe nierdzewne springi (napy)",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    },
+    {
+      "id": 12116,
+      "expected": {
+        "name": "Kompres włókninowy jałowy niemiecki 10x10 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "slug": "kompres-wlokninowy-jalowy-niemiecki-10x10-cm-4-warstwy-1x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "946",
+        "seo_title": "Kompres włókninowy jałowy niemiecki 10x10 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 10x10 cm 4 warstwy 1x2 sztuki BSV Meditrade. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "92669639925dc550852bbd8b1f4d1a62dc6af78532ea8831f75be614773bc72d",
+      "source_short_description_sha256": "ceecf466440a150d5333c5740be47ee5b5b65d9f84b2a525ff7228417b34c0b0",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Kompres włókninowy jałowy niemiecki 10x10 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 10x10 cm 4 warstwy 1x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "65% wiskoza i 35% poliester",
+          "fact": "Material percentages from this product, not a clinical claim."
+        },
+        {
+          "field": "manufacturer_catalogue",
+          "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf",
+          "printed_page": 69,
+          "reference": "1139",
+          "table": "Sterile reference table: four layers; individual pairs.",
+          "checked_at": "2026-11-01",
+          "scope": "Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied."
+        }
+      ]
+    },
+    {
+      "id": 12117,
+      "expected": {
+        "name": "Kompres włókninowy jałowy niemiecki 10x20 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "slug": "kompres-wlokninowy-jalowy-niemiecki-10x20-cm-4-warstwy-1x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "948",
+        "seo_title": "Kompres włókninowy jałowy niemiecki 10x20 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 10x20 cm 4 warstwy 1x2 sztuki BSV Meditrade. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "6d64614b1f8da90389058d0443cb5a7d183ddccbf15e19a4abc16fafe7c4e43a",
+      "source_short_description_sha256": "cd62c3826b80b480886577b09acac407f5d508327de88eb071797ec1ac55e757",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Kompres włókninowy jałowy niemiecki 10x20 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 10x20 cm 4 warstwy 1x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "65% wiskoza i 35% poliester",
+          "fact": "Material percentages from this product, not a clinical claim."
+        },
+        {
+          "field": "manufacturer_catalogue",
+          "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf",
+          "printed_page": 69,
+          "reference": "1140",
+          "table": "Sterile reference table: four layers; individual pairs.",
+          "checked_at": "2026-11-01",
+          "scope": "Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied."
+        }
+      ]
+    },
+    {
+      "id": 12118,
+      "expected": {
+        "name": "Kompres włókninowy jałowy niemiecki 5x5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "slug": "kompres-wlokninowy-jalowy-niemiecki-5x5-cm-4-warstwy-1x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "942",
+        "seo_title": "Kompres włókninowy jałowy niemiecki 5x5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 5x5 cm 4 warstwy 1x2 sztuki BSV Meditrade. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "544956b3a15b73c29aa61ba8c77a59c6e00fb07d3577ea7221c3a930fc9f9fd0",
+      "source_short_description_sha256": "8ccb5e77ad7d158cbd8691544c583b6c84ce0d6d02e925795a44e19ebf699a7f",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Kompres włókninowy jałowy niemiecki 5x5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 5x5 cm 4 warstwy 1x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "65% wiskoza i 35% poliester",
+          "fact": "Material percentages from this product, not a clinical claim."
+        },
+        {
+          "field": "manufacturer_catalogue",
+          "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf",
+          "printed_page": 69,
+          "reference": "1137",
+          "table": "Sterile reference table: four layers; individual pairs.",
+          "checked_at": "2026-11-01",
+          "scope": "Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied."
+        }
+      ]
+    },
+    {
+      "id": 12119,
+      "expected": {
+        "name": "Kompres włókninowy jałowy niemiecki 7,5x7,5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "slug": "kompres-wlokninowy-jalowy-niemiecki-72c5x72c5-cm-4-warstwy-1x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "944",
+        "seo_title": "Kompres włókninowy jałowy niemiecki 7,5x7,5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 7,5x7,5 cm 4 warstwy 1x2 sztuki BSV Meditrade. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "4dfa16690c7f0cfc60a78ac1cba07161c05f4a530fd998daab0285e907ce1d22",
+      "source_short_description_sha256": "461102bf74ef2fe37eaf29c48347d0dde57af152d66d5fe6017f0f5ad01922e3",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Kompres włókninowy jałowy niemiecki 7,5x7,5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 7,5x7,5 cm 4 warstwy 1x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "65% wiskoza i 35% poliester",
+          "fact": "Material percentages from this product, not a clinical claim."
+        },
+        {
+          "field": "manufacturer_catalogue",
+          "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf",
+          "printed_page": 69,
+          "reference": "1138",
+          "table": "Sterile reference table: four layers; individual pairs.",
+          "checked_at": "2026-11-01",
+          "scope": "Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied."
+        }
+      ]
+    },
+    {
+      "id": 12157,
+      "expected": {
+        "name": "Kompresy włókninowe jałowe niemieckie 10x10 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "slug": "kompresy-wlokninowe-jalowe-niemieckie-10x10-cm-4-warstwy-25x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "945",
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 10x10 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 10x10 cm 4 warstwy 25x2 sztuki BSV Meditrade. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "860743fc190fae2a8f76f9573b9b6051aa7a6db019c81cd7c9f9b41b1f0f6d59",
+      "source_short_description_sha256": "9f3de4855e055f9eb11c511839c28410524bbb56fe691a5bf229cacb25f63738",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 10x10 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 10x10 cm 4 warstwy 25x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "65% wiskoza i 35% poliester",
+          "fact": "Material percentages from this product, not a clinical claim."
+        },
+        {
+          "field": "manufacturer_catalogue",
+          "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf",
+          "printed_page": 69,
+          "reference": "1139",
+          "table": "Sterile reference table: four layers; individual pairs.",
+          "checked_at": "2026-11-01",
+          "scope": "Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied."
+        }
+      ]
+    },
+    {
+      "id": 12158,
+      "expected": {
+        "name": "Kompresy włókninowe jałowe niemieckie 10x20 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "slug": "kompresy-wlokninowe-jalowe-niemieckie-10x20-cm-4-warstwy-25x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "947",
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 10x20 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 10x20 cm 4 warstwy 25x2 sztuki BSV Meditrade. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "fc1a04d75ed69e22cb450667b174bbbfa0c12d3afcf49a2e8f41352998fa4276",
+      "source_short_description_sha256": "3123a3f20b68b8d539fc36cf881f30fa6138a92da6005c57fc23ccb59a5ae1f6",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 10x20 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 10x20 cm 4 warstwy 25x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "65% wiskoza i 35% poliester",
+          "fact": "Material percentages from this product, not a clinical claim."
+        },
+        {
+          "field": "manufacturer_catalogue",
+          "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf",
+          "printed_page": 69,
+          "reference": "1140",
+          "table": "Sterile reference table: four layers; individual pairs.",
+          "checked_at": "2026-11-01",
+          "scope": "Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied."
+        }
+      ]
+    },
+    {
+      "id": 12159,
+      "expected": {
+        "name": "Kompresy włókninowe jałowe niemieckie 5x5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "slug": "kompresy-wlokninowe-jalowe-niemieckie-5x5-cm-4-warstwy-25x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "941",
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 5x5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 5x5 cm 4 warstwy 25x2 sztuki BSV Meditrade. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "4d9ca6aac8bd3e69b834befcc3870b71422bf19400b03a3b24b7fab6dda83d3e",
+      "source_short_description_sha256": "1b9acf347aed802341d222fd02170f06ab254c66153c88506b843cf05112fcae",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 5x5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 5x5 cm 4 warstwy 25x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "65% wiskoza i 35% poliester",
+          "fact": "Material percentages from this product, not a clinical claim."
+        },
+        {
+          "field": "manufacturer_catalogue",
+          "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf",
+          "printed_page": 69,
+          "reference": "1137",
+          "table": "Sterile reference table: four layers; individual pairs.",
+          "checked_at": "2026-11-01",
+          "scope": "Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied."
+        }
+      ]
+    },
+    {
+      "id": 12160,
+      "expected": {
+        "name": "Kompresy włókninowe jałowe niemieckie 7,5x7,5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "slug": "kompresy-wlokninowe-jalowe-niemieckie-72c5x72c5-cm-4-warstwy-25x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "943",
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 7,5x7,5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 7,5x7,5 cm 4 warstwy 25x2 sztuki BSV Meditrade. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "e9bf53cb29f9617315079c44154685f688193fd9e4675e50bdfbb615c4d5faa2",
+      "source_short_description_sha256": "42de9eeec6655da93f54e0c9a1e955ff13d26a666338136ea56827d7952560cb",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 7,5x7,5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 7,5x7,5 cm 4 warstwy 25x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "65% wiskoza i 35% poliester",
+          "fact": "Material percentages from this product, not a clinical claim."
+        },
+        {
+          "field": "manufacturer_catalogue",
+          "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_DE_Katalog_2020.pdf",
+          "printed_page": 69,
+          "reference": "1138",
+          "table": "Sterile reference table: four layers; individual pairs.",
+          "checked_at": "2026-11-01",
+          "scope": "Sterile reference reconciles contradictory non-sterile body heading. Retail pack quantity remains as supplied."
+        }
+      ]
+    },
+    {
+      "id": 13702,
+      "expected": {
+        "name": "Granugel Żel hydrokoloidowy Convatec 15 g",
+        "slug": "granugel-zel-na-rany-15-g",
+        "external_source": "seni24",
+        "external_id": "8108",
+        "seo_title": "Granugel Żel hydrokoloidowy Convatec 15 g",
+        "seo_description": "Granugel Żel hydrokoloidowy Convatec 15 g. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "cd3a9cf054b400b70e8cf47ee4157917fe0a825f8af24db063ed50c7b5ead9e2",
+      "source_short_description_sha256": "5c2a57a8692eada7312261808eca5b68b467f33109373c6de77ac35e4f4bed6c",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Granugel Żel hydrokoloidowy Convatec 15 g",
+        "seo_description": "Granugel Convatec 15 g. Jałowy opatrunek hydrokoloidowy w postaci żelu."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://www.convatec.com/pl-pl/produkty/leczenie-ran-i-ochrona-skory/rodzaj-rany/leczenie-ran-rodzaj-rany-odlezyna-stopien-i-e-ii/e1a37604-517a-46d3-97c0-7bb2404598b5/",
+          "manufacturer_model": "Granugel",
+          "quote": "sterylny opatrunek hydrokoloidowy w formie żelu",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    },
+    {
+      "id": 13721,
+      "expected": {
+        "name": "Opatrunek algininowy Medisorb A 5 szt.",
+        "slug": "opatrunek-algininowy-medisorb-a",
+        "external_source": "seni24",
+        "external_id": "414",
+        "seo_title": "Opatrunek algininowy Medisorb A 5 szt. | Sklep",
+        "seo_description": "Opatrunek algininowy Medisorb A 5 szt. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "7f8134d27e438543ea488397047fe4ee20432527c74314f41ffc08209bb24829",
+      "source_short_description_sha256": "175c083cb50e2e133eacb7e72667e80e0eddfd12bc4e5dfae772a2c1c90f6767",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Medisorb A – opatrunek z alginianu wapnia",
+        "seo_description": "Medisorb A. Jałowy opatrunek wykonany z włókien alginianu wapnia. Wymaga zabezpieczenia opatrunkiem wtórnym."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://medisorb.pl/produkt/medisorb-a",
+          "manufacturer_model": "Medisorb A",
+          "quote": "w 100% z włókien alginianu wapnia",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    },
+    {
+      "id": 13961,
+      "expected": {
+        "name": "Roztwór do irygacji i oczyszczenia ran Octenilin Schulke 350 ml",
+        "slug": "octenilin-do-irygacji-i-oczyszczenia-ran-350-ml",
+        "external_source": "seni24",
+        "external_id": "5152",
+        "seo_title": "Roztwór do irygacji i oczyszczenia ran Octenilin Schulke 350 ml",
+        "seo_description": "Roztwór do irygacji i oczyszczenia ran Octenilin Schulke 350 ml. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "f1b2aa2897903ff163de774c78e8190a8b4bb2c6251c47fa57d3193c93baeedc",
+      "source_short_description_sha256": "f2331a64530180dd08dfa783a39cc7f069854117ab7598c85088b350ed8d0dd9",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Roztwór do irygacji i oczyszczenia ran Octenilin Schulke 350 ml",
+        "seo_description": "Octenilin Schulke 350 ml. Roztwór do oczyszczania i nawilżania ran. Zawiera dichlorowodorek oktenidyny, glicerol i etyloheksyloglicerynę."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://www.schuelke.com/pl-pl/products/910826/octenilin-roztw-r-do-irygacji-ran/",
+          "manufacturer_model": "Octenilin",
+          "quote": "oktenidyny dichlorowodorek, etyloheksylogliceryna, glicerol, woda oczyszczona",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    },
+    {
+      "id": 14229,
+      "expected": {
+        "name": "Gips syntetyczny lekki Scotchcast Plus 1 szt.",
+        "slug": "gips-syntetyczny-lekki-scotchcast-plus-1-szt",
+        "external_source": "seni24",
+        "external_id": "8200",
+        "seo_title": "Gips syntetyczny lekki Scotchcast Plus 1 szt.",
+        "seo_description": "Gips syntetyczny lekki Scotchcast Plus 1 szt. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "3efc55b3d4c9813e965415236fd3c59c27d9c85793619e34dce67e0befd456e5",
+      "source_short_description_sha256": "db8bdaddd398fa3d84982333d33b7c50a35031337d119695716e6c2683cfadab",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Gips syntetyczny lekki Scotchcast Plus 1 szt.",
+        "seo_description": "Syntetyczna opaska Scotchcast Plus. Włókno szklane z żywicą aktywowaną wodą."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://www.solventum.com/en-hk/home/v/v000142703/",
+          "manufacturer_model": "Scotchcast Plus",
+          "quote": "Water-activated resin",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    },
+    {
+      "id": 14321,
+      "expected": {
+        "name": "Roztwór do płukania ran Granudacyn Mölnlycke",
+        "slug": "roztwor-do-plukania-ran-moelnlycke-granudacyn",
+        "external_source": "seni24",
+        "external_id": "22027",
+        "seo_title": "Roztwór do płukania ran Granudacyn Mölnlycke",
+        "seo_description": "Roztwór do płukania ran Granudacyn Mölnlycke. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "5a1d0fcf20377c3fdefeccaac0b52c62f2aaee807979ca656749d18668644ecd",
+      "source_short_description_sha256": "6d9ec9367dddc2959c377fa15ebaab1426f3a586b650f0c85d797c65e5612b27",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "Roztwór do płukania ran Granudacyn Mölnlycke",
+        "seo_description": "Granudacyn Mölnlycke. Roztwór do płukania ran z wodą, chlorkiem sodu, kwasem podchlorawym i podchlorynem sodu."
+      },
+      "evidence": [
+        {
+          "field": "manufacturer_page",
+          "url": "https://www.molnlycke.com.au/SysSiteAssets/master-and-local-markets/regulatory-requirements/granudacyn/ifu_e00398_v0_molnlycke_granudacyn_wound_irrigation_npwt.pdf",
+          "manufacturer_model": "Granudacyn",
+          "quote": "woda, sodu chlorek, kwas podchlorawy, sodu podchloryn",
+          "checked_at": "2026-11-01",
+          "scope": "Family/model construction only; no variant option or stock claim."
+        }
+      ]
+    }
+  ],
+  "held_descriptions": [
+    {
+      "id": 455,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "męskie wygodne skórzane sneakersy KD MED 226",
+      "source": "eldan"
+    },
+    {
+      "id": 477,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "wygodne obuwie damskie z regulacją KD MED 124",
+      "source": "eldan"
+    },
+    {
+      "id": 519,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Fartuch T1068 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 520,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Fartuch T1072 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 521,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Fartuch T1075 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 523,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spódnica M3004 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 524,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spódnica T3017 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 525,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spódnica T3018 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 526,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spodnie M4038 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 527,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Sukienka T1069 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 529,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2013 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 530,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2098 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 531,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2170 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 532,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2172 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 533,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2176 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 534,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2177 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 535,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet T2004 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 536,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet T2048 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 537,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet T2074 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 539,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet T2168 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 540,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spodnie S4039 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 541,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spodnie T4005 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 542,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spodnie T4037 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 543,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spodnie T4040 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 544,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "SpodnieS4034 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 545,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Sukienka M8730 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 546,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Sukienka M8735 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 559,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 105 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 560,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 111 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 561,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 464 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 562,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 605 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 563,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 905 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 564,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 911 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 572,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Fartuch M5022 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 573,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Marynarka M6034 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 574,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spodnie R7614 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 575,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Spodnie T7640 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 580,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne męskie BW 108 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 1876,
+      "reason": "Source product description is empty",
+      "name": "Plaster BAWEŁNIANY - rolka 25mm (długość 5m)",
+      "source": "peruka"
+    },
+    {
+      "id": 10432,
+      "reason": "Source review required before adding a reliable, product-specific non-promotional fact",
+      "name": "Materac przeciwodleżynowy bez pompy",
+      "source": "rehafund"
+    },
+    {
+      "id": 10434,
+      "reason": "Source review required before adding a reliable, product-specific non-promotional fact",
+      "name": "Materac przeciwodleżynowy bez pompy",
+      "source": "rehafund"
+    },
+    {
+      "id": 13274,
+      "reason": "Active test product; source is Test123. Catalogue cleanup required",
+      "name": "Testowy Produkt",
+      "source": null
+    },
+    {
+      "id": 13843,
+      "reason": "Source review required before adding a reliable, product-specific non-promotional fact",
+      "name": "Opatrunki na rany Wound Pad 4 x 3 kolory, kartonik 12 szt.",
+      "source": "seni24"
+    },
+    {
+      "id": 13944,
+      "reason": "Source review required before adding a reliable, product-specific non-promotional fact",
+      "name": "Chirurgiczna żelatynowa gąbka hemostatyczna SURGISPON 1 szt.",
+      "source": "seni24"
+    },
+    {
+      "id": 13957,
+      "reason": "Source review required before adding a reliable, product-specific non-promotional fact",
+      "name": "Granuflex Bordered opatrunek hydrokoloidowy na rany",
+      "source": "seni24"
+    },
+    {
+      "id": 14177,
+      "reason": "Source includes an expiry date of 2026-05-30; verify current stock and source text",
+      "name": "Elastyczna mikrokaniula do wypełniaczy skóry twarzy DermaSculpt",
+      "source": "seni24"
+    },
+    {
+      "id": 14345,
+      "reason": "Source text mixes model names; manufacturer identity confirmation required",
+      "name": "FootWave™ MAMA",
+      "source": "footwave"
+    },
+    {
+      "id": 14352,
+      "reason": "Source text mixes model names; manufacturer identity confirmation required",
+      "name": "FootWave™ LADY VERSA",
+      "source": "footwave"
+    }
+  ],
+  "duplicate_review": [
+    {
+      "product_ids": [
+        160,
+        164,
+        165,
+        166
+      ],
+      "current_title": "EVOFLEX",
+      "status": "partially_distinguished",
+      "changed_product_ids": [
+        160,
+        166
+      ],
+      "remaining_same_title_ids": [
+        164,
+        165
+      ]
+    },
+    {
+      "product_ids": [
+        174,
+        181,
+        182
+      ],
+      "current_title": "LUSAKA 2.0 MED",
+      "status": "resolved_by_explicit_product_evidence",
+      "changed_product_ids": [
+        174,
+        181,
+        182
+      ],
+      "remaining_same_title_ids": []
+    },
+    {
+      "product_ids": [
+        175,
+        176,
+        222
+      ],
+      "current_title": "NEW BOGOTA' WEDGE MED",
+      "status": "resolved_by_explicit_product_evidence",
+      "changed_product_ids": [
+        176,
+        222
+      ],
+      "remaining_same_title_ids": []
+    },
+    {
+      "product_ids": [
+        179,
+        186,
+        223
+      ],
+      "current_title": "MOLDAVA WEDGE AD MED",
+      "status": "resolved_by_explicit_product_evidence",
+      "changed_product_ids": [
+        179,
+        186
+      ],
+      "remaining_same_title_ids": []
+    },
+    {
+      "product_ids": [
+        220,
+        221,
+        244,
+        247
+      ],
+      "current_title": "AIR BAG MED",
+      "status": "held_colour_or_model_identity_not_uniquely_established",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        220,
+        221,
+        244,
+        247
+      ]
+    },
+    {
+      "product_ids": [
+        227,
+        232,
+        234,
+        237
+      ],
+      "current_title": "HEAVEN AD MED",
+      "status": "partially_distinguished",
+      "changed_product_ids": [
+        227,
+        232
+      ],
+      "remaining_same_title_ids": [
+        234,
+        237
+      ]
+    },
+    {
+      "product_ids": [
+        238,
+        239,
+        240
+      ],
+      "current_title": "RIO WEDGE AD MED",
+      "status": "resolved_by_explicit_product_evidence",
+      "changed_product_ids": [
+        239,
+        240
+      ],
+      "remaining_same_title_ids": []
+    },
+    {
+      "product_ids": [
+        250,
+        258
+      ],
+      "current_title": "ANTONIA ELASTIC MED",
+      "status": "resolved_by_explicit_product_evidence",
+      "changed_product_ids": [
+        250
+      ],
+      "remaining_same_title_ids": []
+    },
+    {
+      "product_ids": [
+        257,
+        266
+      ],
+      "current_title": "Nautilus",
+      "status": "held_colour_or_model_identity_not_uniquely_established",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        257,
+        266
+      ]
+    },
+    {
+      "product_ids": [
+        259,
+        260
+      ],
+      "current_title": "ABERDEEN MAN MED",
+      "status": "resolved_by_explicit_product_evidence",
+      "changed_product_ids": [
+        260
+      ],
+      "remaining_same_title_ids": []
+    },
+    {
+      "product_ids": [
+        1419,
+        4530
+      ],
+      "current_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        1419,
+        4530
+      ]
+    },
+    {
+      "product_ids": [
+        1568,
+        7988
+      ],
+      "current_title": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE # black",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        1568,
+        7988
+      ]
+    },
+    {
+      "product_ids": [
+        2828,
+        2829
+      ],
+      "current_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        2828,
+        2829
+      ]
+    },
+    {
+      "product_ids": [
+        6744,
+        6745
+      ],
+      "current_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix*",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        6744,
+        6745
+      ]
+    },
+    {
+      "product_ids": [
+        7951,
+        7952
+      ],
+      "current_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        7951,
+        7952
+      ]
+    },
+    {
+      "product_ids": [
+        8869,
+        8870
+      ],
+      "current_title": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        8869,
+        8870
+      ]
+    },
+    {
+      "product_ids": [
+        9066,
+        9067
+      ],
+      "current_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9066,
+        9067
+      ]
+    },
+    {
+      "product_ids": [
+        9092,
+        9093
+      ],
+      "current_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9092,
+        9093
+      ]
+    },
+    {
+      "product_ids": [
+        9094,
+        9095
+      ],
+      "current_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9094,
+        9095
+      ]
+    },
+    {
+      "product_ids": [
+        9309,
+        9332
+      ],
+      "current_title": "FP-25 Stabilizator kończyn",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9309,
+        9332
+      ]
+    },
+    {
+      "product_ids": [
+        9447,
+        9448
+      ],
+      "current_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9447,
+        9448
+      ]
+    },
+    {
+      "product_ids": [
+        9449,
+        9735,
+        9736,
+        9737
+      ],
+      "current_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9449,
+        9735,
+        9736,
+        9737
+      ]
+    },
+    {
+      "product_ids": [
+        9551,
+        9552,
+        9553
+      ],
+      "current_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9551,
+        9552,
+        9553
+      ]
+    },
+    {
+      "product_ids": [
+        9562,
+        9563
+      ],
+      "current_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9562,
+        9563
+      ]
+    },
+    {
+      "product_ids": [
+        9590,
+        9751
+      ],
+      "current_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9590,
+        9751
+      ]
+    },
+    {
+      "product_ids": [
+        9612,
+        9613
+      ],
+      "current_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9612,
+        9613
+      ]
+    },
+    {
+      "product_ids": [
+        9620,
+        9940
+      ],
+      "current_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9620,
+        9940
+      ]
+    },
+    {
+      "product_ids": [
+        9625,
+        9636
+      ],
+      "current_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9625,
+        9636
+      ]
+    },
+    {
+      "product_ids": [
+        9630,
+        9631,
+        9632
+      ],
+      "current_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9630,
+        9631,
+        9632
+      ]
+    },
+    {
+      "product_ids": [
+        9713,
+        9714
+      ],
+      "current_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9713,
+        9714
+      ]
+    },
+    {
+      "product_ids": [
+        9715,
+        9728
+      ],
+      "current_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9715,
+        9728
+      ]
+    },
+    {
+      "product_ids": [
+        9729,
+        9730
+      ],
+      "current_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9729,
+        9730
+      ]
+    },
+    {
+      "product_ids": [
+        9738,
+        9739
+      ],
+      "current_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9738,
+        9739
+      ]
+    },
+    {
+      "product_ids": [
+        9743,
+        9744
+      ],
+      "current_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9743,
+        9744
+      ]
+    },
+    {
+      "product_ids": [
+        9749,
+        9750
+      ],
+      "current_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9749,
+        9750
+      ]
+    },
+    {
+      "product_ids": [
+        9752,
+        9753
+      ],
+      "current_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9752,
+        9753
+      ]
+    },
+    {
+      "product_ids": [
+        9754,
+        9755
+      ],
+      "current_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9754,
+        9755
+      ]
+    },
+    {
+      "product_ids": [
+        9758,
+        9759
+      ],
+      "current_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9758,
+        9759
+      ]
+    },
+    {
+      "product_ids": [
+        9760,
+        9761
+      ],
+      "current_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9760,
+        9761
+      ]
+    },
+    {
+      "product_ids": [
+        9766,
+        9767
+      ],
+      "current_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9766,
+        9767
+      ]
+    },
+    {
+      "product_ids": [
+        9983,
+        9986
+      ],
+      "current_title": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9983,
+        9986
+      ]
+    },
+    {
+      "product_ids": [
+        10104,
+        10107
+      ],
+      "current_title": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        10104,
+        10107
+      ]
+    },
+    {
+      "product_ids": [
+        10479,
+        10523
+      ],
+      "current_title": "Maska podnosowa AirFit N30i - U.02.02.00",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        10479,
+        10523
+      ]
+    },
+    {
+      "product_ids": [
+        11039,
+        11040
+      ],
+      "current_title": "Opaska kompresyjna na twarz AT04702 - Antar",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11039,
+        11040
+      ]
+    },
+    {
+      "product_ids": [
+        11925,
+        11926
+      ],
+      "current_title": "Duomed® smooth pończochy kompresyjne",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11925,
+        11926
+      ]
+    },
+    {
+      "product_ids": [
+        11933,
+        11934
+      ],
+      "current_title": "Genumedi PSS stabilizator kolana",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11933,
+        11934
+      ]
+    },
+    {
+      "product_ids": [
+        11956,
+        11957
+      ],
+      "current_title": "MAXIS MICRO pończochy uciskowe",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11956,
+        11957
+      ]
+    },
+    {
+      "product_ids": [
+        11958,
+        11959
+      ],
+      "current_title": "MAXIS MICRO rajstopy uciskowe",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11958,
+        11959
+      ]
+    },
+    {
+      "product_ids": [
+        11966,
+        11967
+      ],
+      "current_title": "medi collar soft Kidz kołnierz ortopedyczny",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11966,
+        11967
+      ]
+    },
+    {
+      "product_ids": [
+        11998,
+        11999
+      ],
+      "current_title": "mediven elegance pończochy uciskowe",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11998,
+        11999
+      ]
+    },
+    {
+      "product_ids": [
+        12010,
+        12011
+      ],
+      "current_title": "Mediven® sheer & soft rajstopy uciskowe",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12010,
+        12011
+      ]
+    },
+    {
+      "product_ids": [
+        12021,
+        12022
+      ],
+      "current_title": "protect.Ankle air foam",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12021,
+        12022
+      ]
+    },
+    {
+      "product_ids": [
+        12424,
+        12427
+      ],
+      "current_title": "V500 Light | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12424,
+        12427
+      ]
+    },
+    {
+      "product_ids": [
+        12503,
+        12562
+      ],
+      "current_title": "PEPI | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12503,
+        12562
+      ]
+    },
+    {
+      "product_ids": [
+        12581,
+        12617
+      ],
+      "current_title": "VICAIR LIBERTY | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12581,
+        12617
+      ]
+    },
+    {
+      "product_ids": [
+        12582,
+        12618
+      ],
+      "current_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12582,
+        12618
+      ]
+    },
+    {
+      "product_ids": [
+        12583,
+        12619
+      ],
+      "current_title": "VICAIR ACTIVE O2 | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12583,
+        12619
+      ]
+    },
+    {
+      "product_ids": [
+        12584,
+        12620
+      ],
+      "current_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12584,
+        12620
+      ]
+    },
+    {
+      "product_ids": [
+        12585,
+        12621
+      ],
+      "current_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12585,
+        12621
+      ]
+    },
+    {
+      "product_ids": [
+        12586,
+        12622
+      ],
+      "current_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12586,
+        12622
+      ]
+    },
+    {
+      "product_ids": [
+        12587,
+        12623
+      ],
+      "current_title": "VICAIR ALLROUNDER | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12587,
+        12623
+      ]
+    },
+    {
+      "product_ids": [
+        12588,
+        12624
+      ],
+      "current_title": "VICAIR LIBERTY BACK | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12588,
+        12624
+      ]
+    },
+    {
+      "product_ids": [
+        12589,
+        12625
+      ],
+      "current_title": "VICAIR ANATOMY BACK | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12589,
+        12625
+      ]
+    },
+    {
+      "product_ids": [
+        12590,
+        12626
+      ],
+      "current_title": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12590,
+        12626
+      ]
+    },
+    {
+      "product_ids": [
+        13026,
+        13064
+      ],
+      "current_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        13026,
+        13064
+      ]
+    },
+    {
+      "product_ids": [
+        13717,
+        13718
+      ],
+      "current_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        13717,
+        13718
+      ]
+    },
+    {
+      "product_ids": [
+        14106,
+        14279
+      ],
+      "current_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        14106,
+        14279
+      ]
+    }
+  ],
+  "body_description_followup": [
+    {
+      "id": 12116,
+      "issue": "Body says non-sterile; manufacturer sterile reference matches guarded body code. Correct the body separately."
+    },
+    {
+      "id": 12117,
+      "issue": "Body says non-sterile; manufacturer sterile reference matches guarded body code. Correct the body separately."
+    },
+    {
+      "id": 12118,
+      "issue": "Body says non-sterile; manufacturer sterile reference matches guarded body code. Correct the body separately."
+    },
+    {
+      "id": 12119,
+      "issue": "Body says non-sterile; manufacturer sterile reference matches guarded body code. Correct the body separately."
+    },
+    {
+      "id": 12157,
+      "issue": "Body says non-sterile; manufacturer sterile reference matches guarded body code. Correct the body separately."
+    },
+    {
+      "id": 12158,
+      "issue": "Body says non-sterile; manufacturer sterile reference matches guarded body code. Correct the body separately."
+    },
+    {
+      "id": 12159,
+      "issue": "Body says non-sterile; manufacturer sterile reference matches guarded body code. Correct the body separately."
+    },
+    {
+      "id": 12160,
+      "issue": "Body says non-sterile; manufacturer sterile reference matches guarded body code. Correct the body separately."
+    },
+    {
+      "id": 13961,
+      "issue": "Body mixes gel/solution, sterility and opening-life claims. Manufacturer GTIN 4032651217014 matches guarded body. Correct body separately."
+    },
+    {
+      "id": 14229,
+      "issue": "Body claims traditional gypsum composition; manufacturer identifies fiberglass/resin. Correct body separately."
+    }
+  ]
+}
