@@ -1,0 +1,1133 @@
+{
+  "batch": "product-seo-consolidation-20261101-v1",
+  "prior_backup": "storage/app/private/seo-repairs/variant-review-20261101.NmgeeB",
+  "prior_plan_sha256": "604ca4387852727450f392ffb34eb4a0afed5bb77cec02991977e0b19ffe07d6",
+  "source_export_sha256": "949d61b6dcd561fbfb8aa62496ccc7b1a6f74f3d0e64ab42f83163a003c5b9e5",
+  "expected_active_products": 14627,
+  "pairs": [
+    {
+      "manufacturer_image_samples": [
+        "https://domino03.vermeiren.be/product/picture.nsf/74372A75AB0543D9C1258A21003FC680/$File/V500 Light C81 - Adjustable seat height.jpg",
+        "https://domino03.vermeiren.be/product/picture.nsf/BE8E165E06EFC3D5C1258832004CFD3A/$File/V500 Light C89 - 3Q view.jpg",
+        "https://www.vermeiren.pl/product/picture.nsf/O/9603F84BF78EDA70C1258A21003F9548/$FILE/web_V500 Light - Bi5 B06 AB6 B24 B80 C81 - 3Q view.jpg"
+      ],
+      "target": {
+        "id": 12424,
+        "name": "V500 Light",
+        "slug": "v500-light",
+        "external_source": "vermeiren",
+        "external_id": "6fa00241e9481df47fb1f171647b8acff759e16608cce4e815bc9a54344878d0",
+        "seo_title": "V500 Light | Vermeiren Polska",
+        "seo_description": "Vermeiren Wózki manualne Wózki inwalidzkie ze stopów lekkich V500 Light",
+        "description_sha256": "2b4ff56a8c98eaaf52a0aea72d31cd8c9fc9129395617fa206068c0c94dc2ae2",
+        "short_description_sha256": "6bdf6fabb41e2ed8aae83f710320d4b8db78aeedf1d45006fb078b8840e89921",
+        "attribute_value_ids": [
+          692,
+          4804,
+          4848,
+          4854,
+          4867,
+          4868,
+          4889,
+          4906,
+          4919,
+          4920,
+          4921,
+          4922,
+          4923,
+          4924
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          },
+          {
+            "attribute": "Kolor tapicerki",
+            "value_id": 4848,
+            "value": "Nylon czarny"
+          },
+          {
+            "attribute": "Szerokość siedziska",
+            "value_id": 4854,
+            "value": "390 420 440 460 480 500"
+          },
+          {
+            "attribute": "Maksymalna waga użytkownika",
+            "value_id": 4867,
+            "value": "130"
+          },
+          {
+            "attribute": "Kolor ramy",
+            "value_id": 4868,
+            "value": "C86 carbon szary"
+          },
+          {
+            "attribute": "Wysokość siedziska",
+            "value_id": 4889,
+            "value": "470 - 530"
+          },
+          {
+            "attribute": "Kąt siedziska",
+            "value_id": 4906,
+            "value": "0° - 10°"
+          },
+          {
+            "attribute": "Szerokość całkowita",
+            "value_id": 4919,
+            "value": "590 620 640 660 680 700"
+          },
+          {
+            "attribute": "Długość całkowita",
+            "value_id": 4920,
+            "value": "975 - 1035"
+          },
+          {
+            "attribute": "Wysokość całkowita",
+            "value_id": 4921,
+            "value": "860 - 920"
+          },
+          {
+            "attribute": "Głębokość siedziska",
+            "value_id": 4922,
+            "value": "420-480"
+          },
+          {
+            "attribute": "Waga całkowita",
+            "value_id": 4923,
+            "value": "15,7"
+          },
+          {
+            "attribute": "Kolor ramy",
+            "value_id": 4924,
+            "value": "C81 czerwony"
+          }
+        ],
+        "variant_sku": "V500-Light",
+        "categories": [
+          {
+            "category_id": 692,
+            "is_primary": false
+          },
+          {
+            "category_id": 694,
+            "is_primary": true
+          },
+          {
+            "category_id": 1218,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 3,
+          "product_attribute_value.product_id": 14,
+          "product_attribute_value_images.product_id": 3,
+          "product_images.product_id": 8,
+          "product_variants.product_id": 1
+        }
+      },
+      "source": {
+        "id": 12427,
+        "name": "V500 Light",
+        "slug": "v500-light-321fc813",
+        "external_source": "vermeiren",
+        "external_id": "da87706641914de58699441d476edfd153837cea42beae7a14ad54bf6c4d3782",
+        "seo_title": "V500 Light | Vermeiren Polska",
+        "seo_description": "Vermeiren Wózki manualne Do samodzielnego poruszania aktywne V500 Light",
+        "description_sha256": "2b4ff56a8c98eaaf52a0aea72d31cd8c9fc9129395617fa206068c0c94dc2ae2",
+        "short_description_sha256": "7692491af2bb0d919e38fdfd6583e66f1c24b88d8d30823b72a95cfb9216e665",
+        "attribute_value_ids": [
+          692,
+          4804,
+          4848,
+          4854,
+          4867,
+          4868,
+          4889,
+          4906,
+          4919,
+          4920,
+          4921,
+          4922,
+          4923,
+          4924
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          },
+          {
+            "attribute": "Kolor tapicerki",
+            "value_id": 4848,
+            "value": "Nylon czarny"
+          },
+          {
+            "attribute": "Szerokość siedziska",
+            "value_id": 4854,
+            "value": "390 420 440 460 480 500"
+          },
+          {
+            "attribute": "Maksymalna waga użytkownika",
+            "value_id": 4867,
+            "value": "130"
+          },
+          {
+            "attribute": "Kolor ramy",
+            "value_id": 4868,
+            "value": "C86 carbon szary"
+          },
+          {
+            "attribute": "Wysokość siedziska",
+            "value_id": 4889,
+            "value": "470 - 530"
+          },
+          {
+            "attribute": "Kąt siedziska",
+            "value_id": 4906,
+            "value": "0° - 10°"
+          },
+          {
+            "attribute": "Szerokość całkowita",
+            "value_id": 4919,
+            "value": "590 620 640 660 680 700"
+          },
+          {
+            "attribute": "Długość całkowita",
+            "value_id": 4920,
+            "value": "975 - 1035"
+          },
+          {
+            "attribute": "Wysokość całkowita",
+            "value_id": 4921,
+            "value": "860 - 920"
+          },
+          {
+            "attribute": "Głębokość siedziska",
+            "value_id": 4922,
+            "value": "420-480"
+          },
+          {
+            "attribute": "Waga całkowita",
+            "value_id": 4923,
+            "value": "15,7"
+          },
+          {
+            "attribute": "Kolor ramy",
+            "value_id": 4924,
+            "value": "C81 czerwony"
+          }
+        ],
+        "variant_sku": "V500-Light-2",
+        "categories": [
+          {
+            "category_id": 692,
+            "is_primary": false
+          },
+          {
+            "category_id": 695,
+            "is_primary": true
+          },
+          {
+            "category_id": 1218,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 3,
+          "product_attribute_value.product_id": 14,
+          "product_attribute_value_images.product_id": 3,
+          "product_images.product_id": 8,
+          "product_variants.product_id": 1
+        }
+      }
+    },
+    {
+      "manufacturer_image_samples": [
+        "https://domino03.vermeiren.be/product/picture.nsf/1D875C01A356ECEDC1257FD1003DB1E7/$File/Vicair BASIC AirFlow cover upsidedown.jpg",
+        "https://domino03.vermeiren.be/product/picture.nsf/D2C94727D06C64E7C1257FD1003E24BE/$File/Vicair BASIC automatic valve.jpg",
+        "https://www.vermeiren.pl/product/picture.nsf/O/6BEAD5DAFCB6F97BC1257FA10028B3CB/$FILE/web_liberty PT AirFlow blac cover low quality.jpg"
+      ],
+      "target": {
+        "id": 12581,
+        "name": "VICAIR LIBERTY",
+        "slug": "vicair-liberty",
+        "external_source": "vermeiren",
+        "external_id": "cb190cebfeea6a450d7c3b89d18c4650982cb8bcc07b8554d58009a0f5b893c4",
+        "seo_title": "VICAIR LIBERTY | Vermeiren Polska",
+        "seo_description": "Vermeiren Sprzęt przeciwodleżynowy Poduszki przeciwodleżynowe VICAIR LIBERTY",
+        "description_sha256": "59c9c30eecfff639816398292feb5882dd73daf380e679ddfa8aab5428a0b0ff",
+        "short_description_sha256": "ac1ce988e30e21c66ad6e500021da4beeb6c9c2403d95adc0f7d333447268136",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "VICAIR-LIBERTY",
+        "categories": [
+          {
+            "category_id": 719,
+            "is_primary": false
+          },
+          {
+            "category_id": 720,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 3,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 3,
+          "product_variants.product_id": 1
+        }
+      },
+      "source": {
+        "id": 12617,
+        "name": "VICAIR LIBERTY",
+        "slug": "vicair-liberty-e00d9c3c",
+        "external_source": "vermeiren",
+        "external_id": "a71fc8782bc39f0005381472a9c304ee3b55c059bcfcc21bcd841578db9f8f31",
+        "seo_title": "VICAIR LIBERTY | Vermeiren Polska",
+        "seo_description": "Vermeiren Stabilizacja Vicair VICAIR LIBERTY",
+        "description_sha256": "59c9c30eecfff639816398292feb5882dd73daf380e679ddfa8aab5428a0b0ff",
+        "short_description_sha256": "ac1ce988e30e21c66ad6e500021da4beeb6c9c2403d95adc0f7d333447268136",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "VICAIR-LIBERTY-2",
+        "categories": [
+          {
+            "category_id": 729,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 2,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 3,
+          "product_variants.product_id": 1
+        }
+      }
+    },
+    {
+      "manufacturer_image_samples": [
+        "https://domino03.vermeiren.be/product/picture.nsf/1D875C01A356ECEDC1257FD1003DB1E7/$File/Vicair BASIC AirFlow cover upsidedown.jpg",
+        "https://domino03.vermeiren.be/product/picture.nsf/F4D44B2DF1A786C7C12580480043C9AA/$File/Vicair_Liberty_Profile_2.jpg",
+        "https://www.vermeiren.pl/product/picture.nsf/O/468A484BCBA3EF8EC12580480043D663/$FILE/web_Vicair_Liberty_Profile_3_low.jpg"
+      ],
+      "target": {
+        "id": 12582,
+        "name": "VICAIR LIBERTY PROFILE",
+        "slug": "vicair-liberty-profile",
+        "external_source": "vermeiren",
+        "external_id": "51b1cb8e786103b5cd223879f03a6dcf637fca00a64c2cfb1a79a7eb0bdb406b",
+        "seo_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+        "seo_description": "Vermeiren Sprzęt przeciwodleżynowy Poduszki przeciwodleżynowe VICAIR LIBERTY PROFILE",
+        "description_sha256": "69a2b89e49fec5b4ef28e9fafd968da77fb8666f9f38e64d47c61548bdb1311d",
+        "short_description_sha256": "ff2a983ca3b02c4c948c3094f456ebbbe3ee06627e747b7f5fbca895113d355f",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "VICAIR-LIBERTY-PROFILE",
+        "categories": [
+          {
+            "category_id": 719,
+            "is_primary": false
+          },
+          {
+            "category_id": 720,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 3,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 3,
+          "product_variants.product_id": 1
+        }
+      },
+      "source": {
+        "id": 12618,
+        "name": "VICAIR LIBERTY PROFILE",
+        "slug": "vicair-liberty-profile-4b912b06",
+        "external_source": "vermeiren",
+        "external_id": "2c6ddd48b2ac07be66bd2f091fc6259c7fd76e2326a06cbcbea28fcfd8d5de56",
+        "seo_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+        "seo_description": "Vermeiren Stabilizacja Vicair VICAIR LIBERTY PROFILE",
+        "description_sha256": "69a2b89e49fec5b4ef28e9fafd968da77fb8666f9f38e64d47c61548bdb1311d",
+        "short_description_sha256": "5567a53c2ff9124f53c3813c2074514a800f7cc6b4270ae7540417547d3639ef",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "VICAIR-LIBERTY-PROFILE-2",
+        "categories": [
+          {
+            "category_id": 729,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 2,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 3,
+          "product_variants.product_id": 1
+        }
+      }
+    },
+    {
+      "manufacturer_image_samples": [
+        "https://domino03.vermeiren.be/product/picture.nsf/52086DC91EAF5D17C1257F080039CEF5/$File/Vicair Vector O2 with top cover.jpg",
+        "https://domino03.vermeiren.be/product/picture.nsf/C128FE9EFEDF079EC1257F080039C03F/$File/Vicair Vector O2 upper view.jpg",
+        "https://www.vermeiren.pl/product/picture.nsf/O/902CC1FACD3F04D0C1257F080039DE1F/$FILE/web_Vicair Vector O2 without top cover.jpg"
+      ],
+      "target": {
+        "id": 12584,
+        "name": "VICAIR VECTOR O2",
+        "slug": "vicair-vector-o2",
+        "external_source": "vermeiren",
+        "external_id": "2624463a7dce3c0ee597a232ae3629fdc94fab82550909591245587198e2a336",
+        "seo_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+        "seo_description": "Vermeiren Sprzęt przeciwodleżynowy Poduszki przeciwodleżynowe VICAIR VECTOR O2",
+        "description_sha256": "75f9d64907e9d3b14fa95a3c498820994a2248404b711ffaa263679978ce8c8e",
+        "short_description_sha256": "af421741869e1f4bb020f31fcc52d07079eda1c42ea8f461b11644b12dd82cd0",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "VICAIR-VECTOR-O2",
+        "categories": [
+          {
+            "category_id": 719,
+            "is_primary": false
+          },
+          {
+            "category_id": 720,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 3,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 6,
+          "product_variants.product_id": 1
+        }
+      },
+      "source": {
+        "id": 12620,
+        "name": "VICAIR VECTOR 02",
+        "slug": "vicair-vector-02",
+        "external_source": "vermeiren",
+        "external_id": "8afba52f9eea0d07a99b99aa1f37c0d11cda3b853984815f7d38bd88969f4057",
+        "seo_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+        "seo_description": "Vermeiren Stabilizacja Vicair VICAIR VECTOR O2",
+        "description_sha256": "75f9d64907e9d3b14fa95a3c498820994a2248404b711ffaa263679978ce8c8e",
+        "short_description_sha256": "af421741869e1f4bb020f31fcc52d07079eda1c42ea8f461b11644b12dd82cd0",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "VICAIR-VECTOR-O2-2",
+        "categories": [
+          {
+            "category_id": 729,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 2,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 6,
+          "product_variants.product_id": 1
+        }
+      }
+    },
+    {
+      "manufacturer_image_samples": [
+        "https://domino03.vermeiren.be/product/picture.nsf/3DE08FF9E9F136E3C12581BD002C927F/$File/Wheelchair_Cushion_Machine_Washable_Vicair_Adjuster_O2_Top_Cover.jpg",
+        "https://domino03.vermeiren.be/product/picture.nsf/534B19162842C0BEC12581BD002CAC68/$File/Wheelchair_Cushion_Machine_Washable_Vicair_Adjuster_O2_Top.jpg",
+        "https://www.vermeiren.pl/product/picture.nsf/O/CDDD5085356A7895C12581BD002CC45B/$FILE/web_Wheelchair_Cushion_Machine_Washable_Vicair_Adjuster_O2_without_cover.jpg"
+      ],
+      "target": {
+        "id": 12585,
+        "name": "VICAIR ADJUSTER O2",
+        "slug": "vicair-adjuster-o2",
+        "external_source": "vermeiren",
+        "external_id": "e22689e463049616f60b9bf3ce17bb8776297a9ac8c003c2c669826eadf46035",
+        "seo_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+        "seo_description": "Vermeiren Sprzęt przeciwodleżynowy Poduszki przeciwodleżynowe VICAIR ADJUSTER O2",
+        "description_sha256": "27b7d55fe60983928173b8e039ade7351d23c629e1033e630d058882eac51710",
+        "short_description_sha256": "320e2c47dbe15108d5f7ffbe7df762f1da0dc1f2b026bb14c31d399b29086d64",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "VICAIR-ADJUSTER-O2",
+        "categories": [
+          {
+            "category_id": 719,
+            "is_primary": false
+          },
+          {
+            "category_id": 720,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 3,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 6,
+          "product_variants.product_id": 1
+        }
+      },
+      "source": {
+        "id": 12621,
+        "name": "VICAIR ADJUSTER O2",
+        "slug": "vicair-adjuster-o2-87cb2898",
+        "external_source": "vermeiren",
+        "external_id": "79cbd46159ec088fc4811850f6fd6c6009ffc556f5344cd14ce755e5dd3aef4e",
+        "seo_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+        "seo_description": "Vermeiren Stabilizacja Vicair VICAIR ADJUSTER O2",
+        "description_sha256": "27b7d55fe60983928173b8e039ade7351d23c629e1033e630d058882eac51710",
+        "short_description_sha256": "320e2c47dbe15108d5f7ffbe7df762f1da0dc1f2b026bb14c31d399b29086d64",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "VICAIR-ADJUSTER-O2-2",
+        "categories": [
+          {
+            "category_id": 729,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 2,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 6,
+          "product_variants.product_id": 1
+        }
+      }
+    },
+    {
+      "manufacturer_image_samples": [
+        "https://www.vermeiren.pl/product/picture.nsf/O/56539930512D7640C125852800532E63/$FILE/web_Wheelchair_Cushion_Machine_Washable_Vicair_Multifunctional_O2_right_right side forward.jpg"
+      ],
+      "target": {
+        "id": 12586,
+        "name": "VICAIR MULTIFUNCTIONAL O2",
+        "slug": "vicair-multifunctional-o2",
+        "external_source": "vermeiren",
+        "external_id": "2221c32141913e4f600dfbc195d2498f0126315f3a39cd0b7a6bb768892300fb",
+        "seo_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+        "seo_description": "Vermeiren Sprzęt przeciwodleżynowy Poduszki przeciwodleżynowe Vicair Multifunctional O2",
+        "description_sha256": "f97de9b4eed371c5343d44f69d37ebb4e094ad691d162f93949f5a8a09cc4fc1",
+        "short_description_sha256": "3409598b1e41fd92015b5dc78d12feb0505b28df9472a94bbd5894c4794109c4",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "Vicair-Multifunctional-O2",
+        "categories": [
+          {
+            "category_id": 719,
+            "is_primary": false
+          },
+          {
+            "category_id": 720,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 3,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 1,
+          "product_variants.product_id": 1
+        }
+      },
+      "source": {
+        "id": 12622,
+        "name": "VICAIR MULTIFUNCTIONAL O2",
+        "slug": "vicair-multifunctional-o2-b604a48b",
+        "external_source": "vermeiren",
+        "external_id": "64dce2f73dfb0d7683b8c4b8074484df32dd64cfcfc129ea98b30145b36b92d8",
+        "seo_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+        "seo_description": "Vermeiren Stabilizacja Vicair Vicair Multifunctional O2",
+        "description_sha256": "f97de9b4eed371c5343d44f69d37ebb4e094ad691d162f93949f5a8a09cc4fc1",
+        "short_description_sha256": "3409598b1e41fd92015b5dc78d12feb0505b28df9472a94bbd5894c4794109c4",
+        "attribute_value_ids": [
+          692,
+          4804
+        ],
+        "attribute_evidence": [
+          {
+            "attribute": "Wyrób medyczny",
+            "value_id": 692,
+            "value": "Tak"
+          },
+          {
+            "attribute": "Producent",
+            "value_id": 4804,
+            "value": "Vermeiren"
+          }
+        ],
+        "variant_sku": "Vicair-Multifunctional-O2-2",
+        "categories": [
+          {
+            "category_id": 729,
+            "is_primary": true
+          },
+          {
+            "category_id": 1219,
+            "is_primary": false
+          }
+        ],
+        "references": {
+          "category_product.product_id": 2,
+          "product_attribute_value.product_id": 2,
+          "product_images.product_id": 1,
+          "product_variants.product_id": 1
+        }
+      }
+    }
+  ],
+  "held_groups": [
+    {
+      "product_ids": [
+        164,
+        165
+      ],
+      "title": "EVOFLEX",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "same_active_options_review_candidate",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        220,
+        221,
+        244,
+        247
+      ],
+      "title": "AIR BAG MED",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        234,
+        237
+      ],
+      "title": "HEAVEN AD MED",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        257,
+        266
+      ],
+      "title": "Nautilus",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        1419,
+        4530
+      ],
+      "title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        2828,
+        2829
+      ],
+      "title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        6744,
+        6745
+      ],
+      "title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix*",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        7951,
+        7952
+      ],
+      "title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        8869,
+        8870
+      ],
+      "title": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        9066,
+        9067
+      ],
+      "title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        9092,
+        9093
+      ],
+      "title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        9094,
+        9095
+      ],
+      "title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        9309,
+        9332
+      ],
+      "title": "FP-25 Stabilizator kończyn",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        9620,
+        9940
+      ],
+      "title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        9983,
+        9986
+      ],
+      "title": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        10104,
+        10107
+      ],
+      "title": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        10479,
+        10523
+      ],
+      "title": "Maska podnosowa AirFit N30i - U.02.02.00",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        11039,
+        11040
+      ],
+      "title": "Opaska kompresyjna na twarz AT04702 - Antar",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        12021,
+        12022
+      ],
+      "title": "protect.Ankle air foam",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "same_active_options_review_candidate",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        12503,
+        12562
+      ],
+      "title": "PEPI | Vermeiren Polska",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        12583,
+        12619
+      ],
+      "title": "VICAIR ACTIVE O2 | Vermeiren Polska",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        12587,
+        12623
+      ],
+      "title": "VICAIR ALLROUNDER | Vermeiren Polska",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        12588,
+        12624
+      ],
+      "title": "VICAIR LIBERTY BACK | Vermeiren Polska",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        12589,
+        12625
+      ],
+      "title": "VICAIR ANATOMY BACK | Vermeiren Polska",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        12590,
+        12626
+      ],
+      "title": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    },
+    {
+      "product_ids": [
+        13026,
+        13064
+      ],
+      "title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete",
+      "action": "manual_review_required"
+    }
+  ],
+  "reference_inventory": [
+    {
+      "table": "cart_items",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "cart_items",
+      "column": "product_variant_id",
+      "target": "product_variants",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "category_product",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "order_items",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "order_items",
+      "column": "product_variant_id",
+      "target": "product_variants",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "product_attribute_value",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "product_attribute_value_images",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "product_documents",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "product_images",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "product_variant_attribute_value",
+      "column": "product_variant_id",
+      "target": "product_variants",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "product_variants",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "products",
+      "column": "default_image_id",
+      "target": "products",
+      "discovery": "polymorphic_type",
+      "morph": {
+        "column": "default_image_type",
+        "types": [
+          "App\\Models\\Product"
+        ]
+      }
+    },
+    {
+      "table": "products",
+      "column": "default_image_id",
+      "target": "product_variants",
+      "discovery": "polymorphic_type",
+      "morph": {
+        "column": "default_image_type",
+        "types": [
+          "App\\Models\\ProductVariant"
+        ]
+      }
+    },
+    {
+      "table": "withdrawal_request_items",
+      "column": "product_id",
+      "target": "products",
+      "discovery": "foreign_key",
+      "morph": null
+    },
+    {
+      "table": "withdrawal_request_items",
+      "column": "product_variant_id",
+      "target": "product_variants",
+      "discovery": "foreign_key",
+      "morph": null
+    }
+  ],
+  "scope": "Archive six duplicate products, retain every source row/variant/media record, add missing non-primary target category links, serve guarded same-host 301 aliases. No deletion, price, variant, primary or legacy nginx-map changes."
+}

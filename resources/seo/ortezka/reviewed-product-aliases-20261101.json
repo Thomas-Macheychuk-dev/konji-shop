@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "pairs": [
+    {
+      "source": {
+        "id": 12427,
+        "slug": "v500-light-321fc813",
+        "external_source": "vermeiren",
+        "external_id": "da87706641914de58699441d476edfd153837cea42beae7a14ad54bf6c4d3782"
+      },
+      "target": {
+        "id": 12424,
+        "slug": "v500-light",
+        "external_source": "vermeiren",
+        "external_id": "6fa00241e9481df47fb1f171647b8acff759e16608cce4e815bc9a54344878d0"
+      }
+    },
+    {
+      "source": {
+        "id": 12617,
+        "slug": "vicair-liberty-e00d9c3c",
+        "external_source": "vermeiren",
+        "external_id": "a71fc8782bc39f0005381472a9c304ee3b55c059bcfcc21bcd841578db9f8f31"
+      },
+      "target": {
+        "id": 12581,
+        "slug": "vicair-liberty",
+        "external_source": "vermeiren",
+        "external_id": "cb190cebfeea6a450d7c3b89d18c4650982cb8bcc07b8554d58009a0f5b893c4"
+      }
+    },
+    {
+      "source": {
+        "id": 12618,
+        "slug": "vicair-liberty-profile-4b912b06",
+        "external_source": "vermeiren",
+        "external_id": "2c6ddd48b2ac07be66bd2f091fc6259c7fd76e2326a06cbcbea28fcfd8d5de56"
+      },
+      "target": {
+        "id": 12582,
+        "slug": "vicair-liberty-profile",
+        "external_source": "vermeiren",
+        "external_id": "51b1cb8e786103b5cd223879f03a6dcf637fca00a64c2cfb1a79a7eb0bdb406b"
+      }
+    },
+    {
+      "source": {
+        "id": 12620,
+        "slug": "vicair-vector-02",
+        "external_source": "vermeiren",
+        "external_id": "8afba52f9eea0d07a99b99aa1f37c0d11cda3b853984815f7d38bd88969f4057"
+      },
+      "target": {
+        "id": 12584,
+        "slug": "vicair-vector-o2",
+        "external_source": "vermeiren",
+        "external_id": "2624463a7dce3c0ee597a232ae3629fdc94fab82550909591245587198e2a336"
+      }
+    },
+    {
+      "source": {
+        "id": 12621,
+        "slug": "vicair-adjuster-o2-87cb2898",
+        "external_source": "vermeiren",
+        "external_id": "79cbd46159ec088fc4811850f6fd6c6009ffc556f5344cd14ce755e5dd3aef4e"
+      },
+      "target": {
+        "id": 12585,
+        "slug": "vicair-adjuster-o2",
+        "external_source": "vermeiren",
+        "external_id": "e22689e463049616f60b9bf3ce17bb8776297a9ac8c003c2c669826eadf46035"
+      }
+    },
+    {
+      "source": {
+        "id": 12622,
+        "slug": "vicair-multifunctional-o2-b604a48b",
+        "external_source": "vermeiren",
+        "external_id": "64dce2f73dfb0d7683b8c4b8074484df32dd64cfcfc129ea98b30145b36b92d8"
+      },
+      "target": {
+        "id": 12586,
+        "slug": "vicair-multifunctional-o2",
+        "external_source": "vermeiren",
+        "external_id": "2221c32141913e4f600dfbc195d2498f0126315f3a39cd0b7a6bb768892300fb"
+      }
+    }
+  ]
+}
