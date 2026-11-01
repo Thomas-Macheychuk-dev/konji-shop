@@ -1,0 +1,19 @@
+# Duplicate SEO titles: explicit catalogue codes — 2026-11-01
+
+Thirty-eight MedReha records in 17 complete duplicate-title groups receive concise titles containing the catalogue codes already printed in their own product descriptions. Their current variant SKUs independently support those codes. Expected remaining duplicate-title groups: 42, down from 59. SEO descriptions are preserved byte for byte, and the 29 unresolved basic-description holds from the preceding batch remain unresolved.
+
+This is title differentiation, not a claim that SKU differences prove different physical products. Code suffixes such as O/G, GIN/WHT and BLK/TAL are kept literally; colours, materials and clinical effects are not inferred. The 4632 pair has explicit L versus XL source codes. The body hashes and exact current identity/SEO values are checked by the existing transactional repair engine, so no mutable variant data is needed to justify the new copy. Conflicting generic producer prose on the KS products is not used for branding. Product IDs and import-only slug suffixes are never used as title distinctions.
+
+The fresh export contains 124 products and 3,035 variants across 59 duplicate-title groups. There are 38 groups with different active SKU/option signatures, 21 with insufficient active identity data, zero identical complete active SKU/option signatures, and five matching option-only groups. These are review signals, not consolidation decisions. Even matching options can occur on different models, as in KS-18/KS-16 and 9-04/9-07. Different SKU namespaces can occur on repeated imports.
+
+The manifest records a disposition for all 59 groups. All members of each of the 17 changed groups are included. The 42 held groups include Scholl colour/identity questions, wig repeats, Reh4mat/Timago/Antar/Vermeiren records with insufficient active variant identity, medi sale/regular listings, the toilet-seat variant-family ambiguity, Sigvaris, Dr Max and Matovlies. No unsupported canonical selection is made. Actual consolidation requires identity verification plus a read-only audit of order/cart, media and other product/variant references before a concrete reversible plan can be prepared.
+
+Prerequisite: applied evidence-followup receipt at `storage/app/private/seo-repairs/evidence-followup-20261101.NJPKen`, plan SHA-256 `1ce76a8015190eabb03e6c6a46b89d6984e1ae6115f6fd9388394d5a1de2d897`. The receipt is integrity checked without replaying old state verifiers that would reject later intentional repairs. The shared runner creates an immutable backup and plan checksum before writes, checks current source and metadata under transaction locks, rejects new title collisions, invalidates storefront caches and verifies all active rendered metadata. Rollback refuses later edits.
+
+No source descriptions, prices, stock/status, publication dates, variants, category assignments, slugs, canonicals or redirects change. In particular the 1,070 legacy nginx redirect rules remain untouched.
+
+## Execution
+
+On the server through SSM, extract this folder, `scripts/seo/editorial-repair-20261031`, `scripts/seo/colour-correction-20261101` and `scripts/seo/product-database-20261031/Metadata.php` from the pinned commit, then run `bash scripts/seo/duplicate-codes-20261101/repair.sh apply` from the extracted root. The wrapper performs dry-run, apply and verify in sequence. Keep its printed private backup path. To inspect without applying, use `dry-run`; `verify` and `rollback` require the printed backup directory.
+
+`build_review.py PATH_TO_FRESH_EXPORT` rebuilds the frozen manifest and normalized fixture. The export checksum is recorded in the manifest. Tests exercise apply/rendered verification/exact rollback and refusal of changed source or later manual edits. Frozen-content checks verify each literal evidence code, preserved descriptions, unique target titles and complete group coverage.
