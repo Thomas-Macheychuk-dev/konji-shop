@@ -1,0 +1,767 @@
+[
+  {
+    "id": 7988,
+    "description": "Wykonana z włosa syntetycznego długa kręcona treska z mocowaniem na jedną klamrę. Modelka ze zdjęcia prezentuje treskę w kolorze chocolate mix. Kolor oferowanej treski jest prezentowany w kwadracie z wycinkiem włosów. Długość włosa: pasma cieniowane od 35 do 60 cm",
+    "short_description": "Kolekcja POWER PIECES",
+    "variants": [
+      {
+        "id": 19555,
+        "product_id": 7988,
+        "sku": "13810",
+        "external_variant_id": "peruka-13810-default",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 26366,
+        "price_gross_amount": 32430,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": []
+      }
+    ]
+  },
+  {
+    "id": 11925,
+    "description": "Pończochy duomed® smooth łączą w sobie medyczną skuteczność ze stylową elegancją. Miękka dzianina zapewnia wysoki komfort, jest delikatna dla skóry, a tym samym bardzo dyskretna. Lekki połysk w kolorach karmelu i czerni sprawia, że ten medyczny produkt sprawdzi się również podczas wieczornych wyjść, dodając eleganckiego szyku. Technologia Clima Fresh zapewnia świetną cyrkulację powietrza, dzięki czemu niwelowane są nieprzyjemne zapachy. Pończochy duomed® smooth to kompresja w stylowej odsłonie, łącząca w sobie wysoką jakość, uniwersalność i atrakcyjną cenę. Okrągłodziane, medyczne produkty kompresyjne duomed smooth to produkt dla kobiet, przeznaczony do ucisku kończyn dolnych, głównie w leczeniu schorzeń układu żylnego. Produkty duomed® smooth są dostępne w formie pończoch, podkolanówek lub rajstop. Zastosowanie: Okrągłodziany medyczny produkt kompresyjny do ucisku kończyn dolnych, głównie w ramach leczenia chorób układu żylnego lub limfatycznego. To jest wyrób medyczny. Dla bezpieczeństwa używaj go zgodnie z instrukcją lub etykietą. W przypadku wątpliwości skonsultuj się ze specjalistą, gdyż ten wyrób medyczny może nie być odpowiedni dla Ciebie. Parametry produktu SKU01089H007-SALEKolorczarnyPalcezamknięteRozmiarXXLDługośćkrótkaCCLCCL2Rodzaj ściągaczapodstawowy Dane produktu ProducentmediSKU01089H007-SALE To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "pończochy kompresyjne",
+    "variants": [
+      {
+        "id": 32665,
+        "product_id": 11925,
+        "sku": "XW51516",
+        "external_variant_id": "medi-1171327-1170710",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 9259,
+        "price_gross_amount": 10000,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Kolor",
+            "value_id": 16,
+            "value": "Czarny",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 23,
+            "value": "XXL",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Długość",
+            "value_id": 4378,
+            "value": "Krótka",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Palce",
+            "value_id": 4380,
+            "value": "zamknięte",
+            "value_truncated": false
+          },
+          {
+            "attribute": "CCL",
+            "value_id": 4381,
+            "value": "CCL2",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rodzaj ściągacza",
+            "value_id": 4418,
+            "value": "podstawowy",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11933,
+    "description": "Genumedi PSS jest opaską stawu kolanowego, służącą odciążeniu przyczepu więzadła rzepki. Skuteczne rozwiązanie dla pacjentów ceniących sobie aktywność fizyczną jak np. bieganie a zmagających się z przeciążeniem i drobnymi urazami stawów kolanowych w tym m.in. coraz częściej występujące \" kolano skoczka\" . Silikonowe peloty umieszczone od wewnętrznej strony w kieszeniach stabilizatora Genumedi PSS odciążają rzepkę kolanową i w połączeniu z wysokiej klasy i zaawansowanym technologicznie materiałem w CCL2 medycznego ucisku - dają efekt kojącego masażu i ulgi. Przyczynia się to do wspomagania ukrwienia stawu, redukując lekkie obrzęki i krwiaki, a także zmniejszenia podrażnienia i złagodzenia bólu. Jednocześnie poprawia biomechanikę ruchu mięśni oraz stabilizację obciążonego stawu kolanowego. Dodatkowe wsparcie w postaci poprzecznego paska na wysokości rzepki pozwala na pewną stabilizację naciskając na więzadło rzepki tym samym odciąża przyczep rzepki i zmniejsza ból. Detale: Przesunięty układ pasków umożliwia zrównoważony rozkład nacisku (tylny pasek lekko przesunięty w dół - eliminuje niekomfortowe uwieranie pod kolanem Dwudzielny układ pelotek o profilu 3D powoduje dodatkowy efekt masażu: pelotka w okolicy rzepki i w okolicy ścięgna zapewniają dokładną stabilizację i odciążenie Nakrapiane od wewnętrznej strony guzki silikonu zapewniają pewne ułożenie stabilizatora nawet podczas ruchu i wysiłku fizycznego, równocześnie zapewniając swobodny przewiew powietrza unikając odparzeń Parametry produktu SKU03745B010-SALEKolorlyons blueObwódstandardRozmiarV Dane produktu ProducentmediSKU03745B010-SALE",
+    "short_description": "stabilizator kolana",
+    "variants": [
+      {
+        "id": 32861,
+        "product_id": 11933,
+        "sku": "K150305",
+        "external_variant_id": "medi-1185298-1185294",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 16260,
+        "price_gross_amount": 20000,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Obwód",
+            "value_id": 4387,
+            "value": "Standard",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 4396,
+            "value": "V",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Kolor",
+            "value_id": 4423,
+            "value": "lyons blue",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11956,
+    "description": "MAXIS MICRO® to eleganckie pończochy, o matowym wykończeniu, wykonane z bardzo delikatnej dzianiny bezpiecznej dla nawet najbardziej wrażliwej skóry. Produkt ten posiada powłokę antybakteryjną i antyrefleksyjną MICRO PROTECTION, którą cechuje specjalna metoda wytwarzania przędzy gdzie wszystkie włókna Lycry są oplecione mikrowłóknami i nie mają bezpośredniego kontaktu ze skórą. To wszystko redukuje ryzyko podrażnień do minimum i sprawia, że MAXIS MICRO są odpowiednie dla każdego rodzaju skóry. Pończochy MAXIS Micro są bardzo elastyczne, co znacznie ułatwia ich dopasowanie, a noszenie jest wygodniejsze i bardziej komfortowe. Elastyczność włókien Lycra utrzymuje się nawet po wielokrotnym noszeniu i praniu. Miękkość jaką otulą Twoje nogi sprawi, że będziesz czuć się w nich idealnie. Są nieporównywalnie milsze w dotyku i można je prać w pralce i suszyć w suszarce. Wskazania: chroniczne choroby żył, lipodermatoskleroza i zanik biały, żylne choroby zakrzepowo-zatorowe, obrzęk, otyłość z funkcjonalną niewydolnością żylną, dermatoza zapalna nóg, mdłości, zawroty głowy w czasie ciąży, problem z przeciążeniem w czasie ciąży, stan po oparzeniach, opatrzenie blizn Zastosowanie: Okrągłodziany medyczny produkt kompresyjny do ucisku kończyn dolnych, głównie w ramach leczenia chorób układu żylnego lub limfatycznego. Należy zwrócić uwagę, że nasze zalecenia nie zastępują diagnozy lekarskiej, ani porady w specjalistycznym sklepie medycznym. To jest wyrób medyczny. Dla bezpieczeństwa używaj go zgodnie z instrukcją lub etykietą. Parametry produktu SKU010898007-SALEKolorczarny | brązowyPalceotwarte | zamknięteRozmiarI | II | III | IV | VI | VII | VIIIDługośćnormalna | krótkaCCLCCL1 | CCL2Rodzaj ściągaczapodstawowy | podstawowy poszerzone udo Dane produktu ProducentmediSKU010898007-SALE To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "pończochy uciskowe",
+    "variants": [
+      {
+        "id": 33134,
+        "product_id": 11956,
+        "sku": "XB69511",
+        "external_variant_id": "medi-1171324-1170763",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 9259,
+        "price_gross_amount": 10000,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Kolor",
+            "value_id": 16,
+            "value": "Czarny",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Palce",
+            "value_id": 4380,
+            "value": "zamknięte",
+            "value_truncated": false
+          },
+          {
+            "attribute": "CCL",
+            "value_id": 4381,
+            "value": "CCL2",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Długość",
+            "value_id": 4382,
+            "value": "normalna",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 4393,
+            "value": "I",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rodzaj ściągacza",
+            "value_id": 4418,
+            "value": "podstawowy",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11958,
+    "description": "MAXIS MICRO® to eleganckie rajstopy o matowym wykończeniu, wykonane z bardzo delikatnej dzianiny z dużą zawartością mikrowłókien i zaawansowaną technologią antybakteryjną MICRO PROTECTION. Funkcja MICRO PROTECTION oznacza, że wszystkie kompresyjne włókna są oplecione mikrowłóknami i nie mają bezpośredniego kontaktu ze skórą. To wszystko redukuje ryzyko rozwoju bakterii i nieprzyjemnych zapachów, a także zmniejsza ryzyko podrażnień do minimum. Dzięki temu produkt jest odpowiednidla każdego rodzaju skóry, także wrażliwej. Rajstopy MAXIS Micro są elastyczne, co znacznie ułatwia ich zakładanie, a noszenie jest bardziej komfortowe. Elastyczność włókien utrzymuje się nawet po wielokrotnym użytkowaniu i praniu. Zastosowanie: Okrągłodziany medyczny produkt kompresyjny do ucisku kończyn dolnych, głównie w ramach leczenia chorób układu żylnego lub limfatycznego. Należy zwrócić uwagę, że nasze zalecenia nie zastępują diagnozy lekarskiej, ani porady w specjalistycznym sklepie medycznym. To jest wyrób medyczny. Dla bezpieczeństwa używaj go zgodnie z instrukcją lub etykietą. Parametry produktu SKU010898001-SALEKolorczarny | brązowyPalceotwarte | zamknięteRozmiarI | II | IV | VI | VII | VIIIDługośćnormalna | krótkaCCLCCL1 | CCL2 Dane produktu ProducentMaxisSKU010898001-SALE To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "rajstopy uciskowe",
+    "variants": [
+      {
+        "id": 33391,
+        "product_id": 11958,
+        "sku": "XB17611",
+        "external_variant_id": "medi-1171320-1170816",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 10185,
+        "price_gross_amount": 11000,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "out_of_stock",
+        "attributes": [
+          {
+            "attribute": "Kolor",
+            "value_id": 828,
+            "value": "Brązowy",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Długość",
+            "value_id": 4378,
+            "value": "Krótka",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Palce",
+            "value_id": 4380,
+            "value": "zamknięte",
+            "value_truncated": false
+          },
+          {
+            "attribute": "CCL",
+            "value_id": 4381,
+            "value": "CCL2",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 4393,
+            "value": "I",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11966,
+    "description": "medi Collar soft Kidz jest ortezą stabilizującą odcinek szyjny kręgosłupa u dzieci. Ma nowoczesne, odpowiednie dla dzieci wzornictwo i jest zaprojektowana specjalnie do budowy anatomicznej najmłodszych Pacjentów. Miękki kołnierz ortopedyczny wspiera odcinek szyjny kręgosłupa, a jednocześnie ma przyjemne ogrzewające działanie. Dzięki temu orteza nadaje się do różnych wskazań, w których konieczna jest stabilizacja odcinka szyjnego kręgosłupa, jak na przykład: • bolesne napięcia w okolicy szyjnej (zespół szyjny) • mięśniowy kręcz szyi (łac. torticollis) • uraz odcinka szyjnego kręgosłupa z szarpnięcia (odgięciowy uraz kręgosłupa szyjnego) • niestabilność odcinka szyjnego kręgosłupa • bóle reumatyczne medi Collar soft Kidz ma działanie ogrzewające i wspierające. Przyjemny dla skóry materiał kołnierza ortopedycznego zapewnia duży komfort noszenia. Zastosowanie: medi Collar soft Kidz to orteza służąca do stabilizacji odcinka szyjnego kręgosłupa. Parametry produktu SKU04134X024-SALEKolorniebieskiRozmiarIIIGłębokość7 cm Dane produktu ProducentmediSKU04134X024-SALE",
+    "short_description": "kołnierz ortopedyczny",
+    "variants": [
+      {
+        "id": 33531,
+        "product_id": 11966,
+        "sku": "R222013",
+        "external_variant_id": "medi-1185396-1185391",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 3659,
+        "price_gross_amount": 4500,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Kolor",
+            "value_id": 2,
+            "value": "Niebieski",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 4397,
+            "value": "III",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Głębokość",
+            "value_id": 4457,
+            "value": "7 cm",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11998,
+    "description": "Kompresja jeszcze nigdy nie wyglądała tak stylowo. mediven® elegance to okrągłodziane medyczne pończochy kompresyjne o stopniowanym ucisku i pięknym wyglądzie. Służą do kompresji kończyn dolnych, między innymi w leczeniu dolegliwości i chorób układu żylnego. Część na palce Soft Elastic daje uczucie swobody dla palców stóp, a specjalnie ukształtowana (zmniejszona) pięta zapewnia dopasowanie bez pofałdowań. Samonośne pończochy uciskowe dostępne są z różnymi wariantami ściągacza z atrakcyjnym motywem. Produkty mediven® elegance zapewniają właściwą medyczną kompresję, a przy tym stylowo wygladają i doskonale podkreślają kobiecą sylwetkę. Ze względu na grubość materiału, dopasowanie i właściwości produktu zalecamy mediven® elegance kobietom o regularnej wadze, bez skłonności do obrzęków nóg, z mocną i zwartą strukturą tkanki nóg. Produkty mediven® elegance są dostępne w formie podkolanówek, pończoch lub rajstop. Specjalny czas dostawy: Kolory standardowe – jeśli są dostępne w magazynie wysyłka w ciągu 1-3 dni: czarny, karmelowy, beżowy Kolory specjalne – wysyłka do 10 dni roboczych lub mniej: antracytowy, granatowy, kaszmirowy, biały, magenta (14 dni roboczych) Zastosowanie: Okrągłodziany medyczny produkt kompresyjny do ucisku kończyn dolnych, głównie w ramach leczenia chorób układu żylnego lub limfatycznego. To jest wyrób medyczny. Dla bezpieczeństwa używaj go zgodnie z instrukcją lub etykietą. W przypadku wątpliwości skonsultuj się ze specjalistą, gdyż ten wyrób medyczny może nie być odpowiedni dla Ciebie. Parametry produktu SKU010111007-SALEKolorczarny | karmelowy | zielony avocado-green | kaszmirowy | bronze | kasztanPalceotwarte | zamknięteRodzaj ściągaczapodstawowy | podstawowy poszerzone udoRozmiarI | II | III | IV | V | VI | VIIDługośćnormalna | krótkaCCLCCL1 | CCL2 Dane produktu ProducentmediSKU010111007-SALE To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "pończochy uciskowe",
+    "variants": [
+      {
+        "id": 37505,
+        "product_id": 11998,
+        "sku": "0269C07",
+        "external_variant_id": "medi-1176233-1185288",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 21296,
+        "price_gross_amount": 23000,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Palce",
+            "value_id": 4377,
+            "value": "otwarte",
+            "value_truncated": false
+          },
+          {
+            "attribute": "CCL",
+            "value_id": 4381,
+            "value": "CCL2",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Długość",
+            "value_id": 4382,
+            "value": "normalna",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 4394,
+            "value": "VII",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rodzaj ściągacza",
+            "value_id": 4418,
+            "value": "podstawowy",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Kolor",
+            "value_id": 4497,
+            "value": "kaszmirowy",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12010,
+    "description": "Rajstopy mediven sheer&soft są najdelikatniejszym i zarazem najcieńszym produktem w linii mediven. Dzianina wykorzystana do ich produkcji jest wyjątkowo miękka i przyjazna skórze. Rajstopy, oprócz komfortu noszenia, zapewniają również dyskrecję - są niezauważalne jak bielizna, ale posiadają dodatkowo medyczną skuteczność. Tylko Ty będziesz wiedzieć, że masz je na sobie, a Twoje nogi podziękują Ci za to. Kolejną zaletą tego produktu jest jego uniwersalność. Rajstopy mediven sheer&soft sprawdzą się jako dopełnienie każdej stylizacji - od codziennej po elegancką. Technologia Clima Fresh zapewnia świeżość i działa antybakteryjnie, a technologia Clima Comfort daje lepszą cyrkulację powietrza. Są dostępne w aż 7 rozmiarach, aby móc pomóc pochylić się nad potrzebami większej ilości pacjentów. Rajstopy sheer&soft mają również wybór stopy zamkniętej bądź otwartej oraz 2 rodzaje długości dla perfekcyjnego dopasowania do Twoich preferencji. Okrągłodziane rajstopy sheer&soft dedykowane są kobietom do ucisku kończyn dolnych, głównie w ramach leczenia chorób układu żylnego. Produkty mediven® sheer&soft są dostępne w formie rajstop, podkolanówek lub pończoch. Zastosowanie: Okrągłodziane podkolanówki sheer&soft dedykowane są kobietom o regularnej wadze i budowie, które nie zmagają się z obrzekami i posiadają zbitą strukturę tkanki nóg. Specjalny czas dostawy: Kolory standardowe – jeśli są dostępne w magazynie wysyłka w ciągu 1-3 dni: czarny i naturalny To jest wyrób medyczny. Dla bezpieczeństwa używaj go zgodnie z instrukcją lub etykietą. W przypadku wątpliwości skonsultuj się ze specjalistą, gdyż ten wyrób medyczny może nie być odpowiedni dla Ciebie. Parametry produktu SKU010073001-SALEKolorczarnyPalcezamknięteRozmiarIDługośćnormalnaCCL15 - 20 mmHG Dane produktu ProducentmediSKU010073001-SALE To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.",
+    "short_description": "rajstopy uciskowe",
+    "variants": [
+      {
+        "id": 49294,
+        "product_id": 12010,
+        "sku": "O110511",
+        "external_variant_id": "medi-1174101-1173599",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 13889,
+        "price_gross_amount": 15000,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Kolor",
+            "value_id": 16,
+            "value": "Czarny",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Palce",
+            "value_id": 4380,
+            "value": "zamknięte",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Długość",
+            "value_id": 4382,
+            "value": "normalna",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 4393,
+            "value": "I",
+            "value_truncated": false
+          },
+          {
+            "attribute": "CCL",
+            "value_id": 4512,
+            "value": "15 - 20 mmHG",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 13717,
+    "description": "Płyn do szyb Dr Max, 500 ml Płyn do szyb Dr Max przeznaczony jest do mycia powierzchni szklanych i innych powierzchni zmywalnych. Preparat szybko i skutecznie usuwa brud i zabrudzenia tłuszczowe. Posiada innowacyjny system anti fog, dzięki czemu zapobiega parowaniu czyszczonych powierzchni. Doskonale sprawdzi się w każdej łazience! Zastosowanie: okna lustra kafelki blaty armatura okapy kuchenki Właściwości produktu: nie pozostawia smug i zacieków, zapewnia idealną czystość i połysk, polecany do mycia szyb, kafli, blatów, okapów itp., zapewnia doskonały błysk bez konieczności polerowania, zapobiega parowaniu powierzchni, dostępny w formie sprayu w butelce ze spryskiwaczem. Parametry produktu IndeksCH-221-S500-N08 Dodatkowe cechy Przeciw parowaniu Typ Płyn do mycia szyb Czyszczenie powierzchni Szyby i lustraean135900516292058Grupa docelowaWyrób niemedycznyAdres producentaToruńskie Zakłady Materiałów Opatrunkowych S.A, ul. Żółkiewskiego 20/26, 87-100 Toruń, PolskaAdres email producentadrmax@tzmo-global.comPojemność500 ml Dostępne warianty Pojemność: 500 ml Dane produktu DostępnośćProdukt niedostępny",
+    "short_description": "Kup Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml za 7,53 zł | Darmowa dostawa od 119 zł - już w 24h",
+    "variants": [
+      {
+        "id": 67950,
+        "product_id": 13717,
+        "sku": "S24-16499-21997",
+        "external_variant_id": "seni24-16499-21997",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 612,
+        "price_gross_amount": 753,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "out_of_stock",
+        "attributes": [
+          {
+            "attribute": "Pojemność",
+            "value_id": 6949,
+            "value": "500 ml",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 13718,
+    "description": "Płyn do szyb Dr Max, 500 ml Płyn do szyb Dr Max przeznaczony jest do mycia powierzchni szklanych i innych powierzchni zmywalnych. Preparat szybko i skutecznie usuwa brud i zabrudzenia tłuszczowe. Posiada innowacyjny system anti fog, dzięki czemu zapobiega parowaniu czyszczonych powierzchni. Doskonale sprawdzi się w każdej łazience! Zastosowanie: okna lustra kafelki blaty armatura okapy kuchenki Właściwości produktu: nie pozostawia smug i zacieków, zapewnia idealną czystość i połysk, polecany do mycia szyb, kafli, blatów, okapów itp., zapewnia doskonały błysk bez konieczności polerowania, zapobiega parowaniu powierzchni, dostępny w formie sprayu w butelce ze spryskiwaczem. Parametry produktu IndeksCH-221-S500-Z01 Typ Płyn do mycia szyb Czyszczenie powierzchni Szyby i lustraean135900516292195Grupa docelowaWyrób niemedycznyAdres producentaToruńskie Zakłady Materiałów Opatrunkowych S.A, ul. Żółkiewskiego 20/26, 87-100 Toruń, PolskaAdres email producentadrmax@tzmo-global.comPojemność500 ml Dostępne warianty Pojemność: 500 ml Dane produktu DostępnośćProdukt niedostępny",
+    "short_description": "Kup Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml za 7,53 zł | Darmowa dostawa od 119 zł - już w 24h",
+    "variants": [
+      {
+        "id": 67951,
+        "product_id": 13718,
+        "sku": "S24-16500-21998",
+        "external_variant_id": "seni24-16500-21998",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 612,
+        "price_gross_amount": 753,
+        "currency": "PLN",
+        "vat_rate": 23,
+        "stock_status": "out_of_stock",
+        "attributes": [
+          {
+            "attribute": "Pojemność",
+            "value_id": 6949,
+            "value": "500 ml",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 14106,
+    "description": "Kompresy włókninowe Matovlies, niejałowe, 4-warstwowe w torebce papierowej Niejałowe kompresy z włókniny Matovlies są stosowane do celów higieniczno-kosmetycznych. Pakowane zbiorczo po 100 szt. Cechy produktu: jałowość: niejałowe warstwowość: 4-warstwowe opakowanie: torebka papierowa Właściwości produktu: wykonane z włókniny kompresowej, pozbawione luźnych włókien na powierzchni, mogą być docinane, posiadają zdolność wchłaniania wilgoci i płynów, mają możliwość sterylizacji. Szanowni Klienci, ze względu na zmianę szaty graficznej opakowania produkt może zostać wysłany w poprzedniej wersji. Skład i właściwości produktu pozostają bez zmian. Parametry produktu IndeksMA-103-A100-001 Typ Kompres Materiał Włóknina Nitka RTG Nie Warstwowość 4 Jałowość Niejałowe Opakowanie Paczkaean135900516720155Wyrób medycznyTakGrupa docelowaProfesjonaliściProducentTZMO S.A. Numer jednostki notyfikowanej 2274Adres producentaToruńskie Zakłady Materiałów Opatrunkowych S.A. ul. Żółkiewskiego 20/26, 87-100 Toruń, PolandAdres email producentamatopat@tzmo-global.com Dostępne warianty Rozmiar: 5x5cm, Warstwowość: 4, Gramatura: 30g Rozmiar: 5x5cm, Warstwowość: 4, Gramatura: 40g Rozmiar: 7.5x7.5cm, Warstwowość: 4, Gramatura: 40g Rozmiar: 7.5x7.5cm, Warstwowość: 4, Gramatura: 30g Rozmiar: 10x10cm, Warstwowość: 4, Gramatura: 30g Rozmiar: 10x10cm, Warstwowość: 4, Gramatura: 40g Dane produktu DostępnośćProdukt dostępnyTermin realizacji24-48h",
+    "short_description": "Kup Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt. za 4,15 zł | Darmowa dostawa od 119 zł - już w 24h",
+    "variants": [
+      {
+        "id": 69166,
+        "product_id": 14106,
+        "sku": "S24-899-10040",
+        "external_variant_id": "seni24-899-10040",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 384,
+        "price_gross_amount": 415,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Gramatura",
+            "value_id": 7748,
+            "value": "30g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7752,
+            "value": "5x5cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9323,
+            "value": "4",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 69167,
+        "product_id": 14106,
+        "sku": "S24-899-10041",
+        "external_variant_id": "seni24-899-10041",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 426,
+        "price_gross_amount": 460,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Gramatura",
+            "value_id": 7749,
+            "value": "40g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7752,
+            "value": "5x5cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9323,
+            "value": "4",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 69168,
+        "product_id": 14106,
+        "sku": "S24-899-10043",
+        "external_variant_id": "seni24-899-10043",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 764,
+        "price_gross_amount": 825,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7132,
+            "value": "7.5x7.5cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Gramatura",
+            "value_id": 7749,
+            "value": "40g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9323,
+            "value": "4",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 69169,
+        "product_id": 14106,
+        "sku": "S24-899-10042",
+        "external_variant_id": "seni24-899-10042",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 665,
+        "price_gross_amount": 718,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7132,
+            "value": "7.5x7.5cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Gramatura",
+            "value_id": 7748,
+            "value": "30g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9323,
+            "value": "4",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 69170,
+        "product_id": 14106,
+        "sku": "S24-899-10036",
+        "external_variant_id": "seni24-899-10036",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 1100,
+        "price_gross_amount": 1188,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7129,
+            "value": "10x10cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Gramatura",
+            "value_id": 7748,
+            "value": "30g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9323,
+            "value": "4",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 69171,
+        "product_id": 14106,
+        "sku": "S24-899-10037",
+        "external_variant_id": "seni24-899-10037",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 1242,
+        "price_gross_amount": 1341,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7129,
+            "value": "10x10cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Gramatura",
+            "value_id": 7749,
+            "value": "40g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9323,
+            "value": "4",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 14279,
+    "description": "Kompresy włókninowe Matovlies, niejałowe, 4-warstwowe w torebce papierowej Niejałowe kompresy z włókniny Matovlies są stosowane do celów higieniczno-kosmetycznych. Pakowane zbiorczo po 100 szt. Cechy produktu: jałowość: niejałowe warstwowość: 4-warstwowe opakowanie: torebka papierowa Właściwości produktu: wykonane z włókniny kompresowej, pozbawione luźnych włókien na powierzchni, mogą być docinane, posiadają zdolność wchłaniania wilgoci i płynów, mają możliwość sterylizacji. * Zdjęcie podglądowe. Parametry produktu IndeksMA-103-A100-030 Typ Kompres Materiał Włóknina Nitka RTG Nie Warstwowość 4, 6 Jałowość Niejałowe Opakowanie Torebka papierowo-foliowaean135900516720582Wyrób medycznyTakGrupa docelowaProfesjonaliściProducentTZMO S.A. Numer jednostki notyfikowanej 2274Adres producentaToruńskie Zakłady Materiałów Opatrunkowych S.A. ul. Żółkiewskiego 20/26, 87-100 Toruń, PolandAdres email producentamatopat@tzmo-global.com Dostępne warianty Rozmiar: 10x20cm, Gramatura: 30g, Warstwowość: 4 Rozmiar: 10x10cm, Warstwowość: 6, Gramatura: 30g Rozmiar: 10x20cm, Warstwowość: 4, Gramatura: 40g Dane produktu DostępnośćProdukt dostępnyTermin realizacji24-48h",
+    "short_description": "Kup Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt. za 26,24 zł | Darmowa dostawa od 119 zł - już w 24h",
+    "variants": [
+      {
+        "id": 69741,
+        "product_id": 14279,
+        "sku": "S24-22442-25317",
+        "external_variant_id": "seni24-22442-25317",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 1,
+        "price_net_amount": 2430,
+        "price_gross_amount": 2624,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7581,
+            "value": "10x20cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Gramatura",
+            "value_id": 7748,
+            "value": "30g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9323,
+            "value": "4",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 69742,
+        "product_id": 14279,
+        "sku": "S24-22442-25320",
+        "external_variant_id": "seni24-22442-25320",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 1666,
+        "price_gross_amount": 1799,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "out_of_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7129,
+            "value": "10x10cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Gramatura",
+            "value_id": 7748,
+            "value": "30g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9866,
+            "value": "6",
+            "value_truncated": false
+          }
+        ]
+      },
+      {
+        "id": 69743,
+        "product_id": 14279,
+        "sku": "S24-22442-25321",
+        "external_variant_id": "seni24-22442-25321",
+        "status": "active",
+        "deleted_at": null,
+        "is_default": 0,
+        "price_net_amount": 2746,
+        "price_gross_amount": 2966,
+        "currency": "PLN",
+        "vat_rate": 8,
+        "stock_status": "in_stock",
+        "attributes": [
+          {
+            "attribute": "Rozmiar",
+            "value_id": 7581,
+            "value": "10x20cm",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Gramatura",
+            "value_id": 7749,
+            "value": "40g",
+            "value_truncated": false
+          },
+          {
+            "attribute": "Warstwowość",
+            "value_id": 9323,
+            "value": "4",
+            "value_truncated": false
+          }
+        ]
+      }
+    ]
+  }
+]
