@@ -13,6 +13,8 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(23,len(M['entries']))
         self.assertEqual(29,len(M['held_descriptions']))
         self.assertEqual(59,sum(bool(g['remaining_same_title_ids']) for g in M['duplicate_review']))
+        for group in M['duplicate_review']:
+            if group['status']=='resolved_by_explicit_product_codes':self.assertTrue(set(group['product_ids'])<=set(group['changed_product_ids']))
         for e in M['entries']:
             for f in ['description','short_description']:self.assertEqual(hashlib.sha256(rows[e['id']][f].encode()).hexdigest(),e['source_'+f+'_sha256'])
             self.assertEqual({'seo_title','seo_description'},set(e['after']))

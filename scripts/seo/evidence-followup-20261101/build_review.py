@@ -59,7 +59,7 @@ def build(data, previous):
     for g in latest['duplicate_review']:
         if not g['remaining_same_title_ids']:continue
         remaining=[i for i in g['remaining_same_title_ids'] if i not in CRUTCHES]
-        groups.append({**g,'remaining_same_title_ids':remaining if len(remaining)>1 else [],'status':'resolved_by_explicit_product_codes' if len(remaining)<2 else g['status']})
+        groups.append({**g,'changed_product_ids':sorted(set(g.get('changed_product_ids',[]))|(set(g['remaining_same_title_ids'])&set(CRUTCHES))),'remaining_same_title_ids':remaining if len(remaining)>1 else [],'status':'resolved_by_explicit_product_codes' if len(remaining)<2 else g['status']})
     return {'repair':'product-seo-editorial-20261031-v1','batch':'product-seo-evidence-followup-20261101-v1','prior_backup':'storage/app/private/seo-repairs/source-cleanup-20261101.iGilON','prior_plan_sha256':'6d873cfb78350ea580f80d2c763576237cea64af6c9d28e40ff5bae81c29f827','checked_at':'2026-11-01','sources':SOURCES,'entries':entries,'held_descriptions':held,'duplicate_review':groups}
 
 if __name__=='__main__':

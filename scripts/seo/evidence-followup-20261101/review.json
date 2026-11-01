@@ -1071,7 +1071,10 @@
       ],
       "current_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
       "status": "resolved_by_explicit_product_codes",
-      "changed_product_ids": [],
+      "changed_product_ids": [
+        9715,
+        9728
+      ],
       "remaining_same_title_ids": []
     },
     {
@@ -1081,7 +1084,10 @@
       ],
       "current_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
       "status": "resolved_by_explicit_product_codes",
-      "changed_product_ids": [],
+      "changed_product_ids": [
+        9729,
+        9730
+      ],
       "remaining_same_title_ids": []
     },
     {
