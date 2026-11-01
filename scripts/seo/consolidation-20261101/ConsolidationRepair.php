@@ -91,7 +91,41 @@ final class ProductSeoConsolidationRepair
 
     private static function hash(array $value): string
     {
-        return hash('sha256', json_encode($value, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+        return hash('sha256', json_encode(self::canonical($value), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+    }
+
+    private static function canonical(array $value): array
+    {
+        foreach ($value as &$item) {
+            if (is_array($item)) {
+                $item = self::canonical($item);
+            }
+        }
+        unset($item);
+        if (! array_is_list($value)) {
+            ksort($value);
+        }
+
+        return $value;
+    }
+
+    private function comparableAfter(array $state, array $plan): array
+    {
+        // Existing rows retain their exact IDs. Only the six newly generated
+        // pivot IDs are unknowable before commit; their complete link values
+        // and timestamps still have to match the immutable plan.
+        $newLinks = [];
+        foreach ($plan['category_additions'] as $link) {
+            $newLinks[$link['product_id'].':'.$link['category_id']] = true;
+        }
+        foreach ($state['category_product'] as &$row) {
+            if (isset($newLinks[$row['product_id'].':'.$row['category_id']])) {
+                unset($row['id']);
+            }
+        }
+        unset($row);
+
+        return $state;
     }
 
     private function prove(array $state): void
@@ -244,7 +278,7 @@ final class ProductSeoConsolidationRepair
     public function verify(array $plan): array
     {
         $this->validatePlan($plan);
-        if (self::hash($this->snapshot()) !== self::hash($this->after($plan))) {
+        if (self::hash($this->comparableAfter($this->snapshot(), $plan)) !== self::hash($this->after($plan))) {
             throw new RuntimeException('Consolidated state differs or later edits exist.');
         }
         $controller = app(\App\Http\Controllers\ProductShowController::class);
@@ -262,7 +296,7 @@ final class ProductSeoConsolidationRepair
     {
         DB::transaction(function () use ($plan): void {
             $this->validatePlan($plan);
-            if (self::hash($this->snapshot(true)) !== self::hash($this->after($plan))) {
+            if (self::hash($this->comparableAfter($this->snapshot(true), $plan)) !== self::hash($this->after($plan))) {
                 throw new RuntimeException('Later edits detected; rollback refused.');
             }
             foreach ($plan['category_additions'] as $row) {
