@@ -118,7 +118,7 @@ SQL,
 
         $seoTitle = $searchQuery !== ''
             ? 'Wyniki wyszukiwania dla „'.$searchQuery.'”'
-            : 'Odzież medyczna, stabilizatory ortopedyczne i produkty do regeneracji';
+            : 'Ortezy, stabilizatory i odzież medyczna';
         $seoDescription = 'Kupuj odzież medyczną, stabilizatory, ortezy i produkty do regeneracji z dostawą na terenie Polski.';
         $canonicalUrl = route('home');
 
@@ -134,6 +134,7 @@ SQL,
             'openGraphTitle' => $seoTitle,
             'openGraphDescription' => $seoDescription,
             'openGraphType' => 'website',
+            'openGraphImage' => asset('images/ortezka-logo-v4.png'),
             'structuredData' => [
                 $this->websiteStructuredData($canonicalUrl),
                 $this->organizationStructuredData($canonicalUrl),
