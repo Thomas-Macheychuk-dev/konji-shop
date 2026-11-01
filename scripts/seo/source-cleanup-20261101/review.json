@@ -1,0 +1,332 @@
+{
+  "repair": "product-source-cleanup-20261101-v1",
+  "prior_receipts": [
+    {
+      "backup": "storage/app/private/seo-repairs/manufacturer-review-20261101.PJiAHp",
+      "sha256": "65e966fb030abbe992e4484d12d57ea9f28baf4f0a064f37d23908eba3f68298"
+    },
+    {
+      "backup": "storage/app/private/seo-repairs/colour-correction-20261101.lJGpbE",
+      "sha256": "e5f06d854dc2d2ba824d3b670869f3988c36121d8f020519f8383a4ca9016e7f"
+    }
+  ],
+  "sources": {
+    "meditrade": {
+      "url": "https://www.meditrade.de/wp-content/uploads/Meditrade_Katalog_DE_2020-09.pdf",
+      "printed_page": 69,
+      "checked_at": "2026-11-01",
+      "facts": "References 1137–1140: sterile four-layer nonwoven compresses, packed in pairs, external wound care. Retail pack, percentages and precautions come from each supplied product record."
+    },
+    "octenilin": {
+      "url": "https://www.schuelke.com/pl-pl/products/910826/octenilin-roztw-r-do-irygacji-ran/",
+      "checked_at": "2026-11-01",
+      "reference": "121701 / GTIN 4032651217014",
+      "facts": "Sterile 350 ml solution, ingredients, eight-week opening life and external-use restrictions. No gel or allergy-tolerance claim."
+    },
+    "scotchcast": {
+      "url": "https://www.solventum.com/en-hk/home/v/v000142703/",
+      "checked_at": "2026-11-01",
+      "facts": "Scotchcast Plus family: fiberglass, water-activated resin, orthopaedic cast construction. No size/colour/carton details from the displayed 82001 variant."
+    }
+  },
+  "entries": [
+    {
+      "id": 179,
+      "expected": {
+        "name": "MOLDAVA WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "moldava-wedge-ad-med-pale-pink",
+        "external_source": "mobilex",
+        "external_id": "35574",
+        "seo_title": "MOLDAVA WEDGE AD MED Scholl – klapki jasnoróżowe",
+        "seo_description": "MOLDAVA WEDGE AD MED Scholl. Jasnoróżowe skórzane klapki damskie z wyprofilowaną skórzaną wkładką."
+      },
+      "source_description_sha256": "d70e3f65258c5df747e208bc8be3410abec501a20bbe551d5e327d3527a6811a",
+      "source_short_description_sha256": "a090b120297f4a2371a1bbd4e5799ca61c23d661cbd70600d26278540cf265a7",
+      "after": {
+        "short_description": "MOLDAVA WEDGE AD MED Scholl. Jasnoróżowe skórzane klapki damskie z wyprofilowaną skórzaną wkładką."
+      },
+      "evidence": {
+        "source": "own_product_body_and_applied_seo",
+        "note": "Use the already reviewed SEO description. Product 259 remains colour-neutral."
+      }
+    },
+    {
+      "id": 240,
+      "expected": {
+        "name": "RIO WEDGE AD MED Health and Fashion Shoes Italia S",
+        "slug": "rio-wedge-ad-med-green-pale",
+        "external_source": "mobilex",
+        "external_id": "35558",
+        "seo_title": "RIO WEDGE AD MED Scholl – klapki jasnozielone",
+        "seo_description": "RIO WEDGE AD MED Scholl. Jasnozielone skórzane klapki damskie z wyprofilowaną zamszową wkładką."
+      },
+      "source_description_sha256": "9ccd0d0ce520b52e19cfbfbf2e873a81000ae0d22ff0c512a874c5c15e970acc",
+      "source_short_description_sha256": "aec584b1593c1a79f026d79a1e55c49ae8e4764d8649340543dd3bf6be4d3779",
+      "after": {
+        "short_description": "RIO WEDGE AD MED Scholl. Jasnozielone skórzane klapki damskie z wyprofilowaną zamszową wkładką."
+      },
+      "evidence": {
+        "source": "own_product_body_and_applied_seo",
+        "note": "Use the already reviewed SEO description. Product 259 remains colour-neutral."
+      }
+    },
+    {
+      "id": 259,
+      "expected": {
+        "name": "ABERDEEN MAN MED Health and Fashion Shoes Italia S",
+        "slug": "aberdeen-man-med-dk-brown",
+        "external_source": "mobilex",
+        "external_id": "36039",
+        "seo_title": "ABERDEEN MAN MED",
+        "seo_description": "ABERDEEN MAN MED Scholl. Męskie klapki z nubucku z regulowanymi paskami na klamry i wkładką Memory Cushion."
+      },
+      "source_description_sha256": "b07f65b3d9ef46d3a1713f7bd7e6dded18dd325454dbb32061c0208a3b5a9540",
+      "source_short_description_sha256": "127ee4c402ac56d47506ab8eaffef2f538f33c3564f33694cedf067fe5a28dc5",
+      "after": {
+        "short_description": "ABERDEEN MAN MED Scholl. Męskie klapki z nubucku z regulowanymi paskami na klamry i wkładką Memory Cushion."
+      },
+      "evidence": {
+        "source": "own_product_body_and_applied_seo",
+        "note": "Use the already reviewed SEO description. Product 259 remains colour-neutral."
+      }
+    },
+    {
+      "id": 12116,
+      "expected": {
+        "name": "Kompres włókninowy jałowy niemiecki 10x10 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "slug": "kompres-wlokninowy-jalowy-niemiecki-10x10-cm-4-warstwy-1x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "946",
+        "seo_title": "Kompres włókninowy jałowy niemiecki 10x10 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 10x10 cm 4 warstwy 1x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "source_description_sha256": "92669639925dc550852bbd8b1f4d1a62dc6af78532ea8831f75be614773bc72d",
+      "source_short_description_sha256": "ceecf466440a150d5333c5740be47ee5b5b65d9f84b2a525ff7228417b34c0b0",
+      "after": {
+        "description": "<p>Jałowe kompresy włókninowe BSV Meditrade. Cztery warstwy, rozmiar 10 × 10 cm.</p><p>Włóknina: 65% wiskozy i 35% poliestru. Kompresy są przeznaczone do zewnętrznego opatrywania ran.</p><p>Jedna torebka zawierająca 2 kompresy.</p><p>Produkt jednorazowy. Nie używać ponownie ani przy uszkodzonej torebce. Po otwarciu wykorzystać bezpośrednio. Chronić przed zalaniem i nadmiernym nasłonecznieniem.</p><p>Przed użyciem zapoznać się z etykietą i instrukcją producenta.</p>"
+      },
+      "evidence": {
+        "source": "meditrade",
+        "manufacturer_ref": "1139",
+        "supplier_code": "MED1139-1",
+        "retail_pairs": 1,
+        "size": "10 × 10 cm"
+      }
+    },
+    {
+      "id": 12117,
+      "expected": {
+        "name": "Kompres włókninowy jałowy niemiecki 10x20 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "slug": "kompres-wlokninowy-jalowy-niemiecki-10x20-cm-4-warstwy-1x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "948",
+        "seo_title": "Kompres włókninowy jałowy niemiecki 10x20 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 10x20 cm 4 warstwy 1x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "source_description_sha256": "6d64614b1f8da90389058d0443cb5a7d183ddccbf15e19a4abc16fafe7c4e43a",
+      "source_short_description_sha256": "cd62c3826b80b480886577b09acac407f5d508327de88eb071797ec1ac55e757",
+      "after": {
+        "description": "<p>Jałowe kompresy włókninowe BSV Meditrade. Cztery warstwy, rozmiar 10 × 20 cm.</p><p>Włóknina: 65% wiskozy i 35% poliestru. Kompresy są przeznaczone do zewnętrznego opatrywania ran.</p><p>Jedna torebka zawierająca 2 kompresy.</p><p>Produkt jednorazowy. Nie używać ponownie ani przy uszkodzonej torebce. Po otwarciu wykorzystać bezpośrednio. Chronić przed zalaniem i nadmiernym nasłonecznieniem.</p><p>Przed użyciem zapoznać się z etykietą i instrukcją producenta.</p>"
+      },
+      "evidence": {
+        "source": "meditrade",
+        "manufacturer_ref": "1140",
+        "supplier_code": "MED1140-1",
+        "retail_pairs": 1,
+        "size": "10 × 20 cm"
+      }
+    },
+    {
+      "id": 12118,
+      "expected": {
+        "name": "Kompres włókninowy jałowy niemiecki 5x5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "slug": "kompres-wlokninowy-jalowy-niemiecki-5x5-cm-4-warstwy-1x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "942",
+        "seo_title": "Kompres włókninowy jałowy niemiecki 5x5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 5x5 cm 4 warstwy 1x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "source_description_sha256": "544956b3a15b73c29aa61ba8c77a59c6e00fb07d3577ea7221c3a930fc9f9fd0",
+      "source_short_description_sha256": "8ccb5e77ad7d158cbd8691544c583b6c84ce0d6d02e925795a44e19ebf699a7f",
+      "after": {
+        "description": "<p>Jałowe kompresy włókninowe BSV Meditrade. Cztery warstwy, rozmiar 5 × 5 cm.</p><p>Włóknina: 65% wiskozy i 35% poliestru. Kompresy są przeznaczone do zewnętrznego opatrywania ran.</p><p>Jedna torebka zawierająca 2 kompresy.</p><p>Produkt jednorazowy. Nie używać ponownie ani przy uszkodzonej torebce. Po otwarciu wykorzystać bezpośrednio. Chronić przed zalaniem i nadmiernym nasłonecznieniem.</p><p>Przed użyciem zapoznać się z etykietą i instrukcją producenta.</p>"
+      },
+      "evidence": {
+        "source": "meditrade",
+        "manufacturer_ref": "1137",
+        "supplier_code": "MED1137-1",
+        "retail_pairs": 1,
+        "size": "5 × 5 cm"
+      }
+    },
+    {
+      "id": 12119,
+      "expected": {
+        "name": "Kompres włókninowy jałowy niemiecki 7,5x7,5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "slug": "kompres-wlokninowy-jalowy-niemiecki-72c5x72c5-cm-4-warstwy-1x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "944",
+        "seo_title": "Kompres włókninowy jałowy niemiecki 7,5x7,5 cm 4 warstwy 1x2 sztuki BSV Meditrade",
+        "seo_description": "Kompres włókninowy jałowy niemiecki 7,5x7,5 cm 4 warstwy 1x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "source_description_sha256": "4dfa16690c7f0cfc60a78ac1cba07161c05f4a530fd998daab0285e907ce1d22",
+      "source_short_description_sha256": "461102bf74ef2fe37eaf29c48347d0dde57af152d66d5fe6017f0f5ad01922e3",
+      "after": {
+        "description": "<p>Jałowe kompresy włókninowe BSV Meditrade. Cztery warstwy, rozmiar 7,5 × 7,5 cm.</p><p>Włóknina: 65% wiskozy i 35% poliestru. Kompresy są przeznaczone do zewnętrznego opatrywania ran.</p><p>Jedna torebka zawierająca 2 kompresy.</p><p>Produkt jednorazowy. Nie używać ponownie ani przy uszkodzonej torebce. Po otwarciu wykorzystać bezpośrednio. Chronić przed zalaniem i nadmiernym nasłonecznieniem.</p><p>Przed użyciem zapoznać się z etykietą i instrukcją producenta.</p>"
+      },
+      "evidence": {
+        "source": "meditrade",
+        "manufacturer_ref": "1138",
+        "supplier_code": "MED1138-1",
+        "retail_pairs": 1,
+        "size": "7,5 × 7,5 cm"
+      }
+    },
+    {
+      "id": 12157,
+      "expected": {
+        "name": "Kompresy włókninowe jałowe niemieckie 10x10 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "slug": "kompresy-wlokninowe-jalowe-niemieckie-10x10-cm-4-warstwy-25x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "945",
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 10x10 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 10x10 cm 4 warstwy 25x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "source_description_sha256": "860743fc190fae2a8f76f9573b9b6051aa7a6db019c81cd7c9f9b41b1f0f6d59",
+      "source_short_description_sha256": "9f3de4855e055f9eb11c511839c28410524bbb56fe691a5bf229cacb25f63738",
+      "after": {
+        "description": "<p>Jałowe kompresy włókninowe BSV Meditrade. Cztery warstwy, rozmiar 10 × 10 cm.</p><p>Włóknina: 65% wiskozy i 35% poliestru. Kompresy są przeznaczone do zewnętrznego opatrywania ran.</p><p>Opakowanie zawierające 25 torebek po 2 kompresy (łącznie 50 sztuk).</p><p>Produkt jednorazowy. Nie używać ponownie ani przy uszkodzonej torebce. Po otwarciu wykorzystać bezpośrednio. Chronić przed zalaniem i nadmiernym nasłonecznieniem.</p><p>Przed użyciem zapoznać się z etykietą i instrukcją producenta.</p>"
+      },
+      "evidence": {
+        "source": "meditrade",
+        "manufacturer_ref": "1139",
+        "supplier_code": "MED1139",
+        "retail_pairs": 25,
+        "size": "10 × 10 cm"
+      }
+    },
+    {
+      "id": 12158,
+      "expected": {
+        "name": "Kompresy włókninowe jałowe niemieckie 10x20 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "slug": "kompresy-wlokninowe-jalowe-niemieckie-10x20-cm-4-warstwy-25x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "947",
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 10x20 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 10x20 cm 4 warstwy 25x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "source_description_sha256": "fc1a04d75ed69e22cb450667b174bbbfa0c12d3afcf49a2e8f41352998fa4276",
+      "source_short_description_sha256": "3123a3f20b68b8d539fc36cf881f30fa6138a92da6005c57fc23ccb59a5ae1f6",
+      "after": {
+        "description": "<p>Jałowe kompresy włókninowe BSV Meditrade. Cztery warstwy, rozmiar 10 × 20 cm.</p><p>Włóknina: 65% wiskozy i 35% poliestru. Kompresy są przeznaczone do zewnętrznego opatrywania ran.</p><p>Opakowanie zawierające 25 torebek po 2 kompresy (łącznie 50 sztuk).</p><p>Produkt jednorazowy. Nie używać ponownie ani przy uszkodzonej torebce. Po otwarciu wykorzystać bezpośrednio. Chronić przed zalaniem i nadmiernym nasłonecznieniem.</p><p>Przed użyciem zapoznać się z etykietą i instrukcją producenta.</p>"
+      },
+      "evidence": {
+        "source": "meditrade",
+        "manufacturer_ref": "1140",
+        "supplier_code": "MED1140",
+        "retail_pairs": 25,
+        "size": "10 × 20 cm"
+      }
+    },
+    {
+      "id": 12159,
+      "expected": {
+        "name": "Kompresy włókninowe jałowe niemieckie 5x5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "slug": "kompresy-wlokninowe-jalowe-niemieckie-5x5-cm-4-warstwy-25x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "941",
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 5x5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 5x5 cm 4 warstwy 25x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "source_description_sha256": "4d9ca6aac8bd3e69b834befcc3870b71422bf19400b03a3b24b7fab6dda83d3e",
+      "source_short_description_sha256": "1b9acf347aed802341d222fd02170f06ab254c66153c88506b843cf05112fcae",
+      "after": {
+        "description": "<p>Jałowe kompresy włókninowe BSV Meditrade. Cztery warstwy, rozmiar 5 × 5 cm.</p><p>Włóknina: 65% wiskozy i 35% poliestru. Kompresy są przeznaczone do zewnętrznego opatrywania ran.</p><p>Opakowanie zawierające 25 torebek po 2 kompresy (łącznie 50 sztuk).</p><p>Produkt jednorazowy. Nie używać ponownie ani przy uszkodzonej torebce. Po otwarciu wykorzystać bezpośrednio. Chronić przed zalaniem i nadmiernym nasłonecznieniem.</p><p>Przed użyciem zapoznać się z etykietą i instrukcją producenta.</p>"
+      },
+      "evidence": {
+        "source": "meditrade",
+        "manufacturer_ref": "1137",
+        "supplier_code": "MED1137",
+        "retail_pairs": 25,
+        "size": "5 × 5 cm"
+      }
+    },
+    {
+      "id": 12160,
+      "expected": {
+        "name": "Kompresy włókninowe jałowe niemieckie 7,5x7,5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "slug": "kompresy-wlokninowe-jalowe-niemieckie-72c5x72c5-cm-4-warstwy-25x2-sztuki-bsv-meditrade",
+        "external_source": "vaya",
+        "external_id": "943",
+        "seo_title": "Kompresy włókninowe jałowe niemieckie 7,5x7,5 cm 4 warstwy 25x2 sztuki BSV Meditrade",
+        "seo_description": "Kompresy włókninowe jałowe niemieckie 7,5x7,5 cm 4 warstwy 25x2 sztuki BSV Meditrade. Skład włókniny: 65% wiskozy i 35% poliestru."
+      },
+      "source_description_sha256": "e9bf53cb29f9617315079c44154685f688193fd9e4675e50bdfbb615c4d5faa2",
+      "source_short_description_sha256": "42de9eeec6655da93f54e0c9a1e955ff13d26a666338136ea56827d7952560cb",
+      "after": {
+        "description": "<p>Jałowe kompresy włókninowe BSV Meditrade. Cztery warstwy, rozmiar 7,5 × 7,5 cm.</p><p>Włóknina: 65% wiskozy i 35% poliestru. Kompresy są przeznaczone do zewnętrznego opatrywania ran.</p><p>Opakowanie zawierające 25 torebek po 2 kompresy (łącznie 50 sztuk).</p><p>Produkt jednorazowy. Nie używać ponownie ani przy uszkodzonej torebce. Po otwarciu wykorzystać bezpośrednio. Chronić przed zalaniem i nadmiernym nasłonecznieniem.</p><p>Przed użyciem zapoznać się z etykietą i instrukcją producenta.</p>"
+      },
+      "evidence": {
+        "source": "meditrade",
+        "manufacturer_ref": "1138",
+        "supplier_code": "MED1138",
+        "retail_pairs": 25,
+        "size": "7,5 × 7,5 cm"
+      }
+    },
+    {
+      "id": 13961,
+      "expected": {
+        "name": "Roztwór do irygacji i oczyszczenia ran Octenilin Schulke 350 ml",
+        "slug": "octenilin-do-irygacji-i-oczyszczenia-ran-350-ml",
+        "external_source": "seni24",
+        "external_id": "5152",
+        "seo_title": "Roztwór do irygacji i oczyszczenia ran Octenilin Schulke 350 ml",
+        "seo_description": "Octenilin Schulke 350 ml. Roztwór do oczyszczania i nawilżania ran. Zawiera dichlorowodorek oktenidyny, glicerol i etyloheksyloglicerynę."
+      },
+      "source_description_sha256": "f1b2aa2897903ff163de774c78e8190a8b4bb2c6251c47fa57d3193c93baeedc",
+      "source_short_description_sha256": "f2331a64530180dd08dfa783a39cc7f069854117ab7598c85088b350ed8d0dd9",
+      "after": {
+        "description": "<p>Octenilin Schulke to sterylny roztwór do oczyszczania i nawilżania ran. Butelka 350 ml.</p><p>Zawiera wodę oczyszczoną, glicerol, etyloheksyloglicerynę oraz dichlorowodorek oktenidyny.</p><p>Według producenta roztwór zachowuje właściwości przez 8 tygodni po pierwszym otwarciu. Po użyciu zamknąć butelkę.</p><p>Wyłącznie do użytku zewnętrznego. Nie połykać, nie wstrzykiwać ani nie podawać we wlewie. Nie używać przy podejrzeniu uczulenia na składnik preparatu.</p><p>Stosować zgodnie z instrukcją producenta, z uwzględnieniem podanych w niej ograniczeń i przeciwwskazań.</p><p>Indeks produktu: NN-MSH-DDRA-001.</p>"
+      },
+      "evidence": {
+        "source": "octenilin",
+        "gtin": "4032651217014"
+      }
+    },
+    {
+      "id": 14229,
+      "expected": {
+        "name": "Gips syntetyczny lekki Scotchcast Plus 1 szt.",
+        "slug": "gips-syntetyczny-lekki-scotchcast-plus-1-szt",
+        "external_source": "seni24",
+        "external_id": "8200",
+        "seo_title": "Gips syntetyczny lekki Scotchcast Plus 1 szt.",
+        "seo_description": "Syntetyczna opaska Scotchcast Plus. Włókno szklane z żywicą aktywowaną wodą."
+      },
+      "source_description_sha256": "3efc55b3d4c9813e965415236fd3c59c27d9c85793619e34dce67e0befd456e5",
+      "source_short_description_sha256": "db8bdaddd398fa3d84982333d33b7c50a35031337d119695716e6c2683cfadab",
+      "after": {
+        "description": "<p>Scotchcast Plus to syntetyczna opaska do wykonywania ortopedycznych opatrunków unieruchamiających.</p><p>Materiał stanowi włókno szklane z żywicą aktywowaną wodą. Opaska ma porowaty splot i jest lekka.</p><p>Oferta dotyczy 1 sztuki. Rozmiar i kolor należy dobrać wśród wariantów produktu.</p><p>Produkt do stosowania przez personel medyczny zgodnie z instrukcją producenta.</p><p>Indeks produktu: NN-M3M-GS05-001.</p>"
+      },
+      "evidence": {
+        "source": "scotchcast",
+        "scope": "Family construction only; retail single unit comes from the existing product name."
+      }
+    }
+  ],
+  "detach_attribute_values": [
+    {
+      "product_id": 13961,
+      "attribute_value_id": 8815,
+      "attribute_id": 498,
+      "expected_value": "NN-MSH-DDRA-001 Działanie Antybakteryjne Jałowość Niejałowe"
+    },
+    {
+      "product_id": 14229,
+      "attribute_value_id": 9701,
+      "attribute_id": 498,
+      "expected_value": "NN-M3M-GS05-001 Jałowość Niejałowe Wiązanie Wolnowiążące 20 min."
+    }
+  ]
+}
