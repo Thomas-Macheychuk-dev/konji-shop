@@ -32,7 +32,8 @@ it('renders homepage SEO metadata, structured data and category links', function
     $this
         ->get($homeUrl)
         ->assertOk()
-        ->assertSee('<title>Odzież medyczna, stabilizatory ortopedyczne i produkty do regeneracji - Konji Shop</title>', false)
+        ->assertSee('<title>Ortezy, stabilizatory i odzież medyczna - Konji Shop</title>', false)
+        ->assertSee('<meta property="og:image" content="'.asset('images/ortezka-logo-v4.png').'">', false)
         ->assertSee('<meta name="description" content="Kupuj odzież medyczną, stabilizatory, ortezy i produkty do regeneracji z dostawą na terenie Polski.">', false)
         ->assertSee('<link rel="canonical" href="'.$homeUrl.'">', false)
         ->assertSee('"@type": "WebSite"', false)
