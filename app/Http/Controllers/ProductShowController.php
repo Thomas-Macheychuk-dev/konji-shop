@@ -181,7 +181,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v10.%s.%d',
+            'product-page.v11.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -229,8 +229,15 @@ class ProductShowController extends Controller
         string $canonicalUrl,
         array $breadcrumbs,
     ): array {
+        $productData = $this->productStructuredData($product, $defaultVariant, $seoDescription, $canonicalUrl);
+
+        // Google rejects Product markup without offers, review or aggregateRating; unpriced products keep breadcrumbs only.
+        if (! isset($productData['offers'])) {
+            return [$this->breadcrumbStructuredData($breadcrumbs)];
+        }
+
         return [
-            $this->productStructuredData($product, $defaultVariant, $seoDescription, $canonicalUrl),
+            $productData,
             $this->breadcrumbStructuredData($breadcrumbs),
         ];
     }
@@ -717,4 +724,3 @@ class ProductShowController extends Controller
         };
     }
 }
-
