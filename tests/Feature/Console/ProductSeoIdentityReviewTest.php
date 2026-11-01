@@ -76,7 +76,8 @@ it('refuses stale identity evidence before any product or image writes', functio
     } elseif ($kind === 'producer') {
         DB::table('attribute_values')->where('id', 6246)->update(['value' => 'Other producer']);
     } elseif ($kind === 'variant') {
-        DB::table('product_variants')->where('product_id', 13026)->update(['sku' => 'changed-sku']);
+        $variantId = DB::table('product_variants')->where('product_id', 13026)->value('id');
+        DB::table('product_variants')->where('id', $variantId)->update(['sku' => 'changed-sku']);
     } else {
         DB::table('products')->where('id', 2828)->update(['name' => 'Later edited name']);
     }
