@@ -1,0 +1,165 @@
+{
+  "reviewed_on": "2026-11-01",
+  "database_writes": false,
+  "decisions_are_preliminary": true,
+  "groups": [
+    {
+      "product_ids": [
+        8869,
+        8870
+      ],
+      "model": "SPARTAN",
+      "status": "retain_pending_configuration_confirmation",
+      "facts": [
+        "Exact manufacturer post IDs 25342 and 336966 resolve to distinct canonical product pages.",
+        "Main photographs show different frames/hinges; both current pages link the same SPARTAN fitting/manual documents."
+      ],
+      "sources": [
+        "https://www.reh4mat.com/?p=25342",
+        "https://www.reh4mat.com/?p=336966"
+      ],
+      "blocker": "Common copy and documents do not establish generation/configuration equivalence. Do not invent a model year or archive either frame.",
+      "downloaded_source_checks": [
+        {
+          "product_id": 8869,
+          "html_sha256": "90c138e7aa9b35e8223ef163d2349cdcae94d209a8d9fccbc6da6d744189614a"
+        },
+        {
+          "product_id": 8870,
+          "html_sha256": "7729e78d6e09d5893bc83db121ce1830a2ec4ca1e8e985afa71a096ca2665e0c"
+        }
+      ]
+    },
+    {
+      "product_ids": [
+        9309,
+        9332
+      ],
+      "model": "FP-25",
+      "status": "source_identity_mapping_required",
+      "facts": [
+        "Both prior records contain identical FP-25 copy with M/L dimensions and unpriced draft variants; neither has sampled images.",
+        "The official FlexPoint product page identifies FP-25, but does not tie both imported slug-based IDs to a single source record."
+      ],
+      "sources": [
+        "https://flex-point.pl/pl/produkty/stabilizacja-konczyn-dolnych/fp-25-stabilizator-konczyn-126"
+      ],
+      "blocker": "Resolve the original source identity and inspect full current HTML/pivots before treating the -2 slug as a duplicate."
+    },
+    {
+      "product_ids": [
+        10479,
+        10523
+      ],
+      "model": "AirFit N30i",
+      "status": "supplier_variant_mapping_required",
+      "facts": [
+        "Prior record 10479 contains S/M option rows and symbol 63880 / 63816; 10523 contains a Small option and symbol 63880.",
+        "ResMed identifies 63880 as a complete S-cushion/Small-frame system. A shared model/EAN is insufficient to collapse different option sets."
+      ],
+      "sources": [
+        "https://support-portal.resmed.com/de-ch/masken/airfit-n30i",
+        "https://document.resmed.com/documents/products/mask/airtouch-n30i/user-guide/638423_airtouch-n30i-airfit-n30i-p30i_user-guide_eur1_multi.pdf"
+      ],
+      "blocker": "Verify supplier mapping for 63816 and both source offers. Do not misclassify 63880 as a cushion-only part, change option IDs or discard the M option."
+    },
+    {
+      "product_ids": [
+        11039,
+        11040
+      ],
+      "model": "AT04702",
+      "status": "strong_consolidation_candidate_preserve_priced_offer",
+      "facts": [
+        "The clean manufacturer URL redirects to the -kopia URL; both resolve to the same canonical AT04702 page.",
+        "Prior local snapshot has active priced variant 28260 on 11039, while 11040 is unpriced/draft."
+      ],
+      "sources": [
+        "https://antar.net/produkt/opaska-kompresyjna-na-twarz-at04702/",
+        "https://antar.net/produkt/opaska-kompresyjna-na-twarz-at04702-kopia/"
+      ],
+      "blocker": "Need full current media/category/reference rows. Prefer preserving the existing priced product and all variant IDs; no price, stock or activation changes.",
+      "downloaded_source_checks": [
+        {
+          "product_id": 11039,
+          "html_sha256": "a91a9b3e7b23be0135335f8ee3a4d69740e82390ff7a2bd1ec23ad747ad6d9ae"
+        },
+        {
+          "product_id": 11040,
+          "html_sha256": "dfeb8f51bac594fb35ad0da24eaeb9541c96674c88a0a0b7cf5097cdfcdf88d2"
+        }
+      ]
+    },
+    {
+      "product_ids": [
+        12021,
+        12022
+      ],
+      "model": "protect.Ankle air foam",
+      "status": "retain_pending_commercial_policy_confirmation",
+      "facts": [
+        "The prior snapshot contains matching active options but different prices: 5600 versus 20000 grosz.",
+        "Source names/codes distinguish a SALE-tagged offer from a regular offer."
+      ],
+      "sources": [
+        "https://www.medi.de/en/products/protect-ankle-air-foam/"
+      ],
+      "blocker": "Current assortment/price/clearance policy must be established. Do not select a selling price, merge stock or manufacture a condition/clearance claim."
+    },
+    {
+      "product_ids": [
+        12503,
+        12562
+      ],
+      "model": "PEPI",
+      "status": "candidate_with_specification_discrepancy",
+      "facts": [
+        "Prior descriptions share model/photos and basic construction; one adds dimensions/load.",
+        "The manufacturer manual lists 20 cm seat depth, whereas one imported description claims 22 cm. Other matching measurements do not erase that discrepancy."
+      ],
+      "sources": [
+        "https://www.vermeiren.be/product/manuals.nsf/O/84DC3EFA9CB7BA97C1258C1A004BFE85/%24FILE/MANUAL-Pepi-ALL-vB%20%282025%29-W200952.pdf"
+      ],
+      "blocker": "Inspect actual linked manual versions/full source content; reconcile depth/configuration before consolidating or publishing a corrected measurement."
+    },
+    {
+      "product_ids": [
+        12588,
+        12624
+      ],
+      "model": "Vicair Liberty Back",
+      "status": "package_code_conflict_retain",
+      "facts": [
+        "Prior local descriptions specify LBS/1-3 versus LBC/1-3.",
+        "Official historical order forms distinguish LBS systems with adjustable strap backs from cushion-only LBC/CK offers; manufacturer manuals also use LBC cushion codes."
+      ],
+      "sources": [
+        "https://www.invacare.ie/sites/ie/files/csv_migration/product_docs/sales_docs/DSAL008455_Vicair%20Pricelist%20Aug%202022.pdf",
+        "https://www.vermeiren.pl/product/manuals.nsf/O/DF6CAD38CAE0BCB0C1258760004EC39A/%24FILE/Vicair-Liberty-back-Manual_070128-REV08-2019-LR.pdf"
+      ],
+      "blocker": "Confirm what each supplier offer includes. Historical code documentation is not proof of current stock/package contents or a current price."
+    },
+    {
+      "product_ids": [
+        12589,
+        12625
+      ],
+      "model": "Vicair Anatomic Back",
+      "status": "configuration_and_size_confirmation_required",
+      "facts": [
+        "Prior descriptions share model/photos but have different size claims, including 50x48 appearing in one list only.",
+        "Official historical order forms distinguish Anatomic cushion/cover from cushion-plus-strap-back systems."
+      ],
+      "sources": [
+        "https://www.invacare.ie/sites/ie/files/csv_migration/product_docs/sales_docs/DSAL008455_Vicair%20Pricelist%20Aug%202022.pdf"
+      ],
+      "blocker": "Confirm complete package and standard/custom size mapping; do not assume shared photographs imply the same configuration."
+    }
+  ],
+  "source_limits": [
+    "Official historical order forms are used for code/package semantics only, never for current price/availability.",
+    "An unrelated redirect returned by the search service for a Vicair manual was rejected and is not used as evidence.",
+    "Third-party shops/search snippets are not used to decide model equivalence.",
+    "The old snapshot is not treated as the current live after-state; a fresh SELECT-only 16-product export is required."
+  ]
+}
