@@ -26,7 +26,7 @@ class LegacyCategorySuggestionTest(unittest.TestCase):
 
     def test_committed_review_is_reproducible(self):
         out = io.StringIO()
-        writer = csv.DictWriter(out, fieldnames=module.COLUMNS, lineterminator='\r\n')
+        writer = csv.DictWriter(out, fieldnames=module.COLUMNS, lineterminator='\n')
         writer.writeheader()
         writer.writerows(self.rows)
         self.assertEqual(module.REVIEW.read_bytes().decode('utf-8'), out.getvalue())

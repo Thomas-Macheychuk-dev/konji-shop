@@ -116,7 +116,7 @@ def suggest(sources):
 def write_review(rows, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, 'w', encoding='utf-8', newline='') as f:
-        w = csv.DictWriter(f, fieldnames=COLUMNS)
+        w = csv.DictWriter(f, fieldnames=COLUMNS, lineterminator='\n')
         w.writeheader(); w.writerows(rows)
 
 
