@@ -25,8 +25,10 @@ final class SupplierTitleSuffix
         'medi' => ' | medi',
         'apolonia' => ' | Apolonia',
         'novicare' => ' | NOVICARE',
+        'bodymap' => ' | BodyMap®',
         'retailer' => '',
         'shop' => '',
+        'promo' => '',
     ];
 
     /**
@@ -41,8 +43,11 @@ final class SupplierTitleSuffix
         'medi' => '/\s*\|\s*medi sklep internetowy$/u',
         'apolonia' => '/\s*\|\s*Sklep z odzieżą medyczną Warszawa Apolonia$/u',
         'novicare' => '/\s*[-–]\s*NOVICARE\s*[-–]\s*Dystrybutor Specjalistycznych Produktów Ortopedycznych$/u',
+        'bodymap' => '/\s*\|\s*BodyMap®\s*[-–]\s*System podciśnieniowy$/u',
         'retailer' => '/\s*[|\-–]\s*(?:Peruka\.pl|TwojaPeruka\.pl|GaleriaZdrowia\.pl)$/u',
         'shop' => '/\s*\|\s*Sklep$/u',
+        // Supplier shop promises, not product facts.
+        'promo' => '/\s*\|\s*(?:Darmowy zwrot|Darmowa dostawa|14 dni na zwrot|Gwarancja jakości)$/u',
     ];
 
     public static function normalize(?string $title): ?string
@@ -51,18 +56,30 @@ final class SupplierTitleSuffix
     }
 
     /**
-     * @return array{0: string, 1: string|null} the normalized title and the matched rule, if any
+     * Suffixes can be stacked ("… | Gwarancja jakości | 14 dni na zwrot"), so rules repeat until none match.
+     *
+     * @return array{0: string, 1: string|null} the normalized title and the matched rules joined by "+", if any
      */
     public static function apply(string $title): array
     {
-        foreach (self::PATTERNS as $rule => $pattern) {
-            $normalized = preg_replace($pattern, self::RULES[$rule], $title, 1, $count);
+        $matched = [];
 
-            if ($count === 1 && is_string($normalized) && trim($normalized) !== '') {
-                return [$normalized, $rule];
+        do {
+            $changed = false;
+
+            foreach (self::PATTERNS as $rule => $pattern) {
+                $normalized = preg_replace($pattern, self::RULES[$rule], $title, 1, $count);
+
+                if ($count === 1 && is_string($normalized) && trim($normalized) !== '' && $normalized !== $title) {
+                    $title = $normalized;
+                    $matched[] = $rule;
+                    $changed = true;
+
+                    break;
+                }
             }
-        }
+        } while ($changed);
 
-        return [$title, null];
+        return [$title, $matched === [] ? null : implode('+', $matched)];
     }
 }
