@@ -94,6 +94,13 @@ jobs:
 
           python3 scripts/seo/consolidation-followup-20261101/test_download.py
 
+          bash -n scripts/seo/consolidation-final-20261101/repair.sh
+          bash -n scripts/seo/consolidation-final-20261101/patch-runtime.sh
+          python3 scripts/seo/consolidation-final-20261101/test_content.py
+
+      - name: Validate final consolidation repair
+        run: ./vendor/bin/pest tests/Feature/Console/ProductSeoFinalConsolidationTest.php
+
       - name: Validate complete preservation export
         run: ./vendor/bin/pest tests/Feature/Console/ProductSeoPreservationExportTest.php
 
