@@ -13,14 +13,20 @@ class ColourRegressionTests(unittest.TestCase):
         if not fixtures.exists():fixtures=ROOT/'source-fixture.json'
         source={p['id']:p for p in json.loads(fixtures.read_text())}
         for e in M['entries']:
-            self.assertEqual(e['expected']['seo_title'],previous[e['id']]['after']['seo_title'])
-            self.assertEqual(e['expected']['seo_description'],previous[e['id']]['after']['seo_description'])
+            if e['id'] in previous:
+                self.assertEqual(e['expected']['seo_title'],previous[e['id']]['after']['seo_title'])
+                self.assertEqual(e['expected']['seo_description'],previous[e['id']]['after']['seo_description'])
             for field in ['description','short_description']:
                 self.assertEqual(hashlib.sha256(source[e['id']][field].encode()).hexdigest(),e['source_'+field+'_sha256'])
 
-    def test_two_original_colour_conflicts_are_removed_without_touching_titles(self):
-        self.assertEqual({179,240},{e['id'] for e in M['entries']})
+    def test_colour_conflicts_are_removed_without_touching_titles(self):
+        self.assertEqual({179,240,259},{e['id'] for e in M['entries']})
         for e in M['entries']:
+            if e['id']==259:
+                for colour in ['granat','brąz']: self.assertNotIn(colour,e['after']['seo_description'].casefold())
+                self.assertIn('Memory Cushion',e['after']['seo_description'])
+                self.assertEqual(e['expected']['seo_title'],e['after']['seo_title'])
+                continue
             colour,wrong={179:('jasnoróżowe','jasnoniebieskim'),240:('jasnozielone','różowe')}[e['id']]
             self.assertIn(colour,e['after']['seo_title'].casefold())
             self.assertIn(colour,e['after']['seo_description'].casefold())

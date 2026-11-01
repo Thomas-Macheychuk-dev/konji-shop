@@ -63,10 +63,36 @@
           "fact": "Correct contradictory SEO colour using the same product body and slug; old short description remains a separate source cleanup item."
         }
       ]
+    },
+    {
+      "id": 259,
+      "expected": {
+        "name": "ABERDEEN MAN MED Health and Fashion Shoes Italia S",
+        "slug": "aberdeen-man-med-dk-brown",
+        "external_source": "mobilex",
+        "external_id": "36039",
+        "seo_title": "ABERDEEN MAN MED",
+        "seo_description": "Klapki dla mężczyzn od Scholl - ABERDEEN MAN MED idealne na ciepłe dni. Klapki męskie z granatowego nubucku. Regulowane, z zagłębieniem na piętę."
+      },
+      "source_description_sha256": "b07f65b3d9ef46d3a1713f7bd7e6dded18dd325454dbb32061c0208a3b5a9540",
+      "source_short_description_sha256": "127ee4c402ac56d47506ab8eaffef2f538f33c3564f33694cedf067fe5a28dc5",
+      "source_description_truncated": false,
+      "after": {
+        "seo_title": "ABERDEEN MAN MED",
+        "seo_description": "ABERDEEN MAN MED Scholl. Męskie klapki z nubucku z regulowanymi paskami na klamry i wkładką Memory Cushion."
+      },
+      "evidence": [
+        {
+          "field": "description",
+          "quote": "Regulowane paski z klamrami",
+          "fact": "Body/slug say brown, short/SEO say navy. Remove colour entirely pending identity review; keep body-supported nubuck, buckle straps and Memory Cushion."
+        }
+      ]
     }
   ],
   "short_description_followup": [
     179,
-    240
+    240,
+    259
   ]
 }

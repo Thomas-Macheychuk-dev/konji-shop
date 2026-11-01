@@ -30,17 +30,20 @@ it('corrects contradictory colours without changing titles or source description
         ProductSeoAppliedReceipt::verify($directory, $sha);
         $repair = new ProductSeoEditorialRepair($manifest);
         $plan = $repair->plan();
-        expect($plan['stats']['description_updates'])->toBe(2);
+        expect($plan['stats']['description_updates'])->toBe(3);
         expect($plan['stats']['title_updates'])->toBe(0);
         $repair->apply($plan);
-        // Superseding two metadata values must not invalidate receipt integrity.
+        // Superseding earlier metadata values must not invalidate receipt integrity.
         ProductSeoAppliedReceipt::verify($directory, $sha);
-        expect($repair->verify($plan)['verified_editorial_products'])->toBe(2);
+        expect($repair->verify($plan)['verified_editorial_products'])->toBe(3);
         $pink = Product::query()->findOrFail(179);
         $green = Product::query()->findOrFail(240);
         expect($pink->seo_description)->toContain('Jasnoróżowe')->not->toContain('jasnoniebieskim');
         expect($green->seo_description)->toContain('Jasnozielone')->not->toContain('różowe');
-        foreach ([$pink, $green] as $product) {
+        $neutral = Product::query()->findOrFail(259);
+        expect($neutral->seo_description)->not->toContain('granat')->not->toContain('brąz');
+        expect($neutral->seo_description)->toContain('Memory Cushion');
+        foreach ([$pink, $green, $neutral] as $product) {
             expect(ProductSeoMetadata::plain($product->description))->toBe($fixtures[$product->id]['description']);
             expect(ProductSeoMetadata::plain($product->short_description))->toBe($fixtures[$product->id]['short_description']);
         }
