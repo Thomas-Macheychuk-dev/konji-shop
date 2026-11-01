@@ -83,6 +83,22 @@ final class ProductSeoFinalConsolidationRepair
                 throw new RuntimeException('Commercial or unreviewed reference blocks consolidation: '.$reference['table']);
             }
         }
+        // Deleting an incorrect gallery association must not orphan another
+        // product's explicitly selected polymorphic default image.
+        $imageClass = \App\Models\ProductImage::class;
+        $imageTypes = [$imageClass, (new $imageClass)->getMorphClass()];
+        foreach (\Illuminate\Database\Eloquent\Relations\Relation::morphMap() as $alias => $mapped) {
+            if ($mapped === $imageClass) {
+                $imageTypes[] = $alias;
+            }
+        }
+        $consumers = DB::table('products')->whereIn('default_image_id', $this->manifest['remove_image_ids'])->whereIn('default_image_type', array_unique($imageTypes));
+        if ($lock) {
+            $consumers->lockForUpdate();
+        }
+        if ($consumers->get(['id'])->isNotEmpty()) {
+            throw new RuntimeException('Default image reference blocks gallery cleanup.');
+        }
         $state['references'] = $audit['references'];
 
         return $state;

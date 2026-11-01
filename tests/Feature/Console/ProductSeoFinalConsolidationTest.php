@@ -148,3 +148,12 @@ it('rolls back all writes if a target is unavailable for the installed alias', f
         file_put_contents($original, $aliases);
     }
 });
+
+it('refuses to orphan any other products explicitly selected default image', function (): void {
+    $repair = new ProductSeoFinalConsolidationRepair($this->review);
+    $plan = $repair->plan();
+    Product::query()->forceCreate(['name' => 'Other image consumer', 'slug' => 'other-image-consumer', 'status' => ProductStatus::ACTIVE, 'default_image_type' => \App\Models\ProductImage::class, 'default_image_id' => 59711]);
+    expect(fn () => $repair->apply($plan))->toThrow(RuntimeException::class, 'Default image reference blocks');
+    expect(Product::findOrFail(12619)->status)->toBe(ProductStatus::ACTIVE);
+    expect(DB::table('product_images')->where('id', 59711)->exists())->toBeTrue();
+});

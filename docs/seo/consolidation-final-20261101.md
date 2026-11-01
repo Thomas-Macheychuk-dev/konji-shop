@@ -27,7 +27,7 @@ Documents are embedded in the HTML, not `product_documents`. Each source manual/
 
 ## Off-product cane gallery rows
 
-The eight-image gallery on product 10104 includes five images outside its actual product gallery. In the manufacturer's DOM, row 59711 (`produkty/698/17658960765816.jpg`) is the brown companion's colour link under `list__colors`. Rows 59712–59715 are cards under related products: TGR-R LA 833L2, a folding white cane, ELEGANT and ASSIST-TIM. These are not views of the black JMC-C 2052. Keep its genuine three gallery rows 59708–59710 and the brown offer's three existing rows. Remove the five incorrect associations only after recording their entire rows in the private backup. No underlying image file is deleted. Rollback restores the same row IDs, paths, captions and timestamps.
+The eight-image gallery on product 10104 includes five images outside its actual product gallery. In the manufacturer's DOM, row 59711 (`produkty/698/17658960765816.jpg`) is the brown companion's colour link under `list__colors`. Rows 59712–59715 are cards under related products: TGR-R LA 833L2, a folding white cane, ELEGANT and ASSIST-TIM. These are not views of the black JMC-C 2052. Keep its genuine three gallery rows 59708–59710 and the brown offer's three existing rows. Remove the five incorrect associations only after recording their entire rows in the private backup. No underlying image file is deleted. A locked check across all products, including morph aliases and soft-deleted records, blocks removal if any product explicitly selects one of those images as its default. Rollback restores the same row IDs, paths, captions and timestamps.
 
 ## Guards and operation
 
