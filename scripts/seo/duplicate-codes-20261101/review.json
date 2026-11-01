@@ -1,0 +1,1559 @@
+{
+  "repair": "product-seo-editorial-20261031-v1",
+  "batch": "product-seo-duplicate-codes-20261101-v1",
+  "prior_backup": "storage/app/private/seo-repairs/evidence-followup-20261101.NJPKen",
+  "prior_plan_sha256": "1ce76a8015190eabb03e6c6a46b89d6984e1ae6115f6fd9388394d5a1de2d897",
+  "checked_at": "2026-11-01",
+  "source_export_sha256": "e6c326bb57d07beee7a58eb12baebf5758991f27b312f758cf4d2070925211fc",
+  "scope": "Titles only. Existing SEO descriptions preserved. No product consolidation, canonical/URL/status/price/variant/category changes. 29 unresolved basic descriptions remain outside this batch.",
+  "entries": [
+    {
+      "id": 9447,
+      "expected": {
+        "name": "2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "slug": "2x-elastyczna-opaska-na-kolano-sciagacz-wciagana-zamiast-bandazu-orteza",
+        "external_source": "medreha",
+        "external_id": "708",
+        "seo_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "seo_description": "2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza w kategorii ORTEZY NA KOLANO / ORTEZY KOŃCZYNY DOLNEJ / ORTEZY I STABILIZATORY"
+      },
+      "source_description_sha256": "e22e81d8e0365531da80fb06e5d56a2b4cec8ad1910393bf2a8b4f6992a2335e",
+      "source_short_description_sha256": "03456018605fb2a8a062d937919f5e0e2d7f8cc419e9309459f3b293164fd6a3",
+      "after": {
+        "seo_title": "Opaski na kolana KS-18 – para",
+        "seo_description": "2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza w kategorii ORTEZY NA KOLANO / ORTEZY KOŃCZYNY DOLNEJ / ORTEZY I STABILIZATORY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUKS-18",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9448,
+      "expected": {
+        "name": "2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "slug": "2x-elastyczna-opaska-na-kolano-sciagacz-wciagana-zamiast-bandazu-orteza-medreha-709",
+        "external_source": "medreha",
+        "external_id": "709",
+        "seo_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+        "seo_description": "2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza w kategorii ORTEZY NA KOLANO / ORTEZY KOŃCZYNY DOLNEJ / ORTEZY I STABILIZATORY"
+      },
+      "source_description_sha256": "dabbda62e8dccb2a919dc603753cdd1ad29e9d04787aa79a4eb18bdae06110ca",
+      "source_short_description_sha256": "03456018605fb2a8a062d937919f5e0e2d7f8cc419e9309459f3b293164fd6a3",
+      "after": {
+        "seo_title": "Opaski na kolana KS-16 – para",
+        "seo_description": "2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza w kategorii ORTEZY NA KOLANO / ORTEZY KOŃCZYNY DOLNEJ / ORTEZY I STABILIZATORY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUKS-16",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9449,
+      "expected": {
+        "name": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "slug": "2x-stabilizator-orteza-sciagacz-kolana-orteza-2szt",
+        "external_source": "medreha",
+        "external_id": "538",
+        "seo_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "seo_description": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "92d3ea929dadb8aa77b06e2c4b3ac2f59ba11b26a73307770cbfeeccdbc93a81",
+      "source_short_description_sha256": "ca2134f7fa26136fe663b407568e49814cfeb85e6b946cf78b1a930d3232610b",
+      "after": {
+        "seo_title": "Stabilizator kolana 1-02-G – 2 szt.",
+        "seo_description": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU1 02 G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9551,
+      "expected": {
+        "name": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "slug": "orteza-lokcia-stabilizator-stawu-lokciowego-opaska",
+        "external_source": "medreha",
+        "external_id": "473",
+        "seo_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "seo_description": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska w kategorii ORTEZY NA ŁOKIEĆ / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "source_description_sha256": "8685ad6163b31675370ec503edbd75a3695b38292c93b3fb930b12f272a5d46f",
+      "source_short_description_sha256": "618487fa62c5efeeac8360c180f383e6ad93e55cdda21f88af92934d6b0f595c",
+      "after": {
+        "seo_title": "Stabilizator łokcia 3613-UNI",
+        "seo_description": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska w kategorii ORTEZY NA ŁOKIEĆ / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU3613 UNI",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9552,
+      "expected": {
+        "name": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "slug": "orteza-lokcia-stabilizator-stawu-lokciowego-opaska-medreha-506",
+        "external_source": "medreha",
+        "external_id": "506",
+        "seo_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "seo_description": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska w kategorii ORTEZY NA ŁOKIEĆ / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "source_description_sha256": "e8c64d7603d3171eb69c05ef125378898aacc42fb64fb7425cb1739981e22f06",
+      "source_short_description_sha256": "618487fa62c5efeeac8360c180f383e6ad93e55cdda21f88af92934d6b0f595c",
+      "after": {
+        "seo_title": "Stabilizator łokcia WS-03-UNI",
+        "seo_description": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska w kategorii ORTEZY NA ŁOKIEĆ / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUWS-03 UNI",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9553,
+      "expected": {
+        "name": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "slug": "orteza-lokcia-stabilizator-stawu-lokciowego-opaska-medreha-511",
+        "external_source": "medreha",
+        "external_id": "511",
+        "seo_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+        "seo_description": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska w kategorii ORTEZY NA ŁOKIEĆ / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "source_description_sha256": "7ece66afcc54f9605bbe028ce4908351fe204fdc29459a7ad26d03fd3614249e",
+      "source_short_description_sha256": "618487fa62c5efeeac8360c180f383e6ad93e55cdda21f88af92934d6b0f595c",
+      "after": {
+        "seo_title": "Stabilizator łokcia WS-12",
+        "seo_description": "Orteza Łokcia Stabilizator Stawu Łokciowego Opaska w kategorii ORTEZY NA ŁOKIEĆ / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUWS-12",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9562,
+      "expected": {
+        "name": "Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "slug": "stabilizator-szynowy-orteza-na-palec",
+        "external_source": "medreha",
+        "external_id": "140",
+        "seo_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "seo_description": "Stabilizator Szynowy Orteza Palca Szyna Na Palec w kategorii ORTEZY NA PALEC / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "source_description_sha256": "0c68c7c8941557e77d93cadf6445b5c38e03c3d438f105ec06d42d8f7b269d56",
+      "source_short_description_sha256": "9b14045fe06943a7920b40079ca57cb23c56fef185cf230f25e5d349a2fb7d24",
+      "after": {
+        "seo_title": "Szyna na palec F-03",
+        "seo_description": "Stabilizator Szynowy Orteza Palca Szyna Na Palec w kategorii ORTEZY NA PALEC / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUF-03",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9563,
+      "expected": {
+        "name": "Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "slug": "stabilizator-szynowy-orteza-palca-szyna-na-palec",
+        "external_source": "medreha",
+        "external_id": "549",
+        "seo_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+        "seo_description": "Stabilizator Szynowy Orteza Palca Szyna Na Palec w kategorii ORTEZY NA PALEC / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "source_description_sha256": "da583dc19f7668614169151ad62bc9cdac9930a1e23f33f0391773627d153a17",
+      "source_short_description_sha256": "9b14045fe06943a7920b40079ca57cb23c56fef185cf230f25e5d349a2fb7d24",
+      "after": {
+        "seo_title": "Szyna na palec OSN-FS5",
+        "seo_description": "Stabilizator Szynowy Orteza Palca Szyna Na Palec w kategorii ORTEZY NA PALEC / ORTEZY KOŃCZYNY GÓRNEJ / ORTEZY I STABILIZATORY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUOSN-FS5",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9590,
+      "expected": {
+        "name": "Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "slug": "korektor-wad-postawy-orteza-plecow-proste-plecy-garbienie-sie-praca-biurowa",
+        "external_source": "medreha",
+        "external_id": "702",
+        "seo_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "seo_description": "Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa w kategorii KOREKTORY WAD POSTAWY / ORTEZY I STABILIZATORY"
+      },
+      "source_description_sha256": "a648f9bb1e2e904683b321ab05ed738d02af54f323bdc4e42a3b483d50b8e3bd",
+      "source_short_description_sha256": "bc609348d0a6ef35248159991368c15882385bde06e3fa5784b95c3e2d5e8dbb",
+      "after": {
+        "seo_title": "Korektor postawy A-38-UNI",
+        "seo_description": "Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa w kategorii KOREKTORY WAD POSTAWY / ORTEZY I STABILIZATORY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUA-38 UNI",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9612,
+      "expected": {
+        "name": "2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "slug": "2xopaska-magnetyczna-turmalinem-stabilizator-kolana-orteza-na-kolano-para",
+        "external_source": "medreha",
+        "external_id": "615",
+        "seo_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "seo_description": "2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para w kategorii OPASKI I PASY MAGNETYCZNE / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "26b01e9a07d06c106da970ad1ce4bd25d2e5f3be2974c67d653b61e2dfaf75ec",
+      "source_short_description_sha256": "74a6423b332ceda48419aa3492549064cf3d5d98062ce5f9043d8780cba49cbe",
+      "after": {
+        "seo_title": "Opaski na kolana 4632, rozmiar XL – para",
+        "seo_description": "2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para w kategorii OPASKI I PASY MAGNETYCZNE / SPRZĘT REHABILITACYJNY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU2x4632 XL",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9613,
+      "expected": {
+        "name": "2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "slug": "2xopaska-magnetyczna-turmalinem-stabilizator-kolana-orteza-na-kolano-para-medreha-616",
+        "external_source": "medreha",
+        "external_id": "616",
+        "seo_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+        "seo_description": "2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para w kategorii OPASKI I PASY MAGNETYCZNE / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "dd88af9d009a16d4be0a83956b263c439d91a2a519f53e18e1b863e39fdd3c0a",
+      "source_short_description_sha256": "74a6423b332ceda48419aa3492549064cf3d5d98062ce5f9043d8780cba49cbe",
+      "after": {
+        "seo_title": "Opaski na kolana 4632, rozmiar L – para",
+        "seo_description": "2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para w kategorii OPASKI I PASY MAGNETYCZNE / SPRZĘT REHABILITACYJNY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU2x4632 L",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9625,
+      "expected": {
+        "name": "Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "slug": "stolik-przylozkowy-na-kolkach-dla-chorego-z-regulacja-mobilny-solidny-blat",
+        "external_source": "medreha",
+        "external_id": "684",
+        "seo_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "seo_description": "Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "e58479ba0837cd56541376b40552c95e9bfba7d185dc2a2823105bfeabb780ba",
+      "source_short_description_sha256": "3a5b5c212c5f4af212c0c8bf142809a5cd75655ee082d0fc76be73f483256cb2",
+      "after": {
+        "seo_title": "Stolik przyłóżkowy CM-3003GIN",
+        "seo_description": "Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUCM 3003GIN",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9630,
+      "expected": {
+        "name": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "slug": "bandaz-elastyczny-kompresyjny-na-kolano-nadgarstek-reke-opatrunek-na-rane-stluczenie",
+        "external_source": "medreha",
+        "external_id": "742",
+        "seo_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "seo_description": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "72fa0fecf2ef7b4ef259030c60880f27aa777aa262c104e6b7b6c6d6756d3055",
+      "source_short_description_sha256": "70d7ca2fa7abc4cc5b2c7f550cc3641d831268f3c69f04e366e3540bc047b0fa",
+      "after": {
+        "seo_title": "Bandaż elastyczny Tynor M-03",
+        "seo_description": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUM-03",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9631,
+      "expected": {
+        "name": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "slug": "bandaz-elastyczny-kompresyjny-na-kolano-nadgarstek-reke-opatrunek-na-rane-stluczenie-medreha-743",
+        "external_source": "medreha",
+        "external_id": "743",
+        "seo_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "seo_description": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "f3f8c35db90d9e2287de0d1f5fd53e5d5b2f7596529f85c9c0c28b55ff5aaedd",
+      "source_short_description_sha256": "70d7ca2fa7abc4cc5b2c7f550cc3641d831268f3c69f04e366e3540bc047b0fa",
+      "after": {
+        "seo_title": "Bandaż elastyczny Tynor M-02",
+        "seo_description": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUM-02",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9632,
+      "expected": {
+        "name": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "slug": "bandaz-elastyczny-kompresyjny-na-kolano-nadgarstek-reke-opatrunek-na-rane-stluczenie-medreha-744",
+        "external_source": "medreha",
+        "external_id": "744",
+        "seo_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+        "seo_description": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "86951b71f14415dd4c0096fef4a57346d4d35f5671be171932caf0b48c1d7a09",
+      "source_short_description_sha256": "70d7ca2fa7abc4cc5b2c7f550cc3641d831268f3c69f04e366e3540bc047b0fa",
+      "after": {
+        "seo_title": "Bandaż elastyczny Tynor M-04",
+        "seo_description": "Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUM-04",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9636,
+      "expected": {
+        "name": "Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "slug": "stolik-przylozkowy-na-kolkach-dla-chorego-z-regulacja-mobilny-solidny-blat-medreha-747",
+        "external_source": "medreha",
+        "external_id": "747",
+        "seo_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+        "seo_description": "Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "source_description_sha256": "103720f158bbaaf2f972ccdf4616b75af8d5759834d7d743366e45fc73d5a458",
+      "source_short_description_sha256": "3a5b5c212c5f4af212c0c8bf142809a5cd75655ee082d0fc76be73f483256cb2",
+      "after": {
+        "seo_title": "Stolik przyłóżkowy CM-3003WHT",
+        "seo_description": "Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat w kategorii AKCESORIA DO REHABILITACJI / SPRZĘT REHABILITACYJNY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUCM 3003WHT",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9713,
+      "expected": {
+        "name": "Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "slug": "laska-rehabilitacyjna-skladana-stabilna-spacerowa-dla-seniora-spacer-mocna",
+        "external_source": "medreha",
+        "external_id": "687",
+        "seo_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "seo_description": "Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna w kategorii LASKI ORTOPEDYCZNE / SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH"
+      },
+      "source_description_sha256": "ca8540a7980377584903a0e44c035e582ffdd545ef6faf1c91ca21b1c51b7c58",
+      "source_short_description_sha256": "2fd083742ab2b3b45a43fe9b57d3dee91407e6249a0f672b39d4b68fdb3cb226",
+      "after": {
+        "seo_title": "Laska składana CM-1001BLK",
+        "seo_description": "Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna w kategorii LASKI ORTOPEDYCZNE / SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUCM 1001BLK",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9714,
+      "expected": {
+        "name": "Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "slug": "laska-rehabilitacyjna-skladana-stabilna-spacerowa-dla-seniora-spacer-mocna-medreha-746",
+        "external_source": "medreha",
+        "external_id": "746",
+        "seo_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+        "seo_description": "Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna w kategorii LASKI ORTOPEDYCZNE / SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH"
+      },
+      "source_description_sha256": "12e4af9f8fe66e15f36197828d66d7b6d8050df1c61171ca84703534d4e53b46",
+      "source_short_description_sha256": "2fd083742ab2b3b45a43fe9b57d3dee91407e6249a0f672b39d4b68fdb3cb226",
+      "after": {
+        "seo_title": "Laska składana CM-1001TAL",
+        "seo_description": "Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna w kategorii LASKI ORTOPEDYCZNE / SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKUCM 1001TAL",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9735,
+      "expected": {
+        "name": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "slug": "2x-stabilizator-orteza-sciagacz-kolana-orteza-2szt-medreha-539",
+        "external_source": "medreha",
+        "external_id": "539",
+        "seo_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "seo_description": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "b00b35f3599d984eb7a12c384069100fa89cb95115fe9f7f44b053c7b38f8f1d",
+      "source_short_description_sha256": "ca2134f7fa26136fe663b407568e49814cfeb85e6b946cf78b1a930d3232610b",
+      "after": {
+        "seo_title": "Stabilizator kolana 1-03-G – 2 szt.",
+        "seo_description": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU1 03 G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9736,
+      "expected": {
+        "name": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "slug": "2x-stabilizator-orteza-sciagacz-kolana-orteza-2szt-medreha-540",
+        "external_source": "medreha",
+        "external_id": "540",
+        "seo_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "seo_description": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "218bdc3b6c6762a9b0c42de8a5624e26b777c834ece37d505dcaa3386d7cc415",
+      "source_short_description_sha256": "ca2134f7fa26136fe663b407568e49814cfeb85e6b946cf78b1a930d3232610b",
+      "after": {
+        "seo_title": "Stabilizator kolana 1-03-O – 2 szt.",
+        "seo_description": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU1 03 O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9737,
+      "expected": {
+        "name": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "slug": "2x-stabilizator-orteza-sciagacz-kolana-orteza-2szt-medreha-551",
+        "external_source": "medreha",
+        "external_id": "551",
+        "seo_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+        "seo_description": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "1a930be01fe9ddc12196d420575b88a1b40836d7d585c2360ee4446822daffa4",
+      "source_short_description_sha256": "ca2134f7fa26136fe663b407568e49814cfeb85e6b946cf78b1a930d3232610b",
+      "after": {
+        "seo_title": "Stabilizator kolana 1-02-O – 2 szt.",
+        "seo_description": "2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU1 02 O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9738,
+      "expected": {
+        "name": "Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "slug": "stabilizator-orteza-opaska-kolana-neopren-sport",
+        "external_source": "medreha",
+        "external_id": "525",
+        "seo_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "seo_description": "Stabilizator Orteza Opaska Kolana Neopren Sport w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "ea0d6c2ec55fbfdf7313cf8b5f8cbecf64eed1adaea91e515ada6f8c8338f58c",
+      "source_short_description_sha256": "387e5c0a85b5cda1ea0978399ab1df8ad1beecacb6353b8ec7e5712076e1cde6",
+      "after": {
+        "seo_title": "Stabilizator kolana 4-01-UNI-O",
+        "seo_description": "Stabilizator Orteza Opaska Kolana Neopren Sport w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 01 UNI O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9739,
+      "expected": {
+        "name": "Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "slug": "stabilizator-orteza-opaska-kolana-neopren-sport-medreha-528",
+        "external_source": "medreha",
+        "external_id": "528",
+        "seo_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+        "seo_description": "Stabilizator Orteza Opaska Kolana Neopren Sport w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "89006b1ba8c323a69d5b6539743c81a455d41d38375444b16ba6f433385fb00c",
+      "source_short_description_sha256": "387e5c0a85b5cda1ea0978399ab1df8ad1beecacb6353b8ec7e5712076e1cde6",
+      "after": {
+        "seo_title": "Stabilizator kolana 4-01-UNI-G",
+        "seo_description": "Stabilizator Orteza Opaska Kolana Neopren Sport w kategorii OPASKI NA KOLANO / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 01 UNI G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9743,
+      "expected": {
+        "name": "Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "slug": "stabilizator-lokcia-orteza-opaska-lokiec-tenisisty",
+        "external_source": "medreha",
+        "external_id": "529",
+        "seo_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "seo_description": "Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty w kategorii OPASKI NA ŁOKIEĆ / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "ce3523cab56b6d386c7dcc5ac03d5852841e90ca9f784ffc29497bfa990147ca",
+      "source_short_description_sha256": "73fbea8a3ccb4028b0d11ebab9cb814dd850e4cca1816285ea42fa2940c12c7a",
+      "after": {
+        "seo_title": "Stabilizator łokcia 3-02-UNI-G",
+        "seo_description": "Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty w kategorii OPASKI NA ŁOKIEĆ / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU3 02 UNI G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9744,
+      "expected": {
+        "name": "Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "slug": "stabilizator-lokcia-orteza-opaska-lokiec-tenisisty-medreha-547",
+        "external_source": "medreha",
+        "external_id": "547",
+        "seo_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+        "seo_description": "Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty w kategorii OPASKI NA ŁOKIEĆ / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "b71e357d6919d73e1654b14a3124d94f7649ef43ca52ed6a9555803a95443698",
+      "source_short_description_sha256": "73fbea8a3ccb4028b0d11ebab9cb814dd850e4cca1816285ea42fa2940c12c7a",
+      "after": {
+        "seo_title": "Stabilizator łokcia 3-02-UNI-O",
+        "seo_description": "Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty w kategorii OPASKI NA ŁOKIEĆ / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU3 02 UNI O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9749,
+      "expected": {
+        "name": "Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "slug": "stabilizator-opaska-orteza-sciagacz-barku-sport",
+        "external_source": "medreha",
+        "external_id": "533",
+        "seo_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "seo_description": "Stabilizator Opaska Orteza Ściągacz Barku SPORT w kategorii OPASKI NA BARK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "0ce949d5649c668916c8d1f71555d24985eb970fed351e2ee8fa1ddd4f8550b7",
+      "source_short_description_sha256": "c1f805c476b76d0880817287c804c8db956feef15860ffa255a44891e84729ac",
+      "after": {
+        "seo_title": "Stabilizator barku 4-04-UNI-O",
+        "seo_description": "Stabilizator Opaska Orteza Ściągacz Barku SPORT w kategorii OPASKI NA BARK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 04 UNI O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9750,
+      "expected": {
+        "name": "Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "slug": "stabilizator-opaska-orteza-sciagacz-barku-sport-medreha-534",
+        "external_source": "medreha",
+        "external_id": "534",
+        "seo_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+        "seo_description": "Stabilizator Opaska Orteza Ściągacz Barku SPORT w kategorii OPASKI NA BARK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "e38e49b306693a5022212faef41e11efa84670b386c1d8293e55635bb64f1d65",
+      "source_short_description_sha256": "c1f805c476b76d0880817287c804c8db956feef15860ffa255a44891e84729ac",
+      "after": {
+        "seo_title": "Stabilizator barku 4-04-UNI-G",
+        "seo_description": "Stabilizator Opaska Orteza Ściągacz Barku SPORT w kategorii OPASKI NA BARK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 04 UNI G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9751,
+      "expected": {
+        "name": "Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "slug": "korektor-wad-postawy-orteza-plecow-proste-plecy-garbienie-sie-praca-biurowa-medreha-773",
+        "external_source": "medreha",
+        "external_id": "773",
+        "seo_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+        "seo_description": "Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa w kategorii OPASKI NA BARK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "5dd9a69e77f9ea807f641b514756541c9116ad9c30e98804a9316b02aa7842a7",
+      "source_short_description_sha256": "915082841caa1a6884c8f2be8b37316a4e12e16255b2f02ed43259432524ef44",
+      "after": {
+        "seo_title": "Korektor postawy 1-07-UNI",
+        "seo_description": "Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa w kategorii OPASKI NA BARK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU1 07 UNI",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9752,
+      "expected": {
+        "name": "2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "slug": "2x-stabilizator-orteza-nadgarstka-opaska-reki-2szt",
+        "external_source": "medreha",
+        "external_id": "526",
+        "seo_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "seo_description": "2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt w kategorii OPASKI NA NADGARSTEK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "43a1c26879e6410829fb2b8371e1f14a354b4a770da2d20caaa56aed7f7c59f1",
+      "source_short_description_sha256": "070a4f4dc812859a6fe53b363f56e70ecabc7aa2f41602372719f3c03b51a029",
+      "after": {
+        "seo_title": "Opaski na nadgarstki 4-08-UNI-G – 2 szt.",
+        "seo_description": "2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt w kategorii OPASKI NA NADGARSTEK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 08 UNI G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9753,
+      "expected": {
+        "name": "2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "slug": "2x-stabilizator-orteza-nadgarstka-opaska-reki-2szt-medreha-527",
+        "external_source": "medreha",
+        "external_id": "527",
+        "seo_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+        "seo_description": "2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt w kategorii OPASKI NA NADGARSTEK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "9b2f1cd2d98c7c80ce37604479458500768ab7c0cd2b7ea302389c1b988dd8b5",
+      "source_short_description_sha256": "070a4f4dc812859a6fe53b363f56e70ecabc7aa2f41602372719f3c03b51a029",
+      "after": {
+        "seo_title": "Opaski na nadgarstki 4-08-UNI-O – 2 szt.",
+        "seo_description": "2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt w kategorii OPASKI NA NADGARSTEK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 08 UNI O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9754,
+      "expected": {
+        "name": "2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "slug": "2xstabilizator-nadgarstka-orteza-opaska-sport-2szt",
+        "external_source": "medreha",
+        "external_id": "530",
+        "seo_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "seo_description": "2xStabilizator Nadgarstka Orteza Opaska Sport 2szt w kategorii OPASKI NA NADGARSTEK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "1717e6ff293d33d81b29917e74f3e01c449785dfc7cc2c8a8cc45d081f73e8c4",
+      "source_short_description_sha256": "32d476e79e187d10a594ec953536e59de1eb6defa2e792ea336c29e302df3c8e",
+      "after": {
+        "seo_title": "Opaski na nadgarstki 3-01-UNI-O – 2 szt.",
+        "seo_description": "2xStabilizator Nadgarstka Orteza Opaska Sport 2szt w kategorii OPASKI NA NADGARSTEK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU3 01 UNI O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9755,
+      "expected": {
+        "name": "2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "slug": "2xstabilizator-nadgarstka-orteza-opaska-sport-2szt-medreha-531",
+        "external_source": "medreha",
+        "external_id": "531",
+        "seo_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+        "seo_description": "2xStabilizator Nadgarstka Orteza Opaska Sport 2szt w kategorii OPASKI NA NADGARSTEK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "eca44a06f138572e8b850ea902f30e24cfde57c430c435c2176097cbfa42a523",
+      "source_short_description_sha256": "32d476e79e187d10a594ec953536e59de1eb6defa2e792ea336c29e302df3c8e",
+      "after": {
+        "seo_title": "Opaski na nadgarstki 3-01-UNI-G – 2 szt.",
+        "seo_description": "2xStabilizator Nadgarstka Orteza Opaska Sport 2szt w kategorii OPASKI NA NADGARSTEK / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU3 01 UNI G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9758,
+      "expected": {
+        "name": "Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "slug": "pas-brzuszny-wyszczuplajacy-silownia-sport-neopren",
+        "external_source": "medreha",
+        "external_id": "532",
+        "seo_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "seo_description": "Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN w kategorii PASY BRZUSZNE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "7f03bb07a3b45c63696fe5cf0c21aac5e9f448e4c062fccec141a4650901dbfb",
+      "source_short_description_sha256": "52a7ecf41eb138b97a32438c3ce1fbc487ab8d207e6a2b853816f86e96129fad",
+      "after": {
+        "seo_title": "Pas brzuszny neoprenowy 4-07-UNI-O",
+        "seo_description": "Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN w kategorii PASY BRZUSZNE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 07 UNI O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9759,
+      "expected": {
+        "name": "Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "slug": "pas-brzuszny-wyszczuplajacy-silownia-sport-neopren-medreha-537",
+        "external_source": "medreha",
+        "external_id": "537",
+        "seo_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+        "seo_description": "Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN w kategorii PASY BRZUSZNE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "dbb98611d14f425bbf197a2c220ef71ca187b6fdd51a3e4a0504b64f1a942738",
+      "source_short_description_sha256": "52a7ecf41eb138b97a32438c3ce1fbc487ab8d207e6a2b853816f86e96129fad",
+      "after": {
+        "seo_title": "Pas brzuszny neoprenowy 4-07-UNI-G",
+        "seo_description": "Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN w kategorii PASY BRZUSZNE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 07 UNI G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9760,
+      "expected": {
+        "name": "Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "slug": "pas-brzuszny-gorset-wyszczuplajacy-sport-neopren",
+        "external_source": "medreha",
+        "external_id": "535",
+        "seo_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "seo_description": "Pas Brzuszny Gorset Wyszczuplający Sport Neopren w kategorii PASY BRZUSZNE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "7fe0d1248693f9d9ba98fdb4d99568ed3ffc2cb99090a9b23f74f6585095ef1e",
+      "source_short_description_sha256": "67af9c773ce9e77bdd37429bc4881bee074b34879ceeb0f96e4e7ac3a3a9b5ff",
+      "after": {
+        "seo_title": "Pas brzuszny neoprenowy 4-06-UNI-G",
+        "seo_description": "Pas Brzuszny Gorset Wyszczuplający Sport Neopren w kategorii PASY BRZUSZNE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 06 UNI G",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9761,
+      "expected": {
+        "name": "Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "slug": "pas-brzuszny-gorset-wyszczuplajacy-sport-neopren-medreha-536",
+        "external_source": "medreha",
+        "external_id": "536",
+        "seo_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+        "seo_description": "Pas Brzuszny Gorset Wyszczuplający Sport Neopren w kategorii PASY BRZUSZNE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "b755d49267bea86fc79cdd969828cb19c7748657264ad3943b1d679007f568f4",
+      "source_short_description_sha256": "67af9c773ce9e77bdd37429bc4881bee074b34879ceeb0f96e4e7ac3a3a9b5ff",
+      "after": {
+        "seo_title": "Pas brzuszny neoprenowy 4-06-UNI-O",
+        "seo_description": "Pas Brzuszny Gorset Wyszczuplający Sport Neopren w kategorii PASY BRZUSZNE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU4 06 UNI O",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9766,
+      "expected": {
+        "name": "Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "slug": "rekawiczki-sportowe-na-silownie-rower-do-cwiczen-silowych-fitness",
+        "external_source": "medreha",
+        "external_id": "714",
+        "seo_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "seo_description": "Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness w kategorii RĘKAWICZKI SPORTOWE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "77cf4db240f78af492915eaa3ea7574f8dbcd2bd3eabd2e7fd93066c99573f7d",
+      "source_short_description_sha256": "cb0d88c47879c664844862074d45156eaf1136e7f1da8c362e47264e5ed602b9",
+      "after": {
+        "seo_title": "Rękawiczki sportowe 9-04 – para",
+        "seo_description": "Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness w kategorii RĘKAWICZKI SPORTOWE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU9 04",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    },
+    {
+      "id": 9767,
+      "expected": {
+        "name": "Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "slug": "rekawiczki-sportowe-na-silownie-rower-do-cwiczen-silowych-fitness-medreha-715",
+        "external_source": "medreha",
+        "external_id": "715",
+        "seo_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+        "seo_description": "Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness w kategorii RĘKAWICZKI SPORTOWE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "source_description_sha256": "87e1bd7642e56ae7aac36501606bee0e2fb8fa04a71b6989cb14f0b2e5cf9225",
+      "source_short_description_sha256": "cb0d88c47879c664844862074d45156eaf1136e7f1da8c362e47264e5ed602b9",
+      "after": {
+        "seo_title": "Rękawiczki sportowe 9-07 – para",
+        "seo_description": "Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness w kategorii RĘKAWICZKI SPORTOWE / OPASKI SPORTOWE / SPRZĘT SPORTOWY"
+      },
+      "evidence": {
+        "source": "own_product_description",
+        "quote": "SKU9 07",
+        "scope": "Explicit catalogue code, independently visible in active variant SKUs. Code suffixes are preserved without colour/material/clinical interpretation. No claim that SKU differences alone prove different physical products."
+      }
+    }
+  ],
+  "duplicate_review": [
+    {
+      "product_ids": [
+        164,
+        165
+      ],
+      "original_title": "EVOFLEX",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "same_active_options_review_candidate"
+    },
+    {
+      "product_ids": [
+        220,
+        221,
+        244,
+        247
+      ],
+      "original_title": "AIR BAG MED",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        234,
+        237
+      ],
+      "original_title": "HEAVEN AD MED",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        257,
+        266
+      ],
+      "original_title": "Nautilus",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        1419,
+        4530
+      ],
+      "original_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        1568,
+        7988
+      ],
+      "original_title": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE # black",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        2828,
+        2829
+      ],
+      "original_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        6744,
+        6745
+      ],
+      "original_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix*",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        7951,
+        7952
+      ],
+      "original_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        8869,
+        8870
+      ],
+      "original_title": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9066,
+        9067
+      ],
+      "original_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9092,
+        9093
+      ],
+      "original_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9094,
+        9095
+      ],
+      "original_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9309,
+        9332
+      ],
+      "original_title": "FP-25 Stabilizator kończyn",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9447,
+        9448
+      ],
+      "original_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9447,
+        9448
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "same_active_options_review_candidate"
+    },
+    {
+      "product_ids": [
+        9449,
+        9735,
+        9736,
+        9737
+      ],
+      "original_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9449,
+        9735,
+        9736,
+        9737
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9551,
+        9552,
+        9553
+      ],
+      "original_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9551,
+        9552,
+        9553
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9562,
+        9563
+      ],
+      "original_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9562,
+        9563
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9590,
+        9751
+      ],
+      "original_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9590,
+        9751
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9612,
+        9613
+      ],
+      "original_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9612,
+        9613
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9620,
+        9940
+      ],
+      "original_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9625,
+        9636
+      ],
+      "original_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9625,
+        9636
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9630,
+        9631,
+        9632
+      ],
+      "original_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9630,
+        9631,
+        9632
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9713,
+        9714
+      ],
+      "original_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9713,
+        9714
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9738,
+        9739
+      ],
+      "original_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9738,
+        9739
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9743,
+        9744
+      ],
+      "original_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9743,
+        9744
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9749,
+        9750
+      ],
+      "original_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9749,
+        9750
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9752,
+        9753
+      ],
+      "original_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9752,
+        9753
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9754,
+        9755
+      ],
+      "original_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9754,
+        9755
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9758,
+        9759
+      ],
+      "original_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9758,
+        9759
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9760,
+        9761
+      ],
+      "original_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9760,
+        9761
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        9766,
+        9767
+      ],
+      "original_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+      "status": "resolved_by_explicit_description_codes",
+      "changed_product_ids": [
+        9766,
+        9767
+      ],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "same_active_options_review_candidate"
+    },
+    {
+      "product_ids": [
+        9983,
+        9986
+      ],
+      "original_title": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        10104,
+        10107
+      ],
+      "original_title": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        10479,
+        10523
+      ],
+      "original_title": "Maska podnosowa AirFit N30i - U.02.02.00",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        11039,
+        11040
+      ],
+      "original_title": "Opaska kompresyjna na twarz AT04702 - Antar",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        11925,
+        11926
+      ],
+      "original_title": "Duomed® smooth pończochy kompresyjne",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        11933,
+        11934
+      ],
+      "original_title": "Genumedi PSS stabilizator kolana",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        11956,
+        11957
+      ],
+      "original_title": "MAXIS MICRO pończochy uciskowe",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        11958,
+        11959
+      ],
+      "original_title": "MAXIS MICRO rajstopy uciskowe",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        11966,
+        11967
+      ],
+      "original_title": "medi collar soft Kidz kołnierz ortopedyczny",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        11998,
+        11999
+      ],
+      "original_title": "mediven elegance pończochy uciskowe",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12010,
+        12011
+      ],
+      "original_title": "Mediven® sheer & soft rajstopy uciskowe",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12021,
+        12022
+      ],
+      "original_title": "protect.Ankle air foam",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "same_active_options_review_candidate"
+    },
+    {
+      "product_ids": [
+        12424,
+        12427
+      ],
+      "original_title": "V500 Light | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12503,
+        12562
+      ],
+      "original_title": "PEPI | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12581,
+        12617
+      ],
+      "original_title": "VICAIR LIBERTY | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12582,
+        12618
+      ],
+      "original_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12583,
+        12619
+      ],
+      "original_title": "VICAIR ACTIVE O2 | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12584,
+        12620
+      ],
+      "original_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12585,
+        12621
+      ],
+      "original_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12586,
+        12622
+      ],
+      "original_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12587,
+        12623
+      ],
+      "original_title": "VICAIR ALLROUNDER | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12588,
+        12624
+      ],
+      "original_title": "VICAIR LIBERTY BACK | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12589,
+        12625
+      ],
+      "original_title": "VICAIR ANATOMY BACK | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        12590,
+        12626
+      ],
+      "original_title": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "insufficient_active_variant_identity",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        13026,
+        13064
+      ],
+      "original_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    },
+    {
+      "product_ids": [
+        13717,
+        13718
+      ],
+      "original_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "same_active_options_review_candidate"
+    },
+    {
+      "product_ids": [
+        14106,
+        14279
+      ],
+      "original_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+      "status": "held_for_identity_review",
+      "changed_product_ids": [],
+      "identity_signal": "different_active_variant_signatures",
+      "option_signal": "options_differ_or_incomplete"
+    }
+  ]
+}
