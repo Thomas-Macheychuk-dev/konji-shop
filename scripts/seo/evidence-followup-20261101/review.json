@@ -1,0 +1,1543 @@
+{
+  "repair": "product-seo-editorial-20261031-v1",
+  "batch": "product-seo-evidence-followup-20261101-v1",
+  "prior_backup": "storage/app/private/seo-repairs/source-cleanup-20261101.iGilON",
+  "prior_plan_sha256": "6d873cfb78350ea580f80d2c763576237cea64af6c9d28e40ff5bae81c29f827",
+  "checked_at": "2026-11-01",
+  "sources": {
+    "wojdak": {
+      "url": "https://wojdak.pl/wp-content/uploads/2023/05/Katalog-odziezy-medycznej-WOJDAK.pdf",
+      "scope": "Parsed model-specific labels only. No screenshot inspection, fabric, colour or sleeve-option inference."
+    },
+    "bioflote": {
+      "url": "https://rehafund.pl/wp-content/uploads/rehafund-katalog-2023-update.pdf",
+      "page": 110,
+      "scope": "Mattress family bubble construction and PVC only; retail without-pump offer comes from the own product name/code. No pump specification or refund claim."
+    },
+    "hf6001": {
+      "url": "https://sklep.rehafund.pl/file/4854721/_.pdf",
+      "scope": "HF6001 mattress material/construction only; do not import the bundled pump."
+    },
+    "wound_pad": {
+      "url": "https://www.schuelke.com/pl-pl/products/912821/schuelke-wound-pad-g%C4%85bki%20do%20oczyszczania%20ran/",
+      "reference": "146010; GTIN 4031463460106",
+      "scope": "Sterile PUR sponges, three structures; retail 12-unit GTIN matched."
+    },
+    "surgispon": {
+      "url": "https://aegis-lifesciences.com/surgispon/",
+      "scope": "Gelatin, porosity and gamma sterilization. Single-unit retail offer comes from own name; no manufacturer carton or clinical-benefit claim."
+    },
+    "granuflex": {
+      "url": "https://www.convatec.com/en-ie/products/advanced-wound-care/brand-names/pc-wound-duoderm-granluflex/b9fa68b5-0165-4584-9ff9-2e7c67c4d83c/",
+      "scope": "Bordered family only; no pack quantity/dimension copied from displayed international variants."
+    },
+    "mama": {
+      "url": "https://footwave.pl/wkladki-ortopedyczne/footwave-mama/",
+      "scope": "Current manufacturer product headline confirms MAMA and pregnancy audience. No renamed-model assertion or clinical promises from LADY PREGNA prose."
+    },
+    "lady_versa": {
+      "url": "https://footwave.pl/wkladki-ortopedyczne/footwave-lady-versa/",
+      "scope": "LADY VERSA-specific introduction only. Do not use the mismatched LADY PREGNA feature heading."
+    }
+  },
+  "entries": [
+    {
+      "id": 523,
+      "expected": {
+        "name": "Spódnica M3004 Wojdak",
+        "slug": "spodnica-m3004-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnica-m3004",
+        "seo_title": "Spódnica M3004 Wojdak",
+        "seo_description": "Spódnica M3004 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spódnica M3004 Wojdak",
+        "seo_description": "Spódnica M3004 Wojdak. Pas z gumą."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "3004",
+        "printed_page": 15,
+        "label": "pasek+guma"
+      }
+    },
+    {
+      "id": 524,
+      "expected": {
+        "name": "Spódnica T3017 Wojdak",
+        "slug": "spodnica-t3017-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnica-t3017",
+        "seo_title": "Spódnica T3017 Wojdak",
+        "seo_description": "Spódnica T3017 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spódnica T3017 Wojdak",
+        "seo_description": "Spódnica T3017 Wojdak. Pas z gumą."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "3017",
+        "printed_page": 17,
+        "label": "pasek+guma"
+      }
+    },
+    {
+      "id": 525,
+      "expected": {
+        "name": "Spódnica T3018 Wojdak",
+        "slug": "spodnica-t3018-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnica-t3018",
+        "seo_title": "Spódnica T3018 Wojdak",
+        "seo_description": "Spódnica T3018 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spódnica T3018 Wojdak",
+        "seo_description": "Spódnica T3018 Wojdak. Model z pasem."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "3018",
+        "printed_page": 19,
+        "label": "pasek"
+      }
+    },
+    {
+      "id": 526,
+      "expected": {
+        "name": "Spodnie M4038 Wojdak",
+        "slug": "spodnie-m4038-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-m4038",
+        "seo_title": "Spodnie M4038 Wojdak",
+        "seo_description": "Spodnie M4038 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spodnie M4038 Wojdak",
+        "seo_description": "Spodnie M4038 Wojdak. Model z pasem."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "4038",
+        "printed_page": 20,
+        "label": "pasek"
+      }
+    },
+    {
+      "id": 540,
+      "expected": {
+        "name": "Spodnie S4039 Wojdak",
+        "slug": "spodnie-s4039-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-s4039",
+        "seo_title": "Spodnie S4039 Wojdak",
+        "seo_description": "Spodnie S4039 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spodnie S4039 Wojdak",
+        "seo_description": "Spodnie S4039 Wojdak. Model z pasem."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "4039",
+        "printed_page": 20,
+        "label": "pasek"
+      }
+    },
+    {
+      "id": 541,
+      "expected": {
+        "name": "Spodnie T4005 Wojdak",
+        "slug": "spodnie-t4005-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-t4005",
+        "seo_title": "Spodnie T4005 Wojdak",
+        "seo_description": "Spodnie T4005 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spodnie T4005 Wojdak",
+        "seo_description": "Spodnie T4005 Wojdak. Elastyczny pas."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "4005",
+        "printed_page": 18,
+        "label": "guma"
+      }
+    },
+    {
+      "id": 542,
+      "expected": {
+        "name": "Spodnie T4037 Wojdak",
+        "slug": "spodnie-t4037-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-t4037",
+        "seo_title": "Spodnie T4037 Wojdak",
+        "seo_description": "Spodnie T4037 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spodnie T4037 Wojdak",
+        "seo_description": "Spodnie T4037 Wojdak. Pas z gumą."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "4037",
+        "printed_page": 16,
+        "label": "pasek+guma"
+      }
+    },
+    {
+      "id": 543,
+      "expected": {
+        "name": "Spodnie T4040 Wojdak",
+        "slug": "spodnie-t4040-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-t4040",
+        "seo_title": "Spodnie T4040 Wojdak",
+        "seo_description": "Spodnie T4040 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spodnie T4040 Wojdak",
+        "seo_description": "Spodnie T4040 Wojdak. Pas z gumą."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "4040",
+        "printed_page": 15,
+        "label": "pasek+guma"
+      }
+    },
+    {
+      "id": 544,
+      "expected": {
+        "name": "SpodnieS4034 Wojdak",
+        "slug": "spodnies4034-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnies4034",
+        "seo_title": "SpodnieS4034 Wojdak",
+        "seo_description": "SpodnieS4034 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spodnie S4034 Wojdak",
+        "seo_description": "Spodnie S4034 Wojdak. Pas z gumą."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "4034",
+        "printed_page": 19,
+        "label": "pasek + guma"
+      }
+    },
+    {
+      "id": 545,
+      "expected": {
+        "name": "Sukienka M8730 Wojdak",
+        "slug": "sukienka-m8730-wojdak",
+        "external_source": "wojdak",
+        "external_id": "sukienka-m8730",
+        "seo_title": "Sukienka M8730 Wojdak",
+        "seo_description": "Sukienka M8730 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Sukienka M8730 Wojdak",
+        "seo_description": "Sukienka M8730 Wojdak. Podwójne kieszenie."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "8730",
+        "printed_page": 22,
+        "label": "podwójne kieszenie"
+      }
+    },
+    {
+      "id": 574,
+      "expected": {
+        "name": "Spodnie R7614 Wojdak",
+        "slug": "spodnie-r7614-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-r7614",
+        "seo_title": "Spodnie R7614 Wojdak",
+        "seo_description": "Spodnie R7614 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spodnie R7614 Wojdak",
+        "seo_description": "Spodnie R7614 Wojdak. Elastyczny pas."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "7614",
+        "printed_page": 30,
+        "label": "guma"
+      }
+    },
+    {
+      "id": 575,
+      "expected": {
+        "name": "Spodnie T7640 Wojdak",
+        "slug": "spodnie-t7640-wojdak",
+        "external_source": "wojdak",
+        "external_id": "spodnie-t7640",
+        "seo_title": "Spodnie T7640 Wojdak",
+        "seo_description": "Spodnie T7640 Wojdak. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "39fd389e62287514344f5f3c81e8013a3a9924ecc681d52607e2366bea623ea6",
+      "source_short_description_sha256": "9bca8282a1b12c39249670d20f5c08f0d379e87c10475ade2808fef70aa60321",
+      "after": {
+        "seo_title": "Spodnie T7640 Wojdak",
+        "seo_description": "Spodnie T7640 Wojdak. Pas z gumą."
+      },
+      "evidence": {
+        "source": "wojdak",
+        "model": "7640",
+        "printed_page": 29,
+        "label": "pasek+guma"
+      }
+    },
+    {
+      "id": 9715,
+      "expected": {
+        "name": "2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "2x-kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips",
+        "external_source": "medreha",
+        "external_id": "725",
+        "seo_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "seo_description": "2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips w kategorii LASKI ORTOPEDYCZNE / SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH"
+      },
+      "source_description_sha256": "3ccb6a0f5ea6090a6206e238eaf2f13f56f22bcc35ac2cb4e7e277a44988520f",
+      "source_short_description_sha256": "96508ce6b42058470d9a136fcf030537f0ce2c6f7c652aefe8e6db4f395a3998",
+      "after": {
+        "seo_title": "Kule łokciowe Ortho Visions CM-1010BLU – para",
+        "seo_description": "Kule łokciowe Ortho Visions CM-1010BLU. Zestaw 2 sztuk. Regulacja wysokości 74–96,5 cm. Konstrukcja aluminiowa."
+      },
+      "evidence": {
+        "source": "own_product_body",
+        "quote": "SKU2XCM 1010BLU",
+        "scope": "Source product code plus existing retail pack. No load rating or colour inferred from contaminated attributes."
+      }
+    },
+    {
+      "id": 9728,
+      "expected": {
+        "name": "2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "2x-kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips-medreha-724",
+        "external_source": "medreha",
+        "external_id": "724",
+        "seo_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "seo_description": "2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips w kategorii KULE ORTOPEDYCZNE / SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH"
+      },
+      "source_description_sha256": "d99f163aba71105c2a316981034fbb47b3c4ad6587f9f50244b4095c7e53b70e",
+      "source_short_description_sha256": "9081fe559cbc6c70f5b2f03ebca2547ecf3258fb56f1ecf8876694dc5d25048b",
+      "after": {
+        "seo_title": "Kule łokciowe Ortho Visions CM-1011 – para",
+        "seo_description": "Kule łokciowe Ortho Visions CM-1011. Zestaw 2 sztuk. Regulacja wysokości 74–96,5 cm. Konstrukcja aluminiowa."
+      },
+      "evidence": {
+        "source": "own_product_body",
+        "quote": "SKU2XCM 1011",
+        "scope": "Source product code plus existing retail pack. No load rating or colour inferred from contaminated attributes."
+      }
+    },
+    {
+      "id": 9729,
+      "expected": {
+        "name": "Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips",
+        "external_source": "medreha",
+        "external_id": "719",
+        "seo_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "seo_description": "Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips w kategorii KULE ORTOPEDYCZNE / SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH"
+      },
+      "source_description_sha256": "78a9c1c868adeada8bcef3eba45c8793ee9406bc4e00ea58c4a3a10625a62fb3",
+      "source_short_description_sha256": "e87747055469905aac58d7b777e1fa447b705aff8895960dd13dd6bf039d102a",
+      "after": {
+        "seo_title": "Kula łokciowa Ortho Visions CM-1010BLU",
+        "seo_description": "Kula łokciowa Ortho Visions CM-1010BLU. Regulacja wysokości 74–96,5 cm. Konstrukcja aluminiowa."
+      },
+      "evidence": {
+        "source": "own_product_body",
+        "quote": "SKUCM 1010BLU",
+        "scope": "Source product code plus existing retail pack. No load rating or colour inferred from contaminated attributes."
+      }
+    },
+    {
+      "id": 9730,
+      "expected": {
+        "name": "Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "slug": "kula-lokciowa-ortopedyczna-z-regulowana-wysokoscia-zlamanie-nogi-gips-medreha-726",
+        "external_source": "medreha",
+        "external_id": "726",
+        "seo_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+        "seo_description": "Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips w kategorii KULE ORTOPEDYCZNE / SPRZĘT POMOCNICZY DLA OSÓB STARSZYCH"
+      },
+      "source_description_sha256": "994f34cf144d0bc6829c4c788ce53f178ce562ca585a039d5600f5ec159e93bd",
+      "source_short_description_sha256": "e87747055469905aac58d7b777e1fa447b705aff8895960dd13dd6bf039d102a",
+      "after": {
+        "seo_title": "Kula łokciowa Ortho Visions CM-1011",
+        "seo_description": "Kula łokciowa Ortho Visions CM-1011. Regulacja wysokości 74–96,5 cm. Konstrukcja aluminiowa."
+      },
+      "evidence": {
+        "source": "own_product_body",
+        "quote": "SKUCM 1011",
+        "scope": "Source product code plus existing retail pack. No load rating or colour inferred from contaminated attributes."
+      }
+    },
+    {
+      "id": 10432,
+      "expected": {
+        "name": "Materac przeciwodleżynowy bez pompy",
+        "slug": "materac-pneumatyczny-bioflote-2000-bez-pompy-bf",
+        "external_source": "rehafund",
+        "external_id": "1968",
+        "seo_title": "Materac przeciwodleżynowy bez pompy – BF 2000/M",
+        "seo_description": "Materac przeciwodleżynowy bez pompy – BF 2000/M. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "cd5f9bad6cc5c6c15da8198074985bf1f96982608e2edc8e63fc19b57045425e",
+      "source_short_description_sha256": "4ac7a07747d2bb0e3cd9b9935f130fd7bba03479f40b213b844b501009af7764",
+      "after": {
+        "seo_title": "Materac przeciwodleżynowy bez pompy – BF 2000/M",
+        "seo_description": "Materac BioFlote 2000 Reha Fund bez pompy. Konstrukcja bąbelkowa z PVC."
+      },
+      "evidence": {
+        "source": "bioflote",
+        "own_identity_quote": "SymbolBF 2000/M"
+      }
+    },
+    {
+      "id": 10434,
+      "expected": {
+        "name": "Materac przeciwodleżynowy bez pompy",
+        "slug": "materac-przeciwodlezynowy-bez-pomy",
+        "external_source": "rehafund",
+        "external_id": "2220",
+        "seo_title": "Materac przeciwodleżynowy bez pompy – HF6001",
+        "seo_description": "Materac przeciwodleżynowy bez pompy – HF6001. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "e9eba726f1ec3fbc8c52479790fe59a0ec59a222a6a87000f52207f1ff96f808",
+      "source_short_description_sha256": "4ac7a07747d2bb0e3cd9b9935f130fd7bba03479f40b213b844b501009af7764",
+      "after": {
+        "seo_title": "Materac przeciwodleżynowy bez pompy – HF6001",
+        "seo_description": "Materac HF6001 Reha Fund bez pompy. Konstrukcja bąbelkowa z PVC."
+      },
+      "evidence": {
+        "source": "hf6001",
+        "own_identity_quote": "SymbolHF6001"
+      }
+    },
+    {
+      "id": 13843,
+      "expected": {
+        "name": "Opatrunki na rany Wound Pad 4 x 3 kolory, kartonik 12 szt.",
+        "slug": "opatrunki-na-rany-wound-pad-4-x-3-kolory-kartonik-12-szt",
+        "external_source": "seni24",
+        "external_id": "4773",
+        "seo_title": "Opatrunki na rany Wound Pad 4 x 3 kolory, kartonik 12 szt.",
+        "seo_description": "Opatrunki na rany Wound Pad 4 x 3 kolory, kartonik 12 szt. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "4c69c9108ec094450ecb37930fcda8f374436ab57353c74d2a90c1ab0361fada",
+      "source_short_description_sha256": "56200758b2666ada81ac4b00c8c02cd05e5d777c2028112437302ce4b5f36ffd",
+      "after": {
+        "seo_title": "Opatrunki na rany Wound Pad 4 x 3 kolory, kartonik 12 szt.",
+        "seo_description": "Schulke Wound Pad – 12 jałowych gąbek poliuretanowych. Zestaw trzech kolorów o różnej strukturze porów."
+      },
+      "evidence": {
+        "source": "wound_pad",
+        "own_identity_quote": "4031463460106"
+      }
+    },
+    {
+      "id": 13944,
+      "expected": {
+        "name": "Chirurgiczna żelatynowa gąbka hemostatyczna SURGISPON 1 szt.",
+        "slug": "surgispon-zelowa-gabka-hemostatyczna-1-szt",
+        "external_source": "seni24",
+        "external_id": "26293",
+        "seo_title": "Chirurgiczna żelatynowa gąbka hemostatyczna SURGISPON 1 szt.",
+        "seo_description": "Chirurgiczna żelatynowa gąbka hemostatyczna SURGISPON 1 szt. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "5a35a01d062a2d3e27de70a7596f75d0fc0fec615687540f015747a1a9ccbbb5",
+      "source_short_description_sha256": "e1c1c8fb3652de93cfbf20ef251e2633a56a659d2fc0da08ad4f67fe6f97e85b",
+      "after": {
+        "seo_title": "Chirurgiczna żelatynowa gąbka hemostatyczna SURGISPON 1 szt.",
+        "seo_description": "SURGISPON – żelatynowa gąbka hemostatyczna o porowatej strukturze. Sterylizowana promieniowaniem gamma. Oferta: 1 sztuka."
+      },
+      "evidence": {
+        "source": "surgispon",
+        "own_identity_quote": "Aegis Lifesciences"
+      }
+    },
+    {
+      "id": 13957,
+      "expected": {
+        "name": "Granuflex Bordered opatrunek hydrokoloidowy na rany",
+        "slug": "granuflex-bordered-opatrunek-hydrokoloidowy-na-rany",
+        "external_source": "seni24",
+        "external_id": "9650",
+        "seo_title": "Granuflex Bordered opatrunek hydrokoloidowy na rany",
+        "seo_description": "Granuflex Bordered opatrunek hydrokoloidowy na rany. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "3edd980da35ce1b5b2d3f739a283fb072872827677c81d1f8a38a24c0082e793",
+      "source_short_description_sha256": "55ef9d3d0e21c72e222cc76c3c361cc086a4ce066a0b2518c4722cb6a7f097db",
+      "after": {
+        "seo_title": "Granuflex Bordered opatrunek hydrokoloidowy na rany",
+        "seo_description": "Granuflex Bordered Convatec. Jałowy opatrunek hydrokoloidowy z szerokim obramowaniem piankowym, bez dodatkowego mocowania plastrem."
+      },
+      "evidence": {
+        "source": "granuflex",
+        "own_identity_quote": "Granuflex Bordered"
+      }
+    },
+    {
+      "id": 14345,
+      "expected": {
+        "name": "FootWave™ MAMA",
+        "slug": "footwave-mama",
+        "external_source": "footwave",
+        "external_id": "15884",
+        "seo_title": "FootWave™ MAMA",
+        "seo_description": "FootWave™ MAMA. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "5f6957942b676ccd82fcba70fd6451574cc5a1be610f11132bc370cf41446c52",
+      "source_short_description_sha256": "2f5d620d72fe6b81bb4ca11ed9bb6fc501d88510c9660d59bb2787f7e8a0bc69",
+      "after": {
+        "seo_title": "FootWave™ MAMA",
+        "seo_description": "FootWave MAMA. Profilowane wkładki ortopedyczne dla kobiet w ciąży."
+      },
+      "evidence": {
+        "source": "mama",
+        "own_identity_quote": "LADY PREGNA"
+      }
+    },
+    {
+      "id": 14352,
+      "expected": {
+        "name": "FootWave™ LADY VERSA",
+        "slug": "footwave-lady-versa",
+        "external_source": "footwave",
+        "external_id": "19782",
+        "seo_title": "FootWave™ LADY VERSA",
+        "seo_description": "FootWave™ LADY VERSA. Sprawdź opis i parametry produktu w Ortezka.pl."
+      },
+      "source_description_sha256": "4ef67763b59951a2933ac15fd0a7625531fdb233598f0e6d5fb7261cda5cf3ca",
+      "source_short_description_sha256": "9f195746d91e9b4ea79d14817ee610b0d0469ea6fbe1a08a60fda7840dab8742",
+      "after": {
+        "seo_title": "FootWave™ LADY VERSA",
+        "seo_description": "FootWave LADY VERSA – wkładki do kozaków, półbutów i obuwia na obcasie. Profilowane korytko wkładki."
+      },
+      "evidence": {
+        "source": "lady_versa",
+        "own_identity_quote": "FootWave LADY VERSA"
+      }
+    }
+  ],
+  "held_descriptions": [
+    {
+      "id": 455,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "męskie wygodne skórzane sneakersy KD MED 226",
+      "source": "eldan"
+    },
+    {
+      "id": 477,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "wygodne obuwie damskie z regulacją KD MED 124",
+      "source": "eldan"
+    },
+    {
+      "id": 519,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Fartuch T1068 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 520,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Fartuch T1072 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 521,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Fartuch T1075 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 527,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Sukienka T1069 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 529,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2013 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 530,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2098 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 531,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2170 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 532,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2172 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 533,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2176 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 534,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet M2177 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 535,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet T2004 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 536,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet T2048 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 537,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet T2074 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 539,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Żakiet T2168 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 546,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Sukienka M8735 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 559,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 105 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 560,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 111 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 561,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 464 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 562,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 605 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 563,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 905 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 564,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne damskie BW 911 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 572,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Fartuch M5022 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 573,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Marynarka M6034 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 580,
+      "reason": "Source has only a heading, model name or size-table reference; insufficient construction details",
+      "name": "Obuwie medyczne męskie BW 108 Wojdak",
+      "source": "wojdak"
+    },
+    {
+      "id": 1876,
+      "reason": "Source product description is empty",
+      "name": "Plaster BAWEŁNIANY - rolka 25mm (długość 5m)",
+      "source": "peruka"
+    },
+    {
+      "id": 13274,
+      "reason": "Active test product; source is Test123. Catalogue cleanup required",
+      "name": "Testowy Produkt",
+      "source": null
+    },
+    {
+      "id": 14177,
+      "reason": "Source includes an expiry date of 2026-05-30; verify current stock and source text",
+      "name": "Elastyczna mikrokaniula do wypełniaczy skóry twarzy DermaSculpt",
+      "source": "seni24"
+    }
+  ],
+  "duplicate_review": [
+    {
+      "product_ids": [
+        160,
+        164,
+        165,
+        166
+      ],
+      "current_title": "EVOFLEX",
+      "status": "partially_distinguished",
+      "changed_product_ids": [
+        160,
+        166
+      ],
+      "remaining_same_title_ids": [
+        164,
+        165
+      ]
+    },
+    {
+      "product_ids": [
+        220,
+        221,
+        244,
+        247
+      ],
+      "current_title": "AIR BAG MED",
+      "status": "held_colour_or_model_identity_not_uniquely_established",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        220,
+        221,
+        244,
+        247
+      ]
+    },
+    {
+      "product_ids": [
+        227,
+        232,
+        234,
+        237
+      ],
+      "current_title": "HEAVEN AD MED",
+      "status": "partially_distinguished",
+      "changed_product_ids": [
+        227,
+        232
+      ],
+      "remaining_same_title_ids": [
+        234,
+        237
+      ]
+    },
+    {
+      "product_ids": [
+        257,
+        266
+      ],
+      "current_title": "Nautilus",
+      "status": "held_colour_or_model_identity_not_uniquely_established",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        257,
+        266
+      ]
+    },
+    {
+      "product_ids": [
+        1419,
+        4530
+      ],
+      "current_title": "Peruka syntetyczna piaskowy ciemny blond CARA SMALL DELUXE # darksand/mix _ 14.12",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        1419,
+        4530
+      ]
+    },
+    {
+      "product_ids": [
+        1568,
+        7988
+      ],
+      "current_title": "Czarna treska syntetyczna mocowana jednym klipsem odporna na ciepło WINE # black",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        1568,
+        7988
+      ]
+    },
+    {
+      "product_ids": [
+        2828,
+        2829
+      ],
+      "current_title": "Peruka syntetyczna termoodporna jedwabisty siwy ALETTA MONO PART # silkgrey/mix",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        2828,
+        2829
+      ]
+    },
+    {
+      "product_ids": [
+        6744,
+        6745
+      ],
+      "current_title": "Peruka syntetyczna jasny miodowy blond ALASKA # lighthoney/mix*",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        6744,
+        6745
+      ]
+    },
+    {
+      "product_ids": [
+        7951,
+        7952
+      ],
+      "current_title": "Treska z włosa syntetycznego o mocnym pofalowaniu ciemny brąz FRAPPE # dark brown*",
+      "status": "held_same_model_and_colour_repeated_import_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        7951,
+        7952
+      ]
+    },
+    {
+      "product_ids": [
+        8869,
+        8870
+      ],
+      "current_title": "Orteza kończyny dolnej SPARTAN | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        8869,
+        8870
+      ]
+    },
+    {
+      "product_ids": [
+        9066,
+        9067
+      ],
+      "current_title": "Orteza nadgarstka AM-OSN-U-02 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9066,
+        9067
+      ]
+    },
+    {
+      "product_ids": [
+        9092,
+        9093
+      ],
+      "current_title": "Uniwersalny temblak OKG-25 | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9092,
+        9093
+      ]
+    },
+    {
+      "product_ids": [
+        9094,
+        9095
+      ],
+      "current_title": "Separator neurologiczny | Reh4Mat - Wytwórca nowoczesnych przedmiotów ortopedycznych",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9094,
+        9095
+      ]
+    },
+    {
+      "product_ids": [
+        9309,
+        9332
+      ],
+      "current_title": "FP-25 Stabilizator kończyn",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9309,
+        9332
+      ]
+    },
+    {
+      "product_ids": [
+        9447,
+        9448
+      ],
+      "current_title": "MedReha | 2x Elastyczna Opaska Na Kolano Ściągacz Wciągana Zamiast Bandażu Orteza",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9447,
+        9448
+      ]
+    },
+    {
+      "product_ids": [
+        9449,
+        9735,
+        9736,
+        9737
+      ],
+      "current_title": "MedReha | 2x Stabilizator Orteza Ściągacz Kolana Orteza 2szt",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9449,
+        9735,
+        9736,
+        9737
+      ]
+    },
+    {
+      "product_ids": [
+        9551,
+        9552,
+        9553
+      ],
+      "current_title": "MedReha | Orteza Łokcia Stabilizator Stawu Łokciowego Opaska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9551,
+        9552,
+        9553
+      ]
+    },
+    {
+      "product_ids": [
+        9562,
+        9563
+      ],
+      "current_title": "MedReha | Stabilizator Szynowy Orteza Palca Szyna Na Palec",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9562,
+        9563
+      ]
+    },
+    {
+      "product_ids": [
+        9590,
+        9751
+      ],
+      "current_title": "MedReha | Korektor Wad Postawy Orteza Pleców Proste Plecy Garbienie Się Praca Biurowa",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9590,
+        9751
+      ]
+    },
+    {
+      "product_ids": [
+        9612,
+        9613
+      ],
+      "current_title": "MedReha | 2xOpaska Magnetyczna Turmalinem Stabilizator Kolana Orteza Na Kolano Para",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9612,
+        9613
+      ]
+    },
+    {
+      "product_ids": [
+        9620,
+        9940
+      ],
+      "current_title": "MedReha | Nakładka Na Toaletę Nasadka Na Sedes Po Operacji Biodra Podwyższająca WC",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9620,
+        9940
+      ]
+    },
+    {
+      "product_ids": [
+        9625,
+        9636
+      ],
+      "current_title": "MedReha | Stolik Przyłóżkowy Na Kółkach Dla Chorego Z Regulacją Mobilny Solidny Blat",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9625,
+        9636
+      ]
+    },
+    {
+      "product_ids": [
+        9630,
+        9631,
+        9632
+      ],
+      "current_title": "MedReha | Bandaż Elastyczny Kompresyjny Na Kolano Nadgarstek Rękę Opatrunek Na Ranę Stłuczenie",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9630,
+        9631,
+        9632
+      ]
+    },
+    {
+      "product_ids": [
+        9713,
+        9714
+      ],
+      "current_title": "MedReha | Laska Rehabilitacyjna Składana Stabilna Spacerowa Dla Seniora Spacer Mocna",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9713,
+        9714
+      ]
+    },
+    {
+      "product_ids": [
+        9715,
+        9728
+      ],
+      "current_title": "MedReha | 2x Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+      "status": "resolved_by_explicit_product_codes",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": []
+    },
+    {
+      "product_ids": [
+        9729,
+        9730
+      ],
+      "current_title": "MedReha | Kula Łokciowa Ortopedyczna Z Regulowaną Wysokością Złamanie Nogi Gips",
+      "status": "resolved_by_explicit_product_codes",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": []
+    },
+    {
+      "product_ids": [
+        9738,
+        9739
+      ],
+      "current_title": "MedReha | Stabilizator Orteza Opaska Kolana Neopren Sport",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9738,
+        9739
+      ]
+    },
+    {
+      "product_ids": [
+        9743,
+        9744
+      ],
+      "current_title": "MedReha | Stabilizator Łokcia Orteza Opaska Łokieć Tenisisty",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9743,
+        9744
+      ]
+    },
+    {
+      "product_ids": [
+        9749,
+        9750
+      ],
+      "current_title": "MedReha | Stabilizator Opaska Orteza Ściągacz Barku SPORT",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9749,
+        9750
+      ]
+    },
+    {
+      "product_ids": [
+        9752,
+        9753
+      ],
+      "current_title": "MedReha | 2x Stabilizator Orteza Nadgarstka Opaska Ręki 2szt",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9752,
+        9753
+      ]
+    },
+    {
+      "product_ids": [
+        9754,
+        9755
+      ],
+      "current_title": "MedReha | 2xStabilizator Nadgarstka Orteza Opaska Sport 2szt",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9754,
+        9755
+      ]
+    },
+    {
+      "product_ids": [
+        9758,
+        9759
+      ],
+      "current_title": "MedReha | Pas Brzuszny Wyszczuplający Siłownia Sport NEOPREN",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9758,
+        9759
+      ]
+    },
+    {
+      "product_ids": [
+        9760,
+        9761
+      ],
+      "current_title": "MedReha | Pas Brzuszny Gorset Wyszczuplający Sport Neopren",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9760,
+        9761
+      ]
+    },
+    {
+      "product_ids": [
+        9766,
+        9767
+      ],
+      "current_title": "MedReha | Rękawiczki Sportowe Na Siłownie Rower Do Ćwiczeń Siłowych Fitness",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9766,
+        9767
+      ]
+    },
+    {
+      "product_ids": [
+        9983,
+        9986
+      ],
+      "current_title": "Podpórka czterokołowa aluminiowa - RANGER - Timago",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        9983,
+        9986
+      ]
+    },
+    {
+      "product_ids": [
+        10104,
+        10107
+      ],
+      "current_title": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052 - Timago",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        10104,
+        10107
+      ]
+    },
+    {
+      "product_ids": [
+        10479,
+        10523
+      ],
+      "current_title": "Maska podnosowa AirFit N30i - U.02.02.00",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        10479,
+        10523
+      ]
+    },
+    {
+      "product_ids": [
+        11039,
+        11040
+      ],
+      "current_title": "Opaska kompresyjna na twarz AT04702 - Antar",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11039,
+        11040
+      ]
+    },
+    {
+      "product_ids": [
+        11925,
+        11926
+      ],
+      "current_title": "Duomed® smooth pończochy kompresyjne",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11925,
+        11926
+      ]
+    },
+    {
+      "product_ids": [
+        11933,
+        11934
+      ],
+      "current_title": "Genumedi PSS stabilizator kolana",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11933,
+        11934
+      ]
+    },
+    {
+      "product_ids": [
+        11956,
+        11957
+      ],
+      "current_title": "MAXIS MICRO pończochy uciskowe",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11956,
+        11957
+      ]
+    },
+    {
+      "product_ids": [
+        11958,
+        11959
+      ],
+      "current_title": "MAXIS MICRO rajstopy uciskowe",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11958,
+        11959
+      ]
+    },
+    {
+      "product_ids": [
+        11966,
+        11967
+      ],
+      "current_title": "medi collar soft Kidz kołnierz ortopedyczny",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11966,
+        11967
+      ]
+    },
+    {
+      "product_ids": [
+        11998,
+        11999
+      ],
+      "current_title": "mediven elegance pończochy uciskowe",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        11998,
+        11999
+      ]
+    },
+    {
+      "product_ids": [
+        12010,
+        12011
+      ],
+      "current_title": "Mediven® sheer & soft rajstopy uciskowe",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12010,
+        12011
+      ]
+    },
+    {
+      "product_ids": [
+        12021,
+        12022
+      ],
+      "current_title": "protect.Ankle air foam",
+      "status": "held_sale_and_regular_listing_identity_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12021,
+        12022
+      ]
+    },
+    {
+      "product_ids": [
+        12424,
+        12427
+      ],
+      "current_title": "V500 Light | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12424,
+        12427
+      ]
+    },
+    {
+      "product_ids": [
+        12503,
+        12562
+      ],
+      "current_title": "PEPI | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12503,
+        12562
+      ]
+    },
+    {
+      "product_ids": [
+        12581,
+        12617
+      ],
+      "current_title": "VICAIR LIBERTY | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12581,
+        12617
+      ]
+    },
+    {
+      "product_ids": [
+        12582,
+        12618
+      ],
+      "current_title": "VICAIR LIBERTY PROFILE | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12582,
+        12618
+      ]
+    },
+    {
+      "product_ids": [
+        12583,
+        12619
+      ],
+      "current_title": "VICAIR ACTIVE O2 | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12583,
+        12619
+      ]
+    },
+    {
+      "product_ids": [
+        12584,
+        12620
+      ],
+      "current_title": "VICAIR VECTOR O2 | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12584,
+        12620
+      ]
+    },
+    {
+      "product_ids": [
+        12585,
+        12621
+      ],
+      "current_title": "VICAIR ADJUSTER O2 | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12585,
+        12621
+      ]
+    },
+    {
+      "product_ids": [
+        12586,
+        12622
+      ],
+      "current_title": "Vicair Multifunctional O2 | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12586,
+        12622
+      ]
+    },
+    {
+      "product_ids": [
+        12587,
+        12623
+      ],
+      "current_title": "VICAIR ALLROUNDER | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12587,
+        12623
+      ]
+    },
+    {
+      "product_ids": [
+        12588,
+        12624
+      ],
+      "current_title": "VICAIR LIBERTY BACK | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12588,
+        12624
+      ]
+    },
+    {
+      "product_ids": [
+        12589,
+        12625
+      ],
+      "current_title": "VICAIR ANATOMY BACK | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12589,
+        12625
+      ]
+    },
+    {
+      "product_ids": [
+        12590,
+        12626
+      ],
+      "current_title": "VICAIR MULTIFUNCTIONAL BACK | Vermeiren Polska",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        12590,
+        12626
+      ]
+    },
+    {
+      "product_ids": [
+        13026,
+        13064
+      ],
+      "current_title": "Wysoka orteza piersiowo-lędźwiowo-krzyżowa – regulowana",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        13026,
+        13064
+      ]
+    },
+    {
+      "product_ids": [
+        13717,
+        13718
+      ],
+      "current_title": "Płyn do mycia szyb zapobiegający parowaniu Dr Max 500 ml",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        13717,
+        13718
+      ]
+    },
+    {
+      "product_ids": [
+        14106,
+        14279
+      ],
+      "current_title": "Niejałowe kompresy z włókniny Torebka papierowa Matovlies 100 szt.",
+      "status": "held_repeated_model_requires_manufacturer_identifier_review",
+      "changed_product_ids": [],
+      "remaining_same_title_ids": [
+        14106,
+        14279
+      ]
+    }
+  ]
+}

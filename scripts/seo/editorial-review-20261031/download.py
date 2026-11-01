@@ -101,7 +101,7 @@ class SsmClient:
         return base64.b64decode(self.run(command, timeout=60), validate=True)
 
 
-def download_export(client, metadata, output, progress=lambda message: None):
+def download_export(client, metadata, output, progress=lambda message: None, *, version=VERSION, collections=("products", "categories")):
     output = Path(output).expanduser().resolve()
     if output.exists():
         raise FileExistsError("Output already exists: " + str(output))
@@ -135,9 +135,9 @@ def download_export(client, metadata, output, progress=lambda message: None):
     if hashlib.sha256(raw).hexdigest() != metadata["json_sha256"]:
         raise ValueError("JSON checksum mismatch; no file saved")
     data = json.loads(raw)
-    if data.get("version") != VERSION or data.get("database_writes") is not False:
+    if data.get("version") != version or data.get("database_writes") is not False:
         raise ValueError("Unexpected export format")
-    if not isinstance(data.get("products"), list) or not isinstance(data.get("categories"), list):
+    if any(not isinstance(data.get(key), list) for key in collections):
         raise ValueError("Incomplete export")
     output.parent.mkdir(parents=True, exist_ok=True)
     with os.fdopen(os.open(output, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600), "wb") as stream:
