@@ -724,4 +724,3 @@ class ProductShowController extends Controller
         };
     }
 }
-
