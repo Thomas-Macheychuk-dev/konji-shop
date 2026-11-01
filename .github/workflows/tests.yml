@@ -102,6 +102,7 @@ jobs:
 
           python3 scripts/seo/legacy-category-map-20261101/test_suggest.py
           python3 scripts/seo/legacy-category-map-20261101/test_decisions.py
+          python3 scripts/seo/legacy-category-redirects-20261101/test_build.py
 
       - name: Validate remaining identity export
         run: ./vendor/bin/pest tests/Feature/Console/ProductSeoRemainingIdentityExportTest.php

@@ -1,0 +1,365 @@
+{
+ "purpose": "Ordered first-match rules for live legacy products whose old breadcrumb named no category. Prefixes match the start of an accent-folded word in the legacy product name. Unmatched products get no fallback (404).",
+ "rules": [
+  {
+   "id": "cpap",
+   "prefixes": [
+    "airfit",
+    "cpap",
+    "bezdech",
+    "respironics",
+    "nosowa",
+    "twarzowa",
+    "ustno"
+   ],
+   "target_slug": "tlenoterapia"
+  },
+  {
+   "id": "oxygen",
+   "prefixes": [
+    "koncentrator",
+    "inhalator",
+    "nebuliz",
+    "pulsoksym",
+    "tlen",
+    "nhalator"
+   ],
+   "target_slug": "tlenoterapia"
+  },
+  {
+   "id": "pressure",
+   "prefixes": [
+    "cisnieniomierz"
+   ],
+   "target_slug": "cisnieniomierze"
+  },
+  {
+   "id": "thermometer",
+   "prefixes": [
+    "termometr"
+   ],
+   "target_slug": "termometry"
+  },
+  {
+   "id": "electrotherapy",
+   "prefixes": [
+    "elektrostymul",
+    "tens"
+   ],
+   "target_slug": "elektromedycyna"
+  },
+  {
+   "id": "diagnostic",
+   "prefixes": [
+    "stetoskop",
+    "otoskop",
+    "oftalmoskop",
+    "laryngoskop",
+    "dermatoskop",
+    "littmann",
+    "waga",
+    "lampa",
+    "ssak",
+    "glukometr",
+    "latarka",
+    "rektoskop",
+    "sigmoidoskop",
+    "depresor"
+   ],
+   "target_slug": "sprzet-medyczny"
+  },
+  {
+   "id": "wigs",
+   "prefixes": [
+    "peruk",
+    "dopink",
+    "treski",
+    "topper",
+    "tupet",
+    "turban",
+    "chusta"
+   ],
+   "target_slug": "peruki"
+  },
+  {
+   "id": "insoles",
+   "prefixes": [
+    "wkladk",
+    "podpietk",
+    "podpetk",
+    "podkladki",
+    "pecari",
+    "stopki"
+   ],
+   "target_slug": "wkladki-ortopedyczne"
+  },
+  {
+   "id": "hot-cold",
+   "prefixes": [
+    "okład",
+    "oklad",
+    "cold",
+    "termofor",
+    "chlodz"
+   ],
+   "target_slug": "oklady-zimno-cieple"
+  },
+  {
+   "id": "casts",
+   "prefixes": [
+    "gips",
+    "plaster",
+    "bandaz",
+    "opatrun",
+    "kompresy",
+    "przylepiec"
+   ],
+   "target_slug": "opatrunki-i-dezynfekcja"
+  },
+  {
+   "id": "shoes",
+   "prefixes": [
+    "buty",
+    "but",
+    "sandal",
+    "polbut",
+    "balerin",
+    "kapci",
+    "obuwie",
+    "trzewik",
+    "klapki",
+    "sniegow",
+    "tenisow",
+    "kozaki",
+    "kosela",
+    "befado",
+    "postoperative"
+   ],
+   "target_slug": "obuwie"
+  },
+  {
+   "id": "compression",
+   "prefixes": [
+    "rajstop",
+    "podkolanow",
+    "ponczoch",
+    "uciskow"
+   ],
+   "target_slug": "kompresja"
+  },
+  {
+   "id": "bunions",
+   "prefixes": [
+    "haluks",
+    "separator",
+    "odcisk",
+    "zapetk",
+    "nagniotk"
+   ],
+   "target_slug": "aparaty-korekcyjne-podkladki-i-oslony"
+  },
+  {
+   "id": "orthoses",
+   "prefixes": [
+    "orteza",
+    "ortez",
+    "stabilizator",
+    "opaska",
+    "aparat",
+    "kolnierz",
+    "temblak",
+    "pas",
+    "strapilax",
+    "rekaw",
+    "usztywniacz",
+    "wspomagacz"
+   ],
+   "target_slug": "ortezy-i-stabilizatory"
+  },
+  {
+   "id": "wheelchairs",
+   "prefixes": [
+    "wozek",
+    "wozki"
+   ],
+   "target_slug": "wozki-inwalidzkie"
+  },
+  {
+   "id": "walking",
+   "prefixes": [
+    "laska",
+    "laski",
+    "kula",
+    "kule",
+    "trojnog",
+    "czwornog"
+   ],
+   "target_slug": "kule-laski-trojnogi-i-czwornogi"
+  },
+  {
+   "id": "walkers",
+   "prefixes": [
+    "balkonik",
+    "chodzik",
+    "rolator",
+    "rollator",
+    "czterokolow"
+   ],
+   "target_slug": "podporki-i-balkoniki"
+  },
+  {
+   "id": "lifts",
+   "prefixes": [
+    "podnosnik"
+   ],
+   "target_slug": "podnosniki-pacjenta"
+  },
+  {
+   "id": "ramps",
+   "prefixes": [
+    "rampa",
+    "rampy",
+    "szyny",
+    "schodolaz"
+   ],
+   "target_slug": "schodolazy-i-rampy"
+  },
+  {
+   "id": "scooters",
+   "prefixes": [
+    "skuter"
+   ],
+   "target_slug": "skutery"
+  },
+  {
+   "id": "beds",
+   "prefixes": [
+    "lozko",
+    "lozka"
+   ],
+   "target_slug": "lozka-rehabilitacyjne"
+  },
+  {
+   "id": "pressure-cushions",
+   "prefixes": [
+    "siedzisko",
+    "przeciwodlez"
+   ],
+   "target_slug": "produkty-rehabilitacyjne-poduszki-przeciwodlezynowe"
+  },
+  {
+   "id": "mattresses",
+   "prefixes": [
+    "materac"
+   ],
+   "target_slug": "materace-przeciwodlezynowe"
+  },
+  {
+   "id": "pillows",
+   "prefixes": [
+    "poduszka",
+    "poduszki",
+    "walek",
+    "pillow"
+   ],
+   "target_slug": "poduszki-ortopedyczne"
+  },
+  {
+   "id": "toilet",
+   "prefixes": [
+    "kaczka",
+    "basen",
+    "nakladka",
+    "toalet",
+    "sedes",
+    "taboret",
+    "krzeslo"
+   ],
+   "target_slug": "sprzet-toaletowy"
+  },
+  {
+   "id": "bed-furniture",
+   "prefixes": [
+    "stolik",
+    "szafka",
+    "stojak"
+   ],
+   "target_slug": "wyroby-pomocnicze"
+  },
+  {
+   "id": "bedding",
+   "prefixes": [
+    "przescieradl",
+    "posciel",
+    "podklady"
+   ],
+   "target_slug": "seni24-higiena-i-pielegnacja-specjalistyczna-podklady-i-posciel"
+  },
+  {
+   "id": "incontinence",
+   "prefixes": [
+    "pieluch",
+    "chlonn"
+   ],
+   "target_slug": "seni24-nietrzymanie-moczu"
+  },
+  {
+   "id": "protection",
+   "prefixes": [
+    "maska",
+    "maseczk",
+    "przylbic",
+    "rekawic"
+   ],
+   "target_slug": "srodki-ochrony-osobistej"
+  },
+  {
+   "id": "clothing",
+   "prefixes": [
+    "bluza",
+    "spodnie",
+    "fartuch",
+    "zakiet",
+    "sukienka",
+    "tunika",
+    "czepek"
+   ],
+   "target_slug": "odziez-medyczna"
+  },
+  {
+   "id": "bras",
+   "prefixes": [
+    "biustonosz",
+    "proteza"
+   ],
+   "target_slug": "protezy-piersi-biustonosze"
+  },
+  {
+   "id": "massage",
+   "prefixes": [
+    "masaz",
+    "masazer"
+   ],
+   "target_slug": "seni24-rehabilitacja-i-likwidacja-barier-akcesoria-do-cwiczen-i-rehabilitacji-akcesoria-do-masazu-i-rehabilitacji"
+  },
+  {
+   "id": "exercise",
+   "prefixes": [
+    "pilka",
+    "pilki",
+    "tasma",
+    "ekspander",
+    "hantle",
+    "mata",
+    "rotor",
+    "rower",
+    "przyrzad",
+    "trener",
+    "pileczk",
+    "gum",
+    "sciezka"
+   ],
+   "target_slug": "sprzet-do-rehabilitacji-i-fizjoterapii"
+  }
+ ]
+}

@@ -113,11 +113,14 @@ COPY docker/nginx/cloudflare-real-ip.conf /etc/nginx/conf.d/01-cloudflare-real-i
 COPY docker/nginx/production.conf /etc/nginx/conf.d/default.conf
 COPY docker/nginx/generated/legacy-seo-product-map.conf /etc/nginx/conf.d/00-legacy-seo-product-map.conf
 COPY docker/nginx/generated/legacy-seo-staging-extra-map.conf /etc/nginx/conf.d/00-legacy-seo-staging-extra-map.conf
+COPY docker/nginx/generated/legacy-seo-category-fallback-map.conf /etc/nginx/conf.d/02-legacy-seo-category-fallback-map.conf
 COPY docker/nginx/legacy-seo/available/10-product-redirects-enabled.conf /etc/nginx/legacy-seo/available/10-product-redirects-enabled.conf
 COPY docker/nginx/legacy-seo/available/20-staging-candidate-redirects-enabled.conf /etc/nginx/legacy-seo/available/20-staging-candidate-redirects-enabled.conf
+COPY docker/nginx/legacy-seo/available/30-fallback-redirects-enabled.conf /etc/nginx/legacy-seo/available/30-fallback-redirects-enabled.conf
 COPY docker/nginx/verify-seo12-map.sh /usr/local/bin/verify-seo12-map
+COPY docker/nginx/verify-legacy-fallback-map.sh /usr/local/bin/verify-legacy-fallback-map
 COPY docker/nginx/start-production.sh /usr/local/bin/konji-nginx-start
-RUN chmod +x /usr/local/bin/konji-nginx-start /usr/local/bin/verify-seo12-map
+RUN chmod +x /usr/local/bin/konji-nginx-start /usr/local/bin/verify-seo12-map /usr/local/bin/verify-legacy-fallback-map
 COPY public /var/www/html/public
 COPY --from=frontend /app/public/build /var/www/html/public/build
 
