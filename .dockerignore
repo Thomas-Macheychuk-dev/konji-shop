@@ -15,3 +15,5 @@ bootstrap/cache/*
 storage/app/public/**
 storage/app/private/**
 storage/app/scrapers/**
+# Server-side release and repair backups (multi-GB tarballs) must never enter image layers.
+storage/backups/**
