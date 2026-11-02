@@ -127,10 +127,10 @@ class ProductShowController extends Controller
             ->first();
 
         $informationalColorGroups = $this->buildInformationalColorGroups($product);
-        $storefrontDescription = $this->storefrontDescription(
+        $storefrontDescription = $this->demoteDescriptionHeadings($this->storefrontDescription(
             $product,
             $informationalColorGroups !== [],
-        );
+        ));
 
         $productPayload = [
             'id' => $product->id,
@@ -181,7 +181,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v12.%s.%d',
+            'product-page.v13.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -194,7 +194,34 @@ class ProductShowController extends Controller
 
     private function seoTitle(Product $product): string
     {
-        return Str::squish(strip_tags($product->seo_title ?: $product->name));
+        $title = Str::squish(strip_tags($product->seo_title ?: $product->name));
+        $name = Str::squish(strip_tags($product->name));
+
+        // Vermeiren names are model names ("MONICA", "631"); the generated "<name> | Vermeiren" title then says
+        // nothing about the product. Hand-edited titles differ from that pattern and are kept as they are.
+        if ($title !== $name.' | Vermeiren' || ($kind = $this->productKind($product)) === null
+            || Str::contains(Str::lower(Str::ascii($name)), Str::lower(Str::ascii(Str::substr($kind, 0, 4))))) {
+            return $title;
+        }
+
+        return $name.' – '.$kind.' | Vermeiren';
+    }
+
+    /**
+     * The nearest category on the primary trail whose name says what the product is: leaves such as
+     * "Specjalne" or "Dla dzieci" only qualify their parent.
+     */
+    private function productKind(Product $product): ?string
+    {
+        foreach (array_reverse($this->categoryTrail($this->primaryCategory($product))) as $category) {
+            $first = Str::lower(Str::before(Str::squish($category->name), ' '));
+
+            if (! in_array($first, ['specjalne', 'inne', 'pozostałe', 'dla', 'do', 'z', 'ze', 'na', 'nowości', 'okazje'], true)) {
+                return Str::squish($category->name);
+            }
+        }
+
+        return null;
     }
 
     private function seoDescription(Product $product): string
@@ -559,6 +586,18 @@ class ProductShowController extends Controller
             })
             ->values()
             ->all();
+    }
+
+    /**
+     * The page heading is the product name; imported descriptions sometimes bring their own <h1>.
+     */
+    private function demoteDescriptionHeadings(?string $description): ?string
+    {
+        if ($description === null) {
+            return null;
+        }
+
+        return preg_replace('#<(/?)h1(?=[\s>])#i', '<$1h2', $description) ?? $description;
     }
 
     private function storefrontDescription(Product $product, bool $hasInformationalColors): ?string
