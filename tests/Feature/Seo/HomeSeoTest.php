@@ -49,3 +49,12 @@ it('uses the visible storefront name rather than an old shop-setting name in web
 
     expect($response->viewData('structuredData')[0]['name'])->toBe('Ortezka.pl');
 });
+
+it('links the legal company to the storefront brand and logo in organization schema', function (): void {
+    Config::set('app.name', 'Ortezka.pl');
+    $organization = $this->get('https://ortezka.pl')->assertOk()->viewData('structuredData')[1];
+
+    expect($organization['@type'])->toBe('Organization')
+        ->and($organization['alternateName'])->toBe('Ortezka.pl')
+        ->and($organization['logo'])->toBe(asset('images/ortezka-logo-v4.png'));
+});

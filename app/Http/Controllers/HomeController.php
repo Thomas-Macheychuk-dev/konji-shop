@@ -182,7 +182,10 @@ SQL,
             '@context' => 'https://schema.org',
             '@type' => 'Organization',
             'name' => $this->shopSettings->companyName(),
+            // The storefront name ties the legal company to the brand shown in the WebSite schema.
+            'alternateName' => config('app.name') ?: $this->shopSettings->shopName(),
             'url' => $canonicalUrl,
+            'logo' => asset('images/ortezka-logo-v4.png'),
             'email' => $this->shopSettings->email() ?: null,
             'telephone' => $this->shopSettings->phone() ?: null,
         ], fn ($value): bool => $value !== null && $value !== '');
