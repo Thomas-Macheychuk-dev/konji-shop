@@ -44,6 +44,31 @@ The SEO-12 map, its two gates, its 1,070 rules and the staging candidate map are
 3. Spot-check on staging: `/ortezy-i-stabilizatory-cat-124` → 301 `/categories/ortezy-i-stabilizatory`, `/na-dzien-babci-i-dziadka-cat-243` → 410, an unmatched product from `fallback-redirects.csv` → 301 to its category, and a mapped SEO-12 product still → its product.
 4. Disable by setting the flag back to false and recreating `web`.
 
+## Legacy IDs, aliases and `/index.php` — 2 November
+
+The launch check sent 200 random URLs from the live shop's sitemap to the new server as `ortezka.pl`, and 56 returned 404. Two gaps explained them:
+
+- PrestaShop serves a product under **any** slug ending in `-id-N` (and a category under any `-cat-N`), but the maps above match exact paths only. `/2383-orteza-nadgarstka-miekka-z-dociagiem-id-9554` was a 404 even though `/oppo-2383-…-id-9554` was mapped.
+- `/index.php`, with or without `?id_product=`/`?id_category=`/`?controller=`, rendered the homepage with `canonical=/index.php`.
+
+The same generated file now also defines ID maps:
+
+| Map | Rules | Source |
+|---|---|---|
+| Legacy product ID → target | 9,304 | the decision already made for that ID's known paths (SEO-12 product map, or the category fallback above) |
+| Legacy product ID → category | 197 | where the live shop redirects products it has already removed, crawled into `live-redirects-20261102.tsv` |
+| Legacy category ID → category or 410 | 234 | the category decisions |
+| **Total** | **9,735** | |
+
+The legacy ID is taken from a single-segment `/<slug>-id-N` or `/<slug>-cat-N` path, or from `/index.php?id_product=N` / `?id_category=N`. New URLs are never single-segment with those suffixes, so app routes cannot match. Any other `/index.php` request gets a 301 to `/`. All of this sits in the existing `30-fallback-redirects` include, after the exact path rules, so exact paths keep priority, and it is switched by the same `LEGACY_SEO_FALLBACK_REDIRECTS_ENABLED` flag. The gate now also pins `EXPECTED_ID_RULES`.
+
+`live-redirects-20261102.tsv` covers the 1,850 product IDs in the live sitemap that had no mapping, requested one at a time without following redirects:
+
+- **404 (1,356):** already gone on the live shop; they stay 404.
+- **301 to a category (209):** 197 are mapped to that category's decision. The other 12 point to the root category `strona-glowna-cat-2`, which would be a homepage soft-404, so they stay 404.
+- **301 to the same ID under another slug (13):** that ID has no decision either, so they stay 404.
+- **200 (272):** still-live products. 271 are already in `unresolved-products.csv`; the extra one is `wozek-inwalidzki-o-napedzie-elektrycznym-q5-id-2256`.
+
 ## Rebuild
 
 ```bash
@@ -51,4 +76,4 @@ python3 scripts/seo/legacy-category-redirects-20261101/build.py \
   --inventory storage/app/private/scrapers/seo/ortezka/matching/legacy-inventory.csv
 ```
 
-Without `--inventory` it regenerates from the committed `product-sources.json`. After a change, update `EXPECTED_SHA`/`EXPECTED_RULES` in `docker/nginx/verify-legacy-fallback-map.sh` from the printed summary and rerun `nginx-check.sh`.
+Without `--inventory` it regenerates from the committed `product-sources.json`. After a change, update `EXPECTED_SHA`/`EXPECTED_RULES`/`EXPECTED_ID_RULES` in `docker/nginx/verify-legacy-fallback-map.sh` from the printed summary and rerun `nginx-check.sh`.

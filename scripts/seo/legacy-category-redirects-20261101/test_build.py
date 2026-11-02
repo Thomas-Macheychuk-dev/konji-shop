@@ -17,9 +17,10 @@ class LegacyFallbackMapTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.entries, cls.skipped, cls.unresolved = module.build()
+        cls.products, cls.categories = module.build_id_maps(cls.entries)
 
     def test_committed_map_and_review_are_reproducible(self):
-        self.assertEqual(module.MAP.read_bytes().decode('utf-8'), module.render_map(self.entries))
+        self.assertEqual(module.MAP.read_bytes().decode('utf-8'), module.render_map(self.entries, self.products, self.categories))
         out = io.StringIO()
         w = csv.writer(out, lineterminator='\n')
         w.writerow(['legacy_path', 'target', 'kind', 'reason'])
@@ -27,7 +28,7 @@ class LegacyFallbackMapTest(unittest.TestCase):
         self.assertEqual(module.REVIEW.read_bytes().decode('utf-8'), out.getvalue())
 
     def test_scope(self):
-        summary = module.summary(self.entries, self.skipped)
+        summary = module.summary(self.entries, self.skipped, self.products, self.categories)
         self.assertEqual((summary['category_redirects'], summary['category_gone']), (232, 2))
         self.assertEqual(summary['product_ids'], 8640)
         self.assertEqual(summary['rules'], 14636)
@@ -62,9 +63,33 @@ class LegacyFallbackMapTest(unittest.TestCase):
         self.assertEqual(module.rule_for_name('MASKA ANTYSMOGOWA AŻUROWA', rules)['id'], 'protection')
         self.assertIsNone(module.rule_for_name('PODPÓRKA POD PLECY', rules))
 
+    def test_id_maps_repeat_the_path_decisions_for_every_alias(self):
+        for path, (target, kind, _) in self.entries.items():
+            if kind == 'product':
+                self.assertEqual(self.products[module.LEGACY_PRODUCT.match(path).group(1)][0], target, path)
+            else:
+                self.assertEqual(self.categories[module.LEGACY_CATEGORY.match(path).group(1)][0], target, path)
+        exact = module.EXACT_MAPS[0].read_text(encoding='utf-8')
+        self.assertIn('"/oppo-2383-orteza-nadgarstka-miekka-z-dociagiem-id-9554" "/products/stabilizator-kciuka-i-nadgarstka-2383"', exact)
+        self.assertEqual(self.products['9554'][0], '/products/stabilizator-kciuka-i-nadgarstka-2383')
+        self.assertTrue(all(t.startswith(('/products/', '/categories/')) for t, _ in self.products.values()))
+
+    def test_live_shop_redirects_only_follow_known_destinations(self):
+        live = [r for _, r in self.products.values() if r.startswith('live shop')]
+        self.assertEqual(len(live), module.summary(self.entries, self.skipped, self.products, self.categories)['product_ids_from_live_shop'])
+        for lid, (target, reason) in self.products.items():
+            if reason.startswith('live shop redirects to legacy category'):
+                self.assertEqual(self.categories[reason.split()[-1]][0], target, lid)
+
+    def test_id_patterns_cannot_capture_app_routes(self):
+        rendered = module.render_id_maps(self.products, self.categories)
+        self.assertIn(r'"~^/[^/]+-id-([0-9]+)\|" $1;', rendered)
+        self.assertIn(r'"~^/[^/]+-cat-([0-9]+)\|" $1;', rendered)
+        self.assertIn(r'"~^/index\.php(\?|$)" "/";', rendered)
+
     def test_runtime_gate_pins_the_committed_map(self):
         gate = (REPO / 'docker/nginx/verify-legacy-fallback-map.sh').read_text(encoding='utf-8')
-        summary = module.summary(self.entries, self.skipped)
+        summary = module.summary(self.entries, self.skipped, self.products, self.categories)
         self.assertIn(f'EXPECTED_SHA={summary["map_sha256"]}\n', gate)
         self.assertIn(f'EXPECTED_RULES={summary["rules"]}\n', gate)
 

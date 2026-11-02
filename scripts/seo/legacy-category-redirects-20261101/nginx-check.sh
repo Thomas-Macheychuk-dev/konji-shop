@@ -41,6 +41,15 @@ www.ortezka.pl /ortezy-i-stabilizatory-cat-124 301 https://ortezka.pl/categories
 ortezka.pl $FALLBACK 301 https://ortezka.pl$FALLBACK_TARGET
 staging.ortezka.pl /products/vicair-active-o2 200 -
 staging.ortezka.pl /ortezy-i-stabilizatory-cat-124/extra 200 -
+ortezka.pl /2383-orteza-nadgarstka-miekka-z-dociagiem-id-9554 301 https://ortezka.pl/products/stabilizator-kciuka-i-nadgarstka-2383
+ortezka.pl /index.php?id_product=9554&controller=product 301 https://ortezka.pl/products/stabilizator-kciuka-i-nadgarstka-2383
+ortezka.pl /inny-slug-cat-124 301 https://ortezka.pl/categories/ortezy-i-stabilizatory
+ortezka.pl /index.php?controller=category&id_category=124 301 https://ortezka.pl/categories/ortezy-i-stabilizatory
+ortezka.pl /index.php?id_category=243 410 -
+ortezka.pl /index.php?controller=contact 301 https://ortezka.pl/
+ortezka.pl /index.php 301 https://ortezka.pl/
+ortezka.pl /products/stabilizator-id-9554 200 -
+ortezka.pl /nieznany-produkt-id-999999999 200 -
 CASES
 
 docker run --rm -v "$H:/h:ro" nginx:1.27-alpine sh -c '
