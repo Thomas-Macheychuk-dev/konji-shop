@@ -142,10 +142,21 @@ it('previews, writes with a backup and rolls back weak product meta descriptions
         ->and($weak->fresh()->seo_description)->toBe('Vermeiren Sprzęt przeciwodleżynowy Poduszki przeciwodleżynowe VICAIR ACTIVE O2');
 });
 
-it('skips advertiser disclosures and manual links and drops list bullets', function (): void {
+it('skips advertiser disclosures, manual links and file names and drops list bullets', function (): void {
     $html = '<p>Klipsy mocujące do wszystkich kul FDI:</p><p>• wyposażone w system bezpieczeństwa, • dopasowane do wszystkich modeli kul FDI,</p>'
-        .'<p>Podmiot prowadzący reklamę: Antar Spółka Jawna.</p><p>User manual (multiversion).</p>';
+        .'<p>Podmiot prowadzący reklamę: Antar Spółka Jawna.</p><p>User manual (multiversion).</p><p>CE_Vicky_2024-07-23_pl.pdf</p>';
 
     expect(ProductMetaDescription::build($html, null, 'Klipsy FDI'))
         ->toBe('Wyposażone w system bezpieczeństwa. Dopasowane do wszystkich modeli kul FDI.');
+});
+
+it('ignores the manuals and medical notice the vermeiren importer appends', function (): void {
+    $html = '<p>Ułatwia osobom starszym wchodzenie do wanny i wychodzenie z niej bez pomocy drugiej osoby.</p>'
+        .'<section class="vermeiren-documents"><h2>Dokumenty i materiały</h2><h3>Instrukcje i materiały wideo</h3><ul>'
+        .'<li><a href="https://d1epzvmd6naoje.cloudfront.net/products/vermeiren/x/documents/manual/user-manual.pdf">User manual (multi version)</a></li>'
+        .'<li><a href="https://d1epzvmd6naoje.cloudfront.net/products/vermeiren/x/documents/ce/ce-vicky.pdf">Deklaracja zgodności CE dla modelu Vicky</a></li></ul></section>'
+        .'<section class="vermeiren-medical-notice"><p><strong>To jest wyrób medyczny. Używaj go zgodnie z instrukcją używania lub etykietą.</strong></p></section>';
+
+    expect(ProductMetaDescription::build($html, null, 'Vicky'))
+        ->toBe('Ułatwia osobom starszym wchodzenie do wanny i wychodzenie z niej bez pomocy drugiej osoby.');
 });
