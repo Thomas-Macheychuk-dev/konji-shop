@@ -69,6 +69,20 @@ The legacy ID is taken from a single-segment `/<slug>-id-N` or `/<slug>-cat-N` p
 - **301 to the same ID under another slug (13):** that ID has no decision either, so they stay 404.
 - **200 (272):** still-live products. 271 are already in `unresolved-products.csv`; the extra one is `wozek-inwalidzki-o-napedzie-elektrycznym-q5-id-2256`.
 
+## Hand decisions for unresolved products — 2 November
+
+`manual-products.csv` decides the 279 products that neither a breadcrumb nor a name rule resolved. Each was compared with the full new catalogue (all 14,619 product pages exported from staging) and the category list:
+
+| Decision | Products | Target |
+|---|---|---|
+| Same product in the new shop (same model or code; wording or variant differences only) | 34 | `/products/<slug>` |
+| No same product, but a specific category sells that kind of item | 156 | `/categories/<slug>` |
+| Nothing fits (Heine/veterinary diagnostics, Aseptica purifiers, Flovac suction liners, cupping and ear-candle sets, cosmetic gadgets …) | 89 | stays 404, listed in `unresolved-products.csv` |
+
+Product matches win over categories only when the item is clearly the same, because a wrong product redirect is worse than a category one. Promotional categories ("Nowości", "Okazje") were never used. The `matched` column holds the new product name or category path for review. Every target returned 200 on staging on 2 November. The calls worth a second look are the Reha Fund PP-11 spacer (matched to "Rozpórka nóg długa" by inference from PP-12 "krótka") and the generic disposable spatulas (matched to the wooden laryngological spatula).
+
+Hand decisions are the only fallback rules whose target can be a product. The gate's path-rule count now accepts `/products/` targets.
+
 ## Rebuild
 
 ```bash

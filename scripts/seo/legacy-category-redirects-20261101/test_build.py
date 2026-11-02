@@ -30,10 +30,10 @@ class LegacyFallbackMapTest(unittest.TestCase):
     def test_scope(self):
         summary = module.summary(self.entries, self.skipped, self.products, self.categories)
         self.assertEqual((summary['category_redirects'], summary['category_gone']), (232, 2))
-        self.assertEqual(summary['product_ids'], 8640)
-        self.assertEqual(summary['rules'], 14636)
-        self.assertEqual(len(self.unresolved), 279)
-        self.assertEqual(module.UNRESOLVED.read_bytes().decode('utf-8').count('\n'), 280)
+        self.assertEqual(summary['product_ids'], 8830)
+        self.assertEqual(summary['rules'], 14883)
+        self.assertEqual(len(self.unresolved), 89)
+        self.assertEqual(module.UNRESOLVED.read_bytes().decode('utf-8').count('\n'), 90)
 
     def test_never_shadows_exact_rules_or_app_routes(self):
         keys = set(self.entries)
@@ -48,10 +48,21 @@ class LegacyFallbackMapTest(unittest.TestCase):
         for path, (value, kind, _) in self.entries.items():
             if value == module.GONE:
                 self.assertEqual(kind, 'category', path)
+            elif value.startswith('/products/'):
+                self.assertIn(' manual product', self.entries[path][2], path)
             else:
                 self.assertTrue(value.startswith('/categories/') and value[len('/categories/'):] in active, path)
         gone = {p for p, (v, _, _) in self.entries.items() if v == module.GONE}
         self.assertEqual(gone, {'/na-dzien-babci-i-dziadka-cat-243', '/prezenty-na-dzien-kobiet-cat-244'})
+
+    def test_manual_decisions_cover_only_unresolved_products(self):
+        manual = module.manual_decisions()
+        self.assertTrue(manual)
+        for lid, row in manual.items():
+            self.assertIn(row['basis'], ('product', 'category'), lid)
+            self.assertTrue(row['target'].startswith({'product': '/products/', 'category': '/categories/'}[row['basis']]), lid)
+            self.assertTrue(any(r.endswith(f'legacy product {lid} manual {row["basis"]}') for _, _, r in self.entries.values()), lid)
+        self.assertFalse({str(p['legacy_id']) for p in self.unresolved} & set(manual))
 
     def test_breadcrumb_beats_name_rules(self):
         # Befado shoes under "Dla dzieci" follow the category decision, not the shoe keyword rule.
