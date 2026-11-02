@@ -67,6 +67,17 @@
                 </div>
             </div>
 
+            @if ($groups->count() > 1)
+                <nav class="mt-6 flex flex-wrap items-center gap-2" aria-label="Rodzaje sprzętu">
+                    <span class="mr-1 text-sm font-semibold text-slate-500">Przejdź do:</span>
+                    @foreach ($groups as $group)
+                        <a href="#{{ $group['key'] }}" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-[#155fa8]">
+                            {{ $group['heading'] }}
+                        </a>
+                    @endforeach
+                </nav>
+            @endif
+
             <ul class="mt-6 grid gap-4 sm:grid-cols-3">
                 @foreach ([
                     ['Dostawa pod wskazany adres', 'Przywozimy sprzęt, wnosimy go do pomieszczenia i przygotowujemy do użycia.'],
@@ -178,16 +189,6 @@
                     </div>
                 </div>
             </section>
-
-            @if ($groups->count() > 1)
-                <nav class="mt-10 flex flex-wrap gap-2" aria-label="Rodzaje sprzętu">
-                    @foreach ($groups as $group)
-                        <a href="#{{ $group['key'] }}" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-[#155fa8]">
-                            {{ $group['heading'] }}
-                        </a>
-                    @endforeach
-                </nav>
-            @endif
         </div>
     </section>
 
