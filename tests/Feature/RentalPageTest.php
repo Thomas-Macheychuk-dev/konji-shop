@@ -38,6 +38,10 @@ it('shows the rental offer grouped with deposits, monthly fees and phone links',
         ->assertSee('href="tel:+48604895717"', false)
         ->assertDontSee('Kule pachowe');
 
+    // The enquiry panel (phones, address) sits in the page header, before the equipment list.
+    $response->assertSeeInOrder(['<h1', 'Zapytaj o dostępność', 'href="tel:+48697595045"', 'Bolesława Prusa 20', 'id="beds"'], false);
+    expect(substr_count($response->getContent(), 'Zapytaj o dostępność'))->toBe(1);
+
     expect($response->viewData('seoTitle'))->toBe('Wypożyczalnia sprzętu medycznego Poznań')
         ->and(substr_count($response->getContent(), '<h1'))->toBe(1);
 });
