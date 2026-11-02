@@ -29,9 +29,10 @@ final class ProductMetaDescription
     ];
 
     /**
-     * Sentences about the page or its photos ("Kolor … pokazany jest w kwadracie obok zdjęcia") are not product facts.
+     * Sentences about the page, its photos or its downloads ("Kolor … pokazany jest w kwadracie obok zdjęcia",
+     * "CE_Vicky_2024-07-23_pl.pdf") are not product facts.
      */
-    private const PAGE_SENTENCE = '/zdjęci|kwadraci|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w (naszym )?sklepie|skontaktuj się|user manual|pobierz/iu';
+    private const PAGE_SENTENCE = '/zdjęci|kwadraci|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w (naszym )?sklepie|skontaktuj się|user manual|pobierz|\.(pdf|docx?|xlsx?|zip)\b/iu';
 
     /**
      * Manufacturer, importer, advertiser and contact blocks ("Producent: …, ul. …, 03-310 Warszawa, www…") are not product descriptions.
@@ -144,6 +145,8 @@ final class ProductMetaDescription
      */
     private static function units(string $html): array
     {
+        // The Vermeiren importer appends manual/video links and a medical-device notice; neither describes the product.
+        $html = preg_replace('#<section class="vermeiren-(documents|medical-notice)">.*?</section>#isu', ' ', $html) ?? '';
         $html = preg_replace('#<(h[1-6]|table|script|style)\b[^>]*>.*?</\1>#isu', ' ', $html) ?? '';
         $html = preg_replace('#<br\s*/?>|</(p|li|div|ul|ol|tr)>#iu', "\n", $html) ?? '';
         $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
