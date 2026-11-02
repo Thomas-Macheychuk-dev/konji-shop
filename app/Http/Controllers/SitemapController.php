@@ -63,6 +63,11 @@ final class SitemapController extends Controller
                 'priority' => '0.3',
             ],
             [
+                'loc' => route('rental.index'),
+                'changefreq' => 'monthly',
+                'priority' => '0.6',
+            ],
+            [
                 'loc' => route('legal.contact'),
                 'changefreq' => 'monthly',
                 'priority' => '0.3',
