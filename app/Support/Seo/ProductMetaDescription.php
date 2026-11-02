@@ -31,7 +31,7 @@ final class ProductMetaDescription
     /**
      * Sentences about the page or its photos ("Kolor … pokazany jest w kwadracie obok zdjęcia") are not product facts.
      */
-    private const PAGE_SENTENCE = '/zdjęci|kwadraci|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w sklepie/iu';
+    private const PAGE_SENTENCE = '/zdjęci|kwadraci|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w (naszym )?sklepie|skontaktuj się/iu';
 
     /**
      * Manufacturer, importer and contact blocks ("Producent: …, ul. …, 03-310 Warszawa, www…") are not product descriptions.
@@ -40,8 +40,9 @@ final class ProductMetaDescription
 
     /**
      * Supplier page tabs and widgets scraped along with the description ("Opis Wskazania Dostępne rozmiary …").
+     * Phrases such as "dostępne rozmiary" alone also occur in real descriptions, so only the tab labels count.
      */
-    private const PAGE_CHROME = '/Powiązane produkty|Masz jakieś pytania|Detale produktu|Dostępne rozmiary|Sposób zakładania/iu';
+    private const PAGE_CHROME = '/\bOpis Wskazania\b|Powiązane produkty|Masz jakieś pytania|Detale produktu/iu';
 
     /**
      * A list item's trailing comma or colon followed by an added full stop ("łydki,. Niewydolność").
@@ -105,6 +106,7 @@ final class ProductMetaDescription
                     || mb_strtolower(rtrim($sentence, '.')) === mb_strtolower($name)
                     || preg_match(self::PAGE_SENTENCE, $sentence) === 1
                     || preg_match(self::CONTACT_SENTENCE, $sentence) === 1
+                    || preg_match(self::PAGE_CHROME, $sentence) === 1
                     || str_ends_with($sentence, ':')) {
                     continue;
                 }

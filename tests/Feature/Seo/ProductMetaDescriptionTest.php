@@ -20,6 +20,8 @@ it('recognises weak meta descriptions', function (?string $meta, bool $weak): vo
     'boilerplate' => ['bluza kosmetyczna damska ze spandexem MIA. Sprawdź opis i parametry produktu w Ortezka.pl.', true],
     'good' => ['Poduszka przeciwodleżynowa z komorami powietrznymi. Pokrowiec zdejmowany, do prania w 60°C, dostępne cztery rozmiary.', false],
     'scraped page tabs' => ['Orteza stawu nadgarstkowego SZW-01 Opis Wskazania Dostępne rozmiary Rozmiar UNI Detale produktu Powiązane produkty', true],
+    'sizes mentioned in real copy' => ['Różne modele dętek do wózków inwalidzkich – dostępne rozmiary i typy wentyli: prosty, 90/30, 90/90, 45/45 – do wózków aktywnych i standardowych', false],
+    'size prompt in marketing copy' => ['Wybierz ortezę kciuka AT53065! Komfortowa tkanina welurowa, aluminiowa szyna i doskonałe wsparcie w leczeniu urazów. Sprawdź dostępne rozmiary.', false],
     'broken list punctuation' => ['Przeciążenia mięśnia brzuchatego łydki,. Niewydolność krążenia kończyn dolnych,. Zapalenie rozcięgna.', true],
 ]);
 
@@ -40,6 +42,18 @@ it('drops trailing list commas and list lead-ins when building from the descript
 
     expect(ProductMetaDescription::build($html, null, 'Rich Mono'))
         ->toBe('Naturalny prześwit skóry na górze głowy. Lekkość i przewiewność przez cały dzień noszenia.');
+});
+
+it('never rebuilds a description from scraped page tabs or shop wording', function (): void {
+    $scraped = '<p>Kolano Orteza stawu kolanowego DR-K092 Orteza stawu kolanowego DR-K092 Opis Wskazania Dostępne rozmiary Rozmiar M L XL cm 26 – 31 31 – 36 36 – 41 Detale produktu Powiązane produkty Masz jakieś pytania? Jeśli potrzebujesz pomocy lub dodatkowych informacji skontaktuj się z nami mailowo lub telefonicznie</p>';
+
+    expect(ProductMetaDescription::build($scraped, null, 'Orteza stawu kolanowego DR-K092'))->toBeNull();
+
+    $shop = '<p>W naszym sklepie internetowym znajdziesz pełną gamę dętek do wózków inwalidzkich, zaprojektowanych z myślą o niezawodności.</p>'
+        .'<p>Dętki są dostępne w rozmiarach od 12 do 24 cali, z wentylami prostymi i kątowymi do wózków aktywnych.</p>';
+
+    expect(ProductMetaDescription::build($shop, null, 'Dętki'))
+        ->toBe('Dętki są dostępne w rozmiarach od 12 do 24 cali, z wentylami prostymi i kątowymi do wózków aktywnych.');
 });
 
 it('builds whole sentences from the product description without headings or tables', function (): void {
