@@ -19,7 +19,28 @@ it('recognises weak meta descriptions', function (?string $meta, bool $weak): vo
     'shop medi' => ['Odkryj pończochy Mediven Forte w Shop Medi. Trwałe, wygodne, wykonane z dzianiny o wysokiej gęstości.', true],
     'boilerplate' => ['bluza kosmetyczna damska ze spandexem MIA. Sprawdź opis i parametry produktu w Ortezka.pl.', true],
     'good' => ['Poduszka przeciwodleżynowa z komorami powietrznymi. Pokrowiec zdejmowany, do prania w 60°C, dostępne cztery rozmiary.', false],
+    'scraped page tabs' => ['Orteza stawu nadgarstkowego SZW-01 Opis Wskazania Dostępne rozmiary Rozmiar UNI Detale produktu Powiązane produkty', true],
+    'broken list punctuation' => ['Przeciążenia mięśnia brzuchatego łydki,. Niewydolność krążenia kończyn dolnych,. Zapalenie rozcięgna.', true],
 ]);
+
+it('repairs broken list punctuation in stored descriptions and keeps valid long ones whole', function (): void {
+    expect(ProductMetaDescription::clean('Przeciążenia mięśnia łydki,. Niewydolność krążenia,. Zapalenie rozcięgna podeszwowego,.'))
+        ->toBe('Przeciążenia mięśnia łydki. Niewydolność krążenia. Zapalenie rozcięgna podeszwowego.');
+
+    $long = 'POKROWIEC ELASTYCZNY – miękki i przyjemny w dotyku pokrowiec wykonany z „oddychającej” dzianiny elastycznej. '
+        .'Doskonale dopasowuje się poduszki, a tym samym, idealnie odwzorowuje jej kształt. '
+        .'Materiał odznacza się niebywałą delikatnością oraz funkcją sprawnego odprowadzania wilgoci.';
+
+    expect(ProductMetaDescription::clean('<p>'.$long.'</p>'))->toBe($long)
+        ->and(ProductMetaDescription::isWeak($long))->toBeFalse();
+});
+
+it('drops trailing list commas and list lead-ins when building from the description', function (): void {
+    $html = '<p>Dzięki bazie peruki Rich Mono zyskujesz:</p><ul><li>naturalny prześwit skóry na górze głowy,</li><li>lekkość i przewiewność przez cały dzień noszenia,</li></ul>';
+
+    expect(ProductMetaDescription::build($html, null, 'Rich Mono'))
+        ->toBe('Naturalny prześwit skóry na górze głowy. Lekkość i przewiewność przez cały dzień noszenia.');
+});
 
 it('builds whole sentences from the product description without headings or tables', function (): void {
     $html = '<h2>VICAIR ACTIVE O2</h2><p>Poduszka z komorami powietrznymi dopasowuje się do kształtu ciała. Pokrowiec jest zdejmowany i można go prać.</p>'

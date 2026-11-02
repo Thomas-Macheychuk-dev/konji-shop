@@ -19,6 +19,7 @@ use App\Services\Qmed\QmedDescriptionSanitizer;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
 use App\Support\Products\ProductLegalDisclosures;
+use App\Support\Seo\ProductMetaDescription;
 use App\Support\Seo\ReviewedProductAliases;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -181,7 +182,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v13.%s.%d',
+            'product-page.v14.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -227,14 +228,11 @@ class ProductShowController extends Controller
     private function seoDescription(Product $product): string
     {
         if (filled($product->seo_description)) {
-            return Str::squish(strip_tags($product->seo_description));
+            return ProductMetaDescription::clean($product->seo_description);
         }
 
-        $description = $product->short_description
-                ?: $product->description
-                    ?: $product->name;
-
-        return $this->limitText($description, 160);
+        return ProductMetaDescription::build($product->description, $product->short_description, (string) $product->name)
+            ?? Str::limit(ProductMetaDescription::clean($product->short_description ?: $product->description ?: $product->name), 160, '', preserveWords: true);
     }
 
     private function openGraphImage(Product $product, ?ProductVariant $defaultVariant): ?string
@@ -461,17 +459,6 @@ class ProductShowController extends Controller
         }
 
         return url($url);
-    }
-
-    private function limitText(?string $value, int $limit): string
-    {
-        $value = trim(preg_replace('/\s+/', ' ', strip_tags((string) $value)) ?? '');
-
-        if ($value === '') {
-            return '';
-        }
-
-        return Str::limit($value, $limit, '');
     }
 
     private function baseImages(Product $product): array
