@@ -15,6 +15,8 @@ UNRESOLVED = REVIEW.parent / 'unresolved-products.csv'
 EXACT_MAPS = [REPO / 'docker/nginx/generated/legacy-seo-product-map.conf', REPO / 'docker/nginx/generated/legacy-seo-staging-extra-map.conf']
 PLACEHOLDERS = REPO / 'config/legacy-product-placeholders.php'
 LIVE_REDIRECTS = ROOT / 'live-redirects-20261102.tsv'
+MANUAL = ROOT / 'manual-products.csv'
+MANUAL_TARGET = re.compile(r'^/(products|categories)/[a-z0-9-]+$')
 GONE = '410'
 LEGACY_PRODUCT = re.compile(r'^/[^/]+-id-(\d+)$')
 LEGACY_CATEGORY = re.compile(r'^/[^/]+-cat-(\d+)$')
@@ -78,6 +80,13 @@ def rule_for_name(name, rules):
     return None
 
 
+def manual_decisions():
+    """Hand decisions for live legacy products that neither a breadcrumb nor a name rule resolves."""
+    if not MANUAL.exists():
+        return {}
+    return {r['legacy_id']: r for r in csv.DictReader(MANUAL.read_text(encoding='utf-8').splitlines())}
+
+
 def build():
     sources, rows = decisions.load()
     resolved = decisions.resolve(sources, rows)
@@ -107,7 +116,16 @@ def build():
         add(r['path'], target, 'category', f'legacy category {lid}' + (f' via {r["via"]}' if r['via'] else ''))
 
     products = json.loads(PRODUCT_SOURCES.read_text(encoding='utf-8'))['products']
+    manual = manual_decisions()
+    if unknown := set(manual) - {str(p['legacy_id']) for p in products}:
+        raise ValueError(f'manual decisions for products outside product-sources.json: {sorted(unknown)}')
     for p in products:
+        if (row := manual.get(str(p['legacy_id']))) is not None:
+            if not MANUAL_TARGET.match(row['target']) or (row['target'].startswith('/categories/') and row['target'][12:] not in active):
+                raise ValueError(f'manual target {row["target"]} for legacy product {p["legacy_id"]} is not valid')
+            for path in p['paths']:
+                add(path, row['target'], 'product', f'legacy product {p["legacy_id"]} manual {row["basis"]}')
+            continue
         lid = category_for_breadcrumbs(p['breadcrumbs'], by_trail)
         if lid is not None:
             slug, reason = resolved[lid]['target_slug'], f'breadcrumb category {lid}'

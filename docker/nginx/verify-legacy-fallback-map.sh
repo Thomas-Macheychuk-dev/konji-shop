@@ -2,9 +2,9 @@
 set -eu
 
 MAP=/etc/nginx/conf.d/02-legacy-seo-category-fallback-map.conf
-EXPECTED_SHA=639a44d3e5387374b4a2362ae0715d8421563c300362e146ff9f299d28c0059b
-EXPECTED_RULES=14636
-EXPECTED_ID_RULES=9735
+EXPECTED_SHA=da3887b192b5aa5c02caa0bdf9a2ca6089199deddc6737fe1816427dd4f72df2
+EXPECTED_RULES=14883
+EXPECTED_ID_RULES=9925
 
 fail() {
     echo "LEGACY_FALLBACK_MAP_GATE=FAIL: $1" >&2
@@ -19,7 +19,7 @@ ACTUAL_SHA="$(sha256sum "$MAP" | cut -d ' ' -f 1)"
     fail "MAP_SHA_MISMATCH"
 
 ACTUAL_RULES="$(
-    grep -cE '^    "/[^"]+" "(/categories/[^"]+|410)";$' "$MAP"
+    grep -cE '^    "/[^"]+" "(/products/[^"]+|/categories/[^"]+|410)";$' "$MAP"
 )" || fail "INVALID_RULES"
 
 [ "$ACTUAL_RULES" = "$EXPECTED_RULES" ] ||

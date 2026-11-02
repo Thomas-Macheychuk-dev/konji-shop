@@ -48,6 +48,8 @@ ortezka.pl /index.php?controller=category&id_category=124 301 https://ortezka.pl
 ortezka.pl /index.php?id_category=243 410 -
 ortezka.pl /index.php?controller=contact 301 https://ortezka.pl/
 ortezka.pl /index.php 301 https://ortezka.pl/
+ortezka.pl /bc-200-comfy-pojedynczy-laktator-elektryczny-id-13062 301 https://ortezka.pl/products/bc-200-comfy
+ortezka.pl /index.php?id_product=13062 301 https://ortezka.pl/products/bc-200-comfy
 ortezka.pl /products/stabilizator-id-9554 200 -
 ortezka.pl /nieznany-produkt-id-999999999 200 -
 CASES
