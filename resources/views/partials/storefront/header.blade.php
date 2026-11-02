@@ -279,7 +279,7 @@
             </a>
 
             <a href="{{ route('rental.index') }}" class="ml-auto rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
-                Wypożyczalnia
+                Wypożyczalnia sprzętu medycznego
             </a>
 
             <a href="{{ route('legal.nfz') }}" class="rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]">
@@ -327,7 +327,7 @@
             </div>
 
             <div class="mt-5 grid gap-1 border-t border-slate-100 pt-5 sm:grid-cols-2">
-                <a href="{{ route('rental.index') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Wypożyczalnia</a>
+                <a href="{{ route('rental.index') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Wypożyczalnia sprzętu medycznego</a>
                 <a href="{{ route('legal.nfz') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Refundacje NFZ</a>
                 <a href="{{ route('withdrawals.start') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Odstąp od umowy</a>
                 <a href="{{ route('legal.delivery-payments') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Dostawa i płatności</a>

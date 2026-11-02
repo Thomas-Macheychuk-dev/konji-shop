@@ -50,6 +50,17 @@ it('redirects the legacy rental page and lists the new one in the sitemap', func
     $this->get('/sitemap.xml')->assertOk()->assertSee(route('rental.index'), false);
 });
 
+it('links the rental page from the top menu, before the customer information links', function (): void {
+    $this->get(route('home'))->assertOk()->assertSeeInOrder([
+        'href="'.route('rental.index').'"',
+        'Wypożyczalnia sprzętu medycznego',
+        'Refundacje NFZ',
+        'Odstąp od umowy',
+        'Dostawa i płatności',
+        'Kontakt',
+    ], false);
+});
+
 it('formats single prices and ranges', function (): void {
     $item = new RentalItem(['deposit_min' => 200, 'deposit_max' => 500, 'monthly_min' => 80, 'monthly_max' => null]);
 
