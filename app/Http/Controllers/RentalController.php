@@ -19,6 +19,9 @@ class RentalController extends Controller
 
         return view('pages.rental', [
             'groups' => $groups,
+            'items' => $items,
+            // "Zapytaj o ten sprzęt" links preselect the item in the enquiry form.
+            'selectedItems' => old('items', array_filter([request()->string('sprzet')->toString()])),
             'phones' => array_values(array_filter(config('rental.phones', []))),
             'address' => config('rental.address'),
             'seoTitle' => 'Wypożyczalnia sprzętu medycznego Poznań',
