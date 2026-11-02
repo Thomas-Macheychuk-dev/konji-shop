@@ -29,14 +29,8 @@ final class LegacyProductPlaceholderController extends Controller
             'openGraphDescription' => $seoDescription,
             'openGraphType' => 'product',
             'robots' => 'index, follow',
+            // Google rejects Product markup without offers, review or aggregateRating; the placeholder has none.
             'structuredData' => [
-                [
-                    '@context' => 'https://schema.org',
-                    '@type' => 'Product',
-                    'name' => $name,
-                    'description' => $seoDescription,
-                    'url' => $canonicalUrl,
-                ],
                 [
                     '@context' => 'https://schema.org',
                     '@type' => 'BreadcrumbList',

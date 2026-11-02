@@ -6,22 +6,27 @@ namespace App\Services\Security;
 
 use JsonException;
 
-final class GoogleCrawlerRangeRepository
+final class CrawlerRangeRepository
 {
+    public function hasRanges(string $crawler): bool
+    {
+        $path = $this->path($crawler);
+
+        return $path !== '' && is_file($path) && is_readable($path);
+    }
+
     /**
      * @return list<string>
      */
-    public function prefixes(): array
+    public function prefixes(string $crawler): array
     {
-        $path = (string) config('traffic_protection.google.ranges_file');
-
-        if ($path === '' || ! is_file($path) || ! is_readable($path)) {
+        if (! $this->hasRanges($crawler)) {
             return [];
         }
 
         try {
             $decoded = json_decode(
-                (string) file_get_contents($path),
+                (string) file_get_contents($this->path($crawler)),
                 true,
                 512,
                 JSON_THROW_ON_ERROR,
@@ -44,5 +49,10 @@ final class GoogleCrawlerRangeRepository
             $prefixes,
             static fn (mixed $prefix): bool => is_string($prefix) && $prefix !== '',
         ));
+    }
+
+    private function path(string $crawler): string
+    {
+        return (string) config('traffic_protection.verified_crawlers.'.$crawler.'.ranges_file');
     }
 }

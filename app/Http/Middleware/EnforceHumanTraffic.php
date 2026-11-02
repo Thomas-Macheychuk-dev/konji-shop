@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Services\Security\GoogleCrawlerVerifier;
 use App\Services\Security\HumanVerificationCookie;
+use App\Services\Security\VerifiedCrawlerVerifier;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class EnforceHumanTraffic
 {
     public function __construct(
-        private readonly GoogleCrawlerVerifier $googleCrawlerVerifier,
+        private readonly VerifiedCrawlerVerifier $crawlerVerifier,
         private readonly HumanVerificationCookie $humanVerificationCookie,
     ) {}
 
@@ -31,12 +31,25 @@ final class EnforceHumanTraffic
         $userAgent = trim((string) $request->userAgent());
         $ip = (string) $request->ip();
 
-        if ($this->googleCrawlerVerifier->isGoogleUserAgent($userAgent)) {
-            if ($this->googleCrawlerVerifier->isVerified($ip, $userAgent)) {
+        $crawler = $this->crawlerVerifier->crawlerFor($userAgent);
+
+        if ($crawler !== null) {
+            if ($this->crawlerVerifier->isVerified($crawler, $ip)) {
                 return $next($request);
             }
 
-            $this->logBlock($request, 'spoofed_or_unverified_google');
+            // Until the crawler's ranges are first downloaded nothing can be verified; blocking a real
+            // search engine then would cost indexing, so let it through and flag the missing file.
+            if (! $this->crawlerVerifier->hasRanges($crawler)) {
+                Log::warning('Traffic protection has no IP ranges for a verified crawler.', [
+                    'crawler' => $crawler,
+                    'path' => $request->path(),
+                ]);
+
+                return $next($request);
+            }
+
+            $this->logBlock($request, 'spoofed_or_unverified_'.$crawler);
 
             abort(403);
         }

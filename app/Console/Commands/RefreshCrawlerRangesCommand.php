@@ -10,24 +10,58 @@ use Illuminate\Support\Facades\Http;
 use JsonException;
 use Throwable;
 
-final class RefreshGoogleCrawlerRangesCommand extends Command
+final class RefreshCrawlerRangesCommand extends Command
 {
-    protected $signature = 'traffic:refresh-google-crawler-ranges
+    protected $signature = 'traffic:refresh-crawler-ranges
+        {crawler?* : Crawlers to refresh, e.g. google bing (default: all configured)}
         {--show-prefixes : Print the downloaded CIDR prefixes}';
 
-    protected $description = 'Refresh the official Google crawler and fetcher IP ranges used by traffic protection.';
+    protected $description = 'Refresh the official search engine crawler IP ranges used by traffic protection.';
 
     public function handle(): int
     {
+        $configured = (array) config('traffic_protection.verified_crawlers', []);
+        $crawlers = (array) $this->argument('crawler') ?: array_keys($configured);
+
+        if ($crawlers === []) {
+            $this->error('No verified crawlers are configured.');
+
+            return self::FAILURE;
+        }
+
+        $failed = false;
+
+        // One crawler's feed being down must not keep the others' ranges from refreshing.
+        foreach ($crawlers as $crawler) {
+            if (! is_array($configured[$crawler] ?? null)) {
+                $this->error('Unknown crawler: '.$crawler);
+                $failed = true;
+
+                continue;
+            }
+
+            if (! $this->refresh((string) $crawler, $configured[$crawler])) {
+                $failed = true;
+            }
+        }
+
+        return $failed ? self::FAILURE : self::SUCCESS;
+    }
+
+    /**
+     * @param  array<string, mixed>  $definition
+     */
+    private function refresh(string $crawler, array $definition): bool
+    {
         $sources = array_values(array_filter(
-            (array) config('traffic_protection.google.sources', []),
+            (array) ($definition['sources'] ?? []),
             static fn (mixed $source): bool => is_string($source) && $source !== '',
         ));
 
         if ($sources === []) {
-            $this->error('No Google crawler range sources are configured.');
+            $this->error(sprintf('No %s crawler range sources are configured.', $crawler));
 
-            return self::FAILURE;
+            return false;
         }
 
         $prefixes = [];
@@ -38,9 +72,9 @@ final class RefreshGoogleCrawlerRangesCommand extends Command
 
             try {
                 $response = Http::acceptJson()
-                    ->timeout(max(1, (int) config('traffic_protection.google.refresh_timeout_seconds', 20)))
+                    ->timeout(max(1, (int) config('traffic_protection.crawler_ranges.refresh_timeout_seconds', 20)))
                     ->retry(
-                        max(1, (int) config('traffic_protection.google.refresh_attempts', 3)),
+                        max(1, (int) config('traffic_protection.crawler_ranges.refresh_attempts', 3)),
                         500,
                         static fn (Throwable $exception): bool => $exception instanceof ConnectionException,
                         throw: false,
@@ -49,21 +83,21 @@ final class RefreshGoogleCrawlerRangesCommand extends Command
             } catch (Throwable $exception) {
                 $this->error('Failed to fetch '.$source.': '.$exception->getMessage());
 
-                return self::FAILURE;
+                return false;
             }
 
             if (! $response->successful()) {
                 $this->error(sprintf('Failed to fetch %s: HTTP %d', $source, $response->status()));
 
-                return self::FAILURE;
+                return false;
             }
 
             $payload = $response->json();
 
             if (! is_array($payload) || ! is_array($payload['prefixes'] ?? null)) {
-                $this->error('Invalid Google crawler range payload from '.$source);
+                $this->error(sprintf('Invalid %s crawler range payload from %s', $crawler, $source));
 
-                return self::FAILURE;
+                return false;
             }
 
             $sourceCount = 0;
@@ -96,17 +130,17 @@ final class RefreshGoogleCrawlerRangesCommand extends Command
         sort($prefixList, SORT_STRING);
 
         if ($prefixList === []) {
-            $this->error('Google crawler range refresh returned zero CIDR prefixes.');
+            $this->error(sprintf('The %s crawler range refresh returned zero CIDR prefixes.', $crawler));
 
-            return self::FAILURE;
+            return false;
         }
 
-        $path = (string) config('traffic_protection.google.ranges_file');
+        $path = (string) ($definition['ranges_file'] ?? '');
 
         if ($path === '') {
-            $this->error('Google crawler range file path is not configured.');
+            $this->error(sprintf('The %s crawler range file path is not configured.', $crawler));
 
-            return self::FAILURE;
+            return false;
         }
 
         $directory = dirname($path);
@@ -114,7 +148,7 @@ final class RefreshGoogleCrawlerRangesCommand extends Command
         if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) {
             $this->error('Could not create directory: '.$directory);
 
-            return self::FAILURE;
+            return false;
         }
 
         try {
@@ -124,21 +158,21 @@ final class RefreshGoogleCrawlerRangesCommand extends Command
                 'prefixes' => $prefixList,
             ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR).PHP_EOL;
         } catch (JsonException $exception) {
-            $this->error('Could not encode Google crawler ranges: '.$exception->getMessage());
+            $this->error(sprintf('Could not encode %s crawler ranges: %s', $crawler, $exception->getMessage()));
 
-            return self::FAILURE;
+            return false;
         }
 
         $temporaryPath = $path.'.tmp-'.bin2hex(random_bytes(6));
 
         if (file_put_contents($temporaryPath, $json, LOCK_EX) === false || ! rename($temporaryPath, $path)) {
             @unlink($temporaryPath);
-            $this->error('Could not atomically write Google crawler range file: '.$path);
+            $this->error(sprintf('Could not atomically write %s crawler range file: %s', $crawler, $path));
 
-            return self::FAILURE;
+            return false;
         }
 
-        $this->info(sprintf('Saved %d unique Google CIDR prefixes to %s', count($prefixList), $path));
+        $this->info(sprintf('Saved %d unique %s CIDR prefixes to %s', count($prefixList), $crawler, $path));
 
         if ($this->option('show-prefixes')) {
             foreach ($prefixList as $prefix) {
@@ -146,6 +180,6 @@ final class RefreshGoogleCrawlerRangesCommand extends Command
             }
         }
 
-        return self::SUCCESS;
+        return true;
     }
 }

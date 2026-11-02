@@ -25,8 +25,9 @@ it('serves the Q5 placeholder as an indexable canonical product page without che
         ->assertSee('Produkt obecnie niedostępny')
         ->assertSee('<meta name="robots" content="index, follow">', false)
         ->assertSee('<link rel="canonical" href="'.$canonical.'">', false)
-        ->assertSee('"@type": "Product"', false)
-        ->assertSee('"url": "'.$canonical.'"', false)
+        ->assertSee('"@type": "BreadcrumbList"', false)
+        ->assertSee('"item": "'.$canonical.'"', false)
+        ->assertDontSee('"@type": "Product"', false)
         ->assertDontSee('Dodaj do koszyka')
         ->assertDontSee('Zamówienie z obowiązkiem zapłaty')
         ->assertDontSee('"@type": "Offer"', false);

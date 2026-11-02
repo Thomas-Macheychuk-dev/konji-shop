@@ -32,7 +32,7 @@ beforeEach(function (): void {
         'traffic_protection.turnstile.site_key' => 'test-site-key',
         'traffic_protection.turnstile.secret_key' => 'test-secret-key',
         'traffic_protection.turnstile.allowed_hostnames' => ['localhost'],
-        'traffic_protection.google.ranges_file' => writeGoogleCrawlerRanges([
+        'traffic_protection.verified_crawlers.google.ranges_file' => writeGoogleCrawlerRanges([
             '66.249.64.0/19',
             '2001:4860:4801::/48',
         ]),
@@ -154,4 +154,36 @@ it('keeps Paynow notifications and robots exempt from the human challenge', func
         ->postJson('/payments/paynow/notifications', []);
 
     expect($response->status())->not->toBe(403);
+});
+
+it('allows Bingbot only from Bing\'s published ranges', function (): void {
+    $path = storage_path('framework/testing/bing-crawler-ranges.json');
+    file_put_contents($path, json_encode(['prefixes' => ['157.55.39.0/24']], JSON_THROW_ON_ERROR));
+    config(['traffic_protection.verified_crawlers.bing.ranges_file' => $path]);
+
+    $bingbot = 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
+
+    $this
+        ->withServerVariables(['REMOTE_ADDR' => '157.55.39.10'])
+        ->withHeader('User-Agent', $bingbot)
+        ->get('/__traffic-protection-test/ok')
+        ->assertOk();
+
+    $this
+        ->withServerVariables(['REMOTE_ADDR' => '203.0.113.10'])
+        ->withHeader('User-Agent', $bingbot)
+        ->get('/__traffic-protection-test/ok')
+        ->assertForbidden();
+
+    @unlink($path);
+});
+
+it('lets a search engine crawler through while its ranges have never been downloaded', function (): void {
+    config(['traffic_protection.verified_crawlers.apple.ranges_file' => storage_path('framework/testing/missing-ranges.json')]);
+
+    $this
+        ->withServerVariables(['REMOTE_ADDR' => '17.241.208.170'])
+        ->withHeader('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15 (Applebot/0.1; +http://www.apple.com/go/applebot)')
+        ->get('/__traffic-protection-test/ok')
+        ->assertOk();
 });

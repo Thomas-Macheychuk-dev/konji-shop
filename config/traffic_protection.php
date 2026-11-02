@@ -31,18 +31,46 @@ return [
         'attempts' => (int) env('TURNSTILE_ATTEMPTS', 2),
     ],
 
-    'google' => [
-        'ranges_file' => storage_path('app/security/google-crawler-ranges.json'),
-        'sources' => [
-            'https://developers.google.com/static/crawling/ipranges/common-crawlers.json',
-            'https://developers.google.com/static/crawling/ipranges/special-crawlers.json',
-            'https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers.json',
-            'https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers-google.json',
-            'https://developers.google.com/static/crawling/ipranges/user-triggered-agents.json',
+    // Search engine crawlers that publish their source IP ranges. A request whose User-Agent matches one of
+    // these is allowed only from that crawler's published ranges; spoofed User-Agents are rejected.
+    'verified_crawlers' => [
+        'google' => [
+            'ranges_file' => storage_path('app/security/google-crawler-ranges.json'),
+            'sources' => [
+                'https://developers.google.com/static/crawling/ipranges/common-crawlers.json',
+                'https://developers.google.com/static/crawling/ipranges/special-crawlers.json',
+                'https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers.json',
+                'https://developers.google.com/static/crawling/ipranges/user-triggered-fetchers-google.json',
+                'https://developers.google.com/static/crawling/ipranges/user-triggered-agents.json',
+            ],
+            'user_agent_pattern' => '/(?:Googlebot|GoogleOther|Google-InspectionTool|Storebot-Google|Google-Site-Verification|Google-Read-Aloud|GoogleProducer|FeedFetcher-Google|AdsBot-Google|Mediapartners-Google|APIs-Google|GoogleMessages|Google-Pinpoint|Google-Agent)/i',
         ],
-        'user_agent_pattern' => '/(?:Googlebot|GoogleOther|Google-InspectionTool|Storebot-Google|Google-Site-Verification|Google-Read-Aloud|GoogleProducer|FeedFetcher-Google|AdsBot-Google|Mediapartners-Google|APIs-Google|GoogleMessages|Google-Pinpoint|Google-Agent)/i',
-        'refresh_timeout_seconds' => (int) env('GOOGLE_CRAWLER_RANGES_TIMEOUT_SECONDS', 20),
-        'refresh_attempts' => (int) env('GOOGLE_CRAWLER_RANGES_ATTEMPTS', 3),
+        'bing' => [
+            'ranges_file' => storage_path('app/security/bing-crawler-ranges.json'),
+            'sources' => [
+                'https://www.bing.com/toolbox/bingbot.json',
+            ],
+            'user_agent_pattern' => '/bingbot/i',
+        ],
+        'duckduckgo' => [
+            'ranges_file' => storage_path('app/security/duckduckgo-crawler-ranges.json'),
+            'sources' => [
+                'https://duckduckgo.com/duckduckbot.json',
+            ],
+            'user_agent_pattern' => '/DuckDuckBot/i',
+        ],
+        'apple' => [
+            'ranges_file' => storage_path('app/security/apple-crawler-ranges.json'),
+            'sources' => [
+                'https://search.developer.apple.com/applebot.json',
+            ],
+            'user_agent_pattern' => '/Applebot/i',
+        ],
+    ],
+
+    'crawler_ranges' => [
+        'refresh_timeout_seconds' => (int) env('CRAWLER_RANGES_TIMEOUT_SECONDS', 20),
+        'refresh_attempts' => (int) env('CRAWLER_RANGES_ATTEMPTS', 3),
     ],
 
     'exempt_paths' => [
@@ -57,9 +85,7 @@ return [
         'ahrefsbot',
         'amazonbot',
         'anthropic-ai',
-        'applebot',
         'baiduspider',
-        'bingbot',
         'bytespider',
         'ccbot',
         'chatgpt-user',
@@ -67,7 +93,6 @@ return [
         'cohere-ai',
         'curl/',
         'dataforseobot',
-        'duckduckbot',
         'facebookexternalhit',
         'gptbot',
         'headlesschrome',

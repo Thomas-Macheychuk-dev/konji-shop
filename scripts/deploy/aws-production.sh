@@ -102,6 +102,11 @@ ${COMPOSE} exec -T app php artisan storage:link || true
 echo "Checking production runtime optimization..."
 ${COMPOSE} exec -T app php artisan shop:check-runtime --json
 
+# Traffic protection can only verify search engine crawlers once their published
+# IP ranges are on disk; the scheduler otherwise first refreshes them at 03:15.
+echo "Refreshing search engine crawler IP ranges..."
+${COMPOSE} exec -T app php artisan traffic:refresh-crawler-ranges || true
+
 echo "Starting web, queue and scheduler..."
 ${COMPOSE} up -d --remove-orphans web queue scheduler
 

@@ -1,11 +1,11 @@
 # Storefront traffic protection
 
-This layer is intended to allow normal human browser traffic and verified Google crawling/fetching while rejecting known automated crawlers and command-line clients.
+This layer is intended to allow normal human browser traffic and verified search engine crawling (Google, Bing, DuckDuckGo, Apple) while rejecting known automated crawlers and command-line clients.
 
 ## Runtime flow
 
 1. `/up`, `/robots.txt`, `/human-check` and Paynow notifications are exempt from the human challenge.
-2. A request claiming to be a Google crawler/fetcher is allowed only when its source IP matches Google's published crawler/fetcher CIDR ranges.
+2. A request whose User-Agent matches a crawler in `traffic_protection.verified_crawlers` is allowed only when its source IP matches that crawler's published CIDR ranges. If that crawler's ranges file has never been downloaded, the request is let through and a warning is logged, so a fresh install cannot lock search engines out.
 3. Known crawler, scraper, headless and command-line User-Agents are rejected with HTTP 403.
 4. A normal browser without a valid `konji_human_verified` cookie is redirected to `/human-check`.
 5. `/human-check` validates Cloudflare Turnstile server-side. A successful validation issues a signed, HttpOnly human-verification cookie.
@@ -16,7 +16,7 @@ Google Analytics browser measurement does not require an inbound crawler exempti
 
 ## Production activation
 
-Do not enable the middleware until Turnstile is configured and Google's ranges have been downloaded.
+Do not enable the middleware until Turnstile is configured and the crawler ranges have been downloaded. The production deploy script refreshes them on every deploy.
 
 Set production environment values:
 
@@ -28,17 +28,19 @@ TURNSTILE_ACTION=human-traffic
 TURNSTILE_ALLOWED_HOSTNAMES=konji.example,www.konji.example
 ```
 
-Refresh Google ranges inside the application container:
+Refresh the crawler ranges inside the application container (pass names such as `google bing` to refresh only some):
 
 ```bash
-php artisan traffic:refresh-google-crawler-ranges
+php artisan traffic:refresh-crawler-ranges
 ```
 
-Confirm the file exists and contains prefixes:
+Confirm each file exists and contains prefixes:
 
 ```bash
-php -r '$p="storage/app/security/google-crawler-ranges.json"; $d=json_decode(file_get_contents($p), true); echo count($d["prefixes"] ?? []).PHP_EOL;'
+for c in google bing duckduckgo apple; do php -r '$p="storage/app/security/'$c'-crawler-ranges.json"; $d=json_decode(file_get_contents($p), true); echo "'$c' ".count($d["prefixes"] ?? []).PHP_EOL;'; done
 ```
+
+Facebook's link-preview crawler (`facebookexternalhit`) stays blocked: Meta publishes no IP range feed, so Facebook, Messenger and WhatsApp links show no preview while protection is on.
 
 Then set:
 
@@ -52,7 +54,7 @@ and clear cached configuration:
 php artisan optimize:clear
 ```
 
-The scheduler refreshes Google's ranges every day at 03:15.
+The scheduler refreshes all crawler ranges every day at 03:15.
 
 ## Required exclusions
 

@@ -4,7 +4,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::command('traffic:refresh-google-crawler-ranges')
+Schedule::command('traffic:refresh-crawler-ranges')
     ->dailyAt('03:15')
     ->withoutOverlapping();
 
