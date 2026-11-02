@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 /**
  * Builds a product meta description from the product's own description text: whole sentences, no new
  * claims. Used to replace weak imported meta descriptions (empty, very short, supplier breadcrumbs,
- * supplier shop phrasing or generic boilerplate).
+ * supplier shop phrasing, scraped page tabs or generic boilerplate).
  */
 final class ProductMetaDescription
 {
@@ -38,11 +38,23 @@ final class ProductMetaDescription
      */
     private const CONTACT_SENTENCE = '/\b(producent|wytwórca|dystrybutor|importer|podmiot odpowiedzialny)\b\s*:|www\.|https?:|@|e-?mail|\btel\.|\bul\.\s|\b\d{2}-\d{3}\b|\bsp\.\s*z\s*o\.?\s*o/iu';
 
+    /**
+     * Supplier page tabs and widgets scraped along with the description ("Opis Wskazania Dostępne rozmiary …").
+     */
+    private const PAGE_CHROME = '/Powiązane produkty|Masz jakieś pytania|Detale produktu|Dostępne rozmiary|Sposób zakładania/iu';
+
+    /**
+     * A list item's trailing comma or colon followed by an added full stop ("łydki,. Niewydolność").
+     */
+    private const BROKEN_PUNCTUATION = '/\s*[,;:]\s*\./u';
+
     public static function isWeak(?string $meta): bool
     {
         $plain = self::squish((string) $meta);
 
-        if (mb_strlen($plain) < self::MIN_LENGTH) {
+        if (mb_strlen($plain) < self::MIN_LENGTH
+            || preg_match(self::PAGE_CHROME, $plain) === 1
+            || preg_match(self::BROKEN_PUNCTUATION, $plain) === 1) {
             return true;
         }
 
@@ -68,6 +80,15 @@ final class ProductMetaDescription
     }
 
     /**
+     * A stored description as rendered: plain text with broken list punctuation repaired. Valid long
+     * descriptions are kept whole rather than truncated.
+     */
+    public static function clean(string $meta): string
+    {
+        return preg_replace(self::BROKEN_PUNCTUATION, '.', self::squish(strip_tags($meta))) ?? '';
+    }
+
+    /**
      * @param  list<string>  $units
      */
     private static function fromText(array $units, string $name): ?string
@@ -78,16 +99,18 @@ final class ProductMetaDescription
             foreach (preg_split('/(?<=[.!?…])\s+(?=[\p{Lu}0-9„"])/u', $unit) ?: [] as $sentence) {
                 $sentence = trim($sentence);
 
-                // Skip fragments, lines that only repeat the product name and sentences about the page itself.
+                // Skip fragments, lines that only repeat the product name, sentences about the page itself and
+                // lead-ins to a list ("Dzięki bazie peruki zyskujesz:").
                 if (mb_strlen($sentence) < 25
                     || mb_strtolower(rtrim($sentence, '.')) === mb_strtolower($name)
                     || preg_match(self::PAGE_SENTENCE, $sentence) === 1
-                    || preg_match(self::CONTACT_SENTENCE, $sentence) === 1) {
+                    || preg_match(self::CONTACT_SENTENCE, $sentence) === 1
+                    || str_ends_with($sentence, ':')) {
                     continue;
                 }
 
-                // List items are often lowercase fragments ("miękkie, naturalne dziąsła").
-                $sentence = Str::ucfirst($sentence);
+                // List items are often lowercase fragments ("miękkie, naturalne dziąsła") ending in a comma.
+                $sentence = Str::ucfirst(rtrim($sentence, ' ,;'));
                 $sentences[] = preg_match('/[.!?…]$/u', $sentence) === 1 ? $sentence : $sentence.'.';
             }
         }

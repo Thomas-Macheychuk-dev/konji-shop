@@ -169,6 +169,21 @@ it('falls back to product name and description when explicit SEO fields are miss
         ->assertSee('<meta property="og:description" content="Short fallback description.">', false);
 });
 
+it('renders stored meta descriptions without broken list punctuation', function (): void {
+    $product = Product::query()->create([
+        'name' => 'OrthoSleeve FS6+',
+        'slug' => 'orthosleeve-fs6',
+        'seo_description' => 'Przeciążenia mięśnia brzuchatego łydki,. Niewydolność krążenia kończyn dolnych,. Zapalenie rozcięgna podeszwowego (tzw. ostroga piętowa),.',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    $this
+        ->get(route('products.show', $product->slug))
+        ->assertOk()
+        ->assertSee('<meta name="description" content="Przeciążenia mięśnia brzuchatego łydki. Niewydolność krążenia kończyn dolnych. Zapalenie rozcięgna podeszwowego (tzw. ostroga piętowa).">', false)
+        ->assertDontSee(',.', false);
+});
+
 it('renders product Open Graph and Twitter image metadata when a main image exists', function (): void {
     Config::set('app.name', 'Konji Shop');
     Config::set('app.url', 'https://konji-shop.example.test');
