@@ -118,7 +118,8 @@ final class CategoryProductIndexController extends Controller
         $categoryUrl = route('categories.show', $category->slug);
         $products->withPath($categoryUrl);
 
-        $seoTitle = $this->limitText($category->seo_title ?: $category->name, 70);
+        $breadcrumbCategories = $this->breadcrumbCategories($category);
+        $seoTitle = $this->limitText($category->seo_title ?: $this->distinctName($category, $breadcrumbCategories), 70);
         $editorialCopy = require resource_path('content/category-copy.pl.php');
         $copy = $editorialCopy[$category->slug] ?? [];
         if (($copy['name'] ?? null) !== $category->name) {
@@ -131,7 +132,6 @@ final class CategoryProductIndexController extends Controller
         $canonicalUrl = $page > 1
             ? route('categories.show', ['category' => $category->slug, 'page' => $page])
             : $categoryUrl;
-        $breadcrumbCategories = $this->breadcrumbCategories($category);
 
         if ($page > 1) {
             $seoTitle .= ' — Strona '.$page;
@@ -150,6 +150,33 @@ final class CategoryProductIndexController extends Controller
             'openGraphType' => 'website',
             'structuredData' => [$this->breadcrumbStructuredData($category, $breadcrumbCategories, $canonicalUrl)],
         ]);
+    }
+
+    /**
+     * Imported trees repeat names such as "Nowości" or "Temblaki" under different parents. A repeated name
+     * gets its nearest differently named ancestor ("Nowości – Kliny rehabilitacyjne"), so titles stay unique.
+     *
+     * @param  list<Category>  $ancestors
+     */
+    private function distinctName(Category $category, array $ancestors): string
+    {
+        $repeated = Category::query()
+            ->where('name', $category->name)
+            ->where('status', CategoryStatus::ACTIVE->value)
+            ->whereKeyNot($category->getKey())
+            ->exists();
+
+        if (! $repeated) {
+            return $category->name;
+        }
+
+        foreach (array_reverse($ancestors) as $ancestor) {
+            if (mb_strtolower($ancestor->name) !== mb_strtolower($category->name)) {
+                return $category->name.' – '.$ancestor->name;
+            }
+        }
+
+        return $category->name;
     }
 
     /** @return list<Category> */

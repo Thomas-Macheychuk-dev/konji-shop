@@ -15,14 +15,18 @@ cp docker/nginx/generated/legacy-seo-staging-extra-map.conf "$H/conf.d/00-legacy
 cp docker/nginx/generated/legacy-seo-category-fallback-map.conf "$H/conf.d/02-legacy-seo-category-fallback-map.conf"
 cp docker/nginx/legacy-seo/available/*.conf "$H/available/"
 cp docker/nginx/verify-seo12-map.sh docker/nginx/verify-legacy-fallback-map.sh "$H/"
-sed -n '/^map \$host \$legacy_seo_redirect_origin {/,/^}/p' docker/nginx/production.conf > "$H/conf.d/default.conf"
+sed -n -e '/^map \$host \$legacy_seo_redirect_origin {/,/^}/p' \
+    -e '/^map "\$request_method:\$uri" \$trailing_slash_target {/,/^}/p' docker/nginx/production.conf > "$H/conf.d/default.conf"
 cat >> "$H/conf.d/default.conf" <<'CONF'
 server {
     listen 8080;
     server_name staging.ortezka.pl ortezka.pl www.ortezka.pl;
     include /etc/nginx/legacy-seo/runtime/10-product-redirects.conf;
     include /etc/nginx/legacy-seo/runtime/30-fallback-redirects.conf;
-    location / { return 200 "app\n"; }
+    if ($trailing_slash_target != "") {
+        return 301 $legacy_seo_redirect_origin$trailing_slash_target$is_args$args;
+    }
+    location /{ return 200 "app\n"; }
 }
 CONF
 
@@ -52,6 +56,9 @@ ortezka.pl /bc-200-comfy-pojedynczy-laktator-elektryczny-id-13062 301 https://or
 ortezka.pl /index.php?id_product=13062 301 https://ortezka.pl/products/bc-200-comfy
 ortezka.pl /products/stabilizator-id-9554 200 -
 ortezka.pl /nieznany-produkt-id-999999999 200 -
+ortezka.pl /products/bonny/ 301 https://ortezka.pl/products/bonny
+staging.ortezka.pl /categories/peruki//?page=2 301 https://staging.ortezka.pl/categories/peruki?page=2
+ortezka.pl / 200 -
 CASES
 
 docker run --rm -v "$H:/h:ro" nginx:1.27-alpine sh -c '
