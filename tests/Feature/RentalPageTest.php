@@ -43,6 +43,8 @@ it('shows the rental offer grouped with deposits, monthly fees and phone links',
     // The enquiry panel (phones, address) sits in the page header, before the equipment list.
     $response->assertSeeInOrder(['<h1', 'Zapytaj o dostępność', 'href="tel:+48697595045"', 'Bolesława Prusa 20', 'id="beds"'], false);
     expect(substr_count($response->getContent(), 'Zapytaj o dostępność'))->toBe(1);
+    // Section links follow the header card, ahead of the terms and the enquiry form.
+    $response->assertSeeInOrder(['Zapytaj o dostępność', 'aria-label="Rodzaje sprzętu"', 'href="#beds"', 'href="#mobility"', 'Dostawa pod wskazany adres', 'id="zapytanie"', 'id="beds"'], false);
 
     expect($response->viewData('seoTitle'))->toBe('Wypożyczalnia sprzętu medycznego Poznań')
         ->and(substr_count($response->getContent(), '<h1'))->toBe(1);
