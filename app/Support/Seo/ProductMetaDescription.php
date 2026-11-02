@@ -86,6 +86,8 @@ final class ProductMetaDescription
                     continue;
                 }
 
+                // List items are often lowercase fragments ("miękkie, naturalne dziąsła").
+                $sentence = Str::ucfirst($sentence);
                 $sentences[] = preg_match('/[.!?…]$/u', $sentence) === 1 ? $sentence : $sentence.'.';
             }
         }
@@ -104,7 +106,7 @@ final class ProductMetaDescription
 
         if ($text === '' && $sentences !== []) {
             // A single long first sentence is cut at a word boundary.
-            $text = rtrim(Str::limit($sentences[0], self::MAX_LENGTH - 1, ''), ' ,;:-–').'…';
+            $text = rtrim(Str::limit($sentences[0], self::MAX_LENGTH - 1, '', preserveWords: true), ' ,;:-–').'…';
         }
 
         return mb_strlen($text) >= self::MIN_LENGTH ? $text : null;
