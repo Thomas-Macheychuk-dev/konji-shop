@@ -14,7 +14,10 @@ REVIEW = REPO / 'resources/seo/ortezka/review/legacy-category-redirects-20261101
 UNRESOLVED = REVIEW.parent / 'unresolved-products.csv'
 EXACT_MAPS = [REPO / 'docker/nginx/generated/legacy-seo-product-map.conf', REPO / 'docker/nginx/generated/legacy-seo-staging-extra-map.conf']
 PLACEHOLDERS = REPO / 'config/legacy-product-placeholders.php'
+LIVE_REDIRECTS = ROOT / 'live-redirects-20261102.tsv'
 GONE = '410'
+LEGACY_PRODUCT = re.compile(r'^/[^/]+-id-(\d+)$')
+LEGACY_CATEGORY = re.compile(r'^/[^/]+-cat-(\d+)$')
 # nginx matches $uri (decoded); anything that could break out of a quoted map key is excluded.
 SAFE_KEY = re.compile(r'^/[^"\\\s;{}$]+$')
 
@@ -127,7 +130,72 @@ def build():
     return entries, skipped, unresolved
 
 
-def render_map(entries):
+def build_id_maps(entries):
+    """PrestaShop serves /<any-slug>-id-N and /index.php?id_product=N for the same product, so the exact
+    path maps miss every alias. Key the same decisions by legacy ID, plus where the live shop redirects
+    the products it already removed (LIVE_REDIRECTS, crawled from ortezka.pl)."""
+    sources, rows = decisions.load()
+    resolved = decisions.resolve(sources, rows)
+    categories = {str(lid): (f'/categories/{r["target_slug"]}' if r['target_slug'] else GONE, f'legacy category {lid}')
+                  for lid, r in resolved.items()}
+
+    products = {}
+    for path, target in re.findall(r'^\s*"([^"]+)"\s+"([^"]+)";$', EXACT_MAPS[0].read_text(encoding='utf-8'), re.M):
+        if m := LEGACY_PRODUCT.match(path):
+            products.setdefault(m.group(1), (target, 'exact product map'))
+    for path, (target, kind, reason) in entries.items():
+        if kind == 'product' and (m := LEGACY_PRODUCT.match(path)):
+            products.setdefault(m.group(1), (target, reason))
+
+    live = []
+    if LIVE_REDIRECTS.exists():
+        live = list(csv.DictReader(LIVE_REDIRECTS.read_text(encoding='utf-8').splitlines(), delimiter='\t'))
+    for row in live:
+        lid, location = row['legacy_id'], row['location']
+        if row['status'] not in ('301', '302') or lid in products:
+            continue
+        path = re.sub(r'^https?://(www\.)?ortezka\.pl', '', location)
+        if (m := LEGACY_CATEGORY.match(path)) and categories.get(m.group(1), (GONE,))[0] != GONE:
+            products[lid] = (categories[m.group(1)][0], f'live shop redirects to legacy category {m.group(1)}')
+        elif (m := LEGACY_PRODUCT.match(path)) and m.group(1) in products:
+            products[lid] = (products[m.group(1)][0], f'live shop redirects to legacy product {m.group(1)}')
+    return products, categories
+
+
+def render_id_maps(products, categories):
+    def numeric(d):
+        return [f'    "{lid}" "{target}";' for lid, (target, _) in sorted(d.items(), key=lambda kv: int(kv[0]))]
+
+    return '\n'.join([
+        '# Legacy IDs from any single-segment /<slug>-id-N or /<slug>-cat-N path, or from /index.php query strings.',
+        '# New URLs are never single-segment with these suffixes, so app routes cannot match.',
+        'map "$uri|$arg_id_product" $legacy_seo_product_id {',
+        '    default "";',
+        r'    "~^/[^/]+-id-([0-9]+)\|" $1;',
+        r'    "~^/index\.php\|([0-9]+)$" $1;',
+        '}',
+        'map "$uri|$arg_id_category" $legacy_seo_category_id {',
+        '    default "";',
+        r'    "~^/[^/]+-cat-([0-9]+)\|" $1;',
+        r'    "~^/index\.php\|([0-9]+)$" $1;',
+        '}',
+        'map $legacy_seo_product_id $legacy_seo_product_id_target {',
+        '    default "";',
+        *numeric(products),
+        '}',
+        'map $legacy_seo_category_id $legacy_seo_category_id_target {',
+        '    default "";',
+        *numeric(categories),
+        '}',
+        '# Any other PrestaShop front-controller URL goes to the homepage instead of rendering it as a duplicate.',
+        'map $request_uri $legacy_seo_index_php {',
+        '    default "";',
+        r'    "~^/index\.php(\?|$)" "/";',
+        '}',
+    ]) + '\n'
+
+
+def render_map(entries, products, categories):
     lines = [
         '# GENERATED FILE. DO NOT EDIT BY HAND.',
         '# Source: scripts/seo/legacy-category-redirects-20261101/build.py',
@@ -138,11 +206,11 @@ def render_map(entries):
     ]
     lines += [f'    "{path}" "{value}";' for path, (value, _, _) in sorted(entries.items())]
     lines.append('}')
-    return '\n'.join(lines) + '\n'
+    return '\n'.join(lines) + '\n' + render_id_maps(products, categories)
 
 
-def write(entries, unresolved):
-    MAP.write_text(render_map(entries), encoding='utf-8')
+def write(entries, unresolved, products, categories):
+    MAP.write_bytes(render_map(entries, products, categories).encode('utf-8'))
     REVIEW.parent.mkdir(parents=True, exist_ok=True)
     with open(REVIEW, 'w', encoding='utf-8', newline='') as f:
         w = csv.writer(f, lineterminator='\n')
@@ -154,16 +222,19 @@ def write(entries, unresolved):
         w.writerows([p['legacy_id'], p['name'], ' '.join(p['paths'])] for p in unresolved)
 
 
-def summary(entries, skipped):
+def summary(entries, skipped, products, categories):
     kinds = Counter((kind, 'gone' if value == GONE else 'redirect') for value, kind, _ in entries.values())
     return {
+        'id_rules': len(products) + len(categories),
+        'product_id_rules': len(products),
+        'product_ids_from_live_shop': sum(1 for _, reason in products.values() if reason.startswith('live shop')),
         'rules': len(entries),
         'category_redirects': kinds[('category', 'redirect')],
         'category_gone': kinds[('category', 'gone')],
         'product_redirects': kinds[('product', 'redirect')],
         'product_ids': len({reason.split()[2] for value, kind, reason in entries.values() if kind == 'product'}),
         'skipped': dict(skipped),
-        'map_sha256': hashlib.sha256(render_map(entries).encode('utf-8')).hexdigest(),
+        'map_sha256': hashlib.sha256(render_map(entries, products, categories).encode('utf-8')).hexdigest(),
     }
 
 
@@ -178,10 +249,11 @@ def main():
             ',\n'.join(json.dumps(p, ensure_ascii=False) for p in data['products'])), encoding='utf-8')
     try:
         entries, skipped, unresolved = build()
+        products, categories = build_id_maps(entries)
     except ValueError as e:
         sys.exit(f'LEGACY_FALLBACK_MAP=FAIL {e}')
-    write(entries, unresolved)
-    print(json.dumps(summary(entries, skipped), ensure_ascii=False))
+    write(entries, unresolved, products, categories)
+    print(json.dumps(summary(entries, skipped, products, categories), ensure_ascii=False))
 
 
 if __name__ == '__main__':
