@@ -16,6 +16,8 @@ EXACT_MAPS = [REPO / 'docker/nginx/generated/legacy-seo-product-map.conf', REPO 
 PLACEHOLDERS = REPO / 'config/legacy-product-placeholders.php'
 LIVE_REDIRECTS = ROOT / 'live-redirects-20261102.tsv'
 MANUAL = ROOT / 'manual-products.csv'
+# Other legacy pages with Search Console traffic, e.g. /brand/N-name manufacturer pages.
+MANUAL_PATHS = ROOT / 'manual-paths.csv'
 MANUAL_TARGET = re.compile(r'^/(products|categories)/[a-z0-9-]+$')
 GONE = '410'
 LEGACY_PRODUCT = re.compile(r'^/[^/]+-id-(\d+)$')
@@ -114,6 +116,11 @@ def build():
     for lid, r in sorted(resolved.items()):
         target = f'/categories/{r["target_slug"]}' if r['target_slug'] else GONE
         add(r['path'], target, 'category', f'legacy category {lid}' + (f' via {r["via"]}' if r['via'] else ''))
+
+    for row in csv.DictReader(MANUAL_PATHS.read_text(encoding='utf-8').splitlines()):
+        if not MANUAL_TARGET.match(row['target']) or (row['target'].startswith('/categories/') and row['target'][12:] not in active):
+            raise ValueError(f'manual target {row["target"]} for {row["legacy_path"]} is not valid')
+        add(row['legacy_path'], row['target'], 'page', row['reason'])
 
     products = json.loads(PRODUCT_SOURCES.read_text(encoding='utf-8'))['products']
     manual = manual_decisions()

@@ -54,6 +54,8 @@ ortezka.pl /index.php?controller=contact 301 https://ortezka.pl/
 ortezka.pl /index.php 301 https://ortezka.pl/
 ortezka.pl /bc-200-comfy-pojedynczy-laktator-elektryczny-id-13062 301 https://ortezka.pl/products/bc-200-comfy
 ortezka.pl /index.php?id_product=13062 301 https://ortezka.pl/products/bc-200-comfy
+ortezka.pl /bawelniany-rekaw-ochronny-pod-orteze-am-rb-id-13037 301 https://ortezka.pl/products/rekaw-ochronny-pod-orteze-am-rb
+ortezka.pl /brand/179-clinic-dress 301 https://ortezka.pl/categories/odziez-medyczna
 ortezka.pl /products/stabilizator-id-9554 200 -
 ortezka.pl /nieznany-produkt-id-999999999 200 -
 ortezka.pl /products/bonny/ 301 https://ortezka.pl/products/bonny
