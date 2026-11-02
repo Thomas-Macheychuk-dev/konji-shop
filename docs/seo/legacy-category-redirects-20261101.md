@@ -83,6 +83,20 @@ Product matches win over categories only when the item is clearly the same, beca
 
 Hand decisions are the only fallback rules whose target can be a product. The gate's path-rule count now accepts `/products/` targets.
 
+## Search Console traffic pass — 2 November
+
+The Search Console Pages report (30 September – 31 October, 1,000 URLs) listed 843 old product URLs. 751 of them went to a category even though many of those products are in the new shop; product → category redirects are usually treated as soft 404s. Each of the 759 that did not land on a product was checked against the full new catalogue, by model code, brand and product line:
+
+| Decision | Products |
+|---|---|
+| Same product in the new shop → `/products/<slug>` (added to `manual-products.csv`) | 223 |
+| Had no redirect at all; a fitting category exists → `/categories/<slug>` | 6 |
+| Unchanged: product not sold in the new shop (e.g. Össur, Ottobock, Thuasne, some medi lines), different model code, or too ambiguous | 530 |
+
+Four proposed matches were dropped as too uncertain (2550, 13695, 5686, 5835). Wigs and clothing that the new shop splits by colour go to one colour of the same model when the old page named none. Of the 843 URLs, 307 now land on a product (84 before), 534 on a category, and 2 stay 404 (Kinoki patches, Heine skiaskop).
+
+`manual-paths.csv` maps the 42 old `/brand/N-name` pages with traffic to the category that best covers what the brand sold (medical clothing, orthoses, compression, medical shoes, wheelchairs …); before this they returned 404. These are the only fallback rules keyed by a full path rather than a legacy ID. Every target returned 200 on staging on 2 November.
+
 ## Rebuild
 
 ```bash

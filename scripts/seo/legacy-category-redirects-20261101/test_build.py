@@ -30,16 +30,17 @@ class LegacyFallbackMapTest(unittest.TestCase):
     def test_scope(self):
         summary = module.summary(self.entries, self.skipped, self.products, self.categories)
         self.assertEqual((summary['category_redirects'], summary['category_gone']), (232, 2))
-        self.assertEqual(summary['product_ids'], 8830)
-        self.assertEqual(summary['rules'], 14883)
-        self.assertEqual(len(self.unresolved), 89)
-        self.assertEqual(module.UNRESOLVED.read_bytes().decode('utf-8').count('\n'), 90)
+        self.assertEqual(summary['product_ids'], 8836)
+        self.assertEqual(summary['rules'], 14932)
+        self.assertEqual(len(self.unresolved), 83)
+        self.assertEqual(module.UNRESOLVED.read_bytes().decode('utf-8').count('\n'), 84)
 
     def test_never_shadows_exact_rules_or_app_routes(self):
         keys = set(self.entries)
         self.assertFalse(keys & module.exact_keys())
         self.assertFalse(keys & module.placeholder_paths())
-        self.assertTrue(all(re.search(r'-(id|cat)-\d+$', k) for k in keys))
+        self.assertTrue(all(re.search(r'-(id|cat)-\d+$', k) or (kind == 'page' and k.startswith('/brand/'))
+                            for k, (_, kind, _) in self.entries.items()))
         self.assertFalse({v for v, _, _ in self.entries.values()} & keys)
 
     def test_targets_are_active_categories_and_only_categories_are_gone(self):
@@ -64,6 +65,12 @@ class LegacyFallbackMapTest(unittest.TestCase):
             self.assertTrue(any(r.endswith(f'legacy product {lid} manual {row["basis"]}') for _, _, r in self.entries.values()), lid)
         self.assertFalse({str(p['legacy_id']) for p in self.unresolved} & set(manual))
 
+    def test_brand_pages_go_to_active_categories(self):
+        pages = {p: v for p, (v, k, _) in self.entries.items() if k == 'page'}
+        self.assertEqual(len(pages), len(module.MANUAL_PATHS.read_text(encoding='utf-8').splitlines()) - 1)
+        self.assertEqual(pages['/brand/179-clinic-dress'], '/categories/odziez-medyczna')
+        self.assertTrue(all(v.startswith('/categories/') for v in pages.values()))
+
     def test_breadcrumb_beats_name_rules(self):
         # Befado shoes under "Dla dzieci" follow the category decision, not the shoe keyword rule.
         reasons = {r for p, (v, k, r) in self.entries.items() if k == 'product'}
@@ -78,7 +85,7 @@ class LegacyFallbackMapTest(unittest.TestCase):
         for path, (target, kind, _) in self.entries.items():
             if kind == 'product':
                 self.assertEqual(self.products[module.LEGACY_PRODUCT.match(path).group(1)][0], target, path)
-            else:
+            elif kind == 'category':
                 self.assertEqual(self.categories[module.LEGACY_CATEGORY.match(path).group(1)][0], target, path)
         exact = module.EXACT_MAPS[0].read_text(encoding='utf-8')
         self.assertIn('"/oppo-2383-orteza-nadgarstka-miekka-z-dociagiem-id-9554" "/products/stabilizator-kciuka-i-nadgarstka-2383"', exact)
