@@ -53,6 +53,19 @@ it('never uses manufacturer or contact details as the meta description', functio
         ->toBe('Materac HF6001 bez pompy. Materac przeciwodleżynowy o konstrukcji bąbelkowej wykonany z PVC, przeznaczony do stosowania z pompą zmiennociśnieniową.');
 });
 
+it('never cuts a word in half and capitalises lowercase list items', function (): void {
+    $wig = '<p>Model Ginger to peruka z włosów syntetycznych utkanych na bazie, którą charakteryzuje wykonanie maszynowe na tresach, mikroskóra na czubku głowy oraz linia przedziałka.</p>';
+    $meta = ProductMetaDescription::build($wig, null, 'Ginger');
+
+    expect($meta)->toEndWith('głowy oraz…')
+        ->and(mb_strlen($meta))->toBeLessThanOrEqual(ProductMetaDescription::MAX_LENGTH);
+
+    $list = '<ul><li>model dostępny w kilku wersjach artykulatora</li><li>miękkie, naturalne dziąsła i realistyczne zęby</li><li>kompatybilny z wszystkimi fantomami NISSIN</li></ul>';
+
+    expect(ProductMetaDescription::build($list, null, 'Model PDI2001'))
+        ->toBe('Model dostępny w kilku wersjach artykulatora. Miękkie, naturalne dziąsła i realistyczne zęby. Kompatybilny z wszystkimi fantomami NISSIN.');
+});
+
 it('returns nothing when the description is too thin to describe the product', function (): void {
     expect(ProductMetaDescription::build('<p>Orteza kolana.</p>', 'Orteza.', 'Orteza kolana'))->toBeNull();
 });
