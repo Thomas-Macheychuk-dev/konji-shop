@@ -94,9 +94,19 @@
             @php
                 $field = 'block w-full rounded-xl border bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-[#155fa8] focus:ring-4 focus:ring-blue-100';
             @endphp
-            <section id="zapytanie" class="mt-10 scroll-mt-32 lg:scroll-mt-44 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
-                <div class="grid gap-8 lg:grid-cols-[1fr_2fr]">
-                    <div>
+            @php
+                $enquirySent = (bool) session('rental_enquiry_sent');
+                // Collapsed until asked for; open straight away after a send, on errors, or from an item's "Zapytaj" link.
+                $enquiryOpen = $enquirySent || $errors->any() || $selectedItems !== [];
+            @endphp
+            {{-- Native <details>: opens and closes without JavaScript; the script below only opens it for #zapytanie links. --}}
+            <details
+                id="zapytanie"
+                @if ($enquiryOpen) open @endif
+                class="group mt-10 scroll-mt-32 lg:scroll-mt-44 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-10"
+            >
+                <summary class="flex cursor-pointer list-none flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-10 [&::-webkit-details-marker]:hidden">
+                    <div class="max-w-3xl">
                         <h2 class="text-2xl font-extrabold tracking-tight text-slate-950">Zapytaj e-mailem</h2>
                         <p class="mt-3 text-sm leading-6 text-slate-600">
                             Wolisz napisać niż dzwonić? Opisz, jakiego sprzętu potrzebujesz, na jak długo i dokąd go dostarczyć.
@@ -104,8 +114,19 @@
                         </p>
                     </div>
 
-                    <div>
-                        @if (session('rental_enquiry_sent'))
+                    @unless ($enquirySent)
+                        <span class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#155fa8] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#0b3b70]">
+                            <span class="group-open:hidden">Napisz wiadomość</span>
+                            <span class="hidden group-open:inline">Zwiń formularz</span>
+                            <svg class="h-4 w-4 transition group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+                            </svg>
+                        </span>
+                    @endunless
+                </summary>
+
+                <div id="zapytanie-formularz" class="mt-8 border-t border-slate-100 pt-8">
+                        @if ($enquirySent)
                             <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-800" role="status">
                                 <p class="font-bold">Dziękujemy, zapytanie zostało wysłane.</p>
                                 <p class="mt-1">Odpowiemy najszybciej, jak to możliwe. W pilnych sprawach zadzwoń: {{ $phones[0] ?? '' }}.</p>
@@ -186,9 +207,23 @@
                                 </div>
                             </form>
                         @endif
-                    </div>
                 </div>
-            </section>
+            </details>
+            <script>
+                (() => {
+                    const openEnquiry = () => {
+                        if (location.hash === '#zapytanie') {
+                            document.getElementById('zapytanie').open = true;
+                        }
+                    };
+                    openEnquiry();
+                    window.addEventListener('hashchange', openEnquiry);
+                    // Clicking a #zapytanie link again leaves the hash unchanged, so open it on click too.
+                    document.querySelectorAll('a[href="#zapytanie"]').forEach((link) => {
+                        link.addEventListener('click', () => { document.getElementById('zapytanie').open = true; });
+                    });
+                })();
+            </script>
         </div>
     </section>
 
