@@ -9,4 +9,6 @@ return [
         env('RENTAL_PHONE_SECONDARY', '+48 604 895 717'),
     ],
     'address' => env('RENTAL_ADDRESS', 'Bolesława Prusa 20, 60-820 Poznań'),
+    // Where the rental page's enquiry form is delivered.
+    'enquiry_email' => env('RENTAL_ENQUIRY_EMAIL', env('SHOP_EMAIL', 'sklep.ortezka@gmail.com')),
 ];

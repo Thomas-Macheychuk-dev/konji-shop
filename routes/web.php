@@ -70,6 +70,7 @@ use App\Http\Controllers\Payments\PaymentReturnController;
 use App\Http\Controllers\Payments\PaynowNotificationController;
 use App\Http\Controllers\ProductShowController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\RentalEnquiryStoreController;
 use App\Http\Controllers\RobotsTxtController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -322,6 +323,9 @@ Route::redirect('/content/11-wypozyczalnia-sprzetu-medycznego', '/wypozyczalnia-
 
 Route::get('/wypozyczalnia-sprzetu-medycznego', RentalController::class)
     ->name('rental.index');
+Route::post('/wypozyczalnia-sprzetu-medycznego/zapytanie', RentalEnquiryStoreController::class)
+    ->middleware('throttle:5,10')
+    ->name('rental.enquiry');
 
 Route::view('/terms-and-conditions', 'pages.legal.terms-and-conditions')
     ->name('legal.terms');

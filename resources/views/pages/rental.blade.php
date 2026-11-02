@@ -45,6 +45,13 @@
                             </div>
                         @endif
 
+                        <a href="#zapytanie" class="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-5 py-3 text-base font-bold text-slate-800 transition hover:border-blue-200 hover:text-[#155fa8]">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16v12H4z M4 7l8 6 8-6" />
+                            </svg>
+                            Napisz do nas
+                        </a>
+
                         <div class="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-4 text-sm">
                             @if ($address)
                                 <span class="font-semibold text-slate-700">{{ $address }}</span>
@@ -73,6 +80,105 @@
                 @endforeach
             </ul>
 
+            @php
+                $field = 'block w-full rounded-xl border bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-[#155fa8] focus:ring-4 focus:ring-blue-100';
+            @endphp
+            <section id="zapytanie" class="mt-10 scroll-mt-32 lg:scroll-mt-44 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+                <div class="grid gap-8 lg:grid-cols-[1fr_2fr]">
+                    <div>
+                        <h2 class="text-2xl font-extrabold tracking-tight text-slate-950">Zapytaj e-mailem</h2>
+                        <p class="mt-3 text-sm leading-6 text-slate-600">
+                            Wolisz napisać niż dzwonić? Opisz, jakiego sprzętu potrzebujesz, na jak długo i dokąd go dostarczyć.
+                            Odpowiemy na podany adres e-mail, a jeśli zostawisz numer telefonu, możemy też oddzwonić.
+                        </p>
+                    </div>
+
+                    <div>
+                        @if (session('rental_enquiry_sent'))
+                            <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-800" role="status">
+                                <p class="font-bold">Dziękujemy, zapytanie zostało wysłane.</p>
+                                <p class="mt-1">Odpowiemy najszybciej, jak to możliwe. W pilnych sprawach zadzwoń: {{ $phones[0] ?? '' }}.</p>
+                            </div>
+                        @else
+                            @if ($errors->any())
+                                <div class="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+                                    Sprawdź zaznaczone pola i spróbuj ponownie.
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('rental.enquiry') }}" class="grid gap-5 sm:grid-cols-2">
+                                @csrf
+                                <div class="hidden" aria-hidden="true">
+                                    <label for="website">Nie wypełniaj tego pola</label>
+                                    <input id="website" type="text" name="website" tabindex="-1" autocomplete="off">
+                                </div>
+
+                                @foreach ([
+                                    ['name', 'Imię i nazwisko', 'text', 'name', true],
+                                    ['email', 'Adres e-mail', 'email', 'email', true],
+                                    ['phone', 'Telefon (opcjonalnie)', 'tel', 'tel', false],
+                                    ['city', 'Miejscowość dostawy (opcjonalnie)', 'text', 'address-level2', false],
+                                ] as [$key, $label, $type, $autocomplete, $required])
+                                    <div>
+                                        <label for="enquiry-{{ $key }}" class="mb-2 block text-sm font-medium text-slate-700">{{ $label }}</label>
+                                        <input id="enquiry-{{ $key }}" type="{{ $type }}" name="{{ $key }}" value="{{ old($key) }}" autocomplete="{{ $autocomplete }}" @required($required)
+                                            class="{{ $field }} @error($key) border-red-300 @else border-slate-300 @enderror">
+                                        @error($key)
+                                            <p class="mt-1.5 text-sm text-red-700">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                @endforeach
+
+                                <div>
+                                    <label for="enquiry-items" class="mb-2 block text-sm font-medium text-slate-700">Sprzęt (opcjonalnie)</label>
+                                    <select id="enquiry-items" name="items[]" class="{{ $field }} @error('items.*') border-red-300 @else border-slate-300 @enderror">
+                                        <option value="">Wybierz z listy</option>
+                                        @foreach ($groups as $group)
+                                            <optgroup label="{{ $group['heading'] }}">
+                                                @foreach ($group['items'] as $item)
+                                                    <option value="{{ $item->slug }}" @selected(in_array($item->slug, $selectedItems, true))>{{ $item->name }}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        @endforeach
+                                    </select>
+                                    @error('items.*')
+                                        <p class="mt-1.5 text-sm text-red-700">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="enquiry-period" class="mb-2 block text-sm font-medium text-slate-700">Okres wynajmu (opcjonalnie)</label>
+                                    <input id="enquiry-period" type="text" name="period" value="{{ old('period') }}" placeholder="np. 3 miesiące, od 15 listopada"
+                                        class="{{ $field }} @error('period') border-red-300 @else border-slate-300 @enderror">
+                                    @error('period')
+                                        <p class="mt-1.5 text-sm text-red-700">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label for="enquiry-message" class="mb-2 block text-sm font-medium text-slate-700">Wiadomość</label>
+                                    <textarea id="enquiry-message" name="message" rows="5" required minlength="10" maxlength="2000"
+                                        class="{{ $field }} @error('message') border-red-300 @else border-slate-300 @enderror">{{ old('message') }}</textarea>
+                                    @error('message')
+                                        <p class="mt-1.5 text-sm text-red-700">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+                                    <p class="text-xs leading-5 text-slate-500">
+                                        Dane z formularza wykorzystamy wyłącznie do odpowiedzi na zapytanie.
+                                        Szczegóły w <a href="{{ route('legal.privacy') }}" class="font-semibold text-[#155fa8] hover:text-[#0b3b70]">polityce prywatności</a>.
+                                    </p>
+                                    <button type="submit" class="shrink-0 rounded-xl bg-[#155fa8] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#0b3b70]">
+                                        Wyślij zapytanie
+                                    </button>
+                                </div>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+            </section>
+
             @if ($groups->count() > 1)
                 <nav class="mt-10 flex flex-wrap gap-2" aria-label="Rodzaje sprzętu">
                     @foreach ($groups as $group)
@@ -88,7 +194,7 @@
     <div class="bg-white">
         <div class="mx-auto max-w-[1480px] px-4 pb-16 sm:px-6 lg:px-8">
             @foreach ($groups as $group)
-                <section id="{{ $group['key'] }}" class="scroll-mt-28 pt-12">
+                <section id="{{ $group['key'] }}" class="scroll-mt-32 lg:scroll-mt-44 pt-12">
                     <h2 class="text-2xl font-extrabold tracking-tight text-slate-950">{{ $group['heading'] }}</h2>
 
                     <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -118,6 +224,9 @@
                                             <dd class="mt-0.5 font-bold text-[#155fa8]">{{ $item->monthlyLabel() }}</dd>
                                         </div>
                                     </dl>
+                                    <a href="{{ route('rental.index', ['sprzet' => $item->slug]) }}#zapytanie" rel="nofollow" class="mt-4 text-center text-sm font-semibold text-[#155fa8] transition hover:text-[#0b3b70]">
+                                        Zapytaj o ten sprzęt
+                                    </a>
                                 </div>
                             </article>
                         @endforeach
