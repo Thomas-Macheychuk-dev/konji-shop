@@ -121,6 +121,20 @@ it('throttles repeated enquiries from one visitor', function (): void {
     $this->post(route('rental.enquiry'), $valid)->assertTooManyRequests();
 });
 
+it('keeps the enquiry form collapsed until it is asked for', function (): void {
+    $this->seed(RentalItemSeeder::class);
+    $isOpen = fn ($response): bool => (bool) preg_match('/<details\s+id="zapytanie"\s+open\b/', $response->getContent());
+
+    $collapsed = $this->get(route('rental.index'))->assertOk()->assertSee('Napisz wiadomość');
+    expect($isOpen($collapsed))->toBeFalse()
+        ->and($collapsed->getContent())->toContain('<summary');
+
+    expect($isOpen($this->get(route('rental.index', ['sprzet' => 'rollator']))))->toBeTrue();
+
+    $this->from(route('rental.index'))->post(route('rental.enquiry'), ['name' => 'Jan'])->assertRedirect();
+    expect($isOpen($this->get(route('rental.index'))))->toBeTrue();
+});
+
 it('preselects the equipment from an item card link', function (): void {
     $this->seed(RentalItemSeeder::class);
 
