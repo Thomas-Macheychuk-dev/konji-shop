@@ -89,6 +89,7 @@
             <div>
                 <h3 class="text-sm font-bold uppercase tracking-[0.14em] text-white">Obsługa klienta</h3>
                 <nav class="mt-5 flex flex-col gap-3 text-sm">
+                    <a href="{{ route('rental.index') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Wypożyczalnia sprzętu medycznego</a>
                     <a href="{{ route('legal.delivery-payments') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Dostawa i płatności</a>
                     <a href="{{ route('guest.orders.track.show') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Śledzenie zamówienia gościa</a>
                     <a href="{{ route('legal.returns') }}" class="text-blue-100/70 transition hover:translate-x-0.5 hover:text-white">Zwroty i odstąpienie od umowy</a>

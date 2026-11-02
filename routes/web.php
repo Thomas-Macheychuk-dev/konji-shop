@@ -69,6 +69,7 @@ use App\Http\Controllers\Payments\PaymentRetryController;
 use App\Http\Controllers\Payments\PaymentReturnController;
 use App\Http\Controllers\Payments\PaynowNotificationController;
 use App\Http\Controllers\ProductShowController;
+use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RobotsTxtController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -317,6 +318,10 @@ Route::redirect('/content/15-kontakt', '/contact', 301);
 // The contact page carries the seller identity that the legacy "O nas" page described.
 Route::redirect('/content/6-o-nas', '/contact', 301);
 Route::redirect('/content/17-wkladki-ortopedyczne-indywidualne', '/categories/wkladki-ortopedyczne', 301);
+Route::redirect('/content/11-wypozyczalnia-sprzetu-medycznego', '/wypozyczalnia-sprzetu-medycznego', 301);
+
+Route::get('/wypozyczalnia-sprzetu-medycznego', RentalController::class)
+    ->name('rental.index');
 
 Route::view('/terms-and-conditions', 'pages.legal.terms-and-conditions')
     ->name('legal.terms');
