@@ -129,6 +129,9 @@ it('previews, writes with a backup and rolls back weak product meta descriptions
     expect(Artisan::call('seo:product-meta-descriptions'))->toBe(0)
         ->and(Artisan::output())->toContain('WEAK_META=2')->toContain('REBUILT_META=1')->toContain('NO_SOURCE eldan=1')->toContain('MODE=READ_ONLY');
 
+    expect(Artisan::call('seo:product-meta-descriptions', ['--show-unusable' => 1]))->toBe(0)
+        ->and(Artisan::output())->toContain('UNUSABLE '.$thin->id.' [eldan] Thin')->toContain('TEXT(12): Krótki opis.');
+
     expect(Artisan::call('seo:product-meta-descriptions', ['--write' => true]))->toBe(0);
     $output = Artisan::output();
     $backup = trim(str($output)->after('BACKUP=')->before("\n"));

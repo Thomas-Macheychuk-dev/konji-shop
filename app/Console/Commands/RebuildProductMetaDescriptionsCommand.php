@@ -10,6 +10,7 @@ use App\Support\Seo\ProductMetaDescription;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use RuntimeException;
 
 final class RebuildProductMetaDescriptionsCommand extends Command
@@ -17,7 +18,8 @@ final class RebuildProductMetaDescriptionsCommand extends Command
     protected $signature = 'seo:product-meta-descriptions
         {--write : Apply the changes after writing a private backup. Otherwise preview only.}
         {--rollback= : Restore meta descriptions from a backup written by --write.}
-        {--samples=20 : Number of sample changes to print.}';
+        {--samples=20 : Number of sample changes to print.}
+        {--show-unusable=0 : Print up to this many products per source whose description gives no usable meta description.}';
 
     protected $description = 'Preview, apply or roll back rebuilding weak product meta descriptions from the product description.';
 
@@ -32,12 +34,14 @@ final class RebuildProductMetaDescriptionsCommand extends Command
         $changes = [];
         $weak = 0;
         $noSource = [];
+        $unusable = [];
+        $perSource = max(0, (int) $this->option('show-unusable'));
 
         Product::query()
             ->where('status', ProductStatus::ACTIVE->value)
             ->orderBy('id')
             ->select(['id', 'name', 'short_description', 'description', 'seo_description', 'external_source'])
-            ->chunkById(200, function ($products) use (&$changes, &$weak, &$noSource): void {
+            ->chunkById(200, function ($products) use (&$changes, &$weak, &$noSource, &$unusable, $perSource): void {
                 foreach ($products as $product) {
                     $old = $product->getRawOriginal('seo_description');
 
@@ -51,6 +55,10 @@ final class RebuildProductMetaDescriptionsCommand extends Command
                     if ($new === null || $new === $old) {
                         $source = (string) ($product->external_source ?: 'unknown');
                         $noSource[$source] = ($noSource[$source] ?? 0) + 1;
+
+                        if ($noSource[$source] <= $perSource) {
+                            $unusable[] = [$product, $source, $old];
+                        }
 
                         continue;
                     }
@@ -73,6 +81,13 @@ final class RebuildProductMetaDescriptionsCommand extends Command
 
         foreach (array_slice($noSource, 0, 10, true) as $source => $count) {
             $this->line('  NO_SOURCE '.$source.'='.$count);
+        }
+
+        foreach ($unusable as [$product, $source, $old]) {
+            $text = Str::squish(html_entity_decode(strip_tags((string) ($product->description ?: $product->short_description)), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            $this->line('UNUSABLE '.$product->id.' ['.$source.'] '.$product->name);
+            $this->line('  OLD: '.($old ?? '(empty)'));
+            $this->line('  TEXT('.mb_strlen($text).'): '.($text === '' ? '(empty)' : Str::limit($text, 300)));
         }
 
         $samples = max(0, (int) $this->option('samples'));
