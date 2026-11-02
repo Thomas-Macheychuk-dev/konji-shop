@@ -32,7 +32,7 @@ final class ProductMetaDescription
      * Sentences about the page, its photos or its downloads ("Kolor … pokazany jest w kwadracie obok zdjęcia",
      * "CE_Vicky_2024-07-23_pl.pdf") are not product facts.
      */
-    private const PAGE_SENTENCE = '/zdjęci|kwadraci|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w (naszym )?sklepie|skontaktuj się|user manual|pobierz|\.(pdf|docx?|xlsx?|zip)\b/iu';
+    private const PAGE_SENTENCE = '/zdjęci|kwadraci|modelk|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w (naszym )?sklepie|skontaktuj się|user manual|pobierz|\.(pdf|docx?|xlsx?|zip)\b/iu';
 
     /**
      * Manufacturer, importer, advertiser and contact blocks ("Producent: …, ul. …, 03-310 Warszawa, www…") are not product descriptions.
@@ -108,7 +108,8 @@ final class ProductMetaDescription
                     || preg_match(self::PAGE_SENTENCE, $sentence) === 1
                     || preg_match(self::CONTACT_SENTENCE, $sentence) === 1
                     || preg_match(self::PAGE_CHROME, $sentence) === 1
-                    || str_ends_with($sentence, ':')) {
+                    || str_ends_with($sentence, ':')
+                    || self::isShouted($sentence)) {
                     continue;
                 }
 
@@ -124,15 +125,15 @@ final class ProductMetaDescription
             $next = $text === '' ? $sentence : $text.' '.$sentence;
 
             if (mb_strlen($next) > self::MAX_LENGTH) {
+                // Too little so far to stand alone: the sentence that does not fit is cut at a word boundary.
+                if (mb_strlen($text) < self::MIN_LENGTH) {
+                    $text = rtrim(Str::limit($next, self::MAX_LENGTH - 1, '', preserveWords: true), ' ,;:-–').'…';
+                }
+
                 break;
             }
 
             $text = $next;
-        }
-
-        if ($text === '' && $sentences !== []) {
-            // A single long first sentence is cut at a word boundary.
-            $text = rtrim(Str::limit($sentences[0], self::MAX_LENGTH - 1, '', preserveWords: true), ' ,;:-–').'…';
         }
 
         return mb_strlen($text) >= self::MIN_LENGTH ? $text : null;
@@ -148,7 +149,9 @@ final class ProductMetaDescription
         // The Vermeiren importer appends manual/video links and a medical-device notice; neither describes the product.
         $html = preg_replace('#<section class="vermeiren-(documents|medical-notice)">.*?</section>#isu', ' ', $html) ?? '';
         $html = preg_replace('#<(h[1-6]|table|script|style)\b[^>]*>.*?</\1>#isu', ' ', $html) ?? '';
-        $html = preg_replace('#<br\s*/?>|</(p|li|div|ul|ol|tr)>#iu', "\n", $html) ?? '';
+        // A paragraph holding only a short bold line ("<p><strong>Co go wyróżnia?</strong></p>") is a heading too.
+        $html = preg_replace('#<p\b[^>]*>\s*(?:<span\b[^>]*>\s*)?<(strong|b)\b[^>]*>[^<]{1,120}</\1>\s*(?:</span>\s*)?</p>#iu', "\n", $html) ?? '';
+        $html = preg_replace('#<br\b[^>]*>|</(p|li|div|ul|ol|tr)>#iu', "\n", $html) ?? '';
         $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         // Bullet characters mark list items, inline or at the start of a line ("• wyposażone w …").
         $text = str_replace(['•', '▪', '●'], "\n", $text);
@@ -157,6 +160,14 @@ final class ProductMetaDescription
             fn (string $line): string => self::removeSupplierPhrases(self::squish($line)),
             preg_split('/\n+/u', $text) ?: [],
         )));
+    }
+
+    /**
+     * All-caps slogans ("POCZUJESZ ULGĘ W BÓLU STÓP") are headings, not sentences.
+     */
+    private static function isShouted(string $sentence): bool
+    {
+        return preg_match('/\p{Ll}/u', $sentence) !== 1 && preg_match('/\p{Lu}{4}/u', $sentence) === 1;
     }
 
     private static function removeSupplierPhrases(string $text): string
