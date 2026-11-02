@@ -31,12 +31,12 @@ final class ProductMetaDescription
     /**
      * Sentences about the page or its photos ("Kolor … pokazany jest w kwadracie obok zdjęcia") are not product facts.
      */
-    private const PAGE_SENTENCE = '/zdjęci|kwadraci|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w (naszym )?sklepie|skontaktuj się/iu';
+    private const PAGE_SENTENCE = '/zdjęci|kwadraci|klikn|poniżej|powyżej|w zakładce|przewiń|na stronie|w (naszym )?sklepie|skontaktuj się|user manual|pobierz/iu';
 
     /**
-     * Manufacturer, importer and contact blocks ("Producent: …, ul. …, 03-310 Warszawa, www…") are not product descriptions.
+     * Manufacturer, importer, advertiser and contact blocks ("Producent: …, ul. …, 03-310 Warszawa, www…") are not product descriptions.
      */
-    private const CONTACT_SENTENCE = '/\b(producent|wytwórca|dystrybutor|importer|podmiot odpowiedzialny)\b\s*:|www\.|https?:|@|e-?mail|\btel\.|\bul\.\s|\b\d{2}-\d{3}\b|\bsp\.\s*z\s*o\.?\s*o/iu';
+    private const CONTACT_SENTENCE = '/\b(producent|wytwórca|dystrybutor|importer|podmiot odpowiedzialny|podmiot prowadzący reklamę)\b\s*:|www\.|https?:|@|e-?mail|\btel\.|\bul\.\s|\b\d{2}-\d{3}\b|\bsp\.\s*z\s*o\.?\s*o|spółka jawna/iu';
 
     /**
      * Supplier page tabs and widgets scraped along with the description ("Opis Wskazania Dostępne rozmiary …").
@@ -147,6 +147,8 @@ final class ProductMetaDescription
         $html = preg_replace('#<(h[1-6]|table|script|style)\b[^>]*>.*?</\1>#isu', ' ', $html) ?? '';
         $html = preg_replace('#<br\s*/?>|</(p|li|div|ul|ol|tr)>#iu', "\n", $html) ?? '';
         $text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        // Bullet characters mark list items, inline or at the start of a line ("• wyposażone w …").
+        $text = str_replace(['•', '▪', '●'], "\n", $text);
 
         return array_values(array_filter(array_map(
             fn (string $line): string => self::removeSupplierPhrases(self::squish($line)),

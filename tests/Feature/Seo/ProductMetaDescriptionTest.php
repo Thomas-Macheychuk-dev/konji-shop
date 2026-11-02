@@ -141,3 +141,11 @@ it('previews, writes with a backup and rolls back weak product meta descriptions
         ->and(Artisan::output())->toContain('RESTORED_META=1 OF 1')
         ->and($weak->fresh()->seo_description)->toBe('Vermeiren Sprzęt przeciwodleżynowy Poduszki przeciwodleżynowe VICAIR ACTIVE O2');
 });
+
+it('skips advertiser disclosures and manual links and drops list bullets', function (): void {
+    $html = '<p>Klipsy mocujące do wszystkich kul FDI:</p><p>• wyposażone w system bezpieczeństwa, • dopasowane do wszystkich modeli kul FDI,</p>'
+        .'<p>Podmiot prowadzący reklamę: Antar Spółka Jawna.</p><p>User manual (multiversion).</p>';
+
+    expect(ProductMetaDescription::build($html, null, 'Klipsy FDI'))
+        ->toBe('Wyposażone w system bezpieczeństwa. Dopasowane do wszystkich modeli kul FDI.');
+});
