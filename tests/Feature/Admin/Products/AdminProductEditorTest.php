@@ -18,6 +18,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 uses(RefreshDatabase::class);
 
@@ -1176,6 +1177,134 @@ it('filters products by missing package data', function (): void {
         ->assertSee('Editable Product')
         ->assertSee('brakującą wagą/wymiarami')
         ->assertDontSee('Complete Package Product');
+});
+
+it('links product names to the storefront product page', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    createProductForAdminProductEditorTest();
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.index'))
+        ->assertOk()
+        ->assertSee('href="'.route('products.show', 'editable-product').'"', false);
+});
+
+it('paginates admin products 25 per page', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    foreach (range(1, 26) as $number) {
+        Product::query()->create([
+            'name' => 'Paginated Product '.$number,
+            'slug' => 'paginated-product-'.$number,
+            'status' => ProductStatus::ACTIVE,
+        ]);
+    }
+
+    $products = $this
+        ->actingAs($admin)
+        ->get(route('admin.products.index'))
+        ->assertOk()
+        ->viewData('products');
+
+    expect($products->perPage())->toBe(25)
+        ->and($products->count())->toBe(25)
+        ->and($products->total())->toBe(26);
+});
+
+it('filters products without priced variants', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    createProductForAdminProductEditorTest();
+
+    $unpricedProduct = Product::query()->create([
+        'name' => 'Unpriced Product',
+        'slug' => 'unpriced-product',
+        'status' => ProductStatus::DRAFT,
+    ]);
+
+    ProductVariant::query()->create([
+        'product_id' => $unpricedProduct->id,
+        'sku' => 'UNPRICED-1',
+        'status' => ProductVariantStatus::DRAFT,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_8,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+
+    Product::query()->create([
+        'name' => 'Variantless Product',
+        'slug' => 'variantless-product',
+        'status' => ProductStatus::DRAFT,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.index', ['without_priced_variants' => 1]))
+        ->assertOk()
+        ->assertSee('Unpriced Product')
+        ->assertSee('Variantless Product')
+        ->assertDontSee('Editable Product');
+});
+
+it('filters products that are not available for purchase', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $createProduct = function (string $name, array $productAttributes, array $variantAttributes = []): Product {
+        $product = Product::query()->create([
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'status' => ProductStatus::ACTIVE,
+            'published_at' => now()->subDay(),
+            ...$productAttributes,
+        ]);
+
+        ProductVariant::query()->create([
+            'product_id' => $product->id,
+            'sku' => Str::upper(Str::slug($name)),
+            'status' => ProductVariantStatus::ACTIVE,
+            'price_net_amount' => 1000,
+            'currency' => Currency::PLN,
+            'vat_rate' => VatRate::VAT_8,
+            'stock_status' => StockStatus::IN_STOCK,
+            'is_default' => true,
+            ...$variantAttributes,
+        ]);
+
+        return $product;
+    };
+
+    $createProduct('Buyable Product', []);
+    $createProduct('Preorder Product', [], ['stock_status' => StockStatus::PREORDER]);
+    $createProduct('Draft Product', ['status' => ProductStatus::DRAFT]);
+    $createProduct('Unpublished Product', ['published_at' => null]);
+    $createProduct('Scheduled Product', ['published_at' => now()->addDay()]);
+    $createProduct('Sold Out Product', [], ['stock_status' => StockStatus::OUT_OF_STOCK]);
+    $createProduct('Draft Variant Product', [], ['status' => ProductVariantStatus::DRAFT]);
+    $createProduct('No Price Product', [], ['price_net_amount' => null]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.index', ['unavailable' => 1]))
+        ->assertOk()
+        ->assertDontSee('Buyable Product')
+        ->assertDontSee('Preorder Product')
+        ->assertSee('Draft Product')
+        ->assertSee('Unpublished Product')
+        ->assertSee('Scheduled Product')
+        ->assertSee('Sold Out Product')
+        ->assertSee('Draft Variant Product')
+        ->assertSee('No Price Product');
 });
 
 it('allows an admin to update the product name', function (): void {

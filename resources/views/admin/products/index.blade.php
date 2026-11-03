@@ -68,11 +68,35 @@
                             Tylko brakujące wagi/wymiary
                         </label>
 
+                        <label class="flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700">
+                            <input
+                                type="checkbox"
+                                name="without_priced_variants"
+                                value="1"
+                                @checked($withoutPricedVariants)
+                                class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                            >
+
+                            Bez wycenionych wariantów
+                        </label>
+
+                        <label class="flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700">
+                            <input
+                                type="checkbox"
+                                name="unavailable"
+                                value="1"
+                                @checked($unavailable)
+                                class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                            >
+
+                            Tylko niedostępne
+                        </label>
+
                         <button class="rounded-xl bg-zinc-900 px-4 py-3 text-sm font-semibold text-white hover:bg-zinc-700">
                             Filtruj
                         </button>
 
-                        @if ($search !== '' || $missingPackageData)
+                        @if ($search !== '' || $missingPackageData || $withoutPricedVariants || $unavailable)
                             <a
                                 href="{{ route('admin.products.index') }}"
                                 class="rounded-xl border border-zinc-300 px-4 py-3 text-sm font-semibold text-zinc-700 hover:bg-zinc-50"
@@ -102,9 +126,14 @@
                     @forelse ($products as $product)
                         <tr>
                             <td class="px-4 py-4 text-sm">
-                                <div class="font-medium text-zinc-900">
+                                <a
+                                    href="{{ route('products.show', $product->slug) }}"
+                                    target="_blank"
+                                    rel="noopener"
+                                    class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
+                                >
                                     {{ $product->name }}
-                                </div>
+                                </a>
 
                                 <div class="mt-1 text-xs text-zinc-500">
                                     {{ $product->slug }}

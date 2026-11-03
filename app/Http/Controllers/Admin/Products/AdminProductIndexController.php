@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\Products;
 
+use App\Enums\ProductStatus;
+use App\Enums\ProductVariantStatus;
+use App\Enums\StockStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
@@ -15,6 +18,8 @@ final class AdminProductIndexController extends Controller
     {
         $search = trim((string) $request->query('search', ''));
         $missingPackageData = $request->boolean('missing_package_data');
+        $withoutPricedVariants = $request->boolean('without_priced_variants');
+        $unavailable = $request->boolean('unavailable');
 
         $products = Product::query()
             ->withCount('variants')
@@ -41,14 +46,24 @@ final class AdminProductIndexController extends Controller
                     $this->missingPackageDataQuery($query);
                 });
             })
+            ->when($withoutPricedVariants, function ($query): void {
+                $query->whereDoesntHave('variants', function ($query): void {
+                    $this->pricedQuery($query);
+                });
+            })
+            ->when($unavailable, function ($query): void {
+                $this->unavailableQuery($query);
+            })
             ->orderBy('updated_at')
-            ->paginate(50)
+            ->paginate(25)
             ->withQueryString();
 
         return view('admin.products.index', [
             'products' => $products,
             'search' => $search,
             'missingPackageData' => $missingPackageData,
+            'withoutPricedVariants' => $withoutPricedVariants,
+            'unavailable' => $unavailable,
         ]);
     }
 
@@ -64,6 +79,46 @@ final class AdminProductIndexController extends Controller
                 ->orWhere('package_length_mm', '<=', 0)
                 ->orWhere('package_width_mm', '<=', 0)
                 ->orWhere('package_height_mm', '<=', 0);
+        });
+    }
+
+    /**
+     * Mirrors the pricing CartService::addItem() needs: a gross price, or a net price with a VAT rate.
+     */
+    private function pricedQuery($query): void
+    {
+        $query
+            ->whereNotNull('currency')
+            ->whereNotNull('vat_rate')
+            ->where(function ($query): void {
+                $query
+                    ->whereNotNull('price_gross_amount')
+                    ->orWhereNotNull('price_net_amount');
+            });
+    }
+
+    /**
+     * Products a customer cannot add to the cart: not active, not yet published,
+     * or without an active, in-stock (or preorder), priced variant.
+     */
+    private function unavailableQuery($query): void
+    {
+        $query->where(function ($query): void {
+            $query
+                ->where('status', '!=', ProductStatus::ACTIVE->value)
+                ->orWhereNull('published_at')
+                ->orWhere('published_at', '>', now())
+                ->orWhereDoesntHave('variants', function ($query): void {
+                    $query
+                        ->where('status', ProductVariantStatus::ACTIVE->value)
+                        ->where(function ($query): void {
+                            $query
+                                ->whereNull('stock_status')
+                                ->orWhere('stock_status', '!=', StockStatus::OUT_OF_STOCK->value);
+                        });
+
+                    $this->pricedQuery($query);
+                });
         });
     }
 }
