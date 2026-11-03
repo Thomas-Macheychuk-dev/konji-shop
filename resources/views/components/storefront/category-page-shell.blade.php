@@ -1,5 +1,5 @@
 <div class="mx-auto max-w-[1600px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-    <div class="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)] xl:gap-8">
+    <div class="grid gap-6 lg:grid-cols-[336px_minmax(0,1fr)] xl:grid-cols-[360px_minmax(0,1fr)] xl:gap-8">
         <aside class="self-start lg:sticky lg:top-[170px]">
             @include('partials.storefront.category-sidebar')
         </aside>
