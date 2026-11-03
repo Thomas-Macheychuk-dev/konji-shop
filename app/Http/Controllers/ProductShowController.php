@@ -19,6 +19,7 @@ use App\Services\Qmed\QmedDescriptionSanitizer;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
 use App\Support\Products\ProductLegalDisclosures;
+use App\Support\Seo\ProductIdentifiers;
 use App\Support\Seo\ProductMetaDescription;
 use App\Support\Seo\ReviewedProductAliases;
 use Illuminate\Contracts\View\View;
@@ -182,7 +183,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v14.%s.%d',
+            'product-page.v15.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -292,6 +293,19 @@ class ProductShowController extends Controller
 
         if ($defaultVariant?->sku) {
             $data['sku'] = $defaultVariant->sku;
+        }
+
+        // The manufacturer from the supplier import; the shop itself is never claimed as the brand.
+        $brand = ProductIdentifiers::brand($product, [$this->shopSettings->companyName(), $this->shopSettings->shopName()]);
+
+        if ($brand !== null) {
+            $data['brand'] = ['@type' => 'Brand', 'name' => $brand];
+        }
+
+        $gtin = ProductIdentifiers::gtin($product->description, $product->variants->count());
+
+        if ($gtin !== null) {
+            $data['gtin'] = $gtin;
         }
 
         if ($defaultVariant !== null && $defaultVariant->grossPriceAmount() !== null) {
