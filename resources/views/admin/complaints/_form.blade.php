@@ -1,7 +1,8 @@
 @php
     /** @var \App\Models\Complaint|null $complaint */
     $complaint = $complaint ?? null;
-    $inputClasses = 'mt-1 block w-full rounded-lg border-zinc-300 text-sm';
+    $inputClasses = 'mt-1.5 block w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100';
+    $sectionHeading = 'text-sm font-semibold text-zinc-900';
     $value = fn (string $key, mixed $default = null) => old($key, $default);
     $dateTimeValue = fn (?\Carbon\CarbonInterface $date): ?string => $date?->format('Y-m-d\TH:i');
 @endphp
@@ -19,11 +20,26 @@
 <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
     <h2 class="text-lg font-semibold text-zinc-900">Zgłoszenie</h2>
 
-    <div class="mt-5 grid gap-4 text-sm sm:grid-cols-2">
+    <h3 class="mt-6 {{ $sectionHeading }}">1. Kiedy i jak wpłynęła reklamacja</h3>
+    <div
+        class="mt-3 grid gap-4 text-sm sm:grid-cols-2"
+        x-data="{
+            received: @js($value('received_at', $dateTimeValue($complaint?->received_at ?? now()))),
+            shift(days) {
+                const date = new Date((this.received || '').slice(0, 10) + 'T00:00:00');
+                if (isNaN(date)) return '—';
+                date.setDate(date.getDate() + days);
+                return date.toLocaleDateString('pl-PL');
+            },
+        }"
+    >
         <label class="block">
             <span class="text-zinc-700">Data i godzina otrzymania reklamacji</span>
-            <input type="datetime-local" name="received_at" required value="{{ $value('received_at', $dateTimeValue($complaint?->received_at ?? now())) }}" class="{{ $inputClasses }}">
-            <span class="mt-1 block text-xs text-zinc-500">Od tej daty liczy się 14 dni na odpowiedź.</span>
+            <input type="datetime-local" name="received_at" required x-model="received" value="{{ $value('received_at', $dateTimeValue($complaint?->received_at ?? now())) }}" class="{{ $inputClasses }}">
+            <span class="mt-1.5 block text-xs text-zinc-500">
+                Termin odpowiedzi: <strong class="text-zinc-700" x-text="shift({{ \App\Models\Complaint::responseDays() }})"></strong>
+                · przypomnienie: <span x-text="shift({{ \App\Models\Complaint::alertAfterDays() }})"></span>
+            </span>
         </label>
 
         <label class="block">
@@ -34,7 +50,10 @@
                 @endforeach
             </select>
         </label>
+    </div>
 
+    <h3 class="mt-8 border-t border-zinc-100 pt-6 {{ $sectionHeading }}">2. Klient i zamówienie</h3>
+    <div class="mt-3 grid gap-4 text-sm sm:grid-cols-2">
         <label class="block">
             <span class="text-zinc-700">Imię i nazwisko klienta</span>
             <input type="text" name="customer_name" required value="{{ $value('customer_name', $complaint?->customer_name) }}" class="{{ $inputClasses }}">
@@ -55,7 +74,10 @@
             <span class="text-zinc-700">Telefon klienta</span>
             <input type="text" name="customer_phone" value="{{ $value('customer_phone', $complaint?->customer_phone) }}" class="{{ $inputClasses }}">
         </label>
+    </div>
 
+    <h3 class="mt-8 border-t border-zinc-100 pt-6 {{ $sectionHeading }}">3. Towar i problem</h3>
+    <div class="mt-3 grid gap-4 text-sm sm:grid-cols-2">
         <label class="block sm:col-span-2">
             <span class="text-zinc-700">Towar</span>
             <input type="text" name="product_description" required maxlength="500" value="{{ $value('product_description', $complaint?->product_description) }}" class="{{ $inputClasses }}" placeholder="np. Orteza stawu kolanowego, rozmiar M">

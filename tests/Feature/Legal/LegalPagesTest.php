@@ -15,7 +15,7 @@ it('shows published public legal pages without draft warnings', function (string
     ['legal.terms', 'Regulamin sklepu internetowego ORTEZKA.PL'],
     ['legal.privacy', 'Polityka prywatności'],
     ['legal.returns', 'Zwroty i odstąpienie od umowy'],
-    ['legal.complaints', 'Reklamacje - niezgodność towaru z umową'],
+    ['legal.complaints', 'Reklamacje – niezgodność towaru z umową'],
     ['legal.delivery-payments', 'Dostawa i płatności'],
     ['legal.contact', 'Kontakt'],
     ['legal.cookie-policy', 'Polityka plików cookie'],
