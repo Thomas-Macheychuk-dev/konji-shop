@@ -66,9 +66,20 @@ class WithdrawalRequest extends Model
         return ! $this->status->isFinal();
     }
 
+    public function canBeInspected(): bool
+    {
+        return ! $this->status->isFinal()
+            && $this->status !== WithdrawalStatus::REFUND_PENDING;
+    }
+
     public function refundAmount(): int
     {
-        return (int) $this->items->sum('line_gross_amount');
+        return (int) $this->items->sum(fn (WithdrawalRequestItem $item): int => $item->refundableGrossAmount());
+    }
+
+    public function valueReductionAmount(): int
+    {
+        return (int) $this->items->sum('value_reduction_amount');
     }
 
     public function refundAmountDecimal(): string
