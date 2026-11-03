@@ -247,7 +247,7 @@
 
                         @if ($order->discount_amount > 0)
                             <div class="flex items-center justify-between">
-                                <dt>Discount</dt>
+                                <dt>Rabat</dt>
                                 <dd class="font-medium text-zinc-900">
                                     -{{ $order->discountDecimal() }} {{ $order->currency }}
                                 </dd>
