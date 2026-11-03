@@ -265,6 +265,43 @@ it('backfills Peruka brands from scraped data without overwriting an existing ma
         ->and(ProductIdentifiers::brand($second->fresh()))->toBe('Rokoko Hair Company');
 });
 
+it('stores a valid Peruka EAN as the default variant GTIN and backfills imported products', function (): void {
+    writePerukaImportFixture('scrapers/peruka/test-product-data.json', [
+        perukaImportProductPayload(['ean' => '5901234123457']),
+        perukaImportProductPayload(['external_product_id' => '38773', 'slug' => 'second', 'sku' => '38773', 'ean' => '5901234123458']),
+    ]);
+    $this->artisan('peruka:import', ['--from' => 'scrapers/peruka/test-product-data.json', '--no-images' => true])->assertSuccessful();
+
+    $variant = fn (string $externalId) => ProductVariant::query()->where('external_variant_id', 'peruka-'.$externalId.'-default')->firstOrFail();
+
+    expect($variant('38772')->gtin)->toBe('5901234123457')
+        ->and($variant('38773')->gtin)->toBeNull();
+
+    $variant('38772')->forceFill(['gtin' => null])->save();
+    writePerukaImportFixture('scrapers/peruka/test-product-data.json', [
+        perukaImportProductPayload(['ean' => '5901234123457']),
+        perukaImportProductPayload(['external_product_id' => '38773', 'ean' => '4006381333931']),
+        perukaImportProductPayload(['external_product_id' => '38774', 'ean' => '4006381333931']),
+        perukaImportProductPayload(['external_product_id' => '38775', 'ean' => '5901234123458']),
+    ]);
+
+    $this->artisan('peruka:backfill-gtins', ['--data' => 'scrapers/peruka/test-product-data.json'])
+        ->expectsOutputToContain('INVALID_CHECK_DIGIT=1')
+        ->expectsOutputToContain('SHARED_BY_SEVERAL_PRODUCTS=2')
+        ->expectsOutputToContain('TO_STORE=1')
+        ->expectsOutputToContain('MODE=READ_ONLY')
+        ->assertSuccessful();
+
+    expect($variant('38772')->gtin)->toBeNull();
+
+    $this->artisan('peruka:backfill-gtins', ['--data' => 'scrapers/peruka/test-product-data.json', '--write' => true])
+        ->expectsOutputToContain('STORED=1')
+        ->assertSuccessful();
+
+    expect($variant('38772')->gtin)->toBe('5901234123457')
+        ->and($variant('38773')->gtin)->toBeNull();
+});
+
 function writePerukaImportFixture(string $relativePath, array $products): void
 {
     $path = storage_path('app/'.$relativePath);

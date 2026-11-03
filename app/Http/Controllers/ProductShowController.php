@@ -183,7 +183,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v15.%s.%d',
+            'product-page.v16.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -302,7 +302,8 @@ class ProductShowController extends Controller
             $data['brand'] = ['@type' => 'Brand', 'name' => $brand];
         }
 
-        $gtin = ProductIdentifiers::gtin($product->description, $product->variants->count());
+        $gtin = ProductIdentifiers::variantGtin($defaultVariant)
+            ?? ProductIdentifiers::gtin($product->description, $product->variants->count());
 
         if ($gtin !== null) {
             $data['gtin'] = $gtin;

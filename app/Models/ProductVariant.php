@@ -21,6 +21,7 @@ class ProductVariant extends Model
     protected $fillable = [
         'product_id',
         'sku',
+        'gtin',
         'status',
         'price_net_amount',
         'price_gross_amount',

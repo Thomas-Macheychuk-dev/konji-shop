@@ -6,11 +6,12 @@ namespace App\Support\Seo;
 
 use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\ProductVariant;
 
 /**
  * Brand and GTIN for Product structured data, taken only from what the supplier import stored:
- * the "Marka"/"Producent" attribute and an EAN printed in the description. Anything ambiguous is
- * left out, because a wrong identifier is worse than none.
+ * the "Marka"/"Producent" attribute, the variant's GTIN and an EAN printed in the description.
+ * Anything ambiguous is left out, because a wrong identifier is worse than none.
  */
 final class ProductIdentifiers
 {
@@ -54,6 +55,16 @@ final class ProductIdentifiers
         $name = trim((string) preg_replace(self::LEGAL_SUFFIX, '', $name), " \t,.-");
 
         return $name === '' ? null : $name;
+    }
+
+    /**
+     * The GTIN stored on the variant the Product markup describes (its sku and offer).
+     */
+    public static function variantGtin(?ProductVariant $variant): ?string
+    {
+        $gtin = (string) $variant?->gtin;
+
+        return self::isValidGtin($gtin) ? $gtin : null;
     }
 
     /**
