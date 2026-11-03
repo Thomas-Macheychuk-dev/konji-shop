@@ -63,5 +63,7 @@ case "${LEGACY_SEO_FALLBACK_REDIRECTS_ENABLED:-false}" in
         ;;
 esac
 
+/usr/local/bin/konji-archive-build-assets
+
 nginx -t
 exec nginx -g 'daemon off;'
