@@ -132,16 +132,17 @@
                         <div class="relative hidden lg:block" x-data="{ open: false }">
                             <button
                                 type="button"
-                                class="inline-flex min-w-[76px] flex-col items-center justify-center rounded-xl px-2 py-2 text-xs font-semibold text-[#d95513] transition hover:bg-orange-50"
+                                class="inline-flex min-w-[88px] flex-col items-center justify-center rounded-xl px-2 py-2 text-xs font-medium text-slate-600 transition hover:bg-blue-50 hover:text-[#155fa8]"
                                 :aria-expanded="open.toString()"
                                 aria-haspopup="menu"
                                 @click="open = ! open"
                                 @keydown.escape.window="open = false"
                             >
                                 <svg class="mb-1 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2M9 11a4 4 0 1 1 6 0M12 3v2M5.6 5.6 7 7M18.4 5.6 17 7" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4" />
                                 </svg>
-                                Panel admina
+                                Administracja
                             </button>
 
                             <div
@@ -165,7 +166,7 @@
                                 ] as $adminNavigationItem)
                                     <a
                                         href="{{ route($adminNavigationItem['route']) }}"
-                                        class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-orange-50 hover:text-[#d95513]"
+                                        class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-[#155fa8]"
                                         role="menuitem"
                                     >
                                         {{ $adminNavigationItem['label'] }}
@@ -342,15 +343,15 @@
                     <a href="{{ route('account.details.show') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Dane konta</a>
 
                     @if(auth()->user()->is_admin)
-                        <p class="px-3 pt-4 text-xs font-bold uppercase tracking-[0.16em] text-[#d95513] sm:col-span-2">Panel administracyjny</p>
-                        <a href="{{ route('admin.orders.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Zamówienia</a>
-                        <a href="{{ route('admin.products.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Produkty</a>
-                        <a href="{{ route('admin.categories.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Kategorie</a>
-                        <a href="{{ route('admin.withdrawals.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Odstąpienia</a>
-                        <a href="{{ route('admin.complaints.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Reklamacje</a>
-                        <a href="{{ route('admin.pages.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Edytor stron</a>
-                        <a href="{{ route('admin.rental.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Wypożyczalnia</a>
-                        <a href="{{ route('admin.shop.readiness') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Gotowość sklepu</a>
+                        <p class="px-3 pt-4 text-xs font-bold uppercase tracking-[0.16em] text-slate-400 sm:col-span-2">Panel administracyjny</p>
+                        <a href="{{ route('admin.orders.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Zamówienia</a>
+                        <a href="{{ route('admin.products.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Produkty</a>
+                        <a href="{{ route('admin.categories.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Kategorie</a>
+                        <a href="{{ route('admin.withdrawals.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Odstąpienia</a>
+                        <a href="{{ route('admin.complaints.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Reklamacje</a>
+                        <a href="{{ route('admin.pages.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Edytor stron</a>
+                        <a href="{{ route('admin.rental.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Wypożyczalnia</a>
+                        <a href="{{ route('admin.shop.readiness') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Gotowość sklepu</a>
                     @endif
 
                     <form method="POST" action="{{ route('logout') }}">
