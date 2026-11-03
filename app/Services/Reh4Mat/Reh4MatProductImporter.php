@@ -51,6 +51,8 @@ final class Reh4MatProductImporter
         'www.reh4mat.com',
         'stabilobedsystem.pl',
         'www.stabilobedsystem.pl',
+        'flex-point.pl',
+        'www.flex-point.pl',
         'bodymapsystem.pl',
         'www.bodymapsystem.pl',
         'bodymapsystem.com',

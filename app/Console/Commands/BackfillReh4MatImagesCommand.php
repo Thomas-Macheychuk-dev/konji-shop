@@ -11,14 +11,16 @@ use App\Services\Reh4Mat\Reh4MatProductImporter;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use JsonException;
 use Throwable;
 
 /**
  * Adds gallery images to Reh4Mat products that have none, from the image URLs in the saved scrape.
  *
- * Reh4Mat moved its StabiloBed products to stabilobedsystem.pl; the old www.reh4mat.com/media/k2/ files
- * now answer 404 but are served unchanged under the same path there. Only images are added: products,
+ * Reh4Mat moved its StabiloBed products to stabilobedsystem.pl and its FP belts to flex-point.pl; the old
+ * www.reh4mat.com/media/k2/ and /images/ files now answer 404 but are served unchanged under the same path
+ * on one of those hosts, so each moved URL is tried there in turn. Only images are added: products,
  * variants, categories and existing images are never changed or deleted.
  */
 final class BackfillReh4MatImagesCommand extends Command
@@ -33,7 +35,12 @@ final class BackfillReh4MatImagesCommand extends Command
 
     private const BACKUP_DIRECTORY = 'catalogue-repairs';
 
-    private const MOVED_K2_HOST = 'stabilobedsystem.pl';
+    /**
+     * Hosts that took over Reh4Mat product lines, in the order moved files are tried.
+     */
+    private const MOVED_HOSTS = ['stabilobedsystem.pl', 'flex-point.pl'];
+
+    private const MOVED_PATH_PREFIXES = ['/media/k2/', '/images/'];
 
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
@@ -81,7 +88,7 @@ final class BackfillReh4MatImagesCommand extends Command
                 }
 
                 foreach ($images as $image) {
-                    $host = (string) parse_url($image['url'], PHP_URL_HOST);
+                    $host = count($image['urls']) > 1 ? 'moved: '.implode(', then ', self::MOVED_HOSTS) : (string) parse_url($image['urls'][0], PHP_URL_HOST);
                     $hosts[$host] = ($hosts[$host] ?? 0) + 1;
                 }
 
@@ -102,7 +109,7 @@ final class BackfillReh4MatImagesCommand extends Command
         }
 
         foreach (array_slice($plan, 0, 5) as $item) {
-            $this->line($item['product']->id.' '.$item['product']->slug.' <- '.$item['images'][0]['url']);
+            $this->line($item['product']->id.' '.$item['product']->slug.' <- '.$item['images'][0]['urls'][0]);
         }
 
         foreach ($noImageUrls as [$product, $sourceUrl]) {
@@ -138,17 +145,16 @@ final class BackfillReh4MatImagesCommand extends Command
             $downloaded = [];
 
             foreach ($item['images'] as $image) {
-                try {
-                    $downloaded[] = $this->remoteImageImporter->import(
-                        $image['url'],
-                        'products/reh4mat/'.$product->external_id.'/gallery',
-                        'public',
-                        Reh4MatProductImporter::REMOTE_ASSET_ALLOWED_HOSTS,
-                    ) + ['alt' => $image['alt']];
-                } catch (Throwable $exception) {
+                $download = $this->download($image['urls'], (string) $product->external_id);
+
+                if (is_string($download)) {
                     $failedUrls++;
-                    $this->warn('IMAGE_FAILED '.$product->id.' '.$image['url'].' — '.$exception->getMessage());
+                    $this->warn('IMAGE_FAILED '.$product->id.' '.$image['urls'][0].' — '.Str::limit($download, 160));
+
+                    continue;
                 }
+
+                $downloaded[] = $download + ['alt' => $image['alt']];
             }
 
             if ($downloaded === []) {
@@ -256,22 +262,48 @@ final class BackfillReh4MatImagesCommand extends Command
     }
 
     /**
+     * The first URL that downloads, or the last error when none does.
+     *
+     * @param  list<string>  $urls
+     * @return array<string, mixed>|string
+     */
+    private function download(array $urls, string $externalId): array|string
+    {
+        $error = '';
+
+        foreach ($urls as $url) {
+            try {
+                return $this->remoteImageImporter->import(
+                    $url,
+                    'products/reh4mat/'.$externalId.'/gallery',
+                    'public',
+                    Reh4MatProductImporter::REMOTE_ASSET_ALLOWED_HOSTS,
+                );
+            } catch (Throwable $exception) {
+                $error = $url.': '.$exception->getMessage();
+            }
+        }
+
+        return $error;
+    }
+
+    /**
      * @param  array<string, mixed>  $entry
-     * @return list<array{url: string, alt: string}>
+     * @return list<array{urls: list<string>, alt: string}>
      */
     private function candidateImages(array $entry, string $productName, int $limit): array
     {
         $images = [];
 
         foreach ($entry['images'] ?? [] as $image) {
-            $url = is_array($image) && is_string($image['url'] ?? null) ? $this->currentUrl(trim($image['url'])) : null;
+            $url = is_array($image) && is_string($image['url'] ?? null) ? trim($image['url']) : '';
 
-            if ($url === null || $url === '' || isset($images[$url])) {
+            if ($url === '' || isset($images[$url])) {
                 continue;
             }
 
             $alt = is_string($image['alt'] ?? null) && trim($image['alt']) !== '' ? trim($image['alt']) : $productName;
-            $images[$url] = ['url' => $url, 'alt' => $alt];
+            $images[$url] = ['urls' => $this->currentUrls($url), 'alt' => $alt];
         }
 
         $images = array_values($images);
@@ -279,18 +311,25 @@ final class BackfillReh4MatImagesCommand extends Command
         return $limit > 0 ? array_slice($images, 0, $limit) : $images;
     }
 
-    private function currentUrl(string $url): string
+    /**
+     * @return list<string>
+     */
+    private function currentUrls(string $url): array
     {
         $host = strtolower((string) parse_url($url, PHP_URL_HOST));
         $path = (string) parse_url($url, PHP_URL_PATH);
+        $moved = array_filter(self::MOVED_PATH_PREFIXES, fn (string $prefix): bool => str_starts_with($path, $prefix));
 
-        if (! in_array($host, ['reh4mat.com', 'www.reh4mat.com'], true) || ! str_starts_with($path, '/media/k2/')) {
-            return $url;
+        if (! in_array($host, ['reh4mat.com', 'www.reh4mat.com'], true) || $moved === []) {
+            return [$url];
         }
 
         $query = parse_url($url, PHP_URL_QUERY);
 
-        return 'https://'.self::MOVED_K2_HOST.$path.(is_string($query) ? '?'.$query : '');
+        return array_map(
+            fn (string $movedHost): string => 'https://'.$movedHost.$path.(is_string($query) ? '?'.$query : ''),
+            self::MOVED_HOSTS,
+        );
     }
 
     /**
