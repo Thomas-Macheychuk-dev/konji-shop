@@ -16,6 +16,10 @@ Schedule::command('paynow:reconcile-refunds --limit=50')
     ->everyFifteenMinutes()
     ->withoutOverlapping();
 
+Schedule::command('complaints:send-deadline-alerts')
+    ->dailyAt('06:00')
+    ->withoutOverlapping();
+
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');

@@ -54,6 +54,13 @@ return [
         'contact_email' => env('SHOP_RETURNS_EMAIL', env('SHOP_EMAIL', 'sklep.ortezka@gmail.com')),
     ],
 
+    'complaints' => [
+        // Regulamin § 12 ust. 8: no answer within 14 days of receipt means the complaint is accepted.
+        'response_days' => 14,
+        'alert_after_days' => 10,
+        'alert_email' => env('SHOP_COMPLAINTS_ALERT_EMAIL', env('SHOP_EMAIL', 'sklep.ortezka@gmail.com')),
+    ],
+
     'documents' => [
         'terms_pdf' => 'legal/2026-09-24/ORTEZKA_PL_Regulamin_sklepu_internetowego_2026-09-24.pdf',
         'withdrawal_form_pdf' => 'legal/2026-09-24/ORTEZKA_PL_Formularz_odstapienia_DLA_KLIENTA_2026-09-24.pdf',

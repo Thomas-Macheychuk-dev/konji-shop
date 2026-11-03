@@ -52,6 +52,15 @@ return [
         'cancelled' => 'Cancelled',
     ],
 
+    'complaint_status' => [
+        'received' => 'Received',
+        'in_review' => 'In review',
+        'accepted' => 'Accepted',
+        'partially_accepted' => 'Partially accepted',
+        'rejected' => 'Rejected',
+        'closed' => 'Closed',
+    ],
+
     'payment_status' => [
         'unpaid' => 'Unpaid',
         'pending' => 'Pending',
