@@ -1,7 +1,7 @@
 @extends('layouts.storefront')
 
 @section('content')
-    <x-storefront.category-page-shell>
+    <x-storefront.category-page-shell wide>
     @if ($searchQuery !== '')
         <section class="border-b border-slate-200 bg-white">
             <div class="mx-auto max-w-[1480px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">

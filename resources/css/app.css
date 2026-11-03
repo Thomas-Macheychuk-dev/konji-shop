@@ -82,6 +82,46 @@ select:focus[data-flux-control] {
     @apply size-4;
 } */
 
+.category-sidebar-scroll {
+    scrollbar-gutter: stable;
+}
+
+/* Chrome, Edge and Safari: the ::-webkit-scrollbar styles below. Setting
+   scrollbar-width or scrollbar-color would make Chrome ignore them and draw
+   arrow buttons on Windows, so the standard properties are for Firefox only. */
+@supports not selector(::-webkit-scrollbar) {
+    .category-sidebar-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: rgb(203 213 225) transparent;
+    }
+
+    .category-sidebar-scroll:hover {
+        scrollbar-color: rgb(148 163 184) transparent;
+    }
+}
+
+.category-sidebar-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.category-sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.category-sidebar-scroll::-webkit-scrollbar-button {
+    display: none;
+}
+
+.category-sidebar-scroll::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 9999px;
+    background: rgb(203 213 225) padding-box;
+}
+
+.category-sidebar-scroll:hover::-webkit-scrollbar-thumb {
+    background-color: rgb(148 163 184);
+}
+
 .product-description * {
     box-sizing: border-box;
 }
