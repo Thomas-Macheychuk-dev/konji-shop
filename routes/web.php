@@ -14,6 +14,11 @@ use App\Http\Controllers\Admin\Categories\AdminCategoryEditController;
 use App\Http\Controllers\Admin\Categories\AdminCategoryIndexController;
 use App\Http\Controllers\Admin\Categories\AdminCategoryStoreController;
 use App\Http\Controllers\Admin\Categories\AdminCategoryUpdateController;
+use App\Http\Controllers\Admin\Complaints\AdminComplaintCreateController;
+use App\Http\Controllers\Admin\Complaints\AdminComplaintIndexController;
+use App\Http\Controllers\Admin\Complaints\AdminComplaintShowController;
+use App\Http\Controllers\Admin\Complaints\AdminComplaintStoreController;
+use App\Http\Controllers\Admin\Complaints\AdminComplaintUpdateController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierAvailableCarriersRefreshController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
@@ -268,6 +273,21 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/withdrawal-photos/{photo}', AdminWithdrawalItemPhotoShowController::class)
             ->name('withdrawals.photos.show');
+
+        Route::get('/complaints', AdminComplaintIndexController::class)
+            ->name('complaints.index');
+
+        Route::get('/complaints/create', AdminComplaintCreateController::class)
+            ->name('complaints.create');
+
+        Route::post('/complaints', AdminComplaintStoreController::class)
+            ->name('complaints.store');
+
+        Route::get('/complaints/{complaint}', AdminComplaintShowController::class)
+            ->name('complaints.show');
+
+        Route::patch('/complaints/{complaint}', AdminComplaintUpdateController::class)
+            ->name('complaints.update');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {

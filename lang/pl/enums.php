@@ -52,6 +52,15 @@ return [
         'cancelled' => 'Anulowane',
     ],
 
+    'complaint_status' => [
+        'received' => 'Przyjęta',
+        'in_review' => 'W trakcie rozpatrywania',
+        'accepted' => 'Uznana',
+        'partially_accepted' => 'Uznana częściowo',
+        'rejected' => 'Odrzucona',
+        'closed' => 'Zamknięta',
+    ],
+
     'payment_status' => [
         'unpaid' => 'Nieopłacone',
         'pending' => 'Oczekujące',
