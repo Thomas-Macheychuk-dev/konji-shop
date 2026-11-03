@@ -65,8 +65,5 @@ return [
         'terms_pdf' => 'legal/2026-09-24/ORTEZKA_PL_Regulamin_sklepu_internetowego_2026-09-24.pdf',
         'withdrawal_form_pdf' => 'legal/2026-09-24/ORTEZKA_PL_Formularz_odstapienia_DLA_KLIENTA_2026-09-24.pdf',
         'complaint_form_pdf' => 'legal/2026-09-24/ORTEZKA_PL_Formularz_reklamacyjny_DLA_KLIENTA_2026-09-24.pdf',
-        // NFZ forms; the NFZ page links each one only once its file is present in public/.
-        'nfz_order_form_pdf' => 'legal/nfz/zlecenie-na-zaopatrzenie-w-wyroby-medyczne.pdf',
-        'nfz_collection_authorisation_pdf' => 'legal/nfz/upowaznienie-do-odbioru.pdf',
     ],
 ];

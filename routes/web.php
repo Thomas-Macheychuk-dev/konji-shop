@@ -374,7 +374,7 @@ Route::view('/delivery-and-payments', 'pages.legal.delivery-and-payments')
 
 Route::view('/refundacje-nfz', 'pages.legal.nfz', [
     'seoTitle' => 'Refundacje NFZ',
-    'seoDescription' => 'Realizacja zleceń NFZ na wyroby medyczne w Poznaniu. Jak zrealizować zlecenie, formularz zlecenia i upoważnienia do odbioru do pobrania.',
+    'seoDescription' => 'Realizacja zleceń NFZ na wyroby medyczne w Poznaniu. Sprawdź, jak zrealizować zlecenie i odebrać wyrób medyczny.',
 ])->name('legal.nfz');
 
 Route::view('/contact', 'pages.legal.contact')
