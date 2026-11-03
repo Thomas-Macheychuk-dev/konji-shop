@@ -14,7 +14,7 @@ final class EnrichHerdegenDraftsCommandTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function prepare(): Product
+    private function prepare(string $name = 'Laska aluminiowa'): Product
     {
         Storage::fake('local');
         $url = 'https://www.orteo.pl/test-product';
@@ -24,13 +24,13 @@ final class EnrichHerdegenDraftsCommandTest extends TestCase
             'summary' => ['products' => 1, 'commercially_approved' => 0],
             'products' => [[
                 'external_id' => $id, 'source_url' => $url,
-                'name' => 'Laska aluminiowa', 'brand' => 'Herdegen',
+                'name' => $name, 'brand' => 'Herdegen',
                 'commercially_approved' => false, 'variant_candidates' => [],
             ]],
         ], JSON_THROW_ON_ERROR));
         return Product::query()->create([
             'external_source' => 'herdegen', 'external_id' => $id,
-            'name' => 'Laska aluminiowa', 'slug' => 'herdegen-test-product',
+            'name' => $name, 'slug' => 'herdegen-test-product',
             'status' => ProductStatus::DRAFT,
         ]);
     }
@@ -52,6 +52,14 @@ final class EnrichHerdegenDraftsCommandTest extends TestCase
         self::assertSame(ProductStatus::DRAFT, $product->fresh()->status);
         $this->artisan('herdegen:enrich-drafts', ['--write-drafts' => true])
             ->expectsOutput('UPDATED=0')->assertExitCode(0);
+    }
+
+    public function test_long_name_keeps_the_brand_in_the_seo_title(): void
+    {
+        $name = 'Francuska kula łokciowa Evolution komfort czarna (fr200) regulowana';
+        $product = $this->prepare($name);
+        $this->artisan('herdegen:enrich-drafts', ['--write-drafts' => true])->assertExitCode(0);
+        self::assertSame($name.' | Herdegen', $product->fresh()->seo_title);
     }
 
     public function test_rejects_active_products(): void
