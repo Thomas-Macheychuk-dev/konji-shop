@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EditablePage;
 use App\Http\Controllers\Account\AccountDetailsShowController;
 use App\Http\Controllers\Account\AccountDetailsUpdateController;
 use App\Http\Controllers\Account\OrderCancelController;
@@ -33,6 +34,10 @@ use App\Http\Controllers\Admin\Orders\AdminShipmentLabelController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentProtocolController;
 use App\Http\Controllers\Admin\Orders\AdminShipmentStatusRefreshController;
 use App\Http\Controllers\Admin\Orders\OrderFulfilmentController;
+use App\Http\Controllers\Admin\Pages\AdminPageEditController;
+use App\Http\Controllers\Admin\Pages\AdminPageIndexController;
+use App\Http\Controllers\Admin\Pages\AdminPageResetController;
+use App\Http\Controllers\Admin\Pages\AdminPageUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductActivatePricedVariantsController;
 use App\Http\Controllers\Admin\Products\AdminProductCreateController;
 use App\Http\Controllers\Admin\Products\AdminProductDefaultImageUpdateController;
@@ -63,6 +68,7 @@ use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
 use App\Http\Controllers\Checkout\PolkurierMapTokenController;
 use App\Http\Controllers\CheckoutPlaceOrderController;
 use App\Http\Controllers\CheckoutShowController;
+use App\Http\Controllers\EditablePageShowController;
 use App\Http\Controllers\GuestOrderCancelController;
 use App\Http\Controllers\GuestOrderShowController;
 use App\Http\Controllers\GuestOrderTrackLookupController;
@@ -241,6 +247,18 @@ Route::middleware(['auth', 'admin'])
         Route::delete('/categories/{category}', AdminCategoryDestroyController::class)
             ->name('categories.destroy');
 
+        Route::get('/pages', AdminPageIndexController::class)
+            ->name('pages.index');
+
+        Route::get('/pages/{editablePage}/edit', AdminPageEditController::class)
+            ->name('pages.edit');
+
+        Route::patch('/pages/{editablePage}', AdminPageUpdateController::class)
+            ->name('pages.update');
+
+        Route::delete('/pages/{editablePage}', AdminPageResetController::class)
+            ->name('pages.reset');
+
         Route::get('/polkurier', AdminPolkurierDiagnosticsController::class)
             ->name('polkurier.index');
 
@@ -363,21 +381,25 @@ Route::view('/terms-and-conditions', 'pages.legal.terms-and-conditions')
 Route::view('/privacy-policy', 'pages.legal.privacy-policy')
     ->name('legal.privacy');
 
-Route::view('/returns-and-withdrawal', 'pages.legal.returns-and-withdrawal')
+// Texts of these pages are edited in the admin "Edytor stron".
+Route::get('/returns-and-withdrawal', EditablePageShowController::class)
+    ->defaults('editablePage', EditablePage::RETURNS_AND_WITHDRAWAL->value)
     ->name('legal.returns');
 
-Route::view('/complaints-and-warranty', 'pages.legal.complaints-and-warranty')
+Route::get('/complaints-and-warranty', EditablePageShowController::class)
+    ->defaults('editablePage', EditablePage::COMPLAINTS_AND_WARRANTY->value)
     ->name('legal.complaints');
 
-Route::view('/delivery-and-payments', 'pages.legal.delivery-and-payments')
+Route::get('/delivery-and-payments', EditablePageShowController::class)
+    ->defaults('editablePage', EditablePage::DELIVERY_AND_PAYMENTS->value)
     ->name('legal.delivery-payments');
 
-Route::view('/refundacje-nfz', 'pages.legal.nfz', [
-    'seoTitle' => 'Refundacje NFZ',
-    'seoDescription' => 'Realizacja zleceń NFZ na wyroby medyczne w Poznaniu. Sprawdź, jak zrealizować zlecenie i odebrać wyrób medyczny.',
-])->name('legal.nfz');
+Route::get('/refundacje-nfz', EditablePageShowController::class)
+    ->defaults('editablePage', EditablePage::NFZ->value)
+    ->name('legal.nfz');
 
-Route::view('/contact', 'pages.legal.contact')
+Route::get('/contact', EditablePageShowController::class)
+    ->defaults('editablePage', EditablePage::CONTACT->value)
     ->name('legal.contact');
 
 Route::view('/cookie-policy', 'pages.legal.cookie-policy')

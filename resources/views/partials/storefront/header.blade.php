@@ -159,6 +159,7 @@
                                     ['route' => 'admin.categories.index', 'label' => 'Kategorie'],
                                     ['route' => 'admin.withdrawals.index', 'label' => 'Odstąpienia'],
                                     ['route' => 'admin.complaints.index', 'label' => 'Reklamacje'],
+                                    ['route' => 'admin.pages.index', 'label' => 'Edytor stron'],
                                     ['route' => 'admin.shop.readiness', 'label' => 'Gotowość sklepu'],
                                 ] as $adminNavigationItem)
                                     <a
@@ -346,6 +347,7 @@
                         <a href="{{ route('admin.categories.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Kategorie</a>
                         <a href="{{ route('admin.withdrawals.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Odstąpienia</a>
                         <a href="{{ route('admin.complaints.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Reklamacje</a>
+                        <a href="{{ route('admin.pages.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Edytor stron</a>
                         <a href="{{ route('admin.shop.readiness') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Gotowość sklepu</a>
                     @endif
 
