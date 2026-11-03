@@ -66,6 +66,13 @@
                 (e-mail, telefon, adres) aktualizują się same; po zmianie tekstu stają się zwykłym tekstem do ręcznej edycji.
             </p>
 
+            @if ($editablePage === \App\Enums\EditablePage::RENTAL)
+                <p class="rounded-xl bg-blue-50 px-4 py-3 text-sm text-blue-800">
+                    Sprzęt, ceny i zdjęcia edytujesz w sekcji
+                    <a href="{{ route('admin.rental.index') }}" class="font-semibold underline underline-offset-4">Wypożyczalnia</a>.
+                </p>
+            @endif
+
             <div>
                 <label for="title" class="mb-2 block text-sm font-medium text-zinc-700">
                     Tytuł strony (nagłówek H1)
