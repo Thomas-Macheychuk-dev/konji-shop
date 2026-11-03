@@ -11,8 +11,10 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\RentalItem;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 final class SitemapController extends Controller
 {
@@ -22,7 +24,8 @@ final class SitemapController extends Controller
             ->where('status', CategoryStatus::ACTIVE->value)
             ->whereNotNull('slug')
             ->orderByDesc('updated_at')
-            ->get(['slug', 'updated_at']);
+            ->get(['id', 'parent_id', 'slug', 'updated_at']);
+        $categories = $this->withActiveProducts($categories);
 
         $products = Product::query()
             ->where('status', ProductStatus::ACTIVE->value)
@@ -128,5 +131,38 @@ final class SitemapController extends Controller
                     ->values(),
             ])
             ->header('Content-Type', 'application/xml');
+    }
+
+    /**
+     * Keep categories whose active subtree holds an active product, as the category page counts them;
+     * empty ones are noindex. A product marks its categories and their active ancestors.
+     *
+     * @param  Collection<int, Category>  $categories
+     * @return Collection<int, Category>
+     */
+    private function withActiveProducts(Collection $categories): Collection
+    {
+        $parents = $categories->mapWithKeys(fn (Category $category): array => [
+            (int) $category->id => $category->parent_id === null ? null : (int) $category->parent_id,
+        ]);
+        $filled = [];
+
+        $direct = DB::table('category_product')
+            ->join('products', 'products.id', '=', 'category_product.product_id')
+            ->where('products.status', ProductStatus::ACTIVE->value)
+            ->whereNull('products.deleted_at')
+            ->distinct()
+            ->pluck('category_product.category_id');
+
+        foreach ($direct as $id) {
+            $id = (int) $id;
+
+            while ($id !== null && $parents->has($id) && ! isset($filled[$id])) {
+                $filled[$id] = true;
+                $id = $parents[$id];
+            }
+        }
+
+        return $categories->filter(fn (Category $category): bool => isset($filled[(int) $category->id]))->values();
     }
 }

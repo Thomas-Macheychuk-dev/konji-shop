@@ -145,6 +145,8 @@ final class CategoryProductIndexController extends Controller
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
             'canonicalUrl' => $canonicalUrl,
+            // An empty listing is a soft 404 to search engines; it returns to the index once it has products.
+            'robots' => $products->total() === 0 ? 'noindex, follow' : null,
             'openGraphTitle' => $seoTitle,
             'openGraphDescription' => $seoDescription,
             'openGraphType' => 'website',

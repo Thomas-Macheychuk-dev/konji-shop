@@ -78,6 +78,24 @@ it('returns a real 404 for a category page beyond the last page', function (): v
         ->assertNotFound();
 });
 
+it('keeps empty category pages out of the index until they have products', function (): void {
+    $category = categorySeoFixture(1);
+    $noindex = '<meta name="robots" content="noindex, follow">';
+
+    $this->get(route('categories.show', $category->slug))->assertOk()->assertDontSee($noindex, false);
+    // The parent counts products in its active subtree, so it stays indexable too.
+    $this->get(route('categories.show', $category->parent->slug))->assertOk()->assertDontSee($noindex, false);
+
+    $empty = Category::query()->create([
+        'parent_id' => $category->parent_id,
+        'name' => 'Ortezy łokcia',
+        'slug' => 'seo-elbow',
+        'status' => CategoryStatus::ACTIVE,
+    ]);
+
+    $this->get(route('categories.show', $empty->slug))->assertOk()->assertSee($noindex, false);
+});
+
 it('provides category description fallback and breadcrumb structured data', function (): void {
     $category = categorySeoFixture();
     $url = 'https://ortezka.pl/categories/'.$category->slug;
