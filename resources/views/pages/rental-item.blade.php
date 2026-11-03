@@ -18,9 +18,9 @@
             </nav>
 
             <div class="mt-6 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
-                <div class="flex aspect-[4/3] items-center justify-center rounded-[28px] border border-slate-200 bg-white p-6 sm:p-10">
+                <div class="relative aspect-[4/3] rounded-[28px] border border-slate-200 bg-white">
                     @if ($item->imageUrl())
-                        <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" class="max-h-full max-w-full object-contain" decoding="async" fetchpriority="high">
+                        <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" class="absolute inset-0 h-full w-full object-contain p-6 sm:p-10" decoding="async" fetchpriority="high">
                     @endif
                 </div>
 
@@ -84,9 +84,9 @@
                     <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
                         @foreach ($related as $relatedItem)
                             <a href="{{ $relatedItem->url() }}" class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-blue-200">
-                                <span class="flex aspect-[4/3] items-center justify-center bg-white p-4">
+                                <span class="relative block aspect-[4/3] bg-white">
                                     @if ($relatedItem->imageUrl())
-                                        <img src="{{ $relatedItem->imageUrl() }}" alt="{{ $relatedItem->name }}" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async">
+                                        <img src="{{ $relatedItem->imageUrl() }}" alt="{{ $relatedItem->name }}" class="absolute inset-0 h-full w-full object-contain p-4" loading="lazy" decoding="async">
                                     @endif
                                 </span>
                                 <span class="border-t border-slate-100 p-4">
