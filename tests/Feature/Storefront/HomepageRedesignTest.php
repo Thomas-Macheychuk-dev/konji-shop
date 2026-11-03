@@ -22,6 +22,8 @@ it('renders the redesigned medical storefront shell and homepage sections', func
         ->assertSee('/images/ortezka-logo-v4.png', false)
         ->assertSee('name="q"', false)
         ->assertSee('Komfort i stabilizacja na każdy dzień')
+        ->assertSee('/images/support/kolano.webp', false)
+        ->assertSee('/images/support/kostka.webp', false)
         ->assertSee('Sprawdzone produkty medyczne')
         ->assertSee('Znajdź produkt dopasowany do potrzeb')
         ->assertSee('Ortezy i stabilizatory')
