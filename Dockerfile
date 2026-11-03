@@ -120,7 +120,8 @@ COPY docker/nginx/legacy-seo/available/30-fallback-redirects-enabled.conf /etc/n
 COPY docker/nginx/verify-seo12-map.sh /usr/local/bin/verify-seo12-map
 COPY docker/nginx/verify-legacy-fallback-map.sh /usr/local/bin/verify-legacy-fallback-map
 COPY docker/nginx/start-production.sh /usr/local/bin/konji-nginx-start
-RUN chmod +x /usr/local/bin/konji-nginx-start /usr/local/bin/verify-seo12-map /usr/local/bin/verify-legacy-fallback-map
+COPY docker/nginx/archive-build-assets.sh /usr/local/bin/konji-archive-build-assets
+RUN chmod +x /usr/local/bin/konji-nginx-start /usr/local/bin/konji-archive-build-assets /usr/local/bin/verify-seo12-map /usr/local/bin/verify-legacy-fallback-map
 COPY public /var/www/html/public
 COPY --from=frontend /app/public/build /var/www/html/public/build
 

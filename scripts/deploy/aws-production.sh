@@ -81,6 +81,12 @@ bash scripts/seo/verify-seo12-web-image.sh "$WEB_IMAGE_ID"
 
 echo "SEO12_DEPLOYMENT_GATE=PASS"
 
+# The new app renders links to the new hashed CSS/JS before the new web
+# container starts. Publishing them to the shared archive first lets the
+# running web container serve them in the meantime.
+echo "Publishing new build assets to the web archive..."
+${COMPOSE} run --rm --no-deps -T web /usr/local/bin/konji-archive-build-assets
+
 echo "Starting Redis and app..."
 ${COMPOSE} up -d redis app
 

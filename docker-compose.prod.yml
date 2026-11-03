@@ -60,6 +60,7 @@ services:
       LEGACY_SEO_FALLBACK_REDIRECTS_ENABLED: "${LEGACY_SEO_FALLBACK_REDIRECTS_ENABLED:-false}"
     volumes:
       - app_storage:/var/www/html/storage
+      - build_archive:/var/www/build-archive
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/www/certbot:/var/www/certbot:ro
     command: sh -c "ln -sfn /var/www/html/storage/app/public /var/www/html/public/storage && exec /usr/local/bin/konji-nginx-start"
@@ -123,6 +124,7 @@ services:
 
 volumes:
   app_storage:
+  build_archive:
   redis_data:
 
 networks:
