@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\EditablePage;
 use App\Models\RentalItem;
+use App\Support\Pages\PageContent;
 use Illuminate\View\View;
 
 class RentalController extends Controller
@@ -17,15 +19,18 @@ class RentalController extends Controller
             ->filter(fn (array $group) => $group['items']->isNotEmpty())
             ->values();
 
+        $page = PageContent::for(EditablePage::RENTAL);
+
         return view('pages.rental', [
+            'page' => $page,
             'groups' => $groups,
             'items' => $items,
             // "Zapytaj o ten sprzęt" links preselect the item in the enquiry form.
             'selectedItems' => old('items', array_filter([request()->string('sprzet')->toString()])),
             'phones' => array_values(array_filter(config('rental.phones', []))),
             'address' => config('rental.address'),
-            'seoTitle' => 'Wypożyczalnia sprzętu medycznego Poznań',
-            'seoDescription' => 'Wypożycz łóżko rehabilitacyjne, koncentrator tlenu, wózek inwalidzki, podnośnik lub schodołaz w Poznaniu. Dostawa, wniesienie i przygotowanie do użycia.',
+            'seoTitle' => $page->seoTitle,
+            'seoDescription' => $page->seoDescription,
         ]);
     }
 }

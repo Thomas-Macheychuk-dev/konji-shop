@@ -10,7 +10,7 @@
             <nav class="text-sm text-slate-500" aria-label="Okruszki">
                 <a href="{{ route('home') }}" class="transition hover:text-[#155fa8]">Strona główna</a>
                 <span class="mx-2" aria-hidden="true">/</span>
-                <span class="text-slate-700">Wypożyczalnia sprzętu medycznego</span>
+                <span class="text-slate-700">{{ $page->title }}</span>
             </nav>
 
             <div class="relative mt-6 overflow-hidden rounded-[32px] bg-gradient-to-br from-[#0b3b70] via-[#155fa8] to-[#1674c4] px-6 py-10 text-white shadow-[0_24px_80px_rgba(11,59,112,0.22)] sm:px-10 sm:py-14">
@@ -19,11 +19,10 @@
                 <div class="relative grid gap-6 lg:grid-cols-[1.35fr_1fr] lg:gap-x-12 lg:gap-y-4">
                     <div class="lg:self-end">
                         <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-100">Poznań i okolice</p>
-                        <h1 class="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">Wypożyczalnia sprzętu medycznego</h1>
-                        <p class="mt-5 text-base leading-7 text-blue-50 sm:text-lg">
-                            Łóżka rehabilitacyjne, koncentratory tlenu, wózki inwalidzkie, podnośniki i schodołazy na każdy okres.
-                            Sprzęt jest sprawdzony i gotowy do natychmiastowego użycia.
-                        </p>
+                        <h1 class="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">{{ $page->title }}</h1>
+                        <div class="mt-5 text-base leading-7 text-blue-50 sm:text-lg [&_a]:underline">
+                            {!! $page->intro !!}
+                        </div>
                     </div>
 
                     <div class="rounded-2xl bg-white p-6 text-slate-900 shadow-xl sm:p-7 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
@@ -60,10 +59,9 @@
                         </div>
                     </div>
 
-                    <p class="text-sm leading-6 text-blue-100 lg:col-start-1 lg:row-start-2 lg:self-start">
-                        Oferujemy też materace przeciwodleżynowe (również na zlecenie NFZ), rotory do ćwiczeń kończyn dolnych
-                        i przyłóżkowe urządzenia do rehabilitacji kończyn górnych i dolnych.
-                    </p>
+                    <div class="text-sm leading-6 text-blue-100 lg:col-start-1 lg:row-start-2 lg:self-start [&_a]:underline">
+                        {!! $page->content !!}
+                    </div>
                 </div>
             </div>
 
