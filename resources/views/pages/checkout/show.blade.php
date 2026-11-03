@@ -721,7 +721,7 @@
 
                             @if ($discount > 0)
                                 <div class="flex items-center justify-between">
-                                    <dt>Discount</dt>
+                                    <dt>Rabat</dt>
                                     <dd class="font-medium text-zinc-900">
                                         -{{ number_format($discount / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>

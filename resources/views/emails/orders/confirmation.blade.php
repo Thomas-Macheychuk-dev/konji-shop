@@ -149,7 +149,7 @@
                 @if (($order->discount_amount ?? 0) > 0)
                     <tr>
                         <td style="padding: 6px 0; font-size: 14px; color: #52525b;">
-                            Discount
+                            Rabat
                         </td>
                         <td align="right" style="padding: 6px 0; font-size: 14px; color: #52525b;">
                             -{{ $order->discountDecimal() }} {{ $order->currency }}
