@@ -8,6 +8,8 @@ use App\Enums\VatRate;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Services\Products\ProductBrandAttribute;
+use App\Support\Seo\ProductIdentifiers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -215,6 +217,54 @@ it('adjusts already imported Peruka product prices from source JSON without comp
 /**
  * @param  list<array<string, mixed>>  $products
  */
+it('stores the Peruka manufacturer as the Producent attribute used for the Product brand', function (): void {
+    writePerukaImportFixture('scrapers/peruka/test-product-data.json', [perukaImportProductPayload(['brand' => 'Ellen Wille'])]);
+
+    $this->artisan('peruka:import', [
+        '--from' => 'scrapers/peruka/test-product-data.json',
+        '--status' => 'active',
+        '--no-images' => true,
+    ])->assertSuccessful();
+
+    $product = Product::query()->where('external_id', '38772')->firstOrFail();
+
+    expect(ProductIdentifiers::brand($product))->toBe('Ellen Wille');
+});
+
+it('backfills Peruka brands from scraped data without overwriting an existing manufacturer', function (): void {
+    writePerukaImportFixture('scrapers/peruka/test-product-data.json', [
+        perukaImportProductPayload(['brand' => null]),
+        perukaImportProductPayload(['external_product_id' => '38773', 'slug' => 'second', 'sku' => '38773', 'brand' => null]),
+    ]);
+    $this->artisan('peruka:import', ['--from' => 'scrapers/peruka/test-product-data.json', '--no-images' => true])->assertSuccessful();
+    $first = Product::query()->where('external_id', '38772')->firstOrFail();
+    $second = Product::query()->where('external_id', '38773')->firstOrFail();
+    app(ProductBrandAttribute::class)->attach($second, 'Rokoko Hair Company');
+
+    writePerukaImportFixture('scrapers/peruka/test-product-data.json', [
+        perukaImportProductPayload(['brand' => 'Ellen Wille']),
+        perukaImportProductPayload(['external_product_id' => '38773', 'brand' => 'Ellen Wille']),
+        perukaImportProductPayload(['external_product_id' => '99999', 'brand' => 'Walker Tape']),
+    ]);
+
+    $this->artisan('peruka:backfill-brands', ['--data' => 'scrapers/peruka/test-product-data.json'])
+        ->expectsOutputToContain('NOT_IMPORTED=1')
+        ->expectsOutputToContain('ALREADY_BRANDED=1')
+        ->expectsOutputToContain('TO_ATTACH=1')
+        ->expectsOutputToContain('MODE=READ_ONLY')
+        ->assertSuccessful();
+
+    expect(ProductIdentifiers::brand($first->fresh()))->toBeNull();
+
+    $this->artisan('peruka:backfill-brands', ['--data' => 'scrapers/peruka/test-product-data.json', '--write' => true])
+        ->expectsOutputToContain('ATTACHED=1')
+        ->expectsOutputToContain('PERUKA_BRANDS_WRITE=PASS')
+        ->assertSuccessful();
+
+    expect(ProductIdentifiers::brand($first->fresh()))->toBe('Ellen Wille')
+        ->and(ProductIdentifiers::brand($second->fresh()))->toBe('Rokoko Hair Company');
+});
+
 function writePerukaImportFixture(string $relativePath, array $products): void
 {
     $path = storage_path('app/'.$relativePath);

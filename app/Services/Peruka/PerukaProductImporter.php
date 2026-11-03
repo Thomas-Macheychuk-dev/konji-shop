@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Services\Products\ProductBrandAttribute;
 use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -31,6 +32,7 @@ final class PerukaProductImporter
 
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
+        private readonly ProductBrandAttribute $brandAttribute,
     ) {}
 
     /**
@@ -50,6 +52,10 @@ final class PerukaProductImporter
 
             $this->syncCategories($product, $productData);
             $this->syncDefaultVariant($product, $productData);
+
+            if (($brand = $this->stringOrNull($productData['brand'] ?? null)) !== null) {
+                $this->brandAttribute->attach($product, $brand);
+            }
 
             if ($importImages) {
                 $this->syncImages($product, $productData);
@@ -328,7 +334,7 @@ final class PerukaProductImporter
     /**
      * @param  array<string, mixed>  $productData
      */
-    private function externalProductId(array $productData): string
+    public function externalProductId(array $productData): string
     {
         $externalId = $this->stringOrNull($productData['external_product_id'] ?? null)
             ?: $this->stringOrNull($productData['sku'] ?? null)
