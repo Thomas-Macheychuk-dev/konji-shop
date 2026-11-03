@@ -18,6 +18,7 @@ final class AdminRentalItemCreateController extends Controller
             'item' => new RentalItem([
                 'group' => array_key_exists($group, RentalItem::GROUPS) ? $group : array_key_first(RentalItem::GROUPS),
                 'is_active' => true,
+                'is_indexable' => true,
             ]),
         ]);
     }

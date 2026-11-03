@@ -7,11 +7,12 @@ namespace App\Http\Controllers;
 use App\Enums\EditablePage;
 use App\Models\RentalItem;
 use App\Support\Pages\PageContent;
+use App\Support\Rental\RentalStructuredData;
 use Illuminate\View\View;
 
 class RentalController extends Controller
 {
-    public function __invoke(): View
+    public function __invoke(RentalStructuredData $structuredData): View
     {
         $items = RentalItem::query()->active()->orderBy('sort_order')->orderBy('id')->get();
         $groups = collect(RentalItem::GROUPS)
@@ -31,6 +32,16 @@ class RentalController extends Controller
             'address' => config('rental.address'),
             'seoTitle' => $page->seoTitle,
             'seoDescription' => $page->seoDescription,
+            // The ?sprzet= enquiry variants all point back to the one page.
+            'canonicalUrl' => route('rental.index'),
+            'openGraphImage' => $items->first(fn (RentalItem $item): bool => $item->imageUrl() !== null)?->imageUrl(),
+            'structuredData' => [
+                $structuredData->business($items, $page->title, (string) ($page->seoDescription ?? $page->title)),
+                $structuredData->breadcrumbs([
+                    ['name' => 'Strona główna', 'url' => route('home')],
+                    ['name' => $page->title, 'url' => route('rental.index')],
+                ]),
+            ],
         ]);
     }
 }

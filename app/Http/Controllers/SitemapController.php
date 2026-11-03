@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\CategoryStatus;
+use App\Enums\EditablePage;
 use App\Enums\ProductStatus;
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Product;
+use App\Models\RentalItem;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 
 final class SitemapController extends Controller
 {
@@ -25,6 +29,12 @@ final class SitemapController extends Controller
             ->whereNotNull('slug')
             ->orderByDesc('updated_at')
             ->get(['slug', 'updated_at']);
+
+        $rentalItems = RentalItem::query()->active()->orderBy('sort_order')->orderBy('id')->get();
+        $rentalLastModified = collect([
+            $rentalItems->max('updated_at'),
+            Page::query()->where('slug', EditablePage::RENTAL->value)->value('updated_at'),
+        ])->filter()->map(fn ($date) => Carbon::parse($date))->max();
 
         $staticUrls = collect([
             [
@@ -64,6 +74,7 @@ final class SitemapController extends Controller
             ],
             [
                 'loc' => route('rental.index'),
+                'lastmod' => $rentalLastModified,
                 'changefreq' => 'monthly',
                 'priority' => '0.6',
             ],
@@ -88,6 +99,16 @@ final class SitemapController extends Controller
             'priority' => '0.8',
         ]);
 
+        // Only item pages with enough description to be worth indexing; thin ones are noindex.
+        $rentalItemUrls = $rentalItems
+            ->filter(fn (RentalItem $item): bool => $item->shouldBeIndexed())
+            ->map(fn (RentalItem $item): array => [
+                'loc' => $item->url(),
+                'lastmod' => $item->updated_at,
+                'changefreq' => 'monthly',
+                'priority' => '0.5',
+            ]);
+
         $legacyPlaceholderUrls = collect(config('legacy-product-placeholders', []))
             ->keys()
             ->map(fn (string $slug): array => [
@@ -101,6 +122,7 @@ final class SitemapController extends Controller
                 'urls' => $staticUrls
                     ->merge($categoryUrls)
                     ->merge($productUrls)
+                    ->merge($rentalItemUrls)
                     ->merge($legacyPlaceholderUrls)
                     ->unique('loc')
                     ->values(),

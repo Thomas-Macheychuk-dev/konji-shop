@@ -7,12 +7,19 @@ namespace App\Models;
 use App\Support\Storage\PublicFilesystemUrl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class RentalItem extends Model
 {
     public const BUNDLED_IMAGE_DIRECTORY = 'images/rental/';
 
     public const UPLOADED_IMAGE_DIRECTORY = 'rental';
+
+    /**
+     * Item pages with less description than this stay out of Google's index:
+     * a photo, a price and a sentence is thin content that can drag the site down.
+     */
+    public const MIN_INDEXABLE_WORDS = 150;
 
     /** Display order and headings of the rental page sections. */
     public const GROUPS = [
@@ -28,6 +35,9 @@ class RentalItem extends Model
         'group',
         'name',
         'details',
+        'description',
+        'seo_title',
+        'seo_description',
         'deposit_min',
         'deposit_max',
         'monthly_min',
@@ -36,6 +46,7 @@ class RentalItem extends Model
         'image_path',
         'sort_order',
         'is_active',
+        'is_indexable',
     ];
 
     protected function casts(): array
@@ -48,7 +59,56 @@ class RentalItem extends Model
             'nfz_purchase' => 'boolean',
             'sort_order' => 'integer',
             'is_active' => 'boolean',
+            'is_indexable' => 'boolean',
         ];
+    }
+
+    public function url(): string
+    {
+        return route('rental.items.show', $this);
+    }
+
+    public function groupHeading(): string
+    {
+        return self::GROUPS[$this->group] ?? '';
+    }
+
+    public function descriptionWordCount(): int
+    {
+        $text = html_entity_decode(strip_tags((string) $this->description), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return (int) preg_match_all('/[\p{L}\p{N}]+/u', $text);
+    }
+
+    /** Whether the item page is offered to search engines (robots meta and sitemap). */
+    public function shouldBeIndexed(): bool
+    {
+        return $this->is_active
+            && $this->is_indexable
+            && $this->descriptionWordCount() >= self::MIN_INDEXABLE_WORDS;
+    }
+
+    public function seoTitle(): string
+    {
+        return filled($this->seo_title)
+            ? $this->seo_title
+            : $this->name.' – wypożyczalnia Poznań';
+    }
+
+    public function seoDescription(): string
+    {
+        if (filled($this->seo_description)) {
+            return $this->seo_description;
+        }
+
+        $parts = array_filter([
+            'Wypożycz: '.$this->name.' w Poznaniu.',
+            $this->details,
+            'Opłata miesięczna '.$this->monthlyLabel().', kaucja: '.mb_strtolower($this->depositLabel()).'.',
+            'Dostawa i przygotowanie do użycia.',
+        ]);
+
+        return Str::limit(implode(' ', $parts), 160, '', preserveWords: true);
     }
 
     public function scopeActive(Builder $query): Builder

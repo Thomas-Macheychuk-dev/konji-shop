@@ -11,13 +11,17 @@ use Illuminate\Support\Str;
 
 final class RentalItemImageStorage
 {
-    public function store(UploadedFile $image): string
+    /**
+     * Names the file after the item for image search; the random suffix keeps a
+     * replaced photo from being served from a stale cache.
+     */
+    public function store(UploadedFile $image, string $slug): string
     {
         $extension = $image->extension() ?: $image->guessExtension() ?: 'jpg';
 
         return $image->storeAs(
             RentalItem::UPLOADED_IMAGE_DIRECTORY,
-            (string) Str::uuid().'.'.$extension,
+            $slug.'-'.Str::lower(Str::random(6)).'.'.$extension,
             'public',
         );
     }
