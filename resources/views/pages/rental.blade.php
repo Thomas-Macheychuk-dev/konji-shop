@@ -234,9 +234,9 @@
                     <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         @foreach ($group['items'] as $item)
                             <article class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-blue-200">
-                                <a href="{{ $item->url() }}" class="flex aspect-[4/3] items-center justify-center bg-white p-4" tabindex="-1" aria-hidden="true">
+                                <a href="{{ $item->url() }}" class="relative block aspect-[4/3] bg-white" tabindex="-1" aria-hidden="true">
                                     @if ($item->imageUrl())
-                                        <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async">
+                                        <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" class="absolute inset-0 h-full w-full object-contain p-4" loading="lazy" decoding="async">
                                     @endif
                                 </a>
                                 <div class="flex flex-1 flex-col border-t border-slate-100 p-5">
