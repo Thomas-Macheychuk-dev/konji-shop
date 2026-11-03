@@ -2,6 +2,7 @@
 
 use App\Models\RentalItem;
 use App\Models\User;
+use Database\Seeders\RentalItemContent;
 use Database\Seeders\RentalItemSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -27,7 +28,7 @@ beforeEach(function (): void {
 });
 
 it('shows an item page with prices, enquiry links, related items and product markup', function (): void {
-    $item = rentalItemWith('koncentrator-tlenu-everflo', ['description' => '<p>Cichy koncentrator do domu.</p>']);
+    $item = rentalItemWith('koncentrator-tlenu-everflo', ['description' => '<p>Cichy koncentrator do domu.</p>', 'seo_title' => null]);
 
     $response = $this->get('/wypozyczalnia-sprzetu-medycznego/koncentrator-tlenu-everflo')
         ->assertOk()
@@ -52,7 +53,7 @@ it('shows an item page with prices, enquiry links, related items and product mar
 });
 
 it('keeps thin item pages out of the index until the description is long enough', function (): void {
-    $item = rentalItemWith('rollator');
+    $item = rentalItemWith('rollator', ['description' => null]);
 
     $this->get($item->url())->assertOk()->assertSee('<meta name="robots" content="noindex, follow">', false);
     $this->get(route('sitemap'))->assertOk()->assertDontSee($item->url(), false);
@@ -69,6 +70,41 @@ it('keeps thin item pages out of the index until the description is long enough'
 
     $this->get($item->url())->assertSee('<meta name="robots" content="noindex, follow">', false);
     $this->get(route('sitemap'))->assertDontSee($item->url(), false);
+});
+
+it('seeds an indexable page text for every rental item', function (): void {
+    expect(array_keys(RentalItemContent::ITEMS))->toEqualCanonicalizing(array_column(RentalItemSeeder::ITEMS, 0));
+
+    foreach (RentalItem::query()->get() as $item) {
+        expect($item->descriptionWordCount())->toBeGreaterThanOrEqual(RentalItem::MIN_INDEXABLE_WORDS, $item->slug)
+            ->and(mb_strlen($item->seo_title))->toBeLessThanOrEqual(60, $item->slug)
+            ->and(mb_strlen($item->seo_description))->toBeLessThanOrEqual(160, $item->slug)
+            ->and($item->shouldBeIndexed())->toBeTrue($item->slug);
+    }
+
+    $content = collect(RentalItemContent::ITEMS);
+
+    expect($content->pluck('seo_title')->unique())->toHaveCount($content->count())
+        ->and($content->pluck('seo_description')->unique())->toHaveCount($content->count());
+
+    $this->get(route('sitemap'))
+        ->assertOk()
+        ->assertSee(RentalItem::query()->where('slug', 'koncentrator-tlenu-everflo')->sole()->url(), false);
+});
+
+it('fills empty page texts on rerun without overwriting admin edits', function (): void {
+    RentalItem::query()->where('slug', 'rollator')->update(['description' => null, 'seo_title' => null]);
+    RentalItem::query()->where('slug', 'kule-pachowe')->update(['description' => '<p>Tekst z panelu.</p>', 'seo_description' => null]);
+
+    $this->seed(RentalItemSeeder::class);
+
+    $rollator = RentalItem::query()->where('slug', 'rollator')->sole();
+    $crutches = RentalItem::query()->where('slug', 'kule-pachowe')->sole();
+
+    expect($rollator->description)->toBe(RentalItemContent::ITEMS['rollator']['description'])
+        ->and($rollator->seo_title)->toBe(RentalItemContent::ITEMS['rollator']['seo_title'])
+        ->and($crutches->description)->toBe('<p>Tekst z panelu.</p>')
+        ->and($crutches->seo_description)->toBe(RentalItemContent::ITEMS['kule-pachowe']['seo_description']);
 });
 
 it('returns 404 for hidden and unknown items', function (): void {
@@ -91,7 +127,7 @@ it('uses the SEO overrides when set', function (): void {
 });
 
 it('builds a default meta description from the item data', function (): void {
-    $item = rentalItemWith('wozek-inwalidzki-standardowy');
+    $item = rentalItemWith('wozek-inwalidzki-standardowy', ['seo_description' => null]);
 
     expect($item->seoDescription())
         ->toStartWith('Wypożycz: Wózek inwalidzki standardowy w Poznaniu.')
@@ -123,7 +159,7 @@ it('dates the rental page in the sitemap by its latest change', function (): voi
 
 it('lets admins write the description and SEO fields and names uploads after the item', function (): void {
     Storage::fake('public');
-    $item = rentalItemWith('rollator');
+    $item = rentalItemWith('rollator', ['description' => null]);
     $admin = User::factory()->create(['is_admin' => true]);
 
     $this->actingAs($admin)
