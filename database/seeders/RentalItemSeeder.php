@@ -9,7 +9,9 @@ use Illuminate\Database\Seeder;
 
 /**
  * The rental offer from the legacy ortezka.pl "Wypożyczalnia sprzętu medycznego" page (November 2026).
- * Insert-only: rows that already exist keep any prices or texts changed since, so it is safe to rerun.
+ * Safe to rerun: rows that already exist keep any prices or texts changed since. The item-page
+ * texts from {@see RentalItemContent} are only written into fields that are still empty, so
+ * rerunning fills them in on an existing database without overwriting admin edits.
  */
 class RentalItemSeeder extends Seeder
 {
@@ -45,8 +47,13 @@ class RentalItemSeeder extends Seeder
 
     public function run(): void
     {
+        $filled = 0;
+
         foreach (self::ITEMS as $order => [$slug, $group, $name, $details, $deposit, $monthly, $nfz, $image]) {
-            RentalItem::query()->firstOrCreate(['slug' => $slug], [
+            $content = RentalItemContent::ITEMS[$slug] ?? [];
+
+            $item = RentalItem::query()->firstOrCreate(['slug' => $slug], [
+                ...$content,
                 'group' => $group,
                 'name' => $name,
                 'details' => $details,
@@ -59,6 +66,19 @@ class RentalItemSeeder extends Seeder
                 'sort_order' => ($order + 1) * 10,
                 'is_active' => true,
             ]);
+
+            if ($item->wasRecentlyCreated) {
+                continue;
+            }
+
+            $blanks = array_filter($content, fn (string $value, string $field): bool => blank($item->{$field}), ARRAY_FILTER_USE_BOTH);
+
+            if ($blanks !== []) {
+                $item->update($blanks);
+                $filled++;
+            }
         }
+
+        $this->command?->info("Rental items: filled empty description/SEO fields on {$filled} existing item(s).");
     }
 }
