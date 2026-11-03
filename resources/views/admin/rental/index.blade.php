@@ -78,6 +78,11 @@
                                             @if ($item->nfz_purchase)
                                                 <span class="ml-2 rounded-lg bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">NFZ</span>
                                             @endif
+                                            @if ($item->shouldBeIndexed())
+                                                <span class="ml-2 rounded-lg bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700">W Google</span>
+                                            @elseif ($item->is_active)
+                                                <span class="ml-2 rounded-lg bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-700" title="Strona sprzętu ma noindex">Opis: {{ $item->descriptionWordCount() }}/{{ \App\Models\RentalItem::MIN_INDEXABLE_WORDS }} słów</span>
+                                            @endif
                                         </p>
                                         <p class="mt-1 text-sm text-zinc-500">
                                             Kaucja: {{ $item->depositLabel() }} · Miesięcznie: {{ $item->monthlyLabel() }} · Kolejność: {{ $item->sort_order }}

@@ -20,7 +20,7 @@ final class AdminRentalItemStoreController extends Controller
         $attributes['sort_order'] ??= ((int) RentalItem::query()->max('sort_order')) + 10;
 
         if ($request->hasFile('image')) {
-            $attributes['image_path'] = $images->store($request->file('image'));
+            $attributes['image_path'] = $images->store($request->file('image'), $attributes['slug']);
         }
 
         $item = RentalItem::query()->create($attributes);

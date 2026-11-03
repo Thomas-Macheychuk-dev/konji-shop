@@ -1,5 +1,13 @@
 @extends('layouts.storefront')
 
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trix@2.1.19/dist/trix.css">
+@endpush
+
+@push('scripts')
+    @include('admin.partials.html-editor-scripts')
+@endpush
+
 @section('content')
     <div class="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8">

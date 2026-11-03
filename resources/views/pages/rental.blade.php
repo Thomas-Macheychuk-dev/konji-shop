@@ -233,14 +233,16 @@
 
                     <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         @foreach ($group['items'] as $item)
-                            <article class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                                <div class="flex aspect-[4/3] items-center justify-center bg-white p-4">
+                            <article class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-blue-200">
+                                <a href="{{ $item->url() }}" class="flex aspect-[4/3] items-center justify-center bg-white p-4" tabindex="-1" aria-hidden="true">
                                     @if ($item->imageUrl())
                                         <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async">
                                     @endif
-                                </div>
+                                </a>
                                 <div class="flex flex-1 flex-col border-t border-slate-100 p-5">
-                                    <h3 class="font-bold leading-snug text-slate-900">{{ $item->name }}</h3>
+                                    <h3 class="font-bold leading-snug text-slate-900">
+                                        <a href="{{ $item->url() }}" class="transition hover:text-[#155fa8]">{{ $item->name }}</a>
+                                    </h3>
                                     @if ($item->details)
                                         <p class="mt-2 text-sm leading-6 text-slate-600">{{ $item->details }}</p>
                                     @endif
@@ -258,9 +260,12 @@
                                             <dd class="mt-0.5 font-bold text-[#155fa8]">{{ $item->monthlyLabel() }}</dd>
                                         </div>
                                     </dl>
-                                    <a href="{{ route('rental.index', ['sprzet' => $item->slug]) }}#zapytanie" rel="nofollow" class="mt-4 text-center text-sm font-semibold text-[#155fa8] transition hover:text-[#0b3b70]">
-                                        Zapytaj o ten sprzęt
-                                    </a>
+                                    <div class="mt-4 flex items-center justify-between gap-3 text-sm font-semibold">
+                                        <a href="{{ $item->url() }}" class="text-slate-700 transition hover:text-[#155fa8]">Szczegóły</a>
+                                        <a href="{{ route('rental.index', ['sprzet' => $item->slug]) }}#zapytanie" rel="nofollow" class="text-[#155fa8] transition hover:text-[#0b3b70]">
+                                            Zapytaj o ten sprzęt
+                                        </a>
+                                    </div>
                                 </div>
                             </article>
                         @endforeach

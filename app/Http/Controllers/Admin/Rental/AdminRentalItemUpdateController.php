@@ -22,7 +22,7 @@ final class AdminRentalItemUpdateController extends Controller
 
         if ($request->hasFile('image')) {
             $images->delete($rentalItem);
-            $attributes['image_path'] = $images->store($request->file('image'));
+            $attributes['image_path'] = $images->store($request->file('image'), $rentalItem->slug);
         } elseif ($request->boolean('remove_image')) {
             $images->delete($rentalItem);
             $attributes['image_path'] = null;
