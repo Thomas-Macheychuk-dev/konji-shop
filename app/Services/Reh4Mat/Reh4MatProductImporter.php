@@ -46,7 +46,7 @@ final class Reh4MatProductImporter
     /**
      * @var list<string>
      */
-    private const REMOTE_ASSET_ALLOWED_HOSTS = [
+    public const REMOTE_ASSET_ALLOWED_HOSTS = [
         'reh4mat.com',
         'www.reh4mat.com',
         'stabilobedsystem.pl',
