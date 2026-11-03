@@ -85,25 +85,56 @@
             </p>
         </div>
 
-        <nav class="max-h-[calc(100vh-245px)] overflow-y-auto p-3" aria-label="Kategorie produktów">
-            @if ($sidebarCategories->isNotEmpty())
-                <ul class="space-y-1">
-                    @foreach ($sidebarCategories as $category)
-                        @include('partials.storefront.category-sidebar-item', [
-                            'category' => $category,
-                            'currentCategoryId' => $currentCategoryId,
-                            'containsCurrentCategory' => $containsCurrentCategory,
-                            'sidebarIdPrefix' => 'desktop',
-                            'level' => 0,
-                        ])
-                    @endforeach
-                </ul>
-            @else
-                <p class="rounded-xl bg-slate-50 px-4 py-5 text-sm text-slate-500">
-                    Brak dostępnych kategorii.
-                </p>
-            @endif
-        </nav>
+        <div
+            class="relative py-2 pr-1.5"
+            x-data="{
+                atTop: true,
+                atBottom: true,
+                sync(list) {
+                    this.atTop = list.scrollTop <= 1;
+                    this.atBottom = list.scrollTop + list.clientHeight >= list.scrollHeight - 1;
+                },
+            }"
+            x-init="sync($refs.list); new ResizeObserver(() => sync($refs.list)).observe($refs.list.firstElementChild ?? $refs.list)"
+            @resize.window.debounce.100ms="sync($refs.list)"
+        >
+            <nav
+                x-ref="list"
+                class="category-sidebar-scroll max-h-[calc(100vh-430px)] overflow-y-auto py-1 pl-3 pr-1.5"
+                aria-label="Kategorie produktów"
+                @scroll.passive="sync($el)"
+            >
+                @if ($sidebarCategories->isNotEmpty())
+                    <ul class="space-y-1">
+                        @foreach ($sidebarCategories as $category)
+                            @include('partials.storefront.category-sidebar-item', [
+                                'category' => $category,
+                                'currentCategoryId' => $currentCategoryId,
+                                'containsCurrentCategory' => $containsCurrentCategory,
+                                'sidebarIdPrefix' => 'desktop',
+                                'level' => 0,
+                            ])
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="rounded-xl bg-slate-50 px-4 py-5 text-sm text-slate-500">
+                        Brak dostępnych kategorii.
+                    </p>
+                @endif
+            </nav>
+
+            {{-- Fades hint that the list scrolls; they stay clear of the scrollbar. --}}
+            <div
+                class="pointer-events-none absolute inset-x-0 top-2 right-4 h-8 bg-gradient-to-b from-white to-transparent transition-opacity duration-200"
+                :class="atTop ? 'opacity-0' : 'opacity-100'"
+                aria-hidden="true"
+            ></div>
+            <div
+                class="pointer-events-none absolute inset-x-0 bottom-2 right-4 h-12 bg-gradient-to-t from-white to-transparent transition-opacity duration-200"
+                :class="atBottom ? 'opacity-0' : 'opacity-100'"
+                aria-hidden="true"
+            ></div>
+        </div>
 
         <div class="border-t border-slate-100 bg-slate-50/70 p-3">
             <a
