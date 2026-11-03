@@ -157,7 +157,7 @@
 
                                             <label class="block">
                                                 <span class="text-zinc-700">Stan Towaru</span>
-                                                <select name="inspection_condition" class="mt-1 block w-full rounded-lg border-zinc-300 text-sm" required>
+                                                <select name="inspection_condition" class="mt-1.5 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100" required>
                                                     <option value="">— wybierz —</option>
                                                     @foreach (\App\Enums\WithdrawalItemCondition::cases() as $condition)
                                                         <option value="{{ $condition->value }}" @selected(($isEditedItem ? old('inspection_condition') : $item->inspection_condition?->value) === $condition->value)>
@@ -169,7 +169,7 @@
 
                                             <label class="block">
                                                 <span class="text-zinc-700">Zabezpieczenie higieniczne</span>
-                                                <select name="inspection_hygienic_seal_broken" class="mt-1 block w-full rounded-lg border-zinc-300 text-sm">
+                                                <select name="inspection_hygienic_seal_broken" class="mt-1.5 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100">
                                                     <option value="" @selected($sealValue === null || $sealValue === '')>Nie dotyczy / brak</option>
                                                     <option value="0" @selected($sealValue === false || $sealValue === '0')>Nienaruszone</option>
                                                     <option value="1" @selected($sealValue === true || $sealValue === '1')>Naruszone</option>
@@ -190,12 +190,12 @@
 
                                             <label class="block sm:col-span-2">
                                                 <span class="text-zinc-700">Brakujące elementy</span>
-                                                <input type="text" name="inspection_missing_parts" value="{{ $isEditedItem ? old('inspection_missing_parts') : $item->inspection_missing_parts }}" class="mt-1 block w-full rounded-lg border-zinc-300 text-sm" placeholder="np. brak instrukcji, brak paska">
+                                                <input type="text" name="inspection_missing_parts" value="{{ $isEditedItem ? old('inspection_missing_parts') : $item->inspection_missing_parts }}" class="mt-1.5 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100" placeholder="np. brak instrukcji, brak paska">
                                             </label>
 
                                             <label class="block">
                                                 <span class="text-zinc-700">Możliwość ponownej sprzedaży</span>
-                                                <select name="inspection_resellable" class="mt-1 block w-full rounded-lg border-zinc-300 text-sm">
+                                                <select name="inspection_resellable" class="mt-1.5 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100">
                                                     <option value="" @selected($resellableValue === null || $resellableValue === '')>Nie oceniono</option>
                                                     <option value="1" @selected($resellableValue === true || $resellableValue === '1')>Tak</option>
                                                     <option value="0" @selected($resellableValue === false || $resellableValue === '0')>Nie</option>
@@ -204,18 +204,18 @@
 
                                             <label class="block">
                                                 <span class="text-zinc-700">Wartość handlowa po zwrocie ({{ $currency }})</span>
-                                                <input type="text" inputmode="decimal" name="inspection_commercial_value" value="{{ $isEditedItem ? old('inspection_commercial_value') : $formatDecimal($item->inspection_commercial_value_amount) }}" class="mt-1 block w-full rounded-lg border-zinc-300 text-sm">
+                                                <input type="text" inputmode="decimal" name="inspection_commercial_value" value="{{ $isEditedItem ? old('inspection_commercial_value') : $formatDecimal($item->inspection_commercial_value_amount) }}" class="mt-1.5 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100">
                                             </label>
 
                                             <label class="block">
                                                 <span class="text-zinc-700">Zmniejszenie wartości ({{ $currency }})</span>
-                                                <input type="text" inputmode="decimal" name="value_reduction" value="{{ $isEditedItem ? old('value_reduction') : $formatDecimal((int) $item->value_reduction_amount) }}" class="mt-1 block w-full rounded-lg border-zinc-300 text-sm">
+                                                <input type="text" inputmode="decimal" name="value_reduction" value="{{ $isEditedItem ? old('value_reduction') : $formatDecimal((int) $item->value_reduction_amount) }}" class="mt-1.5 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100">
                                                 <span class="mt-1 block text-xs text-zinc-500">Maks. {{ $item->lineGrossDecimal() }} {{ $currency }}. Odejmowane od zwrotu.</span>
                                             </label>
 
                                             <label class="block sm:col-span-2">
                                                 <span class="text-zinc-700">Podstawa wyliczenia zmniejszenia wartości</span>
-                                                <textarea name="value_reduction_basis" rows="3" class="mt-1 block w-full rounded-lg border-zinc-300 text-sm" placeholder="Wymagane, jeżeli zmniejszenie wartości jest większe od zera.">{{ $isEditedItem ? old('value_reduction_basis') : $item->value_reduction_basis }}</textarea>
+                                                <textarea name="value_reduction_basis" rows="3" class="mt-1.5 block w-full rounded-xl border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100" placeholder="Wymagane, jeżeli zmniejszenie wartości jest większe od zera.">{{ $isEditedItem ? old('value_reduction_basis') : $item->value_reduction_basis }}</textarea>
                                             </label>
 
                                             <label class="block sm:col-span-2">
