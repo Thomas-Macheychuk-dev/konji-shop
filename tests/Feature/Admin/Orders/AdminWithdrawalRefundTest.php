@@ -91,6 +91,39 @@ it('finalizes a withdrawal refund and emails the customer only after Paynow conf
     });
 });
 
+it('refunds the line amount minus the recorded value reduction', function (): void {
+    Mail::fake();
+    configurePaynowRefundTest();
+
+    Http::fake([
+        'https://api.sandbox.paynow.pl/v3/payments/*/refunds' => Http::response([
+            'refundId' => 'REFU-123-ABC-456',
+            'status' => 'SUCCESSFUL',
+        ], 201),
+    ]);
+
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    [$order, $withdrawalRequest] = adminOrderWithdrawalRefundFixture();
+
+    $withdrawalRequest->items->sole()->update([
+        'value_reduction_amount' => 2300,
+        'value_reduction_basis' => 'Ślady używania wykraczające poza sprawdzenie Towaru.',
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->patch(route('admin.orders.fulfilment.update', [$order, 'refund']))
+        ->assertRedirect();
+
+    expect(PaymentRefund::query()->sole()->amount)->toBe(10000);
+
+    Http::assertSent(fn ($request): bool => str_ends_with($request->url(), '/refunds')
+        && (int) $request['amount'] === 10000);
+});
+
 it('keeps the withdrawal pending until Paynow reports the refund as successful', function (): void {
     Mail::fake();
     configurePaynowRefundTest();

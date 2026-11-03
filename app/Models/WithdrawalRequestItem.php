@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\WithdrawalItemCondition;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WithdrawalRequestItem extends Model
 {
@@ -21,6 +23,17 @@ class WithdrawalRequestItem extends Model
         'quantity_requested',
         'unit_gross_amount',
         'line_gross_amount',
+        'inspection_condition',
+        'inspection_hygienic_seal_broken',
+        'inspection_signs_of_use',
+        'inspection_soiling',
+        'inspection_missing_parts',
+        'inspection_resellable',
+        'inspection_commercial_value_amount',
+        'value_reduction_amount',
+        'value_reduction_basis',
+        'inspected_at',
+        'inspected_by_user_id',
         'meta',
     ];
 
@@ -31,8 +44,41 @@ class WithdrawalRequestItem extends Model
             'quantity_requested' => 'integer',
             'unit_gross_amount' => 'integer',
             'line_gross_amount' => 'integer',
+            'inspection_condition' => WithdrawalItemCondition::class,
+            'inspection_hygienic_seal_broken' => 'boolean',
+            'inspection_signs_of_use' => 'boolean',
+            'inspection_soiling' => 'boolean',
+            'inspection_resellable' => 'boolean',
+            'inspection_commercial_value_amount' => 'integer',
+            'value_reduction_amount' => 'integer',
+            'inspected_at' => 'datetime',
             'meta' => 'array',
         ];
+    }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(WithdrawalRequestItemPhoto::class);
+    }
+
+    public function inspectedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'inspected_by_user_id');
+    }
+
+    public function refundableGrossAmount(): int
+    {
+        return max(0, (int) $this->line_gross_amount - (int) $this->value_reduction_amount);
+    }
+
+    public function soldWithHygienicSeal(): bool
+    {
+        return (bool) data_get($this->orderItem?->meta, 'legal_disclosures.has_hygienic_seal', false);
+    }
+
+    public function soldAsCustomMade(): bool
+    {
+        return (bool) data_get($this->orderItem?->meta, 'legal_disclosures.is_custom_made', false);
     }
 
     public function withdrawalRequest(): BelongsTo
@@ -63,6 +109,11 @@ class WithdrawalRequestItem extends Model
     public function lineGrossDecimal(): string
     {
         return $this->formatAmount($this->line_gross_amount);
+    }
+
+    public function refundableGrossDecimal(): string
+    {
+        return $this->formatAmount($this->refundableGrossAmount());
     }
 
     private function formatAmount(?int $amount): string

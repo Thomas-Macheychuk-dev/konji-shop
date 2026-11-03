@@ -16,6 +16,8 @@ final class AdminWithdrawalShowController extends Controller
             'order',
             'user',
             'items.orderItem',
+            'items.photos',
+            'items.inspectedBy',
         ]);
 
         return view('admin.withdrawals.show', [

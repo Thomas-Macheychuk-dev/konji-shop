@@ -44,6 +44,8 @@ use App\Http\Controllers\Admin\Products\AdminProductVariantPricesUpdateControlle
 use App\Http\Controllers\Admin\Products\AdminProductVariantStockStatusUpdateController;
 use App\Http\Controllers\Admin\Shop\AdminShopReadinessController;
 use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalIndexController;
+use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalItemInspectionUpdateController;
+use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalItemPhotoShowController;
 use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalShowController;
 use App\Http\Controllers\CartItemDestroyController;
 use App\Http\Controllers\CartItemStoreController;
@@ -258,6 +260,14 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/withdrawals/{withdrawalRequest}', AdminWithdrawalShowController::class)
             ->name('withdrawals.show');
+
+        Route::patch(
+            '/withdrawals/{withdrawalRequest}/items/{item}/inspection',
+            AdminWithdrawalItemInspectionUpdateController::class
+        )->scopeBindings()->name('withdrawals.items.inspection.update');
+
+        Route::get('/withdrawal-photos/{photo}', AdminWithdrawalItemPhotoShowController::class)
+            ->name('withdrawals.photos.show');
     });
 
 Route::middleware(['auth', 'verified'])->group(function () {
