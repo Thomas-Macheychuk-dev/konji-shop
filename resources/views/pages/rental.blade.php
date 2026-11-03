@@ -235,8 +235,8 @@
                         @foreach ($group['items'] as $item)
                             <article class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                                 <div class="flex aspect-[4/3] items-center justify-center bg-white p-4">
-                                    @if ($item->image_path)
-                                        <img src="{{ asset($item->image_path) }}" alt="{{ $item->name }}" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async">
+                                    @if ($item->imageUrl())
+                                        <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async">
                                     @endif
                                 </div>
                                 <div class="flex flex-1 flex-col border-t border-slate-100 p-5">

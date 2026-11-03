@@ -52,6 +52,12 @@ use App\Http\Controllers\Admin\Products\AdminProductUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantPackageDimensionsUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantPricesUpdateController;
 use App\Http\Controllers\Admin\Products\AdminProductVariantStockStatusUpdateController;
+use App\Http\Controllers\Admin\Rental\AdminRentalItemCreateController;
+use App\Http\Controllers\Admin\Rental\AdminRentalItemDestroyController;
+use App\Http\Controllers\Admin\Rental\AdminRentalItemEditController;
+use App\Http\Controllers\Admin\Rental\AdminRentalItemIndexController;
+use App\Http\Controllers\Admin\Rental\AdminRentalItemStoreController;
+use App\Http\Controllers\Admin\Rental\AdminRentalItemUpdateController;
 use App\Http\Controllers\Admin\Shop\AdminShopReadinessController;
 use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalIndexController;
 use App\Http\Controllers\Admin\Withdrawals\AdminWithdrawalItemInspectionUpdateController;
@@ -258,6 +264,24 @@ Route::middleware(['auth', 'admin'])
 
         Route::delete('/pages/{editablePage}', AdminPageResetController::class)
             ->name('pages.reset');
+
+        Route::get('/rental', AdminRentalItemIndexController::class)
+            ->name('rental.index');
+
+        Route::get('/rental/create', AdminRentalItemCreateController::class)
+            ->name('rental.create');
+
+        Route::post('/rental', AdminRentalItemStoreController::class)
+            ->name('rental.store');
+
+        Route::get('/rental/{rentalItem}/edit', AdminRentalItemEditController::class)
+            ->name('rental.edit');
+
+        Route::patch('/rental/{rentalItem}', AdminRentalItemUpdateController::class)
+            ->name('rental.update');
+
+        Route::delete('/rental/{rentalItem}', AdminRentalItemDestroyController::class)
+            ->name('rental.destroy');
 
         Route::get('/polkurier', AdminPolkurierDiagnosticsController::class)
             ->name('polkurier.index');

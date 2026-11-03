@@ -160,6 +160,7 @@
                                     ['route' => 'admin.withdrawals.index', 'label' => 'Odstąpienia'],
                                     ['route' => 'admin.complaints.index', 'label' => 'Reklamacje'],
                                     ['route' => 'admin.pages.index', 'label' => 'Edytor stron'],
+                                    ['route' => 'admin.rental.index', 'label' => 'Wypożyczalnia'],
                                     ['route' => 'admin.shop.readiness', 'label' => 'Gotowość sklepu'],
                                 ] as $adminNavigationItem)
                                     <a
@@ -348,6 +349,7 @@
                         <a href="{{ route('admin.withdrawals.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Odstąpienia</a>
                         <a href="{{ route('admin.complaints.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Reklamacje</a>
                         <a href="{{ route('admin.pages.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Edytor stron</a>
+                        <a href="{{ route('admin.rental.index') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Wypożyczalnia</a>
                         <a href="{{ route('admin.shop.readiness') }}" class="rounded-xl bg-orange-50 px-3 py-3 text-sm font-semibold text-[#d95513]">Gotowość sklepu</a>
                     @endif
 

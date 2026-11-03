@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Support\Storage\PublicFilesystemUrl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class RentalItem extends Model
 {
+    public const BUNDLED_IMAGE_DIRECTORY = 'images/rental/';
+
+    public const UPLOADED_IMAGE_DIRECTORY = 'rental';
+
     /** Display order and headings of the rental page sections. */
     public const GROUPS = [
         'beds' => 'Łóżka rehabilitacyjne',
@@ -49,6 +54,26 @@ class RentalItem extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
+    }
+
+    /**
+     * Seeded images ship in public/images/rental; images uploaded in the admin
+     * live on the public disk.
+     */
+    public function imageUrl(): ?string
+    {
+        if (blank($this->image_path)) {
+            return null;
+        }
+
+        return $this->hasBundledImage()
+            ? asset($this->image_path)
+            : PublicFilesystemUrl::url($this->image_path);
+    }
+
+    public function hasBundledImage(): bool
+    {
+        return str_starts_with((string) $this->image_path, self::BUNDLED_IMAGE_DIRECTORY);
     }
 
     public function depositLabel(): string
