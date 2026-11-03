@@ -163,3 +163,38 @@ it('ignores the manuals and medical notice the vermeiren importer appends', func
     expect(ProductMetaDescription::build($html, null, 'Vicky'))
         ->toBe('Ułatwia osobom starszym wchodzenie do wanny i wychodzenie z niej bez pomocy drugiej osoby.');
 });
+
+it('skips bold headings, all-caps slogans and photo captions before the first real sentence', function (): void {
+    $eldan = '<p><strong>Twoja pierwsza bluza medyczna – lekka i uniwersalna</strong></p><p>Lekka i uniwersalna bluza medyczna z zaokrąglonym dekoltem to idealny wybór dla osób rozpoczynających naukę lub praktykę w zawodzie. Klasyczny krój zapewnia swobodę ruchów i komfort noszenia przez cały dzień.</p>';
+
+    expect(ProductMetaDescription::build($eldan, null, 'Bluza MELODY'))
+        ->toBe('Lekka i uniwersalna bluza medyczna z zaokrąglonym dekoltem to idealny wybór dla osób rozpoczynających naukę lub praktykę w zawodzie.');
+
+    $vermeiren = '<p dir="ltr"><span><strong>EZ1 – komfort, stabilizacja i indywidualne dopasowanie</strong></span></p><p>POCZUJESZ ULGĘ W BÓLU STÓP, KOLAN, BIODER I PLECÓW</p>'
+        .'<p>Modelka w białym żakiecie siedzi na wózku w kolorze grafitowym.</p><p>Wózek model EZ1 zapewnia użytkownikowi stabilną, ergonomiczną pozycję siedzącą przez cały czas użytkowania.</p>';
+
+    expect(ProductMetaDescription::build($vermeiren, null, 'EZ1'))
+        ->toBe('Wózek model EZ1 zapewnia użytkownikowi stabilną, ergonomiczną pozycję siedzącą przez cały czas użytkowania.');
+});
+
+it('keeps a bold paragraph that is the description itself and splits on line breaks with attributes', function (): void {
+    $herdegen = '<p><b><strong><br>Wózek Albatros </strong>to świetne wsparcie dla osób niepełnosprawnych i pacjentów o ograniczonych zdolnościach poruszania.<br><br></b></p>';
+
+    expect(ProductMetaDescription::build($herdegen, null, 'Albatros'))
+        ->toBe('Wózek Albatros to świetne wsparcie dla osób niepełnosprawnych i pacjentów o ograniczonych zdolnościach poruszania.');
+
+    $timago = '<p data-start="112"><strong data-start="112">Automatyczne składanie jednym przyciskiem</strong><br data-start="159"> <span>Lekka, aluminiowa rama składa się samoczynnie.</span></p>';
+
+    expect(ProductMetaDescription::build($timago, null, 'iFold'))
+        ->toBe('Automatyczne składanie jednym przyciskiem. Lekka, aluminiowa rama składa się samoczynnie.');
+});
+
+it('cuts the next sentence instead of giving up when the first one is too short alone', function (): void {
+    $html = '<p>Absolutną prawdą jest, że ciąża to nie choroba. Jednakże, jest to okres wzmożonego obciążenia i wysiłku dla naszego organizmu, co często przekłada się na dolegliwości stóp.</p>';
+
+    $meta = ProductMetaDescription::build($html, null, 'FootWave MAMA');
+
+    expect($meta)->toStartWith('Absolutną prawdą jest, że ciąża to nie choroba. Jednakże')
+        ->toEndWith('…')
+        ->and(mb_strlen($meta))->toBeLessThanOrEqual(ProductMetaDescription::MAX_LENGTH);
+});
