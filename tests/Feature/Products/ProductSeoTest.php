@@ -6,10 +6,13 @@ use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Enums\VatRate;
+use App\Models\Attribute;
+use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
+use App\Support\Seo\ProductIdentifiers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
@@ -342,4 +345,45 @@ it('omits Product structured data when no active variant has a price', function 
         ->assertDontSee('"@type": "Product"', false);
 
     expect($response->viewData('structuredData'))->toHaveCount(1);
+});
+
+it('adds the manufacturer brand and a single valid GTIN to Product structured data', function (): void {
+    Config::set('legal.seller.company_name', 'MAX-CORP sp. z o.o.');
+    $product = Product::query()->create([
+        'name' => 'Podnóżek RF-3',
+        'slug' => 'podnozek-rf-3',
+        'status' => ProductStatus::ACTIVE,
+        'description' => '<p>Podnóżek do wózka.</p><table><tr><th>Kod EAN</th><td>5901234123457</td></tr></table>',
+    ]);
+    $producer = Attribute::query()->create(['name' => 'Producent', 'slug' => 'producent']);
+    $product->attributeValues()->attach(
+        AttributeValue::query()->create(['attribute_id' => $producer->id, 'value' => 'Reha Fund sp. z o. o.', 'slug' => 'reha-fund'])
+    );
+    ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'RF-3',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => 10000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_23,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+
+    $schema = $this->get(route('products.show', $product->slug))->assertOk()->viewData('structuredData')[0];
+
+    expect($schema['brand'])->toBe(['@type' => 'Brand', 'name' => 'Reha Fund'])
+        ->and($schema['gtin'])->toBe('5901234123457');
+});
+
+it('leaves GTIN out when it is ambiguous or invalid', function (): void {
+    $description = '<table><tr><th>EAN</th><td>5901234123457</td></tr></table>';
+
+    expect(ProductIdentifiers::gtin($description, 1))->toBe('5901234123457')
+        ->and(ProductIdentifiers::gtin($description, 3))->toBeNull()
+        ->and(ProductIdentifiers::gtin('<p>Kod EAN: 5901234123458</p>', 1))->toBeNull()
+        ->and(ProductIdentifiers::gtin('<p>EAN 5901234123457, EAN 4006381333931</p>', 1))->toBeNull()
+        ->and(ProductIdentifiers::gtin('<p>Kod EAN5903</p>', 1))->toBeNull()
+        ->and(ProductIdentifiers::brandName('Antar Spółka Jawna'))->toBe('Antar')
+        ->and(ProductIdentifiers::brandName('Medi GmbH'))->toBe('Medi');
 });
