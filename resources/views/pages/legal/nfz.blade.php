@@ -4,10 +4,6 @@
     @php
         $seller = config('legal.seller');
         $phoneHref = 'tel:'.preg_replace('/[^0-9+]/', '', (string) $seller['phone']);
-        $forms = collect([
-            ['title' => 'Zlecenie na zaopatrzenie w wyroby medyczne', 'path' => (string) config('legal.documents.nfz_order_form_pdf')],
-            ['title' => 'Upoważnienie do odbioru', 'path' => (string) config('legal.documents.nfz_collection_authorisation_pdf')],
-        ])->map(fn (array $form): array => [...$form, 'available' => is_file(public_path($form['path']))]);
     @endphp
 
     <div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
@@ -25,21 +21,6 @@
                 ['title' => '2. Przyjdź lub zadzwoń', 'text' => 'Sprawdzimy zlecenie, dostępność wyrobu i ewentualną dopłatę.'],
                 ['title' => '3. Odbiór', 'text' => 'Osobiście albo przez osobę z pisemnym upoważnieniem.'],
             ]])
-
-            <h2 class="mt-10 text-xl font-semibold text-zinc-900">Formularze do pobrania</h2>
-            <div class="mt-4 grid gap-3 sm:grid-cols-2">
-                @foreach ($forms as $form)
-                    <div class="flex items-center justify-between gap-4 rounded-xl px-4 py-4 ring-1 ring-zinc-200">
-                        <div>
-                            <p class="text-sm font-semibold text-zinc-900">{{ $form['title'] }}</p>
-                            <p class="mt-0.5 text-xs text-zinc-500">{{ $form['available'] ? 'PDF' : 'Dostępny w sklepie lub na prośbę e-mailem' }}</p>
-                        </div>
-                        @if ($form['available'])
-                            <a href="{{ asset($form['path']) }}" target="_blank" rel="noopener noreferrer" class="inline-flex shrink-0 rounded-xl border border-zinc-300 px-3 py-2 text-sm font-semibold text-zinc-800 hover:bg-zinc-50">Pobierz</a>
-                        @endif
-                    </div>
-                @endforeach
-            </div>
 
             <div class="prose prose-zinc mt-10 max-w-none prose-h2:mt-8 prose-h2:text-xl prose-a:font-medium">
                 <h2>Na czym polega refundacja</h2>
