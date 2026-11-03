@@ -68,7 +68,8 @@ final class EnrichHerdegenDraftsCommand extends Command
                 $cleanName = trim(preg_replace('/\s+/u', ' ', strip_tags($name)) ?? $name);
                 $short = Str::limit('Herdegen — '.$cleanName.'.', 255, '');
                 $description = '<p>'.e('Herdegen — '.$cleanName.'.').'</p>';
-                $seoTitle = Str::limit($cleanName.' | Herdegen', 60, '');
+                // No length cap: a 60-character cut used to leave "| Herdege" or "| H" at the end.
+                $seoTitle = $cleanName.' | Herdegen';
                 $seoDescription = Str::limit('Herdegen: '.$cleanName.'.', 155, '');
                 $changes = [];
                 foreach (['short_description' => $short, 'description' => $description,
