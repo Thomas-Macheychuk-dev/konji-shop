@@ -387,3 +387,26 @@ it('leaves GTIN out when it is ambiguous or invalid', function (): void {
         ->and(ProductIdentifiers::brandName('Antar Spółka Jawna'))->toBe('Antar')
         ->and(ProductIdentifiers::brandName('Medi GmbH'))->toBe('Medi');
 });
+
+it('prefers the default variant GTIN for products with several variants', function (): void {
+    $product = Product::query()->create(['name' => 'Peruka Coral', 'slug' => 'peruka-coral', 'status' => ProductStatus::ACTIVE]);
+
+    foreach ([['CORAL-1', '5901234123457', true], ['CORAL-2', '4006381333931', false]] as [$sku, $gtin, $isDefault]) {
+        ProductVariant::query()->create([
+            'product_id' => $product->id,
+            'sku' => $sku,
+            'gtin' => $gtin,
+            'status' => ProductVariantStatus::ACTIVE,
+            'price_net_amount' => 10000,
+            'currency' => Currency::PLN,
+            'vat_rate' => VatRate::VAT_23,
+            'stock_status' => StockStatus::IN_STOCK,
+            'is_default' => $isDefault,
+        ]);
+    }
+
+    $schema = $this->get(route('products.show', $product->slug))->assertOk()->viewData('structuredData')[0];
+
+    expect($schema['sku'])->toBe('CORAL-1')
+        ->and($schema['gtin'])->toBe('5901234123457');
+});

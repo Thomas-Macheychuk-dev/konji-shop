@@ -130,6 +130,9 @@ final class ProductSeoFinalConsolidationRepair
         $expected = $this->manifest['frozen'];
         $productFields = array_fill_keys(array_keys($expected['products'][0]), true);
         $projection['products'] = array_map(static fn ($row): array => array_intersect_key($row, $productFields), $state['products']);
+        // Columns added after the freeze (product_variants.gtin) are not evidence; every frozen column still is.
+        $variantFields = array_fill_keys(array_keys($expected['product_variants'][0] ?? []), true);
+        $projection['product_variants'] = array_map(static fn ($row): array => array_intersect_key($row, $variantFields), $state['product_variants']);
         if (self::hash($projection) !== self::hash($expected)) {
             throw new RuntimeException('Frozen catalogue evidence changed; review before any writes.');
         }

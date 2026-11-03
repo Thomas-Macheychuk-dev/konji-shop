@@ -16,6 +16,7 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
 use App\Services\Products\ProductBrandAttribute;
+use App\Support\Seo\ProductIdentifiers;
 use App\Support\Seo\SupplierTitleSuffix;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -230,6 +231,12 @@ final class PerukaProductImporter
             'stock_status' => $this->stockStatusForProduct($productData),
             'is_default' => true,
         ];
+
+        $gtin = preg_replace('/\D/', '', (string) ($productData['ean'] ?? ''));
+
+        if (ProductIdentifiers::isValidGtin($gtin)) {
+            $attributes['gtin'] = $gtin;
+        }
 
         if ($variant !== null) {
             if ($variant->trashed()) {
