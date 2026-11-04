@@ -36,10 +36,9 @@
                         </svg>
                     </span>
                     <span>
-                        <strong class="block text-sm font-bold text-slate-900">{{ $products->total() }} {{ $products->total() === 1 ? 'produkt' : 'produktów' }}</strong>
-                        <span class="block text-xs text-slate-500">w tej kategorii</span>
+                        <strong class="block text-sm font-bold text-slate-900">{{ $products->total() }} {{ trans_choice('produkt|produkty|produktów', $products->total()) }}</strong>
+                        <span class="block text-xs text-slate-600">w tej kategorii</span>
                     </span>
-                    <span class="sr-only">{{ $products->total() }} {{ \Illuminate\Support\Str::plural('product', $products->total()) }} found.</span>
                 </div>
             </div>
 
@@ -81,7 +80,7 @@
                 </div>
 
                 <div class="mt-10 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-slate-200">
-                    {{ $products->links() }}
+                    {{ $products->onEachSide(1)->links() }}
                 </div>
             @else
                 <div class="rounded-[28px] border border-blue-100 bg-gradient-to-r from-blue-50 to-white px-6 py-12 text-center sm:px-10">

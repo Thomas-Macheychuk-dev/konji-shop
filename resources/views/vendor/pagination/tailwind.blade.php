@@ -25,7 +25,7 @@
 
         </div>
 
-        <div class="hidden sm:flex-1 sm:flex sm:gap-2 sm:items-center sm:justify-between">
+        <div class="hidden sm:flex-1 sm:flex sm:flex-wrap sm:gap-3 sm:items-center sm:justify-between">
 
             <div>
                 <p class="text-sm text-gray-700 leading-5 dark:text-gray-600">
@@ -44,7 +44,7 @@
             </div>
 
             <div>
-                <span class="inline-flex rtl:flex-row-reverse shadow-sm rounded-md">
+                <span class="inline-flex flex-wrap rtl:flex-row-reverse shadow-sm rounded-md">
 
                     {{-- Previous Page Link --}}
                     @if ($paginator->onFirstPage())

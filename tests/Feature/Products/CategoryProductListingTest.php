@@ -125,7 +125,8 @@ it('shows active products from a category with product links and prices', functi
         ->get(route('categories.show', $category->slug))
         ->assertOk()
         ->assertSee('Odzież medyczna')
-        ->assertSee('1 product found.')
+        ->assertSee('1 produkt')
+        ->assertDontSee('1 produktów')
         ->assertSee('Bluza medyczna')
         ->assertSee(route('products.show', $activeProduct->slug), false)
         ->assertSee('123,00 PLN')
@@ -179,7 +180,7 @@ it('paginates category products at twenty four products per page', function (): 
     $this
         ->get(route('categories.show', $category->slug))
         ->assertOk()
-        ->assertSee('25 products found.')
+        ->assertSee('25 produktów')
         ->assertSee('Category Product 01')
         ->assertSee('Category Product 24')
         ->assertDontSee('Category Product 25');
