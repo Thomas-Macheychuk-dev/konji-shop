@@ -177,6 +177,33 @@ final class Reh4MatPriceList
     }
 
     /**
+     * The colour version of a symbol when the product name names that colour: the list prices clearance colours
+     * separately ("EB-SK/A BEŻ" 252 next to "EB-SK/A" 290, "AM-PES-03 BEŻ, CZARNY" 54 next to "AM-PES-03" 65).
+     */
+    public function colourVersion(string $code, string $name): ?string
+    {
+        $code = self::normalize($code);
+        $nameWords = preg_split('/[\s,\/()]+/u', self::normalize($name), flags: PREG_SPLIT_NO_EMPTY) ?: [];
+
+        foreach (array_keys($this->rowsBySymbol) as $symbol) {
+            $symbol = (string) $symbol;
+
+            if (! str_starts_with($symbol, $code.' ')) {
+                continue;
+            }
+
+            $colours = preg_split('/[\s,]+/u', mb_substr($symbol, mb_strlen($code) + 1), flags: PREG_SPLIT_NO_EMPTY) ?: [];
+            $allColours = $colours !== [] && array_filter($colours, static fn (string $word): bool => ! self::isColourWord($word)) === [];
+
+            if ($allColours && array_filter($colours, static fn (string $colour): bool => self::nameHasColour($nameWords, $colour)) !== []) {
+                return $symbol;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Whether the product name describes an accessory for the coded product ("Pokrowiec do AM-ADS-R").
      */
     public static function isAccessoryName(string $name, string $code): bool
@@ -217,6 +244,29 @@ final class Reh4MatPriceList
     public static function isChildText(string $text): bool
     {
         return (bool) preg_match(self::CHILD_PATTERN, mb_strtoupper($text));
+    }
+
+    private static function isColourWord(string $word): bool
+    {
+        return (bool) preg_match('/^(BEŻ|CZARN|SZAR|GRANAT|NIEBIESK|POPIEL|MELANŻ)/u', $word);
+    }
+
+    /**
+     * Colours are compared by stem, so "BEŻ" matches "BEŻOWY" and "CZARNY" matches "CZARNA".
+     *
+     * @param  list<string>  $nameWords
+     */
+    private static function nameHasColour(array $nameWords, string $colour): bool
+    {
+        $stem = mb_substr($colour, 0, 4);
+
+        foreach ($nameWords as $word) {
+            if (str_starts_with($word, $stem)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static function looseKey(string $code): string
