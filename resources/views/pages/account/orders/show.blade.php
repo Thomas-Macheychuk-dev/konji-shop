@@ -176,9 +176,9 @@
                                                     @foreach ($item->variant->attributeValues as $attributeValue)
                                                         <div class="flex gap-2">
                                                             <dt class="font-medium text-zinc-700">
-                                                                {{ $attributeValue->attribute?->name ?? 'Option' }}:
+                                                                {{ $attributeValue->attribute?->storefrontName() ?? 'Option' }}:
                                                             </dt>
-                                                            <dd>{{ $attributeValue->value }}</dd>
+                                                            <dd>{{ $attributeValue->storefrontValue() }}</dd>
                                                         </div>
                                                     @endforeach
                                                 </dl>

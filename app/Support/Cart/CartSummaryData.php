@@ -76,8 +76,8 @@ class CartSummaryData
         /** @var Collection<int, string> $parts */
         $parts = $variant->attributeValues
             ->map(function ($attributeValue): ?string {
-                $attributeName = $attributeValue->attribute?->name;
-                $value = $attributeValue->value;
+                $attributeName = $attributeValue->attribute?->storefrontName();
+                $value = $attributeValue->storefrontValue();
 
                 if (! $attributeName || ! $value) {
                     return null;

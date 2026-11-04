@@ -409,8 +409,10 @@ class CheckoutService
                         return [
                             'attribute_id' => $attributeValue->attribute_id,
                             'attribute_name' => $attributeValue->attribute?->name,
+                            'attribute_label' => $attributeValue->attribute?->storefrontName(),
                             'value_id' => $attributeValue->id,
                             'value' => $attributeValue->value,
+                            'value_label' => $attributeValue->storefrontValue(),
                             'slug' => $attributeValue->slug,
                         ];
                     })->values()->all(),
