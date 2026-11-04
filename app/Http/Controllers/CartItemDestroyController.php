@@ -23,12 +23,12 @@ class CartItemDestroyController extends Controller
 
         if ($request->expectsJson()) {
             return response()->json([
-                'message' => 'Item removed from cart.',
+                'message' => 'Produkt usunięty z koszyka.',
             ]);
         }
 
         return redirect()
             ->route('cart.show')
-            ->with('success', 'Item removed from cart.');
+            ->with('success', 'Produkt usunięty z koszyka.');
     }
 }
