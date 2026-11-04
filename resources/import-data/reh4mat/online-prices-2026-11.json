@@ -1,0 +1,1867 @@
+{
+  "source": "Polish online shops (median gross price per product), plus Reh4Mat list prices for items listed under other labels",
+  "collected_at": "2026-11-04",
+  "currency": "PLN",
+  "price_basis": "gross",
+  "product_count": 215,
+  "products": [
+    {
+      "sku": "AM-PLBW",
+      "name": "Orteza tułowia AM-PLBW (męski uniwersalny pas brzuszny)",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-28",
+      "name": "P-SS-28 Dziecięcy separator kończyn dolnych",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dzieciecy-separator-konczyn-dolnych-P-SS-28-StabiloBed-REH4MAT/23044512",
+          "gross_pln": 331
+        }
+      ]
+    },
+    {
+      "sku": "COMPLEX-PLUS-TLSO",
+      "name": "Orteza kończyny dolnej z gorsetem tułowia COMPLEX PLUS TLSO",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Orteza-konczyny-dolnej-z-gorsetem-tulowia-COMPLEX-PLUS-TLSO-4MEDIC/23043610",
+          "gross_pln": 3100.71
+        }
+      ]
+    },
+    {
+      "sku": "COMPLEX-PLUS-TLSO-DUAL-HKAFO",
+      "name": "Orteza kończyny dolnej z gorsetem tułowia COMPLEX PLUS TLSO DUAL HKAFO",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Orteza-konczyny-dolnej-z-gorsetem-tulowia-COMPLEX-PLUS-TLSO-DUAL-HKAFO-4MEDIC/23043618",
+          "gross_pln": 5167.26
+        }
+      ]
+    },
+    {
+      "sku": "AM-SB-11",
+      "name": "AM-SB-11 Orteza stawu biodrowego ograniczająca odwodzenia lub przywodzenia",
+      "sources": []
+    },
+    {
+      "sku": "AM-SB-01-CCA",
+      "name": "Orteza biodra AM-SB-01/CCA",
+      "sources": []
+    },
+    {
+      "sku": "AS-U",
+      "name": "Orteza uda AS-U",
+      "sources": []
+    },
+    {
+      "sku": "EB-SKL-2RA",
+      "name": "Orteza kończyny dolnej EB-SKL/2RA SZARY",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Lekka-orteza-na-golen-i-udo-EB-SKL2RA-4MEDIC/23043653",
+          "gross_pln": 499.19,
+          "note": "found via category listing page; size-independent price shown"
+        }
+      ]
+    },
+    {
+      "sku": "OKD-23",
+      "name": "Orteza kończyny dolnej OKD-23",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Aktywna-orteza-wspomagajaca-wiezadla-OKD-23-4SPORT/23043931",
+          "gross_pln": 399.99
+        }
+      ]
+    },
+    {
+      "sku": "AM-OSK-O-2RA",
+      "name": "Orteza kończyny dolnej AM-OSK-O/2RA",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Orteza-stawu-kolanowego-AM-OSK-O2RA-4MEDIC/23043651",
+          "gross_pln": 395
+        }
+      ]
+    },
+    {
+      "sku": "AS-SK-F",
+      "name": "Orteza stawu kolanowego AS-SK/F",
+      "sources": []
+    },
+    {
+      "sku": "EB-SK-2",
+      "name": "Orteza kończyny dolnej EB-SK/2",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Lekka-orteza-stawu-kolanowego-EB-SK2-4MEDIC/23043642",
+          "gross_pln": 410
+        }
+      ]
+    },
+    {
+      "sku": "EB-SK-P",
+      "name": "Orteza kończyny dolnej EB-SK/P",
+      "sources": []
+    },
+    {
+      "sku": "OKD-16",
+      "name": "Orteza kończyny dolnej OKD-16",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Uniwersalna-orteza-kolana-OKD-16-4CLASSIC/23044069",
+          "gross_pln": 195,
+          "note": "listing showed out of stock (notify button)"
+        }
+      ]
+    },
+    {
+      "sku": "RAPTOR-2R",
+      "name": "Orteza kończyny dolnej RAPTOR/2R",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-51920",
+      "name": "Poduszka podkolanowa (Reh4Mat)",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Poduszka-podkolanowa-Wyposazenie-dodatkowe-do-wybranych-modeli-ortez-4MEDIC/23043632",
+          "gross_pln": 17.89,
+          "note": "matched by name only (Poduszka podkolanowa, accessory); no code to verify"
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-69356",
+      "name": "Zestaw poduszek kłykciowych (Reh4Mat)",
+      "sources": [
+        {
+          "shop": "Reh4Mat cennik 2026-06-01 (net x 1.08)",
+          "url": null,
+          "gross_pln": 44.28,
+          "note": "ZESTAW PODUSZEK KŁYKCIOWYCH, p. 6-8"
+        }
+      ]
+    },
+    {
+      "sku": "R-KAW-KOMPRESYJNY-STAWU-KOLANOWEGO-RW-PROFIT",
+      "name": "Rękaw kompresyjny stawu kolanowego RW-PROFIT",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-66281",
+      "name": "SYSTEM PCL (Reh4Mat)",
+      "sources": []
+    },
+    {
+      "sku": "OKD-34",
+      "name": "OKD-34",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-74799",
+      "name": "Stabilizator stawu skokowego i stopy AFO PLUS",
+      "sources": [
+        {
+          "shop": "Reh4Mat cennik 2026-06-01 (net x 1.08)",
+          "url": null,
+          "gross_pln": 32.4,
+          "note": "AFO PLUS, p. 3 and 9"
+        }
+      ]
+    },
+    {
+      "sku": "APARAT-STACKA",
+      "name": "Orteza palca ręki APARAT STACKA",
+      "sources": [
+        {
+          "shop": "Reh4Mat cennik 2026-06-01 (net x 1.08)",
+          "url": null,
+          "gross_pln": 7.56,
+          "note": "APARAT STACKA, p. 19"
+        }
+      ]
+    },
+    {
+      "sku": "OKG-20",
+      "name": "ORTEZA POOPERACYJNO-NEUROLOGICZNA OKG-20",
+      "sources": [
+        {
+          "shop": "Reh4Mat cennik 2026-06-01 (net x 1.08)",
+          "url": null,
+          "gross_pln": 105.84,
+          "note": "OKG-20 I 98 / II 112 / III 98, p. 14-15"
+        }
+      ]
+    },
+    {
+      "sku": "AM-SDP-K-01",
+      "name": "Orteza nadgarstka AM-SDP-K-01",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Plastyczna-orteza-reki-i-przedramienia-AM-SDP-K-01-4MEDIC/23043703",
+          "gross_pln": 286.27
+        }
+      ]
+    },
+    {
+      "sku": "AM-SDP-K-02",
+      "name": "Orteza nadgarstka AM-SDP-K-02",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Orteza-reki-i-przedramienia-z-separatorem-palcow-AM-SDP-K-02-4MEDIC/23043698",
+          "gross_pln": 335
+        }
+      ]
+    },
+    {
+      "sku": "AM-OSN-U-01-CCA",
+      "name": "Orteza nadgarstka AM-OSN-U-01/CCA",
+      "sources": []
+    },
+    {
+      "sku": "AM-OSN-U-03",
+      "name": "Orteza nadgarstka AM-OSN-U-03",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Sznurowana-orteza-reki-i-przedramienia-AM-OSN-U-03-4MEDIC/23043699",
+          "gross_pln": 187.86
+        }
+      ]
+    },
+    {
+      "sku": "AM-OSN-U-04",
+      "name": "Orteza nadgarstka AM-OSN-U-04",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Sznurowana-orteza-reki-i-przedramienia-ze-stabilizacja-kciuka-AM-OSN-U-04-4MEDIC/23043700",
+          "gross_pln": 246.92
+        }
+      ]
+    },
+    {
+      "sku": "OKG-26",
+      "name": "OKG-26 Orteza przedramienia",
+      "sources": []
+    },
+    {
+      "sku": "OKG-30",
+      "name": "Orteza nadgarstka OKG-30",
+      "sources": []
+    },
+    {
+      "sku": "OKG-31",
+      "name": "Krótka orteza nadgarstka OKG-31",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-41493",
+      "name": "Separator neurologiczny (Reh4Mat)",
+      "sources": [
+        {
+          "shop": "Reh4Mat cennik 2026-06-01 (net x 1.08)",
+          "url": null,
+          "gross_pln": 37.8,
+          "note": "SEPARATOR NEUROLOGICZNO-REUMATOLOGICZNY PALCÓW DŁONI, p. 21"
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-290460",
+      "name": "Separator neurologiczny (Reh4Mat, second product)",
+      "sources": [
+        {
+          "shop": "Reh4Mat cennik 2026-06-01 (net x 1.08)",
+          "url": null,
+          "gross_pln": 37.8,
+          "note": "SEPARATOR NEUROLOGICZNO-REUMATOLOGICZNY PALCÓW DŁONI, p. 21"
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-290482",
+      "name": "Standardowy separator palców (Reh4Mat)",
+      "sources": [
+        {
+          "shop": "Reh4Mat cennik 2026-06-01 (net x 1.08)",
+          "url": null,
+          "gross_pln": 15.12,
+          "note": "STANDARDOWY SEPARATOR PALCÓW DŁONI, p. 21"
+        }
+      ]
+    },
+    {
+      "sku": "AM-SL-03",
+      "name": "Orteza kończyny górnej AM-SL-03",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Orteza-konczyny-gornej-z-regulacja-AM-SL-03-4MEDIC/23043713",
+          "gross_pln": 1082.47,
+          "note": "price looks high for an upper-limb brace; as listed"
+        }
+      ]
+    },
+    {
+      "sku": "AS-L-A",
+      "name": "Orteza kończyny górnej AS-L/A",
+      "sources": []
+    },
+    {
+      "sku": "AM-SOB-01",
+      "name": "Orteza kończyny górnej AM-SOB-01",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Orteza-na-ramie-i-bark-z-uchwytem-AM-SOB-01-4MEDIC/23043722",
+          "gross_pln": 304.16
+        }
+      ]
+    },
+    {
+      "sku": "AR-WSP-01",
+      "name": "Orteza tułowia AR-WSP-01",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Ortopedyczny-gorset-tulowia-z-podpaszkami-AR-WSP-01-4MEDIC/23043735",
+          "gross_pln": 787.26
+        }
+      ]
+    },
+    {
+      "sku": "AR-WSP-02",
+      "name": "Orteza tułowia AR-WSP-02",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Plastyczny-czterofunkcyjny-gorset-tulowia-TLSO-AR-WSP-02-4MEDIC/23043736",
+          "gross_pln": 964.38
+        }
+      ]
+    },
+    {
+      "sku": "ARTUS",
+      "name": "ARTUS (orteza tułowia Reh4Mat)",
+      "sources": []
+    },
+    {
+      "sku": "CASTUS",
+      "name": "CASTUS (orteza tułowia Reh4Mat)",
+      "sources": []
+    },
+    {
+      "sku": "MS-T-01-LSO",
+      "name": "Orteza tułowia MS-T-01/LSO",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Modulowy-gorset-ortopedyczny-MS-T-01LSO-4MEDIC/23043762",
+          "gross_pln": 517.07
+        }
+      ]
+    },
+    {
+      "sku": "MS-T-01-LSO-PLUS",
+      "name": "Orteza tułowia MS-T-01/LSO PLUS",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Modulowy-gorset-ortopedy-MS-T-01LSO-PLUS-4MEDIC/23043763",
+          "gross_pln": 610.13
+        }
+      ]
+    },
+    {
+      "sku": "MS-T-01-TLSO",
+      "name": "Orteza tułowia MS-T-01/TLSO",
+      "sources": [
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/modulowy-gorset-ortopedyczny-ms-t-01-tlso",
+          "gross_pln": 699
+        }
+      ]
+    },
+    {
+      "sku": "MS-T-01-TLSO-PLUS",
+      "name": "Orteza tułowia MS-T-01/TLSO PLUS",
+      "sources": []
+    },
+    {
+      "sku": "MS-T-02-LSO",
+      "name": "Orteza tułowia MS-T-02/LSO",
+      "sources": [
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/modulowy-gorset-ortopedyczny-ms-t-02-lso",
+          "gross_pln": 379
+        }
+      ]
+    },
+    {
+      "sku": "MS-T-02-TLSO",
+      "name": "Orteza tułowia MS-T-02/TLSO",
+      "sources": [
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/modulowy-gorset-ortopedyczny-ms-t-02-tlso",
+          "gross_pln": 485
+        }
+      ]
+    },
+    {
+      "sku": "MS-T-02-TLSO-PLUS",
+      "name": "Orteza tułowia MS-T-02/TLSO PLUS",
+      "sources": [
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/modulowy-gorset-ortopedyczny-ms-t-02-tlso-plus",
+          "gross_pln": 559
+        }
+      ]
+    },
+    {
+      "sku": "AM-PES-06",
+      "name": "Orteza tułowia AM-PES-06 SZARY",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Odciazajaco-stabilizujacy-gorset-tulowia-AM-PES-06-4MEDIC/23043772",
+          "gross_pln": 492.04,
+          "note": "colour not stated on listing"
+        },
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/orteza-piersiowo-ledzwiowo-krzyzowa-am-pes-06",
+          "gross_pln": 410,
+          "note": "colour not stated on listing"
+        }
+      ]
+    },
+    {
+      "sku": "AM-PES-06-2",
+      "name": "Orteza tułowia AM-PES-06 CZARNY MELANŻ",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Odciazajaco-stabilizujacy-gorset-tulowia-AM-PES-06-4MEDIC/23043772",
+          "gross_pln": 492.04,
+          "note": "colour not stated on listing"
+        },
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/orteza-piersiowo-ledzwiowo-krzyzowa-am-pes-06",
+          "gross_pln": 410,
+          "note": "colour not stated on listing"
+        }
+      ]
+    },
+    {
+      "sku": "AM-PES-06-3",
+      "name": "Orteza tułowia AM-PES-06 BEŻ",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Odciazajaco-stabilizujacy-gorset-tulowia-AM-PES-06-4MEDIC/23043772",
+          "gross_pln": 492.04,
+          "note": "colour not stated on listing"
+        },
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/orteza-piersiowo-ledzwiowo-krzyzowa-am-pes-06",
+          "gross_pln": 410,
+          "note": "colour not stated on listing"
+        }
+      ]
+    },
+    {
+      "sku": "AM-SO-12",
+      "name": "AM-SO-12",
+      "sources": []
+    },
+    {
+      "sku": "AM-WSP-11",
+      "name": "Orteza tułowia AM-WSP-11",
+      "sources": []
+    },
+    {
+      "sku": "AM-WSP-12",
+      "name": "Orteza tułowia AM-WSP-12",
+      "sources": []
+    },
+    {
+      "sku": "AR-WSP-03",
+      "name": "Orteza tułowia AR-WSP-03",
+      "sources": []
+    },
+    {
+      "sku": "EB-LK",
+      "name": "Orteza tułowia EB-LK",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Wysoka-ledzwiowo-piersiowa-orteza-tulowia-z-tasmami-dociagowymi-EB-LK-4MEDIC/23043781",
+          "gross_pln": 329
+        }
+      ]
+    },
+    {
+      "sku": "EB-LK-01",
+      "name": "Orteza tułowia EB-LK-01",
+      "sources": []
+    },
+    {
+      "sku": "EB-LK-02",
+      "name": "Orteza tułowia EB-LK-02",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Trzystopniowa-ledzwiowo-piersiowa-orteza-tulowia-EB-LK-02-4MEDIC/23043783",
+          "gross_pln": 399
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-283805",
+      "name": "Osłony szelek (Reh4Mat)",
+      "sources": []
+    },
+    {
+      "sku": "AM-SO-04",
+      "name": "ORTEZA LĘDŹWIOWO-KRZYŻOWA AM-SO-04",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Meska-orteza-ledzwiowo-krzyzowa-AM-SO-04-4SPORT/23044039",
+          "gross_pln": 305
+        }
+      ]
+    },
+    {
+      "sku": "AM-SO-08",
+      "name": "Orteza tułowia AM-SO-08",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Kompresyjna-orteza-kregoslupa-AM-SO-08-4SPORT/23044044",
+          "gross_pln": 245
+        }
+      ]
+    },
+    {
+      "sku": "AM-SO-09",
+      "name": "Orteza Lędźwiowa Kręgosłupa AM-SO-09",
+      "sources": []
+    },
+    {
+      "sku": "AR-WSP-03-CCA",
+      "name": "Orteza tułowia AR-WSP-03/CCA",
+      "sources": [
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/orteza-ledzwiowo-krzyzowa-ar-wsp-03-cca",
+          "gross_pln": 345
+        }
+      ]
+    },
+    {
+      "sku": "AS-LK-02",
+      "name": "Orteza tułowia AS-LK-02",
+      "sources": [
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/sznurowana-orteza-ledzwiowo-krzyzowa-as-lk-02",
+          "gross_pln": 279
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Sznurowana-orteza-ledzwiowo-krzyzowa-AS-LK-02-4SPORT/23044040",
+          "gross_pln": 314.9
+        }
+      ]
+    },
+    {
+      "sku": "EB-LK-03",
+      "name": "Orteza tułowia EB-LK-03 BEŻOWY",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Orteza-ledzwiowo-krzyzowa-EB-LK-03-4GREEN/23044262",
+          "gross_pln": 179.99
+        }
+      ]
+    },
+    {
+      "sku": "AM-PZM-01",
+      "name": "Orteza tułowia AM-PZM-01",
+      "sources": []
+    },
+    {
+      "sku": "AM-PTD-2",
+      "name": "Orteza tułowia AM-PTD/2",
+      "sources": [
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/pas-torako-damski-am-ptd-2",
+          "gross_pln": 137
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Pas-Torako-damski-AM-PTD2-z-dwoma-otworami-Po-zlamaniach-zeber-i-operacjach-klatki-piersiowej-4GREEN/23045663",
+          "gross_pln": 162
+        }
+      ]
+    },
+    {
+      "sku": "AM-SB-13",
+      "name": "AM-SB-13 Pas do stabilizacji miednicy",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-27",
+      "name": "P-SS-27 Niemowlęcy klin antyrefluksowy",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-175",
+      "name": "BodyMap D Zagłówek",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-651",
+      "name": "BodyMap DX Zagłówek motylkowy",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-667",
+      "name": "BodyMap DY Zagłówek prosty",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-694",
+      "name": "BodyMap DZ Zagłówek trójkątny",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-7160",
+      "name": "BodyMap S SWIMMER poduszka do pływania",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-09",
+      "name": "P-SS-09 Krążek przeciwodleżynowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Krazek-przeciwodlezynowy-P-SS-09-StabiloBed-REH4MAT/23044414",
+          "gross_pln": 188
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-15",
+      "name": "P-SS-15 Wałek pod głowę typu banan",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Walek-pod-glowe-P-SS-15-StabiloBed-REH4MAT/23044418",
+          "gross_pln": 187.86
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-18",
+      "name": "P-SS-18 Zagłówek",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Zaglowek-P-SS-18-StabiloBed-REH4MAT/23044422",
+          "gross_pln": 196.81
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-19",
+      "name": "P-SS-19 Stabilizator szyjny",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Stabilizator-szyjny-P-SS-19-StabiloBed-REH4MAT/23044426",
+          "gross_pln": 354.27
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-21",
+      "name": "P-SS-21 Poduszka silikonowa",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Poduszka-silikonowa-P-SS-21-StabiloBed-REH4MAT/23044430",
+          "gross_pln": 115
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-22",
+      "name": "P-SS-22 Osłona termoaktywna",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Oslona-termoaktywna-P-SS-22-StabiloBed-REH4MAT/23044431",
+          "gross_pln": 118.09
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-25",
+      "name": "P-SS-25 Stabilizator głowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Stabilizator-glowy-P-SS-25-StabiloBed-REH4MAT/23044434",
+          "gross_pln": 162
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-26",
+      "name": "P-SS-26 Profilowana poduszka ortopedyczna",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Profilowana-poduszka-ortopedyczna-P-SS-26-StabiloBed-REH4MAT/23044438",
+          "gross_pln": 139.56
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-31",
+      "name": "P-SS-31 Uniwersalna poduszka",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Uniwersalna-poduszka-P-SS-31-StabiloBed-REH4MAT/23044443",
+          "gross_pln": 179.99
+        },
+        {
+          "shop": "rehatop.com",
+          "url": "https://www.rehatop.com/pl/produkt/uniwersalna-poduszka-stabilo-p-ss-31",
+          "gross_pln": 189
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-44",
+      "name": "P-SS-44 Poduszka stabilizująca głowę",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-55",
+      "name": "P-SS-55 Zagłówek trapez",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-154",
+      "name": "BodyMap AB Fotelik podciśnieniowy",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-167",
+      "name": "BodyMap AC Fotelik z pelotami bocznymi i zagłówkiem",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-86",
+      "name": "BodyMap B Poduszka oparcia",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1739",
+      "name": "BodyMap B+ Poduszka oparcia z boczną stabilizacją tułowia",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-117",
+      "name": "BodyMap C Oparcie z pelotami bocznymi i zagłówkiem",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-276",
+      "name": "BodyMap H Jednostronny stabilizator tułowia",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-540",
+      "name": "BodyMap K Materac stabilizujący",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1607",
+      "name": "BodyMap O Wałek stabilizujący",
+      "sources": []
+    },
+    {
+      "sku": "FP-01",
+      "name": "FP-01 Dynamiczna 4-punktowa kamizelka tułowia",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Dynamiczna-kamizelka-tulowia-FP-01-Standardowa-bez-zamka-REH4MAT/23112029",
+          "gross_pln": 375,
+          "note": "Standard width, no zipper (cheapest variant; narrow/zip variants 431.31-577.58)"
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dynamiczna-kamizelka-tulowia-FP-01-Standardowa-bez-zamka-REH4MAT/23044584",
+          "gross_pln": 393.62,
+          "note": "Standard width, no zipper"
+        }
+      ]
+    },
+    {
+      "sku": "FP-02",
+      "name": "FP-02 Dynamiczna 4-punktowa kamizelka typu H",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Dynamiczna-kamizelka-4-punktowa-typu-H-FP-02-REH4MAT/23112032",
+          "gross_pln": 393.79
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dynamiczna-kamizelka-4-punktowa-typu-H-FP-02-REH4MAT/23044587",
+          "gross_pln": 413.31
+        }
+      ]
+    },
+    {
+      "sku": "FP-03",
+      "name": "FP-03 Klasyczna 4-punktowa kamizelka typu H",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Klasyczna-4-punktowa-kamizelka-typu-H-FP-03-REH4MAT/23112036",
+          "gross_pln": 393.79
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Klasyczna-4-punktowa-kamizelka-typu-H-FP-03-REH4MAT/23044591",
+          "gross_pln": 413.31
+        }
+      ]
+    },
+    {
+      "sku": "FP-04",
+      "name": "FP-04 2-punktowy pas tułowia ze wspomaganiem zapięcia",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/2-punktowy-pas-tulowia-ze-wspomaganiem-zapiecia-FP-04-REH4MAT/23112037",
+          "gross_pln": 281.29
+        }
+      ]
+    },
+    {
+      "sku": "FP-05",
+      "name": "FP-05 Dynamiczny 2-punktowy pas tułowia",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Dynamiczny-2-punktowy-pas-tulowia-FP-05-REH4MAT/23112039",
+          "gross_pln": 259
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dynamiczny-2-punktowy-pas-tulowia-FP-05-REH4MAT-/23044594",
+          "gross_pln": 255.86
+        }
+      ]
+    },
+    {
+      "sku": "FP-06",
+      "name": "FP-06 Dynamiczne 4-punktowe szelki retrakcyjne barków",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Dynamiczne-4-punktowe-pasy-tulowia-FP-06-REH4MAT/23112047",
+          "gross_pln": 281.29,
+          "note": "Listed as 'Dynamiczne 4-punktowe pasy tułowia' (same code FP-06)"
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dynamiczne-4-punktowe-pasy-tulowia-FP-06-REH4MAT/23044602",
+          "gross_pln": 295.22,
+          "note": "Same code FP-06, name differs slightly"
+        }
+      ]
+    },
+    {
+      "sku": "FP-07",
+      "name": "FP-07 Jednostronny Stabilizator Tułowia",
+      "sources": []
+    },
+    {
+      "sku": "FP-08",
+      "name": "FP-08 Dynamiczna 6-punktowa kamizelka tułowia",
+      "sources": []
+    },
+    {
+      "sku": "FP-09",
+      "name": "FP-09 4-punktowa kamizelka tułowia z pianką odciążającą",
+      "sources": []
+    },
+    {
+      "sku": "FP-17",
+      "name": "Dynamiczny pas brzuszny FP-17",
+      "sources": []
+    },
+    {
+      "sku": "FP-18",
+      "name": "FP-18 Dynamiczny otwarty stabilizujący pas brzuszny",
+      "sources": []
+    },
+    {
+      "sku": "FP-30",
+      "name": "FP-30 Uniwersalny pas stabilizujący",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Uniwersalny-pas-stabilizujacy-FP-30-REH4MAT/23112063",
+          "gross_pln": 229.99
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Uniwersalny-pas-stabilizujacy-FP-30-REH4MAT/23044618",
+          "gross_pln": 244
+        }
+      ]
+    },
+    {
+      "sku": "FP-31",
+      "name": "FP-31 Pełna kamizelka półsztywna",
+      "sources": []
+    },
+    {
+      "sku": "FP-32",
+      "name": "FP-32 Kamizelka AIR z dzianiny dystansowej ze zintegrowanymi klamrami",
+      "sources": []
+    },
+    {
+      "sku": "FP-33",
+      "name": "FP-33 Kamizelka z pasem obwodowym",
+      "sources": []
+    },
+    {
+      "sku": "FP-34",
+      "name": "FP-34 6-punktowa dynamiczna kamizelka AIR",
+      "sources": []
+    },
+    {
+      "sku": "FP-36",
+      "name": "FP-36 6-punktowa dynamiczna kamizelka AIR ze stabilizatorem miednicy",
+      "sources": []
+    },
+    {
+      "sku": "FP-38",
+      "name": "FP-38 Pas stabilizujący tułów",
+      "sources": []
+    },
+    {
+      "sku": "K-SS-08",
+      "name": "K-SS-08 Klin profilowany",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Klin-profilowany-K-SS-08-StabiloBed-REH4MAT/23111988",
+          "gross_pln": 115
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-08",
+      "name": "P-SS-08 Jednostronny stabilizator tułowia",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Jednostronny-stabilizator-tulowia-P-SS-08-StabiloBed-REH4MAT/23111966",
+          "gross_pln": 969
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Jednostronny-stabilizator-tulowia-P-SS-08-StabiloBed-REH4MAT/23044521",
+          "gross_pln": 979
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-12",
+      "name": "P-SS-12 Trójkątny klin tułowia",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Trojkatny-klin-tulowi-P-SS-12-StabiloBed-REH4MAT/23111970",
+          "gross_pln": 485
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Trojkatny-klin-tulowi-P-SS-12-StabiloBed-REH4MAT/23044525",
+          "gross_pln": 495
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-13",
+      "name": "P-SS-13 Wałek stabilizujący",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Walek-stabilizujacy-P-SS-13-StabiloBed-REH4MAT/23044528",
+          "gross_pln": 885
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-14",
+      "name": "P-SS-14 Półmiękkie wałki kształtowe",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Polmiekkie-walki-ksztaltowe-P-SS-14-StabiloBed-REH4MAT/23111976",
+          "gross_pln": 310.27
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-17",
+      "name": "P-SS-17 Półsztywne wałki do stabilizacji tułowia",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-38",
+      "name": "P-SS-38 Siedzisko sensoryczne typu fasolka",
+      "sources": []
+    },
+    {
+      "sku": "W-SS-01",
+      "name": "W-SS-01 Wałek do rehabilitacji",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Walek-do-rehabilitacij-W-SS-01-StabiloBed-REH4MAT/23111979",
+          "gross_pln": 42.62
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-216",
+      "name": "BodyMap E Stabilizator przedramienia do wózków i pionizatorów",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1649",
+      "name": "BodyMap M Poduszka stabilizująca kończyny górne",
+      "sources": []
+    },
+    {
+      "sku": "FP-25",
+      "name": "FP-25 Stabilizator kończyn",
+      "sources": []
+    },
+    {
+      "sku": "K-SS-01",
+      "name": "K-SS-01 Klin termoaktywny kończyny górnej",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Klin-termoaktywny-konczyny-gornej-K-SS-01-StabiloBed-REH4MAT/23111899",
+          "gross_pln": 167.07
+        }
+      ]
+    },
+    {
+      "sku": "K-SS-02",
+      "name": "K-SS-02 Klin z funkcją samoszczepną",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Klin-z-funkcja-samoszczepna-K-SS-02-StabiloBed-REH4MAT/23111983",
+          "gross_pln": 85.24
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-20",
+      "name": "P-SS-20 Stabilizator kończyny górnej z osłoną",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/Stabilizator-konczyny-gornej-z-oslona-P-SS-20-StabiloBed-REH4MAT/23111895",
+          "gross_pln": 230.14
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Stabilizator-konczyny-gornej-z-oslona-P-SS-20-StabiloBed-REH4MAT/23044450",
+          "gross_pln": 241.55
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-51",
+      "name": "P-SS-51 Uniwersalny separator kończyn",
+      "sources": []
+    },
+    {
+      "sku": "BODYMAP-A-PRO",
+      "name": "BodyMap A PRO",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1725",
+      "name": "BodyMap A+ Poduszka do siedzenia ze stabilizacją miednicy i z klinem",
+      "sources": []
+    },
+    {
+      "sku": "FP-10",
+      "name": "FP-10 2-punktowy dynamiczny pas biodrowy ze stabilizacją miednicy i odwodzeniem",
+      "sources": [
+        {
+          "shop": "ziola-zycia.eu",
+          "url": "https://ziola-zycia.eu/pl/p/2-punktowy-dynamiczny-pas-ze-stabilizacja-miednicy-FP-10-REH4MAT/23112048",
+          "gross_pln": 431.31,
+          "note": "Same code FP-10; shop name omits 'odwodzenie'"
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/2-punktowy-dynamiczny-pas-ze-stabilizacja-miednicy-FP-10-REH4MAT/23044603",
+          "gross_pln": 452.67
+        }
+      ]
+    },
+    {
+      "sku": "FP-11",
+      "name": "FP-11 4-punktowy dynamiczny pas biodrowy ze stabilizacją miednicy i odwodzeniem",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/4-punktowy-dynamiczny-pas-ze-stabilizacja-miednicy-FP-11-REH4MAT/23044604",
+          "gross_pln": 627.83
+        }
+      ]
+    },
+    {
+      "sku": "FP-12",
+      "name": "FP-12 2-punktowy dynamiczny pas biodrowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/2-punktowy-dynamiczny-pas-biodrowy-FP-12-REH4MAT/23044606",
+          "gross_pln": 255.86
+        }
+      ]
+    },
+    {
+      "sku": "FP-13",
+      "name": "FP-13 4-punktowy dynamiczny pas biodrowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/4-punktowy-dynamiczny-pas-biodrowy-FP-13-REH4MAT/23044607",
+          "gross_pln": 373.95
+        }
+      ]
+    },
+    {
+      "sku": "FP-14",
+      "name": "FP-14 2-punktowy pas biodrowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/2-punktowy-pas-biodrowy-FP-14-REH4MAT/23044608",
+          "gross_pln": 177.12
+        }
+      ]
+    },
+    {
+      "sku": "FP-15",
+      "name": "FP-15 2-punktowy pas biodrowy ze wspomaganiem zapięcia",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/2-punktowy-pas-biodrowy-ze-wspomaganiem-zapiecia-FP-15-REH4MAT/23044609",
+          "gross_pln": 236.18
+        }
+      ]
+    },
+    {
+      "sku": "FP-16",
+      "name": "FP-16 Stabilizator miednicy",
+      "sources": []
+    },
+    {
+      "sku": "FP-19",
+      "name": "FP-19 Anatomiczna dynamiczna uprząż miednicy",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-79",
+      "name": "BodyMap A Poduszka do siedzenia",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-24",
+      "name": "P-SS-24 Poduszka przeciwodleżynowa",
+      "sources": [
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/Poduszka-Przeciwodlezynowa-P-SS-24-/1270",
+          "gross_pln": 124.69
+        },
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Poduszka-przeciwodlezynowa-P-SS-24-StabiloBed-REH4MAT/23044537",
+          "gross_pln": 255,
+          "note": "page fetched shows 255,00 (coordinator mentioned 153.00 - mismatch)"
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-1672",
+      "name": "BodyMap N Poduszka korygująca ustawienie stóp",
+      "sources": [
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/BODYMAP-N-Poduszka-Korygujaca-Ustawienie-Stop/1223",
+          "gross_pln": 1421.55
+        }
+      ]
+    },
+    {
+      "sku": "FP-20",
+      "name": "FP-20 Pasy odwodzące uda",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Pasy-odwodzace-uda-FP-20-REH4MAT/23044610",
+          "gross_pln": 255.86
+        }
+      ]
+    },
+    {
+      "sku": "FP-21",
+      "name": "FP-21 Dynamiczny pas łydkowy z funkcją wentylacji",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dynamiczny-pas-lydkowy-z-funkcja-wentylacji-FP-21-REH4MAT/23044611",
+          "gross_pln": 206
+        }
+      ]
+    },
+    {
+      "sku": "FP-22",
+      "name": "FP-22 Dynamiczne stabilizatory kostek",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dynamiczne-stabilizatory-kostek-FP-22-REH4MAT/23044612",
+          "gross_pln": 373.95
+        }
+      ]
+    },
+    {
+      "sku": "FP-23",
+      "name": "FP-23 Anatomiczne pasy odwodzące uda",
+      "sources": []
+    },
+    {
+      "sku": "FP-24",
+      "name": "FP-24 Pasy odwodzące uda",
+      "sources": []
+    },
+    {
+      "sku": "FP-25-2",
+      "name": "FP-25 Stabilizator kończyn (second product)",
+      "sources": []
+    },
+    {
+      "sku": "FP-26",
+      "name": "FP-26 Stabilizator podudzi",
+      "sources": []
+    },
+    {
+      "sku": "K-SS-06",
+      "name": "K-SS-06 Termoaktywny klin elewacyjny",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Termoaktywny-klin-elewacyjny-K-SS-06-StabiloBed-REH4MAT/23044507",
+          "gross_pln": 444.81
+        }
+      ]
+    },
+    {
+      "sku": "K-SS-07",
+      "name": "K-SS-07 Termoaktywna szyna Brauna",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Termoaktywna-szyna-Brauna-K-SS-07-StabiloBed-REH4MAT/23044510",
+          "gross_pln": 297.85
+        }
+      ]
+    },
+    {
+      "sku": "K-SS-09",
+      "name": "K-SS-09 Klin elewacyjny",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Klin-elewacyjny-K-SS-09-StabiloBed-REH4MAT/23044456",
+          "gross_pln": 320
+        },
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/Klin-Elewacyjny-K-SS-09-/1284",
+          "gross_pln": 260.98
+        }
+      ]
+    },
+    {
+      "sku": "K-SS-10",
+      "name": "K-SS-10 Szyna Brauna",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Szyna-Brauna-K-SS-10-StabiloBed-REH4MAT/23044467",
+          "gross_pln": 205,
+          "note": "may be out of stock"
+        }
+      ]
+    },
+    {
+      "sku": "K-SS-11",
+      "name": "K-SS-11 Termoaktywna szyna Brauna ze stabilizacją stopy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Termoaktywna-szyna-Brauna-ze-stabilizacja-stopy-K-SS-11-StabiloBed-REH4MAT/23044469",
+          "gross_pln": 379
+        }
+      ]
+    },
+    {
+      "sku": "K-SS-31",
+      "name": "K-SS-31 Długi separator kończyn dolnych",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-01",
+      "name": "P-SS-01 Separator kończyn dolnych",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Separator-konczyn-dolnych-P-SS-01-StabiloBed-REH4MAT/23044482",
+          "gross_pln": 286.27
+        },
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/Separator-Konczyn-Dolnych-P-SS-01-/1253",
+          "gross_pln": 313.21
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-02",
+      "name": "P-SS-02 Wałek podkolanowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Walek-podkolanowy-P-SS-02-StabiloBed-REH4MAT/23044545",
+          "gross_pln": 247
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-06",
+      "name": "P-SS-06 Stabilizator podudzia",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Stabilizator-podudzia-P-SS-06-StabiloBed-REH4MAT/23044492",
+          "gross_pln": 196.81
+        },
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/Stabilizator-Podudzia-P-SS-06-/1255",
+          "gross_pln": 203.68
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-10",
+      "name": "P-SS-10 Klin podkolanowy",
+      "sources": [
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/Klin-Podkolanowy-P-SS-10-/1258",
+          "gross_pln": 394.98
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-29",
+      "name": "P-SS-29 Uniwersalna poduszka pozycjonująca",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Uniwersalna-poduszka-pozycjonujaca-P-SS-29-StabiloBed-REH4MAT/23044515",
+          "gross_pln": 137.77
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-30",
+      "name": "P-SS-30 Wałek podkolanowy z klinem międzyudowym",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Walek-podkolanowy-z-klinem-miedzyudowym-P-SS-30-StabiloBed-REH4MAT/23044517",
+          "gross_pln": 354.27
+        },
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/Walek-Podkolanowy-Z-Klinem-Miedzy-udowym-P-SS-30-/1276",
+          "gross_pln": 340.45
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-32",
+      "name": "P-SS-32 Wałek podkolanowy z klinem międzyudowym i stabilizatorami bocznymi",
+      "sources": [
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/Walek-Podkolanowy-Z-Klinem-Miedzy-udowym-I-Stabilizatorami-Bocznymi-P-SS-32-/1278",
+          "gross_pln": 394
+        }
+      ]
+    },
+    {
+      "sku": "P-SS-33",
+      "name": "P-SS-33 Poduszka pozycjonująca kończyny dolne",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-52",
+      "name": "P-SS-52 Przeciwodleżynowa poduszka pod kończyny dolne",
+      "sources": []
+    },
+    {
+      "sku": "FP-40",
+      "name": "FP-40 Pas mocujący",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Pas-mocujacy-BeltiCar-FP-40-REH4MAT/23044613",
+          "gross_pln": 1082.47
+        }
+      ]
+    },
+    {
+      "sku": "FP-41",
+      "name": "FP-41 Pas piersiowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Pas-piersiowy-BeltiCar-FP-41-REH4MAT/23044614",
+          "gross_pln": 399.99
+        }
+      ]
+    },
+    {
+      "sku": "FP-42",
+      "name": "FP-42 Pas biodrowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Pas-biodrowy-BeltiCar-FP-42-REH4MAT/23044615",
+          "gross_pln": 492.04
+        }
+      ]
+    },
+    {
+      "sku": "FP-43",
+      "name": "FP-43 Pasy naramienne",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Pasy-naramienne-BeltiCar-FP-43-REH4MAT/23044616",
+          "gross_pln": 492.04
+        }
+      ]
+    },
+    {
+      "sku": "FP-44",
+      "name": "FP-44 Zestaw BeltiCar",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Zestaw-BeltiCar-FP-44-REH4MAT/23044617",
+          "gross_pln": 1720.4
+        },
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/FP-44-Zestaw-BeltiCar/1460",
+          "gross_pln": 1010
+        }
+      ]
+    },
+    {
+      "sku": "FP-45",
+      "name": "FP-45 Pas mocujący HB",
+      "sources": []
+    },
+    {
+      "sku": "FP-46",
+      "name": "FP-46 Zestaw BeltiCar HB",
+      "sources": []
+    },
+    {
+      "sku": "B-SS",
+      "name": "B-SS Prześcieradło z funkcją samoszczepną",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Przescieradlo-z-funkcja-samoszczepna-B-SS-StabiloBed-REH4MAT/23044569",
+          "gross_pln": 286.27
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-1456",
+      "name": "BM_001 Pompka mała ręczna (BodyMap)",
+      "sources": [
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/BM_001-Pompka-Mala-Reczna/1251",
+          "gross_pln": 170.87
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-1643",
+      "name": "BM_002 Pompka duża ręczna (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-963",
+      "name": "BM_003 Pompka elektryczna (BodyMap)",
+      "sources": [
+        {
+          "shop": "ortezy.pl",
+          "url": "https://www.ortezy.pl/pl/p/BM_003-Pompka-Elektryczna/1227",
+          "gross_pln": 344.26
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-1967",
+      "name": "BM_005 Pompka dwufunkcyjna elektryczna (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-839",
+      "name": "PMN Podkładka masująco-napowietrzająca (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "FP-A-1",
+      "name": "FP-A-1 Przedłużacz do uniwersalnego pasa stabilizującego",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Przedluzacz-do-uniwersalnego-pasa-stabilizujacego-FP-A-1-REH4MAT/23044620",
+          "gross_pln": 118.09
+        }
+      ]
+    },
+    {
+      "sku": "FP-A-2",
+      "name": "FP-A-2 Dynamiczna podkładka odciążająca do pasów bezpieczeństwa",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dynamiczna-podkladka-odciazajaca-do-pasow-bezpieczenstwa-FP-A-2-REH4MAT/23044593",
+          "gross_pln": 85
+        }
+      ]
+    },
+    {
+      "sku": "FP-A-3",
+      "name": "FP-A-3 Dynamiczna anatomiczna podkładka odciążająca",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Dynamiczna-anatomiczna-podkladka-odciazajaca-FP-A-3-REH4MAT/23044605",
+          "gross_pln": 216.5
+        }
+      ]
+    },
+    {
+      "sku": "FP-A-4",
+      "name": "FP-A-4 Klamra o regulowanej szerokości",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Klamra-o-regulowanej-szerokosci-BeltiCar-FP-A-4-REH4MAT-/23044621",
+          "gross_pln": 39.36
+        }
+      ]
+    },
+    {
+      "sku": "FP-A-5",
+      "name": "FP-A-5 Zestaw mocujący 6-punktową dynamiczną kamizelkę AIR (FP-34)",
+      "sources": []
+    },
+    {
+      "sku": "FP-A-6",
+      "name": "FP-A-6 Zestaw mocujący 6-punktową dynamiczną kamizelkę AIR ze stabilizatorem miednicy",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-4083",
+      "name": "Funkcja samoszczepna (BodyMap accessory)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1224",
+      "name": "WG Granulat (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1164",
+      "name": "K4 Kamizelka 4-punktowa (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1167",
+      "name": "K6 Kamizelka pełna 6-punktowa (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1177",
+      "name": "KH Kamizelka H (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1016",
+      "name": "P Przelotki do mocowania taśm (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-3597",
+      "name": "P3D Pokrowiec 3D MESH (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-3595",
+      "name": "PE Pokrowiec elastyczny (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-6155",
+      "name": "PN Pokrowiec nieprzemakalny (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-7174",
+      "name": "Podkładka antymigracyjna (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-953",
+      "name": "PP Podparcie pod przedramię (stelaż do systemu BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1092",
+      "name": "PPN Pas piersiowy nieelastyczny (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-330",
+      "name": "PV Pokrowiec VISmemo (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-6110",
+      "name": "PVN Pokrowiec VISmemo nieprzemakalny (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-GRANULAT-SB-WG",
+      "name": "Granulat (StabiloBed)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-5588",
+      "name": "Stolik na kolana (Reh4Mat)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1066",
+      "name": "TJK Taśma jednostronna z klamrą (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1058",
+      "name": "TOK Taśma obwodowa z klamrami (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-983",
+      "name": "TON Taśma obwodowa nieelastyczna (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1074",
+      "name": "TONK Taśma obwodowa nieelastyczna z klamrami (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1113",
+      "name": "TZ Taśma mocowania zagłówka (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-4091",
+      "name": "Zawór serwisowy (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-1083",
+      "name": "ZPK Zapinka przednia z klamrami (BodyMap)",
+      "sources": []
+    },
+    {
+      "sku": "FP-EM-1",
+      "name": "FP-EM-1 Zacisk na rurę",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Zacisk-na-rure-FP-EM-1-FlexPoint-REH4MAT/23044578",
+          "gross_pln": 87.4
+        }
+      ]
+    },
+    {
+      "sku": "FP-EM-2",
+      "name": "FP-EM-2 Trójkąt montażowy",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Trojkat-montazowy-FP-EM-2-FlexPoint-REH4MAT/23044579",
+          "gross_pln": 49.99
+        }
+      ]
+    },
+    {
+      "sku": "FP-EM-3",
+      "name": "FP-EM-3 Pasek zębaty z napinaczem",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Pasek-zebaty-z-napinaczem-FP-EM-3-FlexPoint-REH4MAT-/23044580",
+          "gross_pln": 109.26
+        }
+      ]
+    },
+    {
+      "sku": "FP-EM-4",
+      "name": "FP-EM-4 Śruba montażowa z podkładką",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Sruba-montazowa-z-podkladka-FP-EM-4-FlexPoint-REH4MAT/23044581",
+          "gross_pln": 3.97
+        }
+      ]
+    },
+    {
+      "sku": "FP-EM-5",
+      "name": "FP-EM-5 Śruba montażowa z nakrętką kołpakową",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Sruba-montazowa-z-nakretka-kolpakowa-FP-EM-5-FlexPoint-REH4MAT/23044582",
+          "gross_pln": 11.93
+        }
+      ]
+    },
+    {
+      "sku": "FP-EM-6",
+      "name": "FP-EM-6 Wkręt do drewna",
+      "sources": [
+        {
+          "shop": "sklep-naturia.istore.pl",
+          "url": "https://sklep-naturia.istore.pl/pl/p/Wkret-do-drewna-FP-EM-6-FlexPoint-REH4MAT/23044583",
+          "gross_pln": 1.99
+        }
+      ]
+    },
+    {
+      "sku": "M-SS",
+      "name": "M-SS Materac rurowy",
+      "sources": []
+    },
+    {
+      "sku": "P-SS-54",
+      "name": "P-SS-54 Poduszka do zmiany pozycji",
+      "sources": []
+    },
+    {
+      "sku": "PA-VM-07",
+      "name": "Poduszka PA-VM-07",
+      "sources": []
+    },
+    {
+      "sku": "PM-SS-56",
+      "name": "PM-SS-56 Poduszka pod kończyny dolne z klinem",
+      "sources": []
+    },
+    {
+      "sku": "REH4MAT-272542",
+      "name": "Klucz do modelowania szyn",
+      "sources": [
+        {
+          "shop": "Reh4Mat cennik 2026-06-01 (net x 1.08)",
+          "url": null,
+          "gross_pln": 62.64,
+          "note": "KLUCZ DO MODELOWANIA SZYN ORTOPEDYCZNYCH, p. 14"
+        }
+      ]
+    },
+    {
+      "sku": "REH4MAT-290389",
+      "name": "Wanna do płyt termoplastycznych",
+      "sources": []
+    }
+  ]
+}

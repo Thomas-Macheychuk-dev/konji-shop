@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Concerns\WritesReh4MatPriceChanges;
 use App\Enums\VatRate;
 use App\Models\ProductVariant;
 use App\Services\Reh4Mat\Reh4MatPriceList;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use RuntimeException;
 
 /**
  * Sets Reh4Mat variant prices from the supplier price list (net prices, effective 1 June 2026).
@@ -23,6 +21,8 @@ use RuntimeException;
  */
 final class ApplyReh4MatPriceListCommand extends Command
 {
+    use WritesReh4MatPriceChanges;
+
     protected $signature = 'reh4mat:apply-price-list
         {--list= : Price-list JSON under resources/. Defaults to the 1 June 2026 list.}
         {--write : Apply the price changes after writing a private backup. Otherwise preview only.}
@@ -30,12 +30,16 @@ final class ApplyReh4MatPriceListCommand extends Command
 
     protected $description = 'Preview, apply or roll back Reh4Mat prices from the supplier price list.';
 
-    private const BACKUP_DIRECTORY = 'catalogue-repairs';
-
     public function handle(): int
     {
         if (filled($this->option('rollback'))) {
-            return $this->rollback((string) $this->option('rollback'));
+            if (! $this->rollbackChanges((string) $this->option('rollback'))) {
+                return self::FAILURE;
+            }
+
+            $this->info('REH4MAT_PRICE_ROLLBACK=PASS');
+
+            return self::SUCCESS;
         }
 
         try {
@@ -171,18 +175,7 @@ final class ApplyReh4MatPriceListCommand extends Command
             return self::SUCCESS;
         }
 
-        $backupPath = self::BACKUP_DIRECTORY.'/reh4mat-price-list-'.gmdate('Ymd-His').'-'.bin2hex(random_bytes(4)).'.json';
-        Storage::disk('local')->put($backupPath, json_encode([
-            'command' => $this->getName(),
-            'created_at' => now()->toIso8601String(),
-            'price_list_sha256' => $meta['source_sha256'] ?? null,
-            'changes' => $changes,
-        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR));
-
-        $written = $this->writePrices($changes, 'old', 'new');
-
-        $this->info('BACKUP='.$backupPath);
-        $this->info('WRITTEN_PRICES='.$written);
+        $this->writeChangesWithBackup('reh4mat-price-list', $changes, ['price_list_sha256' => $meta['source_sha256'] ?? null]);
         $this->info('REH4MAT_PRICE_WRITE=PASS');
 
         return self::SUCCESS;
@@ -236,63 +229,5 @@ final class ApplyReh4MatPriceListCommand extends Command
             $status instanceof \BackedEnum ? $status->value : (string) $status,
             Str::limit((string) $variant->product->name, 70),
         );
-    }
-
-    private function money(?int $minor): string
-    {
-        return $minor === null ? '(empty)' : number_format($minor / 100, 2, '.', '');
-    }
-
-    private function rollback(string $backupPath): int
-    {
-        if (! Storage::disk('local')->exists($backupPath)) {
-            $this->error('BACKUP_NOT_FOUND='.$backupPath);
-
-            return self::FAILURE;
-        }
-
-        $backup = json_decode(Storage::disk('local')->get($backupPath), true, flags: JSON_THROW_ON_ERROR);
-        $restored = $this->writePrices($backup['changes'], 'new', 'old');
-
-        $this->info('RESTORED_PRICES='.$restored.' OF '.count($backup['changes']));
-        $this->info('REH4MAT_PRICE_ROLLBACK=PASS');
-
-        return self::SUCCESS;
-    }
-
-    /**
-     * Write the $to prices over each variant whose prices still equal $from; variants edited since are left alone.
-     *
-     * @param  list<array<string, mixed>>  $changes
-     */
-    private function writePrices(array $changes, string $from, string $to): int
-    {
-        return DB::transaction(function () use ($changes, $from, $to): int {
-            $written = 0;
-
-            foreach ($changes as $change) {
-                $variant = ProductVariant::query()->lockForUpdate()->find($change['variant_id']);
-
-                if ($variant === null) {
-                    throw new RuntimeException('Variant disappeared: '.$change['variant_id']);
-                }
-
-                $currentNet = $variant->price_net_amount === null ? null : (int) $variant->price_net_amount;
-
-                if ($currentNet !== $change[$from.'_net'] || $variant->price_gross_amount !== $change[$from.'_gross']) {
-                    $this->warn('SKIPPED_CHANGED_SINCE variant='.$change['variant_id']);
-
-                    continue;
-                }
-
-                // Saved through the model so storefront cache invalidation observers run.
-                $variant->price_net_amount = $change[$to.'_net'];
-                $variant->price_gross_amount = $change[$to.'_gross'];
-                $variant->save();
-                $written++;
-            }
-
-            return $written;
-        });
     }
 }
