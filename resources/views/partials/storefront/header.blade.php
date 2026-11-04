@@ -105,7 +105,7 @@
                         name="q"
                         value="{{ request('q') }}"
                         placeholder="Szukaj ortezy, stabilizatora, odzieży medycznej…"
-                        class="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-12 pr-28 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-[#1674c4] focus:bg-white focus:ring-4 focus:ring-blue-100"
+                        class="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-12 pr-28 text-sm text-slate-900 outline-none transition placeholder:text-slate-500 hover:border-slate-300 focus:border-[#1674c4] focus:bg-white focus:ring-4 focus:ring-blue-100"
                     >
                     <button
                         type="submit"
@@ -153,7 +153,7 @@
                                 role="menu"
                                 @click.outside="open = false"
                             >
-                                <p class="px-3 pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Zarządzanie sklepem</p>
+                                <p class="px-3 pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">Zarządzanie sklepem</p>
                                 @foreach ([
                                     ['route' => 'admin.orders.index', 'label' => 'Zamówienia'],
                                     ['route' => 'admin.products.index', 'label' => 'Produkty'],
@@ -312,7 +312,7 @@
         @click.outside="mobileMenuOpen = false"
     >
         <nav class="mx-auto max-w-[1480px] px-4 py-5 sm:px-6" aria-label="Menu mobilne">
-            <p class="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Kategorie</p>
+            <p class="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Kategorie</p>
 
             <div class="grid gap-1 sm:grid-cols-2">
                 @forelse ($navigationCategories as $navigationCategory)
@@ -343,7 +343,7 @@
                     <a href="{{ route('account.details.show') }}" class="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Dane konta</a>
 
                     @if(auth()->user()->is_admin)
-                        <p class="px-3 pt-4 text-xs font-bold uppercase tracking-[0.16em] text-slate-400 sm:col-span-2">Panel administracyjny</p>
+                        <p class="px-3 pt-4 text-xs font-bold uppercase tracking-[0.16em] text-slate-500 sm:col-span-2">Panel administracyjny</p>
                         <a href="{{ route('admin.orders.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Zamówienia</a>
                         <a href="{{ route('admin.products.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Produkty</a>
                         <a href="{{ route('admin.categories.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Kategorie</a>

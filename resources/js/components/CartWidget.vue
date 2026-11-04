@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { fetchCartSummary, removeCartItem, updateCartItem } from '../services/cart';
 
 const props = defineProps({
@@ -13,6 +13,9 @@ const MIN_QUANTITY = 1;
 const MAX_QUANTITY = 50;
 
 const isOpen = ref(false);
+const triggerButton = ref(null);
+const drawer = ref(null);
+const closeButton = ref(null);
 const isLoading = ref(false);
 const errorMessage = ref('');
 const processingItemIds = ref([]);
@@ -134,11 +137,53 @@ async function toggleCart() {
     await loadSummary();
 }
 
-function handleKeydown(event) {
-    if (event.key === 'Escape') {
-        closeCart();
+function focusableDrawerElements() {
+    return Array.from(
+        drawer.value?.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])') ?? [],
+    );
+}
+
+// Keep Tab inside the open drawer, since the page behind it is covered by the backdrop.
+function trapFocus(event) {
+    const elements = focusableDrawerElements();
+
+    if (elements.length === 0) {
+        return;
+    }
+
+    const first = elements[0];
+    const last = elements[elements.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
     }
 }
+
+function handleKeydown(event) {
+    if (!isOpen.value) {
+        return;
+    }
+
+    if (event.key === 'Escape') {
+        closeCart();
+    } else if (event.key === 'Tab') {
+        trapFocus(event);
+    }
+}
+
+watch(isOpen, async (open) => {
+    await nextTick();
+
+    if (open) {
+        closeButton.value?.focus();
+    } else if (drawer.value?.contains(document.activeElement) || document.activeElement === document.body) {
+        triggerButton.value?.focus();
+    }
+});
 
 function handleCartUpdated(event) {
     const shouldOpen = Boolean(event?.detail?.open);
@@ -166,9 +211,13 @@ onBeforeUnmount(() => {
 <template>
     <div class="relative">
         <button
+            ref="triggerButton"
             type="button"
             class="relative inline-flex items-center gap-2.5 text-sm font-medium text-slate-700 transition hover:text-[#155fa8]"
             :aria-label="isEmpty ? 'Otwórz pusty koszyk' : `Otwórz koszyk: ${itemCount} szt.`"
+            aria-haspopup="dialog"
+            aria-controls="cart-drawer"
+            :aria-expanded="isOpen ? 'true' : 'false'"
             @click="toggleCart"
         >
             <span class="relative inline-flex h-7 w-7 items-center justify-center">
@@ -215,7 +264,7 @@ onBeforeUnmount(() => {
 
             <span class="hidden min-w-0 flex-col items-start sm:flex">
                 <strong class="text-xs font-bold leading-none text-slate-800">Koszyk</strong>
-                <span class="mt-1 max-w-[90px] truncate text-[10px] font-medium leading-none text-slate-400">{{ subtotal }}</span>
+                <span class="mt-1 max-w-[90px] truncate text-[10px] font-medium leading-none text-slate-500">{{ subtotal }}</span>
             </span>
         </button>
 
@@ -226,17 +275,25 @@ onBeforeUnmount(() => {
                 @click="closeCart"
             />
 
+            <!-- Closed drawer stays in the DOM for the slide animation; inert keeps it out of Tab order and the a11y tree. -->
             <aside
+                id="cart-drawer"
+                ref="drawer"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="cart-drawer-title"
+                :inert="!isOpen"
                 class="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col border-l border-zinc-200 bg-white shadow-2xl transition-transform duration-300"
                 :class="isOpen ? 'translate-x-0' : 'translate-x-full'"
             >
                 <div class="flex items-center justify-between border-b border-zinc-200 px-6 py-4">
                     <div>
-                        <h2 class="text-lg font-semibold text-zinc-900">Twój koszyk</h2>
-                        <p class="text-sm text-zinc-500">{{ itemCount }} szt.</p>
+                        <h2 id="cart-drawer-title" class="text-lg font-semibold text-zinc-900">Twój koszyk</h2>
+                        <p class="text-sm text-zinc-600">{{ itemCount }} szt.</p>
                     </div>
 
                     <button
+                        ref="closeButton"
                         type="button"
                         class="text-sm text-zinc-500 hover:text-zinc-900"
                         @click="closeCart"
@@ -297,7 +354,7 @@ onBeforeUnmount(() => {
 
                             <div
                                 v-else
-                                class="flex h-20 w-20 items-center justify-center rounded-xl bg-zinc-100 text-xs text-zinc-400"
+                                class="flex h-20 w-20 items-center justify-center rounded-xl bg-zinc-100 text-xs text-zinc-600"
                             >
                                 Brak zdjęcia
                             </div>
@@ -331,6 +388,7 @@ onBeforeUnmount(() => {
                                             type="button"
                                             class="inline-flex h-7 w-7 items-center justify-center text-base font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
                                             :disabled="isItemProcessing(item.id) || item.quantity <= MIN_QUANTITY"
+                                            :aria-label="`Zmniejsz ilość: ${item.product_name}`"
                                             @click="decreaseQuantity(item)"
                                         >
                                             −
@@ -344,6 +402,7 @@ onBeforeUnmount(() => {
                                             type="button"
                                             class="inline-flex h-7 w-7 items-center justify-center text-base font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
                                             :disabled="isItemProcessing(item.id) || item.quantity >= MAX_QUANTITY"
+                                            :aria-label="`Zwiększ ilość: ${item.product_name}`"
                                             @click="increaseQuantity(item)"
                                         >
                                             +

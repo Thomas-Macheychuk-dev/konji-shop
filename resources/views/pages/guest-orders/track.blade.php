@@ -39,6 +39,7 @@
                         id="email"
                         name="email"
                         type="email"
+                        autocomplete="email"
                         value="{{ old('email') }}"
                         placeholder="you@example.com"
                         class="mt-2 block w-full rounded-xl border border-zinc-300 px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-0"

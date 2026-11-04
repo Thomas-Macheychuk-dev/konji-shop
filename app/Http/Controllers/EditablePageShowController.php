@@ -21,6 +21,8 @@ final class EditablePageShowController extends Controller
 
         return view($page->view(), [
             'page' => $content,
+            // Fallback <title> for pages without an SEO title, so each page is distinguishable (WCAG 2.4.2).
+            'title' => $content->title,
             'seoTitle' => $content->seoTitle,
             'seoDescription' => $content->seoDescription,
         ]);

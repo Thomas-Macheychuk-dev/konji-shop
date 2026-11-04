@@ -163,6 +163,7 @@
 
                 <flux:input
                     name="company_name"
+                    autocomplete="section-invoice organization"
                     :label="__('Company name')"
                     :value="old('company_name')"
                     type="text"
@@ -180,6 +181,7 @@
 
                 <flux:input
                     name="company_street"
+                    autocomplete="section-invoice address-line1"
                     :label="__('Company street')"
                     :value="old('company_street')"
                     type="text"
@@ -189,6 +191,7 @@
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <flux:input
                         name="company_house_number"
+                        autocomplete="section-invoice address-line2"
                         :label="__('Company house number')"
                         :value="old('company_house_number')"
                         type="text"
@@ -197,6 +200,7 @@
 
                     <flux:input
                         name="company_apartment_number"
+                        autocomplete="section-invoice address-line2"
                         :label="__('Company apartment number')"
                         :value="old('company_apartment_number')"
                         type="text"
@@ -206,6 +210,7 @@
 
                 <flux:input
                     name="company_city"
+                    autocomplete="section-invoice address-level2"
                     :label="__('Company city / town / village')"
                     :value="old('company_city')"
                     type="text"
@@ -215,6 +220,7 @@
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <flux:input
                         name="company_postcode"
+                        autocomplete="section-invoice postal-code"
                         :label="__('Company postcode')"
                         :value="old('company_postcode')"
                         type="text"

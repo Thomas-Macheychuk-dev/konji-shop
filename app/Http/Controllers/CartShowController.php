@@ -36,6 +36,7 @@ class CartShowController extends Controller
         $totals = $cartPricingService->calculate($cart);
 
         return view('pages.cart.show', [
+            'title' => 'Koszyk',
             'cart' => $cart,
             'subtotal' => $totals->subtotal,
             'shipping' => $totals->shipping,

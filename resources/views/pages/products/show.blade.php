@@ -32,7 +32,7 @@
 
         @if (! empty($breadcrumbs))
             <nav class="mb-6 text-sm" aria-label="Breadcrumb">
-                <ol class="flex flex-wrap items-center gap-2 text-zinc-500 dark:text-zinc-400">
+                <ol class="flex flex-wrap items-center gap-2 text-zinc-600 dark:text-zinc-400">
                     @foreach ($breadcrumbs as $breadcrumb)
                         <li class="inline-flex items-center gap-2">
                             @if (! $loop->first)

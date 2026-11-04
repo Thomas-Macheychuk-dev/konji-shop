@@ -5,7 +5,7 @@
     <x-storefront.category-page-shell>
     <section class="border-b border-slate-200 bg-white">
         <div class="mx-auto max-w-[1480px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-            <nav class="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-400" aria-label="Okruszki">
+            <nav class="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500" aria-label="Okruszki">
                 <a href="{{ route('home') }}" class="transition hover:text-[#155fa8]">Strona główna</a>
                 @foreach ($breadcrumbCategories as $ancestorCategory)
                     <span aria-hidden="true">/</span>

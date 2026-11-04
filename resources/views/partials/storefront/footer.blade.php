@@ -160,8 +160,8 @@
         </div>
 
         <div class="mt-12 flex flex-col gap-6 border-t border-white/10 pt-7 lg:flex-row lg:items-center lg:justify-between">
-            <p class="text-xs leading-5 text-blue-100/50">
-                © {{ now()->year }} {{ $shopName }}. Wszelkie prawa zastrzeżone.
+            <p class="text-xs leading-5 text-blue-100/70">
+                © {{ now()->year }} {{ config('app.name') }}. Wszelkie prawa zastrzeżone.
             </p>
 
             <nav class="flex flex-wrap gap-x-5 gap-y-2 text-xs text-blue-100/60">
