@@ -186,6 +186,7 @@
                 <div class="min-h-[4rem]">
                     <flux:input
                         name="company_name"
+                        autocomplete="section-invoice organization"
                         :label="__('Company name')"
                         :value="old('company_name', $user->company_name)"
                         type="text"
@@ -206,6 +207,7 @@
                 <div class="min-h-[4rem]">
                     <flux:input
                         name="company_street"
+                        autocomplete="section-invoice address-line1"
                         :label="__('Company street')"
                         :value="old('company_street', $user->company_street)"
                         type="text"
@@ -217,6 +219,7 @@
                     <div class="min-h-[4rem]">
                         <flux:input
                             name="company_house_number"
+                            autocomplete="section-invoice address-line2"
                             :label="__('Company house number')"
                             :value="old('company_house_number', $user->company_house_number)"
                             type="text"
@@ -227,6 +230,7 @@
                     <div class="min-h-[4rem]">
                         <flux:input
                             name="company_apartment_number"
+                            autocomplete="section-invoice address-line2"
                             :label="__('Company apartment number')"
                             :value="old('company_apartment_number', $user->company_apartment_number)"
                             type="text"
@@ -238,6 +242,7 @@
                 <div class="min-h-[4rem]">
                     <flux:input
                         name="company_city"
+                        autocomplete="section-invoice address-level2"
                         :label="__('Company city / town / village')"
                         :value="old('company_city', $user->company_city)"
                         type="text"
@@ -249,6 +254,7 @@
                     <div class="min-h-[4rem]">
                         <flux:input
                             name="company_postcode"
+                            autocomplete="section-invoice postal-code"
                             :label="__('Company postcode')"
                             :value="old('company_postcode', $user->company_postcode)"
                             type="text"
@@ -264,6 +270,7 @@
                         <select
                             id="company_country"
                             name="company_country"
+                            autocomplete="section-invoice country-name"
                             class="w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
                         >
                             <option value="">{{ __('Select a country') }}</option>

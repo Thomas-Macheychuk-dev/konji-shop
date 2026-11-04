@@ -243,7 +243,7 @@
                                     </p>
 
                                     <div class="mt-6 flex items-center justify-between gap-3">
-                                        <span class="text-xs font-semibold text-slate-400">
+                                        <span class="text-xs font-semibold text-slate-500">
                                             {{ $category->active_products_count }} {{ $category->active_products_count === 1 ? 'produkt' : 'produktów' }}
                                         </span>
                                         <span class="inline-flex items-center gap-1 text-sm font-bold text-[#155fa8]">

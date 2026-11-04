@@ -31,7 +31,7 @@
                     <circle cx="8.5" cy="8.5" r="1.5" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="m5 17 4.5-4.5 3 3L15 13l4 4" />
                 </svg>
-                <span class="mt-3 text-xs font-medium text-slate-400">Zdjęcie produktu w przygotowaniu</span>
+                <span class="mt-3 text-xs font-medium text-slate-500">Zdjęcie produktu w przygotowaniu</span>
             </div>
         @endif
 
@@ -62,7 +62,7 @@
 
         <div class="mt-auto flex items-end justify-between gap-3 pt-5">
             <div>
-                <p class="text-[11px] font-medium text-slate-400">Cena brutto</p>
+                <p class="text-[11px] font-medium text-slate-500">Cena brutto</p>
                 @if ($grossPriceAmount !== null)
                     <p class="mt-0.5 text-lg font-extrabold tracking-tight text-slate-950">
                         {{ number_format($grossPriceAmount / 100, 2, ',', ' ') }} {{ $currency }}

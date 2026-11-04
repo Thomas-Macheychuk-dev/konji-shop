@@ -402,10 +402,10 @@ Route::post('/wypozyczalnia-sprzetu-medycznego/zapytanie', RentalEnquiryStoreCon
 Route::get('/wypozyczalnia-sprzetu-medycznego/{rentalItem:slug}', RentalItemShowController::class)
     ->name('rental.items.show');
 
-Route::view('/terms-and-conditions', 'pages.legal.terms-and-conditions')
+Route::view('/terms-and-conditions', 'pages.legal.terms-and-conditions', ['title' => 'Regulamin sklepu'])
     ->name('legal.terms');
 
-Route::view('/privacy-policy', 'pages.legal.privacy-policy')
+Route::view('/privacy-policy', 'pages.legal.privacy-policy', ['title' => 'Polityka prywatności'])
     ->name('legal.privacy');
 
 // Texts of these pages are edited in the admin "Edytor stron".
@@ -429,10 +429,10 @@ Route::get('/contact', EditablePageShowController::class)
     ->defaults('editablePage', EditablePage::CONTACT->value)
     ->name('legal.contact');
 
-Route::view('/cookie-policy', 'pages.legal.cookie-policy')
+Route::view('/cookie-policy', 'pages.legal.cookie-policy', ['title' => 'Polityka cookies'])
     ->name('legal.cookie-policy');
 
-Route::view('/withdraw-from-contract', 'pages.withdrawals.start')
+Route::view('/withdraw-from-contract', 'pages.withdrawals.start', ['title' => 'Odstąpienie od umowy'])
     ->name('withdrawals.start');
 
 require __DIR__.'/settings.php';

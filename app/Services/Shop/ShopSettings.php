@@ -12,7 +12,7 @@ final class ShopSettings
 
     public function shopName(): string
     {
-        return $this->string('legal.seller.shop_name', 'Konji Shop');
+        return $this->string('legal.seller.shop_name', 'Ortezka.pl');
     }
 
     public function companyName(): string

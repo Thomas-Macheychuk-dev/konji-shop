@@ -10,6 +10,8 @@ class GuestOrderTrackShowController extends Controller
 {
     public function __invoke(): View
     {
-        return view('pages.guest-orders.track');
+        return view('pages.guest-orders.track', [
+            'title' => 'Śledź zamówienie',
+        ]);
     }
 }
