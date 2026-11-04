@@ -51,6 +51,7 @@ class CheckoutShowController extends Controller
         $user = $request->user();
 
         return view('pages.checkout.show', [
+            'title' => 'Kasa',
             'cart' => $cart,
             'subtotal' => $totals->subtotal,
             'shipping' => $totals->shipping,

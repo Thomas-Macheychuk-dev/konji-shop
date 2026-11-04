@@ -60,14 +60,56 @@ class PlaceOrderRequest extends FormRequest
                 'email' => (string) $this->user()->email,
                 'phone' => (string) ($this->user()->phone_number ?? ''),
             ]);
+        } elseif (is_string($this->input('phone'))) {
+            $this->merge([
+                'phone' => preg_replace('/[\s().-]+/', '', $this->input('phone')),
+            ]);
         }
+
+        foreach (['shipping', 'billing'] as $type) {
+            $this->merge([
+                "{$type}_postcode" => $this->normalizedPostcode(
+                    $this->input("{$type}_postcode"),
+                    $this->input("{$type}_country_code"),
+                ),
+            ]);
+        }
+    }
+
+    /**
+     * Accepts "60101" as well as "60-101" for Polish addresses.
+     */
+    private function normalizedPostcode(mixed $postcode, mixed $countryCode): mixed
+    {
+        if (! is_string($postcode)) {
+            return $postcode;
+        }
+
+        $postcode = trim($postcode);
+
+        if (strtoupper((string) $countryCode) === 'PL' && preg_match('/^\d{5}$/', $postcode) === 1) {
+            return substr($postcode, 0, 2).'-'.substr($postcode, 2);
+        }
+
+        return $postcode;
+    }
+
+    private function isPolish(string $countryField): bool
+    {
+        return strtoupper((string) $this->input($countryField)) === 'PL';
     }
 
     public function rules(): array
     {
         return [
             'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
-            'phone' => ['required', 'string', 'max:50'],
+            'phone' => [
+                'required',
+                'string',
+                'max:50',
+                // Logged-in customers' phone comes from their account and can't be edited here.
+                Rule::when(fn (): bool => $this->user() === null, ['regex:/^(\+\d{8,15}|\d{9})$/']),
+            ],
 
             'shipping_first_name' => ['required', 'string', 'max:100'],
             'shipping_last_name' => ['required', 'string', 'max:100'],
@@ -75,7 +117,12 @@ class PlaceOrderRequest extends FormRequest
             'shipping_address_line_1' => ['required', 'string', 'max:255'],
             'shipping_address_line_2' => ['nullable', 'string', 'max:255'],
             'shipping_city' => ['required', 'string', 'max:150'],
-            'shipping_postcode' => ['required', 'string', 'max:30'],
+            'shipping_postcode' => [
+                'required',
+                'string',
+                'max:30',
+                Rule::when(fn (): bool => $this->isPolish('shipping_country_code'), ['regex:/^\d{2}-\d{3}$/']),
+            ],
             'shipping_country_code' => ['required', 'string', 'size:2', Rule::in(array_keys(config('countries', [])))],
 
             'delivery_provider' => ['required', 'string', Rule::in(DeliveryProvider::options())],
@@ -122,6 +169,10 @@ class PlaceOrderRequest extends FormRequest
                 'nullable',
                 'string',
                 'max:30',
+                Rule::when(
+                    fn (): bool => $this->input('billing_address_source') === 'other' && $this->isPolish('billing_country_code'),
+                    ['regex:/^\d{2}-\d{3}$/'],
+                ),
             ],
             'billing_country_code' => [
                 Rule::requiredIf(fn (): bool => $this->input('billing_address_source') === 'other'),
@@ -256,6 +307,10 @@ class PlaceOrderRequest extends FormRequest
     {
         return [
             'terms_accepted.accepted' => __('You must accept the terms and conditions to place the order.'),
+            'delivery_locker_code.required_if' => __('Choose a parcel locker.'),
+            'phone.regex' => __('Enter a valid phone number, e.g. 600 100 200 or +48 600 100 200.'),
+            'shipping_postcode.regex' => __('Enter a Polish postcode in the format 00-000.'),
+            'billing_postcode.regex' => __('Enter a Polish postcode in the format 00-000.'),
         ];
     }
 }

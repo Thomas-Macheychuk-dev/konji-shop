@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Checkout;
 
 use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
+use App\Enums\VatRate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckoutShippingQuoteRequest;
 use App\Models\Cart;
@@ -37,8 +38,14 @@ final class CheckoutShippingQuoteController extends Controller
             packs: $packs,
         );
 
+        $netAmount = $quote->amount > 0
+            ? $this->shippingVatRate()->netFromGross($quote->amount)
+            : 0;
+
         return response()->json([
             'amount' => $quote->amount,
+            'net_amount' => $netAmount,
+            'tax_amount' => max(0, $quote->amount - $netAmount),
             'formatted' => $quote->amount === 0
                 ? __('Free')
                 : number_format($quote->amount / 100, 2, ',', ' ').' '.$quote->currency,
@@ -50,6 +57,11 @@ final class CheckoutShippingQuoteController extends Controller
             'provider_service_name' => $quote->providerServiceName,
             'source' => $quote->payload['source'] ?? null,
         ]);
+    }
+
+    private function shippingVatRate(): VatRate
+    {
+        return VatRate::VAT_23;
     }
 
     private function activeCart(CheckoutShippingQuoteRequest $request): ?Cart

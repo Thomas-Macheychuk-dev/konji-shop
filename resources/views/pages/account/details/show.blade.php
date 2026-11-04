@@ -86,7 +86,7 @@
                         :value="old('apartment_number', $user->apartment_number)"
                         type="text"
                         autocomplete="address-line2"
-                        :placeholder="__('Apartment number (opcjonalnie)')"
+                        :placeholder="__('Apartment number (optional)')"
                     />
                 </div>
             </div>
@@ -234,7 +234,7 @@
                             :label="__('Company apartment number')"
                             :value="old('company_apartment_number', $user->company_apartment_number)"
                             type="text"
-                            :placeholder="__('Company apartment number (opcjonalnie)')"
+                            :placeholder="__('Company apartment number (optional)')"
                         />
                     </div>
                 </div>

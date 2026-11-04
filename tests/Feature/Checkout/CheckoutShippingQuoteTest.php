@@ -2,6 +2,7 @@
 
 use App\Enums\DeliveryCarrier;
 use App\Enums\DeliveryProvider;
+use App\Enums\VatRate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -50,6 +51,8 @@ it('returns a fallback shipping quote for courier delivery', function (): void {
         ->assertOk()
         ->assertJson([
             'amount' => 1599,
+            'net_amount' => VatRate::VAT_23->netFromGross(1599),
+            'tax_amount' => 1599 - VatRate::VAT_23->netFromGross(1599),
             'formatted' => '15,99 PLN',
             'currency' => 'PLN',
             'provider' => 'polkurier',
