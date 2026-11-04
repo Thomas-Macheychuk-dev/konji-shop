@@ -387,17 +387,28 @@ function swatchFallback(label) {
 
 const hasActiveVariants = computed(() => variants.value.length > 0);
 
-const canAddToCart = computed(() => {
-    const variant = exactSelectedVariant.value;
-
-    return props.product.is_purchasable === true
-        && variant !== null
-        && variant.status === 'active'
+function isVariantPurchasable(variant) {
+    return variant.status === 'active'
         && ['in_stock', 'preorder'].includes(variant.stock_status)
         && variant.price !== null
         && variant.price !== undefined
         && Number.isFinite(Number(variant.price))
         && Number(variant.price) > 0;
+}
+
+const canAddToCart = computed(() => {
+    const variant = exactSelectedVariant.value;
+
+    return props.product.is_purchasable === true
+        && variant !== null
+        && isVariantPurchasable(variant);
+});
+
+// Nothing (complete) is selected yet, but some variant could be bought.
+const needsVariantChoice = computed(() => {
+    return props.product.is_purchasable === true
+        && exactSelectedVariant.value === null
+        && variants.value.some(isVariantPurchasable);
 });
 
 initializeSelection();
@@ -578,7 +589,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                                     <circle cx="10" cy="20" r="1" />
                                     <circle cx="18" cy="20" r="1" />
                                 </svg>
-                                <span>{{ canAddToCart ? 'Dodaj do koszyka' : 'Niedostępny' }}</span>
+                                <span>{{ canAddToCart ? 'Dodaj do koszyka' : needsVariantChoice ? 'Wybierz wariant' : 'Niedostępny' }}</span>
                             </button>
                         </div>
 
