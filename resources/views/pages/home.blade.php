@@ -197,6 +197,28 @@
             </div>
         </section>
 
+        @if ($featuredProducts->isNotEmpty())
+            <section class="border-b border-slate-200 bg-white">
+                <div class="mx-auto max-w-[1480px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                        <div>
+                            <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#c2410c]">Polecane produkty</p>
+                            <h2 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">Najczęściej wybierane rozwiązania</h2>
+                        </div>
+                        <a href="#categories" class="inline-flex items-center gap-2 text-sm font-bold text-[#155fa8] hover:text-[#0b3b70]">
+                            Wszystkie kategorie <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+
+                    <div class="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        @foreach ($featuredProducts as $product)
+                            <x-storefront.product-card :product="$product" />
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
         <section id="categories" class="scroll-mt-48">
             <div class="mx-auto max-w-[1480px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -275,28 +297,6 @@
                 @endif
             </div>
         </section>
-
-        @if ($featuredProducts->isNotEmpty())
-            <section class="border-y border-slate-200 bg-white">
-                <div class="mx-auto max-w-[1480px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-                    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                        <div>
-                            <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#c2410c]">Polecane produkty</p>
-                            <h2 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">Najczęściej wybierane rozwiązania</h2>
-                        </div>
-                        <a href="#categories" class="inline-flex items-center gap-2 text-sm font-bold text-[#155fa8] hover:text-[#0b3b70]">
-                            Wszystkie kategorie <span aria-hidden="true">→</span>
-                        </a>
-                    </div>
-
-                    <div class="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        @foreach ($featuredProducts as $product)
-                            <x-storefront.product-card :product="$product" />
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-        @endif
 
         <section>
             <div class="mx-auto max-w-[1480px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
