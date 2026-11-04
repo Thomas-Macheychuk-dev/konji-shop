@@ -271,7 +271,11 @@
                             <div class="flex items-center justify-between">
                                 <dt>Dostawa</dt>
                                 <dd class="font-medium text-zinc-900">
-                                    {{ number_format(($shipping ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                    @if (($shipping ?? 0) > 0)
+                                        {{ number_format($shipping / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                    @else
+                                        obliczana w kasie
+                                    @endif
                                 </dd>
                             </div>
 

@@ -59,6 +59,47 @@ it('shows VAT breakdown and the legally required order button before placing an 
         ->assertDontSee('Złóż zamówienie');
 });
 
+it('renders the checkout form in Polish and waits for a delivery price', function (): void {
+    [$product, $variant] = checkoutPageTestProductAndVariant();
+
+    $guestToken = (string) str()->uuid();
+
+    $cart = Cart::query()->create([
+        'guest_token' => $guestToken,
+        'status' => CartStatus::Active,
+        'currency' => Currency::PLN->value,
+    ]);
+
+    $cart->items()->create([
+        'product_id' => $product->id,
+        'product_variant_id' => $variant->id,
+        'quantity' => 1,
+        'unit_price' => $variant->grossPriceAmount(),
+        'currency' => Currency::PLN->value,
+        'meta' => null,
+    ]);
+
+    $this
+        ->withCookie(CartGuestTokenResolver::COOKIE_NAME, $guestToken)
+        ->get(route('checkout.show'))
+        ->assertOk()
+        ->assertSee('<title>Kasa', false)
+        ->assertSee('type="tel"', false)
+        ->assertSeeInOrder(['Telefon', 'Imię', 'Nazwisko', 'Miejscowość', 'Kod pocztowy', 'Kraj', 'Uwagi'])
+        ->assertSeeInOrder(['Polska', 'Albania', 'Niemcy', 'Włochy'])
+        ->assertSee('wybierz metodę dostawy')
+        ->assertSee('checkout-shipping-quote.window', false)
+        ->assertDontSee('>Phone<', false)
+        ->assertDontSee('Postcode')
+        ->assertDontSee('Germany');
+
+    $this
+        ->withCookie(CartGuestTokenResolver::COOKIE_NAME, $guestToken)
+        ->get(route('cart.show'))
+        ->assertOk()
+        ->assertSee('obliczana w kasie');
+});
+
 it('redirects to the cart when the checkout cart is empty', function (): void {
     $this
         ->get(route('checkout.show'))

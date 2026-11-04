@@ -77,7 +77,7 @@
 
                             <div class="sm:col-span-2">
                                 <label for="phone" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Phone
+                                    Telefon
                                 </label>
 
                                 @if($isAuthenticated)
@@ -98,7 +98,7 @@
                                 @else
                                     <input
                                         id="phone"
-                                        type="text"
+                                        type="tel"
                                         name="phone"
                                         value="{{ $customerPhone }}"
                                         autocomplete="tel"
@@ -145,7 +145,7 @@
                         <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
                             <div>
                                 <label for="shipping_first_name" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    First name
+                                    Imię
                                 </label>
                                 <input
                                     id="shipping_first_name"
@@ -162,7 +162,7 @@
 
                             <div>
                                 <label for="shipping_last_name" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Last name
+                                    Nazwisko
                                 </label>
                                 <input
                                     id="shipping_last_name"
@@ -232,7 +232,7 @@
 
                             <div>
                                 <label for="shipping_city" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    City
+                                    Miejscowość
                                 </label>
                                 <input
                                     id="shipping_city"
@@ -249,7 +249,7 @@
 
                             <div>
                                 <label for="shipping_postcode" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Postcode
+                                    Kod pocztowy
                                 </label>
                                 <input
                                     id="shipping_postcode"
@@ -266,7 +266,7 @@
 
                             <div class="sm:col-span-2">
                                 <label for="shipping_country_code" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Country
+                                    Kraj
                                 </label>
                                 <select
                                     id="shipping_country_code"
@@ -381,7 +381,7 @@
                         >
                             <div>
                                 <label for="billing_first_name" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    First name
+                                    Imię
                                 </label>
                                 <input
                                     id="billing_first_name"
@@ -398,7 +398,7 @@
 
                             <div>
                                 <label for="billing_last_name" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Last name
+                                    Nazwisko
                                 </label>
                                 <input
                                     id="billing_last_name"
@@ -468,7 +468,7 @@
 
                             <div>
                                 <label for="billing_city" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    City
+                                    Miejscowość
                                 </label>
                                 <input
                                     id="billing_city"
@@ -485,7 +485,7 @@
 
                             <div>
                                 <label for="billing_postcode" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Postcode
+                                    Kod pocztowy
                                 </label>
                                 <input
                                     id="billing_postcode"
@@ -502,7 +502,7 @@
 
                             <div class="sm:col-span-2">
                                 <label for="billing_country_code" class="mb-2 block text-sm font-medium text-zinc-700">
-                                    Country
+                                    Kraj
                                 </label>
                                 <select
                                     id="billing_country_code"
@@ -531,7 +531,7 @@
 
                         <div class="mt-5">
                             <label for="notes" class="mb-2 block text-sm font-medium text-zinc-700">
-                                Notes
+                                Uwagi
                                 <span class="text-zinc-400">(opcjonalnie)</span>
                             </label>
                             <textarea
@@ -659,7 +659,34 @@
                             @endforeach
                         </div>
 
-                        <dl class="mt-6 space-y-3 text-sm text-zinc-700">
+                        @php
+                            $summaryShippingGross = (int) ($shippingGross ?? $shipping);
+                            $summaryShippingKnown = $summaryShippingGross > 0;
+                        @endphp
+
+                        <dl
+                            class="mt-6 space-y-3 text-sm text-zinc-700"
+                            x-data="{
+                                itemsGross: {{ (int) ($itemsGross ?? $subtotal) }},
+                                itemsTax: {{ (int) ($itemsTax ?? 0) }},
+                                discount: {{ (int) $discount }},
+                                shipping: {{ $summaryShippingKnown ? $summaryShippingGross : 'null' }},
+                                shippingNet: {{ (int) ($shippingNet ?? 0) }},
+                                shippingTax: {{ (int) ($shippingTax ?? 0) }},
+                                currency: @js($cart->currency),
+                                money(amount) {
+                                    return (amount / 100).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ' + this.currency;
+                                },
+                                get total() {
+                                    return Math.max(0, this.itemsGross + (this.shipping ?? 0) - this.discount);
+                                },
+                            }"
+                            x-on:checkout-shipping-quote.window="
+                                shipping = $event.detail?.amount ?? null;
+                                shippingNet = $event.detail?.netAmount ?? 0;
+                                shippingTax = $event.detail?.taxAmount ?? 0;
+                            "
+                        >
                             <div class="flex items-center justify-between">
                                 <dt>Pozycje</dt>
                                 <dd>{{ $cart->items->sum('quantity') }}</dd>
@@ -695,23 +722,34 @@
                             <div>
                                 <div class="flex items-center justify-between">
                                     <dt>Dostawa brutto</dt>
-                                    <dd class="font-medium text-zinc-900">
-                                        {{ number_format(($shippingGross ?? $shipping) / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                    <dd
+                                        class="font-medium text-zinc-900"
+                                        x-text="shipping === null ? 'wybierz metodę dostawy' : money(shipping)"
+                                    >
+                                        @if ($summaryShippingKnown)
+                                            {{ number_format($summaryShippingGross / 100, 2, ',', ' ') }} {{ $cart->currency }}
+                                        @else
+                                            wybierz metodę dostawy
+                                        @endif
                                     </dd>
                                 </div>
 
-                                @if (($hasTaxBreakdown ?? false) && (($shippingGross ?? $shipping) > 0))
-                                    <div class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs">
+                                @if ($hasTaxBreakdown ?? false)
+                                    <div
+                                        class="mt-2 space-y-2 rounded-xl bg-zinc-50 p-3 text-xs"
+                                        x-show="shipping > 0"
+                                        @unless ($summaryShippingKnown) style="display: none" @endunless
+                                    >
                                         <div class="flex items-center justify-between gap-4">
                                             <dt class="text-zinc-500">Dostawa netto</dt>
-                                            <dd class="font-medium text-zinc-800">
+                                            <dd class="font-medium text-zinc-800" x-text="money(shippingNet)">
                                                 {{ number_format(($shippingNet ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                             </dd>
                                         </div>
 
                                         <div class="flex items-center justify-between gap-4">
                                             <dt class="text-zinc-500">VAT od dostawy</dt>
-                                            <dd class="font-medium text-zinc-800">
+                                            <dd class="font-medium text-zinc-800" x-text="money(shippingTax)">
                                                 {{ number_format(($shippingTax ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                             </dd>
                                         </div>
@@ -731,7 +769,7 @@
                             @if ($hasTaxBreakdown ?? false)
                                 <div class="flex items-center justify-between">
                                     <dt>VAT razem</dt>
-                                    <dd class="font-medium text-zinc-900">
+                                    <dd class="font-medium text-zinc-900" x-text="money(itemsTax + shippingTax)">
                                         {{ number_format(($taxAmount ?? 0) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>
                                 </div>
@@ -740,10 +778,18 @@
                             <div class="border-t border-zinc-200 pt-3">
                                 <div class="flex items-center justify-between">
                                     <dt class="text-base font-semibold text-zinc-900">Razem brutto</dt>
-                                    <dd class="text-base font-semibold text-zinc-900">
+                                    <dd class="text-base font-semibold text-zinc-900" x-text="money(total)">
                                         {{ number_format(($totalGross ?? $total) / 100, 2, ',', ' ') }} {{ $cart->currency }}
                                     </dd>
                                 </div>
+
+                                <p
+                                    class="mt-1 text-right text-xs text-zinc-500"
+                                    x-show="shipping === null"
+                                    @if ($summaryShippingKnown) style="display: none" @endif
+                                >
+                                    + koszt dostawy
+                                </p>
                             </div>
                         </dl>
 

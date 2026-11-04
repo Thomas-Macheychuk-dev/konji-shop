@@ -311,6 +311,19 @@ watch(
     { immediate: true }
 );
 
+// The order summary is server-rendered; it listens for this event to show the live delivery price.
+watch(quote, (value) => {
+    window.dispatchEvent(new CustomEvent('checkout-shipping-quote', {
+        detail: value
+            ? {
+                amount: value.amount ?? 0,
+                netAmount: value.net_amount ?? 0,
+                taxAmount: value.tax_amount ?? 0,
+            }
+            : null,
+    }));
+});
+
 onMounted(() => {
     document.addEventListener('input', handleCheckoutInput);
     document.addEventListener('change', handleCheckoutInput);

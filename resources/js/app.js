@@ -1,13 +1,11 @@
 import { createApp, h } from 'vue';
-import Alpine from 'alpinejs';
 import ProductConfigurator from './components/ProductConfigurator.vue';
 import CartWidget from './components/CartWidget.vue';
 import './order-cancel-confirmation';
 import CheckoutDeliveryMethod from './components/CheckoutDeliveryMethod.vue';
 import AdminPolkurierPickupSelector from './components/AdminPolkurierPickupSelector.vue';
 
-window.Alpine = Alpine;
-Alpine.start();
+// Alpine comes bundled with Livewire (injected via @fluxScripts); starting a second copy here breaks x-show.
 
 const productConfiguratorEl = document.getElementById('product-configurator');
 
