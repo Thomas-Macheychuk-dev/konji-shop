@@ -23,6 +23,14 @@ final class Reh4MatPriceList
     /** @var array<string, list<array<string, mixed>>> */
     private array $rowsBySymbol = [];
 
+    /**
+     * Symbols keyed by their letters and digits only, for SKUs written with other separators ("ATTACK-OA" for "ATTACK OA").
+     * A key shared by two symbols is null so it never matches.
+     *
+     * @var array<string, ?string>
+     */
+    private array $symbolsByLooseKey = [];
+
     /** @var array<string, mixed> */
     private array $meta = [];
 
@@ -52,6 +60,11 @@ final class Reh4MatPriceList
             $list->rowsBySymbol[self::normalize((string) $row['symbol'])][] = $row;
         }
 
+        foreach (array_keys($list->rowsBySymbol) as $symbol) {
+            $key = self::looseKey((string) $symbol);
+            $list->symbolsByLooseKey[$key] = array_key_exists($key, $list->symbolsByLooseKey) ? null : (string) $symbol;
+        }
+
         return $list;
     }
 
@@ -72,18 +85,33 @@ final class Reh4MatPriceList
         return $this->meta;
     }
 
-    public function has(string $code): bool
+    /**
+     * The list symbol for a code, matched exactly or ignoring separators.
+     */
+    public function resolve(string $code): ?string
     {
-        return isset($this->rowsBySymbol[self::normalize($code)]);
+        $code = self::normalize($code);
+
+        if (isset($this->rowsBySymbol[$code])) {
+            return $code;
+        }
+
+        return $this->symbolsByLooseKey[self::looseKey($code)] ?? null;
     }
 
     /**
      * Longest list symbol that appears as a whole word in the text, e.g. the code in "Orteza nadgarstka AM-OSN-U-02".
-     * Only symbols with a digit, hyphen or slash count, so model names like SPARTAN or common words never match prose.
+     * Only symbols with a digit, hyphen or slash count, so model names like SPARTAN or common words never match prose,
+     * unless the whole text is the symbol ("Kombiwar").
      */
     public function symbolIn(string $text): ?string
     {
-        $text = ' '.self::normalize($text).' ';
+        if (isset($this->rowsBySymbol[self::normalize($text)])) {
+            return self::normalize($text);
+        }
+
+        // Spaces around slashes are kept here: "Orteza ... / ATTACK 2RA OA" must still have a word boundary.
+        $text = ' '.(string) preg_replace('/\s+/u', ' ', mb_strtoupper($text)).' ';
         $found = null;
 
         foreach (array_keys($this->rowsBySymbol) as $symbol) {
@@ -115,6 +143,17 @@ final class Reh4MatPriceList
             $rows = array_values(array_filter($rows, static fn (array $row): bool => ! $row['accessory']));
         }
 
+        return $this->pick($rows, $forChild);
+    }
+
+    /**
+     * One price from candidate rows, preferring the adult or children's rows when they differ.
+     *
+     * @param  list<array<string, mixed>>  $rows
+     * @return array{status: 'match'|'ambiguous'|'missing', net_minor?: int, row?: array<string, mixed>, candidates?: list<array<string, mixed>>}
+     */
+    private function pick(array $rows, bool $forChild): array
+    {
         if ($rows === []) {
             return ['status' => 'missing'];
         }
@@ -137,9 +176,52 @@ final class Reh4MatPriceList
         return ['status' => 'match', 'net_minor' => $rows[0]['net_minor'], 'row' => $rows[0]];
     }
 
+    /**
+     * Whether the product name describes an accessory for the coded product ("Pokrowiec do AM-ADS-R").
+     */
+    public static function isAccessoryName(string $name, string $code): bool
+    {
+        return (bool) preg_match(
+            '/\bDO\s+(?:ORTEZY\s+|APARATU\s+)?'.preg_quote(self::normalize($code), '/').'(?=$|[\s),.])/u',
+            self::normalize($name),
+        );
+    }
+
+    /**
+     * Price of an accessory for the coded product: a row listed under that symbol or naming it in its description,
+     * whose description starts like the product name ("Pokrowiec ..." -> "POKROWIEC NIEPRZEMAKALNY ...").
+     *
+     * @return array{status: 'match'|'ambiguous'|'missing', net_minor?: int, row?: array<string, mixed>, candidates?: list<array<string, mixed>>}
+     */
+    public function accessoryPrice(string $code, string $name, bool $forChild): array
+    {
+        $code = self::normalize($code);
+        $firstWord = strtok(self::normalize($name), ' ');
+        $rows = [];
+
+        foreach ($this->rowsBySymbol as $symbol => $symbolRows) {
+            foreach ($symbolRows as $row) {
+                $description = self::normalize((string) $row['description']);
+                $forCode = ($row['accessory'] && str_starts_with((string) $symbol, $code))
+                    || preg_match('/(?<=^|\s)'.preg_quote($code, '/').'(?=$|[\s),.])/u', $description);
+
+                if ($forCode && $firstWord !== false && str_starts_with($description, $firstWord)) {
+                    $rows[] = $row;
+                }
+            }
+        }
+
+        return $this->pick($rows, $forChild);
+    }
+
     public static function isChildText(string $text): bool
     {
         return (bool) preg_match(self::CHILD_PATTERN, mb_strtoupper($text));
+    }
+
+    private static function looseKey(string $code): string
+    {
+        return (string) preg_replace('/[^\p{L}\p{N}]+/u', '', mb_strtoupper($code));
     }
 
     /**
