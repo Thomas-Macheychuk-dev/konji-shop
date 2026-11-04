@@ -83,6 +83,36 @@ it('falls back to the code in the product name when the SKU is the import placeh
         ->assertSuccessful();
 });
 
+it('prices accessories named after a product from their own rows', function (): void {
+    $cover = reh4matPricedVariant('AM-ADS-R', 'Pokrowiec do AM-ADS-R', 10000, 'pokrowiec-am-ads-r');
+    $mount = reh4matPricedVariant('REH4MAT-1', 'Zestaw mocujący do ortezy AM-OSS-21/CCA', 10000, 'zestaw-am-oss-21');
+    $stiffener = reh4matPricedVariant('AM-D-03', 'Dodatkowe usztywnienie palca do ortezy AM-D-03', 10000, 'usztywnienie-am-d-03');
+    $unlisted = reh4matPricedVariant('AM-SB-01', 'Gąbka do AM-SB-01', 10000, 'gabka-am-sb-01');
+
+    $this->artisan('reh4mat:apply-price-list', ['--write' => true])
+        ->expectsOutputToContain('NOT_IN_LIST product='.$unlisted->product_id)
+        ->assertSuccessful();
+
+    expect($cover->fresh()->price_net_amount)->toBe(8600)
+        ->and($mount->fresh()->price_net_amount)->toBe(1500)
+        ->and($stiffener->fresh()->price_net_amount)->toBe(1700)
+        ->and($unlisted->fresh()->price_gross_amount)->toBe(10000);
+});
+
+it('matches SKUs written with other separators and codes after a slash in the name', function (): void {
+    $attack = reh4matPricedVariant('ATTACK-OA', 'ATTACK OA', 10000);
+    $atom = reh4matPricedVariant('ATOM-ACL-CCA', 'Orteza kończyny dolnej ATOM ACL/CCA', 10000);
+    $named = reh4matPricedVariant('ATTACK-2RA', 'Orteza odciążająca staw kolanowy / ATTACK 2RA OA', 10000);
+    $model = reh4matPricedVariant('REH4MAT-124686', 'Kombiwar', 10000, 'kombiwar');
+
+    $this->artisan('reh4mat:apply-price-list', ['--write' => true])->assertSuccessful();
+
+    expect($attack->fresh()->price_net_amount)->toBe(68000)
+        ->and($atom->fresh()->price_net_amount)->toBe(85000)
+        ->and($named->fresh()->price_net_amount)->toBe(49000)
+        ->and($model->fresh()->price_net_amount)->toBe(38500);
+});
+
 it('reports ambiguous and unknown products and leaves them and other suppliers alone', function (): void {
     $ambiguous = reh4matPricedVariant('FIX-T-01', 'Dziecięca kamizelka sensoryczna FIX-T-01', 10000);
     $unknown = reh4matPricedVariant('XYZ-1', 'Pokrowiec elastyczny', 10000);

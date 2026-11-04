@@ -68,7 +68,20 @@ final class ApplyReh4MatPriceListCommand extends Command
                     }
 
                     $forChild = Reh4MatPriceList::isChildText($variant->product->name.' '.$variant->product->slug.' '.$variant->sku);
-                    $price = $list->price($code, $forChild);
+
+                    // An accessory named after its product ("Pokrowiec do AM-ADS-R") never takes the product's own price.
+                    if (Reh4MatPriceList::isAccessoryName((string) $variant->product->name, $code)) {
+                        $via .= '+accessory';
+                        $price = $list->accessoryPrice($code, (string) $variant->product->name, $forChild);
+                    } else {
+                        $price = $list->price($code, $forChild);
+                    }
+
+                    if ($price['status'] === 'missing') {
+                        $missing[] = $label.' sku='.($variant->sku ?? '-').' code='.$code.' ['.$via.']';
+
+                        continue;
+                    }
 
                     if ($price['status'] !== 'match') {
                         $candidates = array_map(
@@ -176,9 +189,10 @@ final class ApplyReh4MatPriceListCommand extends Command
     {
         $product = $variant->product;
         $sku = $this->usableSku($variant->sku);
+        $fromSku = $sku === null ? null : $list->resolve($sku);
 
-        if ($sku !== null && $list->has($sku)) {
-            return [Reh4MatPriceList::normalize($sku), 'sku'];
+        if ($fromSku !== null) {
+            return [$fromSku, 'sku'];
         }
 
         // Product-level codes describe the variant only when it is the product's only variant.
@@ -187,9 +201,10 @@ final class ApplyReh4MatPriceListCommand extends Command
         }
 
         $parentSku = $this->usableSku($product->external_parent_sku);
+        $fromParentSku = $parentSku === null ? null : $list->resolve($parentSku);
 
-        if ($parentSku !== null && $list->has($parentSku)) {
-            return [Reh4MatPriceList::normalize($parentSku), 'parent-sku'];
+        if ($fromParentSku !== null) {
+            return [$fromParentSku, 'parent-sku'];
         }
 
         $fromName = $list->symbolIn((string) $product->name);
