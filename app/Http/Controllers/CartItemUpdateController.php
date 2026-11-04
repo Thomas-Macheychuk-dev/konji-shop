@@ -25,12 +25,12 @@ class CartItemUpdateController extends Controller
 
         if ($request->expectsJson()) {
             return response()->json([
-                'message' => 'Cart updated successfully.',
+                'message' => 'Koszyk zaktualizowany.',
             ]);
         }
 
         return redirect()
             ->route('cart.show')
-            ->with('success', 'Cart updated successfully.');
+            ->with('success', 'Koszyk zaktualizowany.');
     }
 }
