@@ -520,7 +520,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                                 v-if="selectedVariant?.stock_status"
                                 class="mt-3 inline-flex rounded-full bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700"
                             >
-                                {{ formatStockStatus(selectedVariant.stock_status) }}
+                                {{ product.is_purchasable === true ? formatStockStatus(selectedVariant.stock_status) : 'Niedostępny' }}
                             </div>
                         </div>
 

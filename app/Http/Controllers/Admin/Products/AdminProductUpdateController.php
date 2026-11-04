@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\Products;
 
+use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateProductDetailsRequest;
 use App\Models\Product;
@@ -20,6 +21,12 @@ final class AdminProductUpdateController extends Controller
         $categoryId = $validated['category_id'] ?? null;
 
         unset($validated['category_id']);
+
+        // The storefront only sells active products with a past published_at,
+        // and the editor has no date field, so activating publishes now.
+        if ($validated['status'] === ProductStatus::ACTIVE->value && $product->published_at === null) {
+            $validated['published_at'] = now();
+        }
 
         $product->update($validated);
 
