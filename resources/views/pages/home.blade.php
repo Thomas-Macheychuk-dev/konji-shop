@@ -151,7 +151,7 @@
                                 </div>
 
                                 <div class="mt-5 flex items-center gap-3 rounded-2xl bg-orange-50 px-4 py-3.5 text-sm text-slate-700 ring-1 ring-orange-100">
-                                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f26722] text-white">
+                                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#c2410c] text-white">
                                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 17h.01M9.1 9a3 3 0 1 1 5.1 2.1c-.9.8-2.2 1.4-2.2 2.9" />
                                             <circle cx="12" cy="12" r="10" />
@@ -281,7 +281,7 @@
                 <div class="mx-auto max-w-[1480px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
                     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                         <div>
-                            <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#f26722]">Polecane produkty</p>
+                            <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#c2410c]">Polecane produkty</p>
                             <h2 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">Najczęściej wybierane rozwiązania</h2>
                         </div>
                         <a href="#categories" class="inline-flex items-center gap-2 text-sm font-bold text-[#155fa8] hover:text-[#0b3b70]">
@@ -308,7 +308,7 @@
                             Skontaktuj się z nami. Pomożemy znaleźć właściwy typ produktu, sprawdzić warianty i przygotować się do wyboru odpowiedniego rozmiaru.
                         </p>
                         <div class="mt-7 flex flex-wrap gap-3">
-                            <a href="{{ route('legal.contact') }}" class="rounded-xl bg-[#f26722] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#d95513]">
+                            <a href="{{ route('legal.contact') }}" class="rounded-xl bg-[#c2410c] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#9a3412]">
                                 Skontaktuj się
                             </a>
                             <a href="{{ route('legal.delivery-payments') }}" class="rounded-xl border border-white/20 bg-white/10 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-white/20">
@@ -344,7 +344,7 @@
                         ['03', 'Na co zwrócić uwagę przed zakupem?', 'Sprawdź stronę produktu, dostępne warianty, sposób zakładania oraz zasady pielęgnacji materiału.'],
                     ] as [$number, $title, $description])
                         <article class="rounded-[24px] border border-slate-200 bg-slate-50/70 p-6 transition hover:border-blue-200 hover:bg-blue-50/50">
-                            <span class="text-sm font-extrabold text-[#f26722]">{{ $number }}</span>
+                            <span class="text-sm font-extrabold text-[#c2410c]">{{ $number }}</span>
                             <h3 class="mt-5 text-xl font-bold tracking-tight text-slate-900">{{ $title }}</h3>
                             <p class="mt-3 text-sm leading-6 text-slate-600">{{ $description }}</p>
                         </article>

@@ -256,7 +256,7 @@ onBeforeUnmount(() => {
                 <!-- Optional badge -->
                 <span
                     v-if="itemCount > 0"
-                    class="absolute -right-2.5 -top-2.5 inline-flex min-w-5 items-center justify-center rounded-full bg-[#f26722] px-1.5 py-0.5 text-[10px] font-bold leading-none text-white ring-2 ring-white"
+                    class="absolute -right-2.5 -top-2.5 inline-flex min-w-5 items-center justify-center rounded-full bg-[#c2410c] px-1.5 py-0.5 text-[10px] font-bold leading-none text-white ring-2 ring-white"
                 >
                     {{ itemCount }}
                 </span>
