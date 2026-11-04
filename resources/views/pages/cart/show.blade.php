@@ -50,8 +50,8 @@
                             $priceChanged = $currentUnitPrice !== null && (int) $item->unit_price !== $currentUnitPrice;
                             $variantName = $variant?->attributeValues
                                 ?->map(function ($attributeValue) {
-                                    $attributeName = $attributeValue->attribute?->name;
-                                    $value = $attributeValue->value;
+                                    $attributeName = $attributeValue->attribute?->storefrontName();
+                                    $value = $attributeValue->storefrontValue();
 
                                     if (! $attributeName || ! $value) {
                                         return null;
