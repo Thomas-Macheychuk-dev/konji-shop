@@ -38,6 +38,16 @@ class AttributeValue extends Model
         return $this->belongsTo(Attribute::class);
     }
 
+    /**
+     * Value shown to shoppers; see config/storefront_labels.php.
+     */
+    public function storefrontValue(): string
+    {
+        $label = config('storefront_labels.values', [])[$this->value] ?? null;
+
+        return is_string($label) && $label !== '' ? $label : (string) $this->value;
+    }
+
     public function productVariants(): BelongsToMany
     {
         return $this->belongsToMany(

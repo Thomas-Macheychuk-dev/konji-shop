@@ -53,7 +53,8 @@ it('previews moved StabiloBed image URLs without downloading or writing', functi
         ->expectsOutputToContain('PRODUCTS_WITHOUT_IMAGES=2')
         ->expectsOutputToContain('WITH_IMAGE_URLS=1')
         ->expectsOutputToContain('IMAGE_URLS=2')
-        ->expectsOutputToContain('HOST stabilobedsystem.pl=2')
+        ->expectsOutputToContain('HOST moved: stabilobedsystem.pl, then flex-point.pl=2')
+        ->expectsOutputToContain($this->withoutImages->id.' am-sb-11 <- https://stabilobedsystem.pl/media/k2/items/cache/aaa_XL.jpg')
         ->expectsOutputToContain('NO_IMAGE_URLS '.$this->noUrls->id.' pokrowiec-elastyczny <- https://www.reh4mat.com/produkt/stabilizacja-akcesoria/pokrowiec-elastyczny/')
         ->expectsOutputToContain('MODE=READ_ONLY')
         ->assertSuccessful();
@@ -97,6 +98,32 @@ it('adds images from the moved host to products without images and changes nothi
         ->assertSuccessful();
 
     expect(ProductImage::query()->count())->toBe(3);
+});
+
+it('falls back to flex-point.pl for moved files that stabilobedsystem.pl does not serve', function (): void {
+    writeReh4MatBackfillFixture([[
+        'external_product_id' => 'am-sb-11',
+        'images' => [
+            ['url' => 'https://www.reh4mat.com/media/k2/items/cache/fp_L.jpg', 'alt' => 'Kamizelka FP-02'],
+            ['url' => 'https://www.reh4mat.com/images/produkty/FP-40/dwa-pasy.jpg'],
+        ],
+    ]]);
+    Http::fake([
+        'https://flex-point.pl/media/k2/items/cache/fp_L.jpg' => Http::response(reh4matBackfillImage(1, 2, 3), 200, ['Content-Type' => 'image/png']),
+        'https://flex-point.pl/images/produkty/FP-40/dwa-pasy.jpg' => Http::response(reh4matBackfillImage(4, 5, 6), 200, ['Content-Type' => 'image/png']),
+        '*' => Http::response('', 404),
+    ]);
+
+    $this->artisan('reh4mat:backfill-images', ['--from' => REH4MAT_BACKFILL_FIXTURE, '--write' => true])
+        ->expectsOutputToContain('IMAGES_ADDED=2')
+        ->expectsOutputToContain('IMAGE_URLS_FAILED=0')
+        ->assertSuccessful();
+
+    expect($this->withoutImages->images()->orderBy('sort_order')->pluck('source_url')->all())->toBe([
+        'https://flex-point.pl/media/k2/items/cache/fp_L.jpg',
+        'https://flex-point.pl/images/produkty/FP-40/dwa-pasy.jpg',
+    ]);
+    Http::assertSent(fn ($request) => $request->url() === 'https://stabilobedsystem.pl/media/k2/items/cache/fp_L.jpg');
 });
 
 it('leaves a product untouched when none of its images download', function (): void {

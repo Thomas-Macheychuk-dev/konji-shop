@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\Products;
 
 use App\Enums\AttributeDisplayType;
+use App\Enums\ProductStatus;
 use App\Enums\VatRate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProductRequest;
@@ -35,6 +36,8 @@ final class AdminProductStoreController extends Controller
             $product = Product::query()->create([
                 ...$validated,
                 'slug' => $validated['slug'] ?: $this->uniqueSlug($validated['name']),
+                // The storefront only sells products with a past published_at.
+                'published_at' => $validated['status'] === ProductStatus::ACTIVE->value ? now() : null,
             ]);
 
             if ($categoryId !== null) {

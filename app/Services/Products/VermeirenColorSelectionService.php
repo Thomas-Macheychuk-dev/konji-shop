@@ -45,7 +45,7 @@ class VermeirenColorSelectionService
                 (string) $attribute?->external_attribute_id,
                 'vermeiren-color-',
             );
-            $groupLabel = $attribute?->name ?: 'Kolor';
+            $groupLabel = $attribute?->storefrontName() ?: 'Kolor';
             $selectedValueId = filter_var(
                 $submitted[$groupCode] ?? null,
                 FILTER_VALIDATE_INT,

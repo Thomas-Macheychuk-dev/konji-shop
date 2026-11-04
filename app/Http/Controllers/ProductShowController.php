@@ -183,7 +183,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v16.%s.%d',
+            'product-page.v17.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -551,7 +551,7 @@ class ProductShowController extends Controller
 
                 return [
                     'code' => $code !== '' ? $code : 'color',
-                    'label' => $attribute?->name ?: 'Kolor',
+                    'label' => $attribute?->storefrontName() ?: 'Kolor',
                     'values' => $values
                         ->sortBy(fn (AttributeValue $value): array => [
                             $value->sort_order,
@@ -569,9 +569,9 @@ class ProductShowController extends Controller
 
                             return [
                                 'id' => $value->id,
-                                'label' => $value->value,
+                                'label' => $value->storefrontValue(),
                                 'image_url' => $image?->url ?? $value->swatch_image_url,
-                                'image_alt' => $image?->alt_text ?: $value->value,
+                                'image_alt' => $image?->alt_text ?: $value->storefrontValue(),
                                 'color' => $value->swatchKind() === 'color'
                                     ? $value->swatch_value
                                     : null,
@@ -646,13 +646,14 @@ class ProductShowController extends Controller
 
                 return [
                     'code' => $code,
-                    'label' => $this->displayLabelForCode($code, $first?->attribute?->name),
+                    'label' => $first?->attribute?->storefrontLabel()
+                        ?? $this->displayLabelForCode($code, $first?->attribute?->storefrontName()),
                     'values' => $values
                         ->sortBy('value')
                         ->map(function (AttributeValue $value) {
                             return [
                                 'id' => $value->id,
-                                'label' => $value->value,
+                                'label' => $value->storefrontValue(),
                                 'sort_order' => $value->sort_order,
                                 'swatch' => [
                                     'type' => $value->swatch_type,

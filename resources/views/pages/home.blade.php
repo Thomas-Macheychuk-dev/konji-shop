@@ -1,7 +1,7 @@
 @extends('layouts.storefront')
 
 @section('content')
-    <x-storefront.category-page-shell>
+    <x-storefront.category-page-shell wide>
     @if ($searchQuery !== '')
         <section class="border-b border-slate-200 bg-white">
             <div class="mx-auto max-w-[1480px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
@@ -125,22 +125,27 @@
 
                                 <div class="mt-6 grid grid-cols-2 gap-3">
                                     @foreach ([
-                                        ['Kolano', 'kolano', 'M12 2v7m0 4v9M8 7c2 2 6 2 8 0M8 17c2-2 6-2 8 0'],
-                                        ['Kręgosłup', 'kręgosłup', 'M12 3v18M8 6c2 1 6 1 8 0M8 10c2 1 6 1 8 0M8 14c2 1 6 1 8 0M8 18c2 1 6 1 8 0'],
-                                        ['Nadgarstek', 'nadgarstek', 'M8 3v9l-2 5m10-14v9l2 5M8 12h8M7 17h10'],
-                                        ['Kostka i stopa', 'kostka', 'M9 3v10c0 4-2 5-4 6h14c0-3-3-4-6-4V3'],
-                                    ] as [$label, $query, $iconPath])
+                                        ['Kolano', 'kolano', 'kolano'],
+                                        ['Kręgosłup', 'kręgosłup', 'kregoslup'],
+                                        ['Nadgarstek', 'nadgarstek', 'nadgarstek'],
+                                        ['Kostka i stopa', 'kostka', 'kostka'],
+                                    ] as [$label, $query, $image])
                                         <a
                                             href="{{ route('home', ['q' => $query]) }}"
-                                            class="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/60 hover:shadow-md"
+                                            class="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-slate-200 transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1674c4]"
                                         >
-                                            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#155fa8] transition group-hover:bg-[#155fa8] group-hover:text-white">
-                                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="{{ $iconPath }}" />
-                                                </svg>
+                                            <img
+                                                src="/images/support/{{ $image }}.webp"
+                                                alt=""
+                                                width="480"
+                                                height="600"
+                                                decoding="async"
+                                                class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                                            >
+                                            <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#082850]/95 via-[#082850]/60 to-transparent px-3 pb-3 pt-10 sm:px-4 sm:pb-3.5 sm:pt-12">
+                                                <span class="block text-sm font-bold leading-tight text-white">{{ $label }}</span>
+                                                <span class="mt-1 hidden text-xs text-blue-100 sm:block">Zobacz produkty →</span>
                                             </span>
-                                            <span class="mt-3 block text-sm font-bold text-slate-800">{{ $label }}</span>
-                                            <span class="mt-1 block text-xs text-slate-500">Zobacz produkty →</span>
                                         </a>
                                     @endforeach
                                 </div>
