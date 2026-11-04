@@ -113,6 +113,24 @@ it('matches SKUs written with other separators and codes after a slash in the na
         ->and($model->fresh()->price_net_amount)->toBe(38500);
 });
 
+it('uses the separately priced colour version when the product name has that colour', function (): void {
+    $grey = reh4matPricedVariant('EB-SK-A', 'Orteza kończyny dolnej EB-SK/A SZARY', 10000, 'eb-sk-a-szary');
+    $beige = reh4matPricedVariant('EB-SK-A', 'Orteza kończyny dolnej EB-SK/A BEŻ', 10000, 'eb-sk-a-bez');
+    $black = reh4matPricedVariant('AM-PES-03', 'Orteza tułowia AM-PES-03 CZARNY', 10000, 'am-pes-03-czarny');
+    $greyBack = reh4matPricedVariant('AM-PES-03', 'Orteza tułowia AM-PES-03 SZARY', 10000, 'am-pes-03-szary');
+
+    $this->artisan('reh4mat:apply-price-list')
+        ->expectsOutputToContain('code=EB-SK/A BEŻ [parent-sku+colour]')
+        ->assertSuccessful();
+
+    $this->artisan('reh4mat:apply-price-list', ['--write' => true])->assertSuccessful();
+
+    expect($grey->fresh()->price_net_amount)->toBe(29000)
+        ->and($beige->fresh()->price_net_amount)->toBe(25200)
+        ->and($black->fresh()->price_net_amount)->toBe(5400)
+        ->and($greyBack->fresh()->price_net_amount)->toBe(6500);
+});
+
 it('reports ambiguous and unknown products and leaves them and other suppliers alone', function (): void {
     $ambiguous = reh4matPricedVariant('FIX-T-01', 'Dziecięca kamizelka sensoryczna FIX-T-01', 10000);
     $unknown = reh4matPricedVariant('XYZ-1', 'Pokrowiec elastyczny', 10000);

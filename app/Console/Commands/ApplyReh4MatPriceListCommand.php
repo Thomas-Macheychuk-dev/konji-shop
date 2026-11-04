@@ -74,6 +74,12 @@ final class ApplyReh4MatPriceListCommand extends Command
                         $via .= '+accessory';
                         $price = $list->accessoryPrice($code, (string) $variant->product->name, $forChild);
                     } else {
+                        $colourCode = $list->colourVersion($code, (string) $variant->product->name);
+
+                        if ($colourCode !== null) {
+                            [$code, $via] = [$colourCode, $via.'+colour'];
+                        }
+
                         $price = $list->price($code, $forChild);
                     }
 
