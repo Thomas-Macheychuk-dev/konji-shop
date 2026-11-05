@@ -62,6 +62,7 @@ data "aws_iam_policy_document" "product_media_cloudfront_read" {
     resources = [
       "${aws_s3_bucket.uploads.arn}/products/*",
       "${aws_s3_bucket.uploads.arn}/swatches/*",
+      "${aws_s3_bucket.uploads.arn}/thumbnails/*",
     ]
 
     principals {
