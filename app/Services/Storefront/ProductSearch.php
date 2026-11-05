@@ -17,6 +17,10 @@ final class ProductSearch
 {
     private const MAX_TERMS = 6;
 
+    private const MAX_RESULTS = 3000;
+
+    private const IDS_TTL_SECONDS = 600;
+
     public function __construct(
         private readonly StorefrontCache $cache,
     ) {}
@@ -32,6 +36,27 @@ final class ProductSearch
             $words,
             static fn (string $word): bool => mb_strlen($word) >= 2,
         ))), 0, self::MAX_TERMS);
+    }
+
+    /**
+     * Limit a listing to the products matching the search. The slow text match over descriptions
+     * runs once per query and is cached, so the page, total and brand list reuse it.
+     */
+    public function restrict(Builder $listing, string $search): Builder
+    {
+        $terms = $this->terms($search);
+
+        $ids = $terms === [] ? [] : $this->cache->rememberVersioned(
+            StorefrontCache::NAMESPACE_CATALOGUE,
+            'search.ids.v1.'.sha1(implode(' ', $terms)),
+            fn (): array => $this->apply(
+                Product::query()->where('products.status', ProductStatus::ACTIVE->value)->whereNotNull('products.slug'),
+                $search,
+            )->limit(self::MAX_RESULTS)->pluck('products.id')->map(static fn ($id): int => (int) $id)->all(),
+            self::IDS_TTL_SECONDS,
+        );
+
+        return $ids === [] ? $listing->whereRaw('1 = 0') : $listing->whereIn('products.id', $ids);
     }
 
     public function apply(Builder $query, string $search): Builder

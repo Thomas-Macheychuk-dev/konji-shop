@@ -4,6 +4,13 @@
     $displayVariant = $product->variants->firstWhere('is_default', true)
         ?? $product->variants->first();
     $grossPriceAmount = $displayVariant?->grossPriceAmount();
+    // Listings sort by the cheapest variant; when that is below the default one, the card says "od".
+    $listingPrice = $product->getAttribute('listing_price');
+    $isFromPrice = $listingPrice !== null && $grossPriceAmount > 0 && (int) $listingPrice < $grossPriceAmount;
+
+    if ($isFromPrice || ($listingPrice !== null && ! ($grossPriceAmount > 0))) {
+        $grossPriceAmount = (int) $listingPrice;
+    }
     $currency = $displayVariant?->currency?->value ?? 'PLN';
     $imageUrl = $product->default_image_url;
     $displayCategory = $product->categories->firstWhere('pivot.is_primary', true)
@@ -71,7 +78,7 @@
                 <p class="text-[11px] font-medium text-slate-500">Cena brutto</p>
                 @if ($grossPriceAmount !== null)
                     <p class="mt-0.5 text-lg font-extrabold tracking-tight text-slate-950">
-                        {{ number_format($grossPriceAmount / 100, 2, ',', ' ') }} {{ $currency }}
+                        @if ($isFromPrice)<span class="text-sm font-semibold text-slate-500">od</span> @endif{{ number_format($grossPriceAmount / 100, 2, ',', ' ') }} {{ $currency }}
                     </p>
                 @else
                     <p class="mt-0.5 text-sm font-semibold text-slate-500">

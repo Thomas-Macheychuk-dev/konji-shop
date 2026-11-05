@@ -147,7 +147,9 @@ final class ProductListing
     {
         if ($filters['price_min'] !== null || $filters['price_max'] !== null || $filters['available']) {
             $query->whereHas('variants', function (Builder $variants) use ($filters): void {
-                $variants->where('status', ProductVariantStatus::ACTIVE->value);
+                $variants
+                    ->where('status', ProductVariantStatus::ACTIVE->value)
+                    ->where('price_gross_amount', '>', 0);
 
                 if ($filters['price_min'] !== null) {
                     $variants->where('price_gross_amount', '>=', $filters['price_min']);
@@ -218,6 +220,8 @@ final class ProductListing
             ->selectRaw('MIN(price_gross_amount)')
             ->whereColumn('product_variants.product_id', 'products.id')
             ->where('product_variants.status', ProductVariantStatus::ACTIVE->value)
+            // Some imports carry 0 zł placeholder variants that cannot be bought.
+            ->where('product_variants.price_gross_amount', '>', 0)
             ->whereNull('product_variants.deleted_at');
     }
 
