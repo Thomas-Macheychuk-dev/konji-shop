@@ -28,9 +28,13 @@ final class Reh4MatSizeOptions
 
     public const STATUS_NO_TABLE = 'no_table';
 
-    private const SIZE = '(?:X{0,4}S|M|X{0,4}L|[2-5]XL|\d{1,2}(?:[,.]5)?)';
+    private const SIZE = '(?:X{0,4}S|M|X{0,4}L|[2-5]XL|MINI|MAXI|\d{1,2}(?:[,.]5)?)';
+
+    /** A size, or a pair such as "S/M", "1/M" or "S/SLIM". */
+    private const SIZE_LABEL = self::SIZE.'(?:\/(?:'.self::SIZE.'|SLIM|WIDE))?';
 
     private const SIZE_RANKS = [
+        'MINI' => 45, 'MAXI' => 75,
         'XXXXS' => 10, 'XXXS' => 20, 'XXS' => 30, 'XS' => 40, 'S' => 50, 'M' => 60, 'L' => 70,
         'XL' => 80, 'XXL' => 90, '2XL' => 90, 'XXXL' => 100, '3XL' => 100, 'XXXXL' => 110, '4XL' => 110, '5XL' => 120,
     ];
@@ -57,10 +61,12 @@ final class Reh4MatSizeOptions
         $universal = false;
         $tables = 0;
 
+        $productCodes = [];
+
         foreach (self::sizeTables($html) as $rows) {
             $tables++;
 
-            foreach (self::labels($rows) as $label) {
+            foreach (self::labels($rows) as [$label, $isMeasurementRow]) {
                 $normalized = self::normalizeLabel($label);
 
                 // Repeated headers and the "przód | tył" (front | back) sub-header over measurement columns.
@@ -74,9 +80,26 @@ final class Reh4MatSizeOptions
                     continue;
                 }
 
-                if (preg_match('/^'.self::SIZE.'(?:\/(?:'.self::SIZE.'|SLIM|WIDE))?$/u', $normalized) === 1) {
-                    $sizes[$normalized] = true;
+                // Flexi-pro style "FP-05-XS": the size after a product code. "FP-04-U" is universal.
+                if (preg_match('/^(.*\d.*?)[- ](U|'.self::SIZE.')$/u', $normalized, $coded) === 1
+                    && preg_match('/^'.self::SIZE_LABEL.'$/u', $normalized) !== 1) {
+                    $productCodes[$coded[1]] = true;
+                    $normalized = $coded[2];
 
+                    if ($normalized === 'U') {
+                        $universal = true;
+
+                        continue;
+                    }
+                }
+
+                if (preg_match('/^'.self::SIZE_LABEL.'$/u', $normalized) === 1) {
+                    $sizes[self::canonicalSize($normalized)] = true;
+
+                    continue;
+                }
+
+                if (! $isMeasurementRow) {
                     continue;
                 }
 
@@ -96,6 +119,18 @@ final class Reh4MatSizeOptions
             $flags[] = 'UNIVERSAL_AND_SIZES';
         }
 
+        // Two models in one table, e.g. FP-09 and FP-09/W.
+        if (count($productCodes) > 1) {
+            $flags[] = 'SEVERAL_PRODUCT_CODES';
+        }
+
+        // Letter and number sizes together are two size systems (S–XL by circumference, 36–45 by shoe size).
+        $numeric = array_filter($sizes, static fn (string $size): bool => preg_match('/^\d{1,2}(?:[,.]5)?(?:\/|$)/', $size) === 1);
+
+        if ($numeric !== [] && count($numeric) < count($sizes)) {
+            $flags[] = 'MIXED_SIZE_SYSTEMS';
+        }
+
         $status = match (true) {
             $flags !== [] => self::STATUS_REVIEW,
             count($sizes) > 1 || $sided => self::STATUS_SPLIT,
@@ -103,7 +138,7 @@ final class Reh4MatSizeOptions
             default => self::STATUS_NO_TABLE,
         };
 
-        // A single size is still shown when the product is split by side, so the cart says which size it is.
+        // A single size is no choice, so a product split by side alone carries no size option.
         return new self($status, $status === self::STATUS_SPLIT && count($sizes) > 1 ? $sizes : [], $sided, $flags, $unread);
     }
 
@@ -208,10 +243,11 @@ final class Reh4MatSizeOptions
     }
 
     /**
-     * Size labels of a table: the first row when the sizes run across it, else the first column.
+     * Size labels of a table, each with whether its row holds measurements: the first row when the
+     * sizes run across it, else the first column.
      *
      * @param  list<list<string>>  $rows
-     * @return list<string>
+     * @return list<array{0: string, 1: bool}>
      */
     private static function labels(array $rows): array
     {
@@ -222,10 +258,41 @@ final class Reh4MatSizeOptions
         ) === [];
 
         if ($acrossFirstRow) {
-            return $header;
+            return array_map(static fn (string $cell): array => [$cell, true], $header);
         }
 
-        return array_map(static fn (array $row): string => $row[0] ?? '', array_slice($rows, 1));
+        return array_map(
+            static fn (array $row): array => [$row[0] ?? '', self::isMeasurementRow($row)],
+            array_slice($rows, 1),
+        );
+    }
+
+    /**
+     * False for a row naming the measurement columns: no numbers ("przód | tył"), or BodyMap's
+     * "A | A 1 | B | C | T" letters, whose later cells can still mention "Pokrowiec 3D Mesh".
+     *
+     * @param  list<string>  $row
+     */
+    private static function isMeasurementRow(array $row): bool
+    {
+        $columnName = '/^[A-Z]\s?\d?$/u';
+
+        if (isset($row[1]) && preg_match($columnName, $row[0]) === 1 && preg_match($columnName, $row[1]) === 1) {
+            return false;
+        }
+
+        return preg_match('/\d/', implode(' ', $row)) === 1;
+    }
+
+    /**
+     * One spelling per size, so "XXL" in one table and "2XL" in another are the same variant.
+     */
+    private static function canonicalSize(string $label): string
+    {
+        return implode('/', array_map(
+            static fn (string $part): string => preg_match('/^X{2,4}L$/', $part) === 1 ? (strlen($part) - 1).'XL' : $part,
+            explode('/', $label),
+        ));
     }
 
     private static function text(string $html): string

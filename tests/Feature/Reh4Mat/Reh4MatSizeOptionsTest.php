@@ -16,7 +16,7 @@ it('reads sizes and the left/right note from an ATTACK PRO style description', f
     );
 
     expect($options->status)->toBe(Reh4MatSizeOptions::STATUS_SPLIT)
-        ->and($options->sizes)->toBe(['S', 'M', 'L', 'XL', 'XXL'])
+        ->and($options->sizes)->toBe(['S', 'M', 'L', 'XL', '2XL'])
         ->and($options->sided)->toBeTrue()
         ->and($options->flags)->toBe([]);
 });
@@ -42,7 +42,23 @@ it('normalises asterisks and merges repeated tables', function (): void {
         reh4matSizeTable(['S*', 'M', 'XXXL*'], 'Rozmiar*').reh4matSizeTable(['S', 'M', 'XXXL'], 'Rozmiar ortezy')
     );
 
-    expect($options->sizes)->toBe(['S', 'M', 'XXXL']);
+    expect($options->sizes)->toBe(['S', 'M', '3XL']);
+});
+
+it('treats XXL and 2XL as the same size', function (): void {
+    expect(Reh4MatSizeOptions::fromDescription(reh4matSizeTable(['M', 'L', 'XXL']).reh4matSizeTable(['M', 'L', '2XL']))->sizes)
+        ->toBe(['M', 'L', '2XL']);
+});
+
+it('skips the BodyMap row that names the measurement columns', function (): void {
+    $options = Reh4MatSizeOptions::fromDescription(
+        '<table><tr><td>ROZMIAR</td><td>Pomiar [cm]</td></tr>'
+        .'<tr><td>A</td><td>B</td><td>C</td><td>T</td><td>Pokrowiec 3D Mesh™</td></tr>'
+        .'<tr><td>1</td><td>27</td><td>30</td></tr><tr><td>2</td><td>30</td><td>31</td></tr></table>'
+    );
+
+    expect($options->status)->toBe(Reh4MatSizeOptions::STATUS_SPLIT)
+        ->and($options->sizes)->toBe(['1', '2']);
 });
 
 it('skips the front/back sub-header row under the size header', function (): void {
@@ -77,6 +93,52 @@ it('sends unreadable or mixed tables to review', function (array $labels, string
     'measurement row' => [['obwód', 'S', 'M'], 'UNREAD_SIZE_LABEL'],
     'universal next to sizes' => [['Uniwersalny', 'S', 'M'], 'UNIVERSAL_AND_SIZES'],
 ]);
+
+it('reads sizes written after a product code', function (): void {
+    $options = Reh4MatSizeOptions::fromDescription(
+        '<table><tr><td>rozmiar</td><td>Dostępne kolory</td><td>A</td></tr>'
+        .'<tr><td>FP-05-XS</td><td></td><td>31 cm</td></tr><tr><td>FP-05-S</td><td></td><td>39,5 cm</td></tr>'
+        .'<tr><td>FP-05-M</td><td></td><td>46,5 cm</td></tr></table>'
+    );
+
+    expect($options->status)->toBe(Reh4MatSizeOptions::STATUS_SPLIT)
+        ->and($options->sizes)->toBe(['XS', 'S', 'M']);
+});
+
+it('treats a coded universal size as a single size', function (): void {
+    $options = Reh4MatSizeOptions::fromDescription('<table><tr><td>rozmiar</td><td>A</td></tr><tr><td>FP-04-U</td><td>5 cm</td></tr></table>');
+
+    expect($options->status)->toBe(Reh4MatSizeOptions::STATUS_SINGLE);
+});
+
+it('sends two product codes in one product to review', function (): void {
+    $options = Reh4MatSizeOptions::fromDescription(
+        '<table><tr><td>rozmiar</td><td>A</td></tr><tr><td>FP-09-S</td><td>15 cm</td></tr><tr><td>FP-09-M</td><td>19 cm</td></tr></table>'
+        .'<table><tr><td>rozmiar</td><td>A</td></tr><tr><td>FP-09/W-S</td><td>17 cm</td></tr><tr><td>FP-09/W-M</td><td>21 cm</td></tr></table>'
+    );
+
+    expect($options->status)->toBe(Reh4MatSizeOptions::STATUS_REVIEW)
+        ->and($options->flags)->toContain('SEVERAL_PRODUCT_CODES');
+});
+
+it('skips a letter sub-header row over the measurement columns', function (): void {
+    $options = Reh4MatSizeOptions::fromDescription(
+        '<table><tr><td>ROZMIAR</td><td>Pomiar [cm]</td></tr><tr><td>A</td><td>B</td><td>C</td></tr>'
+        .'<tr><td>1</td><td>27</td><td>30</td></tr><tr><td>2</td><td>30</td><td>31</td></tr><tr><td>3</td><td>33</td><td>35</td></tr></table>'
+    );
+
+    expect($options->status)->toBe(Reh4MatSizeOptions::STATUS_SPLIT)
+        ->and($options->sizes)->toBe(['1', '2', '3']);
+});
+
+it('sends letter and number sizes together to review', function (): void {
+    $options = Reh4MatSizeOptions::fromDescription(
+        reh4matSizeTable(['S', 'M', 'L', 'XL']).reh4matSizeTable(['36', '37', '38'], 'Rozmiar obuwia')
+    );
+
+    expect($options->status)->toBe(Reh4MatSizeOptions::STATUS_REVIEW)
+        ->and($options->flags)->toContain('MIXED_SIZE_SYSTEMS');
+});
 
 it('reports products without a size table', function (): void {
     expect(Reh4MatSizeOptions::fromDescription('<p>Pelota silikonowa</p>')->status)->toBe(Reh4MatSizeOptions::STATUS_NO_TABLE)
