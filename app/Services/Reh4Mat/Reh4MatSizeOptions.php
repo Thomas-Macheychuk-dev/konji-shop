@@ -84,7 +84,8 @@ final class Reh4MatSizeOptions
             }
         }
 
-        $sizes = array_keys($sizes);
+        // PHP turns numeric keys such as shoe size "36" into ints.
+        $sizes = array_map(strval(...), array_keys($sizes));
         $sided = preg_match('/występuje\s+jako\s+(?:prawy\s*\/\s*lewy|lewy\s*\/\s*prawy)/iu', self::text($html)) === 1;
 
         if ($unread !== []) {

@@ -166,6 +166,21 @@ it('keeps option variant prices when a re-import carries no price', function ():
         ->and($default->fresh()->status)->toBe(ProductVariantStatus::ARCHIVED);
 });
 
+it('splits products with numeric shoe sizes', function (): void {
+    $default = reh4matSizedProduct('BUT-36', '<table><tr><td>Rozmiar obuwia</td><td>Długość stopy</td></tr>'
+        .'<tr><td>36</td><td>23 cm</td></tr><tr><td>38</td><td>24,5 cm</td></tr><tr><td>37</td><td>24 cm</td></tr></table>'
+        .'<p>Wyrób występuje jako prawy / lewy.</p>');
+
+    $this->artisan('reh4mat:sync-size-variants')
+        ->expectsOutputToContain('sizes=36,38,37 sides=P,L variants=6')
+        ->assertSuccessful();
+
+    $this->artisan('reh4mat:sync-size-variants', ['--write' => true])->assertSuccessful();
+
+    expect(ProductVariant::query()->where('product_id', $default->product_id)->where('status', ProductVariantStatus::ACTIVE->value)->orderBy('id')->pluck('sku')->all())
+        ->toBe(['BUT-36-36-P', 'BUT-36-36-L', 'BUT-36-37-P', 'BUT-36-37-L', 'BUT-36-38-P', 'BUT-36-38-L']);
+});
+
 it('prices every size and side variant from the product code in the price list', function (): void {
     $default = reh4matSizedProduct('AM-OSS-04', REH4MAT_ATTACK_PRO_DESCRIPTION, 10000);
     $this->artisan('reh4mat:sync-size-variants', ['--write' => true])->assertSuccessful();
