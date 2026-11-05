@@ -24,13 +24,19 @@ final class GenerateListingThumbnailsCommand extends Command
 {
     protected $signature = 'catalogue:generate-thumbnails
         {--write : Create the thumbnails. Otherwise only count what is missing.}
-        {--limit=1000 : Most images to process in this run.}';
+        {--limit=1000 : Most images to process in this run.}
+        {--repair-missing : First check recorded thumbnails exist on the disk; with --write, forget the missing ones so they are made again.}';
 
     protected $description = 'Preview or create the small listing copies of product card images.';
 
     public function handle(ListingThumbnail $thumbnails, StorefrontCache $cache): int
     {
         $limit = max(1, (int) $this->option('limit'));
+
+        if ($this->option('repair-missing')) {
+            $this->repairMissing($cache);
+        }
+
         $missing = 0;
         $queue = [];
 
@@ -81,7 +87,13 @@ final class GenerateListingThumbnailsCommand extends Command
                 }
 
                 $path = ListingThumbnail::pathFor($image->path);
-                $disk->put($path, $jpeg, ['visibility' => 'public', 'ContentType' => 'image/jpeg']);
+
+                // No ACL: the bucket enforces owner-only objects (CloudFront reads through its policy) and
+                // rejects one. The disk does not throw, so a failed write has to be caught here.
+                if (! $disk->put($path, $jpeg, ['ContentType' => 'image/jpeg'])) {
+                    throw new \RuntimeException('Could not write the thumbnail.');
+                }
+
                 $image->forceFill(['thumbnail_path' => $path])->saveQuietly();
                 $created++;
             } catch (\Throwable $exception) {
@@ -101,5 +113,45 @@ final class GenerateListingThumbnailsCommand extends Command
         $this->info('LISTING_THUMBNAILS_WRITE=PASS');
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Recorded thumbnails whose file is not on the disk (an earlier write failed silently) are forgotten
+     * with --write, so the run below makes them again.
+     */
+    private function repairMissing(StorefrontCache $cache): void
+    {
+        $checked = 0;
+        $absent = [];
+
+        foreach ([ProductImage::class, ProductAttributeValueImage::class] as $model) {
+            $model::query()
+                ->where('thumbnail_path', 'like', 'thumbnails/%')
+                ->select(['id', 'disk', 'thumbnail_path'])
+                ->chunkById(500, function ($images) use (&$checked, &$absent): void {
+                    foreach ($images as $image) {
+                        $checked++;
+
+                        if (! Storage::disk($image->disk)->exists($image->thumbnail_path)) {
+                            $absent[] = $image;
+                        }
+                    }
+                });
+        }
+
+        $this->line('=== RECORDED THUMBNAILS ===');
+        $this->line('CHECKED='.$checked.' ABSENT='.count($absent));
+
+        if (! $this->option('write') || $absent === []) {
+            return;
+        }
+
+        foreach ($absent as $image) {
+            $image->forceFill(['thumbnail_path' => null])->saveQuietly();
+        }
+
+        // Cards go back to the full image until the thumbnail is made again.
+        $cache->bump(StorefrontCache::NAMESPACE_CATALOGUE);
+        $this->line('FORGOTTEN='.count($absent));
     }
 }

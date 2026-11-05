@@ -97,6 +97,44 @@ it('previews, then creates thumbnails that product cards use', function (): void
     $this->artisan('catalogue:generate-thumbnails')->expectsOutputToContain('MISSING=0')->assertSuccessful();
 });
 
+it('treats a failed thumbnail write as a failure instead of recording it', function (): void {
+    $image = thumbnailProduct('Orteza zapis', pngOfSize(1200, 1200));
+
+    $disk = Mockery::mock(Storage::disk('public'))->makePartial();
+    $disk->shouldReceive('put')->andReturnFalse();
+    Storage::set('public', $disk);
+
+    $this->artisan('catalogue:generate-thumbnails', ['--write' => true])
+        ->expectsOutputToContain('FAILED ProductImage='.$image->id)
+        ->expectsOutputToContain('CREATED=0 ALREADY_SMALL=0 FAILED=1')
+        ->assertSuccessful();
+
+    // The card keeps its full image rather than pointing at a file that is not there.
+    expect($image->fresh()->thumbnail_path)->toBe($image->path);
+});
+
+it('forgets recorded thumbnails whose file is missing so they are made again', function (): void {
+    $kept = thumbnailProduct('Orteza zapisana', pngOfSize(1200, 1200));
+    $lost = thumbnailProduct('Orteza zgubiona', pngOfSize(1200, 1200));
+    $this->artisan('catalogue:generate-thumbnails', ['--write' => true])->assertSuccessful();
+    Storage::disk('public')->delete($lost->fresh()->thumbnail_path);
+
+    $this->artisan('catalogue:generate-thumbnails', ['--repair-missing' => true])
+        ->expectsOutputToContain('CHECKED=2 ABSENT=1')
+        ->expectsOutputToContain('MISSING=0')
+        ->assertSuccessful();
+    expect($lost->fresh()->thumbnail_path)->not->toBeNull();
+
+    $this->artisan('catalogue:generate-thumbnails', ['--repair-missing' => true, '--write' => true])
+        ->expectsOutputToContain('FORGOTTEN=1')
+        ->expectsOutputToContain('MISSING=1 THIS_RUN=1')
+        ->expectsOutputToContain('CREATED=1')
+        ->assertSuccessful();
+
+    Storage::disk('public')->assertExists($lost->fresh()->thumbnail_path);
+    expect($kept->fresh()->thumbnail_path)->toBe(ListingThumbnail::pathFor($kept->path));
+});
+
 it('returns 404 for page numbers that are not positive integers', function (): void {
     $category = Category::query()->create(['name' => 'Ortezy', 'slug' => 'ortezy', 'status' => CategoryStatus::ACTIVE]);
     thumbnailProduct('Orteza', pngOfSize(10, 10), $category);
