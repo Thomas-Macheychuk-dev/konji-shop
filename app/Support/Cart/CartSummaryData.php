@@ -34,7 +34,8 @@ class CartSummaryData
             ->all();
 
         return [
-            'count' => (int) $cart->items->count(),
+            // Units, so three of one product reads "3 szt." like the cart page.
+            'count' => (int) $cart->items->sum('quantity'),
             'subtotal_amount' => $totals->subtotal,
             'subtotal' => self::formatAmount($totals->subtotal, $currency),
             'currency' => $currency,
@@ -103,7 +104,7 @@ class CartSummaryData
 
     protected static function formatAmount(int $amount, string $currency): string
     {
-        return number_format($amount / 100, 2, '.', ' ').' '.$currency;
+        return number_format($amount / 100, 2, ',', ' ').' '.$currency;
     }
 
     protected static function resolveVariantImageUrl(CartItem $item): ?string

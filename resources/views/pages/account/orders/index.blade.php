@@ -66,7 +66,7 @@
                                 </td>
 
                                 <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-zinc-900">
-                                    {{ number_format($order->total_amount / 100, 2, '.', ' ') }} {{ $order->currency }}
+                                    {{ number_format($order->total_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
                                 </td>
 
                                 <td class="px-6 py-4 text-sm text-zinc-700">
@@ -130,7 +130,7 @@
                             <div>
                                 <dt class="text-zinc-500">Razem</dt>
                                 <dd class="mt-1 font-medium text-zinc-900">
-                                    {{ number_format($order->total_amount / 100, 2, '.', ' ') }} {{ $order->currency }}
+                                    {{ number_format($order->total_amount / 100, 2, ',', ' ') }} {{ $order->currency }}
                                 </dd>
                             </div>
 

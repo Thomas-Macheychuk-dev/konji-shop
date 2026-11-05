@@ -87,7 +87,7 @@ it('counts active products from the complete active category subtree on homepage
         ->get(route('home'))
         ->assertOk()
         ->assertSee('Obuwie Scholl')
-        ->assertSee('2 produktów');
+        ->assertSee('2 produkty');
 });
 
 it('searches only active storefront products from the global header', function (): void {

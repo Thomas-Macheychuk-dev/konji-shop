@@ -21,7 +21,7 @@ const errorMessage = ref('');
 const processingItemIds = ref([]);
 const summary = ref({
     count: 0,
-    subtotal: '0.00 PLN',
+    subtotal: '0,00 PLN',
     items: [],
     cart_url: '/cart',
     checkout_url: '/checkout',
@@ -29,7 +29,7 @@ const summary = ref({
 
 const itemCount = computed(() => summary.value?.count ?? 0);
 const items = computed(() => summary.value?.items ?? []);
-const subtotal = computed(() => summary.value?.subtotal ?? '0.00 PLN');
+const subtotal = computed(() => summary.value?.subtotal ?? '0,00 PLN');
 const isEmpty = computed(() => itemCount.value < 1);
 
 function isItemProcessing(itemId) {
