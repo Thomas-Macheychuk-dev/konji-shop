@@ -7,7 +7,7 @@ namespace App\Services\Images;
 /**
  * Shrinks a product image for listing cards: at most 600px on the longer side (2x a card), JPEG on white.
  *
- * JPEG because the production GD build has no WebP support; product photos sit on white cards anyway.
+ * Reads JPEG, PNG and WebP originals. Always writes JPEG: product photos sit on white cards anyway.
  */
 final class ListingThumbnail
 {

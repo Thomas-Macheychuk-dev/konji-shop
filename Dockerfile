@@ -46,6 +46,7 @@ RUN apk add --no-cache \
     icu-dev \
     libpng-dev \
     libjpeg-turbo-dev \
+    libwebp-dev \
     freetype-dev \
     mysql-client \
     postgresql-client \
@@ -56,7 +57,7 @@ RUN apk add --no-cache \
     $PHPIZE_DEPS
 
 # Core PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j"$(nproc)" \
         bcmath \
         exif \

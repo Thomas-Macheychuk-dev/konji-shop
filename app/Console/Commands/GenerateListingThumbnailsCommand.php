@@ -25,7 +25,8 @@ final class GenerateListingThumbnailsCommand extends Command
     protected $signature = 'catalogue:generate-thumbnails
         {--write : Create the thumbnails. Otherwise only count what is missing.}
         {--limit=1000 : Most images to process in this run.}
-        {--repair-missing : First check recorded thumbnails exist on the disk; with --write, forget the missing ones so they are made again.}';
+        {--repair-missing : First check recorded thumbnails exist on the disk; with --write, forget the missing ones so they are made again.}
+        {--retry-webp : First count WebP images left on their original (GD could not read WebP before); with --write, forget them so they are made again.}';
 
     protected $description = 'Preview or create the small listing copies of product card images.';
 
@@ -35,6 +36,10 @@ final class GenerateListingThumbnailsCommand extends Command
 
         if ($this->option('repair-missing')) {
             $this->repairMissing($cache);
+        }
+
+        if ($this->option('retry-webp')) {
+            $this->retryWebp();
         }
 
         $missing = 0;
@@ -153,5 +158,27 @@ final class GenerateListingThumbnailsCommand extends Command
         // Cards go back to the full image until the thumbnail is made again.
         $cache->bump(StorefrontCache::NAMESPACE_CATALOGUE);
         $this->line('FORGOTTEN='.count($absent));
+    }
+
+    /**
+     * WebP images recorded with their original as the thumbnail (unreadable before GD had WebP, or already
+     * small) are forgotten with --write so the run below reads them again. Small ones simply get recorded again.
+     */
+    private function retryWebp(): void
+    {
+        $count = 0;
+
+        foreach ([ProductImage::class, ProductAttributeValueImage::class] as $model) {
+            $query = $model::query()
+                ->whereColumn('thumbnail_path', 'path')
+                ->where('path', 'like', '%.webp');
+
+            $count += $this->option('write')
+                ? $query->update(['thumbnail_path' => null])
+                : $query->count();
+        }
+
+        $this->line('=== WEBP ORIGINALS ===');
+        $this->line(($this->option('write') ? 'FORGOTTEN=' : 'ON_ORIGINAL=').$count);
     }
 }

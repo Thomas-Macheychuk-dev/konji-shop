@@ -135,6 +135,29 @@ it('forgets recorded thumbnails whose file is missing so they are made again', f
     expect($kept->fresh()->thumbnail_path)->toBe(ListingThumbnail::pathFor($kept->path));
 });
 
+it('retries WebP images that were left on their original', function (): void {
+    $webp = thumbnailProduct('Peruka webp', pngOfSize(1200, 1200));
+    $webpPath = str_replace('.png', '.webp', $webp->path);
+    Storage::disk('public')->move($webp->path, $webpPath);
+    $webp->forceFill(['path' => $webpPath, 'thumbnail_path' => $webpPath])->save();
+    $png = thumbnailProduct('Orteza mala', pngOfSize(300, 300));
+    $png->forceFill(['thumbnail_path' => $png->path])->save();
+
+    $this->artisan('catalogue:generate-thumbnails', ['--retry-webp' => true])
+        ->expectsOutputToContain('ON_ORIGINAL=1')
+        ->expectsOutputToContain('MISSING=0')
+        ->assertSuccessful();
+    expect($webp->fresh()->thumbnail_path)->toBe($webpPath);
+
+    $this->artisan('catalogue:generate-thumbnails', ['--retry-webp' => true, '--write' => true])
+        ->expectsOutputToContain('FORGOTTEN=1')
+        ->expectsOutputToContain('CREATED=1 ALREADY_SMALL=0 FAILED=0')
+        ->assertSuccessful();
+
+    expect($webp->fresh()->thumbnail_path)->toBe(ListingThumbnail::pathFor($webpPath))
+        ->and($png->fresh()->thumbnail_path)->toBe($png->path);
+});
+
 it('returns 404 for page numbers that are not positive integers', function (): void {
     $category = Category::query()->create(['name' => 'Ortezy', 'slug' => 'ortezy', 'status' => CategoryStatus::ACTIVE]);
     thumbnailProduct('Orteza', pngOfSize(10, 10), $category);
