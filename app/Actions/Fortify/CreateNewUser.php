@@ -33,18 +33,21 @@ class CreateNewUser implements CreatesNewUsers
                 'max:255',
                 Rule::unique(User::class),
             ],
-            'street' => ['required', 'string', 'max:255'],
-            'house_number' => ['required', 'string', 'max:50'],
+            // The address is optional here: checkout asks for it with the first order.
+            'street' => ['nullable', 'string', 'max:255'],
+            'house_number' => ['nullable', 'string', 'max:50'],
             'apartment_number' => ['nullable', 'string', 'max:50'],
-            'city' => ['required', 'string', 'max:255'],
-            'postcode' => ['required', 'string', 'max:32'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'postcode' => ['nullable', 'string', 'max:32'],
             'country' => [
-                'required',
+                'nullable',
                 'string',
                 'size:2',
                 Rule::in(array_keys(config('countries'))),
             ],
+            // Required: checkout takes a logged-in customer's phone from the account.
             'phone_number' => ['required', 'string', 'max:32'],
+            'terms_accepted' => ['accepted'],
 
             'wants_company_invoice' => ['nullable', 'boolean'],
             'company_name' => ['nullable', 'required_if:wants_company_invoice,1', 'string', 'max:255'],
@@ -63,6 +66,8 @@ class CreateNewUser implements CreatesNewUsers
             ],
 
             'password' => $this->passwordRules(),
+        ], [
+            'terms_accepted.accepted' => 'Zaakceptuj regulamin sklepu, aby założyć konto.',
         ])->validate();
 
         $wantsCompanyInvoice = filter_var($input['wants_company_invoice'] ?? false, FILTER_VALIDATE_BOOLEAN);
@@ -72,12 +77,12 @@ class CreateNewUser implements CreatesNewUsers
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
             'email' => $input['email'],
-            'street' => $input['street'],
-            'house_number' => $input['house_number'],
+            'street' => $input['street'] ?? null,
+            'house_number' => $input['house_number'] ?? null,
             'apartment_number' => $input['apartment_number'] ?? null,
-            'city' => $input['city'],
-            'postcode' => $input['postcode'],
-            'country' => $input['country'],
+            'city' => $input['city'] ?? null,
+            'postcode' => $input['postcode'] ?? null,
+            'country' => ($input['country'] ?? null) ?: 'PL',
             'phone_number' => $input['phone_number'],
             'password' => Hash::make($input['password']),
 
