@@ -50,6 +50,8 @@ const defaultVariant = computed(() => {
 const lastSelectedValueId = ref(null);
 const quantity = ref(1);
 const selectionError = ref('');
+const cartForm = ref(null);
+const optionsAnchor = ref(null);
 
 watch(quantity, (value) => {
     const numeric = Number(value);
@@ -411,6 +413,17 @@ const needsVariantChoice = computed(() => {
         && variants.value.some(isVariantPurchasable);
 });
 
+// The phone sticky bar adds to the cart, or scrolls to the options while a choice is missing.
+function stickyBarAction() {
+    if (canAddToCart.value) {
+        cartForm.value?.requestSubmit();
+
+        return;
+    }
+
+    optionsAnchor.value?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 initializeSelection();
 
 watch(
@@ -433,6 +446,25 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 </script>
 
 <template>
+    <div class="pb-24 lg:pb-0">
+    <div class="mb-6 lg:mb-8">
+        <h1 class="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">
+            {{ product.name }}
+        </h1>
+
+        <div class="mt-3 flex flex-wrap items-center gap-3 lg:hidden">
+            <span class="text-2xl font-semibold text-zinc-900">
+                {{ formatPrice(selectedVariant?.price, selectedVariant?.currency || 'PLN') }}
+            </span>
+            <span
+                v-if="selectedVariant?.stock_status"
+                class="inline-flex rounded-full bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700"
+            >
+                {{ product.is_purchasable === true ? formatStockStatus(selectedVariant.stock_status) : 'Niedostępny' }}
+            </span>
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 gap-10 lg:grid-cols-[5fr_6fr]">
         <section>
             <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
@@ -453,13 +485,13 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 
             <div
                 v-if="galleryImages.length > 1"
-                class="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-5"
+                class="mt-4 flex gap-3 overflow-x-auto pb-1 sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0"
             >
                 <button
                     v-for="(image, index) in galleryImages"
                     :key="image.id ?? index"
                     type="button"
-                    class="overflow-hidden rounded-xl border bg-white transition"
+                    class="w-20 shrink-0 overflow-hidden rounded-xl border bg-white transition sm:w-auto"
                     :class="{
                         'border-zinc-900 ring-2 ring-zinc-900/10': isImageSelected(index),
                         'border-zinc-200': !isImageSelected(index),
@@ -477,12 +509,6 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
 
         <section>
             <div class="space-y-6">
-                <div>
-                    <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
-                        {{ product.name }}
-                    </h1>
-                </div>
-
                 <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                     <div
                         v-if="legalDisclosures.length"
@@ -503,6 +529,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                     </div>
 
                     <form
+                        ref="cartForm"
                         method="POST"
                         action="/cart/items"
                         class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
@@ -710,6 +737,8 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                     </div>
                 </div>
 
+                <div ref="optionsAnchor" class="scroll-mt-24" aria-hidden="true" />
+
                 <div
                     v-for="group in optionGroups"
                     :key="group.code"
@@ -773,6 +802,28 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                 </div>
             </div>
         </section>
+    </div>
+
+    <div
+        v-if="hasActiveVariants && product.is_purchasable === true"
+        class="fixed inset-x-0 bottom-0 z-30 flex items-center justify-between gap-3 border-t border-zinc-200 bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)] backdrop-blur lg:hidden"
+    >
+        <div class="min-w-0">
+            <p class="truncate text-xs text-zinc-500">{{ product.name }}</p>
+            <p class="text-lg font-bold text-zinc-900">
+                {{ formatPrice(selectedVariant?.price, selectedVariant?.currency || 'PLN') }}
+            </p>
+        </div>
+
+        <button
+            type="button"
+            class="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-[#155fa8] px-5 text-sm font-bold text-white shadow-sm transition hover:bg-[#0b3b70] disabled:cursor-not-allowed disabled:opacity-50"
+            :disabled="!canAddToCart && !needsVariantChoice"
+            @click="stickyBarAction"
+        >
+            {{ canAddToCart ? 'Dodaj do koszyka' : needsVariantChoice ? 'Wybierz wariant' : 'Niedostępny' }}
+        </button>
+    </div>
     </div>
 </template>
 <style scoped>

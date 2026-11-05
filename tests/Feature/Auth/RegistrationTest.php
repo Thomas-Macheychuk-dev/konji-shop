@@ -29,6 +29,7 @@ test('new users can register', function () {
         'postcode' => '87-100',
         'country' => 'PL',
         'phone_number' => '123456789',
+        'terms_accepted' => '1',
     ]);
 
     $response->assertSessionHasNoErrors()

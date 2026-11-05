@@ -68,12 +68,14 @@ use App\Http\Controllers\CartItemStoreController;
 use App\Http\Controllers\CartItemUpdateController;
 use App\Http\Controllers\CartShowController;
 use App\Http\Controllers\CartSummaryController;
+use App\Http\Controllers\CategoryIndexController;
 use App\Http\Controllers\CategoryProductIndexController;
 use App\Http\Controllers\Checkout\CheckoutShippingQuoteController;
 use App\Http\Controllers\Checkout\InPostParcelLockerSearchController;
 use App\Http\Controllers\Checkout\PolkurierMapTokenController;
 use App\Http\Controllers\CheckoutPlaceOrderController;
 use App\Http\Controllers\CheckoutShowController;
+use App\Http\Controllers\ContactMessageStoreController;
 use App\Http\Controllers\EditablePageShowController;
 use App\Http\Controllers\GuestOrderCancelController;
 use App\Http\Controllers\GuestOrderShowController;
@@ -103,6 +105,8 @@ Route::post('/human-check', [HumanChallengeController::class, 'verify'])
 
 Route::get('/', HomeController::class)->name('home');
 
+Route::get('/categories', CategoryIndexController::class)
+    ->name('categories.index');
 Route::get('/categories/{category:slug}', CategoryProductIndexController::class)
     ->name('categories.show');
 
@@ -396,6 +400,9 @@ Route::redirect('/content/11-wypozyczalnia-sprzetu-medycznego', '/wypozyczalnia-
 
 Route::get('/wypozyczalnia-sprzetu-medycznego', RentalController::class)
     ->name('rental.index');
+Route::post('/contact', ContactMessageStoreController::class)
+    ->middleware('throttle:5,10')
+    ->name('contact.message');
 Route::post('/wypozyczalnia-sprzetu-medycznego/zapytanie', RentalEnquiryStoreController::class)
     ->middleware('throttle:5,10')
     ->name('rental.enquiry');

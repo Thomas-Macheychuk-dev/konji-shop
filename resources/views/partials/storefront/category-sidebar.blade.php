@@ -138,7 +138,7 @@
 
         <div class="border-t border-slate-100 bg-slate-50/70 p-3">
             <a
-                href="{{ route('home') }}#categories"
+                href="{{ route('categories.index') }}"
                 class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold text-[#155fa8] transition hover:bg-white"
             >
                 Zobacz wszystkie działy

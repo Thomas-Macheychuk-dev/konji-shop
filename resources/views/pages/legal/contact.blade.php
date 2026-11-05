@@ -10,6 +10,8 @@
             </div>
 
             {!! $page->content !!}
+
+            @include('partials.storefront.contact-form')
         </div>
     </div>
 @endsection

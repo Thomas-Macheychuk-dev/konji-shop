@@ -41,11 +41,25 @@
             />
 
             <flux:input
+                name="phone_number"
+                :label="__('Phone number')"
+                :value="old('phone_number')"
+                type="tel"
+                required
+                autocomplete="tel"
+                :placeholder="__('Phone number')"
+            />
+
+            <div>
+                <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">Adres (opcjonalnie)</h2>
+                <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Możesz go pominąć — poprosimy o adres przy pierwszym zamówieniu.</p>
+            </div>
+
+            <flux:input
                 name="street"
                 :label="__('Street')"
                 :value="old('street')"
                 type="text"
-                required
                 autocomplete="address-line1"
                 :placeholder="__('Street')"
             />
@@ -56,7 +70,6 @@
                     :label="__('House number')"
                     :value="old('house_number')"
                     type="text"
-                    required
                     autocomplete="address-line2"
                     :placeholder="__('House number')"
                 />
@@ -76,7 +89,6 @@
                 :label="__('City / Town / Village')"
                 :value="old('city')"
                 type="text"
-                required
                 autocomplete="address-level2"
                 :placeholder="__('City / Town / Village')"
             />
@@ -87,7 +99,6 @@
                     :label="__('Postcode')"
                     :value="old('postcode')"
                     type="text"
-                    required
                     autocomplete="postal-code"
                     :placeholder="__('Postcode')"
                 />
@@ -100,7 +111,6 @@
                     <select
                         id="country"
                         name="country"
-                        required
                         autocomplete="country-name"
                         class="w-full rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
                     >
@@ -118,16 +128,6 @@
                     @enderror
                 </div>
             </div>
-
-            <flux:input
-                name="phone_number"
-                :label="__('Phone number')"
-                :value="old('phone_number')"
-                type="text"
-                required
-                autocomplete="tel"
-                :placeholder="__('Phone number')"
-            />
 
             <div class="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/50">
                 <label class="flex items-start gap-3">
@@ -273,6 +273,31 @@
                 :placeholder="__('Confirm password')"
                 viewable
             />
+
+            <div>
+                <label class="flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300">
+                    <input
+                        type="checkbox"
+                        name="terms_accepted"
+                        value="1"
+                        required
+                        @checked(old('terms_accepted'))
+                        class="mt-1 rounded border-zinc-300 text-zinc-900 shadow-sm focus:ring-zinc-500 dark:border-zinc-700 dark:bg-zinc-900"
+                    >
+                    <span>
+                        Zapoznałem/am się z
+                        <a href="{{ route('legal.terms') }}" target="_blank" rel="noopener noreferrer" class="font-medium underline underline-offset-4">Regulaminem sklepu</a>
+                        i akceptuję jego treść.
+                    </span>
+                </label>
+                @error('terms_accepted')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+                <p class="mt-3 text-xs leading-5 text-zinc-500 dark:text-zinc-400">
+                    Administratorem danych jest {{ config('legal.seller.company_name') }}. Dane z konta wykorzystujemy do realizacji zamówień i obsługi konta.
+                    Szczegóły, w tym Twoje prawa, opisuje <a href="{{ route('legal.privacy') }}" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4">Polityka prywatności</a>.
+                </p>
+            </div>
 
             <div class="flex items-center justify-end">
                 <flux:button type="submit" variant="primary" class="w-full" data-test="register-user-button">
