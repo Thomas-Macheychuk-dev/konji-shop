@@ -34,6 +34,8 @@ it('places staging product names in the right body part', function (string $name
     ['Kamizelka na ramię i bark. IMMOBILO SHD', 'bark-i-ramie'],
     ['FP-EM-6 Wkręt do drewna', 'akcesoria-do-ortez'],
     ['Pokrowiec do AM-ADS-R', 'akcesoria-do-ortez'],
+    ['P3D – Pokrowiec 3D MESH™', 'akcesoria-do-ortez'],
+    ['PMN – Podkładka masujaco-napowietrzająca', 'akcesoria-do-ortez'],
     ['Biustonosz kompresyjny AT04007', null],
 ]);
 
