@@ -81,7 +81,7 @@ class CheckoutService
             $deliveryService = (string) ($data['delivery_service'] ?? 'parcel_locker');
             $deliveryLockerCode = $this->nullableString($data['delivery_locker_code'] ?? null);
 
-            $shippingAddressData = $this->buildShippingAddressData($data, $user);
+            $shippingAddressData = $this->buildShippingAddressData($data);
             $packs = $this->packBuilder->fromCart($lockedCart);
 
             $shippingQuote = $this->shippingQuoteService->quote(
@@ -222,16 +222,10 @@ class CheckoutService
     /**
      * @return array<string, mixed>
      */
-    private function buildShippingAddressData(array $data, ?User $user): array
+    private function buildShippingAddressData(array $data): array
     {
-        if ($user !== null && $user->hasPersonalAddress()) {
-            $address = $user->toPersonalOrderAddressSnapshot('shipping');
-            $address['phone'] = (string) $data['phone'];
-            $address['email'] = (string) $data['email'];
-
-            return $address;
-        }
-
+        // Always the address the customer submitted. For logged-in customers the form is pre-filled from the
+        // account, so an unchanged form gives the account address and an edited one (a gift, a work address) wins.
         return [
             'type' => 'shipping',
             'first_name' => (string) $data['shipping_first_name'],
