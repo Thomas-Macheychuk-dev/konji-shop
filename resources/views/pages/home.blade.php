@@ -12,7 +12,7 @@
                             „{{ $searchQuery }}”
                         </h1>
                         <p class="mt-3 text-sm text-slate-500">
-                            Znaleziono {{ $searchResults->count() }} {{ $searchResults->count() === 1 ? 'produkt' : 'produktów' }}.
+                            Znaleziono {{ $searchResults->total() }} {{ trans_choice('produkt|produkty|produktów', $searchResults->total()) }}.
                         </p>
                     </div>
 
@@ -22,11 +22,34 @@
                     </a>
                 </div>
 
+                @if ($searchResults->isNotEmpty() || $searchIsFiltered)
+                    <div class="mt-8">
+                        <x-storefront.listing-toolbar
+                            :action="route('home')"
+                            :filters="$searchFilters"
+                            :sorts="\App\Services\Storefront\ProductListing::SEARCH_SORTS"
+                            :brands="$searchBrands"
+                            :search-query="$searchQuery"
+                        />
+                    </div>
+                @endif
+
                 @if ($searchResults->isNotEmpty())
-                    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         @foreach ($searchResults as $product)
-                            <x-storefront.product-card :product="$product" />
+                            <x-storefront.product-card :product="$product" :show-code="in_array(mb_strtolower($product->name), $duplicateNames, true)" />
                         @endforeach
+                    </div>
+
+                    @if ($searchResults->hasPages())
+                        <div class="mt-10 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-slate-200">
+                            {{ $searchResults->onEachSide(1)->links() }}
+                        </div>
+                    @endif
+                @elseif ($searchIsFiltered)
+                    <div class="rounded-[28px] border border-blue-100 bg-blue-50/70 px-6 py-10 text-center">
+                        <h2 class="text-xl font-bold text-slate-900">Brak wyników dla wybranych filtrów</h2>
+                        <a href="{{ route('home', ['q' => $searchQuery]) }}" class="mt-5 inline-flex rounded-xl bg-[#155fa8] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0b3b70]">Wyczyść filtry</a>
                     </div>
                 @else
                     <div class="mt-8 rounded-[28px] border border-blue-100 bg-blue-50/70 px-6 py-10 text-center sm:px-10">
@@ -37,6 +60,12 @@
                             </svg>
                         </div>
                         <h2 class="mt-5 text-xl font-bold text-slate-900">Nie znaleźliśmy takiego produktu</h2>
+                        @if ($searchSuggestion)
+                            <p class="mt-3 text-base text-slate-700">
+                                Czy chodziło Ci o:
+                                <a href="{{ route('home', ['q' => $searchSuggestion]) }}" class="font-bold text-[#155fa8] underline underline-offset-4">{{ $searchSuggestion }}</a>?
+                            </p>
+                        @endif
                         <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">
                             Spróbuj użyć krótszej nazwy, wyszukaj część ciała albo skontaktuj się z nami — pomożemy znaleźć właściwe rozwiązanie.
                         </p>

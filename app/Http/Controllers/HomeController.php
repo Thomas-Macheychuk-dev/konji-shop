@@ -10,6 +10,8 @@ use App\Enums\ProductVariantStatus;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Shop\ShopSettings;
+use App\Services\Storefront\ProductListing;
+use App\Services\Storefront\ProductSearch;
 use App\Services\Storefront\StorefrontCache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,6 +24,8 @@ class HomeController extends Controller
     public function __construct(
         private readonly ShopSettings $shopSettings,
         private readonly StorefrontCache $cache,
+        private readonly ProductListing $listing,
+        private readonly ProductSearch $search,
     ) {}
 
     public function __invoke(Request $request): View
@@ -102,18 +106,26 @@ SQL,
         );
 
         $searchResults = collect();
+        $searchFilters = $this->listing->filtersFrom($request, ProductListing::SEARCH_SORTS);
+        $searchBrands = [];
+        $searchSuggestion = null;
 
         if ($searchQuery !== '') {
-            $searchResults = $this->productCardQuery()
-                ->where(function (Builder $query) use ($searchQuery): void {
-                    $query
-                        ->where('name', 'like', '%'.$searchQuery.'%')
-                        ->orWhere('short_description', 'like', '%'.$searchQuery.'%')
-                        ->orWhere('description', 'like', '%'.$searchQuery.'%');
-                })
-                ->orderBy('name')
-                ->limit(24)
-                ->get();
+            $query = $this->search->apply($this->listing->query(), $searchQuery);
+            $searchBrands = $this->listing->brandOptions($query);
+
+            if ($searchFilters['sort'] === 'trafnosc') {
+                $this->search->rankByName($query, $searchQuery);
+            }
+
+            $searchResults = $this->listing->apply($query, $searchFilters)
+                ->paginate(ProductListing::PER_PAGE)
+                ->withPath(route('home'))
+                ->appends(['q' => $searchQuery] + $this->listing->queryParameters($searchFilters, 'trafnosc'));
+
+            if ($searchResults->total() === 0 && ! $this->listing->hasActiveFilters($searchFilters)) {
+                $searchSuggestion = $this->search->suggestion($searchQuery);
+            }
         }
 
         $seoTitle = $searchQuery !== ''
@@ -127,6 +139,11 @@ SQL,
             'featuredProducts' => $featuredProducts,
             'searchQuery' => $searchQuery,
             'searchResults' => $searchResults,
+            'searchFilters' => $searchFilters,
+            'searchBrands' => $searchBrands,
+            'searchSuggestion' => $searchSuggestion,
+            'searchIsFiltered' => $this->listing->hasActiveFilters($searchFilters) || $searchFilters['sort'] !== 'trafnosc',
+            'duplicateNames' => $searchQuery === '' ? [] : $this->listing->duplicateNames($searchResults->items()),
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
             'canonicalUrl' => $canonicalUrl,
