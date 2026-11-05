@@ -16,7 +16,7 @@ final class OrthosisBodyPart
 {
     /** slug => [name, pattern] */
     public const GROUPS = [
-        'akcesoria-do-ortez' => ['Akcesoria do ortez', '/wkręt|śrub|zaczep|przedłużacz|klamr|montaż|^pokrowiec|^pelot|zestaw mocując|taśm|rękaw ochronny pod|dodatkowe usztywnienie|wkładk[ai] do ortez|pompk|zawór|granulat|przelotk|zacisk|pasek zębaty|samoszczepn|\bfp-(?:a|em)-|kliny wspierające|podkładka masując/iu'],
+        'akcesoria-do-ortez' => ['Akcesoria do ortez', '/wkręt|śrub|zaczep|przedłużacz|klamr|montaż|(?:^|– )pokrowiec|(?:^|– )pelot|zestaw mocując|taśm|rękaw ochronny pod|dodatkowe usztywnienie|wkładk[ai] do ortez|pompk|zawór|granulat|przelotk|zacisk|pasek zębaty|samoszczepn|\bfp-(?:a|em)-|kliny wspierające|podkładka masuj/iu'],
         'pozycjonowanie-i-stabilizacja' => ['Pozycjonowanie i stabilizacja', '/bodymap|\bfp-\d|\bneo \d|\bp-ss-|materac|wałek|fotelik|zagłówek|podłokietnik|stolik|uprząż|podkładka antymigracyjna|krążek przeciwodleżyn|– kamizelka/iu'],
         'szyja' => ['Szyja', '/szyj|kołnierz|collar/iu'],
         'kolano' => ['Kolano', '/kolan|rzepk|knee|genu|\bacl\b|\bpcl\b/iu'],

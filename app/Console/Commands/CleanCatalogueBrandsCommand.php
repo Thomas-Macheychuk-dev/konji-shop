@@ -32,10 +32,15 @@ final class CleanCatalogueBrandsCommand extends Command
 
     protected $description = 'Preview, apply or roll back manufacturer name clean-up, merges and missing Reh4Mat brands.';
 
-    // A separator is required, so a brand that merely ends in "co" or "sa" keeps its name.
-    private const LEGAL_FORM = '/[\s,.\-]+(?:sp\.?\s*z\s*o\.?\s*o\.?|sp\.?\s*j\.?|sp\.?\s*k\.?|spółka\b.*|s\.?\s*a\.?|s\.?\s*r\.?\s*o\.?|gmbh|ltd\.?|llc|inc\.?|co\.?)$/iu';
+    // A legal form ends the brand name wherever it appears: "Löwenstein Medical Technology GmbH + Co. KG Kronsaalsweg 40".
+    // A separator is required before it, and short forms must stand alone, so "Medico" or "Sanitas" keep their names.
+    private const LEGAL_FORM = '/[\s,.]+(?:sp\.?\s*z\s*o\.?\s*o|sp\.?\s*[jk]\.|spółka\b|s\.?\s*p\.?\s*a\.?(?=[\s,.(]|$)|s\.?\s*r\.?\s*[lo]\.?(?=[\s,.(]|$)|s\.?\s*a\.?(?:\s*e\.?)?(?=[\s,.(]|$)|a\.\s*s\.|b\.?\s*v\.?(?=[\s,.(]|$)|gmbh|ag(?=[\s,.(]|$)|ltd|llc|inc\b|corp\b|pty\b|co\.)/iu';
 
-    private const IMPRINT_START = '/\s*(?:,|\bul\.|\bulica\b|\bNIP\b|\bKRS\b|\btel\.|\be-mail\b|\bwww\.|\bpodmiot\b)/iu';
+    // Imprints, notified-body numbers and leaflet text that follow the name.
+    private const IMPRINT_START = '/\s*(?:\bnumer jednostki notyfikowanej\b|\bul\.|\bulica\b|\bNIP\b|\bKRS\b|\btel\.|\be-mail\b|\bwww\.|\bpodmiot\b|\bupoważniony\b|\bimporter\b|\bdystrybutor\b|\bsposób użycia\b)/iu';
+
+    // "TZMO S.A. (marka Seni)" or "Stella Pack S.A. marka Service": the brand shoppers know is the "marka".
+    private const MARKA = '/\bmarka\s+([^()]+?)\s*(?:\)|\bnumer jednostki|$)/iu';
 
     public function handle(ProductBrandAttribute $brandAttribute): int
     {
@@ -145,18 +150,21 @@ final class CleanCatalogueBrandsCommand extends Command
      */
     public static function cleanName(string $name): string
     {
-        $name = trim((string) preg_replace('/\s+/u', ' ', $name));
-        $cut = preg_split(self::IMPRINT_START, $name, 2);
-        $name = trim($cut[0] ?? $name);
+        $original = trim((string) preg_replace('/\s+/u', ' ', $name));
 
-        do {
-            $before = $name;
-            $name = trim((string) preg_replace(self::LEGAL_FORM, '', $name));
-        } while ($name !== $before && $name !== '');
+        if (preg_match(self::MARKA, $original, $marka) === 1) {
+            return trim($marka[1]);
+        }
 
+        $name = (string) preg_replace('/^(?:osoba odpowiedzialna|producent|wytwórca)\s*:\s*/iu', '', $original);
+        $name = preg_split(self::IMPRINT_START, $name, 2)[0] ?? $name;
+        // After a comma, text holding a number is an address ("Foo Ltd, No. 4-2 Leqiang Road");
+        // other commas belong to the name ("Becton, Dickinson and Company").
+        $name = (string) preg_replace('/,(?=[^,]*\d).*$/u', '', $name);
+        $name = preg_split(self::LEGAL_FORM, $name, 2)[0] ?? $name;
         $name = (string) preg_replace('/^[\s,.\-–]+|[\s,.\-–]+$/u', '', $name);
 
-        return $name !== '' ? $name : $before;
+        return $name !== '' ? $name : $original;
     }
 
     /**
