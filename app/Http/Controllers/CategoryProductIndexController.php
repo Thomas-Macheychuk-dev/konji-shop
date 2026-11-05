@@ -71,7 +71,13 @@ final class CategoryProductIndexController extends Controller
             return redirect()->route('categories.show', $targetSlug, 301);
         }
 
-        abort_unless($category->status->isActive(), 404);
+        if (! $category->status->isActive()) {
+            // Archived supplier subcategories (catalogue:reorganise) send visitors and search engines to the nearest active parent.
+            $ancestor = $this->nearestActiveAncestor($category);
+            abort_if($ancestor === null, 404);
+
+            return redirect()->route('categories.show', $ancestor->slug, 301);
+        }
 
         $category->load([
             'children' => function ($query): void {
@@ -178,6 +184,27 @@ final class CategoryProductIndexController extends Controller
         }
 
         return $category->name;
+    }
+
+    private function nearestActiveAncestor(Category $category): ?Category
+    {
+        $seen = [$category->getKey() => true];
+        $current = $category;
+
+        while ($current->parent_id !== null && ! isset($seen[$current->parent_id])) {
+            $seen[$current->parent_id] = true;
+            $current = Category::query()->find($current->parent_id);
+
+            if ($current === null) {
+                return null;
+            }
+
+            if ($current->status->isActive()) {
+                return $current;
+            }
+        }
+
+        return null;
     }
 
     /** @return list<Category> */
