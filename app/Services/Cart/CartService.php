@@ -13,6 +13,7 @@ use App\Models\Cart;
 use App\Models\ProductVariant;
 use App\Models\User;
 use App\Services\Products\VermeirenColorSelectionService;
+use App\Services\Reh4Mat\Reh4MatSizeOptions;
 use App\Support\Products\ProductLegalDisclosures;
 use Illuminate\Support\Facades\DB;
 
@@ -71,6 +72,10 @@ class CartService
             || $product->published_at === null
             || $product->published_at->isFuture()) {
             throw new \RuntimeException('Product is not available for purchase.');
+        }
+
+        if (Reh4MatSizeOptions::missingChoice($product)) {
+            throw new \RuntimeException('Product needs a size or side that cannot be selected yet.');
         }
 
         if ($variant->status !== ProductVariantStatus::ACTIVE

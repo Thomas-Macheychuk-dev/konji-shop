@@ -8,6 +8,7 @@ use App\Console\Commands\Concerns\WritesReh4MatPriceChanges;
 use App\Enums\VatRate;
 use App\Models\ProductVariant;
 use App\Services\Reh4Mat\Reh4MatPriceList;
+use App\Services\Reh4Mat\Reh4MatSizeVariantSync;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -194,8 +195,9 @@ final class ApplyReh4MatPriceListCommand extends Command
             return [$fromSku, 'sku'];
         }
 
-        // Product-level codes describe the variant only when it is the product's only variant.
-        if ($product->variants_count > 1) {
+        // Product-level codes describe the variant only when it is the product's only variant,
+        // or one of its size/side variants, which all share the product's catalogue price.
+        if ($product->variants_count > 1 && ! Reh4MatSizeVariantSync::isOptionVariant($variant)) {
             return [$sku === null ? null : $list->symbolIn($sku), 'sku-text'];
         }
 

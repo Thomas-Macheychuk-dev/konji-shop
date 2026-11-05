@@ -597,7 +597,7 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                             v-else
                             class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-950"
                         >
-                            Produkt obecnie niedostępny do zakupu.
+                            {{ product.unavailable_note || 'Produkt obecnie niedostępny do zakupu.' }}
                         </div>
                     </form>
 

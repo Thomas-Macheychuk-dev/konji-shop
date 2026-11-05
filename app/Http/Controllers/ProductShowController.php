@@ -16,6 +16,7 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Herdegen\HerdegenDescriptionFormatter;
 use App\Services\Qmed\QmedDescriptionSanitizer;
+use App\Services\Reh4Mat\Reh4MatSizeOptions;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
 use App\Support\Products\ProductLegalDisclosures;
@@ -134,6 +135,8 @@ class ProductShowController extends Controller
             $informationalColorGroups !== [],
         ));
 
+        $missingSizeChoice = Reh4MatSizeOptions::missingChoice($product);
+
         $productPayload = [
             'id' => $product->id,
             'name' => $product->name,
@@ -146,7 +149,11 @@ class ProductShowController extends Controller
 
             'is_purchasable' => $product->status?->isActive() === true
                 && $product->published_at !== null
-                && $product->published_at->isPast(),
+                && $product->published_at->isPast()
+                && ! $missingSizeChoice,
+            'unavailable_note' => $missingSizeChoice
+                ? 'Ten produkt występuje w kilku rozmiarach lub wersjach (lewa/prawa). Skontaktuj się z nami, aby dobrać właściwy.'
+                : null,
             'option_groups' => $this->buildOptionGroups($product),
             'variants' => $this->buildVariants($product),
             'default_variant_id' => $defaultVariant?->id,
