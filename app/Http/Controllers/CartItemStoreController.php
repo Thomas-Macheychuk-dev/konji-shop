@@ -12,6 +12,7 @@ use App\Models\ProductVariant;
 use App\Services\Cart\CartGuestTokenResolver;
 use App\Services\Cart\CartService;
 use App\Services\Products\VermeirenColorSelectionService;
+use App\Services\Reh4Mat\Reh4MatSizeOptions;
 use Illuminate\Http\RedirectResponse;
 
 class CartItemStoreController extends Controller
@@ -44,6 +45,14 @@ class CartItemStoreController extends Controller
             return back()
                 ->withErrors([
                     'product_variant_id' => 'Ten produkt jest niedostępny.',
+                ])
+                ->withInput();
+        }
+
+        if (Reh4MatSizeOptions::missingChoice($variant->product)) {
+            return back()
+                ->withErrors([
+                    'product_variant_id' => 'Ten produkt występuje w kilku rozmiarach lub wersjach (lewa/prawa). Skontaktuj się z nami, aby dobrać właściwy.',
                 ])
                 ->withInput();
         }

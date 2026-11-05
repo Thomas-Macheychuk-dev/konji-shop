@@ -69,6 +69,7 @@ final class Reh4MatProductImporter
 
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
+        private readonly Reh4MatSizeVariantSync $sizeVariantSync,
     ) {}
 
     /**
@@ -259,9 +260,16 @@ final class Reh4MatProductImporter
 
         $variant->attributeValues()->sync([]);
 
+        // Sizes and sides from the description become option variants; the default is then archived.
+        $optionVariantIds = $this->sizeVariantSync->apply(
+            $product,
+            $variant,
+            Reh4MatSizeOptions::fromDescription($product->description),
+        )['option_variant_ids'];
+
         ProductVariant::query()
             ->where('product_id', $product->id)
-            ->where('id', '!=', $variant->id)
+            ->whereKeyNot([$variant->id, ...$optionVariantIds])
             ->delete();
     }
 
