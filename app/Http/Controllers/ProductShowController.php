@@ -130,10 +130,10 @@ class ProductShowController extends Controller
             ->first();
 
         $informationalColorGroups = $this->buildInformationalColorGroups($product);
-        $storefrontDescription = $this->demoteDescriptionHeadings($this->storefrontDescription(
+        $storefrontDescription = $this->describeDescriptionImages($this->demoteDescriptionHeadings($this->storefrontDescription(
             $product,
             $informationalColorGroups !== [],
-        ));
+        )), (string) $product->name);
 
         $missingSizeChoice = Reh4MatSizeOptions::missingChoice($product);
 
@@ -607,6 +607,31 @@ class ProductShowController extends Controller
         }
 
         return preg_replace('#<(/?)h1(?=[\s>])#i', '<$1h2', $description) ?? $description;
+    }
+
+    /**
+     * Supplier description images usually come without alt text and load eagerly. Give each one the product
+     * name as alt (screen readers, image search) and lazy loading; images with an alt attribute keep it.
+     */
+    private function describeDescriptionImages(?string $description, string $productName): ?string
+    {
+        if ($description === null) {
+            return null;
+        }
+
+        return preg_replace_callback('/<img\b([^>]*)>/i', function (array $match) use ($productName): string {
+            $attributes = $match[1];
+
+            if (preg_match('/\salt\s*=/i', $attributes) !== 1) {
+                $attributes .= ' alt="'.e($productName).'"';
+            }
+
+            if (preg_match('/\sloading\s*=/i', $attributes) !== 1) {
+                $attributes .= ' loading="lazy"';
+            }
+
+            return '<img'.rtrim($attributes, ' /').'>';
+        }, $description) ?? $description;
     }
 
     private function storefrontDescription(Product $product, bool $hasInformationalColors): ?string

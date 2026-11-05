@@ -17,7 +17,9 @@ const optionGroups = computed(() => {
             const aSort = Number(a.sort_order ?? 999999);
             const bSort = Number(b.sort_order ?? 999999);
 
-            return aSort - bSort;
+            // Same position: compare numbers by value, so "70x150" comes before "120x150".
+            return (aSort - bSort)
+                || String(a.label ?? '').localeCompare(String(b.label ?? ''), 'pl', { numeric: true });
         }),
     }));
 

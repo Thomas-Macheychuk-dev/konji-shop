@@ -89,6 +89,9 @@ final class CategoryProductIndexController extends Controller
 
         $categoryIds = $this->activeCategorySubtree->ids($category);
 
+        // "?page=abc" or "?page=0" is not a page of this listing.
+        abort_if(request()->has('page') && preg_match('/^[1-9]\d{0,5}$/', (string) request()->query('page')) !== 1, 404);
+
         $page = max(1, request()->integer('page', 1));
         $filters = $this->listing->filtersFrom(request());
         $isFiltered = $this->listing->hasActiveFilters($filters) || $filters['sort'] !== array_key_first(ProductListing::SORTS);

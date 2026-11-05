@@ -143,7 +143,7 @@ class Product extends Model
 
     public function getThumbnailUrlAttribute(): ?string
     {
-        return $this->default_image_url;
+        return $this->selectedDefaultImage()?->thumbnail_url;
     }
 
     public function getImageUrlAttribute(): ?string

@@ -50,6 +50,8 @@ class HomeController extends Controller
         $searchSuggestion = null;
 
         if ($searchQuery !== '') {
+            abort_if($request->has('page') && preg_match('/^[1-9]\d{0,5}$/', (string) $request->query('page')) !== 1, 404);
+
             $query = $this->search->restrict($this->listing->query(), $searchQuery);
             $searchBrands = $this->listing->brandOptions($query);
 

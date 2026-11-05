@@ -76,12 +76,12 @@
                 aria-label="ortezka.pl - strona główna"
             >
                 <img
-                    src="/images/ortezka-mark-v4.png"
+                    src="/images/ortezka-mark-v4-96.png" width="44" height="44"
                     alt="ortezka.pl"
                     class="h-11 w-11 object-contain sm:hidden"
                 >
                 <img
-                    src="/images/ortezka-logo-v4.png"
+                    src="/images/ortezka-logo-v4-500.png"
                     alt="ortezka.pl"
                     class="hidden h-12 w-auto max-w-[225px] object-contain sm:block xl:h-[54px] xl:max-w-[250px]"
                 >
