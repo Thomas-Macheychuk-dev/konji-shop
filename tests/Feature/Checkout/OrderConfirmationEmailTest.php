@@ -728,3 +728,93 @@ test('checkout snapshots product legal disclosures on the order item', function 
         ->and($legal['show_compression_measurement_notice'])->toBeTrue()
         ->and($legal['disclosures'])->toHaveCount(3);
 });
+
+function checkoutAddressTestUserWithCart(): User
+{
+    $user = User::factory()->create([
+        'email' => 'owner@gmail.com',
+        'phone_number' => '987654321',
+        'first_name' => 'Jan',
+        'last_name' => 'Kowalski',
+        'street' => 'Prusa',
+        'house_number' => '20',
+        'city' => 'Poznań',
+        'postcode' => '60-820',
+        'country' => 'PL',
+    ]);
+
+    [$product, $variant] = createTestProductAndVariant('Address Product', 'TEST-SKU-ADDR');
+
+    $cart = Cart::query()->create([
+        'user_id' => $user->id,
+        'status' => CartStatus::Active,
+        'currency' => Currency::PLN->value,
+    ]);
+
+    $cart->items()->create([
+        'product_id' => $product->id,
+        'product_variant_id' => $variant->id,
+        'quantity' => 1,
+        'unit_price' => $variant->grossPriceAmount(),
+        'currency' => Currency::PLN->value,
+        'meta' => null,
+    ]);
+
+    return $user;
+}
+
+test('ships to the address a logged-in customer typed, not the account address', function (): void {
+    $user = checkoutAddressTestUserWithCart();
+
+    $this->actingAs($user)
+        ->withSession(['_token' => 'test-csrf-token'])
+        ->post(route('checkout.place'), [
+            ...validCheckoutPayload(),
+            'delivery_service' => 'courier',
+            'delivery_locker_code' => null,
+            'shipping_first_name' => 'Anna',
+            'shipping_last_name' => 'Kowalska',
+            'shipping_address_line_1' => 'Długa 5',
+            'shipping_city' => 'Gdańsk',
+            'shipping_postcode' => '80-001',
+        ])
+        ->assertSessionHasNoErrors();
+
+    $this->assertDatabaseHas('order_addresses', [
+        'order_id' => Order::query()->latest('id')->value('id'),
+        'type' => 'shipping',
+        'first_name' => 'Anna',
+        'address_line_1' => 'Długa 5',
+        'city' => 'Gdańsk',
+        'postcode' => '80-001',
+        'phone' => '987654321',
+    ]);
+});
+
+test('ships to the account address when the pre-filled form is left unchanged', function (): void {
+    $user = checkoutAddressTestUserWithCart();
+    $defaults = $user->checkoutShippingAddressDefaults();
+
+    $this->actingAs($user)
+        ->withSession(['_token' => 'test-csrf-token'])
+        ->post(route('checkout.place'), [
+            ...validCheckoutPayload(),
+            'shipping_first_name' => $defaults['first_name'],
+            'shipping_last_name' => $defaults['last_name'],
+            'shipping_address_line_1' => $defaults['address_line_1'],
+            'shipping_address_line_2' => $defaults['address_line_2'],
+            'shipping_city' => $defaults['city'],
+            'shipping_postcode' => $defaults['postcode'],
+            'shipping_country_code' => $defaults['country_code'],
+        ])
+        ->assertSessionHasNoErrors();
+
+    $this->assertDatabaseHas('order_addresses', [
+        'order_id' => Order::query()->latest('id')->value('id'),
+        'type' => 'shipping',
+        'first_name' => 'Jan',
+        'address_line_1' => 'Prusa 20',
+        'city' => 'Poznań',
+        'postcode' => '60-820',
+    ]);
+});
