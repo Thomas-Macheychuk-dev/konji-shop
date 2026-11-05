@@ -111,7 +111,7 @@ SQL,
         $searchSuggestion = null;
 
         if ($searchQuery !== '') {
-            $query = $this->search->apply($this->listing->query(), $searchQuery);
+            $query = $this->search->restrict($this->listing->query(), $searchQuery);
             $searchBrands = $this->listing->brandOptions($query);
 
             if ($searchFilters['sort'] === 'trafnosc') {

@@ -172,3 +172,40 @@ it('shows codes on cards that share a name', function (): void {
         ->assertSee('Kod: 1-03-G')
         ->assertDontSee('Kod: OKD-15');
 });
+
+it('ignores 0 zł placeholder variants when sorting by price', function (): void {
+    $withPlaceholder = listingProduct('OrthoSleeve CS6', 8500);
+    ProductVariant::query()->create([
+        'product_id' => $withPlaceholder->id,
+        'sku' => 'FOOTWAVE-ZERO',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => 0,
+        'price_gross_amount' => 0,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_8,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => false,
+    ]);
+    listingProduct('Tania opaska', 2000);
+
+    expect(listedNames($this->get('/categories/ortezy-kolana?sort=cena-rosnaco'), 'products'))->toBe(['Tania opaska', 'OrthoSleeve CS6']);
+});
+
+it('shows an "od" price when a cheaper variant than the default exists', function (): void {
+    $product = listingProduct('Orteza w rozmiarach', 30000);
+    ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => 'CHEAPER-S',
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => VatRate::VAT_8->netFromGross(25000),
+        'price_gross_amount' => 25000,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_8,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => false,
+    ]);
+
+    $this->get('/categories/ortezy-kolana')
+        ->assertSeeInOrder(['Orteza w rozmiarach', 'od', '250,00 PLN'])
+        ->assertDontSee('300,00 PLN');
+});
