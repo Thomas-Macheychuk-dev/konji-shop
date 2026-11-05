@@ -59,7 +59,7 @@
         <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_0.85fr_0.85fr_1fr]">
             <div>
                 <a href="{{ route('home') }}" aria-label="ortezka.pl - strona główna" class="inline-block rounded-2xl bg-white px-4 py-3">
-                    <img src="/images/ortezka-logo-v4.png" alt="ortezka.pl" class="h-12 w-auto max-w-[230px] object-contain">
+                    <img src="/images/ortezka-logo-v4-500.png" alt="ortezka.pl" class="h-12 w-auto max-w-[230px] object-contain">
                 </a>
 
                 <p class="mt-6 max-w-md text-sm leading-7 text-blue-100/70">

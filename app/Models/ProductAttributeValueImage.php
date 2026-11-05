@@ -15,6 +15,7 @@ class ProductAttributeValueImage extends Model
         'attribute_value_id',
         'disk',
         'path',
+        'thumbnail_path',
         'source_url',
         'mime_type',
         'file_size',
@@ -47,5 +48,13 @@ class ProductAttributeValueImage extends Model
     public function getUrlAttribute(): string
     {
         return Storage::disk($this->disk)->url($this->path);
+    }
+
+    /**
+     * The small listing copy (catalogue:generate-thumbnails), or the full image until it exists.
+     */
+    public function getThumbnailUrlAttribute(): string
+    {
+        return Storage::disk($this->disk)->url($this->thumbnail_path ?: $this->path);
     }
 }

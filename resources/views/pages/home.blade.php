@@ -148,7 +148,7 @@
                                         <h2 class="mt-2 text-2xl font-extrabold tracking-tight text-slate-950">Od czego zaczynamy?</h2>
                                     </div>
                                     <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-orange-50">
-                                        <img src="/images/ortezka-mark-v4.png" alt="" class="h-11 w-11 object-contain" aria-hidden="true">
+                                        <img src="/images/ortezka-mark-v4-96.png" alt="" class="h-11 w-11 object-contain" aria-hidden="true">
                                     </div>
                                 </div>
 
@@ -305,7 +305,7 @@
                     <div class="relative hidden h-full min-h-[280px] w-[360px] overflow-hidden lg:block">
                         <div class="absolute -bottom-28 -right-20 h-96 w-96 rounded-full border-[70px] border-white/5"></div>
                         <div class="absolute right-16 top-1/2 flex h-40 w-40 -translate-y-1/2 items-center justify-center rounded-[42px] bg-white shadow-2xl">
-                            <img src="/images/ortezka-mark-v4.png" alt="" class="h-28 w-28 object-contain" aria-hidden="true">
+                            <img src="/images/ortezka-mark-v4-240.png" alt="" class="h-28 w-28 object-contain" aria-hidden="true">
                         </div>
                     </div>
                 </div>

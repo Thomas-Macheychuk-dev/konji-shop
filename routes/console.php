@@ -16,6 +16,11 @@ Schedule::command('paynow:reconcile-refunds --limit=50')
     ->everyFifteenMinutes()
     ->withoutOverlapping();
 
+// Newly imported images get their small listing copy within the hour.
+Schedule::command('catalogue:generate-thumbnails --write --limit=300')
+    ->hourly()
+    ->withoutOverlapping();
+
 Schedule::command('complaints:send-deadline-alerts')
     ->dailyAt('06:00')
     ->withoutOverlapping();

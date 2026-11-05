@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\ProductShowController;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Services\Storefront\StorefrontCache;
+use App\Support\Seo\ReviewedProductAliases;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 
 final class ProductSeoFinalConsolidationRepair
@@ -85,9 +92,9 @@ final class ProductSeoFinalConsolidationRepair
         }
         // Deleting an incorrect gallery association must not orphan another
         // product's explicitly selected polymorphic default image.
-        $imageClass = \App\Models\ProductImage::class;
+        $imageClass = ProductImage::class;
         $imageTypes = [$imageClass, (new $imageClass)->getMorphClass()];
-        foreach (\Illuminate\Database\Eloquent\Relations\Relation::morphMap() as $alias => $mapped) {
+        foreach (Relation::morphMap() as $alias => $mapped) {
             if ($mapped === $imageClass) {
                 $imageTypes[] = $alias;
             }
@@ -128,11 +135,16 @@ final class ProductSeoFinalConsolidationRepair
     {
         $projection = $state;
         $expected = $this->manifest['frozen'];
-        $productFields = array_fill_keys(array_keys($expected['products'][0]), true);
-        $projection['products'] = array_map(static fn ($row): array => array_intersect_key($row, $productFields), $state['products']);
-        // Columns added after the freeze (product_variants.gtin) are not evidence; every frozen column still is.
-        $variantFields = array_fill_keys(array_keys($expected['product_variants'][0] ?? []), true);
-        $projection['product_variants'] = array_map(static fn ($row): array => array_intersect_key($row, $variantFields), $state['product_variants']);
+        // Columns added after the freeze (product_variants.gtin, product_images.thumbnail_path) are not
+        // evidence; every frozen column of every frozen table still is.
+        foreach ($expected as $table => $rows) {
+            if (! is_array($rows) || ! isset($rows[0]) || ! is_array($rows[0]) || ! is_array($state[$table] ?? null)) {
+                continue;
+            }
+
+            $fields = array_fill_keys(array_keys($rows[0]), true);
+            $projection[$table] = array_map(static fn ($row) => is_array($row) ? array_intersect_key($row, $fields) : $row, $state[$table]);
+        }
         if (self::hash($projection) !== self::hash($expected)) {
             throw new RuntimeException('Frozen catalogue evidence changed; review before any writes.');
         }
@@ -290,19 +302,19 @@ final class ProductSeoFinalConsolidationRepair
         if (DB::table('products')->where('status', 'active')->whereNull('deleted_at')->count() !== $this->manifest['expected_after_active_products'] || count($this->groups()) !== $this->manifest['expected_after_duplicate_title_groups']) {
             throw new RuntimeException('After-state catalogue totals differ.');
         }
-        $controller = app(\App\Http\Controllers\ProductShowController::class);
+        $controller = app(ProductShowController::class);
         foreach ($this->manifest['pairs'] as $pair) {
             try {
-                $response = $controller(\App\Models\Product::findOrFail($pair['source']['id']));
+                $response = $controller(Product::findOrFail($pair['source']['id']));
             } catch (Throwable $exception) {
                 throw new RuntimeException('Reviewed redirect is not installed or target unavailable.', previous: $exception);
             }
-            if (! $response instanceof \Illuminate\Http\RedirectResponse || $response->getStatusCode() !== 301 || parse_url($response->getTargetUrl(), PHP_URL_PATH) !== '/products/'.$pair['target']['slug']) {
+            if (! $response instanceof RedirectResponse || $response->getStatusCode() !== 301 || parse_url($response->getTargetUrl(), PHP_URL_PATH) !== '/products/'.$pair['target']['slug']) {
                 throw new RuntimeException('Reviewed redirect is not installed or target unavailable.');
             }
         }
         foreach ([9983, 9986, 10104, 10107] as $id) {
-            if (app(\App\Support\Seo\ReviewedProductAliases::class)->destination(\App\Models\Product::findOrFail($id)) !== null) {
+            if (app(ReviewedProductAliases::class)->destination(Product::findOrFail($id)) !== null) {
                 throw new RuntimeException('A distinct colour offer was redirected.');
             }
         }
@@ -343,6 +355,6 @@ final class ProductSeoFinalConsolidationRepair
     public static function invalidateCache(): void
     {
         ProductSeoEditorialRepair::invalidateCache();
-        app(\App\Services\Storefront\StorefrontCache::class)->bump(\App\Services\Storefront\StorefrontCache::NAMESPACE_NAVIGATION);
+        app(StorefrontCache::class)->bump(StorefrontCache::NAMESPACE_NAVIGATION);
     }
 }

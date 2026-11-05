@@ -12,7 +12,8 @@
         $grossPriceAmount = (int) $listingPrice;
     }
     $currency = $displayVariant?->currency?->value ?? 'PLN';
-    $imageUrl = $product->default_image_url;
+    // The small listing copy when catalogue:generate-thumbnails has made one.
+    $imageUrl = $product->thumbnail_url;
     $displayCategory = $product->categories->firstWhere('pivot.is_primary', true)
         ?? $product->categories->first();
     $categoryName = $displayCategory?->name;
