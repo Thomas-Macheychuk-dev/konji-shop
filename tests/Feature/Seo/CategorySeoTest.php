@@ -48,8 +48,9 @@ it('gives each category page its own canonical URL and page title', function ():
         ->assertOk()
         ->assertSee('<link rel="canonical" href="'.$url.'?page=2">', false)
         ->assertSee('<title>Ortezy kolana — Strona 2 - Ortezka.pl</title>', false)
-        ->assertSee('SEO Product 25')
-        ->assertDontSee('SEO Product 01');
+        // The default "Polecane" order lists the newest products first.
+        ->assertSee('SEO Product 01')
+        ->assertDontSee('SEO Product 25');
 });
 
 it('keeps cached category pagination on the requesting host without tracking parameters', function (): void {

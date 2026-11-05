@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\CategoryStatus;
-use App\Enums\ProductStatus;
-use App\Enums\ProductVariantStatus;
 use App\Models\Category;
-use App\Models\Product;
 use App\Services\Storefront\ActiveCategorySubtree;
+use App\Services\Storefront\ProductListing;
 use App\Services\Storefront\StorefrontCache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -60,6 +58,7 @@ final class CategoryProductIndexController extends Controller
     public function __construct(
         private readonly ActiveCategorySubtree $activeCategorySubtree,
         private readonly StorefrontCache $cache,
+        private readonly ProductListing $listing,
     ) {}
 
     public function __invoke(Category $category): View|RedirectResponse
@@ -85,38 +84,33 @@ final class CategoryProductIndexController extends Controller
         $categoryIds = $this->activeCategorySubtree->ids($category);
 
         $page = max(1, request()->integer('page', 1));
+        $filters = $this->listing->filtersFrom(request());
+        $isFiltered = $this->listing->hasActiveFilters($filters) || $filters['sort'] !== array_key_first(ProductListing::SORTS);
+        $inCategory = fn () => $this->listing->query()->whereHas('categories', function ($query) use ($categoryIds): void {
+            $query->whereIn('categories.id', $categoryIds);
+        });
 
         $products = $this->cache->rememberVersioned(
             StorefrontCache::NAMESPACE_CATALOGUE,
-            sprintf('category.v2.%s.%d.page.%d', strtolower(request()->getSchemeAndHttpHost()), $category->getKey(), $page),
-            fn () => Product::query()
-                ->where('status', ProductStatus::ACTIVE->value)
-                ->whereHas('categories', function ($query) use ($categoryIds): void {
-                    $query->whereIn('categories.id', $categoryIds);
-                })
-                ->with([
-                    'images',
-                    'attributeValueImages',
-                    'categories:id,name,slug',
-                    'variants' => function ($query): void {
-                        $query
-                            ->where('status', ProductVariantStatus::ACTIVE->value)
-                            ->orderByDesc('is_default')
-                            ->orderBy('id');
-                    },
-                ])
-                ->orderBy('name')
-                ->paginate(24),
+            sprintf('category.v3.%s.%d.%s.page.%d', strtolower(request()->getSchemeAndHttpHost()), $category->getKey(), $this->listing->cacheKey($filters), $page),
+            fn () => $this->listing->apply($inCategory(), $filters)->paginate(ProductListing::PER_PAGE),
+            $this->cache->categoryPageTtlSeconds(),
+        );
+
+        $brands = $this->cache->rememberVersioned(
+            StorefrontCache::NAMESPACE_CATALOGUE,
+            sprintf('category.brands.v1.%d', $category->getKey()),
+            fn () => $this->listing->brandOptions($inCategory()),
             $this->cache->categoryPageTtlSeconds(),
         );
 
         abort_if($page > 1 && $products->isEmpty(), 404);
 
         // The paginator is cached as an object. Keep request-specific URL state
-        // out of the cached instance and retain only the pagination parameter.
+        // out of the cached instance and retain only the pagination and filter parameters.
         $products = clone $products;
         $categoryUrl = route('categories.show', $category->slug);
-        $products->withPath($categoryUrl);
+        $products->withPath($categoryUrl)->appends($this->listing->queryParameters($filters, array_key_first(ProductListing::SORTS)));
 
         $breadcrumbCategories = $this->breadcrumbCategories($category);
         $seoTitle = $this->limitText($category->seo_title ?: $this->distinctName($category, $breadcrumbCategories), 70);
@@ -142,11 +136,16 @@ final class CategoryProductIndexController extends Controller
             'categoryDescription' => $categoryDescription,
             'breadcrumbCategories' => $breadcrumbCategories,
             'products' => $products,
+            'filters' => $filters,
+            'isFiltered' => $isFiltered,
+            'brands' => $brands,
+            'duplicateNames' => $this->listing->duplicateNames($products->items()),
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
             'canonicalUrl' => $canonicalUrl,
             // An empty listing is a soft 404 to search engines; it returns to the index once it has products.
-            'robots' => $products->total() === 0 ? 'noindex, follow' : null,
+            // Sorted and filtered views repeat the category, so only the plain listing is indexed.
+            'robots' => $products->total() === 0 || $isFiltered ? 'noindex, follow' : null,
             'openGraphTitle' => $seoTitle,
             'openGraphDescription' => $seoDescription,
             'openGraphType' => 'website',

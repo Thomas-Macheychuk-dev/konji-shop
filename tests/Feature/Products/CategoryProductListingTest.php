@@ -177,19 +177,20 @@ it('paginates category products at twenty four products per page', function (): 
         );
     }
 
+    // The default "Polecane" order lists the newest products first.
     $this
         ->get(route('categories.show', $category->slug))
         ->assertOk()
         ->assertSee('25 produktów')
-        ->assertSee('Category Product 01')
-        ->assertSee('Category Product 24')
-        ->assertDontSee('Category Product 25');
+        ->assertSee('Category Product 25')
+        ->assertSee('Category Product 02')
+        ->assertDontSee('Category Product 01');
 
     $this
         ->get(route('categories.show', [$category->slug, 'page' => 2]))
         ->assertOk()
-        ->assertSee('Category Product 25')
-        ->assertDontSee('Category Product 01');
+        ->assertSee('Category Product 01')
+        ->assertDontSee('Category Product 25');
 });
 
 it('does not show archived categories publicly', function (): void {

@@ -1,4 +1,4 @@
-@props(['product'])
+@props(['product', 'showCode' => false])
 
 @php
     $displayVariant = $product->variants->firstWhere('is_default', true)
@@ -10,6 +10,8 @@
         ?? $product->categories->first();
     $categoryName = $displayCategory?->name;
     $isAvailable = $displayVariant?->stock_status?->isInStock() ?? false;
+    // Cards sharing a name on one page (supplier sets such as "2x Stabilizator…") show their code to tell them apart.
+    $productCode = $showCode ? ($product->external_parent_sku ?: $displayVariant?->sku) : null;
 @endphp
 
 <a
@@ -53,6 +55,10 @@
         <h3 class="mt-2 line-clamp-2 text-base font-bold leading-snug text-slate-900 transition group-hover:text-[#155fa8]">
             {{ $product->name }}
         </h3>
+
+        @if (filled($productCode))
+            <p class="mt-1 text-xs font-semibold text-slate-500">Kod: {{ $productCode }}</p>
+        @endif
 
         @if (filled($product->short_description))
             <p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-500">

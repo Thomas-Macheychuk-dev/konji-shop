@@ -60,7 +60,22 @@
 
     <section>
         <div class="mx-auto max-w-[1480px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-            @if ($products->count() > 0)
+            @if ($products->count() > 0 || $isFiltered)
+                <x-storefront.listing-toolbar
+                    :action="route('categories.show', $category->slug)"
+                    :filters="$filters"
+                    :sorts="\App\Services\Storefront\ProductListing::SORTS"
+                    :brands="$brands"
+                />
+            @endif
+
+            @if ($products->count() === 0 && $isFiltered)
+                <div class="rounded-[28px] border border-blue-100 bg-blue-50/70 px-6 py-10 text-center">
+                    <h2 class="text-xl font-bold text-slate-900">Brak produktów dla wybranych filtrów</h2>
+                    <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">Zmień zakres ceny lub producenta albo wyczyść filtry.</p>
+                    <a href="{{ route('categories.show', $category->slug) }}" class="mt-5 inline-flex rounded-xl bg-[#155fa8] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0b3b70]">Wyczyść filtry</a>
+                </div>
+            @elseif ($products->count() > 0)
                 <div class="mb-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <h2 class="text-2xl font-extrabold tracking-tight text-slate-950">Dostępne produkty</h2>
@@ -75,7 +90,7 @@
 
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     @foreach ($products as $product)
-                        <x-storefront.product-card :product="$product" />
+                        <x-storefront.product-card :product="$product" :show-code="in_array(mb_strtolower($product->name), $duplicateNames, true)" />
                     @endforeach
                 </div>
 
