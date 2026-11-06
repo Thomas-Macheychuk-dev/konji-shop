@@ -36,6 +36,15 @@ it('places staging product names in the right body part', function (string $name
     ['Pokrowiec do AM-ADS-R', 'akcesoria-do-ortez'],
     ['P3D – Pokrowiec 3D MESH™', 'akcesoria-do-ortez'],
     ['PMN – Podkładka masujaco-napowietrzająca', 'akcesoria-do-ortez'],
+    ['OS1st AS6 rękaw na ramię', 'bark-i-ramie'],
+    ['OS1st BR4 Halux', 'kostka-i-stopa'],
+    ['OS1st HV3 Bunion Bracing Sleeve', 'kostka-i-stopa'],
+    ['OS1st ES6 ramię', 'lokiec'],
+    ['OrthoSleeve BR4', 'kostka-i-stopa'],
+    ['OrthoSleeve CS6', 'biodro-udo-i-podudzie'],
+    ['OrthoSleeve ES3', 'lokiec'],
+    ['OrthoSleeve FS6+', 'kostka-i-stopa'],
+    ['OS1st WS6 nadgarstek', 'nadgarstek-i-dlon'],
     ['Biustonosz kompresyjny AT04007', null],
 ]);
 
