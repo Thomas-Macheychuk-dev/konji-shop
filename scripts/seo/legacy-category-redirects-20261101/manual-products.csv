@@ -9,9 +9,11 @@ legacy_id,legacy_name,target,basis,matched
 136,Pani Teresa Medica PT0401 Rajstopy Uciskowe CLASSIC CCL2,/products/rajstopy-uciskowe-classic-ccl2,product,Rajstopy uciskowe CLASSIC CCL2
 138,Pani Teresa Medica PT0403 Pończochy Uciskowe CLASSIC CCL2,/products/ponczochy-uciskowe-classic-ccl2,product,Pończochy uciskowe CLASSIC CCL2
 140,Pani Teresa Medica PT0405 Podkolanówki Uciskowe CLASSIC CCL2,/products/podkolanowki-uciskowe-classic-ccl2,product,Podkolanówki uciskowe CLASSIC CCL2
+141,Pani Teresa Medica PT0406 Pończochy Uciskowe CLASSIC CCL1,/products/ponczochy-uciskowe-classic-ccl1,product,Pończochy uciskowe CLASSIC CCL1
 143,Pani Teresa Medica PT0408 Podkolanówki Uciskowe CLASSIC CCL1,/products/podkolanowki-uciskowe-classic-ccl1,product,Podkolanówki uciskowe CLASSIC CCL1
 144,Pani Teresa Medica PT0410 Rajstopy Uciskowe Dla Mężczyzn CLASSIC CCL2,/products/rajstopy-uciskowe-dla-mezczyzn-classic-ccl2,product,Rajstopy uciskowe dla mężczyzn CLASSIC CCL2
 154,Pani Teresa Medica PT0462 Pończochy Uciskowe PREMIUM CCL2,/products/ponczochy-uciskowe-premium-ccl2,product,Pończochy uciskowe PREMIUM CCL2
+159,Pani Teresa Medica PT0471 Rajstopy Uciskowe PREMIUM CCL1,/products/rajstopy-uciskowe-premium-ccl1,product,Rajstopy uciskowe PREMIUM CCL1
 319,Vermeiren FOUR Light balkonik rollator chodzik,/products/four-light,product,FOUR Light
 481,Yuwell 7A-23B Ssak elektryczny przejezdny,/products/ssak-elektryczny-przejezdny,product,Ssak elektryczny przejezdny
 541,Orteza stabilizująca staw skokowy Timago TGO-C STS 602,/products/orteza-stabilizujaca-staw-skokowy-z-wzmocnieniami,product,Orteza stabilizująca staw skokowy z wzmocnieniami - model 602
@@ -26,12 +28,14 @@ legacy_id,legacy_name,target,basis,matched
 1393,Reh4mat ORTEZA STAWU KOLANOWEGO EB-SK/A SZARY,/products/orteza-stawu-kolanowego-z-szynami-elastycznymi-i-wzmocnieniem-acl-profit-eb-ska,product,Orteza kończyny dolnej EB-SK/A SZARY
 1412,Reh4mat ORTEZA STAWU SKOKOWEGO AFO AM-ASS-OS,/products/aparat-na-opadajaca-stope-carbon-am-ass-os,product,ORTEZA STOPY I STAWU SKOKOWEGO AM-ASS-OS
 1431,Eldan obuwie damskie KD MED 27,/products/kd-med-27-zakryte-klapki-skorzane-z-regulacja-kd-med-27,product,zakryte klapki skórzane z regulacją KD MED 27
+1446,Reh4mat ORTEZA PODUDZIA AS-PU-02,/products/orteza-nogi-as-pu-02,product,Orteza kończyny dolnej AS-PU-02
 1463,Ormesa Obi wózek inwalidzki dla dzieci,/products/wozek-spacerowy-obi,product,Obi wózek inwalidzki spacerowy Ormesa
 1465,Ormesa New Bug wózek inwalidzki dla dzieci,/products/bug-new,product,New Bug wózek inwalidzki Ormesa
 1517,Orteza kciuka AM-D-04,/products/orteza-palca-reki-am-d-04,product,Orteza palca ręki AM-D-04
 1521,Reh4mat Orteza palca ręki AM-D-02 szara,/products/orteza-palca-reki-am-d-02,product,Orteza palca ręki AM-D-02
 1523,Reh4mat AM-SP-02 Orteza palca ręki kciuk,/products/orteza-palca-reki-am-sp-02,product,Orteza palca ręki AM-SP-02
 1526,Reh4mat Orteza nadgarstka AM-OSN-U-06,/products/orteza-przedramienia-am-osn-u-06,product,Orteza nadgarstka AM-OSN-U-06
+1528,Reh4mat Orteza nadgarstka AS-NX-01,/products/orteza-nadgarstka-as-nx-01,product,Orteza nadgarstka AS-NX-01
 1531,Reh4mat Orteza łokcia AM-TL-01,/products/orteza-lokcia-am-tl-01,product,Orteza kończyny górnej AM-TL-01
 1532,Reh4mat Orteza kończyny górnej OKG-04,/products/orteza-konczyny-gornej-okg-04,product,Orteza kończyny górnej OKG-04
 1534,Reh4mat Orteza kończyny górnej AM-KG-AM/1RE,/products/aparat-redresujacy-stawu-lokciowego-z-ujeciem-dloni-am-kg-am1re,product,Orteza kończyny górnej AM-KG-AM/1RE
@@ -61,6 +65,7 @@ legacy_id,legacy_name,target,basis,matched
 3043,"Gips Syntetyczny Prime Cast 5,1cm x 3,6m",/products/opaska-gipsowa-prime-cast-sprzedawana-na-sztuki,product,Opaska gipsowa Prime Cast Polyester - sprzedawana na sztuki
 3058,AM-OSN-L-02 DŁUGA OTWARTA ORTEZA RĘKI I PRZEDRAMIENIA Z UJĘCIEM DŁONI,/products/dluga-usztywniona-orteza-na-dlon-i-przedramie-z-ujeciem-kciuka-am-osn-l-02,product,Orteza nadgarstka AM-OSN-L-02
 3060,ORTEZA WIĘZADŁA STAWU KOLANOWEGO OKD-23,/products/orteza-konczyny-dolnej-okd-23,product,Orteza kończyny dolnej OKD-23
+3071,RAPTOR/2RA ORTEZA KOLANA Z REGULACJĄ 20 stopn,/products/orteza-konczyny-dolnej-raptor-2ra,product,Orteza kończyny dolnej RAPTOR/2RA
 3073,PRZEDNIO TYLNA ORTEZA SZKIELETOWA ATOM/1R,/products/orteza-konczyny-dolnej-atom-1r,product,Orteza kończyny dolnej ATOM/1R
 3075,ORTEZA KOLANA Z REGULACJĄ RUCHOMOŚCI ATOM 2RA,/products/orteza-konczyny-dolnej-atom,product,Orteza kończyny dolnej ATOM/2RA
 3109,AM-OSN-U-17 ORTEZA NADGARSTKA Z ODCIĄŻENIEM GŁOWY,/products/orteza-nadgarstka-am-osn-u-17,product,Orteza nadgarstka AM-OSN-U-17
@@ -86,6 +91,7 @@ legacy_id,legacy_name,target,basis,matched
 3964,Eldan Fartuch medyczny MAJA rękaw 3/4,/products/301-farmaceutyczny-fartuch-damski-z-rekawem-34-maja,product,farmaceutyczny fartuch damski z rękawem 3/4 MAJA
 4216,Apolonia FA 47.1 męski Fartuch medyczny,/products/fartuch-medyczny-meski-bialy-fa-47-dlugi-rekaw-premium,product,"Fartuch medyczny męski biały FA 47, długi rękaw, Premium"
 4441,Orteza ósemkowa obojczyka AM-TX-05,/products/orteza-tulowia-am-tx-05,product,Orteza tułowia AM-TX-05
+4572,Medi CTS Orteza nadgarstka z szyną na palce,/products/medi-cts-orteza-nadgarstka,product,medi CTS
 4735,Medi Epibrace stabilizator łokcia,/products/medi-epibrace-stabilizator-lokcia,product,medi Epibrace
 4740,Rhizomed® soft stabilizator kciuka MEDI,/products/rhizomed-soft-stabilizator-kciuka,product,Rhizomed soft
 4742,Medi orthocox orteza biodra,/products/medi-orthocox-stabilizator-biodra,product,medi Orthocox
@@ -98,6 +104,7 @@ legacy_id,legacy_name,target,basis,matched
 4913,Reh4mat ORTEZA kolana EB-P/RZ,/products/orteza-podrzepkowa-profit-eb-prz,product,Orteza kolana EB-P/RZ
 4923,Orteza kończyny górnej AM-SOB-06 temblak,/products/orteza-barku-am-sob-06,product,Orteza barku AM-SOB-06
 4929,ORTEZA NA HALUKSA AM-OP-03,/products/orteza-stopy-am-op-03,product,Orteza stopy AM-OP-03
+5174,Stabilo K-SS-11 SZYNA PRZECIWODLEŻYNOWA BRAUNA VISMEMO ZE STABILIZACJĄ,/products/przeciwodlezynowa-szyna-brauna-ze-stabilizacja-stopy-k-ss-11,product,K-SS-11 Termoaktywna szyna Brauna ze stabilizacją stopy
 5185,RAPTOR/2RA SHORT Funkcjonalna orteza stawu kolanowego,/products/orteza-konczyny-dolnej-raptor-short,product,Orteza kończyny dolnej RAPTOR/2RA SHORT
 5222,V-Drive Elektryczny Asystent opiekuna,/products/v-drive,product,V-DRIVE
 5435,AM-KOB Orteza na ramię i bark typu DESAULT - TORTO,/products/ortopedyczna-kamizelka-obojczykowo-barkowa-am-kob,product,Orteza kończyny górnej AM-KOB
@@ -180,6 +187,7 @@ legacy_id,legacy_name,target,basis,matched
 9424,RW-POWERFIT RĘKAW OCHRONNY POD ORTEZĘ STAWU KOLANOWEGO,/products/rekaw-ochronny-rw-powerfit,product,Orteza kończyny dolnej RW-POWERFIT
 9511,6510 Orteza stawu kolanowego angora,/products/orteza-stawu-kolanowego-welniana-6510,product,Orteza stawu kolanowego wełniana 6510
 9521,DR-PC107 But na gips,/products/but-na-gips-dr-pc107,product,But na gips DR-PC107
+9531,DR.MED DR-B011-1 Korektor postawy,/products/korektor-postawy-dr-b011-1,product,Korektor postawy DR-B011-1
 9534,MO456 PLAST MED piankowe plastry samoprzylepne,/categories/plastry,category,Opatrunki i dezynfekcja > Produkty opatrunkowe > Plastry
 9564,AT04601 Pas brzuszny,/products/pas-brzuszny-at04601,product,Pas brzuszny AT04601
 9629,AT51027/CA820G CHODZIK TRÓJKOŁOWY STALOWY,/products/chodzik-trojkolowy-stalowy-at51027,product,Chodzik trójkołowy stalowy AT51027
@@ -215,6 +223,7 @@ legacy_id,legacy_name,target,basis,matched
 10251,8065 Genu Immobil Vario,/categories/ortezy-kolana,category,Ortezy i stabilizatory > KOŃCZYNA DOLNA > Ortezy kolana
 10275,ACTIMOVE BACK SUPPORT SZNURÓWKA LĘDŹWIOWO-KRZYŻOWA ZE WZMOCNIENIEM,/categories/ortezy-kregoslupa-ledzwiowo-krzyzowego-lso,category,Ortezy i stabilizatory > KRĘGOSŁUP > Ortezy kręgosłupa lędźwiowo-krzyżowego (LSO)
 10277,0572 Neoprenowa stabilizacja uda Thuasne,/categories/ortezy-uda,category,Ortezy i stabilizatory > KOŃCZYNA DOLNA > Ortezy uda
+10278,Poduszka ortopedyczna CPAP na bezdech senny,/products/poduszka-ortopedyczna-cpap,product,CPAP Poduszka ortopedyczna
 10314,MML_417 ŚPIWÓR ZIMOWY Z MUFKAMI,/categories/akcesoria-do-wozkow,category,Mobilność i transport > Akcesoria do wózków
 10316,MML_451 POKROWCE NA WYSOKIE PELOTY SZTYWNE TUŁOWIA,/categories/akcesoria-do-wozkow,category,Mobilność i transport > Akcesoria do wózków
 10318,ULE_440 WIDELEC Z BLOKADĄ SKRĘTNYCH KÓŁ PRZEDNICH,/categories/akcesoria-do-wozkow,category,Mobilność i transport > Akcesoria do wózków
@@ -228,6 +237,7 @@ legacy_id,legacy_name,target,basis,matched
 10409,Kinesio Light Touch,/categories/tasmy-do-fizjoterapii,category,Rehabilitacja i ćwiczenia > Taśmy do fizjoterapii
 10433,AT52114 Poduszka przeciwodleżynowa pneumatyczna,/products/poduszka-pneumatyczna-przeciwodlezynowa-at52114,product,Poduszka pneumatyczna przeciwodleżynowa AT52114
 10435,AT04606 Osłona termiczna dla osób niepełnosprawnych na wózkach inwalidzkich,/products/oslona-termiczna-dla-osob-niepelnosprawnych-na-wozkach-inwalidzkich-at04606,product,Osłona termiczna dla osób niepełnosprawnych na wózkach inwalidzkich AT04606
+10443,AT03016 PODUSZKA ORTOPEDYCZNA Z EFEKTEM PAMIĘCI I OLEJKIEM RYCYNOWYM,/products/poduszka-ortopedyczna-z-efektem-pamieci-ksztaltu-i-olejkiem-rycynowym-at03016,product,Poduszka ortopedyczna z efektem pamięci kształtu i olejkiem rycynowym AT03016
 10447,PINOL – PŁYN PIELĘGNACYJNY DO CIAŁA ZAPOBIEGAJĄCY POWSTAWANIU ODLEŻYN,/products/pinol-plyn,product,Pinol płyn
 10448,PINOL – krem ochronny przeciw odleżynom,/products/pinol-krem,product,Pinol krem przeciw odleżynom
 10449,ROKITOSOL - OLEJEK DO PIELĘGNACJI SKÓRY NARAŻONEJ NA ODLEŻYNY,/products/rokitosol,product,Rokitosol
@@ -244,6 +254,7 @@ legacy_id,legacy_name,target,basis,matched
 10650,FS6 Stabilizator stawu skokowego OS1st,/products/orthosleeve-fs6-2,product,OrthoSleeve FS6
 10661,QS4 Stabilizator uda OS1st,/products/os1st-qs4-stabilizacja-uda,product,OS1st QS4 stabilizacja uda
 10664,BR4 skarpetki kompresyjne OS1st,/products/os1st-br4-halux,product,OS1st BR4 Halux
+10666,ES6 opaska na ramię OS1st,/products/os1st-es6-ramie,product,OS1st ES6 ramię
 10676,MQB3NLA Reflex Long - wersja otwarta,/categories/ortezy-kolana,category,Ortezy i stabilizatory > KOŃCZYNA DOLNA > Ortezy kolana
 10677,MQB3OLA Reflex Long - wersja zamknięta,/categories/ortezy-kolana,category,Ortezy i stabilizatory > KOŃCZYNA DOLNA > Ortezy kolana
 10685,MoBaLux składane siedziko prysznicowe 3013972,/categories/laweczki-nawannowe-i-stolki-prysznicowe,category,Opieka nad pacjentem > Produkty łazienkowe > ławeczki nawannowe i stołki prysznicowe
@@ -263,11 +274,13 @@ legacy_id,legacy_name,target,basis,matched
 10763,Rozpórka nóg PP-11,/products/rozporka-nog-dluga,product,Rozpórka nóg długa
 10764,Ambonka do chodzenia Atlanta RF-141,/products/ambonka-do-chodzenia-atlanta-141,product,Ambonka do chodzenia Atlanta
 10793,Szpatułki jednorazowego użytku,/products/szpatulki-laryngologiczne-drewniane,product,Szpatułka laryngologiczna drewniana
+10841,SKIASKOP BETA 200®,/categories/sprzet-medyczny,category,Sprzęt diagnostyczny i medyczny
 10981,RESISTANCE LOOP BAND SET ZESTAW TAŚM DO ĆWICZEŃ,/categories/fitness,category,Rehabilitacja i ćwiczenia > Fitness
 10986,BALANCE PODS PÓŁKULE SENSORYCZNE,/categories/sprzet-rehabilitacyjny,category,Rehabilitacja i ćwiczenia > Sprzęt rehabilitacyjny
 10999,QMED MOBILNY UCHWYT PRZYSSAWKOWY - PORTABLE HAND GRIP,/categories/uchwyty-lazienkowe,category,Opieka nad pacjentem > Sprzęt pomocniczy i sanitarny > Sprzęt sanitarny > Uchwyty łazienkowe
 11006,Pas do pończoch dla produktów niesamonośnych bez silikonu,/products/pas-do-ponczoch-dla-produktow-niesamonosnych-bez-silikonu,product,Pas do pończoch
 11007,medi 2in1 pomoc w zakładaniu i zdejmowaniu,/products/medi2in1-pomoc-dokrecania,product,medi 2in1
+11009,medi rękawiczki gumowe pomoc w zakładaniu,/products/rekawiczki-pomoc-w-zakladaniu,product,medi rękawiczki gumowe
 11011,medi Arm Butler stalaż do zakładania rękawów uciskowych,/products/medi-arm-butler-stala-do-zak-adania-r-kaw-w-uciskowych,product,medi Arm Butler
 11012,medi Big (XXL) Butler pomoc w zakładaniu,/products/butler-duzy-pomoc-w-zakladaniu,product,medi Big (XXL) Butler
 11013,medi day żel na dzień,/products/medi-day-el-na-dzie-150ml-1,product,medi day
@@ -278,6 +291,7 @@ legacy_id,legacy_name,target,basis,matched
 11022,Hair TIP-LIQUID 50 ml ELLEN WILLE,/products/hair-tip-liquid-50-ml-ellen-wille,product,Ellen Wille Hair Tip Liquid - Płyn na końcówki włosów 50ml
 11025,Odżywka do włosów syntetycznych Ellen Wille,/products/odzywka-do-wlosow-syntetycznych-ellen-wille,product,Ellen Wille - Odżywka do peruk syntetycznych 200ml
 11026,Styling Mousse pianka do włosów naturalnych i syntetycznych 150ml,/products/styling-mousse-pianka-ew-pianka-do-wlosow-naturalnych-i-syntetycznych,product,Ellen Wille - Pianka do stylizacji peruk naturalnych i syntetycznych 150ml
+11027,Szampon do peruk naturalnych 200 ml pure Ellen Wille,/products/szampon-do-peruk-naturalnych-200-ml-pure-ellen-wille,product,Ellen Wille - Szampon do peruk naturalnych 200ml
 11050,Peruka z włosa naturalnego Alizee M - X - 25cm kolor 10,/products/peruka-naturalna-alizee-x-25cm-8-10-16,product,Peruka naturalna słowiańska włosy dziewicze ciemny blond 25cm ALIZEE X 8/10/16
 11133,Zestaw HIT! - Szampon i Serum,/products/hit-zestaw-kosmetykow-wspomagajace-wzrost-wlosow-oraz-zapobiegajace-ich-wypadaniu,product,Zestaw HIT! (szampon+serum)
 11166,Aero Spacer - Komora inhalacyjna AS175 dla dzieci,/categories/nebulizatory-inhalatory,category,Sprzęt diagnostyczny i medyczny > Tlenoterapia > Nebulizatory (inhalatory)
@@ -409,6 +423,7 @@ legacy_id,legacy_name,target,basis,matched
 13668,D-HEART - MOBILNE URZĄDZENIE DO EKG,/categories/elektromedycyna,category,Sprzęt diagnostyczny i medyczny > Elektromedycyna
 13689,KOREKTOR POSTAWY SS-1PRO,/categories/korektory-wad-postawy,category,Ortezy i stabilizatory > KOREKTORY WAD POSTAWY
 13690,ORTOPEDYCZNY KOREKTOR WAD POSTAWY PROSTE PLECY,/products/korektor-wad-postawy-ortopedyczny-proste-plecy,product,Korektor Wad Postawy Ortopedyczny Proste Plecy
+13695,PLASTRY OCZYSZCZAJĄCE TOKSYNY STOPY DETOX KINOKI,/categories/zdrowie-i-pielegnacja,category,Zdrowie i pielęgnacja
 13696,ASPIRATOR ELEKTRYCZNY DO NOSA LS-1,/categories/elektromedycyna,category,Sprzęt diagnostyczny i medyczny > Elektromedycyna
 13712,ROLLER WIBRACYJNY COMPEX ION,/categories/sprzet-rehabilitacyjny,category,Rehabilitacja i ćwiczenia > Sprzęt rehabilitacyjny
 13787,Apolonia Czepek medyczny z frotką – wzór winogrona,/products/czepek-chirurgiczny-z-frotka-wzor-winogrona,product,Czepek chirurgiczny z frotką - wzór winogrona

@@ -30,10 +30,10 @@ class LegacyFallbackMapTest(unittest.TestCase):
     def test_scope(self):
         summary = module.summary(self.entries, self.skipped, self.products, self.categories)
         self.assertEqual((summary['category_redirects'], summary['category_gone']), (232, 2))
-        self.assertEqual(summary['product_ids'], 8836)
-        self.assertEqual(summary['rules'], 14932)
-        self.assertEqual(len(self.unresolved), 83)
-        self.assertEqual(module.UNRESOLVED.read_bytes().decode('utf-8').count('\n'), 84)
+        self.assertEqual(summary['product_ids'], 8838)
+        self.assertEqual(summary['rules'], 14935)
+        self.assertEqual(len(self.unresolved), 81)
+        self.assertEqual(module.UNRESOLVED.read_bytes().decode('utf-8').count('\n'), 82)
 
     def test_never_shadows_exact_rules_or_app_routes(self):
         keys = set(self.entries)
