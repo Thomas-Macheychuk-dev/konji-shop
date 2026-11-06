@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
  *   imprint become "Armedical" and "Reha Fund".
  * - Merges values of one attribute that are the same brand once cleaned, moving their products to one value.
  * - Gives Reh4Mat-imported products without a manufacturer the brand from their title suffix (" | Reh4Mat").
+ * - Unlinks placeholder values with no letter or digit ("-"): no brand beats a "-" in the filter.
  *
  * Every write is backed up so --rollback restores names and product links.
  */
@@ -34,10 +35,22 @@ final class CleanCatalogueBrandsCommand extends Command
 
     // A legal form ends the brand name wherever it appears: "Löwenstein Medical Technology GmbH + Co. KG Kronsaalsweg 40".
     // A separator is required before it, and short forms must stand alone, so "Medico" or "Sanitas" keep their names.
-    private const LEGAL_FORM = '/[\s,.]+(?:sp\.?\s*z\s*o\.?\s*o|sp\.?\s*[jk]\.|spółka\b|s\.?\s*p\.?\s*a\.?(?=[\s,.(]|$)|s\.?\s*r\.?\s*[lo]\.?(?=[\s,.(]|$)|s\.?\s*a\.?(?:\s*e\.?)?(?=[\s,.(]|$)|a\.\s*s\.|b\.?\s*v\.?(?=[\s,.(]|$)|gmbh|ag(?=[\s,.(]|$)|ltd|llc|inc\b|corp\b|pty\b|co\.)/iu';
+    private const LEGAL_FORM = '/[\s,.]+(?:sp\.?\s*z\s*o\s*\.?\s*o|sp\.?\s*[jk]\.|spółka\b|limited\b|corporation\b|ab(?=[\s,.(]|$)|s\.?\s*p\.?\s*a\.?(?=[\s,.(]|$)|s\.?\s*r\.?\s*[lo]\.?(?=[\s,.(]|$)|s\.?\s*a\.?(?:\s*e\.?)?(?=[\s,.(]|$)|a\.\s*s\.|b\.?\s*v\.?(?=[\s,.(]|$)|gmbh|ag(?=[\s,.(]|$)|ltd|llc|inc\b|corp\b|pty\b|co\.)/iu';
 
     // Imprints, notified-body numbers and leaflet text that follow the name.
-    private const IMPRINT_START = '/\s*(?:\bnumer jednostki notyfikowanej\b|\bul\.|\bulica\b|\bNIP\b|\bKRS\b|\btel\.|\be-mail\b|\bwww\.|\bpodmiot\b|\bupoważniony\b|\bimporter\b|\bdystrybutor\b|\bsposób użycia\b)/iu';
+    private const IMPRINT_START = '/\s*(?:\bnumer jednostki notyfikowanej\b|\bul\.|\bulica\b|\bNIP\b|\bKRS\b|\btel\.|\be-mail\b|\bwww\.|\bpodmiot\b|\bupoważniony\b|\bimporter\b|\bdystrybutor\b|\bsposób użycia\b|opakowanie\s*:|\bcorporate headquarters\b)/iu';
+
+    // One brand under several names, by the slug of the cleaned name: subsidiaries, slogans, spellings.
+    private const ALIASES = [
+        'aflofarm-farmacja-polska' => 'Aflofarm Farmacja',
+        'bbraun-medical' => 'B.Braun',
+        'bbraun-melsungen' => 'B.Braun',
+        'biomar-dbaj-o-siebie-i-stawiaj-na-jakosc' => 'Biomar',
+        'convatec-polska' => 'ConvaTec',
+        'kd-medical-polska' => 'KD Medical',
+        'ortho-visions' => 'OrthoVisions',
+        'scholl-produkty-do-pielegnacji-stop' => 'Scholl',
+    ];
 
     // "TZMO S.A. (marka Seni)" or "Stella Pack S.A. marka Service": the brand shoppers know is the "marka".
     private const MARKA = '/\bmarka\s+([^()]+?)\s*(?:\)|\bnumer jednostki|$)/iu';
@@ -54,17 +67,23 @@ final class CleanCatalogueBrandsCommand extends Command
             ->orderBy('id')
             ->get();
 
-        $plan = $this->plan($values);
+        $placeholders = $values->filter(fn (AttributeValue $value): bool => self::isPlaceholder((string) $value->value) && $value->products_count > 0)->values();
+        $plan = $this->plan($values->reject(fn (AttributeValue $value): bool => self::isPlaceholder((string) $value->value)));
         $missing = $this->missingReh4MatBrands();
 
         $this->line('=== CATALOGUE BRANDS ===');
         $this->line('BRAND_VALUES='.$values->count());
         $this->line('RENAMES='.count($plan['renames']));
         $this->line('MERGES='.count($plan['merges']).' (PRODUCT_LINKS_MOVED='.array_sum(array_column($plan['merges'], 'products')).')');
+        $this->line('PLACEHOLDERS='.$placeholders->count().' (PRODUCT_LINKS_REMOVED='.$placeholders->sum('products_count').')');
         $this->line('REH4MAT_WITHOUT_BRAND='.count($missing).' '.json_encode(array_count_values(array_column($missing, 'brand')), JSON_UNESCAPED_UNICODE));
 
         foreach ($plan['renames'] as $rename) {
             $this->line(sprintf('RENAME value=%d "%s" -> "%s" (%d products)', $rename['id'], Str::limit($rename['from'], 80), $rename['to'], $rename['products']));
+        }
+
+        foreach ($placeholders as $value) {
+            $this->line(sprintf('UNLINK value=%d "%s" slug=%s (%d products)', $value->id, $value->value, $value->slug, $value->products_count));
         }
 
         foreach ($plan['merges'] as $merge) {
@@ -77,15 +96,23 @@ final class CleanCatalogueBrandsCommand extends Command
             return self::SUCCESS;
         }
 
-        if ($plan['renames'] === [] && $plan['merges'] === [] && $missing === []) {
+        if ($plan['renames'] === [] && $plan['merges'] === [] && $missing === [] && $placeholders->isEmpty()) {
             $this->info('NOTHING_TO_WRITE');
 
             return self::SUCCESS;
         }
 
-        $backup = ['renames' => [], 'moved_links' => [], 'attached' => []];
+        $backup = ['renames' => [], 'moved_links' => [], 'attached' => [], 'detached' => []];
 
-        DB::transaction(function () use ($plan, $missing, $brandAttribute, &$backup): void {
+        DB::transaction(function () use ($plan, $missing, $placeholders, $brandAttribute, &$backup): void {
+            foreach ($placeholders as $value) {
+                foreach (DB::table('product_attribute_value')->where('attribute_value_id', $value->id)->pluck('product_id') as $productId) {
+                    $backup['detached'][] = ['product_id' => (int) $productId, 'value_id' => $value->id];
+                }
+
+                DB::table('product_attribute_value')->where('attribute_value_id', $value->id)->delete();
+            }
+
             // Merges first: a rename may take the slug a merged-away value held.
             foreach ($plan['merges'] as $merge) {
                 foreach (DB::table('product_attribute_value')->where('attribute_value_id', $merge['from_id'])->pluck('product_id') as $productId) {
@@ -139,7 +166,7 @@ final class CleanCatalogueBrandsCommand extends Command
         ] + $backup, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
 
         $this->info('BACKUP='.$backupPath);
-        $this->info('RENAMED='.count($plan['renames']).' MERGED='.count($plan['merges']).' LINKS_MOVED='.count($backup['moved_links']).' BRANDS_ATTACHED='.count($backup['attached']));
+        $this->info('RENAMED='.count($plan['renames']).' MERGED='.count($plan['merges']).' LINKS_MOVED='.count($backup['moved_links']).' LINKS_REMOVED='.count($backup['detached']).' BRANDS_ATTACHED='.count($backup['attached']));
         $this->info('CATALOGUE_BRANDS_WRITE=PASS');
 
         return self::SUCCESS;
@@ -163,8 +190,35 @@ final class CleanCatalogueBrandsCommand extends Command
         $name = (string) preg_replace('/,(?=[^,]*\d).*$/u', '', $name);
         $name = preg_split(self::LEGAL_FORM, $name, 2)[0] ?? $name;
         $name = (string) preg_replace('/^[\s,.\-–]+|[\s,.\-–]+$/u', '', $name);
+        $name = self::withoutDoubledPrefix($name);
 
-        return $name !== '' ? $name : $original;
+        if ($name === '') {
+            return $original;
+        }
+
+        return self::ALIASES[Str::slug($name)] ?? $name;
+    }
+
+    /**
+     * "LÖWENSTEINLöwenstein Medical Technology": an import glued an upper-case copy of the first word on.
+     */
+    private static function withoutDoubledPrefix(string $name): string
+    {
+        for ($length = 3; $length * 2 <= mb_strlen($name); $length++) {
+            $prefix = mb_substr($name, 0, $length);
+            $next = mb_substr($name, $length, $length);
+
+            if ($prefix === mb_strtoupper($prefix) && $next !== $prefix && mb_strtolower($next) === mb_strtolower($prefix)) {
+                return mb_substr($name, $length);
+            }
+        }
+
+        return $name;
+    }
+
+    private static function isPlaceholder(string $name): bool
+    {
+        return preg_match('/[\p{L}\p{N}]/u', $name) !== 1;
     }
 
     /**
@@ -235,6 +289,15 @@ final class CleanCatalogueBrandsCommand extends Command
         $backup = json_decode(Storage::disk('local')->get($backupPath), true, flags: JSON_THROW_ON_ERROR);
 
         DB::transaction(function () use ($backup): void {
+            foreach ($backup['detached'] ?? [] as $row) {
+                DB::table('product_attribute_value')->insertOrIgnore([
+                    'product_id' => $row['product_id'],
+                    'attribute_value_id' => $row['value_id'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
             foreach ($backup['attached'] as $row) {
                 DB::table('product_attribute_value')->where('product_id', $row['product_id'])->where('attribute_value_id', $row['value_id'])->delete();
             }
@@ -258,7 +321,7 @@ final class CleanCatalogueBrandsCommand extends Command
             }
         });
 
-        $this->info('RESTORED_NAMES='.count($backup['renames']).' RESTORED_LINKS='.count($backup['moved_links']).' DETACHED='.count($backup['attached']));
+        $this->info('RESTORED_NAMES='.count($backup['renames']).' RESTORED_LINKS='.(count($backup['moved_links']) + count($backup['detached'] ?? [])).' DETACHED='.count($backup['attached']));
         $this->info('CATALOGUE_BRANDS_ROLLBACK=PASS');
 
         return self::SUCCESS;
