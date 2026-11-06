@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Services\Storefront\ActiveCategorySubtree;
 use App\Services\Storefront\ProductListing;
 use App\Services\Storefront\StorefrontCache;
+use App\Support\Catalogue\OrthosisBodyPart;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -72,11 +73,12 @@ final class CategoryProductIndexController extends Controller
         }
 
         if (! $category->status->isActive()) {
-            // Archived supplier subcategories (catalogue:reorganise) send visitors and search engines to the nearest active parent.
-            $ancestor = $this->nearestActiveAncestor($category);
-            abort_if($ancestor === null, 404);
+            // Archived supplier subcategories (catalogue:reorganise) send visitors and search engines to the
+            // body-part orthosis category their name stands for, otherwise to the nearest active parent.
+            $target = $this->orthosisBodyPart($category) ?? $this->nearestActiveAncestor($category);
+            abort_if($target === null, 404);
 
-            return redirect()->route('categories.show', $ancestor->slug, 301);
+            return redirect()->route('categories.show', $target->slug, 301);
         }
 
         $category->load([
@@ -193,6 +195,34 @@ final class CategoryProductIndexController extends Controller
         }
 
         return $category->name;
+    }
+
+    private function orthosisBodyPart(Category $category): ?Category
+    {
+        $seen = [$category->getKey() => true];
+        $current = $category;
+        $underOrthoses = false;
+
+        while ($current->parent_id !== null && ! isset($seen[$current->parent_id])) {
+            $seen[$current->parent_id] = true;
+            $current = Category::query()->find($current->parent_id);
+
+            if ($current === null) {
+                break;
+            }
+
+            if ($current->slug === OrthosisBodyPart::PARENT_SLUG) {
+                $underOrthoses = true;
+                break;
+            }
+        }
+
+        $slug = $underOrthoses ? OrthosisBodyPart::forCategoryName($category->name) : null;
+
+        return $slug === null ? null : Category::query()
+            ->where('slug', $slug)
+            ->where('status', CategoryStatus::ACTIVE->value)
+            ->first();
     }
 
     private function nearestActiveAncestor(Category $category): ?Category

@@ -29,8 +29,15 @@ final class OrthosisBodyPart
         'biodro-udo-i-podudzie' => ['Biodro, udo i podudzie', '/biodr|\bud[ao]\b|udow|miednic|pachwin|łydk|podudzi|spojeni|kończyny dolnej|hip\b|thigh|calf|\bcs6\b/iu'],
     ];
 
+    public const PARENT_SLUG = 'ortezy-i-stabilizatory';
+
     /** Matched by product name only: supplier category names say little about these. */
     private const NAME_ONLY = ['akcesoria-do-ortez', 'pozycjonowanie-i-stabilizacja'];
+
+    /** Supplier category names that the body-part order would misplace: "Temblaki na rękę" are arm slings, not hand orthoses. */
+    private const CATEGORY_NAME_OVERRIDES = [
+        '/temblak/iu' => 'bark-i-ramie',
+    ];
 
     /**
      * @param  list<string>  $categoryNames
@@ -52,6 +59,21 @@ final class OrthosisBodyPart
         }
 
         return null;
+    }
+
+    /**
+     * The body part an archived supplier orthosis category stands for, e.g. "Ortezy kolana" => kolano.
+     * Mixed categories such as "Kończyna dolna" have none and stay with the parent.
+     */
+    public static function forCategoryName(string $categoryName): ?string
+    {
+        foreach (self::CATEGORY_NAME_OVERRIDES as $pattern => $slug) {
+            if (preg_match($pattern, $categoryName) === 1) {
+                return $slug;
+            }
+        }
+
+        return self::classify('', [$categoryName]);
     }
 
     public static function isPartyWig(string $productName): bool

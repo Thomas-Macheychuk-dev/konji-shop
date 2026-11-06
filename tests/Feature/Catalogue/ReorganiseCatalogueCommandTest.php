@@ -48,6 +48,40 @@ it('places staging product names in the right body part', function (string $name
     ['Biustonosz kompresyjny AT04007', null],
 ]);
 
+// The archived supplier categories that legacy ortezka.pl redirects point at.
+it('sends archived supplier orthosis categories to their body part', function (string $name, ?string $group): void {
+    expect(OrthosisBodyPart::forCategoryName($name))->toBe($group);
+})->with([
+    ['Ortezy kolana', 'kolano'],
+    ['KRĘGOSŁUP', 'kregoslup-i-tulow'],
+    ['Ortezy stawu skokowego i stopy', 'kostka-i-stopa'],
+    ['TEMBLAKI NA RĘKĘ', 'bark-i-ramie'],
+    ['Ortezy nadgarstka i przedramienia', 'nadgarstek-i-dlon'],
+    ['Ortezy łokcia', 'lokiec'],
+    ['Ortezy dłoni', 'nadgarstek-i-dlon'],
+    ['Ortezy kręgosłupa szyjnego (CO)', 'szyja'],
+    ['Ortezy podudzia', 'biodro-udo-i-podudzie'],
+    ['Ortezy barku i obojczyka', 'bark-i-ramie'],
+    ['Walkery', 'kostka-i-stopa'],
+    ['OPASKI I PASY MAGNETYCZNE', null],
+    ['PASY PRZEPUKLINOWE', 'kregoslup-i-tulow'],
+    ['KOŃCZYNA DOLNA', null],
+    ['Tułów', 'kregoslup-i-tulow'],
+    ['Ortezy biodra', 'biodro-udo-i-podudzie'],
+    ['Ortezy uda', 'biodro-udo-i-podudzie'],
+    ['KOREKTORY WAD POSTAWY', 'kregoslup-i-tulow'],
+    ['KOŃCZYNA GÓRNA', null],
+    ['Pasy ciążowe', 'kregoslup-i-tulow'],
+    ['Stabilizatory palców', 'nadgarstek-i-dlon'],
+    ['Ortezy kręgosłupa lędźwiowo-krzyżowego (LSO)', 'kregoslup-i-tulow'],
+    ['Ortezy i stabilizatory pleców', 'kregoslup-i-tulow'],
+    ['NightSplint', 'kostka-i-stopa'],
+    ['Stabilizatory stawu skokowego', 'kostka-i-stopa'],
+    ['Magnetyczne pasy na kręgosłup', 'kregoslup-i-tulow'],
+    ['Magnetyczne opaski na rękę', 'nadgarstek-i-dlon'],
+    ['Koszulki korygujące postawę', 'kregoslup-i-tulow'],
+]);
+
 it('recognises party and carnival wigs', function (): void {
     expect(OrthosisBodyPart::isPartyWig('Peruka imprezowa karnawałowa ciemny blond MODEL 8133 14'))->toBeTrue()
         ->and(OrthosisBodyPart::isPartyWig('Peruka syntetyczna, kolor brąz - OPAL'))->toBeFalse();
@@ -136,8 +170,8 @@ it('regroups orthoses by body part, moves party wigs and rolls back', function (
 
     $this->get('/categories/kolano')->assertOk()->assertSee('ATTACK PRO')->assertSee('Opaska na kolano dla biegaczy');
     $this->get('/categories/ortezy-i-stabilizatory')->assertOk()->assertSee('Kostka i stopa')->assertSee('Biustonosz kompresyjny AT04007');
-    // Its parent is archived too, so it goes straight to the nearest active ancestor.
-    $this->get('/categories/ortezy-kolana')->assertRedirect('/categories/ortezy-i-stabilizatory');
+    // A supplier category named after a body part goes to that body part; a mixed one goes to the nearest active ancestor.
+    $this->get('/categories/ortezy-kolana')->assertRedirect('/categories/kolano');
     $this->get('/categories/konczyna-dolna')->assertRedirect('/categories/ortezy-i-stabilizatory');
     $this->get('/categories/peruki-imprezowe-i-karnawalowe')->assertOk()->assertSee('Peruka imprezowa karnawałowa');
 
