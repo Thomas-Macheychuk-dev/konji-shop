@@ -179,18 +179,24 @@ final class ProductListing
     }
 
     /**
-     * Lists products outside the given categories (accessory subcategories) after the rest, whatever the sort.
-     * Call before apply(): the sort only breaks ties within each group.
+     * Lists products found in an accessory category and in none of the main subcategories after the rest,
+     * whatever the sort. Call before apply(): the sort only breaks ties within each group.
      *
+     * @param  list<int>  $accessoryCategoryIds
      * @param  list<int>  $mainCategoryIds
      */
-    public function accessoriesLast(Builder $query, array $mainCategoryIds): Builder
+    public function accessoriesLast(Builder $query, array $accessoryCategoryIds, array $mainCategoryIds): Builder
     {
-        $inMain = DB::table('category_product')
+        $in = fn (array $categoryIds) => DB::table('category_product')
             ->whereColumn('category_product.product_id', 'products.id')
-            ->whereIn('category_product.category_id', $mainCategoryIds);
+            ->whereIn('category_product.category_id', $categoryIds);
+        $inAccessories = $in($accessoryCategoryIds);
+        $inMain = $in($mainCategoryIds);
 
-        return $query->orderByRaw('NOT EXISTS ('.$inMain->toSql().')', $inMain->getBindings());
+        return $query->orderByRaw(
+            'CASE WHEN EXISTS ('.$inAccessories->toSql().') AND NOT EXISTS ('.$inMain->toSql().') THEN 1 ELSE 0 END',
+            [...$inAccessories->getBindings(), ...$inMain->getBindings()],
+        );
     }
 
     /**

@@ -31,9 +31,9 @@ final class ActiveCategorySubtree
     }
 
     /**
-     * The subtree without its accessory subcategories ("Akcesoria do ortez" and the like) and what sits under
-     * them. A listing shows products from these first, so spare parts do not crowd the top of a price sort.
-     * The category itself always counts, so an accessory category's own page is unaffected.
+     * The subcategories below the category, without the accessory ones ("Akcesoria do ortez" and the like) and
+     * what sits under them. The category itself is left out too: catalogue:reorganise links every orthosis to
+     * "Ortezy i stabilizatory" as well as to its group, so that link says nothing about what a product is.
      *
      * @return list<int>
      */
@@ -41,7 +41,7 @@ final class ActiveCategorySubtree
     {
         return $this->cache->rememberVersioned(
             StorefrontCache::NAMESPACE_NAVIGATION,
-            sprintf('category-subtree-main.%d.v1', $category->getKey()),
+            sprintf('category-subtree-main.%d.v2', $category->getKey()),
             fn (): array => $this->queryMainIds($category),
             $this->cache->categorySidebarTtlSeconds(),
         );
@@ -64,17 +64,19 @@ final class ActiveCategorySubtree
      */
     private function queryMainIds(Category $category): array
     {
-        $main = [];
+        $root = (int) $category->getKey();
+        $main = [$root => true];
 
         // Rows come ordered by depth, so a parent is decided before its children.
         foreach ($this->queryRows($category) as $row) {
             $id = (int) $row->id;
-            $isRoot = $id === (int) $category->getKey();
 
-            if ($isRoot || (isset($main[(int) $row->parent_id]) && ! self::isAccessory((string) $row->name))) {
+            if ($id !== $root && isset($main[(int) $row->parent_id]) && ! self::isAccessory((string) $row->name)) {
                 $main[$id] = true;
             }
         }
+
+        unset($main[$root]);
 
         return array_keys($main);
     }
