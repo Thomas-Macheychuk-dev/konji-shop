@@ -838,7 +838,7 @@ legacy_path,target,kind,reason
 /at03008-poduszka-do-siedzenia-jez-z-wyjmowanym-otworem-z-poszewka-id-9561,/categories/wozki-inwalidzkie,product,legacy product 9561 breadcrumb category 126
 /at03010-poduszka-do-siedzenia-z-wyjmowanym-otworem-bez-poszewki-60925-id-9562,/categories/wozki-inwalidzkie,product,legacy product 9562 breadcrumb category 126
 /at03010-poduszka-do-siedzenia-z-wyjmowanym-otworem-bez-poszewki-id-9562,/categories/wozki-inwalidzkie,product,legacy product 9562 breadcrumb category 126
-/at03016-poduszka-ortopedyczna-z-efektem-pamieci-i-olejkiem-rycynowym-id-10443,/categories/poduszki-ortopedyczne,product,legacy product 10443 breadcrumb category 73
+/at03016-poduszka-ortopedyczna-z-efektem-pamieci-i-olejkiem-rycynowym-id-10443,/products/poduszka-ortopedyczna-z-efektem-pamieci-ksztaltu-i-olejkiem-rycynowym-at03016,product,legacy product 10443 manual product
 /at04601-pas-brzuszny-60928-id-9564,/products/pas-brzuszny-at04601,product,legacy product 9564 manual product
 /at04601-pas-brzuszny-id-9564,/products/pas-brzuszny-at04601,product,legacy product 9564 manual product
 /at04602-pas-brzuszny-60942-id-9565,/categories/ortezy-i-stabilizatory,product,legacy product 9565 breadcrumb category 124
@@ -3268,7 +3268,7 @@ legacy_path,target,kind,reason
 /dr-a201-wkladki-orthotic-id-9524,/categories/rehabilitacja,product,legacy product 9524 breadcrumb category 6
 /dr-a202-wkladki-zelowe-60831-id-9525,/categories/rehabilitacja,product,legacy product 9525 breadcrumb category 6
 /dr-a202-wkladki-zelowe-id-9525,/categories/rehabilitacja,product,legacy product 9525 breadcrumb category 6
-/dr-b011-1-korektor-postawy-id-9531,/categories/ortezy-i-stabilizatory,product,legacy product 9531 breadcrumb category 124
+/dr-b011-1-korektor-postawy-id-9531,/products/korektor-postawy-dr-b011-1,product,legacy product 9531 manual product
 /dr-b023-orteza-ledzwiowo-krzyzowa-60848-id-9530,/categories/ortezy-i-stabilizatory,product,legacy product 9530 breadcrumb category 124
 /dr-b023-orteza-ledzwiowo-krzyzowa-id-9530,/categories/ortezy-i-stabilizatory,product,legacy product 9530 breadcrumb category 124
 /dr-b035-orteza-ledzwiowo-krzyzowa-60840-id-9528,/categories/ortezy-i-stabilizatory,product,legacy product 9528 breadcrumb category 124
@@ -3324,8 +3324,8 @@ legacy_path,target,kind,reason
 /drabinka-rehabilitacyjna-przylozkowa-id-2551,/categories/rehabilitacja,product,legacy product 2551 breadcrumb category 6
 /drmed-dr-a001-aparat-korekcyjny-na-hallux-87017-id-9518,/categories/aparaty-na-haluksy,product,legacy product 9518 breadcrumb category 220
 /drmed-dr-a001-aparat-korekcyjny-na-hallux-id-9518,/categories/aparaty-na-haluksy,product,legacy product 9518 breadcrumb category 220
-/drmed-dr-b011-1-korektor-postawy-60853-id-9531,/categories/ortezy-i-stabilizatory,product,legacy product 9531 breadcrumb category 124
-/drmed-dr-b011-1-korektor-postawy-id-9531,/categories/ortezy-i-stabilizatory,product,legacy product 9531 breadcrumb category 124
+/drmed-dr-b011-1-korektor-postawy-60853-id-9531,/products/korektor-postawy-dr-b011-1,product,legacy product 9531 manual product
+/drmed-dr-b011-1-korektor-postawy-id-9531,/products/korektor-postawy-dr-b011-1,product,legacy product 9531 manual product
 /drqf0d-whosp-ft-szyna-na-dlon-i-przedramie-id-9125,/categories/ortezy-i-stabilizatory,product,legacy product 9125 breadcrumb category 124
 /drqf3a-aparat-stacka-51769-id-9126,/categories/ortezy-i-stabilizatory,product,legacy product 9126 breadcrumb category 124
 /drqf3a-aparat-stacka-id-9126,/categories/ortezy-i-stabilizatory,product,legacy product 9126 breadcrumb category 124
@@ -3821,8 +3821,8 @@ legacy_path,target,kind,reason
 /es-01-opaska-elastyczna-stawu-skokowego-id-7624,/categories/ortezy-stawu-skokowego-i-stopy,product,legacy product 7624 breadcrumb category 211
 /es3-opaska-na-lokiec-tenisisty-golfisty-os1st-71208-id-10659,/categories/ortezy-lokcia,product,legacy product 10659 breadcrumb category 213
 /es3-opaska-na-lokiec-tenisisty-golfisty-os1st-id-10659,/categories/ortezy-lokcia,product,legacy product 10659 breadcrumb category 213
-/es6-opaska-na-ramie-os1st-71235-id-10666,/categories/ortezy-nadgarstka-i-przedramienia,product,legacy product 10666 breadcrumb category 216
-/es6-opaska-na-ramie-os1st-id-10666,/categories/ortezy-nadgarstka-i-przedramienia,product,legacy product 10666 breadcrumb category 216
+/es6-opaska-na-ramie-os1st-71235-id-10666,/products/os1st-es6-ramie,product,legacy product 10666 manual product
+/es6-opaska-na-ramie-os1st-id-10666,/products/os1st-es6-ramie,product,legacy product 10666 manual product
 /evis-med-obuwie-meskie-medyczne-scholl-51067-id-8857,/categories/odziez-medyczna,product,legacy product 8857 breadcrumb category 81
 /evis-med-obuwie-meskie-medyczne-scholl-id-8857,/categories/odziez-medyczna,product,legacy product 8857 breadcrumb category 81
 /evoflex-obuwie-zdrowotne-do-pracy-70712-id-10560,/categories/obuwie-medyczne-obuwie-medyczne-damskie,product,legacy product 10560 breadcrumb category 102
@@ -4780,7 +4780,7 @@ legacy_path,target,kind,reason
 /k-ss-06-termoaktywny-klin-pod-konczyny-dolne-id-7393,/categories/kliny-rehabilitacyjne,product,legacy product 7393 breadcrumb category 253
 /k-ss-09-klin-pod-konczyny-dolne-43812-id-7394,/categories/kliny-rehabilitacyjne,product,legacy product 7394 breadcrumb category 253
 /k-ss-09-klin-pod-konczyny-dolne-id-7394,/categories/kliny-rehabilitacyjne,product,legacy product 7394 breadcrumb category 253
-/k-ss-11-szyna-przeciwodlezynowa-brauna-vismemo-ze-stabilizacja-id-5174,/categories/poduszki-ortopedyczne,product,legacy product 5174 breadcrumb category 152
+/k-ss-11-szyna-przeciwodlezynowa-brauna-vismemo-ze-stabilizacja-id-5174,/products/przeciwodlezynowa-szyna-brauna-ze-stabilizacja-stopy-k-ss-11,product,legacy product 5174 manual product
 /kaczka-damska-rf-891-id-10064,/categories/sprzet-toaletowy,product,legacy product 10064 name rule toilet
 /kaczka-lozkowa-basen-podsuwacz-id-5310,/categories/sprzet-toaletowy,product,legacy product 5310 breadcrumb category 168
 /kaczka-meska-aston-id-5308,/categories/sprzet-toaletowy,product,legacy product 5308 breadcrumb category 168
@@ -6290,8 +6290,8 @@ legacy_path,target,kind,reason
 /medi-clavicle-support-kidz-stabilizator-obojczyka-36038-id-5734,/categories/ortezy-i-stabilizatory,product,legacy product 5734 breadcrumb category 124
 /medi-clavicle-support-kidz-stabilizator-obojczyka-id-5734,/categories/ortezy-i-stabilizatory,product,legacy product 5734 breadcrumb category 124
 /medi-clean-plyn-do-prania-id-11015,/products/medi-clean,product,legacy product 11015 manual product
-/medi-cts-orteza-nadgarstka-z-szyna-na-palce-26004-id-4572,/categories/ortezy-i-stabilizatory,product,legacy product 4572 breadcrumb category 124
-/medi-cts-orteza-nadgarstka-z-szyna-na-palce-id-4572,/categories/ortezy-i-stabilizatory,product,legacy product 4572 breadcrumb category 124
+/medi-cts-orteza-nadgarstka-z-szyna-na-palce-26004-id-4572,/products/medi-cts-orteza-nadgarstka,product,legacy product 4572 manual product
+/medi-cts-orteza-nadgarstka-z-szyna-na-palce-id-4572,/products/medi-cts-orteza-nadgarstka,product,legacy product 4572 manual product
 /medi-day-zel-na-dzien-id-11013,/products/medi-day-el-na-dzie-150ml-1,product,legacy product 11013 manual product
 /medi-easy-sling-orteza-stawu-barkowego-26762-id-4725,/categories/ortezy-i-stabilizatory,product,legacy product 4725 breadcrumb category 124
 /medi-easy-sling-orteza-stawu-barkowego-id-4725,/categories/ortezy-i-stabilizatory,product,legacy product 4725 breadcrumb category 124
@@ -6336,8 +6336,8 @@ legacy_path,target,kind,reason
 /medi-pt-control-orteza-do-stabilizacji-rzepki-id-4754,/categories/ortezy-i-stabilizatory,product,legacy product 4754 breadcrumb category 124
 /medi-pts-orteza-tylno-piszczelowa-kolana-27002-id-4756,/categories/ortezy-i-stabilizatory,product,legacy product 4756 breadcrumb category 124
 /medi-pts-orteza-tylno-piszczelowa-kolana-id-4756,/categories/ortezy-i-stabilizatory,product,legacy product 4756 breadcrumb category 124
-/medi-rekawiczki-gumowe-pomoc-w-zakladaniu-72400-id-11009,/categories/ortezy-i-stabilizatory,product,legacy product 11009 name rule orthoses
-/medi-rekawiczki-gumowe-pomoc-w-zakladaniu-id-11009,/categories/ortezy-i-stabilizatory,product,legacy product 11009 name rule orthoses
+/medi-rekawiczki-gumowe-pomoc-w-zakladaniu-72400-id-11009,/products/rekawiczki-pomoc-w-zakladaniu,product,legacy product 11009 manual product
+/medi-rekawiczki-gumowe-pomoc-w-zakladaniu-id-11009,/products/rekawiczki-pomoc-w-zakladaniu,product,legacy product 11009 manual product
 /medi-rom-kidz-uniwersalna-orteza-kolana-51270-id-8899,/categories/ortezy-i-stabilizatory,product,legacy product 8899 breadcrumb category 124
 /medi-rom-kidz-uniwersalna-orteza-kolana-id-8899,/categories/ortezy-i-stabilizatory,product,legacy product 8899 breadcrumb category 124
 /medi-rom-medi-rom-cool-szyna-kolana-26995-id-4755,/categories/ortezy-i-stabilizatory,product,legacy product 4755 breadcrumb category 124
@@ -8410,7 +8410,7 @@ legacy_path,target,kind,reason
 /pani-teresa-medica-pt0403-ponczochy-uciskowe-classic-ccl2-511-id-138,/products/ponczochy-uciskowe-classic-ccl2,product,legacy product 138 manual product
 /pani-teresa-medica-pt0404-ponczochy-okolooperacyjne-hospital-ccl1-636-id-139,/categories/kompresja,product,legacy product 139 breadcrumb category 128
 /pani-teresa-medica-pt0405-podkolanowki-uciskowe-classic-ccl2-638-id-140,/products/podkolanowki-uciskowe-classic-ccl2,product,legacy product 140 manual product
-/pani-teresa-medica-pt0406-ponczochy-uciskowe-classic-ccl1-758-id-141,/categories/kompresja,product,legacy product 141 breadcrumb category 128
+/pani-teresa-medica-pt0406-ponczochy-uciskowe-classic-ccl1-758-id-141,/products/ponczochy-uciskowe-classic-ccl1,product,legacy product 141 manual product
 /pani-teresa-medica-pt0407-rajstopy-uciskowe-classic-ccl1-4057-id-1142,/categories/rajstopy-uciskowe-1-stopnia,product,legacy product 1142 breadcrumb category 135
 /pani-teresa-medica-pt0408-podkolanowki-uciskowe-classic-ccl1-838-id-143,/products/podkolanowki-uciskowe-classic-ccl1,product,legacy product 143 manual product
 /pani-teresa-medica-pt0410-rajstopy-uciskowe-dla-mezczyzn-classic-ccl2-87156-id-144,/products/rajstopy-uciskowe-dla-mezczyzn-classic-ccl2,product,legacy product 144 manual product
@@ -8431,7 +8431,7 @@ legacy_path,target,kind,reason
 /pani-teresa-medica-pt0462-ponczochy-uciskowe-premium-ccl2-1071-id-154,/products/ponczochy-uciskowe-premium-ccl2,product,legacy product 154 manual product
 /pani-teresa-medica-pt0463-podkolanowki-uciskowe-premium-ccl2-1195-id-155,/categories/podkolanowki-uciskowe-2-stopnia,product,legacy product 155 breadcrumb category 136
 /pani-teresa-medica-pt0464-rajstopy-uciskowe-dla-kobiet-w-ciazy-premium-ccl2-1004-id-153,/categories/rajstopy-uciskowe-2-stopnia,product,legacy product 153 breadcrumb category 138
-/pani-teresa-medica-pt0471-rajstopy-uciskowe-premium-ccl1-1375-id-159,/categories/rajstopy-uciskowe-1-stopnia,product,legacy product 159 breadcrumb category 135
+/pani-teresa-medica-pt0471-rajstopy-uciskowe-premium-ccl1-1375-id-159,/products/rajstopy-uciskowe-premium-ccl1,product,legacy product 159 manual product
 /pani-teresa-medica-pt0472-ponczochy-uciskowe-premium-ccl1-1487-id-160,/categories/kompresja,product,legacy product 160 breadcrumb category 128
 /pani-teresa-medica-pt0473-podkolanowki-uciskowe-premium-ccl1-99744-id-161,/categories/podkolanowki-uciskowe-1-stopnia,product,legacy product 161 breadcrumb category 133
 /pani-teresa-medica-pt0474-rajstopy-uciskowe-dla-kobiet-w-ciazy-premium-ccl1-1657-id-162,/categories/rajstopy-uciskowe-1-stopnia,product,legacy product 162 breadcrumb category 135
@@ -8472,7 +8472,7 @@ legacy_path,target,kind,reason
 /pani-teresa-podrozne-skarpety-pt0418-travel-id-151,/categories/podkolanowki-uciskowe-1-stopnia,product,legacy product 151 breadcrumb category 133
 /pani-teresa-podrozne-skarpety-pt0419-travel-id-152,/categories/podkolanowki-uciskowe-1-stopnia,product,legacy product 152 breadcrumb category 133
 /pani-teresa-ponczochy-medyczne-pt0403-id-138,/products/ponczochy-uciskowe-classic-ccl2,product,legacy product 138 manual product
-/pani-teresa-ponczochy-medyczne-pt0406-id-141,/categories/kompresja,product,legacy product 141 breadcrumb category 128
+/pani-teresa-ponczochy-medyczne-pt0406-id-141,/products/ponczochy-uciskowe-classic-ccl1,product,legacy product 141 manual product
 /pani-teresa-ponczochy-medyczne-pt0432-id-1145,/categories/kompresja,product,legacy product 1145 breadcrumb category 128
 /pani-teresa-ponczochy-medyczne-pt0462-id-154,/products/ponczochy-uciskowe-premium-ccl2,product,legacy product 154 manual product
 /pani-teresa-ponczochy-medyczne-pt0472-id-160,/categories/kompresja,product,legacy product 160 breadcrumb category 128
@@ -8487,7 +8487,7 @@ legacy_path,target,kind,reason
 /pani-teresa-rajstopy-medyczne-pt0431-id-1144,/categories/rajstopy-uciskowe-1-stopnia,product,legacy product 1144 breadcrumb category 135
 /pani-teresa-rajstopy-medyczne-pt0461-id-1147,/categories/rajstopy-uciskowe-2-stopnia,product,legacy product 1147 breadcrumb category 138
 /pani-teresa-rajstopy-medyczne-pt0464-id-153,/categories/rajstopy-uciskowe-2-stopnia,product,legacy product 153 breadcrumb category 138
-/pani-teresa-rajstopy-medyczne-pt0471-id-159,/categories/rajstopy-uciskowe-1-stopnia,product,legacy product 159 breadcrumb category 135
+/pani-teresa-rajstopy-medyczne-pt0471-id-159,/products/rajstopy-uciskowe-premium-ccl1,product,legacy product 159 manual product
 /pani-teresa-rajstopy-medyczne-pt0474-id-162,/categories/rajstopy-uciskowe-1-stopnia,product,legacy product 162 breadcrumb category 135
 /pani-teresa-slipy-przepuklinowe-pt0111-id-1690,/products/slipy-przepuklinowo-suspensoryjne,product,legacy product 1690 manual product
 /pani-teresa-stabilizator-na-kostke-pt0320-id-1737,/categories/ortezy-stawu-skokowego-i-stopy,product,legacy product 1737 breadcrumb category 211
@@ -9173,6 +9173,7 @@ legacy_path,target,kind,reason
 /plaster-protection-but-pooperacyjny-qmed-oslona-gipsu-id-2549,/categories/rehabilitacja,product,legacy product 2549 breadcrumb category 6
 /plastry-na-wrastajace-paznokcie-klamry-id-13365,/categories/aplikatory-preparaty-akcesoria-i-kosmetyki,product,legacy product 13365 manual category
 /plastry-na-wrastajace-paznokcie-klamry-paski-id-13364,/categories/ortezy-i-stabilizatory,product,legacy product 13364 name rule orthoses
+/plastry-oczyszczajace-toksyny-stopy-detox-kinoki-id-13695,/categories/zdrowie-i-pielegnacja,product,legacy product 13695 manual category
 /plastry-tejpy-kinesiology-sportstape-tape-10025-id-3712,/categories/rehabilitacja,product,legacy product 3712 breadcrumb category 272
 /plastry-tejpy-kinesiology-sportstape-tape-21-10026-id-3713,/categories/rehabilitacja,product,legacy product 3713 breadcrumb category 272
 /plastry-tejpy-kinesiology-sportstape-tape-21-id-3713,/categories/rehabilitacja,product,legacy product 3713 breadcrumb category 272
@@ -9533,7 +9534,7 @@ legacy_path,target,kind,reason
 /poduszka-obrotowa-tmt-6555-id-7533,/categories/opatrunki-i-dezynfekcja,product,legacy product 7533 breadcrumb category 173
 /poduszka-obrotowa-z-elastyczna-podstawa-id-8444,/categories/opatrunki-i-dezynfekcja,product,legacy product 8444 breadcrumb category 173
 /poduszka-oparcia-bodymap-b-id-2033,/categories/bodymap,product,legacy product 2033 breadcrumb category 274
-/poduszka-ortopedyczna-cpap-na-bezdech-senny-id-10278,/categories/poduszki-ortopedyczne,product,legacy product 10278 breadcrumb category 73
+/poduszka-ortopedyczna-cpap-na-bezdech-senny-id-10278,/products/poduszka-ortopedyczna-cpap,product,legacy product 10278 manual product
 /poduszka-ortopedyczna-morfeusz-cpap-do-terapii-bezdechu-senngo-id-10091,/categories/poduszki-ortopedyczne,product,legacy product 10091 breadcrumb category 73
 /poduszka-ortopedyczna-pa-vm-12-74319-id-9239,/categories/poduszki-ortopedyczne,product,legacy product 9239 breadcrumb category 73
 /poduszka-ortopedyczna-pa-vm-12-id-9239,/categories/poduszki-ortopedyczne,product,legacy product 9239 breadcrumb category 73
@@ -10402,8 +10403,8 @@ legacy_path,target,kind,reason
 /ranja-med-turkusowe-klapki-scholl-id-5948,/categories/odziez-medyczna,product,legacy product 5948 breadcrumb category 81
 /raptor-2-orteza-stawu-kolanowego-28761-id-5443,/categories/ortezy-kolana,product,legacy product 5443 breadcrumb category 209
 /raptor-2-orteza-stawu-kolanowego-id-5443,/categories/ortezy-kolana,product,legacy product 5443 breadcrumb category 209
-/raptor-2ra-orteza-kolana-z-regulacja-20-stopn-7890-id-3071,/categories/ortezy-kolana,product,legacy product 3071 breadcrumb category 209
-/raptor-2ra-orteza-kolana-z-regulacja-20-stopn-id-3071,/categories/ortezy-kolana,product,legacy product 3071 breadcrumb category 209
+/raptor-2ra-orteza-kolana-z-regulacja-20-stopn-7890-id-3071,/products/orteza-konczyny-dolnej-raptor-2ra,product,legacy product 3071 manual product
+/raptor-2ra-orteza-kolana-z-regulacja-20-stopn-id-3071,/products/orteza-konczyny-dolnej-raptor-2ra,product,legacy product 3071 manual product
 /raptor-2ra-short-funkcjonalna-orteza-stawu-kolanowego-28199-id-5185,/products/orteza-konczyny-dolnej-raptor-short,product,legacy product 5185 manual product
 /raptor-2ra-short-funkcjonalna-orteza-stawu-kolanowego-id-5185,/products/orteza-konczyny-dolnej-raptor-short,product,legacy product 5185 manual product
 /raptor-bionic-4army-militarna-bioniczna-orteza-kolana-28820-id-5455,/products/orteza-konczyny-dolnej-raptor-bionic,product,legacy product 5455 manual product
@@ -10523,8 +10524,8 @@ legacy_path,target,kind,reason
 /reh4mat-orteza-nadgarstka-am-osn-u-06-id-1526,/products/orteza-przedramienia-am-osn-u-06,product,legacy product 1526 manual product
 /reh4mat-orteza-nadgarstka-am-osn-u-07-64563-id-1527,/categories/rehabilitacja,product,legacy product 1527 breadcrumb category 6
 /reh4mat-orteza-nadgarstka-am-osn-u-07-id-1527,/categories/rehabilitacja,product,legacy product 1527 breadcrumb category 6
-/reh4mat-orteza-nadgarstka-as-nx-01-64571-id-1528,/categories/rehabilitacja,product,legacy product 1528 breadcrumb category 6
-/reh4mat-orteza-nadgarstka-as-nx-01-id-1528,/categories/rehabilitacja,product,legacy product 1528 breadcrumb category 6
+/reh4mat-orteza-nadgarstka-as-nx-01-64571-id-1528,/products/orteza-nadgarstka-as-nx-01,product,legacy product 1528 manual product
+/reh4mat-orteza-nadgarstka-as-nx-01-id-1528,/products/orteza-nadgarstka-as-nx-01,product,legacy product 1528 manual product
 /reh4mat-orteza-nadgarstka-as-nx-02-82074-id-1529,/categories/rehabilitacja,product,legacy product 1529 breadcrumb category 6
 /reh4mat-orteza-nadgarstka-as-nx-02-id-1529,/categories/rehabilitacja,product,legacy product 1529 breadcrumb category 6
 /reh4mat-orteza-nadgarstka-eb-n-01-65032-id-1642,/products/wzmocniona-orteza-nadgarstka-profit-eb-n-01,product,legacy product 1642 manual product
@@ -10575,8 +10576,8 @@ legacy_path,target,kind,reason
 /reh4mat-orteza-plecow-eb-lk-02-id-1579,/categories/kregoslup,product,legacy product 1579 breadcrumb category 140
 /reh4mat-orteza-plecow-eb-lk-64748-id-1577,/categories/kregoslup,product,legacy product 1577 breadcrumb category 140
 /reh4mat-orteza-plecow-eb-lk-id-1577,/categories/kregoslup,product,legacy product 1577 breadcrumb category 140
-/reh4mat-orteza-podudzia-as-pu-02-63743-id-1446,/categories/rehabilitacja,product,legacy product 1446 breadcrumb category 6
-/reh4mat-orteza-podudzia-as-pu-02-id-1446,/categories/rehabilitacja,product,legacy product 1446 breadcrumb category 6
+/reh4mat-orteza-podudzia-as-pu-02-63743-id-1446,/products/orteza-nogi-as-pu-02,product,legacy product 1446 manual product
+/reh4mat-orteza-podudzia-as-pu-02-id-1446,/products/orteza-nogi-as-pu-02,product,legacy product 1446 manual product
 /reh4mat-orteza-podudzia-u-pu-id-1445,/categories/rehabilitacja,product,legacy product 1445 breadcrumb category 6
 /reh4mat-orteza-przedramienia-am-osn-u-01-65036-id-1643,/products/usztywniona-orteza-na-dlon-i-przedramie-am-osn-u-01,product,legacy product 1643 manual product
 /reh4mat-orteza-przedramienia-am-osn-u-01-id-1643,/products/usztywniona-orteza-na-dlon-i-przedramie-am-osn-u-01,product,legacy product 1643 manual product
@@ -11757,6 +11758,8 @@ legacy_path,target,kind,reason
 /skarpety-stopki-z-przedzy-amicor-dla-diabetykow-id-5600,/categories/zaopatrzenie-stopy-cukrzycowej,product,legacy product 5600 breadcrumb category 245
 /skarpety-z-wkladka-magnetyczna-5822-id-2055,/categories/opaski-i-pasy-magnetyczne,product,legacy product 2055 breadcrumb category 118
 /skarpety-z-wkladka-magnetyczna-id-2055,/categories/opaski-i-pasy-magnetyczne,product,legacy product 2055 breadcrumb category 118
+/skiaskop-beta-200-71657-id-10841,/categories/sprzet-medyczny,product,legacy product 10841 manual category
+/skiaskop-beta-200-id-10841,/categories/sprzet-medyczny,product,legacy product 10841 manual category
 /skippi-wozek-elektryczny-dla-dzieci-id-5155,/categories/obuwie,product,legacy product 5155 breadcrumb category 9
 /skladana-laska-aluminiowa-id-2695,/categories/rehabilitacja,product,legacy product 2695 breadcrumb category 6
 /skladana-laweczka-pod-prysznic-id-8250,/categories/produkty-lazienkowe,product,legacy product 8250 breadcrumb category 160
@@ -12177,7 +12180,7 @@ legacy_path,target,kind,reason
 /stabilo-comfortable-plus-poduszka-stabilizujaca-tulow-id-12632,/categories/poduszki-ortopedyczne,product,legacy product 12632 name rule pillows
 /stabilo-comfortable-poduszka-stabilizujaca-tulow-82018-id-12633,/categories/poduszki-ortopedyczne,product,legacy product 12633 name rule pillows
 /stabilo-comfortable-poduszka-stabilizujaca-tulow-id-12633,/categories/poduszki-ortopedyczne,product,legacy product 12633 name rule pillows
-/stabilo-k-ss-11-szyna-przeciwodlezynowa-brauna-vismemo-ze-stabilizacja-28156-id-5174,/categories/poduszki-ortopedyczne,product,legacy product 5174 breadcrumb category 152
+/stabilo-k-ss-11-szyna-przeciwodlezynowa-brauna-vismemo-ze-stabilizacja-28156-id-5174,/products/przeciwodlezynowa-szyna-brauna-ze-stabilizacja-stopy-k-ss-11,product,legacy product 5174 manual product
 /stabilo-p-ss-26-profilowana-poduszka-ortopedyczna-43795-id-7385,/categories/poduszki-ortopedyczne,product,legacy product 7385 breadcrumb category 152
 /stabimed-orteza-z-ograniczeniem-zginania-26973-id-4752,/categories/ortezy-i-stabilizatory,product,legacy product 4752 breadcrumb category 124
 /stabimed-orteza-z-ograniczeniem-zginania-id-4752,/categories/ortezy-i-stabilizatory,product,legacy product 4752 breadcrumb category 124
@@ -12405,7 +12408,7 @@ legacy_path,target,kind,reason
 /szafka-przylozkowa-ze-stalym-blatem-virgo-h-id-3660,/categories/wyroby-pomocnicze,product,legacy product 3660 breadcrumb category 145
 /szafki-i-stoliki--cat-89,/categories/wyroby-pomocnicze,category,legacy category 89
 /szafki-i-stoliki-cat-145,/categories/wyroby-pomocnicze,category,legacy category 145
-/szampon-do-peruk-naturalnych-200-ml-pure-ellen-wille-id-11027,/categories/peruki,product,legacy product 11027 name rule wigs
+/szampon-do-peruk-naturalnych-200-ml-pure-ellen-wille-id-11027,/products/szampon-do-peruk-naturalnych-200-ml-pure-ellen-wille,product,legacy product 11027 manual product
 /szampon-do-peruk-syntetycznych-ew-200-ml-ellen-wille-id-11028,/categories/peruki,product,legacy product 11028 name rule wigs
 /szampon-nawilzajacy-seni-care-500ml-id-2088,/categories/seni24-higiena-i-pielegnacja-specjalistyczna,product,legacy product 2088 breadcrumb category 71
 /szampon-nawilzajacy-seni-care-500ml-id-2089,/categories/seni24-higiena-i-pielegnacja-specjalistyczna,product,legacy product 2089 breadcrumb category 71
