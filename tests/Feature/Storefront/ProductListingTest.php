@@ -122,6 +122,27 @@ it('sorts a category by price with unpriced products last', function (): void {
         ->and(listedNames($this->get('/categories/ortezy-kolana?sort=cena-malejaco'), 'products'))->toBe(['Droga', 'Średnia', 'Tania', 'Bez ceny']);
 });
 
+it('lists accessory subcategory products after the rest of a parent category', function (): void {
+    $orthoses = Category::query()->create(['slug' => 'ortezy-i-stabilizatory', 'name' => 'Ortezy i stabilizatory', 'status' => CategoryStatus::ACTIVE]);
+    $knee = Category::query()->create(['slug' => 'kolano', 'name' => 'Kolano', 'parent_id' => $orthoses->id, 'status' => CategoryStatus::ACTIVE]);
+    $accessories = Category::query()->create(['slug' => 'akcesoria-do-ortez', 'name' => 'Akcesoria do ortez', 'parent_id' => $orthoses->id, 'status' => CategoryStatus::ACTIVE]);
+
+    listingProduct('Orteza kolana', 20000, ['category' => $knee]);
+    listingProduct('Orteza bez grupy', 9000, ['category' => $orthoses]);
+    listingProduct('FP-EM-6 Wkręt do drewna', 199, ['category' => $accessories]);
+    listingProduct('Pokrowiec do ortezy', 3000, ['category' => $accessories]);
+    // Also in a body-part group, so it is not only a spare part here.
+    listingProduct('Rękaw pod ortezę kolana', 1500, ['category' => $accessories])->categories()->attach($knee->id, ['is_primary' => false]);
+
+    expect(listedNames($this->get('/categories/ortezy-i-stabilizatory?sort=cena-rosnaco'), 'products'))
+        ->toBe(['Rękaw pod ortezę kolana', 'Orteza bez grupy', 'Orteza kolana', 'FP-EM-6 Wkręt do drewna', 'Pokrowiec do ortezy'])
+        ->and(listedNames($this->get('/categories/ortezy-i-stabilizatory?sort=cena-malejaco'), 'products'))
+        ->toBe(['Orteza kolana', 'Orteza bez grupy', 'Rękaw pod ortezę kolana', 'Pokrowiec do ortezy', 'FP-EM-6 Wkręt do drewna'])
+        // The accessory category's own page sorts plainly.
+        ->and(listedNames($this->get('/categories/akcesoria-do-ortez?sort=cena-rosnaco'), 'products'))
+        ->toBe(['FP-EM-6 Wkręt do drewna', 'Rękaw pod ortezę kolana', 'Pokrowiec do ortezy']);
+});
+
 it('puts priced and newest products first by default', function (): void {
     listingProduct('10x Opaska', 2000, ['published_at' => now()->subYear()]);
     listingProduct('Bez ceny nowa', null, ['published_at' => now()]);

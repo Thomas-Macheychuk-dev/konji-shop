@@ -88,6 +88,7 @@ final class CategoryProductIndexController extends Controller
         ]);
 
         $categoryIds = $this->activeCategorySubtree->ids($category);
+        $mainCategoryIds = $this->activeCategorySubtree->mainIds($category);
 
         // "?page=abc" or "?page=0" is not a page of this listing.
         abort_if(request()->has('page') && preg_match('/^[1-9]\d{0,5}$/', (string) request()->query('page')) !== 1, 404);
@@ -101,8 +102,12 @@ final class CategoryProductIndexController extends Controller
 
         $products = $this->cache->rememberVersioned(
             StorefrontCache::NAMESPACE_CATALOGUE,
-            sprintf('category.v3.%s.%d.%s.page.%d', strtolower(request()->getSchemeAndHttpHost()), $category->getKey(), $this->listing->cacheKey($filters), $page),
-            fn () => $this->listing->apply($inCategory(), $filters)->paginate(ProductListing::PER_PAGE),
+            sprintf('category.v4.%s.%d.%s.page.%d', strtolower(request()->getSchemeAndHttpHost()), $category->getKey(), $this->listing->cacheKey($filters), $page),
+            fn () => $this->listing->apply(
+                // Spare parts from accessory subcategories would otherwise top every "cheapest first" listing.
+                count($mainCategoryIds) < count($categoryIds) ? $this->listing->accessoriesLast($inCategory(), $mainCategoryIds) : $inCategory(),
+                $filters,
+            )->paginate(ProductListing::PER_PAGE),
             $this->cache->categoryPageTtlSeconds(),
         );
 

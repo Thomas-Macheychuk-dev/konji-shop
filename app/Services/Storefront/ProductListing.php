@@ -179,6 +179,21 @@ final class ProductListing
     }
 
     /**
+     * Lists products outside the given categories (accessory subcategories) after the rest, whatever the sort.
+     * Call before apply(): the sort only breaks ties within each group.
+     *
+     * @param  list<int>  $mainCategoryIds
+     */
+    public function accessoriesLast(Builder $query, array $mainCategoryIds): Builder
+    {
+        $inMain = DB::table('category_product')
+            ->whereColumn('category_product.product_id', 'products.id')
+            ->whereIn('category_product.category_id', $mainCategoryIds);
+
+        return $query->orderByRaw('NOT EXISTS ('.$inMain->toSql().')', $inMain->getBindings());
+    }
+
+    /**
      * Brands found among the products of a listing, most common first.
      *
      * @return list<array{slug: string, name: string, count: int}>
