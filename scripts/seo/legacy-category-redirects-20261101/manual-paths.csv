@@ -7,12 +7,16 @@ legacy_path,target,reason
 /brand/24-comfortia,/categories/kregoslup,brand: back supports
 /brand/28-memo,/categories/obuwie,brand: children's orthopaedic shoes
 /brand/31-dickies,/categories/odziez-medyczna,brand: medical clothing
+/brand/32-cherokee,/categories/odziez-medyczna,brand: medical clothing
+/brand/33-heartsoul,/categories/odziez-medyczna,brand: medical clothing
 /brand/35-code-happy,/categories/odziez-medyczna,brand: medical clothing
 /brand/42-medi,/categories/wyroby-kompresyjne,brand: compression products
+/brand/43-sigvaris,/categories/sigvaris-medical,brand: compression products
 /brand/47-antar,/categories/mobilnosc-i-transport,brand: walkers and wheelchairs
 /brand/49-push-med,/categories/ortezy-i-stabilizatory,brand: orthoses and supports
 /brand/57-ossur,/categories/ortezy-i-stabilizatory,brand: orthoses and supports
 /brand/61-akcesmed,/categories/rehabilitacja-dziecieca-foteliki-wozki-rehabilitacyjne,brand: children's rehabilitation seats and wheelchairs
+/brand/63-wock,/categories/obuwie-medyczne,brand: medical clogs
 /brand/65-butterfly-bio-magnetic,/categories/opaski-i-pasy-magnetyczne,brand: magnetic bands and pads
 /brand/71-alexandra,/categories/odziez-medyczna,brand: medical clothing
 /brand/72-wojdak,/categories/odziez-medyczna,brand: medical clothing and shoes
@@ -22,11 +26,14 @@ legacy_path,target,reason
 /brand/98-prime-medical,/categories/zaopatrzenie-ortopedyczne-stopy-prime-medical-opaski-gipsowe,brand: casting bandages
 /brand/103-darco,/categories/zaopatrzenie-ortopedyczne-stopy,brand: offloading and post-operative shoes
 /brand/108-vaya-medical,/categories/wkladki-ortopedyczne,brand: insoles and toe correctors
+/brand/113-apolonia,/categories/odziez-medyczna,brand: medical clothing and caps
+/brand/114-lewandowicz,/categories/wkladki-ortopedyczne,brand: insoles
 /brand/119-orthocare,/categories/ortezy-i-stabilizatory,brand: orthoses and hallux devices
 /brand/120-variteks,/categories/przeciwzylakowe,brand: compression hosiery
 /brand/121-scudotex,/categories/przeciwzylakowe,brand: compression hosiery
 /brand/122-albert-andre,/categories/przeciwzylakowe,brand: compression hosiery
 /brand/125-wik,/categories/obuwie,brand: children's orthopaedic shoes
+/brand/126-lidia-atelier-de-creation,/categories/turbany-i-chusty,brand: headscarves after chemotherapy
 /brand/127-fit-clog,/categories/obuwie-medyczne,brand: medical clogs
 /brand/133-rokoko-hair-company,/categories/peruki,brand: wigs
 /brand/137-kosela-medic,/categories/obuwie-medyczne,brand: medical shoes
@@ -34,8 +41,12 @@ legacy_path,target,reason
 /brand/141-dr-orto,/categories/obuwie-medyczne,brand: medical shoes
 /brand/143-neox,/categories/ortezy-i-stabilizatory,brand: orthoses and supports
 /brand/146-nissei,/categories/elektromedycyna,brand: blood pressure monitors
+/brand/147-athenax,/categories/ortezy-i-stabilizatory,"brand: orthoses, supports and insoles"
+/brand/149-curble-chair,/categories/rehabilitacja-dziecieca-foteliki-wozki-rehabilitacyjne,brand: children's corrective seats
 /brand/153-vital-threads,/categories/odziez-medyczna,brand: medical clothing
+/brand/154-promedics,/categories/zaopatrzenie-ortopedyczne-stopy,brand: post-operative shoes
 /brand/168-comfort,/categories/wozki-inwalidzkie,brand: special wheelchairs and accessories
+/brand/172-omax,/categories/ortezy-i-stabilizatory,brand: orthoses and slings
 /brand/176-tynor,/categories/ortezy-i-stabilizatory,brand: orthoses and supports
 /brand/179-clinic-dress,/categories/odziez-medyczna,brand: medical clothing
 /brand/180-push-sport,/categories/ortezy-i-stabilizatory,brand: sports orthoses

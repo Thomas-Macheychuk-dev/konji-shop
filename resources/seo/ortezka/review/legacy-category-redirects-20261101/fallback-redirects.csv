@@ -1566,11 +1566,14 @@ legacy_path,target,kind,reason
 /bran-obuwie-zdrowotne-scholl-damskie-id-4176,/categories/odziez-medyczna,product,legacy product 4176 breadcrumb category 81
 /brand/103-darco,/categories/zaopatrzenie-ortopedyczne-stopy,page,brand: offloading and post-operative shoes
 /brand/108-vaya-medical,/categories/wkladki-ortopedyczne,page,brand: insoles and toe correctors
+/brand/113-apolonia,/categories/odziez-medyczna,page,brand: medical clothing and caps
+/brand/114-lewandowicz,/categories/wkladki-ortopedyczne,page,brand: insoles
 /brand/119-orthocare,/categories/ortezy-i-stabilizatory,page,brand: orthoses and hallux devices
 /brand/120-variteks,/categories/przeciwzylakowe,page,brand: compression hosiery
 /brand/121-scudotex,/categories/przeciwzylakowe,page,brand: compression hosiery
 /brand/122-albert-andre,/categories/przeciwzylakowe,page,brand: compression hosiery
 /brand/125-wik,/categories/obuwie,page,brand: children's orthopaedic shoes
+/brand/126-lidia-atelier-de-creation,/categories/turbany-i-chusty,page,brand: headscarves after chemotherapy
 /brand/127-fit-clog,/categories/obuwie-medyczne,page,brand: medical clogs
 /brand/13-sporlastic,/categories/ortezy-i-stabilizatory,page,brand: orthoses and supports
 /brand/133-rokoko-hair-company,/categories/peruki,page,brand: wigs
@@ -1579,9 +1582,13 @@ legacy_path,target,kind,reason
 /brand/141-dr-orto,/categories/obuwie-medyczne,page,brand: medical shoes
 /brand/143-neox,/categories/ortezy-i-stabilizatory,page,brand: orthoses and supports
 /brand/146-nissei,/categories/elektromedycyna,page,brand: blood pressure monitors
+/brand/147-athenax,/categories/ortezy-i-stabilizatory,page,"brand: orthoses, supports and insoles"
+/brand/149-curble-chair,/categories/rehabilitacja-dziecieca-foteliki-wozki-rehabilitacyjne,page,brand: children's corrective seats
 /brand/153-vital-threads,/categories/odziez-medyczna,page,brand: medical clothing
+/brand/154-promedics,/categories/zaopatrzenie-ortopedyczne-stopy,page,brand: post-operative shoes
 /brand/168-comfort,/categories/wozki-inwalidzkie,page,brand: special wheelchairs and accessories
 /brand/17-timago,/categories/mobilnosc-i-transport,page,brand: walkers and wheelchairs
+/brand/172-omax,/categories/ortezy-i-stabilizatory,page,brand: orthoses and slings
 /brand/176-tynor,/categories/ortezy-i-stabilizatory,page,brand: orthoses and supports
 /brand/179-clinic-dress,/categories/odziez-medyczna,page,brand: medical clothing
 /brand/180-push-sport,/categories/ortezy-i-stabilizatory,page,brand: sports orthoses
@@ -1591,14 +1598,18 @@ legacy_path,target,kind,reason
 /brand/24-comfortia,/categories/kregoslup,page,brand: back supports
 /brand/28-memo,/categories/obuwie,page,brand: children's orthopaedic shoes
 /brand/31-dickies,/categories/odziez-medyczna,page,brand: medical clothing
+/brand/32-cherokee,/categories/odziez-medyczna,page,brand: medical clothing
+/brand/33-heartsoul,/categories/odziez-medyczna,page,brand: medical clothing
 /brand/35-code-happy,/categories/odziez-medyczna,page,brand: medical clothing
 /brand/4-pani-teresa-medica-sa,/categories/pani-teresa-medica-kompresja-medyczna,page,brand: compression and supports
 /brand/42-medi,/categories/wyroby-kompresyjne,page,brand: compression products
+/brand/43-sigvaris,/categories/sigvaris-medical,page,brand: compression products
 /brand/47-antar,/categories/mobilnosc-i-transport,page,brand: walkers and wheelchairs
 /brand/49-push-med,/categories/ortezy-i-stabilizatory,page,brand: orthoses and supports
 /brand/57-ossur,/categories/ortezy-i-stabilizatory,page,brand: orthoses and supports
 /brand/6-vermeiren,/categories/mobilnosc-i-transport,page,brand: wheelchairs and mobility aids
 /brand/61-akcesmed,/categories/rehabilitacja-dziecieca-foteliki-wozki-rehabilitacyjne,page,brand: children's rehabilitation seats and wheelchairs
+/brand/63-wock,/categories/obuwie-medyczne,page,brand: medical clogs
 /brand/65-butterfly-bio-magnetic,/categories/opaski-i-pasy-magnetyczne,page,brand: magnetic bands and pads
 /brand/71-alexandra,/categories/odziez-medyczna,page,brand: medical clothing
 /brand/72-wojdak,/categories/odziez-medyczna,page,brand: medical clothing and shoes

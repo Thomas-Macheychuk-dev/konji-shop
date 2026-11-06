@@ -31,7 +31,7 @@ class LegacyFallbackMapTest(unittest.TestCase):
         summary = module.summary(self.entries, self.skipped, self.products, self.categories)
         self.assertEqual((summary['category_redirects'], summary['category_gone']), (232, 2))
         self.assertEqual(summary['product_ids'], 8838)
-        self.assertEqual(summary['rules'], 14935)
+        self.assertEqual(summary['rules'], 14946)
         self.assertEqual(len(self.unresolved), 81)
         self.assertEqual(module.UNRESOLVED.read_bytes().decode('utf-8').count('\n'), 82)
 
