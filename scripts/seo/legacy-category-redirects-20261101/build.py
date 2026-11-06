@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate the legacy category and product-fallback nginx map from the reviewed legacy category decisions."""
-import argparse, csv, hashlib, importlib.util, json, re, sys
+import argparse, csv, functools, hashlib, importlib.util, json, re, sys
 from collections import Counter
 from pathlib import Path
 
@@ -18,6 +18,9 @@ LIVE_REDIRECTS = ROOT / 'live-redirects-20261102.tsv'
 MANUAL = ROOT / 'manual-products.csv'
 # Other legacy pages with Search Console traffic, e.g. /brand/N-name manufacturer pages.
 MANUAL_PATHS = ROOT / 'manual-paths.csv'
+# Categories archived after the decisions were made (catalogue:reorganise, 2026-11-05) and the page they now
+# redirect to; targets are rewritten so a legacy URL reaches the final page in one hop.
+ARCHIVED_TARGETS = ROOT / 'archived-category-targets.csv'
 MANUAL_TARGET = re.compile(r'^/(products|categories)/[a-z0-9-]+$')
 GONE = '410'
 LEGACY_PRODUCT = re.compile(r'^/[^/]+-id-(\d+)$')
@@ -82,6 +85,16 @@ def rule_for_name(name, rules):
     return None
 
 
+@functools.cache
+def archived_targets():
+    rows = csv.DictReader(ARCHIVED_TARGETS.read_text(encoding='utf-8').splitlines())
+    return {f'/categories/{r["archived_slug"]}': f'/categories/{r["target_slug"]}' for r in rows}
+
+
+def final_target(value):
+    return archived_targets().get(value, value)
+
+
 def manual_decisions():
     """Hand decisions for live legacy products that neither a breadcrumb nor a name rule resolves."""
     if not MANUAL.exists():
@@ -111,7 +124,7 @@ def build():
         elif path in entries:
             raise ValueError(f'duplicate legacy path {path}')
         else:
-            entries[path] = (value, kind, reason)
+            entries[path] = (final_target(value), kind, reason)
 
     for lid, r in sorted(resolved.items()):
         target = f'/categories/{r["target_slug"]}' if r['target_slug'] else GONE
@@ -161,7 +174,7 @@ def build_id_maps(entries):
     the products it already removed (LIVE_REDIRECTS, crawled from ortezka.pl)."""
     sources, rows = decisions.load()
     resolved = decisions.resolve(sources, rows)
-    categories = {str(lid): (f'/categories/{r["target_slug"]}' if r['target_slug'] else GONE, f'legacy category {lid}')
+    categories = {str(lid): (final_target(f'/categories/{r["target_slug"]}') if r['target_slug'] else GONE, f'legacy category {lid}')
                   for lid, r in resolved.items()}
 
     products = {}

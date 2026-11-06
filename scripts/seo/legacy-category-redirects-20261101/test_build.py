@@ -45,7 +45,8 @@ class LegacyFallbackMapTest(unittest.TestCase):
 
     def test_targets_are_active_categories_and_only_categories_are_gone(self):
         sources, _ = module.decisions.load()
-        active = {c['slug'] for c in sources['konji']}
+        # Body-part categories were created after the sources snapshot; they are only reachable through the archived map.
+        active = {c['slug'] for c in sources['konji']} | {t[len('/categories/'):] for t in module.archived_targets().values()}
         for path, (value, kind, _) in self.entries.items():
             if value == module.GONE:
                 self.assertEqual(kind, 'category', path)
@@ -64,6 +65,14 @@ class LegacyFallbackMapTest(unittest.TestCase):
             self.assertTrue(row['target'].startswith({'product': '/products/', 'category': '/categories/'}[row['basis']]), lid)
             self.assertTrue(any(r.endswith(f'legacy product {lid} manual {row["basis"]}') for _, _, r in self.entries.values()), lid)
         self.assertFalse({str(p['legacy_id']) for p in self.unresolved} & set(manual))
+
+    def test_no_target_is_an_archived_category(self):
+        archived = set(module.archived_targets())
+        self.assertFalse(archived & set(module.archived_targets().values()))
+        self.assertFalse(archived & {v for v, _, _ in self.entries.values()})
+        self.assertFalse(archived & {t for t, _ in self.products.values()})
+        self.assertFalse(archived & {t for t, _ in self.categories.values()})
+        self.assertEqual(self.categories['237'][0], '/categories/kregoslup-i-tulow')
 
     def test_brand_pages_go_to_active_categories(self):
         pages = {p: v for p, (v, k, _) in self.entries.items() if k == 'page'}
