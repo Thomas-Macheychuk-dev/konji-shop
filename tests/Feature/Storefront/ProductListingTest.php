@@ -129,8 +129,9 @@ it('lists accessory subcategory products after the rest of a parent category', f
 
     listingProduct('Orteza kolana', 20000, ['category' => $knee]);
     listingProduct('Orteza bez grupy', 9000, ['category' => $orthoses]);
-    listingProduct('FP-EM-6 Wkręt do drewna', 199, ['category' => $accessories]);
-    listingProduct('Pokrowiec do ortezy', 3000, ['category' => $accessories]);
+    // catalogue:reorganise also links every orthosis to the root category; that link does not make it a main product.
+    listingProduct('FP-EM-6 Wkręt do drewna', 199, ['category' => $accessories])->categories()->attach($orthoses->id, ['is_primary' => false]);
+    listingProduct('Pokrowiec do ortezy', 3000, ['category' => $accessories])->categories()->attach($orthoses->id, ['is_primary' => false]);
     // Also in a body-part group, so it is not only a spare part here.
     listingProduct('Rękaw pod ortezę kolana', 1500, ['category' => $accessories])->categories()->attach($knee->id, ['is_primary' => false]);
 
