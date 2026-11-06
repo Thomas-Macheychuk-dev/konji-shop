@@ -31,14 +31,68 @@ final class ActiveCategorySubtree
     }
 
     /**
+     * The subtree without its accessory subcategories ("Akcesoria do ortez" and the like) and what sits under
+     * them. A listing shows products from these first, so spare parts do not crowd the top of a price sort.
+     * The category itself always counts, so an accessory category's own page is unaffected.
+     *
+     * @return list<int>
+     */
+    public function mainIds(Category $category): array
+    {
+        return $this->cache->rememberVersioned(
+            StorefrontCache::NAMESPACE_NAVIGATION,
+            sprintf('category-subtree-main.%d.v1', $category->getKey()),
+            fn (): array => $this->queryMainIds($category),
+            $this->cache->categorySidebarTtlSeconds(),
+        );
+    }
+
+    /**
      * @return list<int>
      */
     private function queryIds(Category $category): array
     {
-        $rows = DB::select(
+        return collect($this->queryRows($category))
+            ->pluck('id')
+            ->map(fn (mixed $id): int => (int) $id)
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function queryMainIds(Category $category): array
+    {
+        $main = [];
+
+        // Rows come ordered by depth, so a parent is decided before its children.
+        foreach ($this->queryRows($category) as $row) {
+            $id = (int) $row->id;
+            $isRoot = $id === (int) $category->getKey();
+
+            if ($isRoot || (isset($main[(int) $row->parent_id]) && ! self::isAccessory((string) $row->name))) {
+                $main[$id] = true;
+            }
+        }
+
+        return array_keys($main);
+    }
+
+    private static function isAccessory(string $name): bool
+    {
+        return preg_match('/^akcesoria\b/iu', trim($name)) === 1;
+    }
+
+    /**
+     * @return list<object{id: int, parent_id: ?int, name: string}>
+     */
+    private function queryRows(Category $category): array
+    {
+        return DB::select(
             <<<'SQL'
 WITH RECURSIVE active_category_tree AS (
-    SELECT id, parent_id
+    SELECT id, parent_id, name, 0 AS depth
     FROM categories
     WHERE id = ?
       AND status = ?
@@ -46,15 +100,16 @@ WITH RECURSIVE active_category_tree AS (
 
     UNION ALL
 
-    SELECT categories.id, categories.parent_id
+    SELECT categories.id, categories.parent_id, categories.name, active_category_tree.depth + 1
     FROM categories
     INNER JOIN active_category_tree
         ON categories.parent_id = active_category_tree.id
     WHERE categories.status = ?
       AND categories.deleted_at IS NULL
 )
-SELECT id
+SELECT id, parent_id, name
 FROM active_category_tree
+ORDER BY depth, id
 SQL,
             [
                 (int) $category->getKey(),
@@ -62,11 +117,5 @@ SQL,
                 CategoryStatus::ACTIVE->value,
             ],
         );
-
-        return collect($rows)
-            ->pluck('id')
-            ->map(fn (mixed $id): int => (int) $id)
-            ->values()
-            ->all();
     }
 }
