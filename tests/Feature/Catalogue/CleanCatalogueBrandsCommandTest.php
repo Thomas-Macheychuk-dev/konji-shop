@@ -66,7 +66,7 @@ it('cleans legal forms and imprints from brand names', function (string $raw, st
     ['Canpol Sp. z o.o (marka Lovi)', 'Lovi'],
     ['Löwenstein Medical Technology GmbH + Co. KG Kronsaalsweg 40, 22525 Hamburg, Germany', 'Löwenstein Medical Technology'],
     ['ResMed Pty. Ltd.1 Elizabeth Macarthur Drive Bella Vista NSW 2153 Australia', 'ResMed'],
-    ['Aflofarm Farmacja Polska Sp. z o.o.Sposób użycia:Postępować zgodnie z instrukcją', 'Aflofarm Farmacja Polska'],
+    ['Aflofarm Farmacja Polska Sp. z o.o.Sposób użycia:Postępować zgodnie z instrukcją', 'Aflofarm Farmacja'],
     ['Becton, Dickinson and Company Numer jednostki notyfikowanej 2797', 'Becton, Dickinson and Company'],
     ['Respironics, Inc.Upoważniony przedstawiciel: (EU REP)', 'Respironics'],
     ['Foshan Hongfeng Co., Ltd, No. 4-2 Leqiang Road', 'Foshan Hongfeng'],
@@ -76,7 +76,7 @@ it('cleans legal forms and imprints from brand names', function (string $raw, st
     ['Eurofarm S.p.A. Numer jednostki notyfikowanej 0373', 'Eurofarm'],
     ['3A Health Care S.r.l.', '3A Health Care'],
     ['RI.MOS. Srl Numer jednostki notyfikowanej 0051', 'RI.MOS'],
-    ['B.Braun Melsungen AG Numer jednostki notyfikowanej 0123', 'B.Braun Melsungen'],
+    ['B.Braun Melsungen AG Numer jednostki notyfikowanej 0123', 'B.Braun'],
     ['SUNGO Europe B.V. Numer jednostki notyfikowanej N/D', 'SUNGO Europe'],
     ['AQUA KOZMETIK DIS TICARET A.S.', 'AQUA KOZMETIK DIS TICARET'],
     ['SEMA Spółka Cywilna', 'SEMA'],
@@ -84,6 +84,23 @@ it('cleans legal forms and imprints from brand names', function (string $raw, st
     ['Sanitas', 'Sanitas'],
     ['Agnes Medical', 'Agnes Medical'],
     ['P.H. PAPIER-FOLIA', 'P.H. PAPIER-FOLIA'],
+    // Staging brand filter, November 2026.
+    ['Albis Mazur Sp. Z o .o', 'Albis Mazur'],
+    ['LÖWENSTEINLöwenstein Medical Technology', 'Löwenstein Medical Technology'],
+    ['SchollOpakowanie: 275 g', 'Scholl'],
+    ['Scholl - Produkty do pielęgnacji stóp', 'Scholl'],
+    ['Biomar Dbaj o siebie i stawiaj na Jakość', 'Biomar'],
+    ['Microlife Corporation', 'Microlife'],
+    ['ConvaTec Limited', 'ConvaTec'],
+    ['Convatec Polska', 'ConvaTec'],
+    ['KD Medical Polska', 'KD Medical'],
+    ['Mölnlycke Health Care AB', 'Mölnlycke Health Care'],
+    ['Trulife Corporate Headquarters', 'Trulife'],
+    ['ORTHO VISIONS', 'OrthoVisions'],
+    ['B.Braun Melsungen AG', 'B.Braun'],
+    ['JJW', 'JJW'],
+    ['ABENA', 'ABENA'],
+    ['MASO', 'MASO'],
 ]);
 
 it('previews renames, merges and missing Reh4Mat brands without writing', function (): void {
@@ -102,6 +119,27 @@ it('previews renames, merges and missing Reh4Mat brands without writing', functi
         ->assertSuccessful();
 
     expect($long->fresh()->value)->toBe('Armedical Sp. z o.o.');
+});
+
+it('unlinks placeholder brands and puts them back on rollback', function (): void {
+    $dash = brandValue('-', 'medreha-value-3bc15c8aae');
+    $product = brandedProduct('Wózek', $dash);
+
+    $this->artisan('catalogue:clean-brands')
+        ->expectsOutputToContain('PLACEHOLDERS=1 (PRODUCT_LINKS_REMOVED=1)')
+        ->assertSuccessful();
+
+    $this->artisan('catalogue:clean-brands', ['--write' => true])
+        ->expectsOutputToContain('LINKS_REMOVED=1')
+        ->assertSuccessful();
+
+    expect(brandNamesOf($product))->toBe([]);
+
+    $this->artisan('catalogue:clean-brands', ['--rollback' => collect(Storage::disk('local')->files('catalogue-repairs'))->sole()])
+        ->expectsOutputToContain('CATALOGUE_BRANDS_ROLLBACK=PASS')
+        ->assertSuccessful();
+
+    expect(brandNamesOf($product))->toBe(['-']);
 });
 
 it('merges and renames brands, attaches Reh4Mat brands, and rolls back', function (): void {
