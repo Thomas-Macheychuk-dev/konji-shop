@@ -56,6 +56,28 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3">
+                        <label for="external_source" class="sr-only">
+                            Źródło zewnętrzne
+                        </label>
+
+                        <select
+                            id="external_source"
+                            name="external_source"
+                            class="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700 focus:border-zinc-900 focus:ring-zinc-900"
+                        >
+                            <option value="">Wszystkie źródła</option>
+
+                            @foreach ($externalSources as $source)
+                                <option value="{{ $source }}" @selected($externalSource === $source)>
+                                    {{ $source }}
+                                </option>
+                            @endforeach
+
+                            <option value="{{ $noExternalSource }}" @selected($externalSource === $noExternalSource)>
+                                Brak źródła
+                            </option>
+                        </select>
+
                         <label class="flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700">
                             <input
                                 type="checkbox"
@@ -96,7 +118,7 @@
                             Filtruj
                         </button>
 
-                        @if ($search !== '' || $missingPackageData || $withoutPricedVariants || $unavailable)
+                        @if ($search !== '' || $externalSource !== '' || $missingPackageData || $withoutPricedVariants || $unavailable)
                             <a
                                 href="{{ route('admin.products.index') }}"
                                 class="rounded-xl border border-zinc-300 px-4 py-3 text-sm font-semibold text-zinc-700 hover:bg-zinc-50"
