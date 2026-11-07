@@ -108,7 +108,7 @@
                 </div>
             </form>
 
-            <div class="overflow-hidden rounded-xl border border-zinc-200">
+            <div class="overflow-x-auto rounded-xl border border-zinc-200">
                 <table class="min-w-full divide-y divide-zinc-200">
                     <thead class="bg-zinc-50">
                     <tr>
@@ -172,19 +172,19 @@
                                 </div>
 
                                 @if ($product->external_id)
-                                    <div class="mt-1 text-xs text-zinc-400">
+                                    <div class="mt-1 max-w-[12rem] truncate text-xs text-zinc-400" title="{{ $product->external_id }}">
                                         {{ $product->external_id }}
                                     </div>
                                 @endif
                             </td>
 
-                            <td class="px-4 py-4 text-sm text-zinc-700">
+                            <td class="whitespace-nowrap px-4 py-4 text-sm text-zinc-700">
                                 <div>
                                     {{ $product->updated_at ?: $product->created_at }}
                                 </div>
                             </td>
 
-                            <td class="px-4 py-4 text-right text-sm">
+                            <td class="whitespace-nowrap px-4 py-4 text-right text-sm">
                                 <a
                                     href="{{ route('admin.products.edit', $product) }}"
                                     class="font-medium text-zinc-900 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700"
