@@ -39,7 +39,7 @@
             </div>
 
             <form method="GET" action="{{ route('admin.products.index') }}" class="mb-6 rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
-                <div class="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
+                <div class="grid gap-4">
                     <div>
                         <label for="search" class="mb-2 block text-sm font-medium text-zinc-700">
                             Szukaj produktów
