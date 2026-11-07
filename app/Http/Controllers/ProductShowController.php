@@ -20,6 +20,7 @@ use App\Services\Reh4Mat\Reh4MatSizeOptions;
 use App\Services\Shop\ShopSettings;
 use App\Services\Storefront\StorefrontCache;
 use App\Support\Products\ProductLegalDisclosures;
+use App\Support\Products\ProductManufacturerInformation;
 use App\Support\Seo\ProductIdentifiers;
 use App\Support\Seo\ProductMetaDescription;
 use App\Support\Seo\ReviewedProductAliases;
@@ -112,6 +113,7 @@ class ProductShowController extends Controller
         $product->load([
             'images',
             'attributeValues.attribute',
+            'attributeValues.manufacturer',
             'categories' => fn ($query) => $query
                 ->where('status', CategoryStatus::ACTIVE->value)
                 ->with('parent')
@@ -173,6 +175,7 @@ class ProductShowController extends Controller
             'breadcrumbs' => $breadcrumbs,
             'informationalColorGroups' => $informationalColorGroups,
             'storefrontDescription' => $storefrontDescription,
+            'manufacturerInformation' => ProductManufacturerInformation::forProduct($product),
 
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
@@ -190,7 +193,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v17.%s.%d',
+            'product-page.v18.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );

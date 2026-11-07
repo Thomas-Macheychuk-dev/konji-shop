@@ -23,6 +23,9 @@ use App\Http\Controllers\Admin\Complaints\AdminComplaintUpdateController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierAvailableCarriersRefreshController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierDiagnosticsController;
 use App\Http\Controllers\Admin\Delivery\AdminPolkurierValuationTestController;
+use App\Http\Controllers\Admin\Manufacturers\AdminManufacturerEditController;
+use App\Http\Controllers\Admin\Manufacturers\AdminManufacturerIndexController;
+use App\Http\Controllers\Admin\Manufacturers\AdminManufacturerUpdateController;
 use App\Http\Controllers\Admin\Orders\AdminOrderCancelController;
 use App\Http\Controllers\Admin\Orders\AdminOrderIndexController;
 use App\Http\Controllers\Admin\Orders\AdminOrderNoteController;
@@ -269,6 +272,15 @@ Route::middleware(['auth', 'admin'])
 
         Route::delete('/pages/{editablePage}', AdminPageResetController::class)
             ->name('pages.reset');
+
+        Route::get('/manufacturers', AdminManufacturerIndexController::class)
+            ->name('manufacturers.index');
+
+        Route::get('/manufacturers/{attributeValue}/edit', AdminManufacturerEditController::class)
+            ->name('manufacturers.edit');
+
+        Route::patch('/manufacturers/{attributeValue}', AdminManufacturerUpdateController::class)
+            ->name('manufacturers.update');
 
         Route::get('/rental', AdminRentalItemIndexController::class)
             ->name('rental.index');

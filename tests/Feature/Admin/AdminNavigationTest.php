@@ -21,6 +21,7 @@ it('shows the complete admin navigation for admins', function (): void {
         ->assertSee(route('admin.withdrawals.index'), false)
         ->assertSee(route('admin.pages.index'), false)
         ->assertSee(route('admin.rental.index'), false)
+        ->assertSee(route('admin.manufacturers.index'), false)
         ->assertSee('Edytor stron')
         ->assertSee(route('admin.shop.readiness'), false);
 });
@@ -41,6 +42,7 @@ it('does not show admin navigation for normal users', function (): void {
         ->assertDontSee(route('admin.withdrawals.index'), false)
         ->assertDontSee(route('admin.pages.index'), false)
         ->assertDontSee(route('admin.rental.index'), false)
+        ->assertDontSee(route('admin.manufacturers.index'), false)
         ->assertDontSee(route('admin.shop.readiness'), false);
 });
 
