@@ -101,6 +101,10 @@ it('cleans legal forms and imprints from brand names', function (string $raw, st
     ['JJW', 'JJW'],
     ['ABENA', 'ABENA'],
     ['MASO', 'MASO'],
+    // Cut at the first dot by the Mobilex scraper before November 2026.
+    ['Health and Fashion Shoes Italia S', 'Scholl'],
+    ['Health and Fashion Shoes Italia S.p.A.', 'Scholl'],
+    ['Winncare Polska Sp', 'Winncare Polska'],
 ]);
 
 it('previews renames, merges and missing Reh4Mat brands without writing', function (): void {

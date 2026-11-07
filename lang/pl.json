@@ -200,5 +200,16 @@
     "Showing": "Wyświetlanie",
     "to": "do",
     "of": "z",
-    "results": "wyników"
+    "results": "wyników",
+    "Already have an account?": "Masz już konto?",
+    "Don't have an account?": "Nie masz konta?",
+    "Enable this if you want to provide company billing details during registration.": "Zaznacz, jeśli chcesz już przy rejestracji podać dane firmy do faktury.",
+    "Or, return to": "Albo wróć do",
+    "Please confirm access to your account by entering one of your emergency recovery codes.": "Potwierdź dostęp do konta, wpisując jeden z kodów odzyskiwania.",
+    "Resend verification email": "Wyślij ponownie e-mail weryfikacyjny",
+    "Sign up": "Zarejestruj się",
+    "This is a secure area of the application. Please confirm your password before continuing.": "To chroniona część serwisu. Zanim przejdziesz dalej, potwierdź swoje hasło.",
+    "log in": "logowania",
+    "login using a recovery code": "zalogować się kodem odzyskiwania",
+    "login using an authentication code": "zalogować się kodem uwierzytelniającym"
 }

@@ -35,7 +35,8 @@ final class CleanCatalogueBrandsCommand extends Command
 
     // A legal form ends the brand name wherever it appears: "Löwenstein Medical Technology GmbH + Co. KG Kronsaalsweg 40".
     // A separator is required before it, and short forms must stand alone, so "Medico" or "Sanitas" keep their names.
-    private const LEGAL_FORM = '/[\s,.]+(?:sp\.?\s*z\s*o\s*\.?\s*o|sp\.?\s*[jk]\.|spółka\b|limited\b|corporation\b|ab(?=[\s,.(]|$)|s\.?\s*p\.?\s*a\.?(?=[\s,.(]|$)|s\.?\s*r\.?\s*[lo]\.?(?=[\s,.(]|$)|s\.?\s*a\.?(?:\s*e\.?)?(?=[\s,.(]|$)|a\.\s*s\.|b\.?\s*v\.?(?=[\s,.(]|$)|gmbh|ag(?=[\s,.(]|$)|ltd|llc|inc\b|corp\b|pty\b|co\.)/iu';
+    // A bare trailing "Sp" is "Sp. z o.o." an older scraper cut at its first dot.
+    private const LEGAL_FORM = '/[\s,.]+(?:sp\.?\s*z\s*o\s*\.?\s*o|sp\.?\s*[jk]\.|spółka\b|limited\b|corporation\b|ab(?=[\s,.(]|$)|s\.?\s*p\.?\s*a\.?(?=[\s,.(]|$)|s\.?\s*r\.?\s*[lo]\.?(?=[\s,.(]|$)|s\.?\s*a\.?(?:\s*e\.?)?(?=[\s,.(]|$)|a\.\s*s\.|b\.?\s*v\.?(?=[\s,.(]|$)|gmbh|ag(?=[\s,.(]|$)|ltd|llc|inc\b|corp\b|pty\b|co\.|sp\.?$)/iu';
 
     // Imprints, notified-body numbers and leaflet text that follow the name.
     private const IMPRINT_START = '/\s*(?:\bnumer jednostki notyfikowanej\b|\bul\.|\bulica\b|\bNIP\b|\bKRS\b|\btel\.|\be-mail\b|\bwww\.|\bpodmiot\b|\bupoważniony\b|\bimporter\b|\bdystrybutor\b|\bsposób użycia\b|opakowanie\s*:|\bcorporate headquarters\b)/iu';
@@ -47,6 +48,9 @@ final class CleanCatalogueBrandsCommand extends Command
         'bbraun-melsungen' => 'B.Braun',
         'biomar-dbaj-o-siebie-i-stawiaj-na-jakosc' => 'Biomar',
         'convatec-polska' => 'ConvaTec',
+        // The maker of Scholl shoes; "Italia S" is "S.p.A." an older scraper cut at its first dot.
+        'health-and-fashion-shoes-italia' => 'Scholl',
+        'health-and-fashion-shoes-italia-s' => 'Scholl',
         'kd-medical-polska' => 'KD Medical',
         'ortho-visions' => 'OrthoVisions',
         'scholl-produkty-do-pielegnacji-stop' => 'Scholl',

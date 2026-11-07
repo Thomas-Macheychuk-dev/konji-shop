@@ -442,3 +442,21 @@ it('prefers the real medical device producer over the Mobilex distributor for Le
             'slug' => '100_pe_nonwoven_hipoalergiczny',
         ])->and($result['variant_candidates'])->toBe([]);
 });
+
+it('keeps dotted legal forms whole when reading the Galeria Zdrowia producer', function (string $medicalInfo, string $producer): void {
+    $html = <<<HTML
+        <html><body>
+            <h1 class="product_title entry-title">Produkt testowy</h1>
+            <div class="row"><div class="large-12"><div>Produkt jest wyrobem medycznym. {$medicalInfo}</div></div></div>
+        </body></html>
+        HTML;
+
+    $result = app(MobilexProductScraper::class)->extract($html, 'https://galeriazdrowia.pl/produkt/testowy/');
+
+    expect(collect($result['attributes'])->firstWhere('code', 'producent')['value'] ?? null)->toBe($producer);
+})->with([
+    ['Producentem butów Scholl jest firma Health and Fashion Shoes Italia S.p.A. Wyłącznym dystrybutorem w Polsce jest firma Mobilex Sp. z o.o.', 'Scholl'],
+    ['Producentem łóżek jest firma Winncare Polska Sp. z o.o., której wyłącznym dystrybutorem w Polsce jest Firma Mobilex Sp. z o.o.', 'Winncare Polska'],
+    ['Producentem wózków jest firma firma ANTANO Group SRL. Dystrybutorem w Polsce jest firma Mobilex Sp. z o.o.', 'ANTANO Group'],
+    ['Producentem napędów jest firma AAT Alber Antriebstechnik Gmbh. Dystrybutorem w Polsce jest firma Mobilex Sp. z o.o.', 'AAT Alber Antriebstechnik'],
+]);
