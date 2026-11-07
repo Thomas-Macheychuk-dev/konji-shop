@@ -14,9 +14,15 @@ use Illuminate\Http\Request;
 
 final class AdminProductIndexController extends Controller
 {
+    /**
+     * Filter value for products without an external source (created by hand).
+     */
+    public const NO_EXTERNAL_SOURCE = '__none__';
+
     public function __invoke(Request $request): View
     {
         $search = trim((string) $request->query('search', ''));
+        $externalSource = trim((string) $request->query('external_source', ''));
         $missingPackageData = $request->boolean('missing_package_data');
         $withoutPricedVariants = $request->boolean('without_priced_variants');
         $unavailable = $request->boolean('unavailable');
@@ -41,6 +47,16 @@ final class AdminProductIndexController extends Controller
                         });
                 });
             })
+            ->when($externalSource === self::NO_EXTERNAL_SOURCE, function ($query): void {
+                $query->where(function ($query): void {
+                    $query
+                        ->whereNull('external_source')
+                        ->orWhere('external_source', '');
+                });
+            })
+            ->when($externalSource !== '' && $externalSource !== self::NO_EXTERNAL_SOURCE, function ($query) use ($externalSource): void {
+                $query->where('external_source', $externalSource);
+            })
             ->when($missingPackageData, function ($query): void {
                 $query->whereHas('variants', function ($query): void {
                     $this->missingPackageDataQuery($query);
@@ -61,6 +77,14 @@ final class AdminProductIndexController extends Controller
         return view('admin.products.index', [
             'products' => $products,
             'search' => $search,
+            'externalSource' => $externalSource,
+            'externalSources' => Product::query()
+                ->whereNotNull('external_source')
+                ->where('external_source', '!=', '')
+                ->distinct()
+                ->orderBy('external_source')
+                ->pluck('external_source'),
+            'noExternalSource' => self::NO_EXTERNAL_SOURCE,
             'missingPackageData' => $missingPackageData,
             'withoutPricedVariants' => $withoutPricedVariants,
             'unavailable' => $unavailable,

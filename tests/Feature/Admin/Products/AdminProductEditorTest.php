@@ -7,6 +7,7 @@ use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Enums\VatRate;
+use App\Http\Controllers\Admin\Products\AdminProductIndexController;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Category;
@@ -1140,6 +1141,68 @@ it('filters products by variant sku', function (): void {
         ->assertOk()
         ->assertSee('Editable Product')
         ->assertDontSee('Other Product');
+});
+
+it('filters products by external source', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    Product::query()->create([
+        'name' => 'Vermeiren Product',
+        'slug' => 'vermeiren-product',
+        'status' => ProductStatus::ACTIVE,
+        'external_source' => 'vermeiren',
+    ]);
+
+    Product::query()->create([
+        'name' => 'Medi Product',
+        'slug' => 'medi-product',
+        'status' => ProductStatus::ACTIVE,
+        'external_source' => 'medi',
+    ]);
+
+    Product::query()->create([
+        'name' => 'Handmade Product',
+        'slug' => 'handmade-product',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.index', ['external_source' => 'vermeiren']))
+        ->assertOk()
+        ->assertSee('Vermeiren Product')
+        ->assertDontSee('Medi Product')
+        ->assertDontSee('Handmade Product')
+        ->assertSee('<option value="vermeiren" selected', false)
+        ->assertSee('<option value="medi"', false);
+});
+
+it('filters products without an external source', function (): void {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    Product::query()->create([
+        'name' => 'Medi Product',
+        'slug' => 'medi-product',
+        'status' => ProductStatus::ACTIVE,
+        'external_source' => 'medi',
+    ]);
+
+    Product::query()->create([
+        'name' => 'Handmade Product',
+        'slug' => 'handmade-product',
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    $this
+        ->actingAs($admin)
+        ->get(route('admin.products.index', ['external_source' => AdminProductIndexController::NO_EXTERNAL_SOURCE]))
+        ->assertOk()
+        ->assertSee('Handmade Product')
+        ->assertDontSee('Medi Product');
 });
 
 it('filters products by missing package data', function (): void {
