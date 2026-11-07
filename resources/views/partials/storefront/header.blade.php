@@ -158,6 +158,7 @@
                                     ['route' => 'admin.orders.index', 'label' => 'Zamówienia'],
                                     ['route' => 'admin.products.index', 'label' => 'Produkty'],
                                     ['route' => 'admin.categories.index', 'label' => 'Kategorie'],
+                                    ['route' => 'admin.manufacturers.index', 'label' => 'Producenci (GPSR)'],
                                     ['route' => 'admin.withdrawals.index', 'label' => 'Odstąpienia'],
                                     ['route' => 'admin.complaints.index', 'label' => 'Reklamacje'],
                                     ['route' => 'admin.pages.index', 'label' => 'Edytor stron'],
@@ -347,6 +348,7 @@
                         <a href="{{ route('admin.orders.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Zamówienia</a>
                         <a href="{{ route('admin.products.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Produkty</a>
                         <a href="{{ route('admin.categories.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Kategorie</a>
+                        <a href="{{ route('admin.manufacturers.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Producenci (GPSR)</a>
                         <a href="{{ route('admin.withdrawals.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Odstąpienia</a>
                         <a href="{{ route('admin.complaints.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Reklamacje</a>
                         <a href="{{ route('admin.pages.index') }}" class="rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-[#155fa8]">Edytor stron</a>

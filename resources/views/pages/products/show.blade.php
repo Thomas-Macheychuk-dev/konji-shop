@@ -190,5 +190,12 @@
                 </section>
             </div>
         </div>
+
+        {{-- Outside the Vue mount point, which replaces its contents. --}}
+        @if ($manufacturerInformation ?? null)
+            <div class="mt-10 lg:ml-auto lg:w-[calc((100%_-_2.5rem)*6/11)]">
+                @include('pages.products.partials.manufacturer-information', ['manufacturer' => $manufacturerInformation])
+            </div>
+        @endif
     </div>
 @endsection

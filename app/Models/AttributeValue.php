@@ -77,6 +77,14 @@ class AttributeValue extends Model
             ->orderBy('id');
     }
 
+    /**
+     * GPSR manufacturer details, for "Producent"/"Marka" values only.
+     */
+    public function manufacturer(): HasOne
+    {
+        return $this->hasOne(Manufacturer::class);
+    }
+
     public function hasSwatch(): bool
     {
         return filled($this->swatch_value) || filled($this->swatch_image_path);
