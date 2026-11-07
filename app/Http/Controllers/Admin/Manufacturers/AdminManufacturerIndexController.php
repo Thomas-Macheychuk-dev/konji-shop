@@ -6,9 +6,11 @@ namespace App\Http\Controllers\Admin\Manufacturers;
 
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Services\Storefront\ProductListing;
+use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -23,10 +25,11 @@ final class AdminManufacturerIndexController extends Controller
     {
         $search = trim($request->string('search')->toString());
         $onlyMissing = $request->boolean('missing');
+        $usingValue = $this->activeProductsUsingValue();
 
-        $brands = $this->brandValues()
+        $brands = $this->brandValues($usingValue)
             ->with(['attribute', 'manufacturer'])
-            ->withCount(['products as active_products_count' => fn (Builder $query) => $query->where('status', ProductStatus::ACTIVE->value)])
+            ->withCount(['products as active_products_count' => $usingValue])
             ->when($search !== '', fn (Builder $query) => $query->where(fn (Builder $query) => $query
                 ->where('value', 'like', '%'.$search.'%')
                 ->orWhereHas('manufacturer', fn (Builder $query) => $query->where('name', 'like', '%'.$search.'%'))))
@@ -44,11 +47,41 @@ final class AdminManufacturerIndexController extends Controller
         ]);
     }
 
-    private function brandValues(): Builder
+    /**
+     * Brand values some active product takes its details from, plus any value whose details are already filled in.
+     */
+    private function brandValues(Closure $usingValue): Builder
     {
         return AttributeValue::query()
             ->whereHas('attribute', fn (Builder $query) => $query->whereIn('slug', ProductListing::BRAND_ATTRIBUTE_SLUGS))
-            ->whereHas('products', fn (Builder $query) => $query->where('status', ProductStatus::ACTIVE->value));
+            ->where(fn (Builder $query) => $query->whereHas('products', $usingValue)->orWhereHas('manufacturer'));
+    }
+
+    /**
+     * Constrains a brand value's products to the active ones whose page shows this value's details:
+     * a "Marka" value only counts products without a "Producent" value, the order
+     * ProductManufacturerInformation reads them in. A brand set under both is then listed once.
+     */
+    private function activeProductsUsingValue(): Closure
+    {
+        $attributeIds = Attribute::query()->whereIn('slug', ProductListing::BRAND_ATTRIBUTE_SLUGS)->pluck('id', 'slug');
+        $ranked = collect(ProductListing::BRAND_ATTRIBUTE_SLUGS)
+            ->map(fn (string $slug): ?int => $attributeIds[$slug] ?? null)
+            ->filter()
+            ->values();
+
+        return fn (Builder $query) => $query
+            ->where('status', ProductStatus::ACTIVE->value)
+            ->where(function (Builder $query) use ($ranked): void {
+                foreach ($ranked as $rank => $attributeId) {
+                    $preferred = $ranked->take($rank)->all();
+
+                    $query->orWhere(fn (Builder $query) => $query
+                        ->where('attribute_values.attribute_id', $attributeId)
+                        ->when($preferred !== [], fn (Builder $query) => $query
+                            ->whereDoesntHave('attributeValues', fn (Builder $query) => $query->whereIn('attribute_id', $preferred))));
+                }
+            });
     }
 
     /**

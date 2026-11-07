@@ -10,6 +10,7 @@
             <p class="mt-2 max-w-3xl text-sm text-zinc-600">
                 Dane producenta, które rozporządzenie GPSR wymaga na stronie każdego produktu: nazwa, adres pocztowy i elektroniczny, a dla producentów spoza UE — osoba odpowiedzialna w UE.
                 Dane wpisane dla marki pojawiają się na stronach wszystkich jej produktów.
+                Strona produktu bierze dane najpierw z atrybutu „Producent”, dlatego przy wartościach „Marka” liczone są tylko produkty bez „Producenta”.
             </p>
         </div>
 

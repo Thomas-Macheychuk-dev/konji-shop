@@ -1117,8 +1117,9 @@ final class MobilexProductScraper
         $text = $this->htmlToText($html);
 
         foreach ([
-            '/Producentem\s+.+?\s+jest\s+firma\s+(.+?)(?:\s+kt[oó]rej|\s+którego|\s+ktory|\s+który|\s+Wyłącznym|\s+dystrybutorem|\s+jest\s+Firma|\.|$)/iu',
-            '/producent(?:a|em)?\s+(?:jest\s+)?(.+?)(?:\s+kt[oó]rej|\s+którego|\s+Wyłącznym|\s+dystrybutorem|\.|$)/iu',
+            // A dot ends the name only before a capitalised word or the end, so "S.p.A." and "Sp. z o.o." stay whole.
+            '/Producentem\s+.+?\s+jest\s+(?:firma\s+)+(.+?\.?)(?:\s+kt[oó]rej|\s+którego|\s+ktory|\s+który|\s+Wyłącznym|\s+dystrybutorem|\s+jest\s+Firma|,|\.(?=\s+(?-i:\p{Lu})|\s*$)|$)/iu',
+            '/producent(?:a|em)?\s+(?:jest\s+)?(.+?\.?)(?:\s+kt[oó]rej|\s+którego|\s+Wyłącznym|\s+dystrybutorem|\.(?=\s+(?-i:\p{Lu})|\s*$)|$)/iu',
         ] as $pattern) {
             if (preg_match($pattern, $text, $matches) === 1) {
                 return $this->canonicalBrandName($matches[1]);
@@ -1136,7 +1137,8 @@ final class MobilexProductScraper
             return null;
         }
 
-        if ($this->textContains($name, 'scholl')) {
+        // Health and Fashion Shoes Italia makes the Scholl shoes.
+        if ($this->textContains($name, 'scholl') || $this->textContains($name, 'health and fashion shoes')) {
             return 'Scholl';
         }
 
@@ -1164,7 +1166,7 @@ final class MobilexProductScraper
             return 'Mobilex';
         }
 
-        return preg_replace('/\s+(?:A\/S|ApS|Sp\.\s*z\s*o\.o\.|a\.s\.|s\.r\.l\.|ltd\.?|lda\.?)\.?$/iu', '', $name) ?: $name;
+        return preg_replace('/,?\s+(?:A\/S|ApS|Sp\.\s*z\s*o\.\s*o\.?|a\.s\.|s\.?r\.?l\.?|s\.p\.a\.?|gmbh|ltd\.?|lda\.?)\.?$/iu', '', $name) ?: $name;
     }
 
     /**

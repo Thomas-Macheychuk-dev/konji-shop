@@ -166,3 +166,29 @@ it('does not attach manufacturer details to attributes that are not brands', fun
 
     expect(Manufacturer::query()->count())->toBe(0);
 });
+
+it('lists a brand set under both Producent and Marka once, under Producent', function (): void {
+    $producent = brandWithProducts('ARMEDICAL', 3);
+    $marka = AttributeValue::query()->create([
+        'attribute_id' => Attribute::query()->firstOrCreate(['slug' => 'marka'], ['name' => 'Marka'])->id,
+        'value' => 'ARmedical',
+        'slug' => 'armedical-marka',
+    ]);
+    $marka->products()->attach($producent->products()->pluck('products.id'));
+    $markaOnly = brandWithProducts('Wock', 2, 'marka');
+
+    $this->actingAs(manufacturerAdmin())
+        ->get(route('admin.manufacturers.index'))
+        ->assertOk()
+        ->assertSee(route('admin.manufacturers.edit', $producent), false)
+        ->assertSee(route('admin.manufacturers.edit', $markaOnly), false)
+        ->assertDontSee(route('admin.manufacturers.edit', $marka), false);
+
+    // Details already entered stay reachable.
+    Manufacturer::query()->create(['attribute_value_id' => $marka->id, 'name' => 'Armedical Sp. z o.o.', 'address' => 'Kraków', 'email' => 'a@example.com']);
+
+    $this->actingAs(manufacturerAdmin())
+        ->get(route('admin.manufacturers.index'))
+        ->assertOk()
+        ->assertSee(route('admin.manufacturers.edit', $marka), false);
+});
