@@ -60,6 +60,27 @@ final class AssignMissingBrandsCommand extends Command
      */
     private const NAME_MATCH_EXCLUDED = ['bella', 'happy'];
 
+    /**
+     * Distributors whose titles name the product line rather than the brand: supplier => brand => title
+     * patterns. The lines are grouped as the supplier's own site groups them (sklep.iconic.pl lists
+     * Movilo and NightSplint under DARCO). Titles matching two brands are left alone.
+     */
+    private const SOURCE_PRODUCT_LINES = [
+        'iconic' => [
+            'DARCO' => ['DARCO', 'MedSurg', 'OrthoWedge', 'HeelWedge', 'Relief Dual', 'Twin ?Shoe', 'WCS', 'Body Armor', 'Ubiq Way', 'AllRound Shoe', 'Peg ?Assist', 'Peg ?Contour', 'Puzzle Insole', 'Pro Term', 'Movilo', 'NightSplint'],
+            'PRIME' => ['Prime ?Cast', 'Prime ?Net(?:Dry)?'],
+            'YDA' => ['YDA', 'Optima'],
+            'Hobble-Free' => ['Hobble[ -]Free'],
+            'SEAL PROTECT' => ['SEAL PROTECT'],
+            'MECRON' => ['MECRON'],
+            'TAS' => ['TAS'],
+            'SBi' => ['SBi'],
+            'Yaktrax' => ['Yaktrax'],
+            'Bodytronix' => ['Bodytronix'],
+            'Birco' => ['Birco'],
+        ],
+    ];
+
     public function handle(ProductBrandAttribute $brandAttribute, StorefrontCache $cache): int
     {
         if (filled($this->option('rollback'))) {
@@ -83,16 +104,29 @@ final class AssignMissingBrandsCommand extends Command
                     continue;
                 }
 
+                $lines = self::productLineBrands($source, (string) $product->name);
                 $matches = self::brandsInName((string) $product->name, $brandNames);
 
-                if (count($matches) === 1) {
+                if (count($lines) === 1) {
+                    // Another brand named in the title makes it ambiguous; the same brand reuses its value.
+                    $others = array_filter($matches, fn (string $brand): bool => mb_strtolower($brand) !== mb_strtolower($lines[0]));
+
+                    if ($others === []) {
+                        $valueId = array_key_first($matches);
+                        $assignments[] = $assignment + ['rule' => 'line', 'value_id' => $valueId, 'brand' => $valueId !== null ? $matches[$valueId] : $lines[0]];
+
+                        continue;
+                    }
+                }
+
+                if ($lines === [] && count($matches) === 1) {
                     $valueId = array_key_first($matches);
                     $assignments[] = $assignment + ['rule' => 'name', 'value_id' => $valueId, 'brand' => $matches[$valueId]];
 
                     continue;
                 }
 
-                $ambiguous += count($matches) > 1 ? 1 : 0;
+                $ambiguous += count($lines) + count($matches) > 1 ? 1 : 0;
                 $key = $source !== '' ? $source : '(none)';
                 $unmatched[$key] = ($unmatched[$key] ?? 0) + 1;
             }
@@ -174,6 +208,28 @@ final class AssignMissingBrandsCommand extends Command
         });
     }
 
+    /**
+     * The brands whose product lines a supplier's title mentions.
+     *
+     * @return list<string>
+     */
+    public static function productLineBrands(string $source, string $name): array
+    {
+        $brands = [];
+
+        foreach (self::SOURCE_PRODUCT_LINES[$source] ?? [] as $brand => $patterns) {
+            foreach ($patterns as $pattern) {
+                if (preg_match('/(?<![\p{L}\p{N}])(?:'.$pattern.')(?![\p{L}\p{N}])/iu', $name) === 1) {
+                    $brands[] = $brand;
+
+                    continue 2;
+                }
+            }
+        }
+
+        return $brands;
+    }
+
     private static function mentions(string $text, string $brand): bool
     {
         return preg_match('/(?<![\p{L}\p{N}])'.preg_quote($brand, '/').'(?![\p{L}\p{N}])/iu', $text) === 1;
@@ -229,6 +285,7 @@ final class AssignMissingBrandsCommand extends Command
 
         $this->line('=== ASSIGN MISSING BRANDS ===');
         $this->line('ASSIGNABLE='.count($assignments).' (BY_SOURCE='.($rules['source'] ?? 0).', BY_NAME='.($rules['name'] ?? 0).')');
+        $this->line('BY_PRODUCT_LINE='.($rules['line'] ?? 0));
         $this->line('AMBIGUOUS_NAMES='.$ambiguous);
         $this->line('STILL_WITHOUT_BRAND='.array_sum($unmatched).' '.json_encode($unmatched, JSON_UNESCAPED_UNICODE));
 

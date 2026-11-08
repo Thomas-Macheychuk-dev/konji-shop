@@ -153,3 +153,36 @@ it('gives Eldan clothing the Eldan brand but leaves its shoes to name matching',
         ->and(brandsOf($shoes))->toBe([])
         ->and(brandsOf($clogs))->toBe(['DARCO']);
 });
+
+it('recognises Iconic product lines', function (string $name, array $expected): void {
+    expect(AssignMissingBrandsCommand::productLineBrands('iconic', $name))->toBe($expected);
+})->with([
+    ['But Odciążający Przodostopie i Palce DARCO - OrthoWedge', ['DARCO']],
+    ['Osłona na palce do buta TwinShoe', ['DARCO']],
+    ['Movilo® Fly - granatowe', ['DARCO']],
+    ['Opaska gipsowa Prime Cast Soft - sprzedawana na sztuki', ['PRIME']],
+    ['Wodoodporny rękaw pod gips - PrimeNetDry', ['PRIME']],
+    ['Optima Diab - Orteza odciążająca na stopę cukrzycową', ['YDA']],
+    ['YDA - Modern Line - dla kobiet czarny', ['YDA']],
+    ['Szyna na paluch koślawy i palce młotkowate - TAS', ['TAS']],
+    ['Zestaw Po Operacji Haluksa - Relief Dual + Puzzle + Szyna TAS', ['DARCO', 'TAS']],
+    ['Night Splint - Bodytronix', ['Bodytronix']],
+    ['Cążki do paznokci - proste 10 cm', []],
+]);
+
+it('gives Iconic products the brand of their product line, creating it when missing', function (): void {
+    $walker = sourcedProduct('Optima CLHeel - Walker odciążający piętę', 'iconic');
+    $set = sourcedProduct('Zestaw Po Operacji Haluksa - Relief Dual + Puzzle + Szyna TAS', 'iconic');
+    $clippers = sourcedProduct('Cążki do paznokci - proste 10 cm', 'iconic');
+    $elsewhere = sourcedProduct('Buty YDA damskie', 'peruka');
+
+    $this->artisan('catalogue:assign-missing-brands', ['--write' => true])
+        ->expectsOutput('BY_PRODUCT_LINE=1')
+        ->expectsOutput('ATTACHED=1')
+        ->assertSuccessful();
+
+    expect(brandsOf($walker))->toBe(['YDA'])
+        ->and(brandsOf($set))->toBe([])
+        ->and(brandsOf($clippers))->toBe([])
+        ->and(brandsOf($elsewhere))->toBe([]);
+});
