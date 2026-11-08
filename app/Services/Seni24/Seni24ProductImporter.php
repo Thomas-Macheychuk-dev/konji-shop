@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Seni24;
 
+use App\Console\Commands\CleanCatalogueBrandsCommand;
 use App\Enums\AttributeDisplayType;
 use App\Enums\CategoryStatus;
 use App\Enums\Currency;
@@ -101,7 +102,7 @@ final class Seni24ProductImporter
             $this->syncCategories($product, $scraped);
             $this->syncProductAttributes($product, $scraped);
 
-            if (($brand = $this->stringOrNull($scraped['brand'] ?? null)) !== null) {
+            if (($brand = $this->brandName($scraped)) !== null) {
                 $this->brandAttribute->attach($product, $brand);
             }
             $this->syncVariants($product, $scraped, $resolvedVatRate, $status);
@@ -905,6 +906,31 @@ final class Seni24ProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
+    /**
+     * The scraped "Marka", or else the cleaned "Producent" attribute: older product data only has
+     * "TZMO S.A. (marka Seni) Numer jednostki notyfikowanej N/D", which becomes "Seni".
+     *
+     * @param  array<string, mixed>  $scraped
+     */
+    public function brandName(array $scraped): ?string
+    {
+        if (($brand = $this->stringOrNull($scraped['brand'] ?? null)) !== null) {
+            return $brand;
+        }
+
+        foreach (($scraped['attributes'] ?? []) as $attribute) {
+            if (! is_array($attribute) || mb_strtolower(trim((string) ($attribute['label'] ?? ''))) !== 'producent') {
+                continue;
+            }
+
+            if (($producer = $this->stringOrNull($attribute['value'] ?? null)) !== null) {
+                return $this->stringOrNull(CleanCatalogueBrandsCommand::cleanName($producer));
+            }
+        }
+
+        return null;
+    }
+
     public function externalProductId(array $scraped): string
     {
         $externalId = $this->stringOrNull($scraped['external_product_id'] ?? null)
