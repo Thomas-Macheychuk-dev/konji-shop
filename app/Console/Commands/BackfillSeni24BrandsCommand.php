@@ -17,7 +17,7 @@ final class BackfillSeni24BrandsCommand extends Command
         {--data=scrapers/seni24/products-full-v1.json : Seni24 product-data JSON path. Relative paths are resolved under the local disk, then storage/app.}
         {--write : Attach the brands. Otherwise preview only.}';
 
-    protected $description = 'Attach the "Marka" from scraped Seni24 product data as the "Producent" attribute of already imported products without a manufacturer.';
+    protected $description = 'Attach the "Marka" (or cleaned "Producent") from scraped Seni24 product data as the "Producent" attribute of already imported products without a manufacturer.';
 
     public function handle(Seni24ProductImporter $importer, ProductBrandAttribute $brands, StorefrontCache $cache): int
     {
@@ -35,7 +35,7 @@ final class BackfillSeni24BrandsCommand extends Command
         $perBrand = [];
 
         foreach ($decoded['products'] as $productData) {
-            $brand = is_array($productData) ? trim((string) ($productData['brand'] ?? '')) : '';
+            $brand = is_array($productData) ? (string) $importer->brandName($productData) : '';
 
             if ($brand === '') {
                 continue;

@@ -271,3 +271,28 @@ it('backfills Seni24 brands from scraped data onto imported products without one
     expect(ProductIdentifiers::brand($unbranded->fresh()))->toBe('Ziaja')
         ->and(ProductIdentifiers::brand($branded->fresh()))->toBe('Seni');
 });
+
+it('falls back to the cleaned Seni24 Producent attribute when the data has no brand', function (array $attributes, ?string $expected): void {
+    expect(app(Seni24ProductImporter::class)->brandName([...seni24PricedFixture(), 'brand' => null, 'attributes' => $attributes]))
+        ->toBe($expected);
+})->with([
+    [[['label' => 'Producent', 'value' => 'TZMO S.A. (marka Seni) Numer jednostki notyfikowanej N/D']], 'Seni'],
+    [[['label' => 'Producent', 'value' => 'TZMO S.A. Numer jednostki notyfikowanej 2274']], 'TZMO'],
+    [[['label' => 'Producent', 'value' => 'JJW Sp.J.']], 'JJW'],
+    [[['label' => 'Indeks', 'value' => 'NN-1']], null],
+]);
+
+it('backfills a Seni24 brand from the Producent attribute of older product data', function (): void {
+    Storage::fake('local');
+    $product = app(Seni24ProductImporter::class)->import(seni24PricedFixture(), null, false)['product'];
+
+    Storage::disk('local')->put('scrapers/seni24/old.json', json_encode(['products' => [
+        [...seni24PricedFixture(), 'brand' => '', 'attributes' => [['label' => 'Producent', 'value' => 'ZARYS Numer jednostki notyfikowanej 0197']]],
+    ]]));
+
+    $this->artisan('seni24:backfill-brands', ['--data' => 'scrapers/seni24/old.json', '--write' => true])
+        ->expectsOutputToContain('ATTACHED=1')
+        ->assertSuccessful();
+
+    expect(ProductIdentifiers::brand($product->fresh()))->toBe('ZARYS');
+});
