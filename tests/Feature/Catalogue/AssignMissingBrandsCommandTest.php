@@ -124,3 +124,17 @@ it('attaches brands, refreshes cached pages and rolls back exactly those links',
         ->and(brandsOf($bySource))->toBe([])
         ->and(brandsOf(Product::query()->where('name', 'Inny but DARCO')->sole()))->toBe(['DARCO']);
 });
+
+it('never matches brands that are also common product names', function (): void {
+    sourcedProduct('Chusteczki', 'seni24', brandOf('Bella'));
+    sourcedProduct('Oliwka', 'seni24', brandOf('Happy'));
+    $wig = sourcedProduct('Syntetyczna dopinka blond BELLA VITA 23A/26 siatka', 'peruka');
+    $top = sourcedProduct('Happy Feet skarpetki', 'iconic');
+
+    $this->artisan('catalogue:assign-missing-brands', ['--write' => true])
+        ->expectsOutput('NOTHING_TO_WRITE')
+        ->assertSuccessful();
+
+    expect(brandsOf($wig))->toBe([])
+        ->and(brandsOf($top))->toBe([]);
+});
