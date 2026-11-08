@@ -908,7 +908,8 @@ final class Seni24ProductImporter
      */
     /**
      * The scraped "Marka", or else the cleaned "Producent" attribute: older product data only has
-     * "TZMO S.A. (marka Seni) Numer jednostki notyfikowanej N/D", which becomes "Seni".
+     * "TZMO S.A. (marka Seni) Numer jednostki notyfikowanej N/D", which becomes "Seni". Without either,
+     * the company opening the "Adres producenta" imprint.
      *
      * @param  array<string, mixed>  $scraped
      */
@@ -926,6 +927,38 @@ final class Seni24ProductImporter
             if (($producer = $this->stringOrNull($attribute['value'] ?? null)) !== null) {
                 return $this->stringOrNull(CleanCatalogueBrandsCommand::cleanName($producer));
             }
+        }
+
+        return $this->producerFromAddress($scraped);
+    }
+
+    /**
+     * The company that opens the "Adres producenta" imprint, the last place older product data names
+     * the maker: "POLLENA-EWA S.A., ul. Zachodnia 25, 97-425 Zelów" becomes "POLLENA-EWA".
+     *
+     * @param  array<string, mixed>  $scraped
+     */
+    private function producerFromAddress(array $scraped): ?string
+    {
+        foreach (($scraped['attributes'] ?? []) as $attribute) {
+            if (! is_array($attribute) || mb_strtolower(trim((string) ($attribute['label'] ?? ''))) !== 'adres producenta') {
+                continue;
+            }
+
+            $address = $this->stringOrNull($attribute['value'] ?? null);
+
+            if ($address === null) {
+                return null;
+            }
+
+            $company = explode(',', $address, 2)[0];
+            // A street and number straight after the name: "Perrigo Omega Pharma Int. Venecoweg 26".
+            $company = (string) preg_replace('/\s+\p{L}[\p{L}.\-]*\s+\d[\p{L}\d\/]*$/u', '', $company);
+
+            $company = CleanCatalogueBrandsCommand::cleanName($company);
+
+            // Placeholders such as "-" name no one.
+            return preg_match('/\p{L}/u', $company) === 1 ? $company : null;
         }
 
         return null;
