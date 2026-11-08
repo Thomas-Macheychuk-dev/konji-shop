@@ -138,3 +138,18 @@ it('never matches brands that are also common product names', function (): void 
     expect(brandsOf($wig))->toBe([])
         ->and(brandsOf($top))->toBe([]);
 });
+
+it('gives Eldan clothing the Eldan brand but leaves its shoes to name matching', function (): void {
+    $top = sourcedProduct('bluza medyczna rozpinana krótki rękaw IGA FLEX', 'eldan');
+    $shoes = sourcedProduct('wygodne skórzane buty medyczne KD MED 57', 'eldan');
+    $clogs = sourcedProduct('Chodaki medyczne DARCO białe', 'eldan');
+    sourcedProduct('Inny but DARCO', 'iconic', brandOf('DARCO'));
+
+    $this->artisan('catalogue:assign-missing-brands', ['--write' => true])
+        ->expectsOutput('ATTACHED=2')
+        ->assertSuccessful();
+
+    expect(brandsOf($top))->toBe(['Eldan'])
+        ->and(brandsOf($shoes))->toBe([])
+        ->and(brandsOf($clogs))->toBe(['DARCO']);
+});

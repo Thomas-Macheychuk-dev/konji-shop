@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
 /**
  * Gives products without a "Producent"/"Marka" value a brand, so their pages can show GPSR manufacturer details.
  *
- * - Suppliers that sell only their own products get that brand as "Producent".
+ * - Suppliers that sell only their own products get that brand as "Producent" (Eldan only for clothing).
  * - Otherwise a product takes the one existing brand its name mentions as a whole word ("… Ziaja Intima 500 ml").
  *   Names mentioning several brands are left alone, as are brands shorter than four letters and brands
  *   whose name is also a common product name.
@@ -39,8 +39,17 @@ final class AssignMissingBrandsCommand extends Command
 
     /** Suppliers whose catalogue is only their own brand: external_source => brand. */
     private const SOURCE_BRANDS = [
+        'eldan' => 'Eldan',
         'herdegen' => 'Herdegen',
         'wojdak' => 'Wojdak',
+    ];
+
+    /**
+     * Products of those suppliers that may be someone else's: Eldan sews its own clothing,
+     * but its shoes ("buty medyczne KD MED 57") may come from another maker.
+     */
+    private const SOURCE_BRAND_EXCEPT = [
+        'eldan' => '/(?<!\p{L})(buty|obuwie|klapki|chodaki|sandały|sabo|trzewiki)(?!\p{L})/iu',
     ];
 
     private const MIN_NAME_MATCH_LENGTH = 4;
@@ -67,7 +76,8 @@ final class AssignMissingBrandsCommand extends Command
                 $source = (string) $product->external_source;
                 $assignment = ['product_id' => $product->id, 'product' => (string) $product->name, 'source' => $source];
 
-                if (isset(self::SOURCE_BRANDS[$source])) {
+                if (isset(self::SOURCE_BRANDS[$source])
+                    && preg_match(self::SOURCE_BRAND_EXCEPT[$source] ?? '/(?!)/', (string) $product->name) !== 1) {
                     $assignments[] = $assignment + ['rule' => 'source', 'value_id' => null, 'brand' => self::SOURCE_BRANDS[$source]];
 
                     continue;
