@@ -35,6 +35,28 @@ final class ProductBrandAttribute
         return true;
     }
 
+    /**
+     * For importers that replace all product attributes: when the attributes they sync carry no brand,
+     * keep the brand the product already has, e.g. one catalogue:assign-missing-brands attached.
+     *
+     * @param  array<int, array<string, mixed>>  $syncIds  attribute value id => pivot data
+     * @return array<int, array<string, mixed>>
+     */
+    public function keepingBrand(Product $product, array $syncIds): array
+    {
+        $isBrand = fn ($query) => $query->whereHas('attribute', fn ($query) => $query->whereIn('slug', ['producent', 'marka']));
+
+        if ($syncIds !== [] && AttributeValue::query()->whereKey(array_keys($syncIds))->where($isBrand)->exists()) {
+            return $syncIds;
+        }
+
+        foreach ($product->attributeValues()->where($isBrand)->pluck('attribute_values.id') as $brandValueId) {
+            $syncIds[(int) $brandValueId] ??= [];
+        }
+
+        return $syncIds;
+    }
+
     public function hasBrand(Product $product): bool
     {
         return $product->attributeValues()
@@ -42,7 +64,10 @@ final class ProductBrandAttribute
             ->exists();
     }
 
-    private function value(string $brand): AttributeValue
+    /**
+     * The "Producent" value for a brand, created when missing.
+     */
+    public function value(string $brand): AttributeValue
     {
         $attribute = Attribute::query()->firstOrCreate(
             ['slug' => Str::slug(self::ATTRIBUTE_NAME)],
