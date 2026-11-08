@@ -21,7 +21,8 @@ use Illuminate\Support\Str;
  *
  * - Suppliers that sell only their own products get that brand as "Producent".
  * - Otherwise a product takes the one existing brand its name mentions as a whole word ("… Ziaja Intima 500 ml").
- *   Names mentioning several brands are left alone, as are brands shorter than four letters.
+ *   Names mentioning several brands are left alone, as are brands shorter than four letters and brands
+ *   whose name is also a common product name.
  *
  * Only links to brand values are added; every link is backed up so --rollback removes exactly those.
  */
@@ -43,6 +44,12 @@ final class AssignMissingBrandsCommand extends Command
     ];
 
     private const MIN_NAME_MATCH_LENGTH = 4;
+
+    /**
+     * Brands whose name is also a common product or model name, never matched by name:
+     * TZMO's "Bella" against "BELLA VITA" wig pieces or a "BELLA FLEX" top.
+     */
+    private const NAME_MATCH_EXCLUDED = ['bella', 'happy'];
 
     public function handle(ProductBrandAttribute $brandAttribute, StorefrontCache $cache): int
     {
@@ -191,7 +198,9 @@ final class AssignMissingBrandsCommand extends Command
             ->each(function (AttributeValue $value) use (&$names): void {
                 $name = trim((string) $value->value);
 
-                if (mb_strlen($name) >= self::MIN_NAME_MATCH_LENGTH && ! in_array(mb_strtolower($name), array_map('mb_strtolower', $names), true)) {
+                if (mb_strlen($name) >= self::MIN_NAME_MATCH_LENGTH
+                    && ! in_array(mb_strtolower($name), self::NAME_MATCH_EXCLUDED, true)
+                    && ! in_array(mb_strtolower($name), array_map('mb_strtolower', $names), true)) {
                     $names[$value->id] = $name;
                 }
             });
