@@ -6,6 +6,7 @@ use App\Enums\ProductStatus;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Services\Storefront\StorefrontCache;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 
@@ -186,4 +187,26 @@ it('merges and renames brands, attaches Reh4Mat brands, and rolls back', functio
         ->and(brandNamesOf($d))->toBe(['Reha Fund Sp. z o.o. ul. Staniewicka 14 03-310 Warszawa'])
         ->and(brandNamesOf($attack))->toBe([])
         ->and(brandNamesOf($a))->toBe(['Armedical']);
+});
+
+it('refreshes cached storefront pages after writing and rolling back, not after a preview', function (): void {
+    config(['storefront.cache.enabled' => true, 'storefront.cache.store' => 'array']);
+    brandedProduct('Orteza kolana', brandValue('Armedical Sp. z o.o.'));
+    $cache = app(StorefrontCache::class);
+    $cachedKey = fn (): string => $cache->versionedKey(StorefrontCache::NAMESPACE_CATALOGUE, 'product-page');
+    $before = $cachedKey();
+
+    $this->artisan('catalogue:clean-brands')->assertSuccessful();
+
+    expect($cachedKey())->toBe($before);
+
+    $this->artisan('catalogue:clean-brands', ['--write' => true])->assertSuccessful();
+    $afterWrite = $cachedKey();
+
+    expect($afterWrite)->not->toBe($before);
+
+    $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->sole();
+    $this->artisan('catalogue:clean-brands', ['--rollback' => $backup])->assertSuccessful();
+
+    expect($cachedKey())->not->toBe($afterWrite);
 });

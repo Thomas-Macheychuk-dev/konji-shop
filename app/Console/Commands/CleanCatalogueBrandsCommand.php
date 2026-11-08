@@ -8,6 +8,7 @@ use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Services\Products\ProductBrandAttribute;
 use App\Services\Storefront\ProductListing;
+use App\Services\Storefront\StorefrontCache;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -59,10 +60,10 @@ final class CleanCatalogueBrandsCommand extends Command
     // "TZMO S.A. (marka Seni)" or "Stella Pack S.A. marka Service": the brand shoppers know is the "marka".
     private const MARKA = '/\bmarka\s+([^()]+?)\s*(?:\)|\bnumer jednostki|$)/iu';
 
-    public function handle(ProductBrandAttribute $brandAttribute): int
+    public function handle(ProductBrandAttribute $brandAttribute, StorefrontCache $cache): int
     {
         if (filled($this->option('rollback'))) {
-            return $this->rollback((string) $this->option('rollback'));
+            return $this->rollback((string) $this->option('rollback'), $cache);
         }
 
         $values = AttributeValue::query()
@@ -171,6 +172,10 @@ final class CleanCatalogueBrandsCommand extends Command
 
         $this->info('BACKUP='.$backupPath);
         $this->info('RENAMED='.count($plan['renames']).' MERGED='.count($plan['merges']).' LINKS_MOVED='.count($backup['moved_links']).' LINKS_REMOVED='.count($backup['detached']).' BRANDS_ATTACHED='.count($backup['attached']));
+
+        // Attribute pivots and value renames do not fire product observers, so cached product pages
+        // and brand filters are invalidated here.
+        $cache->bump(StorefrontCache::NAMESPACE_CATALOGUE);
         $this->info('CATALOGUE_BRANDS_WRITE=PASS');
 
         return self::SUCCESS;
@@ -282,7 +287,7 @@ final class CleanCatalogueBrandsCommand extends Command
             ->all();
     }
 
-    private function rollback(string $backupPath): int
+    private function rollback(string $backupPath, StorefrontCache $cache): int
     {
         if (! Storage::disk('local')->exists($backupPath)) {
             $this->error('BACKUP_NOT_FOUND='.$backupPath);
@@ -326,6 +331,8 @@ final class CleanCatalogueBrandsCommand extends Command
         });
 
         $this->info('RESTORED_NAMES='.count($backup['renames']).' RESTORED_LINKS='.(count($backup['moved_links']) + count($backup['detached'] ?? [])).' DETACHED='.count($backup['attached']));
+
+        $cache->bump(StorefrontCache::NAMESPACE_CATALOGUE);
         $this->info('CATALOGUE_BRANDS_ROLLBACK=PASS');
 
         return self::SUCCESS;
