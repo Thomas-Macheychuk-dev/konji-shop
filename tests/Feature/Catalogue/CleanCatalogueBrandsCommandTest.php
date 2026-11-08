@@ -106,6 +106,13 @@ it('cleans legal forms and imprints from brand names', function (string $raw, st
     ['Health and Fashion Shoes Italia S', 'Scholl'],
     ['Health and Fashion Shoes Italia S.p.A.', 'Scholl'],
     ['Winncare Polska Sp', 'Winncare Polska'],
+    // Scraping leftovers on staging, November 2026.
+    ['nie podaje innego zastosowania. Czy poszewka klina przeciwobrzękowego Halcamp jest w konkretnym kolorze?', 'HALCAMP'],
+    ['Salter LabsTF1008 Humidifiers 30 Spur DriveEl Paso, Texas', 'Salter Labs'],
+    ['TYL - Producent Lasek', 'TYL'],
+    ['Yuyoo Shengchang Medical Instrument Factory Simen-Town 315400 Yuyoo City, Zhejiang China', 'Yuyao Shengchang Medical Instrument Factory'],
+    ['Yuyoo Shengchang Medical Instrument Factory Simen-Town 315400 Yuyoo City, Zhejiang ChinaUpoważniony przedstawiciel: ZOUSTECH S.L.Pso. Castellana', 'Yuyao Shengchang Medical Instrument Factory'],
+    ['Toruńskie Zakłady Materiałów Opatrunkowych', 'TZMO'],
 ]);
 
 it('previews renames, merges and missing Reh4Mat brands without writing', function (): void {

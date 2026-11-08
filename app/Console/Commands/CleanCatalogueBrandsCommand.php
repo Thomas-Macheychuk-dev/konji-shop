@@ -40,7 +40,7 @@ final class CleanCatalogueBrandsCommand extends Command
     private const LEGAL_FORM = '/[\s,.]+(?:sp\.?\s*z\s*o\s*\.?\s*o|sp\.?\s*[jk]\.|spółka\b|limited\b|corporation\b|ab(?=[\s,.(]|$)|s\.?\s*p\.?\s*a\.?(?=[\s,.(]|$)|s\.?\s*r\.?\s*[lo]\.?(?=[\s,.(]|$)|s\.?\s*a\.?(?:\s*e\.?)?(?=[\s,.(]|$)|a\.\s*s\.|[bn]\.?\s*v\.?(?=[\s,.(]|$)|gmbh|ag(?=[\s,.(]|$)|ltd|llc|inc\b|corp\b|pty\b|co\.|sp\.?$)/iu';
 
     // Imprints, notified-body numbers and leaflet text that follow the name.
-    private const IMPRINT_START = '/\s*(?:\bnumer jednostki notyfikowanej\b|\bul\.|\bulica\b|\bNIP\b|\bKRS\b|\btel\.|\be-mail\b|\bwww\.|\bpodmiot\b|\bupoważniony\b|\bimporter\b|\bdystrybutor\b|\bsposób użycia\b|opakowanie\s*:|\bcorporate headquarters\b)/iu';
+    private const IMPRINT_START = '/\s*(?:\bnumer jednostki notyfikowanej\b|\bul\.|\bulica\b|\bNIP\b|\bKRS\b|\btel\.|\be-mail\b|\bwww\.|\bpodmiot\b|upoważniony\s+przedstawiciel|\bupoważniony\b|\bimporter\b|\bdystrybutor\b|\bsposób użycia\b|opakowanie\s*:|\bcorporate headquarters\b)/iu';
 
     // One brand under several names, by the slug of the cleaned name: subsidiaries, slogans, spellings.
     private const ALIASES = [
@@ -61,6 +61,11 @@ final class CleanCatalogueBrandsCommand extends Command
         'scholl-produkty-do-pielegnacji-stop' => 'Scholl',
         'torunskie-zaklady-materialow-opatrunkowych' => 'TZMO',
         'zarys-international-group' => 'ZARYS',
+        // Scraping leftovers stored as brands: a product question, glued addresses, a shop name.
+        'nie-podaje-innego-zastosowania-czy-poszewka-klina-przeciwobrzekowego-halcamp-jest-w-konkretnym-kolorze' => 'HALCAMP',
+        'salter-labstf1008-humidifiers-30-spur-driveel-paso-texas' => 'Salter Labs',
+        'tyl-producent-lasek' => 'TYL',
+        'yuyoo-shengchang-medical-instrument-factory-simen-town-315400-yuyoo-city-zhejiang-china' => 'Yuyao Shengchang Medical Instrument Factory',
     ];
 
     // "TZMO S.A. (marka Seni)" or "Stella Pack S.A. marka Service": the brand shoppers know is the "marka".
