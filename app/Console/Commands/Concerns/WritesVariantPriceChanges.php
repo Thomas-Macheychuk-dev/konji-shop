@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use RuntimeException;
 
 /**
- * Backup, write and rollback of variant price changes for the Reh4Mat price commands.
+ * Backup, write and rollback of variant price changes for the price-list commands.
  *
  * Each change holds variant_id, old_net, old_gross, new_net and new_gross; writes and rollbacks only touch
  * variants whose prices still equal the side being replaced.
  */
-trait WritesReh4MatPriceChanges
+trait WritesVariantPriceChanges
 {
     /**
      * @param  list<array<string, mixed>>  $changes

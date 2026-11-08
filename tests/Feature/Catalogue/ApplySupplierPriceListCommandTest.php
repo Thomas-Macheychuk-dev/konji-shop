@@ -1,0 +1,93 @@
+<?php
+
+use App\Enums\Currency;
+use App\Enums\ProductStatus;
+use App\Enums\ProductVariantStatus;
+use App\Enums\StockStatus;
+use App\Enums\VatRate;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
+
+uses(RefreshDatabase::class);
+
+beforeEach(function (): void {
+    Storage::fake('local');
+});
+
+it('previews Timago prices with the 10% markup without writing', function (): void {
+    $collar = supplierPricedVariant('timago', '88', 'Kołnierz miękki typu SCHANTZA', null);
+    supplierPricedVariant('timago', 'not-listed', 'Produkt spoza cennika', 5000);
+
+    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026'])
+        ->expectsOutputToContain('SUPPLIER=timago')
+        ->expectsOutputToContain('PRICE_CHANGES=1 (UP=0 DOWN=0 FROM_EMPTY=1)')
+        ->expectsOutputToContain('variant='.$collar->id.' [active] Kołnierz miękki typu SCHANTZA [Ortotyka:6] gross (empty) -> 18.89 (net (empty) -> 17.49, VAT 8%)')
+        ->expectsOutputToContain('NOT_IN_LIST=1')
+        ->expectsOutputToContain('MODE=READ_ONLY')
+        ->assertSuccessful();
+
+    expect($collar->fresh()->price_gross_amount)->toBeNull();
+});
+
+it('writes Vermeiren retail prices, keeps a backup and rolls back', function (): void {
+    $wheelchair = supplierPricedVariant('vermeiren', '8d21f4002841ec6fc25ce5210dd2268eaba04660fd2a9346ae778d56fe13bde5', '101', 70000);
+
+    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'vermeiren-2026', '--write' => true])
+        ->expectsOutputToContain('WRITTEN_PRICES=1')
+        ->expectsOutputToContain('SUPPLIER_PRICE_WRITE=PASS')
+        ->assertSuccessful();
+
+    expect($wheelchair->fresh()->only(['price_net_amount', 'price_gross_amount']))
+        ->toEqual(['price_net_amount' => 60185, 'price_gross_amount' => 65000]);
+
+    $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->sole();
+
+    $this->artisan('catalogue:apply-supplier-prices', ['--rollback' => $backup])
+        ->expectsOutputToContain('RESTORED_PRICES=1 OF 1')
+        ->assertSuccessful();
+
+    expect($wheelchair->fresh()->price_gross_amount)->toBe(70000);
+});
+
+it('leaves variants whose VAT rate differs from the list alone', function (): void {
+    // The wheelchair tray is listed with 23% VAT; the shop variant has 8%.
+    $table = supplierPricedVariant('timago', '819', 'TABLE - Stolik do wózka inwalidzkiego', 5000);
+
+    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026', '--write' => true])
+        ->expectsOutputToContain('VAT_MISMATCH=1')
+        ->expectsOutputToContain('NOTHING_TO_WRITE')
+        ->assertSuccessful();
+
+    expect($table->fresh()->price_gross_amount)->toBe(5000);
+});
+
+it('rejects an unknown price table', function (): void {
+    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'nope'])
+        ->expectsOutputToContain('PRICE_LIST_ERROR=Choose one of: timago-2026, vermeiren-2026')
+        ->assertFailed();
+});
+
+function supplierPricedVariant(string $source, string $externalId, string $name, ?int $grossAmount): ProductVariant
+{
+    $product = Product::query()->create([
+        'external_source' => $source,
+        'external_id' => $externalId,
+        'name' => $name,
+        'slug' => str($source.'-'.$externalId)->slug()->limit(80, '')->toString(),
+        'status' => ProductStatus::ACTIVE,
+    ]);
+
+    return ProductVariant::query()->create([
+        'product_id' => $product->id,
+        'sku' => strtoupper($source).'-'.$product->id,
+        'status' => ProductVariantStatus::ACTIVE,
+        'price_net_amount' => $grossAmount === null ? null : VatRate::VAT_8->netFromGross($grossAmount),
+        'price_gross_amount' => $grossAmount,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_8,
+        'stock_status' => StockStatus::IN_STOCK,
+        'is_default' => true,
+    ]);
+}
