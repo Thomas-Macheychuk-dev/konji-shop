@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Services\Iconic\IconicProductImporter;
+use App\Services\Products\ProductBrandAttribute;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -240,4 +241,15 @@ it('falls back to an Iconic gallery thumbnail when the full-size image is unavai
         ->and($image->alt_text)->toBe('Fallback image');
 
     Storage::disk('public')->assertExists($image->path);
+});
+
+it('keeps a brand assigned outside the Iconic import when re-importing', function (): void {
+    $importer = app(IconicProductImporter::class);
+    $product = $importer->import(iconicPricedFixture(), VatRate::VAT_8, false)['product'];
+    app(ProductBrandAttribute::class)->attach($product, 'DARCO');
+
+    $importer->import(iconicPricedFixture(), VatRate::VAT_8, false);
+
+    expect($product->fresh()->attributeValues()->whereHas('attribute', fn ($query) => $query->where('slug', 'producent'))->pluck('value')->all())
+        ->toBe(['DARCO']);
 });

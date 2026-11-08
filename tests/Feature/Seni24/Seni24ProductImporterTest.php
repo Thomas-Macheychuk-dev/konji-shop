@@ -9,6 +9,7 @@ use App\Enums\VatRate;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Services\Products\ProductBrandAttribute;
 use App\Services\Seni24\Seni24ProductImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -219,4 +220,15 @@ it('canonicalizes the Seni24 size-table alias without duplicating variant size v
             'Rozmiar (Tabela rozmiarów)=S',
         )
         ->toHaveCount(2);
+});
+
+it('keeps a brand assigned outside the Seni24 import when re-importing', function (): void {
+    $importer = app(Seni24ProductImporter::class);
+    $product = $importer->import(seni24PricedFixture(), null, false)['product'];
+    app(ProductBrandAttribute::class)->attach($product, 'Ziaja');
+
+    $importer->import(seni24PricedFixture(), null, false);
+
+    expect($product->fresh()->attributeValues()->whereHas('attribute', fn ($query) => $query->where('slug', 'producent'))->pluck('value')->all())
+        ->toBe(['Ziaja']);
 });

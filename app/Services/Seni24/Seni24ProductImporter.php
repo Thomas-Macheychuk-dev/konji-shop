@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
+use App\Services\Products\ProductBrandAttribute;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -55,6 +56,7 @@ final class Seni24ProductImporter
 
     public function __construct(
         private readonly RemoteImageImporter $remoteImageImporter,
+        private readonly ProductBrandAttribute $brandAttribute,
     ) {}
 
     /**
@@ -380,7 +382,7 @@ final class Seni24ProductImporter
             $syncIds[$value->id] = [];
         }
 
-        $product->attributeValues()->sync($syncIds);
+        $product->attributeValues()->sync($this->brandAttribute->keepingBrand($product, $syncIds));
     }
 
     /**
