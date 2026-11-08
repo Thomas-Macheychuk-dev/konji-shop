@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Concerns;
 
+use App\Enums\VatRate;
 use App\Models\ProductVariant;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -12,8 +13,9 @@ use RuntimeException;
 /**
  * Backup, write and rollback of variant price changes for the price-list commands.
  *
- * Each change holds variant_id, old_net, old_gross, new_net and new_gross; writes and rollbacks only touch
- * variants whose prices still equal the side being replaced.
+ * Each change holds variant_id, old_net, old_gross, new_net and new_gross, and optionally old_vat and new_vat
+ * when the VAT rate changes too; writes and rollbacks only touch variants whose prices (and VAT rate) still
+ * equal the side being replaced.
  */
 trait WritesVariantPriceChanges
 {
@@ -71,8 +73,12 @@ trait WritesVariantPriceChanges
                 }
 
                 $currentNet = $variant->price_net_amount === null ? null : (int) $variant->price_net_amount;
+                $changesVat = array_key_exists($from.'_vat', $change);
+                $currentVat = $variant->vat_rate instanceof VatRate ? $variant->vat_rate->value : null;
 
-                if ($currentNet !== $change[$from.'_net'] || $variant->price_gross_amount !== $change[$from.'_gross']) {
+                if ($currentNet !== $change[$from.'_net']
+                    || $variant->price_gross_amount !== $change[$from.'_gross']
+                    || ($changesVat && $currentVat !== $change[$from.'_vat'])) {
                     $this->warn('SKIPPED_CHANGED_SINCE variant='.$change['variant_id']);
 
                     continue;
@@ -81,6 +87,10 @@ trait WritesVariantPriceChanges
                 // Saved through the model so storefront cache invalidation observers run.
                 $variant->price_net_amount = $change[$to.'_net'];
                 $variant->price_gross_amount = $change[$to.'_gross'];
+
+                if ($changesVat) {
+                    $variant->vat_rate = $change[$to.'_vat'] === null ? null : VatRate::from($change[$to.'_vat']);
+                }
                 $variant->save();
                 $written++;
             }
