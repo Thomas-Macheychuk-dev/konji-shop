@@ -11,7 +11,9 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Services\Products\ProductBrandAttribute;
 use App\Services\Seni24\Seni24ProductImporter;
+use App\Support\Seo\ProductIdentifiers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -231,4 +233,41 @@ it('keeps a brand assigned outside the Seni24 import when re-importing', functio
 
     expect($product->fresh()->attributeValues()->whereHas('attribute', fn ($query) => $query->where('slug', 'producent'))->pluck('value')->all())
         ->toBe(['Ziaja']);
+});
+
+it('stores the scraped Seni24 brand as the manufacturer', function (): void {
+    $product = app(Seni24ProductImporter::class)
+        ->import([...seni24PricedFixture(), 'brand' => 'Ziaja'], null, false)['product'];
+
+    expect(ProductIdentifiers::brand($product->fresh()))->toBe('Ziaja');
+});
+
+it('backfills Seni24 brands from scraped data onto imported products without one', function (): void {
+    Storage::fake('local');
+    $importer = app(Seni24ProductImporter::class);
+    $unbranded = $importer->import(seni24PricedFixture(), null, false)['product'];
+    $branded = $importer->import([...seni24PricedFixture(), 'external_product_id' => '339', 'slug' => 'drugi', 'brand' => 'Seni'], null, false)['product'];
+
+    Storage::disk('local')->put('scrapers/seni24/products-full-v1.json', json_encode(['products' => [
+        [...seni24PricedFixture(), 'brand' => 'Ziaja'],
+        [...seni24PricedFixture(), 'external_product_id' => '339', 'slug' => 'drugi', 'brand' => 'Inna'],
+        [...seni24PricedFixture(), 'external_product_id' => '999', 'slug' => 'brak', 'brand' => 'Eva'],
+    ]]));
+
+    $this->artisan('seni24:backfill-brands')
+        ->expectsOutputToContain('NOT_IMPORTED=1')
+        ->expectsOutputToContain('ALREADY_BRANDED=1')
+        ->expectsOutputToContain('TO_ATTACH=1')
+        ->expectsOutputToContain('MODE=READ_ONLY')
+        ->assertSuccessful();
+
+    expect(ProductIdentifiers::brand($unbranded->fresh()))->toBeNull();
+
+    $this->artisan('seni24:backfill-brands', ['--write' => true])
+        ->expectsOutputToContain('ATTACHED=1')
+        ->expectsOutputToContain('SENI24_BRANDS_WRITE=PASS')
+        ->assertSuccessful();
+
+    expect(ProductIdentifiers::brand($unbranded->fresh()))->toBe('Ziaja')
+        ->and(ProductIdentifiers::brand($branded->fresh()))->toBe('Seni');
 });

@@ -100,6 +100,10 @@ final class Seni24ProductImporter
 
             $this->syncCategories($product, $scraped);
             $this->syncProductAttributes($product, $scraped);
+
+            if (($brand = $this->stringOrNull($scraped['brand'] ?? null)) !== null) {
+                $this->brandAttribute->attach($product, $brand);
+            }
             $this->syncVariants($product, $scraped, $resolvedVatRate, $status);
 
             if ($importImages) {
@@ -901,7 +905,7 @@ final class Seni24ProductImporter
     /**
      * @param  array<string, mixed>  $scraped
      */
-    private function externalProductId(array $scraped): string
+    public function externalProductId(array $scraped): string
     {
         $externalId = $this->stringOrNull($scraped['external_product_id'] ?? null)
             ?: $this->stringOrNull($scraped['slug'] ?? null);
