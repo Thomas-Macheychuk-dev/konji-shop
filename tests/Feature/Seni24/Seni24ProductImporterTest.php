@@ -296,3 +296,26 @@ it('backfills a Seni24 brand from the Producent attribute of older product data'
 
     expect(ProductIdentifiers::brand($product->fresh()))->toBe('ZARYS');
 });
+
+it('takes the Seni24 brand from the producer address when nothing else names the maker', function (string $address, ?string $expected): void {
+    expect(app(Seni24ProductImporter::class)->brandName([
+        ...seni24PricedFixture(),
+        'brand' => null,
+        'attributes' => [['label' => 'Adres producenta', 'value' => $address]],
+    ]))->toBe($expected);
+})->with([
+    ['POLLENA-EWA S.A., ul. Zachodnia 25, 97-425 Zelów, Polska', 'POLLENA-EWA'],
+    ['ZIAJA LTD ZAKŁAD PRODUKCJI LEKÓW SP. Z O.O. UL. JESIENNA 9 80-298 GDAŃSK', 'ZIAJA'],
+    ['POLLENA Kosmetyki i Mydła Naturalne Sp. z o.o. ul. Powstańców Wlkp. 16 63-500 Ostrzeszów', 'POLLENA'],
+    ['SCHMEES POLSKA Sp z o.o. ul. Przemysłowa 1, 66-500 Strzelce Krajeńskie', 'SCHMEES POLSKA'],
+    ['Przedsiębiorstwo Farmaceutyczne ziołolek sp. z o.o. ul. Starołęcka 189 61-341 Poznań', 'Ziołolek'],
+    ['Terumo Europe N.V. Interleuvenlaan 40,3001 Leuven,Belgium', 'Terumo Europe'],
+    ['CHIRANA T. Injecta, a.s. Nám. Dr. Alberta Schweitzera 194, 916 01 Stará Turá, Slovakia', 'CHIRANA T. Injecta'],
+    ['BEROMED GmbH Hospital Products Kronenstr. 19, 10117 Berlin', 'BEROMED'],
+    ['Perrigo Omega Pharma Int. Venecoweg 26, 9810 Nazareth, Belgium', 'Perrigo Omega Pharma Int'],
+    ['Toruńskie Zakłady Materiałów Opatrunkowych S.A, ul. Żółkiewskiego 20/26, 87-100 Toruń, Polska', 'TZMO'],
+    ['ZARYS International Group sp. z o.o. sp.k., ul. Pod Borem 18, 41-808 Zabrze', 'ZARYS'],
+    ['MEDILAB Firma Wytwórczo-Usługowa Sp. z o.o ul. Niedźwiedzia 60 15-531 Białystok', 'MEDILAB'],
+    ['Convatec Polska Sp. z o.o Rondo Daszyńskiego 1, 00-843 Warszawa', 'ConvaTec'],
+    ['-', null],
+]);

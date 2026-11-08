@@ -37,7 +37,7 @@ final class CleanCatalogueBrandsCommand extends Command
     // A legal form ends the brand name wherever it appears: "Löwenstein Medical Technology GmbH + Co. KG Kronsaalsweg 40".
     // A separator is required before it, and short forms must stand alone, so "Medico" or "Sanitas" keep their names.
     // A bare trailing "Sp" is "Sp. z o.o." an older scraper cut at its first dot.
-    private const LEGAL_FORM = '/[\s,.]+(?:sp\.?\s*z\s*o\s*\.?\s*o|sp\.?\s*[jk]\.|spółka\b|limited\b|corporation\b|ab(?=[\s,.(]|$)|s\.?\s*p\.?\s*a\.?(?=[\s,.(]|$)|s\.?\s*r\.?\s*[lo]\.?(?=[\s,.(]|$)|s\.?\s*a\.?(?:\s*e\.?)?(?=[\s,.(]|$)|a\.\s*s\.|b\.?\s*v\.?(?=[\s,.(]|$)|gmbh|ag(?=[\s,.(]|$)|ltd|llc|inc\b|corp\b|pty\b|co\.|sp\.?$)/iu';
+    private const LEGAL_FORM = '/[\s,.]+(?:sp\.?\s*z\s*o\s*\.?\s*o|sp\.?\s*[jk]\.|spółka\b|limited\b|corporation\b|ab(?=[\s,.(]|$)|s\.?\s*p\.?\s*a\.?(?=[\s,.(]|$)|s\.?\s*r\.?\s*[lo]\.?(?=[\s,.(]|$)|s\.?\s*a\.?(?:\s*e\.?)?(?=[\s,.(]|$)|a\.\s*s\.|[bn]\.?\s*v\.?(?=[\s,.(]|$)|gmbh|ag(?=[\s,.(]|$)|ltd|llc|inc\b|corp\b|pty\b|co\.|sp\.?$)/iu';
 
     // Imprints, notified-body numbers and leaflet text that follow the name.
     private const IMPRINT_START = '/\s*(?:\bnumer jednostki notyfikowanej\b|\bul\.|\bulica\b|\bNIP\b|\bKRS\b|\btel\.|\be-mail\b|\bwww\.|\bpodmiot\b|\bupoważniony\b|\bimporter\b|\bdystrybutor\b|\bsposób użycia\b|opakowanie\s*:|\bcorporate headquarters\b)/iu';
@@ -53,8 +53,14 @@ final class CleanCatalogueBrandsCommand extends Command
         'health-and-fashion-shoes-italia' => 'Scholl',
         'health-and-fashion-shoes-italia-s' => 'Scholl',
         'kd-medical-polska' => 'KD Medical',
+        'medilab-firma-wytworczo-uslugowa' => 'MEDILAB',
         'ortho-visions' => 'OrthoVisions',
+        // Registered names in supplier imprints ("Adres producenta") for brands the shop already lists.
+        'pollena-kosmetyki-i-mydla-naturalne' => 'POLLENA',
+        'przedsiebiorstwo-farmaceutyczne-ziololek' => 'Ziołolek',
         'scholl-produkty-do-pielegnacji-stop' => 'Scholl',
+        'torunskie-zaklady-materialow-opatrunkowych' => 'TZMO',
+        'zarys-international-group' => 'ZARYS',
     ];
 
     // "TZMO S.A. (marka Seni)" or "Stella Pack S.A. marka Service": the brand shoppers know is the "marka".
