@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Console\Commands\Concerns\WritesReh4MatPriceChanges;
+use App\Console\Commands\Concerns\WritesVariantPriceChanges;
 use App\Enums\VatRate;
 use App\Models\ProductVariant;
 use App\Services\Reh4Mat\Reh4MatPriceList;
@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
  */
 final class ApplyReh4MatPriceListCommand extends Command
 {
-    use WritesReh4MatPriceChanges;
+    use WritesVariantPriceChanges;
 
     protected $signature = 'reh4mat:apply-price-list
         {--list= : Price-list JSON under resources/. Defaults to the 1 June 2026 list.}

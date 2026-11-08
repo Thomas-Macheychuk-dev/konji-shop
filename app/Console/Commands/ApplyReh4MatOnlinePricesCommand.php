@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Console\Commands\Concerns\WritesReh4MatPriceChanges;
+use App\Console\Commands\Concerns\WritesVariantPriceChanges;
 use App\Enums\VatRate;
 use App\Models\ProductVariant;
 use Illuminate\Console\Command;
@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
  */
 final class ApplyReh4MatOnlinePricesCommand extends Command
 {
-    use WritesReh4MatPriceChanges;
+    use WritesVariantPriceChanges;
 
     public const DEFAULT_PATH = 'import-data/reh4mat/online-prices-2026-11.json';
 

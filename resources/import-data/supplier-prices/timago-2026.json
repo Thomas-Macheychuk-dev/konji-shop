@@ -1,0 +1,4310 @@
+{
+ "supplier": "timago",
+ "external_source": "timago",
+ "source_file": "CENNIK dla dystrybutorów- 2026.xlsx",
+ "effective_from": "2026-01-01",
+ "currency": "PLN",
+ "pricing": "distributor net price + 10% markup; gross from the list VAT rate",
+ "entries": [
+  {
+   "external_id": "1310",
+   "sku": "SANI-TIM",
+   "name": "Prysznicowo-toaletowy wózek transportowy 3w1 na małych kołach - SANI-TIM",
+   "list_row": "Rehabilitacja:44",
+   "list_code": "SANI-TIM",
+   "list_net_minor": 85000,
+   "vat": 8,
+   "net_minor": 93500,
+   "gross_minor": 100980,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1309",
+   "sku": "EASY-TRANSFER",
+   "name": "Deska do transferu pacjenta – EASY-TRANSFER",
+   "list_row": "Rehabilitacja:282",
+   "list_code": "EASY-TRANSFER",
+   "list_net_minor": 12000,
+   "vat": 8,
+   "net_minor": 13200,
+   "gross_minor": 14256,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "3225",
+   "sku": "JMC-C 3225",
+   "name": "Balkonik czterokołowy z podparciem pod łokcie i hamulcami - JMC-C 3225",
+   "list_row": "Rehabilitacja:76",
+   "list_code": "JMC-C 3225",
+   "list_net_minor": 21000,
+   "vat": 8,
+   "net_minor": 23100,
+   "gross_minor": 24948,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "540",
+   "sku": "TGR-R KP 540",
+   "name": "Taboret prysznicowy bez oparcia, składany - TGR-R KP 540",
+   "list_row": "Rehabilitacja:137",
+   "list_code": "TGR-R KP 540",
+   "list_net_minor": 7900,
+   "vat": 8,
+   "net_minor": 8690,
+   "gross_minor": 9385,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1303",
+   "sku": "Turn360",
+   "name": "Ławka obrotowa na wannę - Turn360",
+   "list_row": "Rehabilitacja:131",
+   "list_code": "TURN360",
+   "list_net_minor": 27000,
+   "vat": 8,
+   "net_minor": 29700,
+   "gross_minor": 32076,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1271",
+   "sku": "ELECTRIC-TIM I",
+   "name": "Wózek inwalidzki elektryczny - ELECTRIC-TIM I",
+   "list_row": "Rehabilitacja:10",
+   "list_code": "Electric-Tim I",
+   "list_net_minor": 275000,
+   "vat": 8,
+   "net_minor": 302500,
+   "gross_minor": 326700,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1237",
+   "sku": "iFold",
+   "name": "Elektryczny wózek inwalidzki z funkcją automatycznego składania - iFold",
+   "list_row": "Rehabilitacja:7",
+   "list_code": "iFold",
+   "list_net_minor": 399900,
+   "vat": 8,
+   "net_minor": 439890,
+   "gross_minor": 475081,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1236",
+   "sku": "FortiGO",
+   "name": "Wózek inwalidzki elektryczny - FortiGO",
+   "list_row": "Rehabilitacja:8",
+   "list_code": "FortiGo",
+   "list_net_minor": 319900,
+   "vat": 8,
+   "net_minor": 351890,
+   "gross_minor": 380041,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1235",
+   "sku": "GO-TIM",
+   "name": "Wózek inwalidzki elektryczny - GO-TIM",
+   "list_row": "Rehabilitacja:13",
+   "list_code": "GO-TIM",
+   "list_net_minor": 304900,
+   "vat": 8,
+   "net_minor": 335390,
+   "gross_minor": 362221,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1183",
+   "sku": "SMART-TIM",
+   "name": "Wózek inwalidzki elektryczny, srebrny - SMART-TIM",
+   "list_row": "Rehabilitacja:12",
+   "list_code": "Smart Tim",
+   "list_net_minor": 299000,
+   "vat": 8,
+   "net_minor": 328900,
+   "gross_minor": 355212,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1160",
+   "sku": "SMART-TIM",
+   "name": "Wózek inwalidzki elektryczny, czarny - SMART-TIM",
+   "list_row": "Rehabilitacja:12",
+   "list_code": "Smart Tim",
+   "list_net_minor": 299000,
+   "vat": 8,
+   "net_minor": 328900,
+   "gross_minor": 355212,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1142",
+   "sku": "FLASH-TIM",
+   "name": "Wózek inwalidzki elektryczny - FLASH-TIM",
+   "list_row": "Rehabilitacja:11",
+   "list_code": "Flash-Tim",
+   "list_net_minor": 269000,
+   "vat": 8,
+   "net_minor": 295900,
+   "gross_minor": 319572,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1104",
+   "sku": "POWER-TIM",
+   "name": "Wózek inwalidzki elektryczny - POWER-TIM",
+   "list_row": "Rehabilitacja:9",
+   "list_code": "Power-Tim",
+   "list_net_minor": 255000,
+   "vat": 8,
+   "net_minor": 280500,
+   "gross_minor": 302940,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "673",
+   "sku": "H011",
+   "name": "Stalowy wózek inwalidzki - CLASSIC-TIM",
+   "list_row": "Rehabilitacja:21",
+   "list_code": "H011",
+   "list_net_minor": 43500,
+   "vat": 8,
+   "net_minor": 47850,
+   "gross_minor": 51678,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1039",
+   "sku": "H011-B",
+   "name": "BASIC-TIM - Stalowy wózek inwalidzki",
+   "list_row": "Rehabilitacja:18",
+   "list_code": "H011 B",
+   "list_net_minor": 38900,
+   "vat": 8,
+   "net_minor": 42790,
+   "gross_minor": 46213,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1117",
+   "sku": "MOBIL-TIM PLUS",
+   "name": "Wózek inwalidzki - MOBIL-TIM PLUS",
+   "list_row": "Rehabilitacja:28",
+   "list_code": "MOBIL-TIM PLUS",
+   "list_net_minor": 43900,
+   "vat": 8,
+   "net_minor": 48290,
+   "gross_minor": 52153,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1078",
+   "sku": "MOBIL-TIM",
+   "name": "Wózek inwalidzki - MOBIL-TIM",
+   "list_row": "Rehabilitacja:27",
+   "list_code": "MOBIL-TIM",
+   "list_net_minor": 33500,
+   "vat": 8,
+   "net_minor": 36850,
+   "gross_minor": 39798,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "585",
+   "sku": "FS 692",
+   "name": "Toaletowy wózek transportowy - TRANSPORT-TIM",
+   "list_row": "Rehabilitacja:112",
+   "list_code": "FS 692",
+   "list_net_minor": 34200,
+   "vat": 8,
+   "net_minor": 37620,
+   "gross_minor": 40630,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "550",
+   "sku": "K7",
+   "name": "BIG-TIM - Wzmocniony stalowy wózek inwalidzki z maksymalnym obciążeniem 225 kg",
+   "list_row": "Rehabilitacja:30",
+   "list_code": "K-7 56 cm",
+   "list_net_minor": 79000,
+   "vat": 8,
+   "net_minor": 86900,
+   "gross_minor": 93852,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1274",
+   "sku": "SANI-TIM",
+   "name": "Prysznicowo-toaletowy wózek transportowy 3w1 - SANI-TIM",
+   "list_row": "Rehabilitacja:43",
+   "list_code": "SANI-TIM",
+   "list_net_minor": 109900,
+   "vat": 8,
+   "net_minor": 120890,
+   "gross_minor": 130561,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "544",
+   "sku": "ALH 008",
+   "name": "STABLE-TIM - Aluminiowy wózek inwalidzki stabilizujący plecy i głowę",
+   "list_row": "Rehabilitacja:46",
+   "list_code": "ALH008",
+   "list_net_minor": 109900,
+   "vat": 8,
+   "net_minor": 120890,
+   "gross_minor": 130561,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1188",
+   "sku": "ACTIV-TIM",
+   "name": "Wózek inwalidzki aktywny aluminiowy na małych kołach - ACTIV-TIM",
+   "list_row": "Rehabilitacja:36",
+   "list_code": "ACTIV-TIM",
+   "list_net_minor": 145000,
+   "vat": 8,
+   "net_minor": 159500,
+   "gross_minor": 172260,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1137",
+   "sku": "ACTIV-TIM",
+   "name": "Wózek inwalidzki aktywny aluminiowy na dużych kołach - ACTIV-TIM",
+   "list_row": "Rehabilitacja:36",
+   "list_code": "ACTIV-TIM",
+   "list_net_minor": 145000,
+   "vat": 8,
+   "net_minor": 159500,
+   "gross_minor": 172260,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1254",
+   "sku": "NEURO-TIM",
+   "name": "Wózek inwalidzki stabilizujący plecy i głowę - NEURO-TIM",
+   "list_row": "Rehabilitacja:48",
+   "list_code": "NEURO TIM",
+   "list_net_minor": 109900,
+   "vat": 8,
+   "net_minor": 120890,
+   "gross_minor": 130561,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1232",
+   "sku": "ELITE-TIM",
+   "name": "Ultralekki aktywny wózek inwalidzki aluminiowy - ELITE-TIM",
+   "list_row": "Rehabilitacja:38",
+   "list_code": "ELITE-TIM",
+   "list_net_minor": 145000,
+   "vat": 8,
+   "net_minor": 159500,
+   "gross_minor": 172260,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1128",
+   "sku": "EXCLUSIVE-TIM LIGHT",
+   "name": "EXCLUSIVE-TIM LIGHT - Wózek inwalidzki aktywny aluminiowy, granatowy",
+   "list_row": "Rehabilitacja:37",
+   "list_code": "EXCLUSIVE-TIM LIGHT",
+   "list_net_minor": 129000,
+   "vat": 8,
+   "net_minor": 141900,
+   "gross_minor": 153252,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1126",
+   "sku": "COMPLEX-TIM",
+   "name": "Wózek inwalidzki aluminiowy z funkcją toaletowo-prysznicową - COMPLEX-TIM",
+   "list_row": "Rehabilitacja:42",
+   "list_code": "COMPLEX-TIM",
+   "list_net_minor": 92000,
+   "vat": 8,
+   "net_minor": 101200,
+   "gross_minor": 109296,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "661",
+   "sku": "T101",
+   "name": "EVERYDAY-TIM : Wózek inwalidzki aluminiowy z łamanym oparciem i hamulcami dla osoby prowadzącej",
+   "list_row": "Rehabilitacja:35",
+   "list_code": "T101",
+   "list_net_minor": 78900,
+   "vat": 8,
+   "net_minor": 86790,
+   "gross_minor": 93733,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "676",
+   "sku": "TGR-R WA C2600",
+   "name": "PREMIUM-TIM - Aluminiowy wózek inwalidzki z łamanym oparciem i odpinaną tapicerką",
+   "list_row": "Rehabilitacja:33",
+   "list_code": "TGR-R WA C2600",
+   "list_net_minor": 79900,
+   "vat": 8,
+   "net_minor": 87890,
+   "gross_minor": 94921,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "432",
+   "sku": "SIMPLE-TIM",
+   "name": "Wózek inwalidzki aluminiowy - SIMPLE-TIM",
+   "list_row": "Rehabilitacja:34",
+   "list_code": "SIMPLE-TIM",
+   "list_net_minor": 65500,
+   "vat": 8,
+   "net_minor": 72050,
+   "gross_minor": 77814,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "624",
+   "sku": "EXCLUSIVE-TIM LIGHT",
+   "name": "EXCLUSIVE-TIM LIGHT - Wózek inwalidzki aktywny aluminiowy, czerwony",
+   "list_row": "Rehabilitacja:37",
+   "list_code": "EXCLUSIVE-TIM LIGHT",
+   "list_net_minor": 129000,
+   "vat": 8,
+   "net_minor": 141900,
+   "gross_minor": 153252,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "973",
+   "sku": "MASTER-TIM",
+   "name": "MASTER-TIM - Prysznicowo-toaletowy wózek transportowy 3w1",
+   "list_row": "Rehabilitacja:115",
+   "list_code": "MASTER-TIM",
+   "list_net_minor": 80500,
+   "vat": 8,
+   "net_minor": 88550,
+   "gross_minor": 95634,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1067",
+   "sku": "MASTER-TIM PLUS",
+   "name": "MASTER-TIM PLUS - Prysznicowo-toaletowy wózek transportowy",
+   "list_row": "Rehabilitacja:114",
+   "list_code": "MASTER-TIM PLUS",
+   "list_net_minor": 99000,
+   "vat": 8,
+   "net_minor": 108900,
+   "gross_minor": 117612,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1301",
+   "sku": "TGR-R RA 882",
+   "name": "Podpórka czterokołowa aluminiowa VICTORIA - bordowy",
+   "list_row": "Rehabilitacja:62",
+   "list_code": "TGR-R RA 882",
+   "list_net_minor": 26900,
+   "vat": 8,
+   "net_minor": 29590,
+   "gross_minor": 31957,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1300",
+   "sku": "YOLA",
+   "name": "Podpórka czterokołowa aluminiowa YOLA – szary",
+   "list_row": "Rehabilitacja:66",
+   "list_code": "YOLA",
+   "list_net_minor": 31500,
+   "vat": 8,
+   "net_minor": 34650,
+   "gross_minor": 37422,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1287",
+   "sku": "YOLA",
+   "name": "Podpórka czterokołowa aluminiowa YOLA – kolor turkusowy",
+   "list_row": "Rehabilitacja:66",
+   "list_code": "YOLA",
+   "list_net_minor": 31500,
+   "vat": 8,
+   "net_minor": 34650,
+   "gross_minor": 37422,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1286",
+   "sku": "YOLA AIR",
+   "name": "Podpórka czterokołowa aluminiowa - YOLA AIR",
+   "list_row": "Rehabilitacja:65",
+   "list_code": "YOLA AIR",
+   "list_net_minor": 41900,
+   "vat": 8,
+   "net_minor": 46090,
+   "gross_minor": 49777,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1285",
+   "sku": "YOLA",
+   "name": "Podpórka czterokołowa aluminiowa YOLA – czarny mat",
+   "list_row": "Rehabilitacja:66",
+   "list_code": "YOLA",
+   "list_net_minor": 31500,
+   "vat": 8,
+   "net_minor": 34650,
+   "gross_minor": 37422,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1175",
+   "sku": "PEDRO",
+   "name": "PEDRO - Podpórka czterokołowa aluminiowa składana do użytku wewnątrz pomieszczeń",
+   "list_row": "Rehabilitacja:73",
+   "list_code": "PEDRO",
+   "list_net_minor": 28900,
+   "vat": 8,
+   "net_minor": 31790,
+   "gross_minor": 34333,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1174",
+   "sku": "LORENZA",
+   "name": "Podpórka czterokołowa aluminiowa - LORENZA",
+   "list_row": "Rehabilitacja:72",
+   "list_code": "LORENZA",
+   "list_net_minor": 53500,
+   "vat": 8,
+   "net_minor": 58850,
+   "gross_minor": 63558,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1132",
+   "sku": "RANGER",
+   "name": "Podpórka czterokołowa aluminiowa - RANGER",
+   "list_row": "Rehabilitacja:70",
+   "list_code": "RANGER",
+   "list_net_minor": 49500,
+   "vat": 8,
+   "net_minor": 54450,
+   "gross_minor": 58806,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1118",
+   "sku": "LEXI",
+   "name": "Podpórka czterokołowa aluminiowa z podparciem pod łokcie - LEXI",
+   "list_row": "Rehabilitacja:57",
+   "list_code": "LEXI",
+   "list_net_minor": 38900,
+   "vat": 8,
+   "net_minor": 42790,
+   "gross_minor": 46213,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1095",
+   "sku": "Knee Walker",
+   "name": "Knee Walker - Podpórka czterokołowa aluminiowa z podparciem na kolano",
+   "list_row": "Rehabilitacja:71",
+   "list_code": "KNEE WALKER",
+   "list_net_minor": 28000,
+   "vat": 8,
+   "net_minor": 30800,
+   "gross_minor": 33264,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1046",
+   "sku": "RANGER",
+   "name": "Podpórka czterokołowa aluminiowa - RANGER",
+   "list_row": "Rehabilitacja:70",
+   "list_code": "RANGER",
+   "list_net_minor": 49500,
+   "vat": 8,
+   "net_minor": 54450,
+   "gross_minor": 58806,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "944",
+   "sku": "CARBON",
+   "name": "Podpórka czterokołowa aluminiowa - CARBON",
+   "list_row": "Rehabilitacja:64",
+   "list_code": "CARBON",
+   "list_net_minor": 26000,
+   "vat": 8,
+   "net_minor": 28600,
+   "gross_minor": 30888,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "667",
+   "sku": "TGR-R RA 882",
+   "name": "Podpórka czterokołowa aluminiowa VICTORIA - grafitowy",
+   "list_row": "Rehabilitacja:62",
+   "list_code": "TGR-R RA 882",
+   "list_net_minor": 26900,
+   "vat": 8,
+   "net_minor": 29590,
+   "gross_minor": 31957,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "888",
+   "sku": "TGR-R RA 888",
+   "name": "Podpórka czterokołowa aluminiowa z podparciem na nogi - LUCY",
+   "list_row": "Rehabilitacja:68",
+   "list_code": "TGR-R RA 888",
+   "list_net_minor": 27500,
+   "vat": 8,
+   "net_minor": 30250,
+   "gross_minor": 32670,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "680",
+   "sku": "TGR-R RA 885",
+   "name": "Podpórka czterokołowa aluminiowa regulowana - ALINA",
+   "list_row": "Rehabilitacja:67",
+   "list_code": "TGR-R RA 885",
+   "list_net_minor": 25900,
+   "vat": 8,
+   "net_minor": 28490,
+   "gross_minor": 30769,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1069",
+   "sku": "RAPID",
+   "name": "RAPID - Podpórka trójkołowa aluminiowa",
+   "list_row": "Rehabilitacja:61",
+   "list_code": "RAPID",
+   "list_net_minor": 28900,
+   "vat": 8,
+   "net_minor": 31790,
+   "gross_minor": 34333,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "570",
+   "sku": "TGR-R RS 880",
+   "name": "Podpórka czterokołowa stalowa - STELLA",
+   "list_row": "Rehabilitacja:53",
+   "list_code": "TGR-R RS 880",
+   "list_net_minor": 20900,
+   "vat": 8,
+   "net_minor": 22990,
+   "gross_minor": 24829,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1057",
+   "sku": "PAULA",
+   "name": "Podpórka ułatwiająca chodzenie typu Ambona - PAULA",
+   "list_row": "Rehabilitacja:56",
+   "list_code": "PAULA",
+   "list_net_minor": 77000,
+   "vat": 8,
+   "net_minor": 84700,
+   "gross_minor": 91476,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "681",
+   "sku": "TGR-R RT 892G",
+   "name": "Podpórka trójkołowa stalowa - MONA",
+   "list_row": "Rehabilitacja:60",
+   "list_code": "TGR-R RT 892G",
+   "list_net_minor": 21500,
+   "vat": 8,
+   "net_minor": 23650,
+   "gross_minor": 25542,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "881",
+   "sku": "TGR-R RS 881",
+   "name": "DAISY - Podpórka czterokołowa stalowa",
+   "list_row": "Rehabilitacja:55",
+   "list_code": "TGR-R RS 881",
+   "list_net_minor": 21900,
+   "vat": 8,
+   "net_minor": 24090,
+   "gross_minor": 26017,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "682",
+   "sku": "JMC-C 3511",
+   "name": "CARMEN - Podpórka dwukołowa stalowa",
+   "list_row": "Rehabilitacja:59",
+   "list_code": "JMC-C 3511",
+   "list_net_minor": 10900,
+   "vat": 8,
+   "net_minor": 11990,
+   "gross_minor": 12949,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "583",
+   "sku": "TGR-R RS 8812",
+   "name": "Podpórka ułatwiająca chodzenie typu Ambona - ANNA",
+   "list_row": "Rehabilitacja:58",
+   "list_code": "TGR-R RS 8812",
+   "list_net_minor": 38900,
+   "vat": 8,
+   "net_minor": 42790,
+   "gross_minor": 46213,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1187",
+   "sku": "FUTURO",
+   "name": "FUTURO - Podpórka czterokołowa z włókna węglowego, czarny mat",
+   "list_row": "Rehabilitacja:69",
+   "list_code": "FUTURO",
+   "list_net_minor": 96000,
+   "vat": 8,
+   "net_minor": 105600,
+   "gross_minor": 114048,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1124",
+   "sku": "FUTURO",
+   "name": "FUTURO - Podpórka czterokołowa z włókna węglowego, czerwony połysk",
+   "list_row": "Rehabilitacja:69",
+   "list_code": "FUTURO",
+   "list_net_minor": 96000,
+   "vat": 8,
+   "net_minor": 105600,
+   "gross_minor": 114048,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "3224",
+   "sku": "JMC-C 3224",
+   "name": "Balkonik czterokołowy z hamulcami - JMC-C 3224",
+   "list_row": "Rehabilitacja:74",
+   "list_code": "JMC-C 3224",
+   "list_net_minor": 13900,
+   "vat": 8,
+   "net_minor": 15290,
+   "gross_minor": 16513,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1171",
+   "sku": "DEFENDER",
+   "name": "Balkonik czterokołowy z hamulcami i siedziskiem - DEFENDER",
+   "list_row": "Rehabilitacja:77",
+   "list_code": "DEFENDER",
+   "list_net_minor": 30500,
+   "vat": 8,
+   "net_minor": 33550,
+   "gross_minor": 36234,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1096",
+   "sku": "HUGO",
+   "name": "Balkonik statyczny składany - HUGO",
+   "list_row": "Rehabilitacja:80",
+   "list_code": "HUGO",
+   "list_net_minor": 7900,
+   "vat": 8,
+   "net_minor": 8690,
+   "gross_minor": 9385,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "588",
+   "sku": "JMC-C 3016W5",
+   "name": "Balkonik składany na dużych kołach - model JMC-C 3016W5",
+   "list_row": "Rehabilitacja:79",
+   "list_code": "JMC-C 3016W5",
+   "list_net_minor": 10490,
+   "vat": 8,
+   "net_minor": 11539,
+   "gross_minor": 12462,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1065",
+   "sku": "FOLDY",
+   "name": "Balkonik dwufunkcyjny podwójnie składany - FOLDY",
+   "list_row": "Rehabilitacja:78",
+   "list_code": "FOLDY",
+   "list_net_minor": 10900,
+   "vat": 8,
+   "net_minor": 11990,
+   "gross_minor": 12949,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "683",
+   "sku": "FS 913L",
+   "name": "Balkonik dwufunkcyjny (krocząco-statyczny) - model FS 913L - srebrny",
+   "list_row": "Rehabilitacja:81",
+   "list_code": "FS 913L",
+   "list_net_minor": 9900,
+   "vat": 8,
+   "net_minor": 10890,
+   "gross_minor": 11761,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1034",
+   "sku": "FS 913L",
+   "name": "Balkonik dwufunkcyjny (krocząco-statyczny) - model FS 913L - brązowy",
+   "list_row": "Rehabilitacja:81",
+   "list_code": "FS 913L",
+   "list_net_minor": 9900,
+   "vat": 8,
+   "net_minor": 10890,
+   "gross_minor": 11761,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "3223",
+   "sku": "JMC-C 3223",
+   "name": "Balkonik czterokołowy z hamulcami - model JMC-C 3223",
+   "list_row": "Rehabilitacja:75",
+   "list_code": "JMC-C 3223",
+   "list_net_minor": 15900,
+   "vat": 8,
+   "net_minor": 17490,
+   "gross_minor": 18889,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "3222",
+   "sku": "JMC-C 3222",
+   "name": "Balkonik 3-funkcyjny (krocząco - statyczny) - model JMC-C 3222",
+   "list_row": "Rehabilitacja:82",
+   "list_code": "JMC-C 3222",
+   "list_net_minor": 10900,
+   "vat": 8,
+   "net_minor": 11990,
+   "gross_minor": 12949,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1296",
+   "sku": "EcoLIFT180",
+   "name": "Elektryczny podnośnik pacjenta - EcoLIFT180",
+   "list_row": "Rehabilitacja:284",
+   "list_code": "EcoLIFT180",
+   "list_net_minor": 185000,
+   "vat": 8,
+   "net_minor": 203500,
+   "gross_minor": 219780,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1275",
+   "sku": "SAFE-TRANSFER",
+   "name": "Hydrauliczny podnośnik transferowy - SAFE-TRANSFER",
+   "list_row": "Rehabilitacja:288",
+   "list_code": "SAFE-TRANSFER",
+   "list_net_minor": 99900,
+   "vat": 8,
+   "net_minor": 109890,
+   "gross_minor": 118681,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1269",
+   "sku": "AirMATE",
+   "name": "Materac przeciwodleżynowy z kompresorem - AirMATE",
+   "list_row": "Rehabilitacja:222",
+   "list_code": "AirMATE",
+   "list_net_minor": 14000,
+   "vat": 8,
+   "net_minor": 15400,
+   "gross_minor": 16632,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1249",
+   "sku": "TurnMATE",
+   "name": "Materac przeciwodleżynowy rurowy z funkcją zmiany pozycji - TurnMATE",
+   "list_row": "Rehabilitacja:226",
+   "list_code": "TURNMATE",
+   "list_net_minor": 175000,
+   "vat": 8,
+   "net_minor": 192500,
+   "gross_minor": 207900,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1246",
+   "sku": "TGR-Y MR 001-5",
+   "name": "Materac przeciwodleżynowy rurowy z wyjmowanymi komorami",
+   "list_row": "Rehabilitacja:227",
+   "list_code": "TGR-Y MR 001-5",
+   "list_net_minor": 31900,
+   "vat": 8,
+   "net_minor": 35090,
+   "gross_minor": 37897,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1179",
+   "sku": "TOPPER",
+   "name": "Materac nawierzchniowy - TOPPER",
+   "list_row": "Rehabilitacja:233",
+   "list_code": "MAT-TOPPER",
+   "list_net_minor": 30500,
+   "vat": 8,
+   "net_minor": 33550,
+   "gross_minor": 36234,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1178",
+   "sku": "TriMATE Care",
+   "name": "Materac przeciwodleżynowy piankowy do łóżek rehabilitacyjnych - TriMATE Care",
+   "list_row": "Rehabilitacja:232",
+   "list_code": "TriMATE Care",
+   "list_net_minor": 56500,
+   "vat": 8,
+   "net_minor": 62150,
+   "gross_minor": 67122,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1163",
+   "sku": "MAT-TIM",
+   "name": "Materac piankowy do łóżka rehabilitacyjnego - MAT-TIM",
+   "list_row": "Rehabilitacja:230",
+   "list_code": "MAT-TIM",
+   "list_net_minor": 25000,
+   "vat": 8,
+   "net_minor": 27500,
+   "gross_minor": 29700,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "770",
+   "sku": "MOON-TIM GOFR",
+   "name": "Materac typu gofer - maksymalne obciążenie 120 kg",
+   "list_row": "Rehabilitacja:228",
+   "list_code": "MOON-TIM -GOFR-12",
+   "list_net_minor": 35000,
+   "vat": 8,
+   "net_minor": 38500,
+   "gross_minor": 41580,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "703",
+   "sku": "TGR-Y MR 001-3",
+   "name": "Materac przeciwodleżynowy rurowy trójprzepływowy - model TGR-Y MR 001-3 - maksymalne obciążenie do 150 kg",
+   "list_row": "Rehabilitacja:225",
+   "list_code": "TGR-Y MR 001-3",
+   "list_net_minor": 45900,
+   "vat": 8,
+   "net_minor": 50490,
+   "gross_minor": 54529,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "702",
+   "sku": "TGR-Y MR 001-2",
+   "name": "Materac przeciwodleżynowy rurowy z kompresorem- model TGR-Y MR 001-2 - maksymalne obciążenie do 130 kg",
+   "list_row": "Rehabilitacja:224",
+   "list_code": "TGR-Y MR 001-2",
+   "list_net_minor": 38500,
+   "vat": 8,
+   "net_minor": 42350,
+   "gross_minor": 45738,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "701",
+   "sku": "TGR-Y MB 001-1",
+   "name": "Materac przeciwodleżynowy z kompresorem - model TGR-Y MB 001-1 - maksymalne obciążenie do 135 kg",
+   "list_row": "Rehabilitacja:223",
+   "list_code": "TGR-Y MB 001-1",
+   "list_net_minor": 9900,
+   "vat": 8,
+   "net_minor": 10890,
+   "gross_minor": 11761,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1270",
+   "sku": "SIT-EXPERT",
+   "name": "Przeciwodleżynowa poduszka pneumatyczna - SIT-EXPERT",
+   "list_row": "Rehabilitacja:218",
+   "list_code": "SIT-EXPERT",
+   "list_net_minor": 10900,
+   "vat": 8,
+   "net_minor": 11990,
+   "gross_minor": 12949,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1229",
+   "sku": "ErgoTIM",
+   "name": "Poduszka do wózka inwalidzkiego typu jeżyk - ErgoTIM",
+   "list_row": "Rehabilitacja:203",
+   "list_code": "ErgoTIM",
+   "list_net_minor": 6500,
+   "vat": 8,
+   "net_minor": 7150,
+   "gross_minor": 7722,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1228",
+   "sku": "SitWELL",
+   "name": "Poduszka do wózka inwalidzkiego, perforowana - SitWELL",
+   "list_row": "Rehabilitacja:202",
+   "list_code": "SITWELL",
+   "list_net_minor": 5500,
+   "vat": 8,
+   "net_minor": 6050,
+   "gross_minor": 6534,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1185",
+   "sku": "TWISTER",
+   "name": "Poduszka obrotowa do siedzenia - TWISTER",
+   "list_row": "Rehabilitacja:204",
+   "list_code": "TWISTER",
+   "list_net_minor": 7200,
+   "vat": 8,
+   "net_minor": 7920,
+   "gross_minor": 8554,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1153",
+   "sku": "BABY DREAM",
+   "name": "Poduszka anatomiczna dla dzieci - BABY DREAM",
+   "list_row": "Rehabilitacja:215",
+   "list_code": "BABY DREAM",
+   "list_net_minor": 2990,
+   "vat": 8,
+   "net_minor": 3289,
+   "gross_minor": 3552,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1152",
+   "sku": "COOLING TIM",
+   "name": "Poduszka ortopedyczna do siedzenia z żelem chłodzącym - COOLING TIM",
+   "list_row": "Rehabilitacja:214",
+   "list_code": "COOLING TIM",
+   "list_net_minor": 4900,
+   "vat": 8,
+   "net_minor": 5390,
+   "gross_minor": 5821,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1151",
+   "sku": "SUPPORT TIM",
+   "name": "Poduszka piankowa przeciwodleżynowa z otworem - SUPPORT TIM",
+   "list_row": "Rehabilitacja:213",
+   "list_code": "SUPPORT TIM",
+   "list_net_minor": 4700,
+   "vat": 8,
+   "net_minor": 5170,
+   "gross_minor": 5584,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1150",
+   "sku": "UNICORN TIM",
+   "name": "Poduszka ortopedyczna - UNICORN TIM",
+   "list_row": "Rehabilitacja:212",
+   "list_code": "UNICORN TIM",
+   "list_net_minor": 3550,
+   "vat": 8,
+   "net_minor": 3905,
+   "gross_minor": 4217,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1148",
+   "sku": "TRAVEL TIM",
+   "name": "Poduszka ortopedyczna, niebieska - TRAVEL TIM",
+   "list_row": "Rehabilitacja:211",
+   "list_code": "TRAVEL TIM",
+   "list_net_minor": 3100,
+   "vat": 8,
+   "net_minor": 3410,
+   "gross_minor": 3683,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1147",
+   "sku": "TRAVEL TIM",
+   "name": "Poduszka ortopedyczna, szara - TRAVEL TIM",
+   "list_row": "Rehabilitacja:211",
+   "list_code": "TRAVEL TIM",
+   "list_net_minor": 3100,
+   "vat": 8,
+   "net_minor": 3410,
+   "gross_minor": 3683,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1061",
+   "sku": "BUBBLE EXCLUSIVE",
+   "name": "BUBBLE EXCLUSIVE - Poduszka przeciwodleżynowa",
+   "list_row": "Rehabilitacja:219",
+   "list_code": "BUBBLE EXCLUSIVE",
+   "list_net_minor": 6450,
+   "vat": 8,
+   "net_minor": 7095,
+   "gross_minor": 7663,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1302",
+   "sku": "NEXO",
+   "name": "Krzesło toaletowo-prysznicowe - NEXO",
+   "list_row": "Rehabilitacja:130",
+   "list_code": "NEXO",
+   "list_net_minor": 17900,
+   "vat": 8,
+   "net_minor": 19690,
+   "gross_minor": 21265,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1291",
+   "sku": "KING-12A-20",
+   "name": "Nasadka toaletowa z uchwytami bocznymi",
+   "list_row": "Rehabilitacja:125",
+   "list_code": "LM-KING-12A-20",
+   "list_net_minor": 14500,
+   "vat": 8,
+   "net_minor": 15950,
+   "gross_minor": 17226,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1290",
+   "sku": "Movano",
+   "name": "Krzesło toaletowo-prysznicowe - Movano",
+   "list_row": "Rehabilitacja:132",
+   "list_code": "MOVANO",
+   "list_net_minor": 19900,
+   "vat": 8,
+   "net_minor": 21890,
+   "gross_minor": 23641,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1241",
+   "sku": "SAFE",
+   "name": "Antypoślizgowa mata łazienkowa - SAFE",
+   "list_row": "Rehabilitacja:158",
+   "list_code": "SAFE",
+   "list_net_minor": 1600,
+   "vat": 8,
+   "net_minor": 1760,
+   "gross_minor": 1901,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1240",
+   "sku": "StepTim",
+   "name": "Stopień łazienkowy - StepTim",
+   "list_row": "Rehabilitacja:142",
+   "list_code": "StepTim",
+   "list_net_minor": 6950,
+   "vat": 8,
+   "net_minor": 7645,
+   "gross_minor": 8257,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1176",
+   "sku": "MAXIMUS",
+   "name": "Składane krzesło toaletowe bariatryczne 3w1 - MAXIMUS",
+   "list_row": "Rehabilitacja:121",
+   "list_code": "MAXIMUS",
+   "list_net_minor": 17900,
+   "vat": 8,
+   "net_minor": 19690,
+   "gross_minor": 21265,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1173",
+   "sku": "JMC-C 5300KD",
+   "name": "Przystawka toaletowa - JMC-C 5300KD",
+   "list_row": "Rehabilitacja:127",
+   "list_code": "JMC-C 5300KD",
+   "list_net_minor": 5900,
+   "vat": 8,
+   "net_minor": 6490,
+   "gross_minor": 7009,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1122",
+   "sku": "KING-CRTS4-20",
+   "name": "Nakładka wymiękczająca do nasadki toaletowej",
+   "list_row": "Rehabilitacja:126",
+   "list_code": "KING-CCMD4-20",
+   "list_net_minor": 6200,
+   "vat": 23,
+   "net_minor": 6820,
+   "gross_minor": 8389,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1105",
+   "sku": "BLUE-TIM",
+   "name": "Krzesło toaletowe tapicerowane BLUE-TIM",
+   "list_row": "Rehabilitacja:116",
+   "list_code": "BLUE-TIM",
+   "list_net_minor": 19500,
+   "vat": 8,
+   "net_minor": 21450,
+   "gross_minor": 23166,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1097",
+   "sku": "BathTim",
+   "name": "Ławka do wanny z oparciem - BathTim",
+   "list_row": "Rehabilitacja:143",
+   "list_code": "BATHTIM",
+   "list_net_minor": 14500,
+   "vat": 8,
+   "net_minor": 15950,
+   "gross_minor": 17226,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "20",
+   "sku": "KING-STRA-20",
+   "name": "Taboret prysznicowy okrągły",
+   "list_row": "Rehabilitacja:135",
+   "list_code": "KING- STRA-20",
+   "list_net_minor": 9900,
+   "vat": 8,
+   "net_minor": 10890,
+   "gross_minor": 11761,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "952",
+   "sku": "KING-10-20",
+   "name": "Nasadka toaletowa bez klapy",
+   "list_row": "Rehabilitacja:122",
+   "list_code": "LM-KING-10-20",
+   "list_net_minor": 5300,
+   "vat": 8,
+   "net_minor": 5830,
+   "gross_minor": 6296,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "951",
+   "sku": "KING-10L-20",
+   "name": "Nasadka toaletowa z klapą",
+   "list_row": "Rehabilitacja:123",
+   "list_code": "LM-KING-10L-20",
+   "list_net_minor": 6400,
+   "vat": 8,
+   "net_minor": 7040,
+   "gross_minor": 7603,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "853",
+   "sku": "EASY SHOWER",
+   "name": "Basen do mycia głowy z prysznicem w zestawie - EASY SHOWER",
+   "list_row": "Rehabilitacja:157",
+   "list_code": "EASY SHOWER",
+   "list_net_minor": 5400,
+   "vat": 8,
+   "net_minor": 5940,
+   "gross_minor": 6415,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "915",
+   "sku": "JMC-C 54024",
+   "name": "Uchwyt łazienkowy prosty JMC-C 54024 - długość 60 cm",
+   "list_row": "Rehabilitacja:148",
+   "list_code": "JMC-C 54024",
+   "list_net_minor": 2990,
+   "vat": 8,
+   "net_minor": 3289,
+   "gross_minor": 3552,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "5105",
+   "sku": "JMC-C 5105",
+   "name": "Taboret prysznicowy przyścienny, składany - model JMC-C 5105",
+   "list_row": "Rehabilitacja:144",
+   "list_code": "JMC-C 5105",
+   "list_net_minor": 9600,
+   "vat": 8,
+   "net_minor": 10560,
+   "gross_minor": 11405,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "914",
+   "sku": "JMC-C 54018",
+   "name": "Uchwyt łazienkowy prosty JMC-C 54018 - długość 45 cm",
+   "list_row": "Rehabilitacja:147",
+   "list_code": "JMC-C 54018",
+   "list_net_minor": 2290,
+   "vat": 8,
+   "net_minor": 2519,
+   "gross_minor": 2721,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "904",
+   "sku": "TGR-R KP 355L",
+   "name": "Taboret prysznicowy z oparciem i uchwytami bocznymi - TGR-R KP 355L",
+   "list_row": "Rehabilitacja:138",
+   "list_code": "TGR-R KP 355L",
+   "list_net_minor": 9500,
+   "vat": 8,
+   "net_minor": 10450,
+   "gross_minor": 11286,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "913",
+   "sku": "JMC-C 54016",
+   "name": "Uchwyt łazienkowy prosty JMC-C 54016 - długość 40 cm",
+   "list_row": "Rehabilitacja:146",
+   "list_code": "JMC-C 54016",
+   "list_net_minor": 2050,
+   "vat": 8,
+   "net_minor": 2255,
+   "gross_minor": 2435,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "859",
+   "sku": "TGR-R KT 023B",
+   "name": "Krzesło toaletowe składane - model TGR-R KT 023B",
+   "list_row": "Rehabilitacja:120",
+   "list_code": "TGR-R KT 023B",
+   "list_net_minor": 11500,
+   "vat": 8,
+   "net_minor": 12650,
+   "gross_minor": 13662,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "912",
+   "sku": "JMC-C 54012",
+   "name": "Uchwyt łazienkowy prosty JMC-C 54012 - długość 30 cm",
+   "list_row": "Rehabilitacja:145",
+   "list_code": "JMC-C 54012",
+   "list_net_minor": 1990,
+   "vat": 8,
+   "net_minor": 2189,
+   "gross_minor": 2364,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "916",
+   "sku": "JMC-C 54032",
+   "name": "Uchwyt łazienkowy prosty JMC-C 54032 - długość 80 cm",
+   "list_row": "Rehabilitacja:149",
+   "list_code": "JMC-C 54032",
+   "list_net_minor": 3500,
+   "vat": 8,
+   "net_minor": 3850,
+   "gross_minor": 4158,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "3432",
+   "sku": "TGR-R KP-O 3432",
+   "name": "Taboret prysznicowy okrągły z systemem ułatwiającym montaż - model TGR-R KP-O 3432",
+   "list_row": "Rehabilitacja:140",
+   "list_code": "TGR-R KP-O 3432",
+   "list_net_minor": 6150,
+   "vat": 8,
+   "net_minor": 6765,
+   "gross_minor": 7306,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "852",
+   "sku": "TGR-R KP 350L",
+   "name": "Taboret prysznicowy z oparciem - TGR-R KP 350L",
+   "list_row": "Rehabilitacja:139",
+   "list_code": "TGR-R KP 350L",
+   "list_net_minor": 9900,
+   "vat": 8,
+   "net_minor": 10890,
+   "gross_minor": 11761,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "851",
+   "sku": "TGR-R KP 340L",
+   "name": "Taboret prysznicowy TGR-R KP 340L z systemem łatwego montażu",
+   "list_row": "Rehabilitacja:136",
+   "list_code": "TGR-R KP 340L",
+   "list_net_minor": 6250,
+   "vat": 8,
+   "net_minor": 6875,
+   "gross_minor": 7425,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1",
+   "sku": "TGR-R LW 794L-1",
+   "name": "Ławka wgłębna do wanny - model TGR-R LW 794L-1",
+   "list_row": "Rehabilitacja:155",
+   "list_code": "TGR-R LW 794L-1",
+   "list_net_minor": 10900,
+   "vat": 8,
+   "net_minor": 11990,
+   "gross_minor": 12949,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "677",
+   "sku": "FS 7962L",
+   "name": "Transportowy wózek prysznicowy - SHOWER-TIM",
+   "list_row": "Rehabilitacja:113",
+   "list_code": "FS 7962L",
+   "list_net_minor": 38900,
+   "vat": 8,
+   "net_minor": 42790,
+   "gross_minor": 46213,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "330",
+   "sku": "TGR-R TW 330",
+   "name": "Transfer na wannę - model - TGR-R TW 330",
+   "list_row": "Rehabilitacja:154",
+   "list_code": "TGR-R TW 330",
+   "list_net_minor": 7900,
+   "vat": 8,
+   "net_minor": 8690,
+   "gross_minor": 9385,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1252",
+   "sku": "ROLLER",
+   "name": "Wałek do ćwiczeń - ROLLER",
+   "list_row": "Rehabilitacja:195",
+   "list_code": "ROLLER",
+   "list_net_minor": 1990,
+   "vat": 8,
+   "net_minor": 2189,
+   "gross_minor": 2364,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1251",
+   "sku": "LILY",
+   "name": "Zestaw do akupresury - LILY",
+   "list_row": "Rehabilitacja:189",
+   "list_code": "LILY",
+   "list_net_minor": 4500,
+   "vat": 8,
+   "net_minor": 4950,
+   "gross_minor": 5346,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1250",
+   "sku": "SensorTIM",
+   "name": "Dysk sensoryczny - SensorTIM",
+   "list_row": "Rehabilitacja:188",
+   "list_code": "SensorTIM",
+   "list_net_minor": 2350,
+   "vat": 8,
+   "net_minor": 2585,
+   "gross_minor": 2792,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1239",
+   "sku": "GripTim",
+   "name": "Poręcz przyłóżkowa - GripTim",
+   "list_row": "Rehabilitacja:293",
+   "list_code": "GRIP-TIM",
+   "list_net_minor": 9900,
+   "vat": 8,
+   "net_minor": 10890,
+   "gross_minor": 11761,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1138",
+   "sku": "BallTim",
+   "name": "Piłka rehabilitacyjna z pompką - BallTim",
+   "list_row": "Rehabilitacja:172",
+   "list_code": "BallTIM",
+   "list_net_minor": 900,
+   "vat": 8,
+   "net_minor": 990,
+   "gross_minor": 1069,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1135",
+   "sku": "AQD-C004-RE",
+   "name": "Kijki trekkingowe, kolor czerwony",
+   "list_row": "Rehabilitacja:163",
+   "list_code": "AQD-C004",
+   "list_net_minor": 4000,
+   "vat": 23,
+   "net_minor": 4400,
+   "gross_minor": 5412,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1134",
+   "sku": "AQD-C004-BL",
+   "name": "Kijki trekkingowe, kolor niebieski",
+   "list_row": "Rehabilitacja:163",
+   "list_code": "AQD-C004",
+   "list_net_minor": 4000,
+   "vat": 23,
+   "net_minor": 4400,
+   "gross_minor": 5412,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1093",
+   "sku": "BackTim",
+   "name": "Podpórka pod plecy z podłokietnikami - BackTim",
+   "list_row": "Rehabilitacja:234",
+   "list_code": "BACK-TIM",
+   "list_net_minor": 9290,
+   "vat": 8,
+   "net_minor": 10219,
+   "gross_minor": 11037,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1091",
+   "sku": "STAND-TIM",
+   "name": "Stojak na kroplówki z kółkami, składany, 4 zaczepy - STAND-TIM",
+   "list_row": "Rehabilitacja:295",
+   "list_code": "STAND-TIM",
+   "list_net_minor": 11900,
+   "vat": 8,
+   "net_minor": 13090,
+   "gross_minor": 14137,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1058",
+   "sku": "WB-ICP-100 NW",
+   "name": "SUCHY LÓD, włóknina - 100 g",
+   "list_row": "Rehabilitacja:167",
+   "list_code": "WB-ICP-100 NW",
+   "list_net_minor": 90,
+   "vat": 8,
+   "net_minor": 99,
+   "gross_minor": 107,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1026",
+   "sku": "DualTIM",
+   "name": "Rotor rehabilitacyjny - DualTIM",
+   "list_row": "Rehabilitacja:160",
+   "list_code": "DUALTIM",
+   "list_net_minor": 9490,
+   "vat": 8,
+   "net_minor": 10439,
+   "gross_minor": 11274,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1024",
+   "sku": "TempoTIM Plus",
+   "name": "Rotor rehabilitacyjny - TempoTIM Plus",
+   "list_row": "Rehabilitacja:162",
+   "list_code": "TEMPOTIM PLUS",
+   "list_net_minor": 7790,
+   "vat": 8,
+   "net_minor": 8569,
+   "gross_minor": 9255,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1023",
+   "sku": "TempoTIM",
+   "name": "Rotor rehabilitacyjny - TempoTIM",
+   "list_row": "Rehabilitacja:161",
+   "list_code": "TEMPOTIM",
+   "list_net_minor": 6490,
+   "vat": 8,
+   "net_minor": 7139,
+   "gross_minor": 7710,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "981",
+   "sku": "yellowBALANCE pods",
+   "name": "yellowBALANCE pods - półkule sensomotoryczne",
+   "list_row": "Rehabilitacja:190",
+   "list_code": "yellowBALANCE pods",
+   "list_net_minor": 2000,
+   "vat": 23,
+   "net_minor": 2200,
+   "gross_minor": 2706,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "980",
+   "sku": "YGB-BL",
+   "name": "Piłka rehabilitacyjna yellowGYM ball 45 cm, niebieska",
+   "list_row": "Rehabilitacja:192",
+   "list_code": "yellowGYM ball",
+   "list_net_minor": 2250,
+   "vat": 8,
+   "net_minor": 2475,
+   "gross_minor": 2673,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "979",
+   "sku": "YGB-RE",
+   "name": "Piłka rehabilitacyjna yellowGYM ball 55 cm, czerwona",
+   "list_row": "Rehabilitacja:193",
+   "list_code": "yellowGYM ball",
+   "list_net_minor": 2900,
+   "vat": 8,
+   "net_minor": 3190,
+   "gross_minor": 3445,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "903",
+   "sku": "yelloROLLER",
+   "name": "yellowROLLER wałek do masażu 33 cm EVA, czarny - yellowSPORT",
+   "list_row": "Rehabilitacja:195",
+   "list_code": "ROLLER",
+   "list_net_minor": 1990,
+   "vat": 8,
+   "net_minor": 2189,
+   "gross_minor": 2364,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "902",
+   "sku": "YM-X",
+   "name": "Mata do ćwiczeń yellowMAT 1,5cm czarna - yellowSPORT",
+   "list_row": "Rehabilitacja:196",
+   "list_code": "yellowMAT",
+   "list_net_minor": 4380,
+   "vat": 23,
+   "net_minor": 4818,
+   "gross_minor": 5926,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "7000",
+   "sku": "JMC-C 7000",
+   "name": "Podpórka pod plecy - JMC-C 7000",
+   "list_row": "Rehabilitacja:235",
+   "list_code": "JMC-C 7000",
+   "list_net_minor": 7900,
+   "vat": 8,
+   "net_minor": 8690,
+   "gross_minor": 9385,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "732",
+   "sku": "YFB-X",
+   "name": "Taśma do ćwiczeń yellowFLAT band czarny (opór 12-15kg)",
+   "list_row": "Rehabilitacja:182",
+   "list_code": "yellowFlat",
+   "list_net_minor": 1530,
+   "vat": 8,
+   "net_minor": 1683,
+   "gross_minor": 1818,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "726",
+   "sku": "yellowDISK",
+   "name": "yellowDISK - poduszka sensomotoryczna",
+   "list_row": "Rehabilitacja:187",
+   "list_code": "yellowDisk",
+   "list_net_minor": 2700,
+   "vat": 23,
+   "net_minor": 2970,
+   "gross_minor": 3653,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "725",
+   "sku": "YGB-Y",
+   "name": "Piłka rehabilitacyjna yellowGYM ball 75 cm, żółta",
+   "list_row": "Rehabilitacja:191",
+   "list_code": "yellowGYM ball",
+   "list_net_minor": 3500,
+   "vat": 8,
+   "net_minor": 3850,
+   "gross_minor": 4158,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "380",
+   "sku": "AQD-C004-BK",
+   "name": "Kijki trekkingowe, kolor czarny",
+   "list_row": "Rehabilitacja:163",
+   "list_code": "AQD-C004",
+   "list_net_minor": 4000,
+   "vat": 23,
+   "net_minor": 4400,
+   "gross_minor": 5412,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1293",
+   "sku": "PrimeTim",
+   "name": "Laska inwalidzka aluminiowa składana, zielona - PrimeTim",
+   "list_row": "Rehabilitacja:108",
+   "list_code": "PrimeTim",
+   "list_net_minor": 3800,
+   "vat": 8,
+   "net_minor": 4180,
+   "gross_minor": 4514,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1292",
+   "sku": "DuoStep",
+   "name": "Czwórnóg do pokonywania stopni - DuoStep",
+   "list_row": "Rehabilitacja:87",
+   "list_code": "DUOSTEP",
+   "list_net_minor": 5500,
+   "vat": 8,
+   "net_minor": 6050,
+   "gross_minor": 6534,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1289",
+   "sku": "ELEGANT",
+   "name": "Laska aluminiowa regulowana ELEGANT – czarna",
+   "list_row": "Rehabilitacja:109",
+   "list_code": "ELEGANT",
+   "list_net_minor": 2750,
+   "vat": 8,
+   "net_minor": 3025,
+   "gross_minor": 3267,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1180",
+   "sku": "ASSIST-TIM",
+   "name": "Kula łokciowa - ASSIST-TIM",
+   "list_row": "Rehabilitacja:103",
+   "list_code": "Assist-Tim",
+   "list_net_minor": 2790,
+   "vat": 8,
+   "net_minor": 3069,
+   "gross_minor": 3315,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1169",
+   "sku": "ELEGANT",
+   "name": "Laska aluminiowa regulowana ELEGANT – srebrno-niebieska",
+   "list_row": "Rehabilitacja:109",
+   "list_code": "ELEGANT",
+   "list_net_minor": 2750,
+   "vat": 8,
+   "net_minor": 3025,
+   "gross_minor": 3267,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1146",
+   "sku": "QUATRO",
+   "name": "Czwórnóg inwalidzki aluminiowy - QUATRO",
+   "list_row": "Rehabilitacja:86",
+   "list_code": "QUATRO",
+   "list_net_minor": 4350,
+   "vat": 8,
+   "net_minor": 4785,
+   "gross_minor": 5168,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1144",
+   "sku": "PrimeTim",
+   "name": "Laska inwalidzka aluminiowa składana, niebieska - PrimeTim",
+   "list_row": "Rehabilitacja:108",
+   "list_code": "PrimeTim",
+   "list_net_minor": 3800,
+   "vat": 8,
+   "net_minor": 4180,
+   "gross_minor": 4514,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1143",
+   "sku": "SeatTim",
+   "name": "Laska inwalidzka regulowana z siedziskiem - SeatTim",
+   "list_row": "Rehabilitacja:107",
+   "list_code": "SeatTim",
+   "list_net_minor": 7000,
+   "vat": 8,
+   "net_minor": 7700,
+   "gross_minor": 8316,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1125",
+   "sku": "HandyTim",
+   "name": "Kula pachowa HandyTim - kolor czarny",
+   "list_row": "Rehabilitacja:104",
+   "list_code": "HANDYTIM",
+   "list_net_minor": 3200,
+   "vat": 8,
+   "net_minor": 3520,
+   "gross_minor": 3802,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1116",
+   "sku": "FlipTim",
+   "name": "Kula łokciowa z podparciem na przedramieniu - FlipTim",
+   "list_row": "Rehabilitacja:101",
+   "list_code": "Flip Tim",
+   "list_net_minor": 8900,
+   "vat": 8,
+   "net_minor": 9790,
+   "gross_minor": 10573,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1098",
+   "sku": "WalkTim",
+   "name": "Kula łokciowa z uchylną obejmą regulowana dwustopniowo - WalkTim",
+   "list_row": "Rehabilitacja:102",
+   "list_code": "Walk-Tim",
+   "list_net_minor": 2400,
+   "vat": 8,
+   "net_minor": 2640,
+   "gross_minor": 2851,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1066",
+   "sku": "CompactTim",
+   "name": "Kula łokciowa składana - CompactTim",
+   "list_row": "Rehabilitacja:100",
+   "list_code": "CompactTim",
+   "list_net_minor": 2990,
+   "vat": 8,
+   "net_minor": 3289,
+   "gross_minor": 3552,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1064",
+   "sku": "HandyTim",
+   "name": "Kula pachowa HandyTim - kolor srebrny",
+   "list_row": "Rehabilitacja:104",
+   "list_code": "HANDYTIM",
+   "list_net_minor": 3200,
+   "vat": 8,
+   "net_minor": 3520,
+   "gross_minor": 3802,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1022",
+   "sku": "TGR-R LA 833L2",
+   "name": "Laska inwalidzka aluminiowa regulowana TGR-R LA 833L2 – brązowa",
+   "list_row": "Rehabilitacja:106",
+   "list_code": "TGR-R LA 833L2",
+   "list_net_minor": 2090,
+   "vat": 8,
+   "net_minor": 2299,
+   "gross_minor": 2483,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "2052",
+   "sku": "JMC-C 2052",
+   "name": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052",
+   "list_row": "Rehabilitacja:110",
+   "list_code": "JMC-C 2052",
+   "list_net_minor": 2400,
+   "vat": 8,
+   "net_minor": 2640,
+   "gross_minor": 2851,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1017",
+   "sku": "ELEGANT",
+   "name": "Laska aluminiowa regulowana ELEGANT – brązowa",
+   "list_row": "Rehabilitacja:109",
+   "list_code": "ELEGANT",
+   "list_net_minor": 2750,
+   "vat": 8,
+   "net_minor": 3025,
+   "gross_minor": 3267,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "700",
+   "sku": "TGR-R LA 853N",
+   "name": "Laska dla niewidomych, składana - model TGR-R LA 853N",
+   "list_row": "Rehabilitacja:105",
+   "list_code": "TGR-R LA 853N",
+   "list_net_minor": 3800,
+   "vat": 8,
+   "net_minor": 4180,
+   "gross_minor": 4514,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "698",
+   "sku": "JMC-C 2052",
+   "name": "Laska inwalidzka aluminiowa, składana - model JMC-C 2052",
+   "list_row": "Rehabilitacja:110",
+   "list_code": "JMC-C 2052",
+   "list_net_minor": 2400,
+   "vat": 8,
+   "net_minor": 2640,
+   "gross_minor": 2851,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "696",
+   "sku": "TGR-R LA 833L2",
+   "name": "Laska inwalidzka aluminiowa regulowana TGR-R LA 833L2 – czarna",
+   "list_row": "Rehabilitacja:106",
+   "list_code": "TGR-R LA 833L2",
+   "list_net_minor": 2090,
+   "vat": 8,
+   "net_minor": 2299,
+   "gross_minor": 2483,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "687",
+   "sku": "JMC-C 2670SL",
+   "name": "Czwórnóg inwalidzki - JMC-C 2670SL",
+   "list_row": "Rehabilitacja:85",
+   "list_code": "JMC-C 2670SL",
+   "list_net_minor": 4190,
+   "vat": 8,
+   "net_minor": 4609,
+   "gross_minor": 4978,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "686",
+   "sku": "JMC-C 2680SL",
+   "name": "Trójnóg inwalidzki - model JMC-C 2680SL",
+   "list_row": "Rehabilitacja:84",
+   "list_code": "JMC-C 2680SL",
+   "list_net_minor": 3800,
+   "vat": 8,
+   "net_minor": 4180,
+   "gross_minor": 4514,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "3",
+   "sku": "JMC-C 2047-1:3",
+   "name": "Kula łokciowa dziecięca - model JMC-C 2047-1:3",
+   "list_row": "Rehabilitacja:97",
+   "list_code": "JMC-C 2047-1",
+   "list_net_minor": 1995,
+   "vat": 8,
+   "net_minor": 2195,
+   "gross_minor": 2371,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1192",
+   "sku": null,
+   "name": "Torba do wózka inwalidzkiego",
+   "list_row": "Rehabilitacja:50",
+   "list_code": "FU-TORBA",
+   "list_net_minor": 2000,
+   "vat": 23,
+   "net_minor": 2200,
+   "gross_minor": 2706,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1170",
+   "sku": "HexTip",
+   "name": "Nasadka gumowa do kul i lasek",
+   "list_row": "Rehabilitacja:302",
+   "list_code": "HEX",
+   "list_net_minor": 1350,
+   "vat": 23,
+   "net_minor": 1485,
+   "gross_minor": 1827,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1177",
+   "sku": null,
+   "name": "Torba na podłokietnik do wózka inwalidzkiego",
+   "list_row": "Rehabilitacja:49",
+   "list_code": "FU-MAŁA TORBA",
+   "list_net_minor": 1000,
+   "vat": 23,
+   "net_minor": 1100,
+   "gross_minor": 1353,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "827",
+   "sku": "Nasadka zimowa",
+   "name": "Zimowa końcówka do kul i lasek inwalidzkich",
+   "list_row": "Rehabilitacja:303",
+   "list_code": "NASADKA ZIMOWA",
+   "list_net_minor": 750,
+   "vat": 23,
+   "net_minor": 825,
+   "gross_minor": 1015,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "819",
+   "sku": "TABLE",
+   "name": "TABLE - Stolik do wózka inwalidzkiego",
+   "list_row": "Rehabilitacja:51",
+   "list_code": "H011 TABLE",
+   "list_net_minor": 5200,
+   "vat": 23,
+   "net_minor": 5720,
+   "gross_minor": 7036,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "824",
+   "sku": "JMC 2731",
+   "name": "Nasadki gumowe do balkoników - 2 sztuki",
+   "list_row": "Rehabilitacja:301",
+   "list_code": "NASADKA",
+   "list_net_minor": 710,
+   "vat": 23,
+   "net_minor": 781,
+   "gross_minor": 961,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "822",
+   "sku": "JMC 2906",
+   "name": "Nasadki gumowe do trójnogów i czwórnogów na wysokich nogach - 4 sztuki",
+   "list_row": "Rehabilitacja:300",
+   "list_code": "NASADKA",
+   "list_net_minor": 710,
+   "vat": 23,
+   "net_minor": 781,
+   "gross_minor": 961,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "2905",
+   "sku": "-",
+   "name": "Nasadki gumowe do lasek inwalidzkich - 2 sztuki",
+   "list_row": "Rehabilitacja:299",
+   "list_code": "NASADKA",
+   "list_net_minor": 510,
+   "vat": 23,
+   "net_minor": 561,
+   "gross_minor": 690,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "2013",
+   "sku": "JMC-2013",
+   "name": "Nasadki gumowe do kul inwalidzkich - 2 sztuki",
+   "list_row": "Rehabilitacja:298",
+   "list_code": "JMC 2013",
+   "list_net_minor": 710,
+   "vat": 23,
+   "net_minor": 781,
+   "gross_minor": 961,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1298",
+   "sku": "HandyGrip",
+   "name": "Poręcz przyłożkowa - HandyGrip",
+   "list_row": "Rehabilitacja:294",
+   "list_code": "HANDYGRIP",
+   "list_net_minor": 7900,
+   "vat": 8,
+   "net_minor": 8690,
+   "gross_minor": 9385,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1247",
+   "sku": null,
+   "name": "Podkładka podwyższająca pod meble",
+   "list_row": "Rehabilitacja:296",
+   "list_code": "FU-PODKŁADKA",
+   "list_net_minor": 4000,
+   "vat": 23,
+   "net_minor": 4400,
+   "gross_minor": 5412,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1090",
+   "sku": "DREAM-TIM MAX",
+   "name": "Łóżko rehabilitacyjne sterowane elektrycznie (wersja bariatryczna) - DREAM-TIM MAX",
+   "list_row": "Łóżka rehabilitacyjne:9",
+   "list_code": "DREAM TIM MAX",
+   "list_net_minor": 499900,
+   "vat": 8,
+   "net_minor": 549890,
+   "gross_minor": 593881,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1140",
+   "sku": "TableTIM Multi",
+   "name": "Stolik przyłóżkowy - TableTIM Multi",
+   "list_row": "Rehabilitacja:291",
+   "list_code": "TABLE-TIM MULTI",
+   "list_net_minor": 22000,
+   "vat": 8,
+   "net_minor": 24200,
+   "gross_minor": 26136,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1123",
+   "sku": "DREAM-TIM MAX LOW",
+   "name": "Łóżko rehabilitacyjne niskie sterowane elektrycznie (wersja bariatryczna) - DREAM-TIM MAX LOW",
+   "list_row": "Łóżka rehabilitacyjne:10",
+   "list_code": "DREAM TIM MAX LOW",
+   "list_net_minor": 525500,
+   "vat": 8,
+   "net_minor": 578050,
+   "gross_minor": 624294,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1030",
+   "sku": "DREAM-TIM",
+   "name": "Łóżko rehabilitacyjne sterowane elektrycznie - DREAM-TIM - Dąb Sonoma",
+   "list_row": "Łóżka rehabilitacyjne:6",
+   "list_code": "DREAM TIM/ DREAM TIM PLUS",
+   "list_net_minor": 248000,
+   "vat": 8,
+   "net_minor": 272800,
+   "gross_minor": 294624,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "722",
+   "sku": "DREAM-TIM / DREAM-TIM PLUS",
+   "name": "Łóżko rehabilitacyjne sterowane elektrycznie - DREAM-TIM - Buk",
+   "list_row": "Łóżka rehabilitacyjne:6",
+   "list_code": "DREAM TIM/ DREAM TIM PLUS",
+   "list_net_minor": 248000,
+   "vat": 8,
+   "net_minor": 272800,
+   "gross_minor": 294624,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1016",
+   "sku": "DREAM-TIM LOW",
+   "name": "Łóżko rehabilitacyjne niskie sterowane elektrycznie - DREAM-TIM LOW",
+   "list_row": "Łóżka rehabilitacyjne:7",
+   "list_code": "DREAM TIM LOW",
+   "list_net_minor": 258000,
+   "vat": 8,
+   "net_minor": 283800,
+   "gross_minor": 306504,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1019",
+   "sku": "TableTIM",
+   "name": "Stolik przyłóżkowy TableTIM",
+   "list_row": "Rehabilitacja:292",
+   "list_code": "TABLE-TIM",
+   "list_net_minor": 11900,
+   "vat": 8,
+   "net_minor": 13090,
+   "gross_minor": 14137,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1133",
+   "sku": "RELAX",
+   "name": "Pionizujący fotel geriatryczny - RELAX",
+   "list_row": "Rehabilitacja:238",
+   "list_code": "RELAX",
+   "list_net_minor": 135000,
+   "vat": 8,
+   "net_minor": 148500,
+   "gross_minor": 160380,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "377",
+   "sku": "TGR-R KP-O 5021",
+   "name": "Taboret prysznicowy TGR-R KP-O 5021 obrotowy z systemem TF ułatwiającym montaż",
+   "list_row": "Rehabilitacja:141",
+   "list_code": "TGR-R KP-O 5021",
+   "list_net_minor": 8090,
+   "vat": 8,
+   "net_minor": 8899,
+   "gross_minor": 9611,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "548",
+   "sku": "KING-15L-20",
+   "name": "Nasadka toaletowa z klapą",
+   "list_row": "Rehabilitacja:124",
+   "list_code": "LM-KING-15L-20",
+   "list_net_minor": 7200,
+   "vat": 8,
+   "net_minor": 7920,
+   "gross_minor": 8554,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "618",
+   "sku": "TGR-R KT 618",
+   "name": "Krzesło toaletowe składane z szybkozłączkami TGR-R KT 618",
+   "list_row": "Rehabilitacja:117",
+   "list_code": "TGR-R KT 618",
+   "list_net_minor": 11500,
+   "vat": 8,
+   "net_minor": 12650,
+   "gross_minor": 13662,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1299",
+   "sku": "YF-06",
+   "name": "Maska ustnopodnosowa do aparatu CPAP - YF-06",
+   "list_row": "Elektromedycyna:30",
+   "list_code": "YF-06",
+   "list_net_minor": 19900,
+   "vat": 8,
+   "net_minor": 21890,
+   "gross_minor": 23641,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "10",
+   "sku": "8F-10",
+   "name": "Koncentrator tlenu z czujnikiem stężenia - 8F-10",
+   "list_row": "Elektromedycyna:7",
+   "list_code": "8F-10",
+   "list_net_minor": 359000,
+   "vat": 8,
+   "net_minor": 394900,
+   "gross_minor": 426492,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "465",
+   "sku": "8F-5A",
+   "name": "Koncentrator tlenu - model 8F-5A",
+   "list_row": "Elektromedycyna:6",
+   "list_code": "8F-5A",
+   "list_net_minor": 199000,
+   "vat": 8,
+   "net_minor": 218900,
+   "gross_minor": 236412,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "850",
+   "sku": "M102",
+   "name": "Inhalator siateczkowy do nebulizacji - Timago",
+   "list_row": "Elektromedycyna:18",
+   "list_code": "M102",
+   "list_net_minor": 10900,
+   "vat": 8,
+   "net_minor": 11990,
+   "gross_minor": 12949,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "467",
+   "sku": "405B",
+   "name": "Inhalator do nebulizacji kompresyjny - model 405B",
+   "list_row": "Elektromedycyna:17",
+   "list_code": "405B",
+   "list_net_minor": 8700,
+   "vat": 8,
+   "net_minor": 9570,
+   "gross_minor": 10336,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "830",
+   "sku": "YH-830",
+   "name": "Aparat BiPAP do leczenia bezdechu obturacyjnego Bi-Level - YH-830",
+   "list_row": "Elektromedycyna:27",
+   "list_code": "YH-830",
+   "list_net_minor": 231000,
+   "vat": 8,
+   "net_minor": 254100,
+   "gross_minor": 274428,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1028",
+   "sku": "YN-03",
+   "name": "Maska nosowa do aparatu CPAP bez wspornika czołowego - YUWELL",
+   "list_row": "Elektromedycyna:29",
+   "list_code": "YN-03",
+   "list_net_minor": 12963,
+   "vat": 8,
+   "net_minor": 14259,
+   "gross_minor": 15400,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1015",
+   "sku": "YH-480",
+   "name": "Aparat do leczenia bezdechu sennego AUTO CPAP z podgrzewaną rurą oraz funkcją Wi-Fi",
+   "list_row": "Elektromedycyna:25",
+   "list_code": "YH-480",
+   "list_net_minor": 197000,
+   "vat": 8,
+   "net_minor": 216700,
+   "gross_minor": 234036,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "966",
+   "sku": "YH-550",
+   "name": "Aparat do leczenia bezdechu sennego AUTO CPAP z wbudowanym podgrzewanym nawilżaczem",
+   "list_row": "Elektromedycyna:24",
+   "list_code": "YH-550",
+   "list_net_minor": 133333,
+   "vat": 8,
+   "net_minor": 146666,
+   "gross_minor": 158399,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1295",
+   "sku": "7E-H1",
+   "name": "Ssak elektryczny - 7E-H1",
+   "list_row": "Elektromedycyna:10",
+   "list_code": "7E-H1",
+   "list_net_minor": 38500,
+   "vat": 8,
+   "net_minor": 42350,
+   "gross_minor": 45738,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1294",
+   "sku": "7E-G1",
+   "name": "Ssak elektryczny przenośny - 7E-G1",
+   "list_row": "Elektromedycyna:11",
+   "list_code": "7E-G1",
+   "list_net_minor": 65900,
+   "vat": 8,
+   "net_minor": 72490,
+   "gross_minor": 78289,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1272",
+   "sku": "SLEEP BUDDY",
+   "name": "Poduszka do spania na boku/CPAP - SLEEP BUDDY",
+   "list_row": "Rehabilitacja:206",
+   "list_code": "SLEEP BUDDY",
+   "list_net_minor": 8900,
+   "vat": 8,
+   "net_minor": 9790,
+   "gross_minor": 10573,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "843",
+   "sku": "SDP-330",
+   "name": "Elektrostymulator TENS - aparat przeciwbólowy - YUWELL",
+   "list_row": "Elektromedycyna:35",
+   "list_code": "SDP-330",
+   "list_net_minor": 12000,
+   "vat": 8,
+   "net_minor": 13200,
+   "gross_minor": 14256,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "965",
+   "sku": "7B-1",
+   "name": "Ssak ręczny typu pistoletowego",
+   "list_row": "Elektromedycyna:13",
+   "list_code": "7B-1",
+   "list_net_minor": 7900,
+   "vat": 8,
+   "net_minor": 8690,
+   "gross_minor": 9385,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "715",
+   "sku": "7A-23D",
+   "name": "Ssak elektryczny przejezdny",
+   "list_row": "Elektromedycyna:12",
+   "list_code": "7A-23D",
+   "list_net_minor": 60000,
+   "vat": 8,
+   "net_minor": 66000,
+   "gross_minor": 71280,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1162",
+   "sku": "YE8300B",
+   "name": "Ciśnieniomierz nadgarstkowy",
+   "list_row": "Elektromedycyna:21",
+   "list_code": "YE8300B",
+   "list_net_minor": 5200,
+   "vat": 8,
+   "net_minor": 5720,
+   "gross_minor": 6178,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1103",
+   "sku": "YE660D",
+   "name": "Ciśnieniomierz naramienny YE660D - Timago",
+   "list_row": "Elektromedycyna:20",
+   "list_code": "YE-660D",
+   "list_net_minor": 6490,
+   "vat": 8,
+   "net_minor": 7139,
+   "gross_minor": 7710,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "651",
+   "sku": "3.02.008",
+   "name": "Ciśnieniomierz zegarowy ze stetoskopem - YUWELL",
+   "list_row": "Elektromedycyna:22",
+   "list_code": "3.02.008",
+   "list_net_minor": 3900,
+   "vat": 8,
+   "net_minor": 4290,
+   "gross_minor": 4633,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1101",
+   "sku": "YHT101",
+   "name": "Termometr do ucha",
+   "list_row": "Elektromedycyna:33",
+   "list_code": "YHT-101",
+   "list_net_minor": 5400,
+   "vat": 8,
+   "net_minor": 5940,
+   "gross_minor": 6415,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "669",
+   "sku": "YT-1",
+   "name": "Termometr bezdotykowy - Timago",
+   "list_row": "Elektromedycyna:32",
+   "list_code": "YT-1",
+   "list_net_minor": 5900,
+   "vat": 8,
+   "net_minor": 6490,
+   "gross_minor": 7009,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "947",
+   "sku": "BM1000C",
+   "name": "Pulsoksymetr napalcowy z funkcją Bluetooth BERRY BM1000C",
+   "list_row": "Elektromedycyna:15",
+   "list_code": "BM 1000C",
+   "list_net_minor": 4900,
+   "vat": 8,
+   "net_minor": 5390,
+   "gross_minor": 5821,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1273",
+   "sku": "TRAVEL SNAIL",
+   "name": "Poduszka ortopedyczna - TRAVEL SNAIL",
+   "list_row": "Rehabilitacja:210",
+   "list_code": "TRAVEL SNAIL",
+   "list_net_minor": 3300,
+   "vat": 8,
+   "net_minor": 3630,
+   "gross_minor": 3920,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1155",
+   "sku": "MAGIC DREAM",
+   "name": "Poduszka ortopedyczna do spania - MAGIC DREAM",
+   "list_row": "Rehabilitacja:209",
+   "list_code": "MAGIC DREAM",
+   "list_net_minor": 7400,
+   "vat": 8,
+   "net_minor": 8140,
+   "gross_minor": 8791,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1054",
+   "sku": "CPAP DREAM",
+   "name": "Poduszka ortopedyczna do terapii bezdechu sennego - CPAP DREAM",
+   "list_row": "Rehabilitacja:207",
+   "list_code": "CPAP DREAM",
+   "list_net_minor": 8500,
+   "vat": 8,
+   "net_minor": 9350,
+   "gross_minor": 10098,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1056",
+   "sku": "SPACER",
+   "name": "Poduszka ortopedyczna dwuczęściowa kończyn dolnych - SPACER",
+   "list_row": "Rehabilitacja:208",
+   "list_code": "SPACER",
+   "list_net_minor": 4980,
+   "vat": 8,
+   "net_minor": 5478,
+   "gross_minor": 5916,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1055",
+   "sku": "ORTO DREAM",
+   "name": "PODUSZKA ORTOPEDYCZNA - ORTO DREAM",
+   "list_row": "Rehabilitacja:205",
+   "list_code": "ORTO DREAM",
+   "list_net_minor": 7600,
+   "vat": 8,
+   "net_minor": 8360,
+   "gross_minor": 9029,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "978",
+   "sku": "yellowMASSAGE DuoBall",
+   "name": "yellowMASSAGE DuoBall - podwójna silikonowa piłeczka do masażu",
+   "list_row": "Rehabilitacja:199",
+   "list_code": "yellowMASSAGE DuoBall",
+   "list_net_minor": 2400,
+   "vat": 8,
+   "net_minor": 2640,
+   "gross_minor": 2851,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "933",
+   "sku": "YGB-X",
+   "name": "Piłka rehabilitacyjna yellowGYM ball 65 cm, czarna",
+   "list_row": "Rehabilitacja:194",
+   "list_code": "yellowGYM ball",
+   "list_net_minor": 3260,
+   "vat": 8,
+   "net_minor": 3586,
+   "gross_minor": 3873,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "934",
+   "sku": "YMB-65-S-X",
+   "name": "yellowMASSAGE Ball silikonowa piłeczka do masażu, czarna",
+   "list_row": "Rehabilitacja:198",
+   "list_code": "yellowMASSAGE Ball",
+   "list_net_minor": 1500,
+   "vat": 23,
+   "net_minor": 1650,
+   "gross_minor": 2030,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "932",
+   "sku": "YMB-8-EPP-XY",
+   "name": "yellowMASSAGE Ball piłeczka do masażu EPP, czarno-żółta",
+   "list_row": "Rehabilitacja:197",
+   "list_code": "yellowMASSAGE Ball",
+   "list_net_minor": 1500,
+   "vat": 8,
+   "net_minor": 1650,
+   "gross_minor": 1782,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "728",
+   "sku": "yellowFLAT",
+   "name": "Taśma do ćwiczeń zielona yellowFLAT band zielona (opór 5-8kg)",
+   "list_row": "Rehabilitacja:180",
+   "list_code": "yellowFlat",
+   "list_net_minor": 1610,
+   "vat": 8,
+   "net_minor": 1771,
+   "gross_minor": 1913,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "730",
+   "sku": "yellowLOOP",
+   "name": "Taśma do ćwiczeń yellowLOOP band żółty (5-10kg)",
+   "list_row": "Rehabilitacja:184",
+   "list_code": "yellowLOOP band",
+   "list_net_minor": 590,
+   "vat": 8,
+   "net_minor": 649,
+   "gross_minor": 701,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "733",
+   "sku": "yellowLOOP",
+   "name": "Taśma do ćwiczeń yellowLOOP band zielony (10-15kg)",
+   "list_row": "Rehabilitacja:185",
+   "list_code": "yellowLOOP band",
+   "list_net_minor": 590,
+   "vat": 8,
+   "net_minor": 649,
+   "gross_minor": 701,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "729",
+   "sku": "yellowLOOP",
+   "name": "Taśma do ćwiczeń yellowLOOP band niebieski (1-5kg)",
+   "list_row": "Rehabilitacja:183",
+   "list_code": "yellowLOOP band",
+   "list_net_minor": 590,
+   "vat": 8,
+   "net_minor": 649,
+   "gross_minor": 701,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "727",
+   "sku": "yellowLOOP",
+   "name": "Taśma do ćwiczeń yellowLOOP band czarny (15-20kg)",
+   "list_row": "Rehabilitacja:186",
+   "list_code": "yellowLOOP band",
+   "list_net_minor": 590,
+   "vat": 8,
+   "net_minor": 649,
+   "gross_minor": 701,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "734",
+   "sku": "yellowFLAT",
+   "name": "Taśma do ćwiczeń yellowFLAT band żółta (opór 1-2 kg)",
+   "list_row": "Rehabilitacja:178",
+   "list_code": "yellowFlat",
+   "list_net_minor": 1320,
+   "vat": 8,
+   "net_minor": 1452,
+   "gross_minor": 1568,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "735",
+   "sku": "yellowFLAT",
+   "name": "Taśma do ćwiczeń yellowFLAT band niebieska (opór 9-11kg)",
+   "list_row": "Rehabilitacja:181",
+   "list_code": "yellowFlat",
+   "list_net_minor": 1780,
+   "vat": 8,
+   "net_minor": 1958,
+   "gross_minor": 2115,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "731",
+   "sku": "yellowFLAT",
+   "name": "Taśma do ćwiczeń yellowFLAT band czerwona (opór 2-4 kg)",
+   "list_row": "Rehabilitacja:179",
+   "list_code": "yellowFlat",
+   "list_net_minor": 1400,
+   "vat": 8,
+   "net_minor": 1540,
+   "gross_minor": 1663,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1106",
+   "sku": "ManuTim Long",
+   "name": "Długi stabilizator stawu nadgarstkowego - ManuTim Long",
+   "list_row": "Ortotyka:22",
+   "list_code": "ManuTim Long",
+   "list_net_minor": 5500,
+   "vat": 8,
+   "net_minor": 6050,
+   "gross_minor": 6534,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1094",
+   "sku": "Sky-Walker Low",
+   "name": "But marszowy ze stabilizacją pneumatyczną - Sky-Walker Low",
+   "list_row": "Ortotyka:55",
+   "list_code": "SKY WALKER LOW",
+   "list_net_minor": 9900,
+   "vat": 8,
+   "net_minor": 10890,
+   "gross_minor": 11761,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1074",
+   "sku": "Sky-Walker",
+   "name": "But marszowy ze stabilizacją pneumatyczną - Sky-Walker",
+   "list_row": "Ortotyka:56",
+   "list_code": "SKY WALKER",
+   "list_net_minor": 10400,
+   "vat": 8,
+   "net_minor": 11440,
+   "gross_minor": 12355,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1072",
+   "sku": "GenuStrap",
+   "name": "Orteza stawu kolanowego - GenuStrap",
+   "list_row": "Ortotyka:43",
+   "list_code": "GENU-STRAP",
+   "list_net_minor": 3900,
+   "vat": 8,
+   "net_minor": 4290,
+   "gross_minor": 4633,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1071",
+   "sku": "Pro-Walker Low",
+   "name": "Dwukomorowa krótka orteza sztywna na goleń i stopę - Pro-Walker Low",
+   "list_row": "Ortotyka:57",
+   "list_code": "PRO WLAKER LOW",
+   "list_net_minor": 15900,
+   "vat": 8,
+   "net_minor": 17490,
+   "gross_minor": 18889,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1040",
+   "sku": "MalleoTim Lite",
+   "name": "Orteza stawu skokowego MalleoTim Lite",
+   "list_row": "Ortotyka:54",
+   "list_code": "MalleoTimLite",
+   "list_net_minor": 4200,
+   "vat": 8,
+   "net_minor": 4620,
+   "gross_minor": 4990,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "89",
+   "sku": "TGO-C KF 106",
+   "name": "Kołnierz półsztywny typu FLORIDA",
+   "list_row": "Ortotyka:7",
+   "list_code": "TGO-C KF 106",
+   "list_net_minor": 2800,
+   "vat": 8,
+   "net_minor": 3080,
+   "gross_minor": 3326,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "88",
+   "sku": "TGO-C KS 101",
+   "name": "Kołnierz miękki typu SCHANTZA",
+   "list_row": "Ortotyka:6",
+   "list_code": "TGO-C KS 101",
+   "list_net_minor": 1590,
+   "vat": 8,
+   "net_minor": 1749,
+   "gross_minor": 1889,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "90",
+   "sku": "TGO-C KPH-O 103",
+   "name": "Kołnierz stabilizujący typu Philadelphia z otworem tracheostomijnym",
+   "list_row": "Ortotyka:8",
+   "list_code": "TGO-C KPH-O 103",
+   "list_net_minor": 4200,
+   "vat": 8,
+   "net_minor": 4620,
+   "gross_minor": 4990,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "96",
+   "sku": "TGO-C OB 306",
+   "name": "Aparat odwodzący kończyny górnej",
+   "list_row": "Ortotyka:12",
+   "list_code": "TGO-C OB 306",
+   "list_net_minor": 10900,
+   "vat": 8,
+   "net_minor": 11990,
+   "gross_minor": 12949,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "95",
+   "sku": "TGO-C OB 305",
+   "name": "Kamizelka na bark i ramię",
+   "list_row": "Ortotyka:11",
+   "list_code": "TGO-C OB 305",
+   "list_net_minor": 6900,
+   "vat": 8,
+   "net_minor": 7590,
+   "gross_minor": 8197,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "94",
+   "sku": "TGO-C OB 304",
+   "name": "Temblak kończyny górnej",
+   "list_row": "Ortotyka:18",
+   "list_code": "TGO-C OB 304",
+   "list_net_minor": 2200,
+   "vat": 8,
+   "net_minor": 2420,
+   "gross_minor": 2614,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1009",
+   "sku": "ManuTim",
+   "name": "Stabilizator stawu nadgarstkowego ManuTim",
+   "list_row": "Ortotyka:21",
+   "list_code": "ManuTim",
+   "list_net_minor": 3800,
+   "vat": 8,
+   "net_minor": 4180,
+   "gross_minor": 4514,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "98",
+   "sku": "TGO-C SN-K 403",
+   "name": "Stabilizator stawu nadgarstkowego z ujęciem kciuka - model TGO-C SN-K 403",
+   "list_row": "Ortotyka:20",
+   "list_code": "TGO-C SN-K 403",
+   "list_net_minor": 6900,
+   "vat": 8,
+   "net_minor": 7590,
+   "gross_minor": 8197,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "402",
+   "sku": "TGO-C SN 402",
+   "name": "Stabilizator stawu nadgarstkowego - model TGO-C SN 402",
+   "list_row": "Ortotyka:19",
+   "list_code": "TGO-C SN 402",
+   "list_net_minor": 5490,
+   "vat": 8,
+   "net_minor": 6039,
+   "gross_minor": 6522,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1031",
+   "sku": "TGO-V AP SK-O 510",
+   "name": "Aparat szynowo - opaskowy na goleń i udo, niebieski",
+   "list_row": "Ortotyka:41",
+   "list_code": "TGO-V AP SK-O 510",
+   "list_net_minor": 14900,
+   "vat": 8,
+   "net_minor": 16390,
+   "gross_minor": 17701,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "761",
+   "sku": "TGO-C SK-O 504",
+   "name": "Stabilizator stawu kolanowego z szynami otwarty - model 504",
+   "list_row": "Ortotyka:46",
+   "list_code": "TGO-C SK-O 504",
+   "list_net_minor": 12500,
+   "vat": 8,
+   "net_minor": 13750,
+   "gross_minor": 14850,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1011",
+   "sku": "MalleoTim",
+   "name": "Orteza stawu skokowego MalleoTim",
+   "list_row": "Ortotyka:53",
+   "list_code": "MalleoTIM",
+   "list_net_minor": 7800,
+   "vat": 8,
+   "net_minor": 8580,
+   "gross_minor": 9266,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "759",
+   "sku": "TGO-C STS 602",
+   "name": "Orteza stabilizująca staw skokowy z wzmocnieniami - model 602",
+   "list_row": "Ortotyka:50",
+   "list_code": "TGO-C STS 602",
+   "list_net_minor": 4990,
+   "vat": 8,
+   "net_minor": 5489,
+   "gross_minor": 5928,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "758",
+   "sku": "TGO-C STS 603",
+   "name": "Tutor unieruchamiający staw skokowy - model 603",
+   "list_row": "Ortotyka:51",
+   "list_code": "TGO-C STS 603",
+   "list_net_minor": 7900,
+   "vat": 8,
+   "net_minor": 8690,
+   "gross_minor": 9385,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1013",
+   "sku": "LumboTim Plus",
+   "name": "Wysoki gorset piersiowo-lędźwiowo-krzyżowy LumboTim Plus",
+   "list_row": "Ortotyka:31",
+   "list_code": "LumboTim Plus",
+   "list_net_minor": 14200,
+   "vat": 8,
+   "net_minor": 15620,
+   "gross_minor": 16870,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1012",
+   "sku": "LumboTim",
+   "name": "Gorset stabilizująco-unieruchamiający z pasami dociągowymi LumboTim",
+   "list_row": "Ortotyka:30",
+   "list_code": "LumboTim",
+   "list_net_minor": 10900,
+   "vat": 8,
+   "net_minor": 11990,
+   "gross_minor": 12949,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "756",
+   "sku": "TGO-R SLK 701",
+   "name": "Gorset stabilizująco-unieruchamiający - model TGO-R SLK 701",
+   "list_row": "Ortotyka:26",
+   "list_code": "TGO-R SLK 701",
+   "list_net_minor": 6500,
+   "vat": 8,
+   "net_minor": 7150,
+   "gross_minor": 7722,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "755",
+   "sku": "TGO-R SLK 702",
+   "name": "Gorset stabilizująco-unieruchamiający z pasami dociągowymi - model TGO-R SLK 702",
+   "list_row": "Ortotyka:27",
+   "list_code": "TGO-R SLK 702",
+   "list_net_minor": 8500,
+   "vat": 8,
+   "net_minor": 9350,
+   "gross_minor": 10098,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "753",
+   "sku": "TGO-R WSLK-R 704",
+   "name": "Wysoka orteza (gorset) piersiowo-lędźwiowo-krzyżowa regulowana - model TGO-R WSLK-R 704",
+   "list_row": "Ortotyka:29",
+   "list_code": "TGO-R WSLK-R 704",
+   "list_net_minor": 13500,
+   "vat": 8,
+   "net_minor": 14850,
+   "gross_minor": 16038,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "751",
+   "sku": "TGO-C SL 903",
+   "name": "Opaska na łokieć tenisisty",
+   "list_row": "Ortotyka:14",
+   "list_code": "TGO-C SL 903",
+   "list_net_minor": 3850,
+   "vat": 8,
+   "net_minor": 4235,
+   "gross_minor": 4574,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "750",
+   "sku": "TGO-C SR 516",
+   "name": "Opaska stabilizująca rzepkę",
+   "list_row": "Ortotyka:44",
+   "list_code": "TGO-C SR 516",
+   "list_net_minor": 3550,
+   "vat": 8,
+   "net_minor": 3905,
+   "gross_minor": 4217,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "01",
+   "sku": "TGO-C OSN 408",
+   "name": "Opaska elastyczna stawu nadgarstkowego",
+   "list_row": "Ortotyka:24",
+   "list_code": "TGO-C OSN 408",
+   "list_net_minor": 1680,
+   "vat": 8,
+   "net_minor": 1848,
+   "gross_minor": 1996,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "749",
+   "sku": "TGO-C OSL 904",
+   "name": "Opaska elastyczna stawu łokciowego",
+   "list_row": "Ortotyka:15",
+   "list_code": "TGO-C OSL 904",
+   "list_net_minor": 1950,
+   "vat": 8,
+   "net_minor": 2145,
+   "gross_minor": 2317,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "803",
+   "sku": "TGO-C OU 803",
+   "name": "Opaska elastyczna na udo - TGO-C OU 803",
+   "list_row": "Ortotyka:39",
+   "list_code": "TGO-C OU 803",
+   "list_net_minor": 1950,
+   "vat": 8,
+   "net_minor": 2145,
+   "gross_minor": 2317,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "747",
+   "sku": "TGO-C OL 802",
+   "name": "Elastyczna opaska na łydkę",
+   "list_row": "Ortotyka:38",
+   "list_code": "TGO-C OL 802",
+   "list_net_minor": 1950,
+   "vat": 8,
+   "net_minor": 2145,
+   "gross_minor": 2317,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "746",
+   "sku": "TGO-C OSS 612",
+   "name": "Opaska elastyczna stawu skokowego",
+   "list_row": "Ortotyka:52",
+   "list_code": "TGO-C OSS 612",
+   "list_net_minor": 2050,
+   "vat": 8,
+   "net_minor": 2255,
+   "gross_minor": 2435,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "745",
+   "sku": "TGO-C OSK 515",
+   "name": "Opaska elastyczna stawu kolanowego",
+   "list_row": "Ortotyka:45",
+   "list_code": "TGO-C OSK 515",
+   "list_net_minor": 2050,
+   "vat": 8,
+   "net_minor": 2255,
+   "gross_minor": 2435,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "744",
+   "sku": "TGO-C OSN 407",
+   "name": "Opaska elastyczna stawu nadgarstkowego",
+   "list_row": "Ortotyka:23",
+   "list_code": "TGO-C OSN 407",
+   "list_net_minor": 3390,
+   "vat": 8,
+   "net_minor": 3729,
+   "gross_minor": 4027,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "765",
+   "sku": "TGO-V AP SL 910",
+   "name": "Orteza readresująca staw łokciowy - model TGO-V AP SL 910",
+   "list_row": "Ortotyka:16",
+   "list_code": "TGO-V AP SL 910",
+   "list_net_minor": 17900,
+   "vat": 8,
+   "net_minor": 19690,
+   "gross_minor": 21265,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1060",
+   "sku": "BUBBLE ROLL",
+   "name": "BUBBLE ROLL - Poduszka do obracania pacjenta",
+   "list_row": "Rehabilitacja:221",
+   "list_code": "BUBBLE ROLL",
+   "list_net_minor": 4990,
+   "vat": 8,
+   "net_minor": 5489,
+   "gross_minor": 5928,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "959",
+   "sku": "SVC 2476XL",
+   "name": "Pas na nadgarstek lub kostkę z metalową sprzączką - model SVC 2476XL",
+   "list_row": "Rehabilitacja:247",
+   "list_code": "SVC 2476 XL",
+   "list_net_minor": 2400,
+   "vat": 8,
+   "net_minor": 2640,
+   "gross_minor": 2851,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "6",
+   "sku": "TMT 6550",
+   "name": "Talerz obrotowy",
+   "list_row": "Rehabilitacja:283",
+   "list_code": "TMT 6550",
+   "list_net_minor": 45000,
+   "vat": 8,
+   "net_minor": 49500,
+   "gross_minor": 53460,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "5",
+   "sku": "TMG 6405",
+   "name": "Deska do przenoszenia chorych z uchwytem",
+   "list_row": "Rehabilitacja:279",
+   "list_code": "TMG 6405",
+   "list_net_minor": 35900,
+   "vat": 8,
+   "net_minor": 39490,
+   "gross_minor": 42649,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "606",
+   "sku": "SCP 4500",
+   "name": "Pas trzymający brzuch",
+   "list_row": "Rehabilitacja:268",
+   "list_code": "SCP 4500",
+   "list_net_minor": 15900,
+   "vat": 8,
+   "net_minor": 17490,
+   "gross_minor": 18889,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "7",
+   "sku": "SCP 4600",
+   "name": "Pas stabilizujący pachwinę",
+   "list_row": "Rehabilitacja:269",
+   "list_code": "SCP 4600",
+   "list_net_minor": 17500,
+   "vat": 8,
+   "net_minor": 19250,
+   "gross_minor": 20790,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "593",
+   "sku": "SVP 2401",
+   "name": "Ochraniacz na łokieć lub pietę - SALVAPAD",
+   "list_row": "Rehabilitacja:242",
+   "list_code": "SVP-2401",
+   "list_net_minor": 2700,
+   "vat": 8,
+   "net_minor": 2970,
+   "gross_minor": 3208,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "594",
+   "sku": "SVP 2402",
+   "name": "Ochraniacz na łokieć lub piętę z dodatkową obejmą - SALVAPAD",
+   "list_row": "Rehabilitacja:243",
+   "list_code": "SVP-2402",
+   "list_net_minor": 4000,
+   "vat": 8,
+   "net_minor": 4400,
+   "gross_minor": 4752,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "595",
+   "sku": "SVP 2412",
+   "name": "Ochraniacze na pięty - SALVAPAD",
+   "list_row": "Rehabilitacja:244",
+   "list_code": "SVP-2412",
+   "list_net_minor": 4000,
+   "vat": 8,
+   "net_minor": 4400,
+   "gross_minor": 4752,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "596",
+   "sku": "SVP 2413",
+   "name": "Ochraniacz na pięty wydłużony na palce u stopy - SALVAPAD",
+   "list_row": "Rehabilitacja:245",
+   "list_code": "SVP-2413",
+   "list_net_minor": 6500,
+   "vat": 8,
+   "net_minor": 7150,
+   "gross_minor": 7722,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1154",
+   "sku": "EASY BATH",
+   "name": "Wanna pneumatyczna do mycia w łożku - EASY BATH",
+   "list_row": "Rehabilitacja:156",
+   "list_code": "EASY BATH",
+   "list_net_minor": 11900,
+   "vat": 8,
+   "net_minor": 13090,
+   "gross_minor": 14137,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1297",
+   "sku": "TH 557/1",
+   "name": "Rehabilitacyjny fotelik samochodowy - RECARO Axion 1 Reha, pomarańczowy",
+   "list_row": "Rehabilitacja dziecięca:177",
+   "list_code": "TH 557",
+   "list_net_minor": 550000,
+   "vat": 5,
+   "net_minor": 605000,
+   "gross_minor": 635250,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1283",
+   "sku": "TH 530",
+   "name": "Adapter do fotelika RECARO Axion 1 Reha",
+   "list_row": "Rehabilitacja dziecięca:157",
+   "list_code": "TH 530",
+   "list_net_minor": 65000,
+   "vat": 8,
+   "net_minor": 71500,
+   "gross_minor": 77220,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1282",
+   "sku": "TH 540",
+   "name": "Przedłużenie głębokości siedziska do fotelika RECARO Axion 1 Reha",
+   "list_row": "Rehabilitacja dziecięca:168",
+   "list_code": "TH 540",
+   "list_net_minor": 80000,
+   "vat": 8,
+   "net_minor": 88000,
+   "gross_minor": 95040,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1281",
+   "sku": "TH 537",
+   "name": "Podnóżek do fotelika RECARO Axion 1 Reha",
+   "list_row": "Rehabilitacja dziecięca:159",
+   "list_code": "TH 537",
+   "list_net_minor": 135000,
+   "vat": 8,
+   "net_minor": 148500,
+   "gross_minor": 160380,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1279",
+   "sku": "TH 533",
+   "name": "Regulacja kąta nachylenia do fotelika RECARO Axion 1 Reha",
+   "list_row": "Rehabilitacja dziecięca:166",
+   "list_code": "TH 533",
+   "list_net_minor": 197000,
+   "vat": 8,
+   "net_minor": 216700,
+   "gross_minor": 234036,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "804",
+   "sku": "SWIFTY",
+   "name": "Wózek rehabilitacyjny - Swifty",
+   "list_row": "Rehabilitacja dziecięca:98",
+   "list_code": "TH 6806/3",
+   "list_net_minor": 580000,
+   "vat": 8,
+   "net_minor": 638000,
+   "gross_minor": 689040,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1257",
+   "sku": "TH 550",
+   "name": "Rehabilitacyjny fotelik samochodowy - Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:245",
+   "list_code": "TH 550",
+   "list_net_minor": 670000,
+   "vat": 5,
+   "net_minor": 737000,
+   "gross_minor": 773850,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1276",
+   "sku": "TH 557",
+   "name": "Rehabilitacyjny fotelik samochodowy - RECARO Axion 1 Reha, czarny",
+   "list_row": "Rehabilitacja dziecięca:177",
+   "list_code": "TH 557",
+   "list_net_minor": 550000,
+   "vat": 5,
+   "net_minor": 605000,
+   "gross_minor": 635250,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "816",
+   "sku": "MAJOR",
+   "name": "Rehabilitacyjny fotelik samochodowy - Major",
+   "list_row": "Rehabilitacja dziecięca:228",
+   "list_code": "TH 610",
+   "list_net_minor": 350000,
+   "vat": 5,
+   "net_minor": 385000,
+   "gross_minor": 404250,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1191",
+   "sku": "TH 470",
+   "name": "Rehabilitacyjny fotelik samochodowy - Hercules Small",
+   "list_row": "Rehabilitacja dziecięca:281",
+   "list_code": "TH 470",
+   "list_net_minor": 670000,
+   "vat": 5,
+   "net_minor": 737000,
+   "gross_minor": 773850,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1190",
+   "sku": "TH 522",
+   "name": "Rehabilitacyjny fotelik samochodowy - Axkid NEXTKID Reha",
+   "list_row": "Rehabilitacja dziecięca:153",
+   "list_code": "TH 522",
+   "list_net_minor": 490000,
+   "vat": 5,
+   "net_minor": 539000,
+   "gross_minor": 565950,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1227",
+   "sku": "TH 6739",
+   "name": "Osłona przeciwdeszczowa na daszek do wózka Swifty",
+   "list_row": "Rehabilitacja dziecięca:47",
+   "list_code": "TH 6739",
+   "list_net_minor": 38000,
+   "vat": 8,
+   "net_minor": 41800,
+   "gross_minor": 45144,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1226",
+   "sku": "TH 6637/61",
+   "name": "Daszek przeciwsłoneczny, przeciwdeszczowy do wózka Swifty",
+   "list_row": "Rehabilitacja dziecięca:42",
+   "list_code": "TH 6637/61",
+   "list_net_minor": 91000,
+   "vat": 8,
+   "net_minor": 100100,
+   "gross_minor": 108108,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1225",
+   "sku": "TH 6637/6",
+   "name": "Daszek przeciwsłoneczny, przeciwdeszczowy z pokrowcem na nogi do wózka Swifty",
+   "list_row": "Rehabilitacja dziecięca:41",
+   "list_code": "TH 6637/6",
+   "list_net_minor": 115000,
+   "vat": 8,
+   "net_minor": 126500,
+   "gross_minor": 136620,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1223",
+   "sku": "TH 6813",
+   "name": "Koszyk do wózka Swifty",
+   "list_row": "Rehabilitacja dziecięca:119",
+   "list_code": "TH 6813",
+   "list_net_minor": 23000,
+   "vat": 8,
+   "net_minor": 25300,
+   "gross_minor": 27324,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1221",
+   "sku": "TH 6620",
+   "name": "Klin odwodzący do wózka rehabilitacyjnego EASyS Advantage",
+   "list_row": "Rehabilitacja dziecięca:25",
+   "list_code": "TH 6620/6",
+   "list_net_minor": 42000,
+   "vat": 8,
+   "net_minor": 46200,
+   "gross_minor": 49896,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "475",
+   "sku": "TH 6833/1",
+   "name": "Poręcz (pałąk) do wózka Swifty",
+   "list_row": "Rehabilitacja dziecięca:108",
+   "list_code": "TH 6833/1",
+   "list_net_minor": 31000,
+   "vat": 8,
+   "net_minor": 34100,
+   "gross_minor": 36828,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "487",
+   "sku": "TH 6341/1",
+   "name": "Pas z ujęciem krocza do wózka EASyS",
+   "list_row": "Rehabilitacja dziecięca:18",
+   "list_code": "TH 6341/1",
+   "list_net_minor": 9000,
+   "vat": 8,
+   "net_minor": 9900,
+   "gross_minor": 10692,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "493",
+   "sku": "TH 6621/41",
+   "name": "Poręcz (pałąk) - mocno zaokrąglony do wózka EASyS Advantage",
+   "list_row": "Rehabilitacja dziecięca:27",
+   "list_code": "TH 6621/51",
+   "list_net_minor": 25000,
+   "vat": 8,
+   "net_minor": 27500,
+   "gross_minor": 29700,
+   "matched_by": "override"
+  },
+  {
+   "external_id": "1278",
+   "sku": "TH 539",
+   "name": "Klin odwodzący do fotelika RECARO Axion 1 Reha",
+   "list_row": "Rehabilitacja dziecięca:173",
+   "list_code": "TH 539",
+   "list_net_minor": 74000,
+   "vat": 8,
+   "net_minor": 81400,
+   "gross_minor": 87912,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1277",
+   "sku": "TH 536",
+   "name": "Rurka stabilizująca do fotelika RECARO Axion 1 Reha",
+   "list_row": "Rehabilitacja dziecięca:169",
+   "list_code": "TH 536",
+   "list_net_minor": 34000,
+   "vat": 8,
+   "net_minor": 37400,
+   "gross_minor": 40392,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1268",
+   "sku": "TH 423",
+   "name": "Łącznik pasów w foteliku Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:172",
+   "list_code": "TH 423",
+   "list_net_minor": 3800,
+   "vat": 8,
+   "net_minor": 4180,
+   "gross_minor": 4514,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1266",
+   "sku": "TH 479",
+   "name": "Uchwyt Isofix do fotelika Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:263",
+   "list_code": "TH 479",
+   "list_net_minor": 50000,
+   "vat": 8,
+   "net_minor": 55000,
+   "gross_minor": 59400,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1264",
+   "sku": "TH 476",
+   "name": "Regulacja kąta nachylenia do fotelika Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:254",
+   "list_code": "TH 476",
+   "list_net_minor": 87000,
+   "vat": 8,
+   "net_minor": 95700,
+   "gross_minor": 103356,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1263",
+   "sku": "TH 475",
+   "name": "Płyta obrotowa do fotelika Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:253",
+   "list_code": "TH 475",
+   "list_net_minor": 140000,
+   "vat": 8,
+   "net_minor": 154000,
+   "gross_minor": 166320,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1260",
+   "sku": "TH 429",
+   "name": "Peloty boczne sztywne do fotelika Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:270",
+   "list_code": "TH 429",
+   "list_net_minor": 71000,
+   "vat": 8,
+   "net_minor": 78100,
+   "gross_minor": 84348,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1259",
+   "sku": "TH 405",
+   "name": "Peloty boczne odchylane do fotelika Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:258",
+   "list_code": "TH 405",
+   "list_net_minor": 130000,
+   "vat": 8,
+   "net_minor": 143000,
+   "gross_minor": 154440,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1258",
+   "sku": "TH 412",
+   "name": "Klin odwodzący do fotelika Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:260",
+   "list_code": "TH 412/1",
+   "list_net_minor": 70000,
+   "vat": 8,
+   "net_minor": 77000,
+   "gross_minor": 83160,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1220",
+   "sku": "TH 423",
+   "name": "Łącznik pasów w foteliku Hercules Small",
+   "list_row": "Rehabilitacja dziecięca:172",
+   "list_code": "TH 423",
+   "list_net_minor": 3800,
+   "vat": 8,
+   "net_minor": 4180,
+   "gross_minor": 4514,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1219",
+   "sku": "TH 487",
+   "name": "Peloty boczne odchylane do fotelika Hercules Small",
+   "list_row": "Rehabilitacja dziecięca:294",
+   "list_code": "TH 487",
+   "list_net_minor": 130000,
+   "vat": 8,
+   "net_minor": 143000,
+   "gross_minor": 154440,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1218",
+   "sku": "TH 486",
+   "name": "Peloty boczne sztywne do fotelika Hercules Small",
+   "list_row": "Rehabilitacja dziecięca:296",
+   "list_code": "TH 486",
+   "list_net_minor": 70000,
+   "vat": 8,
+   "net_minor": 77000,
+   "gross_minor": 83160,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1217",
+   "sku": "TH 494",
+   "name": "Dodatkowy zagłówek do fotelika Hercules Small",
+   "list_row": "Rehabilitacja dziecięca:303",
+   "list_code": "TH 494",
+   "list_net_minor": 38000,
+   "vat": 8,
+   "net_minor": 41800,
+   "gross_minor": 45144,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1216",
+   "sku": "TH 475",
+   "name": "Płyta obrotowa do fotelika Hercules Small",
+   "list_row": "Rehabilitacja dziecięca:253",
+   "list_code": "TH 475",
+   "list_net_minor": 140000,
+   "vat": 8,
+   "net_minor": 154000,
+   "gross_minor": 166320,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1214",
+   "sku": "TH 479",
+   "name": "Uchwyt Isofix do fotelika Hercules Small",
+   "list_row": "Rehabilitacja dziecięca:263",
+   "list_code": "TH 479",
+   "list_net_minor": 50000,
+   "vat": 8,
+   "net_minor": 55000,
+   "gross_minor": 59400,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1200",
+   "sku": "TH 501",
+   "name": "Płyta obrotowa do fotelika Major",
+   "list_row": "Rehabilitacja dziecięca:212",
+   "list_code": "TH 501",
+   "list_net_minor": 117000,
+   "vat": 8,
+   "net_minor": 128700,
+   "gross_minor": 138996,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1199",
+   "sku": "TH 500",
+   "name": "Adapter do fotelika Major",
+   "list_row": "Rehabilitacja dziecięca:209",
+   "list_code": "TH 500",
+   "list_net_minor": 75000,
+   "vat": 8,
+   "net_minor": 82500,
+   "gross_minor": 89100,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1198",
+   "sku": "TH 507",
+   "name": "Rurka stabilizująca do fotelika Major",
+   "list_row": "Rehabilitacja dziecięca:216",
+   "list_code": "TH 507",
+   "list_net_minor": 15000,
+   "vat": 8,
+   "net_minor": 16500,
+   "gross_minor": 17820,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1197",
+   "sku": "TH 506",
+   "name": "Uchwyt Isofix do fotelika Major",
+   "list_row": "Rehabilitacja dziecięca:214",
+   "list_code": "TH 506",
+   "list_net_minor": 41000,
+   "vat": 8,
+   "net_minor": 45100,
+   "gross_minor": 48708,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1196",
+   "sku": "TH 502",
+   "name": "Płyta podwyższająca do fotelika Major",
+   "list_row": "Rehabilitacja dziecięca:211",
+   "list_code": "TH 502",
+   "list_net_minor": 105000,
+   "vat": 8,
+   "net_minor": 115500,
+   "gross_minor": 124740,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1195",
+   "sku": "TH 670",
+   "name": "Klin odwodzący do fotelika Major",
+   "list_row": "Rehabilitacja dziecięca:222",
+   "list_code": "TH 670",
+   "list_net_minor": 14000,
+   "vat": 8,
+   "net_minor": 15400,
+   "gross_minor": 16632,
+   "matched_by": "code"
+  },
+  {
+   "external_id": "1194",
+   "sku": "TH 508",
+   "name": "Przedłużenie głębokości siedziska + 13 cm do fotelika Major",
+   "list_row": "Rehabilitacja dziecięca:215",
+   "list_code": "TH 508",
+   "list_net_minor": 135000,
+   "vat": 8,
+   "net_minor": 148500,
+   "gross_minor": 160380,
+   "matched_by": "code"
+  }
+ ],
+ "unresolved": [
+  {
+   "sku": "Maya Produkt wkrótce w sprzedaży – dostępność ograniczona",
+   "name": "Wózek inwalidzki elektryczny - Maya",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "MOON-TIM",
+   "name": "Materac piankowy do łóżka rehabilitacyjnego - MOON-TIM",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "MAT-MAX-ZM-15",
+   "name": "Materac piankowy do łóżka rehabilitacyjnego w pokrowcu nieprzemakalnym, paroprzepuszczalnym - maksymalne obciążenie 250 kg",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "KING-CMDBA-20",
+   "name": "Krzesło prysznicowo-toaletowe z wiaderkiem",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "HOLD-TIM",
+   "name": "Uchwyt łazienkowy prosty - HOLD-TIM",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "WB-804 / WB-NT-600 / WB-NT-630",
+   "name": "Żelowe kompresy termiczne do terapii ciepłem lub zimnem",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SPIKY",
+   "name": "SPIKY - Piłka rehabilitacyjna z kolcami (jeżyk)",
+   "reason": "ambiguous"
+  },
+  {
+   "sku": "yellowBAND",
+   "name": "Bandaż kohezyjny",
+   "reason": "ambiguous"
+  },
+  {
+   "sku": "JMC-C 2040-2049",
+   "name": "Kula inwalidzka łokciowa - modele JMC-C 2040-2046 / JMC-C 2048-2049",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "HMS NASADKA",
+   "name": "Nasadka gumowa do kul HMS",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "JMC",
+   "name": "Nasadki gumowe do podpórki dwukołowej - 2 sztuki",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "JMC 2907",
+   "name": "Nasadki gumowe do czwórnogów na niskich nogach - 2 sztuki",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "WCD1-80",
+   "name": "Chusteczki nawilżane dla dzieci",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "WR1-08",
+   "name": "Rękawice do bezwodnego mycia ciała",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "WM1-08",
+   "name": "Chusteczki do bezwodnego mycia ciała",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "WC1-01",
+   "name": "Czepek do bezwodnego mycia włosów",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "GLOVE-TIM",
+   "name": "Myjka wielokrotnego użytku",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "MED-BB/1 BEGOBANO",
+   "name": "Myjka z żelem myjącym Begobano",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "BT-002",
+   "name": "Ochraniacze na buty",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "MED-MB52 COCO",
+   "name": "Myjka z żelem do ciała kokosowa - Coco Dermobano",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": null,
+   "name": "Basen sanitarny",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TGR-R KT-S 668",
+   "name": "Krzesło toaletowe stałe - TGR-R KT-S 668",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": null,
+   "name": "Kaczka sanitarna męska/damska z uchwytem",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "BT-PC",
+   "name": "Podkład chłonny",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SPIRIT-3_BATERIA",
+   "name": "Bateria do przenośnego koncentratora tlenu SPIRIT-3 - 13,6 Ah",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "YH-690",
+   "name": "Aparat do leczenia bezdechu sennego - YH-690",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TEDI",
+   "name": "Nebulizator kompresyjny dla dzieci - TEDI",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "YF-02",
+   "name": "Maska twarzowa do aparatu CPAP bez wspornika czołowego - YUWELL",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "CT3",
+   "name": "System Ciągłego Monitorowania Glikemii - CT3",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "FTL1",
+   "name": "Tlen inhalacyjny o stężeniu 99,5% + maska do podawania tlenu - pojemność 14L",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "yellowTAPE",
+   "name": "Taśma do kinesiotapingu yellowTAPE",
+   "reason": "ambiguous"
+  },
+  {
+   "sku": "CHTW/B",
+   "name": "Chusta trójkątna",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TGO-C SR 501",
+   "name": "Orteza stabilizująca rzepkę",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TGO-C OGU 505",
+   "name": "Orteza stabilizująca goleń i udo",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TGO-C SK-Z 502",
+   "name": "Stabilizator stawu kolanowego z szynami zamknięty - model 502",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SLIDE-TIM",
+   "name": "Łatwoślizg - SLIDE-TIM",
+   "reason": "ambiguous"
+  },
+  {
+   "sku": "STMT 6512 / STMT 6513",
+   "name": "Pas do przenoszenia chorych z uchwytami i klamrą",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TTE 6102 - TTE6122",
+   "name": "Łatwoślizg - chusta ułatwiająca przenoszenie chorego",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SVC 2500 / SVC2510",
+   "name": "Rękawica ochronna - SALVACEL",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SCP 4275M / 4275L",
+   "name": "Pas stabilizujący miednicę z ujęciem krocza",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SCP 4250M / 4250L",
+   "name": "Kamizelka unieruchamiająca 5-punktowa SALVACLIP",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Myjka do ciała - gąbka HIGIEMED",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Kompres gazowy KOMPRI lux/KOMPRI lux S",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "Zarys",
+   "name": "Kompres włókninowy NONVI lux/NONVI lux S",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Opaska elastyczna z zapinką - elastoBAND FLEX",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": null,
+   "name": "Płyn do higienicznej i chirurgicznej dezynfekcji rąk i powierzchni",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "DryTim",
+   "name": "Podkład na materac - DryTim",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "Elastopor",
+   "name": "Opatrunek włókninowy z wkładem chłonnym - ELASTOPOR STERIL",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "IN - dispoFINE",
+   "name": "Igła iniekcyjna",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "BT-030",
+   "name": "Prześcieradło medyczne",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TIM-MULTI",
+   "name": "Pojemnik na mocz/kał 2w1, sterylny - TIM-MULTI",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Maska tlenowa",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "FP",
+   "name": "Plaster tkaninowy z opatrunkiem FABRIPLAST",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "YADA-BRUSH-B/A",
+   "name": "Szczotka do mycia rurek tracheotomijnych",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "KR160210",
+   "name": "Koc ratunkowy",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "easyFLOW IS",
+   "name": "Przyrząd do infuzji easyFLOW IS",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "elastoBAND",
+   "name": "Opaska dziana",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "KOMPRES",
+   "name": "Gaza opatrunkowa kopertowa - GAZA LUX",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "BT-019",
+   "name": "Fartuch medyczny z gumką, włókninowy, niejałowy",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "PLASPOL",
+   "name": "Pojemnik na odpady medyczne",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Podkład bibułowy 2-warstwowy w rolce",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SA-001",
+   "name": "Staza automatyczna",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "S001",
+   "name": "Staza gumowa w rolce",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS-BT-046-31B (Z)",
+   "name": "Maseczka chirurgiczna z gumką",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "Kubek",
+   "name": "Kubek pojnik z uchwytem",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "HPM",
+   "name": "Kieliszek do podawania leków",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "3CZ-CEW",
+   "name": "Strzykawka trzyczęściowa Janeta",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SLN/SLS",
+   "name": "Szpatułka laryngologiczna drewniana",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Nerka medyczna",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "WLS/WLN/ZLN",
+   "name": "Worek do lewatywy",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "GREATCARE-GCU230105",
+   "name": "Worek do zbiórki moczu z mocowaniem na nogę",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "WMD2000",
+   "name": "Worek do zbiórki moczu 2l, z odpływem typu T",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Zgłębnik żołądkowy 100% silikon",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Zgłębnik żołądkowy",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Dren tlenowy",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Cewnik do podawania tlenu przez nos",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SleepTim",
+   "name": "Prześcieradło z gumką dookoła - SleepTim",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "BIB-TIM",
+   "name": "Śliniak medyczny z kieszonką",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "easyCARE NITRYLE",
+   "name": "Rękawice diagnostyczne nitrylowe easyCARE",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS16-HJM-SO",
+   "name": "Szczoteczka do zębów z odsysaniem",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "ZARYS25-HJM-GB",
+   "name": "Aplikator gąbkowy do nawilżania jamy ustnej",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "LAYERTEX-87EN0901220-23",
+   "name": "Myjka nasączona mydłem - CLEANET NAPA",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "87ENTAS1220-07",
+   "name": "Myjka nasączona środkiem myjącym - CLEANET PLUS",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "01MA1552090-76",
+   "name": "Myjka nasączona środkiem myjącym - GANTNET",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "LAYERTEX-PLMA1502260-72",
+   "name": "Myjka nasączona środkiem myjącym - GANTNET PLUS",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TH 534",
+   "name": "Płyta obrotowa do fotelika RECARO Axion 1 Reha",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TH 6634/6 / TH 6734/6",
+   "name": "Peloty boczne podtrzymujące do wózka Swifty",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TH 6620/6 / TH 6720/6",
+   "name": "Klin odwodzący do wózka Swifty",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TH 6616/51 / TH 6617/6 / TH 6717",
+   "name": "Motylkowa uprząż piersiowa, elastyczna rozm. S, M i L do wózka EASyS Advantage",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TH 421",
+   "name": "Rurka stabilizująca do fotelika Hercules Prime R129",
+   "reason": "ambiguous"
+  },
+  {
+   "sku": "TH 427",
+   "name": "Prowadnice ramion do fotelika Hercules Prime R129",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TH 421",
+   "name": "Rurka stabilizująca do fotelika Hercules Small",
+   "reason": "ambiguous"
+  },
+  {
+   "sku": "TH 503, TH 504",
+   "name": "Podnóżek do fotelika Major",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "TH 675",
+   "name": "Peloty boczne do fotelika Major",
+   "reason": "ambiguous"
+  },
+  {
+   "sku": "TH 673",
+   "name": "Stolik do fotelika Major",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "AHD 1000",
+   "name": "Płyn do dezynfekcji AHD 1000",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "Hogen Spitze",
+   "name": "Igły do karpuli Hogen-Spitze",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "MB-05170502/MB/05380502/MB-0561",
+   "name": "Opatrunki żelowe Cutanplast",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SIMPLE MANIKIN III",
+   "name": "Fantom Simple Manikin III (zestaw standardowy)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "NISSIN Type 1",
+   "name": "Fantom NISSIN Type 1 (zestaw średnio-zaawansowany)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "NISSIN Type 2",
+   "name": "Fantom Nissin TYPE 2 (zestaw zaawansowany)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "PRO2001-UL-SP-FEM-32",
+   "name": "Model PRO2001-UL-SP-FEM-32 (model standardowy/protetyczny)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "EDE1001-UL-UP-FEM",
+   "name": "Model EDE1001-UL-UP-FEM (model bezzębny)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "PER2001-UL-SP-FEM-32",
+   "name": "Model PER2001-UL-SP-FEM-32 (model periodontologiczny)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SUG1003-UL-SP-FEM-28",
+   "name": "Model SUG1003-UL-SP-FEM-28 (model chirurgiczny)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "PDI2001-UL-SP-FEM",
+   "name": "Model PDI2001-UL-SP-FEM (model pedodontyczny)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "IMP5003-UL-SP-FEM",
+   "name": "Model IMP5003-UL-SP-FEM (model do implantacji)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "SUG2005-UL-SP",
+   "name": "Model L SUG2005-UL-SP (model anestezjologiczny)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "YS-802A",
+   "name": "Model YS-802A (model ortodontyczny)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "A5A-200",
+   "name": "Model L A5A-200 (zęby standardowe)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "A20A-200",
+   "name": "Model A20A-200 (zęby 2-warstwowe)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "A27A",
+   "name": "Model A27A (zęby 2-warstowe z próchnicą)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "A21A / A25A",
+   "name": "Model A21A / A25A (zęby z opracowanym ubytkiem)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "S12A-200",
+   "name": "Model S12A-200 (zęby endodontyczne)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "A2A-240",
+   "name": "Model A2A-240 (wypełnienie ubytków)",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Bloczki endodontyczne",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Modele anatomiczne",
+   "reason": "not_in_list"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Modele edukacyjne",
+   "reason": "not_in_list"
+  }
+ ]
+}
