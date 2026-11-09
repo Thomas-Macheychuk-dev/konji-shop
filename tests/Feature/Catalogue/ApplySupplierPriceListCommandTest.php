@@ -51,16 +51,30 @@ it('writes Vermeiren retail prices, keeps a backup and rolls back', function ():
     expect($wheelchair->fresh()->price_gross_amount)->toBe(70000);
 });
 
-it('leaves variants whose VAT rate differs from the list alone', function (): void {
+it('applies the list VAT rate and restores the old one on rollback', function (): void {
     // The wheelchair tray is listed with 23% VAT; the shop variant has 8%.
     $table = supplierPricedVariant('timago', '819', 'TABLE - Stolik do wózka inwalidzkiego', 5000);
 
-    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026', '--write' => true])
-        ->expectsOutputToContain('VAT_MISMATCH=1')
-        ->expectsOutputToContain('NOTHING_TO_WRITE')
+    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026'])
+        ->expectsOutputToContain('VAT_CHANGES=1')
+        ->expectsOutputToContain('[Rehabilitacja:51] gross 50.00 -> 70.36 (net 46.30 -> 57.20, VAT 8% -> 23%)')
         ->assertSuccessful();
 
-    expect($table->fresh()->price_gross_amount)->toBe(5000);
+    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026', '--write' => true])
+        ->expectsOutputToContain('WRITTEN_PRICES=1')
+        ->assertSuccessful();
+
+    expect($table->fresh()->only(['price_net_amount', 'price_gross_amount', 'vat_rate']))
+        ->toEqual(['price_net_amount' => 5720, 'price_gross_amount' => 7036, 'vat_rate' => VatRate::VAT_23]);
+
+    $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->sole();
+
+    $this->artisan('catalogue:apply-supplier-prices', ['--rollback' => $backup])
+        ->expectsOutputToContain('RESTORED_PRICES=1 OF 1')
+        ->assertSuccessful();
+
+    expect($table->fresh()->only(['price_gross_amount', 'vat_rate']))
+        ->toEqual(['price_gross_amount' => 5000, 'vat_rate' => VatRate::VAT_8]);
 });
 
 it('rejects an unknown price table', function (): void {

@@ -16,8 +16,7 @@ use JsonException;
  *
  * The tables are built from the supplier price lists by scripts/catalogue/supplier-prices-2026 and hold one
  * entry per supplier product (external_id) with the final net and gross price and the list VAT rate. Every
- * variant of a matched product gets that price. A variant whose VAT rate differs from the list is reported
- * and left alone, because its gross price would no longer match the list.
+ * variant of a matched product gets that price and the list VAT rate; the preview shows each VAT change.
  */
 final class ApplySupplierPriceListCommand extends Command
 {
@@ -53,7 +52,7 @@ final class ApplySupplierPriceListCommand extends Command
         $entries = collect($table['entries'])->keyBy('external_id');
         $changes = [];
         $unchanged = 0;
-        $vatMismatches = [];
+        $vatChanges = 0;
         $missing = [];
         $matchedProducts = [];
 
@@ -62,7 +61,7 @@ final class ApplySupplierPriceListCommand extends Command
             ->whereHas('product', fn ($query) => $query->where('external_source', $table['external_source']))
             ->orderBy('product_id')
             ->orderBy('id')
-            ->chunkById(200, function ($variants) use ($entries, &$changes, &$unchanged, &$vatMismatches, &$missing, &$matchedProducts): void {
+            ->chunkById(200, function ($variants) use ($entries, &$changes, &$unchanged, &$vatChanges, &$missing, &$matchedProducts): void {
                 foreach ($variants as $variant) {
                     $entry = $entries->get((string) $variant->product->external_id);
                     $label = $this->label($variant);
@@ -74,21 +73,18 @@ final class ApplySupplierPriceListCommand extends Command
                     }
 
                     $matchedProducts[$entry['external_id']] = true;
-                    $vatRate = $variant->vat_rate instanceof VatRate ? $variant->vat_rate : VatRate::VAT_8;
+                    $oldVat = $variant->vat_rate instanceof VatRate ? $variant->vat_rate->value : null;
+                    $oldNet = $variant->price_net_amount === null ? null : (int) $variant->price_net_amount;
+                    $oldGross = $variant->price_gross_amount;
 
-                    if ($vatRate->value !== $entry['vat']) {
-                        $vatMismatches[] = sprintf('%s list=%s VAT shop=%d%% list=%d%% list gross %s', $label, $entry['list_code'], $vatRate->value, $entry['vat'], $this->money($entry['gross_minor']));
+                    if ($oldNet === $entry['net_minor'] && $oldGross === $entry['gross_minor'] && $oldVat === $entry['vat']) {
+                        $unchanged++;
 
                         continue;
                     }
 
-                    $oldNet = $variant->price_net_amount === null ? null : (int) $variant->price_net_amount;
-                    $oldGross = $variant->price_gross_amount;
-
-                    if ($oldNet === $entry['net_minor'] && $oldGross === $entry['gross_minor']) {
-                        $unchanged++;
-
-                        continue;
+                    if ($oldVat !== $entry['vat']) {
+                        $vatChanges++;
                     }
 
                     $changes[] = [
@@ -96,11 +92,12 @@ final class ApplySupplierPriceListCommand extends Command
                         'product_id' => $variant->product_id,
                         'list_row' => $entry['list_row'],
                         'label' => $label,
-                        'vat_rate' => $vatRate->value,
                         'old_net' => $oldNet,
                         'old_gross' => $oldGross,
+                        'old_vat' => $oldVat,
                         'new_net' => $entry['net_minor'],
                         'new_gross' => $entry['gross_minor'],
+                        'new_vat' => $entry['vat'],
                     ];
                 }
             });
@@ -115,24 +112,22 @@ final class ApplySupplierPriceListCommand extends Command
         $this->line('LIST_ENTRIES='.$entries->count().' LIST_UNRESOLVED='.count($table['unresolved'] ?? []).' ENTRIES_WITHOUT_PRODUCT='.$absent->count());
         $this->line('PRICE_CHANGES='.count($changes).' (UP='.$increases.' DOWN='.$decreases.' FROM_EMPTY='.(count($changes) - $increases - $decreases).')');
         $this->line('ALREADY_CURRENT='.$unchanged);
-        $this->line('VAT_MISMATCH='.count($vatMismatches));
+        $this->line('VAT_CHANGES='.$vatChanges);
         $this->line('NOT_IN_LIST='.count($missing));
 
         foreach ($changes as $change) {
             $this->line(sprintf(
-                'CHANGE %s [%s] gross %s -> %s (net %s -> %s, VAT %d%%)',
+                'CHANGE %s [%s] gross %s -> %s (net %s -> %s, VAT %s)',
                 $change['label'],
                 $change['list_row'],
                 $this->money($change['old_gross']),
                 $this->money($change['new_gross']),
                 $this->money($change['old_net']),
                 $this->money($change['new_net']),
-                $change['vat_rate'],
+                $change['old_vat'] === $change['new_vat']
+                    ? $change['new_vat'].'%'
+                    : ($change['old_vat'] === null ? '(empty)' : $change['old_vat'].'%').' -> '.$change['new_vat'].'%',
             ));
-        }
-
-        foreach ($vatMismatches as $line) {
-            $this->line('VAT_MISMATCH '.$line);
         }
 
         foreach ($missing as $line) {
