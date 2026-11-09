@@ -523,6 +523,18 @@
    "matched_by": "manual"
   },
   {
+   "external_id": "aea20499cb60906ccc023cc92a548d5cdf173d151b541e513ffe91663959ad66",
+   "sku": "CORAILLE XXL (from seat width 55)",
+   "name": "CORAILLE XXL",
+   "list_row": "page 9: Corille + dopłata XXL",
+   "list_code": "Corille + dopłata XXL",
+   "list_net_minor": 425000,
+   "vat": 8,
+   "net_minor": 425000,
+   "gross_minor": 459000,
+   "matched_by": "manual"
+  },
+  {
    "external_id": "a76193c13290bb6ef27f6ccce58119f0a7671c81db66ddaecdd4a5fb8f4db9b3",
    "sku": "ALTITUDE",
    "name": "ALTITUDE",
@@ -532,6 +544,18 @@
    "vat": 8,
    "net_minor": 370370,
    "gross_minor": 400000,
+   "matched_by": "manual"
+  },
+  {
+   "external_id": "a70874f7b730a9eda704afce0aa146e38cfe3f58305b45a90048ff16de5ce6c6",
+   "sku": "ALTITUDE XXL (from seat width 55)",
+   "name": "ALTITUDE XXL",
+   "list_row": "page 8: Altitude + dopłata XXL",
+   "list_code": "Altitude + dopłata XXL",
+   "list_net_minor": 425000,
+   "vat": 8,
+   "net_minor": 425000,
+   "gross_minor": 459000,
    "matched_by": "manual"
   },
   {
@@ -547,6 +571,18 @@
    "matched_by": "manual"
   },
   {
+   "external_id": "25a2136c2b0737f01df62a511186575bf7aafa2657e31459417908d4901cb36a",
+   "sku": "NORMANDIE XXL",
+   "name": "NORMANDIE XXL z kołami",
+   "list_row": "page 37: NORMANDIE + dopłata XXL",
+   "list_code": "NORMANDIE + dopłata XXL",
+   "list_net_minor": 259400,
+   "vat": 8,
+   "net_minor": 259352,
+   "gross_minor": 280100,
+   "matched_by": "manual"
+  },
+  {
    "external_id": "6982a6e82599090370d2d8544612dc99caea6395110bda7e0fb3d24d9bc1d59c",
    "sku": "JAZZS50 HEM2",
    "name": "JAZZS50 Hem2",
@@ -556,6 +592,18 @@
    "vat": 8,
    "net_minor": 277778,
    "gross_minor": 300000,
+   "matched_by": "manual"
+  },
+  {
+   "external_id": "1a3a7415111b1141ffeb13eb195bd8de5d7558180411103a23d3f7951f6192dc",
+   "sku": "708D HEM2",
+   "name": "708D Hem2",
+   "list_row": "page 24: 708D + dopłata HEM2",
+   "list_code": "708D + dopłata HEM2",
+   "list_net_minor": 241900,
+   "vat": 8,
+   "net_minor": 241944,
+   "gross_minor": 261300,
    "matched_by": "manual"
   },
   {
@@ -1096,6 +1144,18 @@
    "vat": 8,
    "net_minor": 355093,
    "gross_minor": 383500,
+   "matched_by": "manual"
+  },
+  {
+   "external_id": "b30b45d50a42922a8d90ef9d949c03180bb2fabc0661711478b688a251b64a61",
+   "sku": "Club UL",
+   "name": "CLUB UL",
+   "list_row": "page 45: CLUB UL D",
+   "list_code": "CLUB UL D",
+   "list_net_minor": 410000,
+   "vat": 8,
+   "net_minor": 410000,
+   "gross_minor": 442800,
    "matched_by": "manual"
   },
   {
@@ -2565,14 +2625,9 @@
  ],
  "unresolved": [
   {
-   "sku": "Klaxon Twist",
-   "name": "TWIST",
-   "reason": "four configurations from 20491 to 26714 net"
-  },
-  {
    "sku": "Bobby Evo B03",
    "name": "Bobby Evo B03",
-   "reason": "B03 is an armrest option, no separate model price"
+   "reason": "B03 armrests are only listed as a separate purchase, no model price"
   },
   {
    "sku": "ECLIPS X4 30°",
@@ -2585,31 +2640,6 @@
    "reason": "not in the 2026 list"
   },
   {
-   "sku": "CORAILLE XXL (from seat width 55)",
-   "name": "CORAILLE XXL",
-   "reason": "XXL is a 546 net surcharge on the base model"
-  },
-  {
-   "sku": "ALTITUDE XXL (from seat width 55)",
-   "name": "ALTITUDE XXL",
-   "reason": "XXL is a 546 net surcharge on the base model"
-  },
-  {
-   "sku": "NORMANDIE XXL",
-   "name": "NORMANDIE XXL z kołami",
-   "reason": "XXL is a 590 net surcharge on the base model"
-  },
-  {
-   "sku": "708D HEM2",
-   "name": "708D Hem2",
-   "reason": "no 708D Hem2 row; HEM2 is a 1433 net option"
-  },
-  {
-   "sku": "Gemini 2*",
-   "name": "GEMINI 2",
-   "reason": "seat 32 or 40 cm: 2887 or 3145 net"
-  },
-  {
    "sku": "SAGITTA KIDS SI",
    "name": "SAGITTA KIDS SI",
    "reason": "not in the 2026 list"
@@ -2618,11 +2648,6 @@
    "sku": "Plego Carbon",
    "name": "PLEGO Carbon",
    "reason": "not in the 2026 list"
-  },
-  {
-   "sku": "SIGMA",
-   "name": "SIGMA",
-   "reason": "only SIGMA 230 is listed"
   },
   {
    "sku": "Kuarz",
@@ -2640,84 +2665,14 @@
    "reason": "not in the 2026 list"
   },
   {
-   "sku": "BAYO",
-   "name": "BAYO",
-   "reason": "seat 32 or 40 cm: 2439 or 2530 net"
-  },
-  {
-   "sku": "Club UL",
-   "name": "CLUB UL",
-   "reason": "only CLUB UL D is listed"
-  },
-  {
-   "sku": "385",
-   "name": "385",
-   "reason": "two cabinets share 385: 1137 or 900 net"
-  },
-  {
    "sku": "275",
    "name": "275",
    "reason": "not in the 2026 list"
   },
   {
-   "sku": "PLUO",
-   "name": "PLUO",
-   "reason": "5'' or 24'' wheels: 1836 or 3352 net"
-  },
-  {
-   "sku": "Mia",
-   "name": "Mia",
-   "reason": "10 or 15 cm: 119 or 139 net"
-  },
-  {
-   "sku": "IZZIE",
-   "name": "IZZIE",
-   "reason": "30-80 cm and R: 43 to 114 net"
-  },
-  {
-   "sku": "REGULAR (Eagle Sling)",
-   "name": "REGULAR",
-   "reason": "two sling sizes: 441 or 386 net"
-  },
-  {
-   "sku": "HYGIENIC (Eagle sling)",
-   "name": "HYGIENIC",
-   "reason": "two sling sizes: 441 or 386 net"
-  },
-  {
-   "sku": "COMFORT (Eagle sling)",
-   "name": "COMFORT",
-   "reason": "two sling sizes: 441 or 386 net"
-  },
-  {
-   "sku": "690",
-   "name": "690",
-   "reason": "ramp kits 1-5: 308 to 2425 net"
-  },
-  {
    "sku": "Mattress BaWü",
    "name": "Materac BaWü",
    "reason": "not in the 2026 list"
-  },
-  {
-   "sku": "STABILO BASE",
-   "name": "STABILO BASE",
-   "reason": "price by size S to L: 998 to 1462 net"
-  },
-  {
-   "sku": "STABILO Comfortable",
-   "name": "STABILO COMFORTABLE",
-   "reason": "price by size S to L: 1167 to 1664 net"
-  },
-  {
-   "sku": "STABILO Comfortable Plus",
-   "name": "STABILO COMFORTABLE PLUS",
-   "reason": "price by size S to XL: 1380 to 1892 net"
-  },
-  {
-   "sku": "STABILO Comfortable Plus Duo",
-   "name": "STABILO COMFORTABLE PLUS DUO",
-   "reason": "price by size S to XXL: 2682 to 4294 net"
   }
  ]
 }

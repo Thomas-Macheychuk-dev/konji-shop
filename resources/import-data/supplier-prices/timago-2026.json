@@ -3499,6 +3499,18 @@
    "matched_by": "code"
   },
   {
+   "external_id": "1265",
+   "sku": "TH 421",
+   "name": "Rurka stabilizująca do fotelika Hercules Prime R129",
+   "list_row": "Rehabilitacja dziecięca:264",
+   "list_code": "TH 421",
+   "list_net_minor": 32000,
+   "vat": 8,
+   "net_minor": 35200,
+   "gross_minor": 38016,
+   "matched_by": "override"
+  },
+  {
    "external_id": "1264",
    "sku": "TH 476",
    "name": "Regulacja kąta nachylenia do fotelika Hercules Prime R129",
@@ -3619,6 +3631,18 @@
    "matched_by": "code"
   },
   {
+   "external_id": "1215",
+   "sku": "TH 421",
+   "name": "Rurka stabilizująca do fotelika Hercules Small",
+   "list_row": "Rehabilitacja dziecięca:292",
+   "list_code": "TH 421",
+   "list_net_minor": 23000,
+   "vat": 8,
+   "net_minor": 25300,
+   "gross_minor": 27324,
+   "matched_by": "override"
+  },
+  {
    "external_id": "1214",
    "sku": "TH 479",
    "name": "Uchwyt Isofix do fotelika Hercules Small",
@@ -3629,6 +3653,18 @@
    "net_minor": 55000,
    "gross_minor": 59400,
    "matched_by": "code"
+  },
+  {
+   "external_id": "1202",
+   "sku": "TH 675",
+   "name": "Peloty boczne do fotelika Major",
+   "list_row": "Rehabilitacja dziecięca:243",
+   "list_code": "TH 675",
+   "list_net_minor": 31500,
+   "vat": 8,
+   "net_minor": 34650,
+   "gross_minor": 37422,
+   "matched_by": "override"
   },
   {
    "external_id": "1200",
@@ -3747,16 +3783,6 @@
    "reason": "not_in_list"
   },
   {
-   "sku": "SPIKY",
-   "name": "SPIKY - Piłka rehabilitacyjna z kolcami (jeżyk)",
-   "reason": "ambiguous"
-  },
-  {
-   "sku": "yellowBAND",
-   "name": "Bandaż kohezyjny",
-   "reason": "ambiguous"
-  },
-  {
    "sku": "JMC-C 2040-2049",
    "name": "Kula inwalidzka łokciowa - modele JMC-C 2040-2046 / JMC-C 2048-2049",
    "reason": "not_in_list"
@@ -3867,11 +3893,6 @@
    "reason": "not_in_list"
   },
   {
-   "sku": "yellowTAPE",
-   "name": "Taśma do kinesiotapingu yellowTAPE",
-   "reason": "ambiguous"
-  },
-  {
    "sku": "CHTW/B",
    "name": "Chusta trójkątna",
    "reason": "not_in_list"
@@ -3890,11 +3911,6 @@
    "sku": "TGO-C SK-Z 502",
    "name": "Stabilizator stawu kolanowego z szynami zamknięty - model 502",
    "reason": "not_in_list"
-  },
-  {
-   "sku": "SLIDE-TIM",
-   "name": "Łatwoślizg - SLIDE-TIM",
-   "reason": "ambiguous"
   },
   {
    "sku": "STMT 6512 / STMT 6513",
@@ -4162,29 +4178,14 @@
    "reason": "not_in_list"
   },
   {
-   "sku": "TH 421",
-   "name": "Rurka stabilizująca do fotelika Hercules Prime R129",
-   "reason": "ambiguous"
-  },
-  {
    "sku": "TH 427",
    "name": "Prowadnice ramion do fotelika Hercules Prime R129",
    "reason": "not_in_list"
   },
   {
-   "sku": "TH 421",
-   "name": "Rurka stabilizująca do fotelika Hercules Small",
-   "reason": "ambiguous"
-  },
-  {
    "sku": "TH 503, TH 504",
    "name": "Podnóżek do fotelika Major",
    "reason": "not_in_list"
-  },
-  {
-   "sku": "TH 675",
-   "name": "Peloty boczne do fotelika Major",
-   "reason": "ambiguous"
   },
   {
    "sku": "TH 673",
