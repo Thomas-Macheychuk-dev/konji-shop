@@ -77,9 +77,24 @@ it('applies the list VAT rate and restores the old one on rollback', function ()
         ->toEqual(['price_gross_amount' => 5000, 'vat_rate' => VatRate::VAT_8]);
 });
 
+it('keeps the variant VAT rate for gross-only online prices', function (): void {
+    // HOLD-TIM is priced at the 43.00 median of shop offers; the table carries no VAT rate.
+    $bar = supplierPricedVariant('timago', '1092', 'Uchwyt łazienkowy prosty - HOLD-TIM', null);
+    $bar->update(['vat_rate' => VatRate::VAT_23]);
+
+    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-online-2026', '--write' => true])
+        ->expectsOutputToContain('gross (empty) -> 43.00 (net (empty) -> 34.96, VAT 23%)')
+        ->expectsOutputToContain('VAT_CHANGES=0')
+        ->expectsOutputToContain('WRITTEN_PRICES=1')
+        ->assertSuccessful();
+
+    expect($bar->fresh()->only(['price_net_amount', 'price_gross_amount', 'vat_rate']))
+        ->toEqual(['price_net_amount' => 3496, 'price_gross_amount' => 4300, 'vat_rate' => VatRate::VAT_23]);
+});
+
 it('rejects an unknown price table', function (): void {
     $this->artisan('catalogue:apply-supplier-prices', ['list' => 'nope'])
-        ->expectsOutputToContain('PRICE_LIST_ERROR=Choose one of: timago-2026, vermeiren-2026')
+        ->expectsOutputToContain('PRICE_LIST_ERROR=Choose one of: timago-2026, timago-online-2026, vermeiren-2026, vermeiren-online-2026')
         ->assertFailed();
 });
 

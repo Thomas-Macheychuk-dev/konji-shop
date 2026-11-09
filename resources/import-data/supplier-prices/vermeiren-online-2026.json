@@ -1,0 +1,84 @@
+{
+ "supplier": "vermeiren",
+ "external_source": "vermeiren",
+ "source_file": "Polish online shop prices, researched 2026-11-09",
+ "effective_from": "2026-11-09",
+ "currency": "PLN",
+ "pricing": "median gross price of matching Polish shop offers; VAT stays as set on the variant",
+ "entries": [
+  {
+   "external_id": "57568e6e9dfa627376fd7e4837cb763ec34b8494084b00ea7ac876429bc71a6f",
+   "sku": "Bobby Evo B03",
+   "name": "Bobby Evo B03",
+   "list_row": "online median of 3: servitum.pl (via Ceneo), tanisklepmedyczny.pl (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 156200,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/88109710",
+    "https://www.ceneo.pl/88109710",
+    "https://www.ceneo.pl/200847246"
+   ]
+  },
+  {
+   "external_id": "2fb2d7e494b55b867786fee6180c15aafd843c5726d68af29e826d14b1a7f26f",
+   "sku": "Plego Carbon",
+   "name": "PLEGO Carbon",
+   "list_row": "online median of 1: Rehago.pl (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 1000000,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/195433935"
+   ]
+  }
+ ],
+ "unresolved": [
+  {
+   "sku": "ECLIPS X4 30°",
+   "name": "ECLIPS X4 30",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "ECLIPS X4 90° COMFORT",
+   "name": "eclipsx4 90° Komfort",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "SAGITTA KIDS SI",
+   "name": "SAGITTA KIDS SI",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "Kuarz",
+   "name": "KUARZ",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "Sync",
+   "name": "SYNC",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "Eon",
+   "name": "EON",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "275",
+   "name": "275",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "Mattress BaWü",
+   "name": "Materac BaWü",
+   "reason": "confidence none"
+  }
+ ]
+}

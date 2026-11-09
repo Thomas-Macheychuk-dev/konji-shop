@@ -1,0 +1,1007 @@
+{
+ "supplier": "timago",
+ "external_source": "timago",
+ "source_file": "Polish online shop prices, researched 2026-11-09",
+ "effective_from": "2026-11-09",
+ "currency": "PLN",
+ "pricing": "median gross price of matching Polish shop offers; VAT stays as set on the variant",
+ "entries": [
+  {
+   "external_id": "1121",
+   "sku": "MAT-MAX-ZM-15",
+   "name": "Materac piankowy do łóżka rehabilitacyjnego w pokrowcu nieprzemakalnym, paroprzepuszczalnym - maksymalne obciążenie 250 kg",
+   "list_row": "online median of 2: megamedic.pl, sklep.haltia.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 87950,
+   "matched_by": "online",
+   "offers": [
+    "https://megamedic.pl/pl/p/Materac-piankowy-do-lozka-rehabilitacyjnego-w-pokrowcu-nieprzemakalnym%2C-paroprzepuszczalnym-maksymalne-obciazenie-250-kg/3619",
+    "https://sklep.haltia.pl/materac-piankowy-do-lozka-rehabilitacyjnego-w-pokrowcu-nieprzemakalnym-paroprzepuszczalnym-maksymalne-obciazenie-250-kg-p-15865.html"
+   ]
+  },
+  {
+   "external_id": "1100",
+   "sku": "KING-CMDBA-20",
+   "name": "Krzesło prysznicowo-toaletowe z wiaderkiem",
+   "list_row": "online median of 2: med-studio24.pl, megamedic.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 35450,
+   "matched_by": "online",
+   "offers": [
+    "https://med-studio24.pl/krzeslo-prysznicowo-toaletowe-z-wiaderkiem-do-150-kg,id1491.html",
+    "https://megamedic.pl/pl/p/Krzeslo-prysznicowo-toaletowe-z-wiaderkiem-KING-CMDBA-20/3556"
+   ]
+  },
+  {
+   "external_id": "1092",
+   "sku": "HOLD-TIM",
+   "name": "Uchwyt łazienkowy prosty - HOLD-TIM",
+   "list_row": "online median of 6: fizjo4sport.pl, medycznie.com.pl, megamedic.pl, ocean-zdrowia.pl, sklep.haltia.pl, tanisklepmedyczny.pl (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 4300,
+   "matched_by": "online",
+   "offers": [
+    "https://medycznie.com.pl/produkt/uchwyt-lazienkowy-prosty-30cm-bialy-hold-tim-30/",
+    "https://www.ceneo.pl/24564699",
+    "https://megamedic.pl/pl/p/Uchwyt-lazienkowy-prosty-HoldTim-Timago-/3538",
+    "https://sklep.haltia.pl/porecze-i-uchwyty-lazienkowe-c-195_309.html",
+    "https://ocean-zdrowia.pl/uchwyty-do-lazienki-dla-niepelnosprawnych/4412-uchwyt-lazienkowy-prosty-hold-tim-30.html",
+    "https://fizjo4sport.pl/uchwyt-lazienkowy-na-sciane-dla-osob-niepelnosprawnych-i-seniorow-porecz-prosta-hold-tim-timago"
+   ]
+  },
+  {
+   "external_id": "2049",
+   "sku": "JMC-C 2040-2049",
+   "name": "Kula inwalidzka łokciowa - modele JMC-C 2040-2046 / JMC-C 2048-2049",
+   "list_row": "online median of 3: pomocedlaseniora.pl, sklep-rehabilitacyjny.com.pl, sklep-zdrowie.com.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 3800,
+   "matched_by": "online",
+   "offers": [
+    "https://www.sklep-zdrowie.com.pl/kula-lokciowa-jmc-c-2040-timago-p-368.html",
+    "https://www.sklep-rehabilitacyjny.com.pl/kula_lokciowa_kule_lokciowe_jmc-c_2040_2041_2042_2043_2044_2045_2046_timago",
+    "https://pomocedlaseniora.pl/kule-inwalidzkie/1316-kule-ortopedyczne-lokciowe-regulowane-inwalidzkie-kolory-jmc-c-2040-2046-marki-timago-5902983720249.html"
+   ]
+  },
+  {
+   "external_id": "955",
+   "sku": "HMS NASADKA",
+   "name": "Nasadka gumowa do kul HMS",
+   "list_row": "online median of 2: sklep.haltia.pl, sklep.imed.warszawa.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 1250,
+   "matched_by": "online",
+   "offers": [
+    "https://sklep.haltia.pl/nasadka-gumowa-do-kul-hms-p-15862.html",
+    "https://sklep.imed.warszawa.pl/index.php?product_id=6940&route=product%2Fproduct"
+   ]
+  },
+  {
+   "external_id": "825",
+   "sku": "JMC",
+   "name": "Nasadki gumowe do podpórki dwukołowej - 2 sztuki",
+   "list_row": "online median of 2: emedeo.pl, medicaldepot.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 995,
+   "matched_by": "online",
+   "offers": [
+    "https://emedeo.pl/produkt/nasadki-gumowe-do-podporki-dwukolowej-2-sztuki",
+    "https://medicaldepot.pl/sprzet-medyczny/rehabilitacja/balkoniki-i-chodziki/nasadki-gumowe-do-podporki-dwukolowej-2-szt-3220.html"
+   ]
+  },
+  {
+   "external_id": "1167",
+   "sku": "WCD1-80",
+   "name": "Chusteczki nawilżane dla dzieci",
+   "list_row": "online median of 4: komfortmed.pl, med-studio24.pl, rehamed.com.pl, sosafe.com.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 506,
+   "matched_by": "online",
+   "offers": [
+    "https://rehamed.com.pl/produkt/zarys-nawilzane-chusteczki-dla-dzieci-stila-care-80-sztuk/",
+    "https://med-studio24.pl/chusteczki-nawilzane-dla-dzieci-stila-care-wet-wipes-80szt,id1294.html",
+    "https://sosafe.com.pl/sklep/produkt/nawilzane-chusteczki/",
+    "https://komfortmed.pl/chusteczki-nawilzane-dla-dzieci-stila-care"
+   ]
+  },
+  {
+   "external_id": "1164",
+   "sku": "WR1-08",
+   "name": "Rękawice do bezwodnego mycia ciała",
+   "list_row": "online median of 4: med-studio24.pl, rehatop.com, salvadormedical.pl, sklep-omnibus.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 590,
+   "matched_by": "online",
+   "offers": [
+    "https://med-studio24.pl/rekawice-do-bezwodnego-mycia-ciala-stila-care-zarys-opakowanie-8-szt,id1296.html",
+    "https://salvadormedical.pl/pl/p/Rekawice-do-bezwodnego-mycia-ciala-Stila-Care-8szt./71922",
+    "https://www.sklep-omnibus.pl/myjka-rekawica-do-bezwodnego-mycia-ciala-8-sztuk-p-1101.html",
+    "https://www.rehatop.com/pl/kategorie/dezynfekcja-i-higiena"
+   ]
+  },
+  {
+   "external_id": "1166",
+   "sku": "WM1-08",
+   "name": "Chusteczki do bezwodnego mycia ciała",
+   "list_row": "online median of 5: med-studio24.pl, medipaczka.pl, rehatop.com, salvadormedical.pl, sklep-omnibus.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 360,
+   "matched_by": "online",
+   "offers": [
+    "https://med-studio24.pl/chusteczki-do-bezwodnego-mycia-ciala,id1295.html",
+    "https://salvadormedical.pl/pl/p/Rekawice-do-bezwodnego-mycia-ciala-Stila-Care-8szt./71922",
+    "https://medipaczka.pl/pl/producer/ZARYS-International-Group/23",
+    "https://www.sklep-omnibus.pl/myjki-do-ciala-i-wlosow-c-69_113.html",
+    "https://www.rehatop.com/pl/kategorie/dezynfekcja-i-higiena"
+   ]
+  },
+  {
+   "external_id": "1165",
+   "sku": "WC1-01",
+   "name": "Czepek do bezwodnego mycia włosów",
+   "list_row": "online median of 6: a-medyczny.pl, dlapacjenta.pl, med-studio24.pl, medipaczka.pl, salvadormedical.pl, sklep-rehabilitacyjny.com.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 660,
+   "matched_by": "online",
+   "offers": [
+    "https://www.sklep-rehabilitacyjny.com.pl/czepek_do_bezwodnego_mycia_wlosow_Stila_Care",
+    "https://dlapacjenta.pl/stila-care-czepek-do-bezwodnego-mycia-glowy-i-wlosow.html",
+    "https://med-studio24.pl/czepek-do-bezwodnego-mycia-wlosow-shampoo-cap-stila-care-by-zarys-1-szt,id1293.html",
+    "https://a-medyczny.pl/pielegnacja-osob-lezacych/7183-czepek-do-bezwodnego-mycia-wlosow-zarys-1-sztuka-5907996885930.html",
+    "https://medipaczka.pl/pl/producer/ZARYS-International-Group/23",
+    "https://salvadormedical.pl/pl/p/Rekawice-do-bezwodnego-mycia-ciala-Stila-Care-8szt./71922"
+   ]
+  },
+  {
+   "external_id": "1157",
+   "sku": "GLOVE-TIM",
+   "name": "Myjka wielokrotnego użytku",
+   "list_row": "online median of 3: fizjo4sport.pl, med-studio24.pl, yellowsport.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 950,
+   "matched_by": "online",
+   "offers": [
+    "https://yellowsport.pl/myjka-wielokrotnego-uzytku-bawelniana",
+    "https://med-studio24.pl/myjka-wielokrotnego-uzytku-timago-glove-tim,id1286.html",
+    "https://fizjo4sport.pl/rekawica-myjka-wielokrotnego-uzytku-do-kapieli-i-pielegnacji-glove-tim-timago"
+   ]
+  },
+  {
+   "external_id": "1087",
+   "sku": "MED-BB/1 BEGOBANO",
+   "name": "Myjka z żelem myjącym Begobano",
+   "list_row": "online median of 3: fizjo4sport.pl, megamed.info, targmed.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 1650,
+   "matched_by": "online",
+   "offers": [
+    "https://fizjo4sport.pl/myjka-z-zelem-do-mycia-ciala-24-szt-begabano",
+    "https://www.megamed.info/p/nietrzymanie-moczu/kosmetyki/myjki-z-zelem-myjacym-jalsosa-begobano-24-szt-16187051104/",
+    "https://targmed.pl/begobano-bb-jednorazowa-myjka-gabka-z-mydlem-ph-5-5-op-24-worek-25,id1083.html"
+   ]
+  },
+  {
+   "external_id": "1063",
+   "sku": "BT-002",
+   "name": "Ochraniacze na buty",
+   "list_row": "online median of 5: ars-beauty.pl, czystysklep.pl, higienadent.com, medeocare.pl, rzesydlaciebie.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 790,
+   "matched_by": "online",
+   "offers": [
+    "https://medeocare.pl/produkt/ochraniacze-na-obuwie-krotkie-jednorazowe-foliowe-100szt-betatex-zarys/",
+    "https://higienadent.com/zarys-ochraniacze-na-obuwie-100szt-p-3067.html",
+    "https://www.czystysklep.pl/zarys-ochraniacze-na-buty-100-sztuk-p17451",
+    "https://www.ars-beauty.pl/pl/products/zarys-betatex-ochraniacze-foliowe-na-obuwie-niebieskie-100-szt-1007418",
+    "https://rzesydlaciebie.pl/pl/p/Ochraniacze-na-obuwie-foliowe-ZARYS-100-szt./1887"
+   ]
+  },
+  {
+   "external_id": "1035",
+   "sku": "MED-MB52 COCO",
+   "name": "Myjka z żelem do ciała kokosowa - Coco Dermobano",
+   "list_row": "online median of 2: admed.org.pl, sklep-rehabilitacyjny.com.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 1150,
+   "matched_by": "online",
+   "offers": [
+    "https://admed.org.pl/gabki-nasaczone-zelem-myjki-do-mycia-ciala-kokosowe-jednorazowe-dermobano-op-10-szt.html",
+    "https://www.sklep-rehabilitacyjny.com.pl/Myjka_Dermobano_z_zelem_kokosowym_do_mycia_ciala"
+   ]
+  },
+  {
+   "external_id": "236",
+   "sku": null,
+   "name": "Basen sanitarny",
+   "list_row": "online median of 1: orto-sklep.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 2499,
+   "matched_by": "online",
+   "offers": [
+    "https://orto-sklep.pl/srodki-pomocnicze/1148-basen-sanitarny-zarys-timago.html"
+   ]
+  },
+  {
+   "external_id": "810",
+   "sku": "TGR-R KT-S 668",
+   "name": "Krzesło toaletowe stałe - TGR-R KT-S 668",
+   "list_row": "online median of 4: matopat24.pl, med-studio24.pl, seni24.pl, tanisklepmedyczny.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 14313,
+   "matched_by": "online",
+   "offers": [
+    "https://www.matopat24.pl/timago-tgr-r-kt-s-668-krzeslo-toaletowe-stale_24545",
+    "https://www.seni24.pl/krzeslo-toaletowe-stale-timago-tgr-r-kt-s-668_24545",
+    "https://med-studio24.pl/krzeslo-toaletowe-stale,id70.html",
+    "https://tanisklepmedyczny.pl/krzeslo-toaletowe-tgrr-kts-668-timago-p-378.html"
+   ]
+  },
+  {
+   "external_id": "237",
+   "sku": null,
+   "name": "Kaczka sanitarna męska/damska z uchwytem",
+   "list_row": "online median of 2: fizjo4sport.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 1399,
+   "matched_by": "online",
+   "offers": [
+    "https://fizjo4sport.pl/kaczka-sanitarna-damska-600-ml-na-mocz-z-uchwytem-timago",
+    "https://fizjo4sport.pl/kaczka-sanitarna-meska-1200-ml-na-mocz-z-uchwytem-timago"
+   ]
+  },
+  {
+   "external_id": "690",
+   "sku": "YH-690",
+   "name": "Aparat do leczenia bezdechu sennego - YH-690",
+   "list_row": "online median of 1: dobrzewyspani.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 339000,
+   "matched_by": "online",
+   "offers": [
+    "https://dobrzewyspani.pl/?s=YH-690&post_type=product"
+   ]
+  },
+  {
+   "external_id": "1161",
+   "sku": "TEDI",
+   "name": "Nebulizator kompresyjny dla dzieci - TEDI",
+   "list_row": "online median of 4: fizjo4sport.pl, med-studio24.pl, reh-express.pl, sklep.cp-medibed.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 8595,
+   "matched_by": "online",
+   "offers": [
+    "https://med-studio24.pl/nebulizator-kompresyjny-dla-dzieci-tedi-timago-kompletny-zestaw,id1297.html",
+    "https://sklep.cp-medibed.pl/pl/p/Nebulizator-KOMPRESYJNY-dla-dzieci-MIS-TEDI-Timago/1368",
+    "https://reh-express.pl/produkt/timago-tedi-inhalator-nebulizator-kompresyjny-dla-dzieci-misiek-2-maski/",
+    "https://fizjo4sport.pl/inhalator-nebulizator-kompresyjny-dla-dzieci-z-2-maskami-w-zestawie-cichy-tedi-timago"
+   ]
+  },
+  {
+   "external_id": "970",
+   "sku": "YF-02",
+   "name": "Maska twarzowa do aparatu CPAP bez wspornika czołowego - YUWELL",
+   "list_row": "online median of 5: cpap-sklep.pl, medactive24.pl, megamedic.pl, musi-med.pl, rehago.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 20000,
+   "matched_by": "online",
+   "offers": [
+    "https://megamedic.pl/pl/p/Maska-twarzowa-do-aparatu-CPAP-bez-wspornika-czolowego-YUWELL/2994",
+    "https://musi-med.pl/pl/p/Maska-twarzowa-YF-02-do-aparatu-CPAP-bez-wspornika-czolowego-YUWELL/438",
+    "https://www.cpap-sklep.pl/maska-twarzowa-yf-02-yuwell-p-230.html",
+    "https://medactive24.pl/sprzet-medyczny/251-yuwell-maska-twarzowa-yf-02.html",
+    "https://www.rehago.pl/pl/maska-twarzowa-do-aparatu-cpap-yuwell-yf02/3-60-1192"
+   ]
+  },
+  {
+   "external_id": "884",
+   "sku": "FTL1",
+   "name": "Tlen inhalacyjny o stężeniu 99,5% + maska do podawania tlenu - pojemność 14L",
+   "list_row": "online median of 4: citomedical.pl, fizjo4sport.pl, medwil.pl, sklepmedicus.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 3095,
+   "matched_by": "online",
+   "offers": [
+    "https://fizjo4sport.pl/tlen-inhalacyjny-w-puszcze-z-maska-stezenie-99,5-14l-ftl1-fokusmed",
+    "https://medwil.pl/Tlen-inhalacyjny-z-maska-do-podawania-o-stezeniu-99-5-o-pojemnosci-14-l",
+    "https://citomedical.pl/Tlen-inhalacyjny-z-maska-do-podawania-o-stezeniu-99-5-o-pojemnosci-14-L-p2635",
+    "https://www.sklepmedicus.pl/pl/p/Tlen-inhalacyjny-99%2C5-w-puszce-z-maska%2C-14-L%2C-FokusMed/1084"
+   ]
+  },
+  {
+   "external_id": "764",
+   "sku": "TGO-C SR 501",
+   "name": "Orteza stabilizująca rzepkę",
+   "list_row": "online median of 3: emedeo.pl, sklep-rehabilitacyjny.com.pl, sklep.wzso.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 8500,
+   "matched_by": "online",
+   "offers": [
+    "https://emedeo.pl/produkt/orteza-stabilizujaca-rzepke",
+    "https://www.sklep-rehabilitacyjny.com.pl/orteza_stabilizaujaca_rzepke_TGO-C_SR_501",
+    "https://sklep.wzso.pl/zamknieta-orteza-kolana-stabilizujaca-rzepke-timago-tgo-c-sr-501,3,11230,11008"
+   ]
+  },
+  {
+   "external_id": "763",
+   "sku": "TGO-C OGU 505",
+   "name": "Orteza stabilizująca goleń i udo",
+   "list_row": "online median of 3: orthomedicus.istore.pl, pomocedlaseniora.pl, sklepsplint.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 13000,
+   "matched_by": "online",
+   "offers": [
+    "https://www.pomocedlaseniora.pl/orteza-stabilizujaca-golen-udo-tgo-c-ogu-505-firmy-timago-m-i406863",
+    "https://orthomedicus.istore.pl/pl/stabilizatory-i-ortezy/1/full/9/f_producer_580902/1",
+    "https://www.sklepsplint.pl/shop/orteza-tutor-stabilizujaca-golen-i-udo-timago-tgo-c-ogu-505/"
+   ]
+  },
+  {
+   "external_id": "762",
+   "sku": "TGO-C SK-Z 502",
+   "name": "Stabilizator stawu kolanowego z szynami zamknięty - model 502",
+   "list_row": "online median of 2: pomocedlaseniora.pl, sklep.wzso.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 16850,
+   "matched_by": "online",
+   "offers": [
+    "https://www.pomocedlaseniora.pl/ortezy-i-stabilizatory-kolana-20662/timago",
+    "https://sklep.wzso.pl/zamknieta-orteza-stawu-kolanowego-z-szynami-timago-tgo-c-sk-z-502,3,11230,11009"
+   ]
+  },
+  {
+   "external_id": "930",
+   "sku": "STMT 6512 / STMT 6513",
+   "name": "Pas do przenoszenia chorych z uchwytami i klamrą",
+   "list_row": "online median of 5: emedeo.pl, med-studio24.pl, sklep-rehabilitacyjny.com.pl, sklep.wzso.pl, sklepmedicus.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 21500,
+   "matched_by": "online",
+   "offers": [
+    "https://www.sklepmedicus.pl/pl_PL/p/Regulowany-pas-78-152-cm-do-transferu-chorych-z-zapieciem-na-klamre-MOBI-TOOLS-Medicare-System/1302",
+    "https://www.sklep-rehabilitacyjny.com.pl/pas_do_przenoszenia_chorych_MEDI-TOOLS_STMT6512_STMT6513",
+    "https://emedeo.pl/produkt/pas-do-przenoszenia-chorych-z-uchwytami-i-klamra",
+    "https://med-studio24.pl/pas-do-przenoszenia-chorych-z-uchwytami-i-klamra-stmt-6512,id969.html",
+    "https://sklep.wzso.pl/pas-do-przenoszenia-chorych-z-uchwytami-i-klamra-r/3-11215-12523"
+   ]
+  },
+  {
+   "external_id": "592",
+   "sku": "SVC 2500 / SVC2510",
+   "name": "Rękawica ochronna - SALVACEL",
+   "list_row": "online median of 5: cezal.pl, emedeo.pl, medactive24.pl, medycznie.com.pl, sklep.haltia.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 6800,
+   "matched_by": "online",
+   "offers": [
+    "https://medycznie.com.pl/produkt/rekawica-ochronna-m-salvacel-svc-2500-ochraniacz-na-dlon/",
+    "https://www.cezal.pl/pomoce/6256-rekawica-ochronna-m-z-pasem-mocujacym-svc2500-salvacel.html",
+    "https://emedeo.pl/produkt/rekawica-ochronna-salvacel",
+    "https://medactive24.pl/pomoce-rehabilitacyjne/224-tim-rekawica-ochronna-svc2500-8436035354054.html",
+    "https://sklep.haltia.pl/rekawica-ochronna-salvacel-p-15800.html"
+   ]
+  },
+  {
+   "external_id": "4",
+   "sku": "SCP 4250M / 4250L",
+   "name": "Kamizelka unieruchamiająca 5-punktowa SALVACLIP",
+   "list_row": "online median of 4: asmedi.pl, med-studio24.pl, sklep-rehabilitacyjny.com.pl, vitalconcept.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 24450,
+   "matched_by": "online",
+   "offers": [
+    "https://med-studio24.pl/kaftan-unieruchamiajacy-5-punktowy-salvaclip,id605.html",
+    "https://asmedi.pl/kregoslup-i-plecy/36-salvaclip-kaftan-unieruchamiajacy.html",
+    "https://www.sklep-rehabilitacyjny.com.pl/kaftan_stabilizujacy_5_punktowy_SCP_4250",
+    "https://vitalconcept.pl/pl/c/Wozki-inwalidzkie/110"
+   ]
+  },
+  {
+   "external_id": "1245",
+   "sku": "ZARYS",
+   "name": "Myjka do ciała - gąbka HIGIEMED",
+   "list_row": "online median of 1: sklep.medicov.pl (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 2249,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/112899460"
+   ]
+  },
+  {
+   "external_id": "1130",
+   "sku": "IN - dispoFINE",
+   "name": "Igła iniekcyjna",
+   "list_row": "online median of 12: Formedic (via Ceneo), doz.pl (via Ceneo), gemini.pl (via Ceneo), or-med.sklep (via Ceneo), witalo.pl (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 527,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/98769893",
+    "https://www.ceneo.pl/98769893",
+    "https://www.ceneo.pl/98769893",
+    "https://www.ceneo.pl/91763712",
+    "https://www.ceneo.pl/91763712",
+    "https://www.ceneo.pl/120241378",
+    "https://www.ceneo.pl/154219601",
+    "https://www.ceneo.pl/98769879",
+    "https://www.ceneo.pl/185688612",
+    "https://www.ceneo.pl/185688612",
+    "https://www.ceneo.pl/185688622",
+    "https://www.ceneo.pl/185688622"
+   ]
+  },
+  {
+   "external_id": "1120",
+   "sku": "TIM-MULTI",
+   "name": "Pojemnik na mocz/kał 2w1, sterylny - TIM-MULTI",
+   "list_row": "online median of 5: aptekadlarodziny.pl (via Ceneo), aptekaolmed.pl (via Ceneo), aptekazawiszy.pl (via Ceneo), gemini.pl (via Ceneo), medicare.pl (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 139,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/92747561",
+    "https://www.ceneo.pl/92747561",
+    "https://www.ceneo.pl/92747561",
+    "https://www.ceneo.pl/92747561",
+    "https://www.ceneo.pl/92747561"
+   ]
+  },
+  {
+   "external_id": "266",
+   "sku": "ZARYS",
+   "name": "Maska tlenowa",
+   "list_row": "online median of 4: medica-sklep.pl (via Ceneo), or-med.sklep (via Ceneo), sklep.cp-medibed.pl (via Ceneo), tanisklepmedyczny.pl (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 425,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/136768569",
+    "https://www.ceneo.pl/114596379",
+    "https://www.ceneo.pl/98243762",
+    "https://www.ceneo.pl/98243762"
+   ]
+  },
+  {
+   "external_id": "283",
+   "sku": "KR160210",
+   "name": "Koc ratunkowy",
+   "list_row": "online median of 6: allegro.pl (via Ceneo), aptekapigulkazdrowia.pl (via Ceneo), butterflyhurt.pl (via Ceneo), cezzoo.pl (via Ceneo), sklep.cp-medibed.pl (via Ceneo), sklep.medicov",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 499,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/49831364",
+    "https://www.ceneo.pl/49831364",
+    "https://www.ceneo.pl/49831364",
+    "https://www.ceneo.pl/49831364",
+    "https://www.ceneo.pl/49831364",
+    "https://www.ceneo.pl/49831364"
+   ]
+  },
+  {
+   "external_id": "886",
+   "sku": "easyFLOW IS",
+   "name": "Przyrząd do infuzji easyFLOW IS",
+   "list_row": "online median of 1: gemini.pl (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 229,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/158484752"
+   ]
+  },
+  {
+   "external_id": "234",
+   "sku": "WLS/WLN/ZLN",
+   "name": "Worek do lewatywy",
+   "list_row": "online median of 1: or-med.sklep (via Ceneo)",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 489,
+   "matched_by": "online",
+   "offers": [
+    "https://www.ceneo.pl/200751187"
+   ]
+  },
+  {
+   "external_id": "656",
+   "sku": "easyCARE NITRYLE",
+   "name": "Rękawice diagnostyczne nitrylowe easyCARE",
+   "list_row": "online median of 3: doz.pl, gemini.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 2499,
+   "matched_by": "online",
+   "offers": [
+    "https://www.doz.pl/p/easycare-nitrile-bezpudrowe-rekawice-diagnostyczne-nitrylowe-niejalowe-niebieskie-rozmiar-m-100-szt-180877",
+    "https://www.doz.pl/p/easycare-nitrile-bezpudrowe-rekawice-diagnostyczne-nitrylowe-niejalowe-niebieskie-rozmiar-s-100-szt-180878",
+    "https://gemini.pl/easycare-nitrile-rekawice-nitrylowe-niejalowe-bezpudrowe-rozmiar-m-100-sztuk-9079561"
+   ]
+  }
+ ],
+ "unresolved": [
+  {
+   "sku": "Maya Produkt wkrótce w sprzedaży – dostępność ograniczona",
+   "name": "Wózek inwalidzki elektryczny - Maya",
+   "reason": "not confirmed on the shop pages"
+  },
+  {
+   "sku": "MOON-TIM",
+   "name": "Materac piankowy do łóżka rehabilitacyjnego - MOON-TIM",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "WB-804 / WB-NT-600 / WB-NT-630",
+   "name": "Żelowe kompresy termiczne do terapii ciepłem lub zimnem",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "JMC 2907",
+   "name": "Nasadki gumowe do czwórnogów na niskich nogach - 2 sztuki",
+   "reason": "not confirmed on the shop pages"
+  },
+  {
+   "sku": "BT-PC",
+   "name": "Podkład chłonny",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "SPIRIT-3_BATERIA",
+   "name": "Bateria do przenośnego koncentratora tlenu SPIRIT-3 - 13,6 Ah",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "CT3",
+   "name": "System Ciągłego Monitorowania Glikemii - CT3",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "CHTW/B",
+   "name": "Chusta trójkątna",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "TTE 6102 - TTE6122",
+   "name": "Łatwoślizg - chusta ułatwiająca przenoszenie chorego",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "SCP 4275M / 4275L",
+   "name": "Pas stabilizujący miednicę z ujęciem krocza",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Kompres gazowy KOMPRI lux/KOMPRI lux S",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "Zarys",
+   "name": "Kompres włókninowy NONVI lux/NONVI lux S",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Opaska elastyczna z zapinką - elastoBAND FLEX",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": null,
+   "name": "Płyn do higienicznej i chirurgicznej dezynfekcji rąk i powierzchni",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "DryTim",
+   "name": "Podkład na materac - DryTim",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "Elastopor",
+   "name": "Opatrunek włókninowy z wkładem chłonnym - ELASTOPOR STERIL",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "BT-030",
+   "name": "Prześcieradło medyczne",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "FP",
+   "name": "Plaster tkaninowy z opatrunkiem FABRIPLAST",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "YADA-BRUSH-B/A",
+   "name": "Szczotka do mycia rurek tracheotomijnych",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "elastoBAND",
+   "name": "Opaska dziana",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "KOMPRES",
+   "name": "Gaza opatrunkowa kopertowa - GAZA LUX",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "BT-019",
+   "name": "Fartuch medyczny z gumką, włókninowy, niejałowy",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "PLASPOL",
+   "name": "Pojemnik na odpady medyczne",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Podkład bibułowy 2-warstwowy w rolce",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "SA-001",
+   "name": "Staza automatyczna",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "S001",
+   "name": "Staza gumowa w rolce",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "ZARYS-BT-046-31B (Z)",
+   "name": "Maseczka chirurgiczna z gumką",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "Kubek",
+   "name": "Kubek pojnik z uchwytem",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "HPM",
+   "name": "Kieliszek do podawania leków",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "3CZ-CEW",
+   "name": "Strzykawka trzyczęściowa Janeta",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "SLN/SLS",
+   "name": "Szpatułka laryngologiczna drewniana",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Nerka medyczna",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "GREATCARE-GCU230105",
+   "name": "Worek do zbiórki moczu z mocowaniem na nogę",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "WMD2000",
+   "name": "Worek do zbiórki moczu 2l, z odpływem typu T",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Zgłębnik żołądkowy 100% silikon",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Zgłębnik żołądkowy",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Dren tlenowy",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Cewnik do podawania tlenu przez nos",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "SleepTim",
+   "name": "Prześcieradło z gumką dookoła - SleepTim",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "BIB-TIM",
+   "name": "Śliniak medyczny z kieszonką",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "ZARYS16-HJM-SO",
+   "name": "Szczoteczka do zębów z odsysaniem",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "ZARYS25-HJM-GB",
+   "name": "Aplikator gąbkowy do nawilżania jamy ustnej",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "LAYERTEX-87EN0901220-23",
+   "name": "Myjka nasączona mydłem - CLEANET NAPA",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "87ENTAS1220-07",
+   "name": "Myjka nasączona środkiem myjącym - CLEANET PLUS",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "01MA1552090-76",
+   "name": "Myjka nasączona środkiem myjącym - GANTNET",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "LAYERTEX-PLMA1502260-72",
+   "name": "Myjka nasączona środkiem myjącym - GANTNET PLUS",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "TH 534",
+   "name": "Płyta obrotowa do fotelika RECARO Axion 1 Reha",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "TH 6634/6 / TH 6734/6",
+   "name": "Peloty boczne podtrzymujące do wózka Swifty",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "TH 6620/6 / TH 6720/6",
+   "name": "Klin odwodzący do wózka Swifty",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "TH 6616/51 / TH 6617/6 / TH 6717",
+   "name": "Motylkowa uprząż piersiowa, elastyczna rozm. S, M i L do wózka EASyS Advantage",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "TH 427",
+   "name": "Prowadnice ramion do fotelika Hercules Prime R129",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "TH 503, TH 504",
+   "name": "Podnóżek do fotelika Major",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "TH 673",
+   "name": "Stolik do fotelika Major",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "AHD 1000",
+   "name": "Płyn do dezynfekcji AHD 1000",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "Hogen Spitze",
+   "name": "Igły do karpuli Hogen-Spitze",
+   "reason": "confidence low"
+  },
+  {
+   "sku": "MB-05170502/MB/05380502/MB-0561",
+   "name": "Opatrunki żelowe Cutanplast",
+   "reason": "priced per size/pack/version; needs variants"
+  },
+  {
+   "sku": "SIMPLE MANIKIN III",
+   "name": "Fantom Simple Manikin III (zestaw standardowy)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "NISSIN Type 1",
+   "name": "Fantom NISSIN Type 1 (zestaw średnio-zaawansowany)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "NISSIN Type 2",
+   "name": "Fantom Nissin TYPE 2 (zestaw zaawansowany)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "PRO2001-UL-SP-FEM-32",
+   "name": "Model PRO2001-UL-SP-FEM-32 (model standardowy/protetyczny)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "EDE1001-UL-UP-FEM",
+   "name": "Model EDE1001-UL-UP-FEM (model bezzębny)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "PER2001-UL-SP-FEM-32",
+   "name": "Model PER2001-UL-SP-FEM-32 (model periodontologiczny)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "SUG1003-UL-SP-FEM-28",
+   "name": "Model SUG1003-UL-SP-FEM-28 (model chirurgiczny)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "PDI2001-UL-SP-FEM",
+   "name": "Model PDI2001-UL-SP-FEM (model pedodontyczny)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "IMP5003-UL-SP-FEM",
+   "name": "Model IMP5003-UL-SP-FEM (model do implantacji)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "SUG2005-UL-SP",
+   "name": "Model L SUG2005-UL-SP (model anestezjologiczny)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "YS-802A",
+   "name": "Model YS-802A (model ortodontyczny)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "A5A-200",
+   "name": "Model L A5A-200 (zęby standardowe)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "A20A-200",
+   "name": "Model A20A-200 (zęby 2-warstwowe)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "A27A",
+   "name": "Model A27A (zęby 2-warstowe z próchnicą)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "A21A / A25A",
+   "name": "Model A21A / A25A (zęby z opracowanym ubytkiem)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "S12A-200",
+   "name": "Model S12A-200 (zęby endodontyczne)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "A2A-240",
+   "name": "Model A2A-240 (wypełnienie ubytków)",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Bloczki endodontyczne",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Modele anatomiczne",
+   "reason": "confidence none"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Modele edukacyjne",
+   "reason": "confidence none"
+  }
+ ]
+}
