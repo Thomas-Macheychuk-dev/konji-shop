@@ -59,8 +59,8 @@ final class ApplyReh4MatPriceListCommand extends Command
         ProductVariant::query()
             ->with(['product' => fn ($query) => $query->select(['id', 'name', 'slug', 'status', 'external_parent_sku'])->withCount('variants')])
             ->whereHas('product', fn ($query) => $query->where('external_source', 'reh4mat'))
-            ->orderBy('product_id')
-            ->orderBy('id')
+            // chunkById pages by id, so the query must be ordered by id alone: with product_id first, a chunk
+            // ending on a later-created size variant skips the variants of the products after it.
             ->chunkById(200, function ($variants) use ($list, &$changes, &$unchanged, &$ambiguous, &$missing): void {
                 foreach ($variants as $variant) {
                     [$code, $via] = $this->codeFor($variant, $list);
