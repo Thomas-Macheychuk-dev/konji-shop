@@ -1,6 +1,6 @@
 """Build the resolved Timago 2026 price table.
 
-Usage: python -I build_timago.py "CENNIK dla dystrybutorów- 2026.xlsx" full-product-data.json out.json
+Usage: python -I build_timago.py "CENNIK dla dystrybutorów- 2026.xlsx" full-product-data.json out.json variants-out.json
 
 The spreadsheet is Timago's distributor list (net, VAT, gross). The shop sells at the distributor
 net price plus a 10% markup; gross follows from the list VAT rate. Each scraped Timago product
@@ -73,6 +73,26 @@ OVERRIDES = {
     "TH 6341/1": "Rehabilitacja dziecięca:18",
     "TH 6833/1": "Rehabilitacja dziecięca:108",
     "TH 6621/41": "Rehabilitacja dziecięca:27",  # pałąk mocno zaokrąglony, listed as TH 6621/51
+    # TH 421 and TH 675 appear under several car seats; the row is the one in that seat's accessories.
+    "Rurka stabilizująca do fotelika Hercules Prime R129": "Rehabilitacja dziecięca:264",
+    "Rurka stabilizująca do fotelika Hercules Small": "Rehabilitacja dziecięca:292",
+    "TH 675": "Rehabilitacja dziecięca:243",  # Major, peloty boczne tułowia
+}
+
+# Products whose list price depends on a size or configuration; each becomes a shop variant per row.
+# scraped SKU -> (attribute name, [(value, list row)])
+VARIANTS = {
+    "SPIKY": ("Rozmiar", [
+        ("5 cm (czerwona)", "Rehabilitacja:168"), ("6 cm (niebieska)", "Rehabilitacja:169"),
+        ("7 cm (żółta)", "Rehabilitacja:170"), ("8 cm (zielona)", "Rehabilitacja:171"),
+    ]),
+    "yellowBAND": ("Szerokość", [
+        ("5 cm", "Rehabilitacja:175"), ("7,5 cm", "Rehabilitacja:176"), ("10 cm", "Rehabilitacja:177"),
+    ]),
+    "yellowTAPE": ("Wariant", [
+        ("jednokolorowa", "Rehabilitacja:174"), ("mix 4 kolorów", "Rehabilitacja:173"),
+    ]),
+    "SLIDE-TIM": ("Rozmiar", [("72 x 71 cm", "Rehabilitacja:274"), ("122 x 71 cm", "Rehabilitacja:273")]),
 }
 
 
@@ -114,7 +134,14 @@ def read_rows(path):
     return rows
 
 
-def main(xlsx, scraped_path, out_path):
+def price(row):
+    """Return (net_minor, gross_minor) for a list row: distributor net + markup, gross from the list VAT."""
+    net = (row["net"] * MARKUP).quantize(Decimal("0.01"), ROUND_HALF_UP)
+    net_minor = int(net * 100)
+    return net_minor, int((Decimal(net_minor) * (100 + row["vat"]) / 100).quantize(Decimal("1"), ROUND_HALF_UP))
+
+
+def main(xlsx, scraped_path, out_path, variants_out_path):
     rows = read_rows(xlsx)
     by_code = defaultdict(list)
     for row in rows.values():
@@ -124,10 +151,32 @@ def main(xlsx, scraped_path, out_path):
 
     data = json.load(open(scraped_path, encoding="utf-8"))
     products = data["products"] if isinstance(data, dict) else data
-    entries, unresolved = [], []
+    entries, variant_products, unresolved = [], [], []
 
     for product in products:
         sku, name = product.get("sku"), product["name"]
+        if sku in VARIANTS:
+            attribute, picks = VARIANTS[sku]
+            variants = []
+            for value, row_id in picks:
+                row = rows[row_id]
+                net_minor, gross_minor = price(row)
+                variants.append({
+                    "value": value,
+                    "list_row": row["id"],
+                    "list_net_minor": int(row["net"] * 100),
+                    "vat": row["vat"],
+                    "net_minor": net_minor,
+                    "gross_minor": gross_minor,
+                })
+            variant_products.append({
+                "external_id": str(product["external_product_id"]),
+                "sku": sku,
+                "name": name,
+                "attribute": attribute,
+                "variants": variants,
+            })
+            continue
         override = OVERRIDES.get(sku) or OVERRIDES.get(name)
         if override:
             row, via = rows[override], "override"
@@ -139,8 +188,7 @@ def main(xlsx, scraped_path, out_path):
                 continue
             row, via = candidates[0], "code"
 
-        net = (row["net"] * MARKUP).quantize(Decimal("0.01"), ROUND_HALF_UP)
-        net_minor = int(net * 100)
+        net_minor, gross_minor = price(row)
         entries.append({
             "external_id": str(product["external_product_id"]),
             "sku": sku,
@@ -150,25 +198,28 @@ def main(xlsx, scraped_path, out_path):
             "list_net_minor": int(row["net"] * 100),
             "vat": row["vat"],
             "net_minor": net_minor,
-            "gross_minor": int((Decimal(net_minor) * (100 + row["vat"]) / 100).quantize(Decimal("1"), ROUND_HALF_UP)),
+            "gross_minor": gross_minor,
             "matched_by": via,
         })
 
-    out = {
+    header = {
         "supplier": "timago",
         "external_source": "timago",
         "source_file": "CENNIK dla dystrybutorów- 2026.xlsx",
         "effective_from": "2026-01-01",
         "currency": "PLN",
         "pricing": "distributor net price + 10% markup; gross from the list VAT rate",
-        "entries": entries,
-        "unresolved": unresolved,
     }
-    with open(out_path, "w", encoding="utf-8") as handle:
-        json.dump(out, handle, ensure_ascii=False, indent=1)
+    write_json(out_path, {**header, "entries": entries, "unresolved": unresolved})
+    write_json(variants_out_path, {**header, "products": variant_products})
+    print(f"products={len(products)} priced={len(entries)} with_variants={len(variant_products)} unresolved={len(unresolved)}")
+
+
+def write_json(path, data):
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(data, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
-    print(f"products={len(products)} priced={len(entries)} unresolved={len(unresolved)}")
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:5])

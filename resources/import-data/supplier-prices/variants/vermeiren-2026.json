@@ -1,0 +1,538 @@
+{
+ "supplier": "vermeiren",
+ "external_source": "vermeiren",
+ "source_file": "cennik 2026 ważny od 01,01,2026-1.pdf",
+ "effective_from": "2026-01-01",
+ "currency": "PLN",
+ "pricing": "retail (cena detaliczna) gross from the list; net follows from the list VAT rate",
+ "products": [
+  {
+   "external_id": "ff578e5934c1c7dfe04ae1127cef1d9079d7ddb9aa3a8953b6e54dbc418fa8f1",
+   "sku": "Klaxon Twist",
+   "name": "TWIST",
+   "attribute": "Wersja",
+   "variants": [
+    {
+     "value": "napęd tylny (RDE)",
+     "list_row": "page 21: TWIST RDE",
+     "list_net_minor": 2049100,
+     "vat": 8,
+     "net_minor": 2049074,
+     "gross_minor": 2213000
+    },
+    {
+     "value": "napęd przedni (FDE)",
+     "list_row": "page 21: TWIST FDE",
+     "list_net_minor": 2293500,
+     "vat": 8,
+     "net_minor": 2293519,
+     "gross_minor": 2477000
+    },
+    {
+     "value": "napęd przedni z kierownicą (FDE+SB)",
+     "list_row": "page 21: TWIST FDE+SB",
+     "list_net_minor": 2444400,
+     "vat": 8,
+     "net_minor": 2444444,
+     "gross_minor": 2640000
+    },
+    {
+     "value": "wersja full (FDE+RDE+SB)",
+     "list_row": "page 21: TWIST FDE+RDE+SB",
+     "list_net_minor": 2671400,
+     "vat": 8,
+     "net_minor": 2671389,
+     "gross_minor": 2885100
+    }
+   ]
+  },
+  {
+   "external_id": "97ec21b268e620c13ea002abd66a349b5093b497f2d1b843224f6c5fab832b22",
+   "sku": "Gemini 2*",
+   "name": "GEMINI 2",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "32 cm",
+     "list_row": "page 10: gemini² /32",
+     "list_net_minor": 288700,
+     "vat": 8,
+     "net_minor": 288704,
+     "gross_minor": 311800
+    },
+    {
+     "value": "40 cm",
+     "list_row": "page 10: gemini² /40",
+     "list_net_minor": 314500,
+     "vat": 8,
+     "net_minor": 314537,
+     "gross_minor": 339700
+    }
+   ]
+  },
+  {
+   "external_id": "3fd748bcfa58c4406f977155f68db910b695c198cefbe036cbf0a4d97cbb9025",
+   "sku": "SIGMA",
+   "name": "SIGMA",
+   "attribute": "Prędkość",
+   "variants": [
+    {
+     "value": "6 km/h",
+     "list_row": "page 17: SIGMA 230 6 km/h",
+     "list_net_minor": 1422200,
+     "vat": 8,
+     "net_minor": 1422222,
+     "gross_minor": 1536000
+    },
+    {
+     "value": "10 km/h",
+     "list_row": "page 17: SIGMA 230 10 km/h",
+     "list_net_minor": 1534200,
+     "vat": 8,
+     "net_minor": 1534167,
+     "gross_minor": 1656900
+    }
+   ]
+  },
+  {
+   "external_id": "9e74acb11f3a841462f74d98acf951d363aa0433f757914e2b54e745c0d5042e",
+   "sku": "BAYO",
+   "name": "BAYO",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "32 cm",
+     "list_row": "page 14: BAYO /32 cm",
+     "list_net_minor": 243900,
+     "vat": 8,
+     "net_minor": 243889,
+     "gross_minor": 263400
+    },
+    {
+     "value": "40 cm",
+     "list_row": "page 14: BAYO /40 cm",
+     "list_net_minor": 253000,
+     "vat": 8,
+     "net_minor": 252963,
+     "gross_minor": 273200
+    }
+   ]
+  },
+  {
+   "external_id": "9e85f2d5eb436c0ca3ab6382dab0567ac5f2ba25ca26aec6aaee75469ca1c02c",
+   "sku": "385",
+   "name": "385",
+   "attribute": "Blat",
+   "variants": [
+    {
+     "value": "wyciągany",
+     "list_row": "page 46: 385 z wyciąganym blatem",
+     "list_net_minor": 113700,
+     "vat": 8,
+     "net_minor": 113704,
+     "gross_minor": 122800
+    },
+    {
+     "value": "odchylany",
+     "list_row": "page 46: 385 z odchylanym blatem",
+     "list_net_minor": 90000,
+     "vat": 8,
+     "net_minor": 90000,
+     "gross_minor": 97200
+    }
+   ]
+  },
+  {
+   "external_id": "9b796683e982c07a20f353989d3297141b635549ce66848d6030852df0560251",
+   "sku": "PLUO",
+   "name": "PLUO",
+   "attribute": "Koła",
+   "variants": [
+    {
+     "value": "5 cali",
+     "list_row": "page 37: PLUO 5'",
+     "list_net_minor": 183600,
+     "vat": 8,
+     "net_minor": 183611,
+     "gross_minor": 198300
+    },
+    {
+     "value": "24 cale",
+     "list_row": "page 37: PLUO 24'",
+     "list_net_minor": 335200,
+     "vat": 8,
+     "net_minor": 335185,
+     "gross_minor": 362000
+    }
+   ]
+  },
+  {
+   "external_id": "e43adf1defa3ea950cb45e2d10fd798aae3fa18f7ae64b54c9b1bcf5ac319e6b",
+   "sku": "Mia",
+   "name": "Mia",
+   "attribute": "Wysokość",
+   "variants": [
+    {
+     "value": "10 cm",
+     "list_row": "page 36: Mia 10 cm",
+     "list_net_minor": 11900,
+     "vat": 8,
+     "net_minor": 11944,
+     "gross_minor": 12900
+    },
+    {
+     "value": "15 cm",
+     "list_row": "page 36: Mia 15 cm",
+     "list_net_minor": 13900,
+     "vat": 8,
+     "net_minor": 13889,
+     "gross_minor": 15000
+    }
+   ]
+  },
+  {
+   "external_id": "863eeed5c264b1007e4cf2a60734309bd46ea6884f094f759208291324ca4592",
+   "sku": "IZZIE",
+   "name": "IZZIE",
+   "attribute": "Wariant",
+   "variants": [
+    {
+     "value": "30 cm",
+     "list_row": "page 36: Izzie 30",
+     "list_net_minor": 4300,
+     "vat": 8,
+     "net_minor": 4259,
+     "gross_minor": 4600
+    },
+    {
+     "value": "40 cm",
+     "list_row": "page 36: Izzie 40",
+     "list_net_minor": 4900,
+     "vat": 8,
+     "net_minor": 4907,
+     "gross_minor": 5300
+    },
+    {
+     "value": "45 cm",
+     "list_row": "page 36: Izzie 45",
+     "list_net_minor": 5300,
+     "vat": 8,
+     "net_minor": 5278,
+     "gross_minor": 5700
+    },
+    {
+     "value": "60 cm",
+     "list_row": "page 36: Izzie 60",
+     "list_net_minor": 5900,
+     "vat": 8,
+     "net_minor": 5926,
+     "gross_minor": 6400
+    },
+    {
+     "value": "80 cm",
+     "list_row": "page 36: Izzie 80",
+     "list_net_minor": 6700,
+     "vat": 8,
+     "net_minor": 6667,
+     "gross_minor": 7200
+    },
+    {
+     "value": "kątowa (R)",
+     "list_row": "page 36: Izzie R",
+     "list_net_minor": 11400,
+     "vat": 8,
+     "net_minor": 11389,
+     "gross_minor": 12300
+    }
+   ]
+  },
+  {
+   "external_id": "047137aa2fdf723be4a4fe3ac3e3cd2ba3c60e1e0c4cfb7d49095906d7b932ad",
+   "sku": "REGULAR (Eagle Sling)",
+   "name": "REGULAR",
+   "attribute": "Materiał",
+   "variants": [
+    {
+     "value": "siatka",
+     "list_row": "page 38: REGULAR z siatki",
+     "list_net_minor": 44100,
+     "vat": 8,
+     "net_minor": 44074,
+     "gross_minor": 47600
+    },
+    {
+     "value": "poliester",
+     "list_row": "page 38: REGULAR z poliestru",
+     "list_net_minor": 38600,
+     "vat": 8,
+     "net_minor": 38611,
+     "gross_minor": 41700
+    }
+   ]
+  },
+  {
+   "external_id": "4adff22a85dcc4d59f5f973908e8dacce10d6b98ce2b377e0b6957bf77d4e610",
+   "sku": "HYGIENIC (Eagle sling)",
+   "name": "HYGIENIC",
+   "attribute": "Materiał",
+   "variants": [
+    {
+     "value": "siatka",
+     "list_row": "page 38: HYGIENIC z siatki",
+     "list_net_minor": 44100,
+     "vat": 8,
+     "net_minor": 44074,
+     "gross_minor": 47600
+    },
+    {
+     "value": "poliester",
+     "list_row": "page 38: HYGIENIC z poliestru",
+     "list_net_minor": 38600,
+     "vat": 8,
+     "net_minor": 38611,
+     "gross_minor": 41700
+    }
+   ]
+  },
+  {
+   "external_id": "78d0dfb08ebb4bcae5c296eef7ee5f874d4ad611a714a51a0f2a9adbc776d738",
+   "sku": "COMFORT (Eagle sling)",
+   "name": "COMFORT",
+   "attribute": "Materiał",
+   "variants": [
+    {
+     "value": "siatka",
+     "list_row": "page 38: COMFORT z siatki",
+     "list_net_minor": 44100,
+     "vat": 8,
+     "net_minor": 44074,
+     "gross_minor": 47600
+    },
+    {
+     "value": "poliester",
+     "list_row": "page 38: COMFORT z poliestru",
+     "list_net_minor": 38600,
+     "vat": 8,
+     "net_minor": 38611,
+     "gross_minor": 41700
+    }
+   ]
+  },
+  {
+   "external_id": "f411361fc513e61ef5f57fcca178f04d3141d4e4a9ebf63e5a6e833c8d8df4c1",
+   "sku": "690",
+   "name": "690",
+   "attribute": "Zestaw",
+   "variants": [
+    {
+     "value": "kit 1 (do 4 cm)",
+     "list_row": "page 38: rampy 690 kit1",
+     "list_net_minor": 30800,
+     "vat": 23,
+     "net_minor": 30813,
+     "gross_minor": 37900
+    },
+    {
+     "value": "kit 2 (do 7,5 cm)",
+     "list_row": "page 38: rampy 690 kit2",
+     "list_net_minor": 59600,
+     "vat": 23,
+     "net_minor": 59593,
+     "gross_minor": 73300
+    },
+    {
+     "value": "kit 3 (do 11,5 cm)",
+     "list_row": "page 38: rampy 690 kit3",
+     "list_net_minor": 97000,
+     "vat": 23,
+     "net_minor": 96992,
+     "gross_minor": 119300
+    },
+    {
+     "value": "kit 4 (do 15 cm)",
+     "list_row": "page 38: rampy 690 kit4",
+     "list_net_minor": 117400,
+     "vat": 23,
+     "net_minor": 117398,
+     "gross_minor": 144400
+    },
+    {
+     "value": "kit 5 (do 20 cm)",
+     "list_row": "page 38: rampy 690 kit5",
+     "list_net_minor": 242500,
+     "vat": 23,
+     "net_minor": 242520,
+     "gross_minor": 298300
+    }
+   ]
+  },
+  {
+   "external_id": "7f2fd08e0fe530ef4073ce128a090ff5d623ee3b6c89c53a10364560132165c0",
+   "sku": "STABILO BASE",
+   "name": "STABILO BASE",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "S",
+     "list_row": "page 33: STABILO BASE S",
+     "list_net_minor": 99800,
+     "vat": 8,
+     "net_minor": 99815,
+     "gross_minor": 107800
+    },
+    {
+     "value": "S+",
+     "list_row": "page 33: STABILO BASE S+",
+     "list_net_minor": 116800,
+     "vat": 8,
+     "net_minor": 116759,
+     "gross_minor": 126100
+    },
+    {
+     "value": "M",
+     "list_row": "page 33: STABILO BASE M",
+     "list_net_minor": 127100,
+     "vat": 8,
+     "net_minor": 127130,
+     "gross_minor": 137300
+    },
+    {
+     "value": "M+",
+     "list_row": "page 33: STABILO BASE M+",
+     "list_net_minor": 139100,
+     "vat": 8,
+     "net_minor": 139074,
+     "gross_minor": 150200
+    },
+    {
+     "value": "L",
+     "list_row": "page 33: STABILO BASE L",
+     "list_net_minor": 146200,
+     "vat": 8,
+     "net_minor": 146204,
+     "gross_minor": 157900
+    }
+   ]
+  },
+  {
+   "external_id": "f2708b35baa9baba36fe301939a4209916a436cd8feab9939c2fd4749f76d7d6",
+   "sku": "STABILO Comfortable",
+   "name": "STABILO COMFORTABLE",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "S",
+     "list_row": "page 33: STABILO CONFORTABLE S",
+     "list_net_minor": 116700,
+     "vat": 8,
+     "net_minor": 116667,
+     "gross_minor": 126000
+    },
+    {
+     "value": "M",
+     "list_row": "page 33: STABILO CONFORTABLE M",
+     "list_net_minor": 157300,
+     "vat": 8,
+     "net_minor": 157315,
+     "gross_minor": 169900
+    },
+    {
+     "value": "L",
+     "list_row": "page 33: STABILO CONFORTABLE L",
+     "list_net_minor": 166400,
+     "vat": 8,
+     "net_minor": 166389,
+     "gross_minor": 179700
+    }
+   ]
+  },
+  {
+   "external_id": "7167536624539a2dac8395127f669baddfee2e620f04c525e0ce76adb467cd48",
+   "sku": "STABILO Comfortable Plus",
+   "name": "STABILO COMFORTABLE PLUS",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "S",
+     "list_row": "page 33: CONFORTABLE PLUS S",
+     "list_net_minor": 138000,
+     "vat": 8,
+     "net_minor": 137963,
+     "gross_minor": 149000
+    },
+    {
+     "value": "M",
+     "list_row": "page 33: CONFORTABLE PLUS M",
+     "list_net_minor": 157300,
+     "vat": 8,
+     "net_minor": 157315,
+     "gross_minor": 169900
+    },
+    {
+     "value": "L",
+     "list_row": "page 33: CONFORTABLE PLUS L",
+     "list_net_minor": 176200,
+     "vat": 8,
+     "net_minor": 176204,
+     "gross_minor": 190300
+    },
+    {
+     "value": "XL",
+     "list_row": "page 33: CONFORTABLE PLUS XL",
+     "list_net_minor": 189200,
+     "vat": 8,
+     "net_minor": 189167,
+     "gross_minor": 204300
+    }
+   ]
+  },
+  {
+   "external_id": "1e42fed4cfe704d421b7ff590796d5ffe9524427ffb326c37871a0925ad316f6",
+   "sku": "STABILO Comfortable Plus Duo",
+   "name": "STABILO COMFORTABLE PLUS DUO",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "S",
+     "list_row": "page 33: COMFORTABLE PLUS DUO S",
+     "list_net_minor": 268200,
+     "vat": 8,
+     "net_minor": 268241,
+     "gross_minor": 289700
+    },
+    {
+     "value": "M",
+     "list_row": "page 33: COMFORTABLE PLUS DUO M",
+     "list_net_minor": 299000,
+     "vat": 8,
+     "net_minor": 298981,
+     "gross_minor": 322900
+    },
+    {
+     "value": "L",
+     "list_row": "page 33: COMFORTABLE PLUS DUO L",
+     "list_net_minor": 334300,
+     "vat": 8,
+     "net_minor": 334259,
+     "gross_minor": 361000
+    },
+    {
+     "value": "XL",
+     "list_row": "page 33: COMFORTABLE PLUS DUO XL",
+     "list_net_minor": 361100,
+     "vat": 8,
+     "net_minor": 361111,
+     "gross_minor": 390000
+    },
+    {
+     "value": "XXL",
+     "list_row": "page 33: COMFORTABLE PLUS DUO XXL",
+     "list_net_minor": 429400,
+     "vat": 8,
+     "net_minor": 429444,
+     "gross_minor": 463800
+    }
+   ]
+  }
+ ]
+}

@@ -1,13 +1,13 @@
 """Build the resolved Vermeiren 2026 price table.
 
-Usage: python -I build_vermeiren.py product-data.json out.json
+Usage: python -I build_vermeiren.py product-data.json out.json variants-out.json
 
 Prices are the retail ("cena detaliczna") net and gross columns of Vermeiren's
 "CENNIK 2026" (valid from 01/01/2026, 47 pages). The PDF text layout is too irregular to parse
 reliably, so PRICES was transcribed by hand and checked against the rendered pages. Keys are the
 scraped Vermeiren SKUs (storage/app/scrapers/vermeiren/product-data.json); products sharing a SKU
-share the price. Products whose list price depends on a size or configuration that the shop
-product does not carry are left out on purpose (see NOT_PRICED).
+share the price. Products priced per size or configuration (VARIANTS) go to a separate table that
+catalogue:apply-supplier-variants turns into shop variants; NOT_PRICED lists what stays unpriced.
 """
 
 import json
@@ -214,60 +214,121 @@ PRICES = {
     "Neo 40.02 Ankle control": ("Neo 40.02", 29, 438, 473),
     "Neo 00.01 Multi-use band": ("Neo 00.01", 28, 193, 208),
     "Neo 00.02 Multi-use band extension": ("Neo 00.02", 28, 180, 194),
+    # Base model plus the list's "dopłata do wersji XXL" (546 net / 590 gross; NORMANDIE 590 / 637).
+    "CORAILLE XXL (from seat width 55)": ("Corille + dopłata XXL", 9, 3704 + 546, 4000 + 590),
+    "ALTITUDE XXL (from seat width 55)": ("Altitude + dopłata XXL", 8, 3704 + 546, 4000 + 590),
+    "NORMANDIE XXL": ("NORMANDIE + dopłata XXL", 37, 2004 + 590, 2164 + 637),
+    # 708D plus the HEM2 "dopłata do wózka" (one-hand drive) from the options table.
+    "708D HEM2": ("708D + dopłata HEM2", 24, 986 + 1433, 1065 + 1548),
+    # The shop's CLUB UL is the bed the list sells as CLUB UL D.
+    "Club UL": ("CLUB UL D", 45, 4100, 4428),
+}
+
+# Products whose list price depends on a size or configuration; each becomes a shop variant per row.
+# scraped SKU -> (attribute name, page, [(value, PDF label, retail net, retail gross)])
+SLING_ROWS = [("siatka", "z siatki", 441, 476), ("poliester", "z poliestru", 386, 417)]
+VARIANTS = {
+    "Klaxon Twist": ("Wersja", 21, [
+        ("napęd tylny (RDE)", "TWIST RDE", 20491, 22130),
+        ("napęd przedni (FDE)", "TWIST FDE", 22935, 24770),
+        ("napęd przedni z kierownicą (FDE+SB)", "TWIST FDE+SB", 24444, 26400),
+        ("wersja full (FDE+RDE+SB)", "TWIST FDE+RDE+SB", 26714, 28851),
+    ]),
+    "Gemini 2*": ("Rozmiar", 10, [("32 cm", "gemini² /32", 2887, 3118), ("40 cm", "gemini² /40", 3145, 3397)]),
+    "BAYO": ("Rozmiar", 14, [("32 cm", "BAYO /32 cm", 2439, 2634), ("40 cm", "BAYO /40 cm", 2530, 2732)]),
+    "SIGMA": ("Prędkość", 17, [("6 km/h", "SIGMA 230 6 km/h", 14222, 15360), ("10 km/h", "SIGMA 230 10 km/h", 15342, 16569)]),
+    "STABILO BASE": ("Rozmiar", 33, [
+        ("S", "STABILO BASE S", 998, 1078), ("S+", "STABILO BASE S+", 1168, 1261), ("M", "STABILO BASE M", 1271, 1373),
+        ("M+", "STABILO BASE M+", 1391, 1502), ("L", "STABILO BASE L", 1462, 1579),
+    ]),
+    "STABILO Comfortable": ("Rozmiar", 33, [
+        ("S", "STABILO CONFORTABLE S", 1167, 1260), ("M", "STABILO CONFORTABLE M", 1573, 1699),
+        ("L", "STABILO CONFORTABLE L", 1664, 1797),
+    ]),
+    "STABILO Comfortable Plus": ("Rozmiar", 33, [
+        ("S", "CONFORTABLE PLUS S", 1380, 1490), ("M", "CONFORTABLE PLUS M", 1573, 1699),
+        ("L", "CONFORTABLE PLUS L", 1762, 1903), ("XL", "CONFORTABLE PLUS XL", 1892, 2043),
+    ]),
+    "STABILO Comfortable Plus Duo": ("Rozmiar", 33, [
+        ("S", "COMFORTABLE PLUS DUO S", 2682, 2897), ("M", "COMFORTABLE PLUS DUO M", 2990, 3229),
+        ("L", "COMFORTABLE PLUS DUO L", 3343, 3610), ("XL", "COMFORTABLE PLUS DUO XL", 3611, 3900),
+        ("XXL", "COMFORTABLE PLUS DUO XXL", 4294, 4638),
+    ]),
+    "Mia": ("Wysokość", 36, [("10 cm", "Mia 10 cm", 119, 129), ("15 cm", "Mia 15 cm", 139, 150)]),
+    "IZZIE": ("Wariant", 36, [
+        ("30 cm", "Izzie 30", 43, 46), ("40 cm", "Izzie 40", 49, 53), ("45 cm", "Izzie 45", 53, 57),
+        ("60 cm", "Izzie 60", 59, 64), ("80 cm", "Izzie 80", 67, 72), ("kątowa (R)", "Izzie R", 114, 123),
+    ]),
+    "PLUO": ("Koła", 37, [("5 cali", "PLUO 5'", 1836, 1983), ("24 cale", "PLUO 24'", 3352, 3620)]),
+    "REGULAR (Eagle Sling)": ("Materiał", 38, [(v, "REGULAR " + l, n, g) for v, l, n, g in SLING_ROWS]),
+    "COMFORT (Eagle sling)": ("Materiał", 38, [(v, "COMFORT " + l, n, g) for v, l, n, g in SLING_ROWS]),
+    "HYGIENIC (Eagle sling)": ("Materiał", 38, [(v, "HYGIENIC " + l, n, g) for v, l, n, g in SLING_ROWS]),
+    "690": ("Zestaw", 38, [
+        ("kit 1 (do 4 cm)", "rampy 690 kit1", 308, 379), ("kit 2 (do 7,5 cm)", "rampy 690 kit2", 596, 733),
+        ("kit 3 (do 11,5 cm)", "rampy 690 kit3", 970, 1193), ("kit 4 (do 15 cm)", "rampy 690 kit4", 1174, 1444),
+        ("kit 5 (do 20 cm)", "rampy 690 kit5", 2425, 2983),
+    ]),
+    "385": ("Blat", 46, [("wyciągany", "385 z wyciąganym blatem", 1137, 1228), ("odchylany", "385 z odchylanym blatem", 900, 972)]),
 }
 
 # Scraped SKUs deliberately left unpriced, with the reason.
 NOT_PRICED = {
-    "Klaxon Twist": "four configurations from 20491 to 26714 net",
-    "Bobby Evo B03": "B03 is an armrest option, no separate model price",
+    "Bobby Evo B03": "B03 armrests are only listed as a separate purchase, no model price",
     "ECLIPS X4 30°": "not in the 2026 list",
     "ECLIPS X4 90° COMFORT": "not in the 2026 list",
-    "CORAILLE XXL (from seat width 55)": "XXL is a 546 net surcharge on the base model",
-    "ALTITUDE XXL (from seat width 55)": "XXL is a 546 net surcharge on the base model",
-    "NORMANDIE XXL": "XXL is a 590 net surcharge on the base model",
-    "708D HEM2": "no 708D Hem2 row; HEM2 is a 1433 net option",
-    "Gemini 2*": "seat 32 or 40 cm: 2887 or 3145 net",
     "SAGITTA KIDS SI": "not in the 2026 list",
     "Plego Carbon": "not in the 2026 list",
-    "SIGMA": "only SIGMA 230 is listed",
     "Kuarz": "not in the 2026 list",
     "Sync": "not in the 2026 list",
     "Eon": "not in the 2026 list",
-    "BAYO": "seat 32 or 40 cm: 2439 or 2530 net",
-    "Club UL": "only CLUB UL D is listed",
-    "385": "two cabinets share 385: 1137 or 900 net",
     "275": "not in the 2026 list",
-    "PLUO": "5'' or 24'' wheels: 1836 or 3352 net",
-    "Mia": "10 or 15 cm: 119 or 139 net",
-    "IZZIE": "30-80 cm and R: 43 to 114 net",
-    "REGULAR (Eagle Sling)": "two sling sizes: 441 or 386 net",
-    "HYGIENIC (Eagle sling)": "two sling sizes: 441 or 386 net",
-    "COMFORT (Eagle sling)": "two sling sizes: 441 or 386 net",
-    "690": "ramp kits 1-5: 308 to 2425 net",
     "Mattress BaWü": "not in the 2026 list",
-    "STABILO BASE": "price by size S to L: 998 to 1462 net",
-    "STABILO Comfortable": "price by size S to L: 1167 to 1664 net",
-    "STABILO Comfortable Plus": "price by size S to XL: 1380 to 1892 net",
-    "STABILO Comfortable Plus Duo": "price by size S to XXL: 2682 to 4294 net",
 }
 
 
-def main(scraped_path, out_path):
+def list_price(sku, net, gross):
+    """Return (vat, net_minor, gross_minor) from the list's retail net and gross columns."""
+    # The list rounds both columns to whole złoty, so small prices only approximate the rate.
+    vat = min((8, 23), key=lambda rate: abs(net * (100 + rate) / 100 - gross))
+    if abs(net * (100 + vat) / 100 - gross) > 1:
+        raise SystemExit(f"Net {net} and gross {gross} for {sku} fit neither 8% nor 23% VAT")
+    gross_minor = gross * 100
+    return vat, round(gross_minor * 100 / (100 + vat)), gross_minor
+
+
+def main(scraped_path, out_path, variants_out_path):
     data = json.load(open(scraped_path, encoding="utf-8"))
     products = data["products"] if isinstance(data, dict) else data
-    entries, unresolved = [], []
+    entries, variant_products, unresolved = [], [], []
 
     for product in products:
         sku = product.get("sku")
+        if sku in VARIANTS:
+            attribute, page, rows = VARIANTS[sku]
+            variants = []
+            for value, label, net, gross in rows:
+                vat, net_minor, gross_minor = list_price(sku, net, gross)
+                variants.append({
+                    "value": value,
+                    "list_row": f"page {page}: {label}",
+                    "list_net_minor": net * 100,
+                    "vat": vat,
+                    "net_minor": net_minor,
+                    "gross_minor": gross_minor,
+                })
+            variant_products.append({
+                "external_id": str(product["external_product_id"]),
+                "sku": sku,
+                "name": product["name"],
+                "attribute": attribute,
+                "variants": variants,
+            })
+            continue
         if sku not in PRICES:
             unresolved.append({"sku": sku, "name": product["name"], "reason": NOT_PRICED.get(sku, "not_in_list")})
             continue
         label, page, net, gross = PRICES[sku]
-        # The list rounds both columns to whole złoty, so small prices only approximate the rate.
-        vat = min((8, 23), key=lambda rate: abs(net * (100 + rate) / 100 - gross))
-        if abs(net * (100 + vat) / 100 - gross) > 1:
-            raise SystemExit(f"Net {net} and gross {gross} for {sku} fit neither 8% nor 23% VAT")
-        gross_minor = gross * 100
+        vat, net_minor, gross_minor = list_price(sku, net, gross)
         entries.append({
             "external_id": str(product["external_product_id"]),
             "sku": sku,
@@ -276,30 +337,34 @@ def main(scraped_path, out_path):
             "list_code": label,
             "list_net_minor": net * 100,
             "vat": vat,
-            "net_minor": round(gross_minor * 100 / (100 + vat)),
+            "net_minor": net_minor,
             "gross_minor": gross_minor,
             "matched_by": "manual",
         })
 
-    unused = sorted(set(PRICES) - {p.get("sku") for p in products})
+    scraped_skus = {p.get("sku") for p in products}
+    unused = sorted((set(PRICES) | set(VARIANTS)) - scraped_skus)
     if unused:
-        raise SystemExit(f"PRICES keys not in the scraped data: {unused}")
+        raise SystemExit(f"PRICES/VARIANTS keys not in the scraped data: {unused}")
 
-    out = {
+    header = {
         "supplier": "vermeiren",
         "external_source": "vermeiren",
         "source_file": "cennik 2026 ważny od 01,01,2026-1.pdf",
         "effective_from": "2026-01-01",
         "currency": "PLN",
         "pricing": "retail (cena detaliczna) gross from the list; net follows from the list VAT rate",
-        "entries": entries,
-        "unresolved": unresolved,
     }
-    with open(out_path, "w", encoding="utf-8") as handle:
-        json.dump(out, handle, ensure_ascii=False, indent=1)
+    write_json(out_path, {**header, "entries": entries, "unresolved": unresolved})
+    write_json(variants_out_path, {**header, "products": variant_products})
+    print(f"products={len(products)} priced={len(entries)} with_variants={len(variant_products)} unresolved={len(unresolved)}")
+
+
+def write_json(path, data):
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(data, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
-    print(f"products={len(products)} priced={len(entries)} unresolved={len(unresolved)}")
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:3])
+    main(*sys.argv[1:4])

@@ -1,0 +1,130 @@
+{
+ "supplier": "timago",
+ "external_source": "timago",
+ "source_file": "CENNIK dla dystrybutorów- 2026.xlsx",
+ "effective_from": "2026-01-01",
+ "currency": "PLN",
+ "pricing": "distributor net price + 10% markup; gross from the list VAT rate",
+ "products": [
+  {
+   "external_id": "514",
+   "sku": "SPIKY",
+   "name": "SPIKY - Piłka rehabilitacyjna z kolcami (jeżyk)",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "5 cm (czerwona)",
+     "list_row": "Rehabilitacja:168",
+     "list_net_minor": 539,
+     "vat": 8,
+     "net_minor": 593,
+     "gross_minor": 640
+    },
+    {
+     "value": "6 cm (niebieska)",
+     "list_row": "Rehabilitacja:169",
+     "list_net_minor": 585,
+     "vat": 8,
+     "net_minor": 644,
+     "gross_minor": 696
+    },
+    {
+     "value": "7 cm (żółta)",
+     "list_row": "Rehabilitacja:170",
+     "list_net_minor": 619,
+     "vat": 8,
+     "net_minor": 681,
+     "gross_minor": 735
+    },
+    {
+     "value": "8 cm (zielona)",
+     "list_row": "Rehabilitacja:171",
+     "list_net_minor": 739,
+     "vat": 8,
+     "net_minor": 813,
+     "gross_minor": 878
+    }
+   ]
+  },
+  {
+   "external_id": "622",
+   "sku": "yellowBAND",
+   "name": "Bandaż kohezyjny",
+   "attribute": "Szerokość",
+   "variants": [
+    {
+     "value": "5 cm",
+     "list_row": "Rehabilitacja:175",
+     "list_net_minor": 290,
+     "vat": 8,
+     "net_minor": 319,
+     "gross_minor": 345
+    },
+    {
+     "value": "7,5 cm",
+     "list_row": "Rehabilitacja:176",
+     "list_net_minor": 370,
+     "vat": 8,
+     "net_minor": 407,
+     "gross_minor": 440
+    },
+    {
+     "value": "10 cm",
+     "list_row": "Rehabilitacja:177",
+     "list_net_minor": 485,
+     "vat": 8,
+     "net_minor": 534,
+     "gross_minor": 577
+    }
+   ]
+  },
+  {
+   "external_id": "629",
+   "sku": "yellowTAPE",
+   "name": "Taśma do kinesiotapingu yellowTAPE",
+   "attribute": "Wariant",
+   "variants": [
+    {
+     "value": "jednokolorowa",
+     "list_row": "Rehabilitacja:174",
+     "list_net_minor": 950,
+     "vat": 8,
+     "net_minor": 1045,
+     "gross_minor": 1129
+    },
+    {
+     "value": "mix 4 kolorów",
+     "list_row": "Rehabilitacja:173",
+     "list_net_minor": 4700,
+     "vat": 8,
+     "net_minor": 5170,
+     "gross_minor": 5584
+    }
+   ]
+  },
+  {
+   "external_id": "1253",
+   "sku": "SLIDE-TIM",
+   "name": "Łatwoślizg - SLIDE-TIM",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "72 x 71 cm",
+     "list_row": "Rehabilitacja:274",
+     "list_net_minor": 7500,
+     "vat": 8,
+     "net_minor": 8250,
+     "gross_minor": 8910
+    },
+    {
+     "value": "122 x 71 cm",
+     "list_row": "Rehabilitacja:273",
+     "list_net_minor": 9900,
+     "vat": 8,
+     "net_minor": 10890,
+     "gross_minor": 11761
+    }
+   ]
+  }
+ ]
+}
