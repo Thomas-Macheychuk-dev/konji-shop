@@ -61,8 +61,8 @@ final class ApplySupplierPriceListCommand extends Command
         ProductVariant::query()
             ->with('product:id,name,status,external_id')
             ->whereHas('product', fn ($query) => $query->where('external_source', $table['external_source']))
-            ->orderBy('product_id')
-            ->orderBy('id')
+            // chunkById pages by id, so the query must be ordered by id alone: with product_id first, a chunk
+            // ending on a later-created variant (size variants have high ids) skips the next products' variants.
             ->chunkById(200, function ($variants) use ($entries, &$changes, &$unchanged, &$vatChanges, &$missing, &$matchedProducts): void {
                 foreach ($variants as $variant) {
                     $entry = $entries->get((string) $variant->product->external_id);

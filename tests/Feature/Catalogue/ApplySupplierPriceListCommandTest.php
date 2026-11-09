@@ -77,6 +77,28 @@ it('applies the list VAT rate and restores the old one on rollback', function ()
         ->toEqual(['price_gross_amount' => 5000, 'vat_rate' => VatRate::VAT_8]);
 });
 
+it('sees every variant when a later-created variant ends a chunk', function (): void {
+    // Products 1-199 are not in the list; product 200 (the collar) is. Variant 201 belongs to product 199, so
+    // ordered by product it closes the first chunk of 200: paging by product_id would then skip variant 200.
+    for ($n = 1; $n <= 199; $n++) {
+        $filler = supplierPricedVariant('timago', 'filler-'.$n, 'Produkt '.$n, 5000);
+    }
+    $collar = supplierPricedVariant('timago', '88', 'Kołnierz miękki typu SCHANTZA', null);
+    ProductVariant::query()->create([
+        'product_id' => $filler->product_id,
+        'sku' => 'FILLER-SIZE-2',
+        'status' => ProductVariantStatus::ACTIVE,
+        'currency' => Currency::PLN,
+        'vat_rate' => VatRate::VAT_8,
+        'stock_status' => StockStatus::IN_STOCK,
+    ]);
+
+    $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026'])
+        ->expectsOutputToContain('variant='.$collar->id.' [active] Kołnierz miękki typu SCHANTZA [Ortotyka:6] gross (empty) -> 18.89')
+        ->expectsOutputToContain('NOT_IN_LIST=200')
+        ->assertSuccessful();
+});
+
 it('keeps the variant VAT rate for gross-only online prices', function (): void {
     // HOLD-TIM is priced at the 43.00 median of shop offers; the table carries no VAT rate.
     $bar = supplierPricedVariant('timago', '1092', 'Uchwyt łazienkowy prosty - HOLD-TIM', null);
