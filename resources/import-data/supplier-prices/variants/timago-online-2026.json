@@ -1,0 +1,348 @@
+{
+ "supplier": "timago",
+ "external_source": "timago",
+ "source_file": "Polish online shop prices, researched 2026-11-09",
+ "effective_from": "2026-11-09",
+ "currency": "PLN",
+ "pricing": "median gross price of matching Polish shop offers per version; VAT stays as set on the product",
+ "products": [
+  {
+   "external_id": "1168",
+   "sku": "MOON-TIM",
+   "name": "Materac piankowy do łóżka rehabilitacyjnego - MOON-TIM",
+   "attribute": "Pokrowiec",
+   "variants": [
+    {
+     "value": "zmywalny (bawełniany)",
+     "list_row": "online median of 3: allegro.pl (via Ceneo), med-studio24.pl, tanisklepmedyczny.pl (via Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 39900,
+     "offers": [
+      "https://www.ceneo.pl/50282384",
+      "https://www.ceneo.pl/50282384",
+      "https://med-studio24.pl/en/materac-piankowy-do-lozka-rehabilitacyjnego-200x90x12-cm-moon-tim,id1488.html"
+     ]
+    },
+    {
+     "value": "paroprzepuszczalny",
+     "list_row": "online median of 2: almamed.pl (via Ceneo), tanisklepmedyczny.pl (via Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 46900,
+     "offers": [
+      "https://www.ceneo.pl/50282386",
+      "https://www.ceneo.pl/50282386"
+     ]
+    }
+   ]
+  },
+  {
+   "external_id": "2",
+   "sku": "SCP 4275M / 4275L",
+   "name": "Pas stabilizujący miednicę z ujęciem krocza",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "M (100–140 cm)",
+     "list_row": "online median of 4: becomfo.pl, emedeo.pl, med-studio24.pl, sklep-rehabilitacyjny.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 17045,
+     "offers": [
+      "https://emedeo.pl/produkt/pas-stabilizujacy-miednice-z-ujeciem-krocza",
+      "https://med-studio24.pl/pas-stabilizujacy-do-wozka-inwalidzkiego-z-ujeciem-miednicy-i-krocza,id420.html",
+      "https://www.sklep-rehabilitacyjny.com.pl/pas_stabilizujacy_miednice_i_krocze_SCP_4275",
+      "https://becomfo.pl/product-pol-2064-pas-stabilizujacy-miednice-z-ujeciem-krocza-SCP-4275.html"
+     ]
+    },
+    {
+     "value": "L (120–165 cm)",
+     "list_row": "online median of 4: emedeo.pl, med-studio24.pl, orto-sklep.pl, sklep-rehabilitacyjny.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 17045,
+     "offers": [
+      "https://orto-sklep.pl/pasy-ortopedyczne/269-pas-stabilizujacy-miednice-z-ujeciem-krocza-scp-4275m-timago-8436035351336.html",
+      "https://emedeo.pl/produkt/pas-stabilizujacy-miednice-z-ujeciem-krocza",
+      "https://med-studio24.pl/pas-stabilizujacy-do-wozka-inwalidzkiego-z-ujeciem-miednicy-i-krocza,id420.html",
+      "https://www.sklep-rehabilitacyjny.com.pl/pas_stabilizujacy_miednice_i_krocze_SCP_4275"
+     ]
+    }
+   ]
+  },
+  {
+   "external_id": "1242",
+   "sku": "ZARYS",
+   "name": "Opaska elastyczna z zapinką - elastoBAND FLEX",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "8 cm x 5 m",
+     "list_row": "online median of 2: melisa.pl (via Ceneo), wapteka.pl (via Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 444,
+     "offers": [
+      "https://www.ceneo.pl/191388999",
+      "https://www.ceneo.pl/191388999"
+     ]
+    },
+    {
+     "value": "10 cm x 5 m",
+     "list_row": "online median of 2: melisa.pl (via Ceneo), wapteka.pl (via Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 508,
+     "offers": [
+      "https://www.ceneo.pl/191389006",
+      "https://www.ceneo.pl/191389006"
+     ]
+    },
+    {
+     "value": "12 cm x 5 m",
+     "list_row": "online median of 2: melisa.pl (via Ceneo), wapteka.pl (via Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 752,
+     "offers": [
+      "https://www.ceneo.pl/100030361",
+      "https://www.ceneo.pl/100030361"
+     ]
+    },
+    {
+     "value": "15 cm x 5 m",
+     "list_row": "online median of 2: melisa.pl (via Ceneo), wapteka.pl (via Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 738,
+     "offers": [
+      "https://www.ceneo.pl/191389003",
+      "https://www.ceneo.pl/191389003"
+     ]
+    }
+   ]
+  },
+  {
+   "external_id": "240",
+   "sku": "SLN/SLS",
+   "name": "Szpatułka laryngologiczna drewniana",
+   "attribute": "Wariant",
+   "variants": [
+    {
+     "value": "niejałowe, op. 100 szt.",
+     "list_row": "online median of 9: Apteka Papaya (Ceneo), Formedic (Ceneo), cezzoo.pl (Ceneo), gemini.pl (Ceneo), medmeapteka.pl (Ceneo), melisa.pl (Ceneo), sklep.cp-medibed.pl (Ceneo), wapteka.p",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 598,
+     "offers": [
+      "https://www.ceneo.pl/51365397",
+      "https://www.ceneo.pl/51365397",
+      "https://www.ceneo.pl/51365397",
+      "https://www.ceneo.pl/51365397",
+      "https://www.ceneo.pl/51365397",
+      "https://www.ceneo.pl/51365397",
+      "https://www.ceneo.pl/51365397",
+      "https://www.ceneo.pl/51365397",
+      "https://www.ceneo.pl/51365397"
+     ]
+    },
+    {
+     "value": "jałowe, op. 100 szt.",
+     "list_row": "online median of 3: cezzoo.pl (Ceneo), gemini.pl, or-med.sklep (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 1583,
+     "offers": [
+      "https://www.ceneo.pl/78232874",
+      "https://www.ceneo.pl/78232874",
+      "https://gemini.pl/szpatulki-laryngologiczne-drewniane-jalowe-100-sztuk-0077131"
+     ]
+    }
+   ]
+  },
+  {
+   "external_id": "228",
+   "sku": "ZARYS",
+   "name": "Cewnik do podawania tlenu przez nos",
+   "attribute": "Długość",
+   "variants": [
+    {
+     "value": "2 m",
+     "list_row": "online median of 1: sklep.cp-medibed.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 199,
+     "offers": [
+      "https://www.ceneo.pl/186186142"
+     ]
+    },
+    {
+     "value": "3 m",
+     "list_row": "online median of 1: sklep.cp-medibed.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 219,
+     "offers": [
+      "https://www.ceneo.pl/186186216"
+     ]
+    },
+    {
+     "value": "5 m",
+     "list_row": "online median of 1: sklep.cp-medibed.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 255,
+     "offers": [
+      "https://www.ceneo.pl/186186281"
+     ]
+    }
+   ]
+  },
+  {
+   "external_id": "1000",
+   "sku": "AHD 1000",
+   "name": "Płyn do dezynfekcji AHD 1000",
+   "attribute": "Pojemność",
+   "variants": [
+    {
+     "value": "1 l",
+     "list_row": "online median of 11: Biokur (Ceneo), Dyskont Kosmetyczny (Ceneo), Fryzjerowa10 (Ceneo), Wasserman (Ceneo), Wszystko do Włosów (Ceneo), dcdpaznokcie.pl (Ceneo), dermes.store (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 4568,
+     "offers": [
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802",
+      "https://www.ceneo.pl/85615802"
+     ]
+    },
+    {
+     "value": "250 ml (spray)",
+     "list_row": "online median of 11: Biokur (Ceneo), Wasserman (Ceneo), apteczka24.pl (Ceneo), blizejciebie.pl (Ceneo), dcdpaznokcie.pl (Ceneo), dermes.store (Ceneo), hyaloo.pl (Ceneo), matopat24.",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 2700,
+     "offers": [
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357",
+      "https://www.ceneo.pl/30284357"
+     ]
+    }
+   ]
+  }
+ ],
+ "unresolved": [
+  {
+   "sku": "WB-804 / WB-NT-600 / WB-NT-630",
+   "name": "Żelowe kompresy termiczne do terapii ciepłem lub zimnem",
+   "reason": "WB-NT-600 (uniwersalny 30x18) has no shop offer found; WB-NT-630 has only one offer."
+  },
+  {
+   "sku": "BT-PC",
+   "name": "Podkład chłonny",
+   "reason": "Only 60x90 cm priced; no current shop offers found for 40x60 or 60x60 (okazje.info.pl shows only historical wojrat.pl prices 21,78 / 25,74 for Zarys 25 szt., not current)."
+  },
+  {
+   "sku": "SPIRIT-3_BATERIA",
+   "name": "Bateria do przenośnego koncentratora tlenu SPIRIT-3 - 13,6 Ah",
+   "reason": "Single version: Timago page is the 13,6 Ah battery only (6,8 Ah is not on this supplier product). No shop page shows an explicit 13,6 Ah price; the 2250-2350 upper ends of ranges are likely but not confirmed."
+  },
+  {
+   "sku": "CT3",
+   "name": "System Ciągłego Monitorowania Glikemii - CT3",
+   "reason": "CT3: Timago sells one 'system'; sensor and transmitter are separate retail items, not its versions"
+  },
+  {
+   "sku": "CHTW/B",
+   "name": "Chusta trójkątna",
+   "reason": "chusta trójkątna: the cotton price comes from a single shop selling 12-packs"
+  },
+  {
+   "sku": "TTE 6102 - TTE6122",
+   "name": "Łatwoślizg - chusta ułatwiająca przenoszenie chorego",
+   "reason": "5 supplier versions; only TTE6102 and TTE6122 priced (one confirmed offer each); TTE6104/6106/6108 have no Polish offers found."
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Kompres gazowy KOMPRI lux/KOMPRI lux S",
+   "reason": "Two dimensions (jałowe/niejałowe x size, plus 13N/17N thread count); niejałowe 5x5 unpriced; jałowe pack unit ambiguous (20x3 vs 10 szt.) and only one effective source (wapteka/melisa mirror)."
+  },
+  {
+   "sku": "Zarys",
+   "name": "Kompres włókninowy NONVI lux/NONVI lux S",
+   "reason": "Two dimensions (jałowe/niejałowe x 3 sizes); only niejałowe 10x10 op. 100 szt. has confirmed offers; sterile pack units unclear."
+  },
+  {
+   "sku": "Elastopor",
+   "name": "Opatrunek włókninowy z wkładem chłonnym - ELASTOPOR STERIL",
+   "reason": "Timago lists 13 sizes; 12 have confirmed prices but 8 x 20 cm has no Polish shop offer found (Ceneo search of 29 Elastopor listings has no 8x20; web search found none)."
+  },
+  {
+   "sku": "FP",
+   "name": "Plaster tkaninowy z opatrunkiem FABRIPLAST",
+   "reason": "6 cm x 5 m roll (listed by Timago, twice) has no Polish shop offer found (Ceneo search 'fabriplast' and web search)."
+  },
+  {
+   "sku": "elastoBAND",
+   "name": "Opaska dziana",
+   "reason": "elastoBAND: the 5 and 10 cm prices are unattributed 'od' prices, not shop offers"
+  },
+  {
+   "sku": "KOMPRES",
+   "name": "Gaza opatrunkowa kopertowa - GAZA LUX",
+   "reason": "Units don't match across versions: 13N has only a per-piece price (1 offer), 17N only 25-packs. No 13N 25-pack and no 17N single-piece offer found (aptekazawiszy 17N 1 szt. shows 0,00 PLN / out of stock)."
+  },
+  {
+   "sku": "PLASPOL",
+   "name": "Pojemnik na odpady medyczne",
+   "reason": "Only 1 l and 10 l have a confirmed Plaspol offer (one shop each); 0,2 / 0,7 / 2 / 3,5 / 5 l not found as Plaspol-branded offers."
+  },
+  {
+   "sku": "3CZ-CEW",
+   "name": "Strzykawka trzyczęściowa Janeta",
+   "reason": "Single version (Timago: 100 ml, sterile, one code). No confirmed per-piece price: only confirmed offer is a 25-pack at 50.60 zł (≈2.02 zł/szt, derived)."
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Dren tlenowy",
+   "reason": "2,1 m tube has no Polish shop offer found; 4,26 m and 7,62 m have one offer each (or-med only)."
+  },
+  {
+   "sku": "MB-05170502/MB/05380502/MB-0561",
+   "name": "Opatrunki żelowe Cutanplast",
+   "reason": "Only Dental 24 szt. has confirmed prices; Specjal 70x50x1 mm and Standard 7x5x1 cm not found in Polish shops (Ceneo has no Cutanplast listings)."
+  }
+ ]
+}
