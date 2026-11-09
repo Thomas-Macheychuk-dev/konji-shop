@@ -26,6 +26,9 @@ use RuntimeException;
  * variant per other row copies its status, stock status and package data. Every variant carries one value of
  * the table's attribute (e.g. Rozmiar), which the product page shows as the option selector.
  *
+ * Tables from gross-only sources (timago-online-2026: medians of Polish shop prices) carry rows with
+ * "vat": null and "net_minor": null; those take the VAT rate the product already has.
+ *
  * Note that re-running the Timago or Vermeiren importer resets a product to a single default variant.
  */
 final class ApplySupplierVariantsCommand extends Command
@@ -61,6 +64,14 @@ final class ApplySupplierVariantsCommand extends Command
 
             if ($product === null) {
                 $missing[] = sprintf('external_id=%s sku=%s %s', $entry['external_id'], $entry['sku'] ?? '-', Str::limit((string) $entry['name'], 70));
+
+                continue;
+            }
+
+            $entry = $this->withVatRates($product, $entry);
+
+            if ($entry === null) {
+                $skipped[] = $this->label($product).' reason=no VAT rate on the variant for gross-only prices';
 
                 continue;
             }
@@ -351,6 +362,34 @@ final class ApplySupplierVariantsCommand extends Command
     }
 
     /**
+     * Rows from gross-only sources (online shop prices) carry "vat": null; they take the VAT rate of the
+     * product's default variant and derive the net price from it. Null when that variant has no rate.
+     *
+     * @param  array<string, mixed>  $entry
+     * @return array<string, mixed>|null
+     */
+    private function withVatRates(Product $product, array $entry): ?array
+    {
+        $default = $product->variants->firstWhere('is_default', true) ?? $product->variants->first();
+        $rate = $default?->vat_rate instanceof VatRate ? $default->vat_rate : null;
+
+        foreach ($entry['variants'] as $index => $row) {
+            if ($row['vat'] !== null) {
+                continue;
+            }
+
+            if ($rate === null) {
+                return null;
+            }
+
+            $entry['variants'][$index]['vat'] = $rate->value;
+            $entry['variants'][$index]['net_minor'] = $rate->netFromGross($row['gross_minor']);
+        }
+
+        return $entry;
+    }
+
+    /**
      * The supplier variants get their own attributes (like reh4mat-rozmiar), so their value order is theirs.
      */
     private function attributeKey(string $name): string
@@ -435,11 +474,15 @@ final class ApplySupplierVariantsCommand extends Command
                 && is_array($rows) && count($rows) >= 2;
 
             foreach ($valid ? $rows : [] as $row) {
+                $keepsVat = array_key_exists('vat', $row) && $row['vat'] === null;
                 $valid = $valid
                     && filled($row['value'] ?? null)
-                    && is_int($row['net_minor'] ?? null) && $row['net_minor'] > 0
-                    && is_int($row['gross_minor'] ?? null) && $row['gross_minor'] >= $row['net_minor']
-                    && VatRate::tryFrom($row['vat'] ?? -1) !== null;
+                    && is_int($row['gross_minor'] ?? null) && $row['gross_minor'] > 0
+                    && ($keepsVat
+                        ? ($row['net_minor'] ?? null) === null
+                        : is_int($row['net_minor'] ?? null) && $row['net_minor'] > 0
+                            && $row['gross_minor'] >= $row['net_minor']
+                            && VatRate::tryFrom($row['vat'] ?? -1) !== null);
             }
 
             $slugs = $valid ? array_map(fn (array $row): string => $this->valueSlug($row['value']), $rows) : [];

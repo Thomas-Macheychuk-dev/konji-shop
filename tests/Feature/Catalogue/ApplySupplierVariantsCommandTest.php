@@ -107,9 +107,27 @@ it('leaves products that already have other variants alone', function (): void {
         ->assertSuccessful();
 });
 
+it('keeps the product VAT rate for gross-only online variant prices', function (): void {
+    // MOON-TIM is priced per cover from shop medians (399.00 / 469.00); the table carries no VAT rate.
+    $mattress = singleVariantProduct('timago', '1168', 'Materac piankowy do łóżka rehabilitacyjnego - MOON-TIM', 'MOON-TIM', null);
+    $mattress->update(['vat_rate' => VatRate::VAT_23]);
+
+    $this->artisan('catalogue:apply-supplier-variants', ['list' => 'timago-online-2026', '--write' => true])
+        // Each output line can satisfy only one expectation, so one expectation per line.
+        ->expectsOutputToContain('tanisklepmedyczny.pl (via Ceneo)] gross (empty) -> 399.00 (net 324.39, VAT 23%)')
+        ->expectsOutputToContain('tanisklepmedyczny.pl (via Ceneo)] gross new -> 469.00 (net 381.30, VAT 23%)')
+        ->expectsOutputToContain('CREATED_VARIANTS=1')
+        ->assertSuccessful();
+
+    $variants = ProductVariant::query()->where('product_id', $mattress->product_id)->orderBy('id')->get();
+
+    expect($variants->map(fn (ProductVariant $v) => [$v->price_gross_amount, $v->price_net_amount, $v->vat_rate])->all())
+        ->toEqual([[39900, 32439, VatRate::VAT_23], [46900, 38130, VatRate::VAT_23]]);
+});
+
 it('rejects an unknown variant table', function (): void {
     $this->artisan('catalogue:apply-supplier-variants', ['list' => 'nope'])
-        ->expectsOutputToContain('VARIANT_LIST_ERROR=Choose one of: timago-2026, vermeiren-2026')
+        ->expectsOutputToContain('VARIANT_LIST_ERROR=Choose one of: timago-2026, timago-online-2026, vermeiren-2026')
         ->assertFailed();
 });
 
