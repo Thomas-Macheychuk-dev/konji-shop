@@ -116,7 +116,7 @@ it('keeps the variant VAT rate for gross-only online prices', function (): void 
 
 it('rejects an unknown price table', function (): void {
     $this->artisan('catalogue:apply-supplier-prices', ['list' => 'nope'])
-        ->expectsOutputToContain('PRICE_LIST_ERROR=Choose one of: timago-2026, timago-online-2026, vermeiren-2026, vermeiren-online-2026')
+        ->expectsOutputToContain('PRICE_LIST_ERROR=Choose one of: timago-2026, timago-online-2026, timago-online-extra-2026, vermeiren-2026, vermeiren-online-2026')
         ->assertFailed();
 });
 

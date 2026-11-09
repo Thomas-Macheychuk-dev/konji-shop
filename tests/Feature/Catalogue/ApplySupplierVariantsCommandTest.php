@@ -125,9 +125,29 @@ it('keeps the product VAT rate for gross-only online variant prices', function (
         ->toEqual([[39900, 32439, VatRate::VAT_23], [46900, 38130, VatRate::VAT_23]]);
 });
 
+it('labels the only priced version of a product as its single variant', function (): void {
+    // Cutanplast comes in three versions; only Dental 24 szt. has a price, so the shop sells just that one.
+    $dressing = singleVariantProduct('timago', '741', 'Opatrunki żelowe Cutanplast', 'CUTANPLAST', null);
+
+    $this->artisan('catalogue:apply-supplier-variants', ['list' => 'timago-online-extra-2026', '--write' => true])
+        ->expectsOutputToContain('gross (empty) -> 36.42 (net 33.72, VAT 8%)')
+        ->expectsOutputToContain('CREATED_VARIANTS=0')
+        ->assertSuccessful();
+
+    $variant = ProductVariant::query()->where('product_id', $dressing->product_id)->with('attributeValues')->sole();
+
+    expect($variant->id)->toBe($dressing->id)
+        ->and($variant->price_gross_amount)->toBe(3642)
+        ->and($variant->attributeValues->sole()->value)->toBe('Dental 10 x 10 x 10 mm, op. 24 szt.');
+
+    $this->artisan('catalogue:apply-supplier-variants', ['list' => 'timago-online-extra-2026'])
+        ->expectsOutputToContain('TO_SPLIT=0 NEW_VARIANTS=0 ALREADY_CURRENT=1')
+        ->assertSuccessful();
+});
+
 it('rejects an unknown variant table', function (): void {
     $this->artisan('catalogue:apply-supplier-variants', ['list' => 'nope'])
-        ->expectsOutputToContain('VARIANT_LIST_ERROR=Choose one of: timago-2026, timago-online-2026, vermeiren-2026')
+        ->expectsOutputToContain('VARIANT_LIST_ERROR=Choose one of: timago-2026, timago-online-2026, timago-online-extra-2026, vermeiren-2026')
         ->assertFailed();
 });
 
