@@ -17,6 +17,8 @@ use JsonException;
  * The tables are built from the supplier price lists by scripts/catalogue/supplier-prices-2026 and hold one
  * entry per supplier product (external_id) with the final net and gross price and the list VAT rate. Every
  * variant of a matched product gets that price and the list VAT rate; the preview shows each VAT change.
+ * Tables from gross-only sources (e.g. timago-online-2026, medians of Polish shop prices) carry "vat": null
+ * and "net_minor": null; those keep each variant's VAT rate and derive the net price from it.
  */
 final class ApplySupplierPriceListCommand extends Command
 {
@@ -76,6 +78,18 @@ final class ApplySupplierPriceListCommand extends Command
                     $oldVat = $variant->vat_rate instanceof VatRate ? $variant->vat_rate->value : null;
                     $oldNet = $variant->price_net_amount === null ? null : (int) $variant->price_net_amount;
                     $oldGross = $variant->price_gross_amount;
+
+                    // Entries without a VAT rate (gross-only sources such as shop prices) keep the variant's rate.
+                    if ($entry['vat'] === null) {
+                        if ($oldVat === null) {
+                            $missing[] = $label.' sku='.($variant->sku ?? '-').' reason=no VAT rate on the variant';
+
+                            continue;
+                        }
+
+                        $entry['vat'] = $oldVat;
+                        $entry['net_minor'] = VatRate::from($oldVat)->netFromGross($entry['gross_minor']);
+                    }
 
                     if ($oldNet === $entry['net_minor'] && $oldGross === $entry['gross_minor'] && $oldVat === $entry['vat']) {
                         $unchanged++;
@@ -187,10 +201,14 @@ final class ApplySupplierPriceListCommand extends Command
         }
 
         foreach ($table['entries'] as $entry) {
+            $keepsVat = array_key_exists('vat', $entry) && $entry['vat'] === null;
             $valid = is_string($entry['external_id'] ?? null)
-                && is_int($entry['net_minor'] ?? null) && $entry['net_minor'] > 0
-                && is_int($entry['gross_minor'] ?? null) && $entry['gross_minor'] >= $entry['net_minor']
-                && VatRate::tryFrom($entry['vat'] ?? -1) !== null;
+                && is_int($entry['gross_minor'] ?? null) && $entry['gross_minor'] > 0
+                && ($keepsVat
+                    ? ($entry['net_minor'] ?? null) === null
+                    : is_int($entry['net_minor'] ?? null) && $entry['net_minor'] > 0
+                        && $entry['gross_minor'] >= $entry['net_minor']
+                        && VatRate::tryFrom($entry['vat'] ?? -1) !== null);
 
             if (! $valid) {
                 $this->error('PRICE_LIST_ERROR=Invalid entry: '.json_encode($entry, JSON_UNESCAPED_UNICODE));
