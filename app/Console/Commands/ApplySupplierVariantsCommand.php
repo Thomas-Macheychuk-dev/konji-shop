@@ -471,7 +471,9 @@ final class ApplySupplierVariantsCommand extends Command
             $rows = $product['variants'] ?? null;
             $valid = is_string($product['external_id'] ?? null)
                 && filled($product['attribute'] ?? null)
-                && is_array($rows) && count($rows) >= 2;
+                // One row is allowed: a product sold in several versions of which only one is priced keeps that
+                // version visible as its single variant.
+                && is_array($rows) && count($rows) >= 1;
 
             foreach ($valid ? $rows : [] as $row) {
                 $keepsVat = array_key_exists('vat', $row) && $row['vat'] === null;

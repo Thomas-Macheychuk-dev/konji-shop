@@ -1,0 +1,870 @@
+{
+ "supplier": "timago",
+ "external_source": "timago",
+ "source_file": "Polish online shop prices, second pass 2026-11-09",
+ "effective_from": "2026-11-09",
+ "currency": "PLN",
+ "pricing": "median gross price of matching Polish shop offers (incl. hospital-supply shops); VAT stays as set on the product",
+ "products": [
+  {
+   "external_id": "741",
+   "sku": "MB-05170502/MB/05380502/MB-0561",
+   "name": "Opatrunki żelowe Cutanplast",
+   "attribute": "Rozmiar / opakowanie",
+   "variants": [
+    {
+     "value": "Dental 10 x 10 x 10 mm, op. 24 szt.",
+     "list_row": "online median of 2: dentaleshop.pl, edenta.eu",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 3642,
+     "offers": [
+      "https://edenta.eu/hemostatic-gelatin-sponges/cutanplast-24-pcs",
+      "https://dentaleshop.pl/en_GB/p/Cutanplast-24-pcs.-10x10x10mm-Resorbable-gelatin-collagen-sponge/4858"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "Specjal 70 x 50 x 1 mm, op. 20 szt.",
+    "Standard 7 x 5 x 1 cm, op. 20 szt."
+   ]
+  },
+  {
+   "external_id": "953",
+   "sku": "WB-804 / WB-NT-600 / WB-NT-630",
+   "name": "Żelowe kompresy termiczne do terapii ciepłem lub zimnem",
+   "attribute": "Rodzaj",
+   "variants": [
+    {
+     "value": "na kolano 23 x 13 cm",
+     "list_row": "online median of 4: allegro.pl (first pass), aptekacud.pl (first pass), cezal.pl, sklep.cp-medibed.pl (first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 1570,
+     "offers": [
+      "https://cezal.pl/kompresy-coldhot/5308-kompres-termiczny-na-kolano-zimnocieplo-23x13cm-wb-804-timago.html",
+      "https://allegro.pl/produkt/kompres-zelowy-timago-23-cm-x-13-cm-3ce9b340-da73-4680-9537-d717473e5452",
+      "https://sklep.cp-medibed.pl/pl/p/Kompres-zelowy-na-KOLANO-23x13-cm-TIMAGO/313",
+      "https://aptekacud.pl/sprzet-medyczny/1888-kompres-termiczny-na-kolano-do-terapii-zimnem-lub-cieplem-23-cm-x-13-cm-1-sztu-9904752533735"
+     ]
+    },
+    {
+     "value": "na bark 54 x 19 cm",
+     "list_row": "online median of 1: medactive24.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 3690,
+     "offers": [
+      "https://medactive24.pl/pomoce-rehabilitacyjne/1645-tim-kompres-termiczny-zelowy-54x19cm-5902983724810.html"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "uniwersalny 30 x 18 cm"
+   ]
+  },
+  {
+   "external_id": "894",
+   "sku": "BT-PC",
+   "name": "Podkład chłonny",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "40 x 60 cm, op. 25 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 1850,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/-Podklad-chlonny-40x60cm-25szt-BETAtex-Zarys-/1054"
+     ]
+    },
+    {
+     "value": "60 x 60 cm, op. 25 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 2480,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Podklad-chlonny-60x60cm-25szt-BETATEX-Zarys/479"
+     ]
+    },
+    {
+     "value": "60 x 90 cm, op. 25 szt.",
+     "list_row": "online median of 3: camedica.pl (first pass), emka-sklep.com.pl, sklep.biomedico.pl (first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 3000,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Podklad-chlonny-60x90cm-25szt-BETATEX-Zarys/480",
+      "https://sklep.biomedico.pl/produkt/podklad-chlonny-nieprzemakalny-60x90cm-betatex-25sztop/",
+      "https://camedica.pl/podklad-higieniczny-60x90cm-chlonnyfoliowany-opak-25-szt-bt-pc6090/"
+     ]
+    }
+   ],
+   "unpriced_versions": []
+  },
+  {
+   "external_id": "282",
+   "sku": "CHTW/B",
+   "name": "Chusta trójkątna",
+   "attribute": "Materiał",
+   "variants": [
+    {
+     "value": "włókninowa 96 x 96 x 136 cm",
+     "list_row": "online median of 4: emedyczni.pl (first pass), emka-sklep.com.pl (first pass), sklep-rehabilitacyjny.com.pl (first pass), sklep.dib.com.pl (first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 176,
+     "offers": [
+      "https://www.sklep-rehabilitacyjny.com.pl/chusta_trojkatna_wlokninowa_elastoSLING",
+      "https://emedyczni.pl/chusta-trojkatna-wlokninowa-96x96x130cm/96",
+      "https://emka-sklep.com.pl/pl/p/Chusta-trojkatna-wlokninowa-96cm-x-96cm-x-136cm-elastoSLING-Zarys-REF-CHTW9696136/462",
+      "https://sklep.dib.com.pl/p6154,zarys-chusta-trojkatna-wlokninowa-elastosling-temblak.html"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "bawełniana 96 x 96 x 130 cm"
+   ]
+  },
+  {
+   "external_id": "806",
+   "sku": "TTE 6102 - TTE6122",
+   "name": "Łatwoślizg - chusta ułatwiająca przenoszenie chorego",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "72 x 71 cm",
+     "list_row": "online median of 3: medactive24.pl, prolifter.pl (first pass), sklepimed.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 13490,
+     "offers": [
+      "https://medactive24.pl/pomoce-rehabilitacyjne/1658-tim-latwoslizg-tte6102-czerwony-72x71cm-8436035357628.html",
+      "https://sklepimed.pl/strona-glowna/1292-2630-latwoslizg-chusta-ulatwiajaca-przenoszenie-chorego-tte-6102.html",
+      "https://www.prolifter.pl/mata-poslizgowa-do-przesuwania-pacjenta-petermann-kartapdf-615.html"
+     ]
+    },
+    {
+     "value": "122 x 71 cm",
+     "list_row": "online median of 1: sklepimed.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 17500,
+     "offers": [
+      "https://sklepimed.pl/strona-glowna/1292-2631-latwoslizg-chusta-ulatwiajaca-przenoszenie-chorego-tte-6102.html"
+     ]
+    },
+    {
+     "value": "200 x 90 cm, z uchwytami",
+     "list_row": "online median of 2: medactive24.pl, sklepimed.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 38995,
+     "offers": [
+      "https://medactive24.pl/pomoce-rehabilitacyjne/1659-tim-latwoslizg-tte6122-czerwony-200x90cm-8436035357765.html",
+      "https://sklepimed.pl/strona-glowna/1292-2632-latwoslizg-chusta-ulatwiajaca-przenoszenie-chorego-tte-6102.html"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "122 x 100 cm",
+    "200 x 71 cm"
+   ]
+  },
+  {
+   "external_id": "1244",
+   "sku": "ZARYS",
+   "name": "Kompres gazowy KOMPRI lux/KOMPRI lux S",
+   "attribute": "Wersja i rozmiar",
+   "variants": [
+    {
+     "value": "niejałowe 5 x 5 cm, 13N 8W, op. 100 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 240,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-z-gazy-niejalowy-13N8W-5x5cm-a100szt-KOMPRI-LUX-Zarys/292"
+     ]
+    },
+    {
+     "value": "niejałowe 7,5 x 7,5 cm, 13N 8W, op. 100 szt.",
+     "list_row": "online median of 3: or-med.sklep (via Ceneo, first pass), stetosklep.pl (via Ceneo, first pass), wapteka.pl (via Ceneo, first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 655,
+     "offers": [
+      "https://www.ceneo.pl/100030372",
+      "https://www.ceneo.pl/100030372",
+      "https://www.ceneo.pl/100030372"
+     ]
+    },
+    {
+     "value": "niejałowe 10 x 10 cm, 13N 8W, op. 100 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 720,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-z-gazy-niejalowy-13N8W-10x10cm-a100szt-KOMPRI-LUX-Zarys/291"
+     ]
+    },
+    {
+     "value": "jałowe 5 x 5 cm, 17N 8W, op. 10 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 80,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-gaz-jalowych-17N8W-5x5cm-a10szt-KOMPRI-LUX-S-Zarys-/1096"
+     ]
+    },
+    {
+     "value": "jałowe 7,5 x 7,5 cm, 17N 8W, op. 10 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 110,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-gaz-jalowych-17N8W-7%2C5x7%2C5cm-a10szt-KOMPRI-LUX-S-Zarys-/1097"
+     ]
+    },
+    {
+     "value": "jałowe 10 x 10 cm, 17N 8W, op. 10 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 230,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-gaz-jal-17N8W-10x10cm-a10szt-KOMPRI-LUX-S-Zarys-REF-GS17100810-SS-/1840"
+     ]
+    }
+   ],
+   "unpriced_versions": []
+  },
+  {
+   "external_id": "1243",
+   "sku": "Zarys",
+   "name": "Kompres włókninowy NONVI lux/NONVI lux S",
+   "attribute": "Wersja i rozmiar",
+   "variants": [
+    {
+     "value": "niejałowe 5 x 5 cm, op. 100 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 110,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-wlokninowy-niejalowy-30G4W-5x5cm-100szt-NONVI-LUX-Zarys/948"
+     ]
+    },
+    {
+     "value": "niejałowe 7,5 x 7,5 cm, op. 100 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 250,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-wlokninowy-niejalowy-30G4W-7%2C5x7%2C5cm-100szt-NONVI-LUX-Zarys/968"
+     ]
+    },
+    {
+     "value": "niejałowe 10 x 10 cm, op. 100 szt.",
+     "list_row": "online median of 5: emka-sklep.com.pl, or-med.sklep (via Ceneo, first pass), sklep.cp-medibed.pl (via Ceneo, first pass), sklep.dib.com.pl (via Ceneo, first pass), sklep.medicov.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 499,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-wlokninowy-niejalowy-30G4W-10x10cm-100szt-NONVI-LUX-Zarys/947",
+      "https://www.ceneo.pl/100030388",
+      "https://www.ceneo.pl/100030388",
+      "https://www.ceneo.pl/100030388",
+      "https://www.ceneo.pl/100030388"
+     ]
+    },
+    {
+     "value": "jałowe 5 x 5 cm, op. 3 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 10,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompresy-wlokninowy-jalowe-30G4W-5x5cm-a3szt-NONVI-LUX-S-Zarys/945"
+     ]
+    },
+    {
+     "value": "jałowe 7,5 x 7,5 cm, op. 3 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 20,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-wlokn-jal-30G4W-7%2C5x7%2C5-a3szt-NONVI-LUX-S-Zarys-REF-NL753-S/1842"
+     ]
+    },
+    {
+     "value": "jałowe 10 x 10 cm, op. 3 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 30,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Kompres-wlokn-jal-30G4W-10x10cm-3szt-NONVI-LUX-S-Zarys/1736"
+     ]
+    }
+   ],
+   "unpriced_versions": []
+  },
+  {
+   "external_id": "1131",
+   "sku": "Elastopor",
+   "name": "Opatrunek włókninowy z wkładem chłonnym - ELASTOPOR STERIL",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "5 x 7,2 cm, op. 100 szt.",
+     "list_row": "online median of 7: aptekaolmed.pl (Ceneo), aptekazawiszy.pl (Ceneo), melisa.pl (Ceneo), or-med.sklep (Ceneo), sklep.medicov.pl (Ceneo), wapteka.pl (Ceneo), witalo.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 2739,
+     "offers": [
+      "https://www.ceneo.pl/89765470",
+      "https://www.ceneo.pl/89765470",
+      "https://www.ceneo.pl/89765470",
+      "https://www.ceneo.pl/89765470",
+      "https://www.ceneo.pl/89765470",
+      "https://www.ceneo.pl/89765470",
+      "https://www.ceneo.pl/89765470"
+     ]
+    },
+    {
+     "value": "6 x 10 cm, op. 50 szt.",
+     "list_row": "online median of 7: aptekacurate.pl (Ceneo), gemini.pl (Ceneo), melisa.pl (Ceneo), sklep.cp-medibed.pl (Ceneo), sklep.medicov.pl (Ceneo), wapteka.pl (Ceneo), witalo.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 2099,
+     "offers": [
+      "https://www.ceneo.pl/181602297",
+      "https://www.ceneo.pl/181602297",
+      "https://www.ceneo.pl/181602297",
+      "https://www.ceneo.pl/181602297",
+      "https://www.ceneo.pl/181602297",
+      "https://www.ceneo.pl/181602297",
+      "https://www.ceneo.pl/181602297"
+     ]
+    },
+    {
+     "value": "8 x 10 cm, op. 30 szt.",
+     "list_row": "online median of 4: gemini.pl (Ceneo), or-med.sklep (Ceneo), stetosklep.pl (Ceneo), witalo.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 1569,
+     "offers": [
+      "https://www.ceneo.pl/179409662",
+      "https://www.ceneo.pl/179409662",
+      "https://www.ceneo.pl/179409662",
+      "https://www.ceneo.pl/179409662"
+     ]
+    },
+    {
+     "value": "10 x 10 cm, op. 30 szt.",
+     "list_row": "online median of 2: gemini.pl (first pass), sklep.medicov.pl (via Ceneo, first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 1822,
+     "offers": [
+      "https://gemini.pl/elastopor-steril-opatrunek-wlokninowy-z-wkladem-chlonnym-samoprzylepny-jalowy-10-cm-x-10-cm-30-sztuk-9082142",
+      "https://www.ceneo.pl/31116932"
+     ]
+    },
+    {
+     "value": "10 x 12 cm, op. 30 szt.",
+     "list_row": "online median of 3: aptekaiderm.pl (Ceneo), aptekaolmed.pl (Ceneo), aptekazawiszy.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 2404,
+     "offers": [
+      "https://www.ceneo.pl/124869382",
+      "https://www.ceneo.pl/124869382",
+      "https://www.ceneo.pl/124869382"
+     ]
+    },
+    {
+     "value": "10 x 15 cm, op. 30 szt.",
+     "list_row": "online median of 9: Formedic (Ceneo), aptekaiderm.pl (Ceneo), aptekazawiszy.pl (Ceneo), blizejciebie.pl (Ceneo), matopat24.pl (Ceneo), or-med.sklep (Ceneo), seni24.pl (Ceneo), skle",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 2635,
+     "offers": [
+      "https://www.ceneo.pl/102598098",
+      "https://www.ceneo.pl/102598098",
+      "https://www.ceneo.pl/102598098",
+      "https://www.ceneo.pl/102598098",
+      "https://www.ceneo.pl/102598098",
+      "https://www.ceneo.pl/102598098",
+      "https://www.ceneo.pl/102598098",
+      "https://www.ceneo.pl/102598098",
+      "https://www.ceneo.pl/102598098"
+     ]
+    },
+    {
+     "value": "6 x 15 cm, op. 50 szt.",
+     "list_row": "online median of 3: aptekacurate.pl (Ceneo), melisa.pl (Ceneo), wapteka.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 3751,
+     "offers": [
+      "https://www.ceneo.pl/181602301",
+      "https://www.ceneo.pl/181602301",
+      "https://www.ceneo.pl/181602301"
+     ]
+    },
+    {
+     "value": "8 x 15 cm, op. 30 szt.",
+     "list_row": "online median of 3: melisa.pl (Ceneo), sklep.cp-medibed.pl (Ceneo), wapteka.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 2593,
+     "offers": [
+      "https://www.ceneo.pl/181602316",
+      "https://www.ceneo.pl/181602316",
+      "https://www.ceneo.pl/181602316"
+     ]
+    },
+    {
+     "value": "10 x 20 cm, op. 25 szt.",
+     "list_row": "online median of 4: melisa.pl (Ceneo), sklep.cp-medibed.pl (Ceneo), wapteka.pl (Ceneo), witalo.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 2965,
+     "offers": [
+      "https://www.ceneo.pl/186183721",
+      "https://www.ceneo.pl/186183721",
+      "https://www.ceneo.pl/186183721",
+      "https://www.ceneo.pl/186183721"
+     ]
+    },
+    {
+     "value": "10 x 25 cm, op. 25 szt.",
+     "list_row": "online median of 5: melisa.pl (Ceneo), or-med.sklep (Ceneo), sklep.medicov.pl (Ceneo), wapteka.pl (Ceneo), witalo.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 3499,
+     "offers": [
+      "https://www.ceneo.pl/95606413",
+      "https://www.ceneo.pl/95606413",
+      "https://www.ceneo.pl/95606413",
+      "https://www.ceneo.pl/95606413",
+      "https://www.ceneo.pl/95606413"
+     ]
+    },
+    {
+     "value": "10 x 30 cm, op. 25 szt.",
+     "list_row": "online median of 2: aptekaolmed.pl (Ceneo), sklep.cp-medibed.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 5029,
+     "offers": [
+      "https://www.ceneo.pl/186183706",
+      "https://www.ceneo.pl/95092662"
+     ]
+    },
+    {
+     "value": "10 x 35 cm, op. 25 szt.",
+     "list_row": "online median of 2: melisa.pl (Ceneo), wapteka.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 6137,
+     "offers": [
+      "https://www.ceneo.pl/186236209",
+      "https://www.ceneo.pl/186236209"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "8 x 20 cm, op. 30 szt."
+   ]
+  },
+  {
+   "external_id": "273",
+   "sku": "FP",
+   "name": "Plaster tkaninowy z opatrunkiem FABRIPLAST",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "6 cm x 1 m",
+     "list_row": "online median of 4: melisa.pl (via Ceneo, first pass), or-med.sklep (via Ceneo, first pass), sklep.cp-medibed.pl (via Ceneo, first pass), wapteka.pl (via Ceneo, first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 319,
+     "offers": [
+      "https://www.ceneo.pl/51587418",
+      "https://www.ceneo.pl/51587418",
+      "https://www.ceneo.pl/51587418",
+      "https://www.ceneo.pl/51587418"
+     ]
+    },
+    {
+     "value": "8 cm x 1 m",
+     "list_row": "online median of 7: melisa.pl (Ceneo), or-med.sklep (Ceneo), sklep.brat.pl (Ceneo), sklep.cp-medibed.pl (Ceneo), sklep.medicov.pl (Ceneo), wapteka.pl (Ceneo), witalo.pl (Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 364,
+     "offers": [
+      "https://www.ceneo.pl/135520017",
+      "https://www.ceneo.pl/135520017",
+      "https://www.ceneo.pl/135520017",
+      "https://www.ceneo.pl/135520017",
+      "https://www.ceneo.pl/135520017",
+      "https://www.ceneo.pl/135520017",
+      "https://www.ceneo.pl/135520017"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "6 cm x 5 m"
+   ]
+  },
+  {
+   "external_id": "891",
+   "sku": "elastoBAND",
+   "name": "Opaska dziana",
+   "attribute": "Szerokość",
+   "variants": [
+    {
+     "value": "15 cm x 4 m",
+     "list_row": "online median of 3: melisa.pl (via Ceneo, first pass), or-med.sklep (via Ceneo, first pass), wapteka.pl (via Ceneo, first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 142,
+     "offers": [
+      "https://www.ceneo.pl/191389000",
+      "https://www.ceneo.pl/191389000",
+      "https://www.ceneo.pl/181461984"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "5 cm x 4 m",
+    "10 cm x 4 m"
+   ]
+  },
+  {
+   "external_id": "892",
+   "sku": "KOMPRES",
+   "name": "Gaza opatrunkowa kopertowa - GAZA LUX",
+   "attribute": "Rodzaj gazy",
+   "variants": [
+    {
+     "value": "13-nitkowa, jałowa, 1 m², 1 szt.",
+     "list_row": "online median of 3: emka-sklep.com.pl, or-med.sklep (via Ceneo, first pass), sklep.dib.com.pl (via Ceneo, first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 168,
+     "offers": [
+      "https://www.ceneo.pl/100030364",
+      "https://www.ceneo.pl/100030364",
+      "https://emka-sklep.com.pl/pl/p/Gaza-jalowa-13N-1m2-Zarys/465"
+     ]
+    },
+    {
+     "value": "17-nitkowa, jałowa, 1 m², 1 szt.",
+     "list_row": "online median of 1: emka-sklep.com.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 180,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Gaza-jalowa-17N-1m2-GAZALUX-S-Zarys/919"
+     ]
+    }
+   ],
+   "unpriced_versions": []
+  },
+  {
+   "external_id": "253",
+   "sku": "PLASPOL",
+   "name": "Pojemnik na odpady medyczne",
+   "attribute": "Pojemność",
+   "variants": [
+    {
+     "value": "1 l",
+     "list_row": "online median of 1: or-med.sklep (via Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 320,
+     "offers": [
+      "https://www.ceneo.pl/185198482"
+     ]
+    },
+    {
+     "value": "10 l",
+     "list_row": "online median of 1: or-med.sklep (via Ceneo)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 1309,
+     "offers": [
+      "https://www.ceneo.pl/185198680"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "0,2 l",
+    "0,7 l",
+    "2 l",
+    "3,5 l",
+    "5 l"
+   ]
+  },
+  {
+   "external_id": "229",
+   "sku": "ZARYS",
+   "name": "Dren tlenowy",
+   "attribute": "Długość",
+   "variants": [
+    {
+     "value": "4,26 m",
+     "list_row": "online median of 2: emka-sklep.com.pl, or-med.sklep (via Ceneo, first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 357,
+     "offers": [
+      "https://emka-sklep.com.pl/pl/p/Dren-tlenowy-4%2C26m-Zarys/890",
+      "https://www.ceneo.pl/111015941"
+     ]
+    },
+    {
+     "value": "7,62 m",
+     "list_row": "online median of 1: or-med.sklep (via Ceneo, first pass)",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 428,
+     "offers": [
+      "https://www.ceneo.pl/197987973"
+     ]
+    }
+   ],
+   "unpriced_versions": [
+    "2,1 m"
+   ]
+  },
+  {
+   "external_id": "230",
+   "sku": "ZARYS",
+   "name": "Zgłębnik żołądkowy",
+   "attribute": "Rozmiar",
+   "variants": [
+    {
+     "value": "CH12, 80 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch12-80cm.html"
+     ]
+    },
+    {
+     "value": "CH12, 100 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch12-100cm.html"
+     ]
+    },
+    {
+     "value": "CH14, 80 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch14-80cm.html"
+     ]
+    },
+    {
+     "value": "CH14, 100 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch14-100cm.html"
+     ]
+    },
+    {
+     "value": "CH14, 125 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch14-125cm.html"
+     ]
+    },
+    {
+     "value": "CH16, 80 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch16-80cm.html"
+     ]
+    },
+    {
+     "value": "CH16, 100 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch16-100cm.html"
+     ]
+    },
+    {
+     "value": "CH16, 125 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch16-125cm.html"
+     ]
+    },
+    {
+     "value": "CH18, 80 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch18-80cm.html"
+     ]
+    },
+    {
+     "value": "CH18, 100 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch18-100cm.html"
+     ]
+    },
+    {
+     "value": "CH18, 125 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch18-125cm.html"
+     ]
+    },
+    {
+     "value": "CH20, 80 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch20-80cm.html"
+     ]
+    },
+    {
+     "value": "CH20, 100 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch20-100cm.html"
+     ]
+    },
+    {
+     "value": "CH22, 80 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch22-80cm.html"
+     ]
+    },
+    {
+     "value": "CH24, 80 cm",
+     "list_row": "online median of 1: dlapacjenta.pl",
+     "list_net_minor": null,
+     "vat": null,
+     "net_minor": null,
+     "gross_minor": 90,
+     "offers": [
+      "https://dlapacjenta.pl/zglebnik-zoladka-zarys-ch24-80cm.html"
+     ]
+    }
+   ],
+   "unpriced_versions": []
+  }
+ ]
+}

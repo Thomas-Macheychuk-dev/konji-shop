@@ -1,0 +1,344 @@
+{
+ "supplier": "timago",
+ "external_source": "timago",
+ "source_file": "Polish online shop prices, second pass 2026-11-09",
+ "effective_from": "2026-11-09",
+ "currency": "PLN",
+ "pricing": "median gross price of matching Polish shop offers (incl. hospital-supply shops); VAT stays as set on the product",
+ "entries": [
+  {
+   "external_id": "1288",
+   "sku": "SPIRIT-3_BATERIA",
+   "name": "Bateria do przenośnego koncentratora tlenu SPIRIT-3 - 13,6 Ah",
+   "list_row": "online median of 2: sklep.poprostuoddychaj.pl, sklep.stanmed24.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 230000,
+   "matched_by": "online",
+   "offers": [
+    "https://www.sklep.stanmed24.pl/wp-json/wc/store/v1/products/2686",
+    "https://sklep.poprostuoddychaj.pl/wp-json/wc/store/v1/products/2421"
+   ]
+  },
+  {
+   "external_id": "245",
+   "sku": "3CZ-CEW",
+   "name": "Strzykawka trzyczęściowa Janeta",
+   "list_row": "online median of 1: emka-sklep.com.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 160,
+   "matched_by": "online",
+   "offers": [
+    "https://emka-sklep.com.pl/pl/p/Strzykawka-100ml-cewnikowa-DICONEX-Zarys/524"
+   ]
+  },
+  {
+   "external_id": "251",
+   "sku": "SA-001",
+   "name": "Staza automatyczna",
+   "list_row": "online median of 1: dlapacjenta.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 750,
+   "matched_by": "online",
+   "offers": [
+    "https://dlapacjenta.pl/staza-uciskowa-automatyczna-sa-001.html"
+   ]
+  },
+  {
+   "external_id": "250",
+   "sku": "S001",
+   "name": "Staza gumowa w rolce",
+   "list_row": "online median of 1: dlapacjenta.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 1590,
+   "matched_by": "online",
+   "offers": [
+    "https://dlapacjenta.pl/staza-uciskowa-bezlateksowa-rolka-25szt.html"
+   ]
+  },
+  {
+   "external_id": "232",
+   "sku": "WMD2000",
+   "name": "Worek do zbiórki moczu 2l, z odpływem typu T",
+   "list_row": "online median of 2: doz.pl, gemini.pl",
+   "list_code": null,
+   "list_net_minor": null,
+   "vat": null,
+   "net_minor": null,
+   "gross_minor": 240,
+   "matched_by": "online",
+   "offers": [
+    "https://www.doz.pl/p/zarys-worek-do-zbiorki-moczu-sterylny-2000-ml90-cm-10-szt-141070",
+    "https://gemini.pl/zarys-worek-do-dobowej-zbiorki-moczu-jalowy-2000-ml-1-sztuka-9020666"
+   ]
+  }
+ ],
+ "unresolved": [
+  {
+   "sku": "Hogen Spitze",
+   "name": "Igły do karpuli Hogen-Spitze",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "SIMPLE MANIKIN III",
+   "name": "Fantom Simple Manikin III (zestaw standardowy)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "NISSIN Type 1",
+   "name": "Fantom NISSIN Type 1 (zestaw średnio-zaawansowany)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "NISSIN Type 2",
+   "name": "Fantom Nissin TYPE 2 (zestaw zaawansowany)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "PRO2001-UL-SP-FEM-32",
+   "name": "Model PRO2001-UL-SP-FEM-32 (model standardowy/protetyczny)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "EDE1001-UL-UP-FEM",
+   "name": "Model EDE1001-UL-UP-FEM (model bezzębny)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "PER2001-UL-SP-FEM-32",
+   "name": "Model PER2001-UL-SP-FEM-32 (model periodontologiczny)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "SUG1003-UL-SP-FEM-28",
+   "name": "Model SUG1003-UL-SP-FEM-28 (model chirurgiczny)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "PDI2001-UL-SP-FEM",
+   "name": "Model PDI2001-UL-SP-FEM (model pedodontyczny)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "IMP5003-UL-SP-FEM",
+   "name": "Model IMP5003-UL-SP-FEM (model do implantacji)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "SUG2005-UL-SP",
+   "name": "Model L SUG2005-UL-SP (model anestezjologiczny)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "YS-802A",
+   "name": "Model YS-802A (model ortodontyczny)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "A5A-200",
+   "name": "Model L A5A-200 (zęby standardowe)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "A20A-200",
+   "name": "Model A20A-200 (zęby 2-warstwowe)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "A27A",
+   "name": "Model A27A (zęby 2-warstowe z próchnicą)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "A21A / A25A",
+   "name": "Model A21A / A25A (zęby z opracowanym ubytkiem)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "S12A-200",
+   "name": "Model S12A-200 (zęby endodontyczne)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "A2A-240",
+   "name": "Model A2A-240 (wypełnienie ubytków)",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Bloczki endodontyczne",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Modele anatomiczne",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "w zależności od modelu",
+   "name": "Modele edukacyjne",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "TH 534",
+   "name": "Płyta obrotowa do fotelika RECARO Axion 1 Reha",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "TH 6634/6 / TH 6734/6",
+   "name": "Peloty boczne podtrzymujące do wózka Swifty",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "TH 6620/6 / TH 6720/6",
+   "name": "Klin odwodzący do wózka Swifty",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "TH 6616/51 / TH 6617/6 / TH 6717",
+   "name": "Motylkowa uprząż piersiowa, elastyczna rozm. S, M i L do wózka EASyS Advantage",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "TH 427",
+   "name": "Prowadnice ramion do fotelika Hercules Prime R129",
+   "reason": "no confirmed PLN offer (low)"
+  },
+  {
+   "sku": "TH 503, TH 504",
+   "name": "Podnóżek do fotelika Major",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "TH 673",
+   "name": "Stolik do fotelika Major",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "CT3",
+   "name": "System Ciągłego Monitorowania Glikemii - CT3",
+   "reason": "CT3: Timago sells one kit (applicator, sensor, transmitter, case); shops sell the parts separately"
+  },
+  {
+   "sku": "Maya Produkt wkrótce w sprzedaży – dostępność ograniczona",
+   "name": "Wózek inwalidzki elektryczny - Maya",
+   "reason": "Maya: only search-snippet prices; the shop pages refuse to load"
+  },
+  {
+   "sku": "JMC 2907",
+   "name": "Nasadki gumowe do czwórnogów na niskich nogach - 2 sztuki",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": null,
+   "name": "Płyn do higienicznej i chirurgicznej dezynfekcji rąk i powierzchni",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "DryTim",
+   "name": "Podkład na materac - DryTim",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "BT-030",
+   "name": "Prześcieradło medyczne",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "YADA-BRUSH-B/A",
+   "name": "Szczotka do mycia rurek tracheotomijnych",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "BT-019",
+   "name": "Fartuch medyczny z gumką, włókninowy, niejałowy",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Podkład bibułowy 2-warstwowy w rolce",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "ZARYS-BT-046-31B (Z)",
+   "name": "Maseczka chirurgiczna z gumką",
+   "reason": "no confirmed PLN offer (low)"
+  },
+  {
+   "sku": "Kubek",
+   "name": "Kubek pojnik z uchwytem",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "HPM",
+   "name": "Kieliszek do podawania leków",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Nerka medyczna",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "GREATCARE-GCU230105",
+   "name": "Worek do zbiórki moczu z mocowaniem na nogę",
+   "reason": "leg urine bag: the shop offer names a different manufacturer (Ningbo Caremet) than Timago's GreatCare code"
+  },
+  {
+   "sku": "ZARYS",
+   "name": "Zgłębnik żołądkowy 100% silikon",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "SleepTim",
+   "name": "Prześcieradło z gumką dookoła - SleepTim",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "BIB-TIM",
+   "name": "Śliniak medyczny z kieszonką",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "ZARYS16-HJM-SO",
+   "name": "Szczoteczka do zębów z odsysaniem",
+   "reason": "no confirmed PLN offer (low)"
+  },
+  {
+   "sku": "ZARYS25-HJM-GB",
+   "name": "Aplikator gąbkowy do nawilżania jamy ustnej",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "LAYERTEX-87EN0901220-23",
+   "name": "Myjka nasączona mydłem - CLEANET NAPA",
+   "reason": "no confirmed PLN offer (low)"
+  },
+  {
+   "sku": "87ENTAS1220-07",
+   "name": "Myjka nasączona środkiem myjącym - CLEANET PLUS",
+   "reason": "no confirmed PLN offer (low)"
+  },
+  {
+   "sku": "01MA1552090-76",
+   "name": "Myjka nasączona środkiem myjącym - GANTNET",
+   "reason": "no confirmed PLN offer (none)"
+  },
+  {
+   "sku": "LAYERTEX-PLMA1502260-72",
+   "name": "Myjka nasączona środkiem myjącym - GANTNET PLUS",
+   "reason": "no confirmed PLN offer (low)"
+  }
+ ]
+}
