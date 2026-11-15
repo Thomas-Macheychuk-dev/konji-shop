@@ -17,7 +17,6 @@
     $taxId = $seller['tax_id'] ?? '';
     $registryNumber = $seller['business_registry_number'] ?? '';
     $regon = $seller['regon'] ?? '';
-    $shareCapital = $seller['share_capital'] ?? '';
     $returnAddress = $returns['return_address'] ?? '';
     $phoneHref = filled($phone)
         ? 'tel:'.preg_replace('/[^0-9+]/', '', (string) $phone)
@@ -145,15 +144,13 @@
                         @if (filled($regon))
                             <span class="block">REGON: {{ $regon }}</span>
                         @endif
-                        @if (filled($shareCapital))
-                            <span class="block">Kapitał zakładowy: {{ $shareCapital }}</span>
-                        @endif
                     </div>
 
                     @if (filled($returnAddress))
                         <div class="leading-6">
                             <strong class="block font-semibold text-white">Adres do zwrotów</strong>
-                            <span>{{ $returnAddress }}</span>
+                            <span class="block">{{ $seller['company_name'] ?? $companyName }}</span>
+                            <span class="block">{{ str_starts_with((string) $returnAddress, 'ul.') ? $returnAddress : 'ul. '.$returnAddress }}</span>
                         </div>
                     @endif
                 </div>

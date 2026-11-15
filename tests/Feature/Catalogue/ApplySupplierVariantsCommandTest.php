@@ -24,8 +24,8 @@ it('previews the Timago size variants without writing', function (): void {
     $this->artisan('catalogue:apply-supplier-variants', ['list' => 'timago-2026'])
         ->expectsOutputToContain('TABLE_PRODUCTS=4 TO_SPLIT=1 NEW_VARIANTS=3 ALREADY_CURRENT=0 SKIPPED=0 PRODUCT_MISSING=3')
         ->expectsOutputToContain('SPLIT product='.$spiky->product_id.' [active] SPIKY - Piłka rehabilitacyjna z kolcami (jeżyk) by Rozmiar')
-        ->expectsOutputToContain('KEEP variant='.$spiky->id.' 5 cm (czerwona) [Rehabilitacja:168] gross (empty) -> 6.40 (net 5.93, VAT 8%)')
-        ->expectsOutputToContain('NEW 8 cm (zielona) [Rehabilitacja:171] gross new -> 8.78 (net 8.13, VAT 8%)')
+        ->expectsOutputToContain('KEEP variant='.$spiky->id.' 5 cm (czerwona) [Rehabilitacja:168] gross (empty) -> 6.99 (net 6.47, VAT 8%)')
+        ->expectsOutputToContain('NEW 8 cm (zielona) [Rehabilitacja:171] gross new -> 9.58 (net 8.87, VAT 8%)')
         ->expectsOutputToContain('MODE=READ_ONLY')
         ->assertSuccessful();
 

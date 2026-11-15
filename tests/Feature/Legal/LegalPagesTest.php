@@ -88,3 +88,14 @@ it('shows legal footer links on the storefront', function (): void {
         ->assertSee('Dostawa i płatności', false)
         ->assertSee('Polityka plików cookie');
 });
+
+it('shows the return address with the company name and no share capital in the footer and on the contact page', function (): void {
+    foreach ([route('home'), route('legal.contact')] as $url) {
+        $this->get($url)
+            ->assertOk()
+            ->assertDontSee('Kapitał zakładowy')
+            ->assertSee('ul. Bolesława Prusa 20, 60-820 Poznań');
+    }
+
+    $this->get(route('home'))->assertSeeInOrder(['Adres do zwrotów', 'MAX-CORP sp. z o.o.', 'ul. Bolesława Prusa 20, 60-820 Poznań']);
+});

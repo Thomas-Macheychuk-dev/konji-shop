@@ -3,7 +3,10 @@
 Usage: python -I build_timago.py "CENNIK dla dystrybutorów- 2026.xlsx" full-product-data.json out.json variants-out.json
 
 The spreadsheet is Timago's distributor list (net, VAT, gross). The shop sells at the distributor
-net price plus a 10% markup; gross follows from the list VAT rate. Each scraped Timago product
+price plus a 20% markup, and wheelchairs and walkers (the list's "Wózki inwalidzkie" and "PODPÓRKI I
+BALKONIKI" sections) plus 30%; gross follows from the list VAT rate, so it is the list gross plus the
+same markup. The owner set 20% on 15 November 2026 (it was 10%) and asked for more on wheelchairs and
+walkers; 30% is a starting point she adjusts by hand. Each scraped Timago product
 (storage/app/scrapers/timago/full-product-data.json) is matched by its SKU against the list
 "Kod produktu"; a code with several different prices is only used when OVERRIDES picks the row.
 Promotional bundle rows ("PAKIET 5 szt.") are never used.
@@ -17,7 +20,11 @@ from decimal import ROUND_HALF_UP, Decimal
 
 import openpyxl
 
-MARKUP = Decimal("1.10")
+MARKUP = Decimal("1.20")
+# Wheelchairs (Rehabilitacja rows 5-48) and walkers/rollators (rows 52-82) sell at a higher markup;
+# the wheelchair bags and tray in rows 49-51 do not.
+HIGHER_MARKUP = Decimal("1.30")
+HIGHER_MARKUP_ROWS = (("Rehabilitacja", 5, 48), ("Rehabilitacja", 52, 82))
 
 # Scraped SKU (or product name when the SKU is missing or shared) -> list row "<sheet>:<row>".
 # Each was checked by hand against the product name.
@@ -134,9 +141,15 @@ def read_rows(path):
     return rows
 
 
+def markup(row):
+    name, number = row["id"].rsplit(":", 1)
+    higher = any(name == sheet and first <= int(number) <= last for sheet, first, last in HIGHER_MARKUP_ROWS)
+    return HIGHER_MARKUP if higher else MARKUP
+
+
 def price(row):
     """Return (net_minor, gross_minor) for a list row: distributor net + markup, gross from the list VAT."""
-    net = (row["net"] * MARKUP).quantize(Decimal("0.01"), ROUND_HALF_UP)
+    net = (row["net"] * markup(row)).quantize(Decimal("0.01"), ROUND_HALF_UP)
     net_minor = int(net * 100)
     return net_minor, int((Decimal(net_minor) * (100 + row["vat"]) / 100).quantize(Decimal("1"), ROUND_HALF_UP))
 
@@ -208,7 +221,7 @@ def main(xlsx, scraped_path, out_path, variants_out_path):
         "source_file": "CENNIK dla dystrybutorów- 2026.xlsx",
         "effective_from": "2026-01-01",
         "currency": "PLN",
-        "pricing": "distributor net price + 10% markup; gross from the list VAT rate",
+        "pricing": "distributor price + 20% markup (wheelchairs and walkers, list rows Rehabilitacja:5-48 and 52-82, + 30%); gross from the list VAT rate",
     }
     write_json(out_path, {**header, "entries": entries, "unresolved": unresolved})
     write_json(variants_out_path, {**header, "products": variant_products})
