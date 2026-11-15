@@ -172,15 +172,16 @@ final class SanipurProductGrouper
             : null;
 
         // Colour at the end of the name. A colour may span two segments ("Szary, domki", "taupe i szary, jasno
-        // beżowy"); "kolor grafitowy, grafitowe" names it twice, so the "kolor …" copy is dropped. Earlier
-        // segments only count when they name a colour, so "Kształtka, Klin prosty, bawełna" keeps "Klin prosty".
+        // beżowy"); "kolor grafitowy, grafitowe" and "brązowa, brązowa" or "szara, ciemno szara" name it twice,
+        // so only the later, more specific copy is kept. Earlier segments only count when they name a colour, so
+        // "Kształtka, Klin prosty, bawełna" keeps "Klin prosty".
         if (count($segments) > 1 && $this->looksLikeColour((string) end($segments))) {
             $colour = (string) array_pop($segments);
 
             while (count($segments) > 1 && $this->namesColour((string) end($segments))) {
                 $segment = (string) array_pop($segments);
 
-                if (preg_match('/^kolor\s/iu', $segment) !== 1) {
+                if (preg_match('/^kolor\s/iu', $segment) !== 1 && ! $this->repeatsColour($segment, $colour)) {
                     $colour = $segment.', '.$colour;
                 }
             }
@@ -202,6 +203,16 @@ final class SanipurProductGrouper
         $base = $base !== '' ? $base : $name;
 
         return ['base' => $restore($base), 'size' => $size, 'colour' => $colour === null ? null : $restore($colour)];
+    }
+
+    /**
+     * Whether every word of an earlier colour segment is already in the colour ("szara" in "ciemno szara").
+     */
+    private function repeatsColour(string $segment, string $colour): bool
+    {
+        $words = fn (string $value): array => preg_split('/\s+/u', mb_strtolower(trim($value)), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+        return array_diff($words($segment), $words($colour)) === [];
     }
 
     /**
