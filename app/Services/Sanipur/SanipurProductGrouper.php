@@ -296,7 +296,7 @@ final class SanipurProductGrouper
             'group_key' => $key,
             'name' => $name,
             'slug' => Str::slug($name),
-            'brand' => $lead['brand'] ?? null,
+            'brand' => $this->brand($members),
             'breadcrumbs' => $this->breadcrumbs($members),
             'short_description' => $lead['short_description'] ?? null,
             'description_html' => $lead['description_html'] ?? null,
@@ -387,6 +387,35 @@ final class SanipurProductGrouper
         uasort($paths, fn (array $a, array $b): int => $b['count'] <=> $a['count']);
 
         return reset($paths)['path'];
+    }
+
+    /**
+     * SKU prefixes of Multitex's three brands, for the few pages sanipur.eu shows without a "Producent".
+     */
+    private const BRAND_BY_SKU_PREFIX = ['TM' => 'Matex', 'TB' => 'BabyMatex', 'TS' => 'Sanipur'];
+
+    /**
+     * The brand sanipur.eu names on the product's pages, else the one its SKU prefix stands for.
+     *
+     * @param  list<array<string, mixed>>  $members
+     */
+    private function brand(array $members): ?string
+    {
+        foreach ($members as $member) {
+            if (($brand = $this->string($member['brand'] ?? null)) !== null) {
+                return $brand;
+            }
+        }
+
+        foreach ($members as $member) {
+            $prefix = mb_strtoupper(mb_substr((string) ($member['sku'] ?? ''), 0, 2));
+
+            if (isset(self::BRAND_BY_SKU_PREFIX[$prefix])) {
+                return self::BRAND_BY_SKU_PREFIX[$prefix];
+            }
+        }
+
+        return null;
     }
 
     private function skuLine(string $sku): string

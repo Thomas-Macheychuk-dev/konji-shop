@@ -14,6 +14,7 @@ use App\Enums\VatRate;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Category;
+use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
@@ -34,6 +35,24 @@ final class SanipurProductImporter
     public const ROOT_CATEGORY = ['slug' => 'sanipur', 'name' => 'Sanipur'];
 
     public const FALLBACK_CATEGORY = 'Pozostałe';
+
+    /**
+     * GPSR manufacturer of Sanipur, Matex and BabyMatex: Multitex, which runs sanipur.eu and describes itself
+     * as the manufacturer of all three brands (sanipur.eu/pl/o-nas, regulamin_sanipur; multitex.com.pl).
+     * Filled in only for brands without details, so edits made in the admin panel are kept.
+     */
+    public const MANUFACTURER = [
+        'name' => 'Multitex Sp. z o.o.',
+        'address' => 'ul. 3 Maja 40, 48-250 Głogówek, Polska',
+        'email' => 'bok@multitex.com.pl',
+        'phone' => '+48 77 406 99 66',
+        'website' => 'https://multitex.com.pl',
+    ];
+
+    /**
+     * Brands made by Multitex (comparable form).
+     */
+    private const MULTITEX_BRANDS = ['sanipur', 'matex', 'babymatex'];
 
     private const MAX_DATABASE_STRING_LENGTH = 190;
 
@@ -233,7 +252,12 @@ final class SanipurProductImporter
         $brand = $this->stringOrNull($group['brand'] ?? null);
 
         if ($brand !== null) {
-            $ids[$this->resolveAttributeValue('Producent', $brand)->id] = [];
+            $brandValue = $this->resolveAttributeValue('Producent', $brand);
+            $ids[$brandValue->id] = [];
+
+            if (in_array(Str::slug($brand, ''), self::MULTITEX_BRANDS, true) && ! $brandValue->manufacturer()->exists()) {
+                Manufacturer::query()->create(['attribute_value_id' => $brandValue->id] + self::MANUFACTURER);
+            }
         }
 
         if ((bool) ($group['is_medical_device'] ?? false)) {
