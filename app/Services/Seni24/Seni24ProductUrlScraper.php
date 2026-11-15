@@ -232,7 +232,8 @@ final class Seni24ProductUrlScraper
 
         $path = (string) parse_url($normalized, PHP_URL_PATH);
 
-        return preg_match('/_[0-9]+-[0-9]+(?:\\.html)?$/u', rtrim($path, '/')) === 1
+        // Products without size or pack options have no combination id: ".../name_22104".
+        return preg_match('/_[0-9]+(?:-[0-9]+)?(?:\\.html)?$/u', rtrim($path, '/')) === 1
             ? rtrim($normalized, '/')
             : null;
     }

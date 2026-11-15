@@ -1201,7 +1201,8 @@ final class Seni24ProductScraper
         $path = preg_replace('#/+#', '/', $path) ?? $path;
         $path = rtrim($path, '/');
 
-        if (preg_match('/_[0-9]+-[0-9]+(?:\\.html)?$/u', $path) !== 1) {
+        // Products without size or pack options have no combination id: ".../name_22104".
+        if (preg_match('/_[0-9]+(?:-[0-9]+)?(?:\\.html)?$/u', $path) !== 1) {
             return null;
         }
 
@@ -1212,11 +1213,12 @@ final class Seni24ProductScraper
     private function idsFromUrl(string $url): array
     {
         $path = (string) parse_url($url, PHP_URL_PATH);
-        if (preg_match('/_([0-9]+)-([0-9]+)(?:\\.html)?$/u', $path, $m) !== 1) {
+        if (preg_match('/_([0-9]+)(?:-([0-9]+))?(?:\\.html)?$/u', $path, $m) !== 1) {
             return [null, null];
         }
 
-        return [$m[1], $m[2]];
+        // A product without options has no combination id; PrestaShop uses 0 for it.
+        return [$m[1], ($m[2] ?? '') !== '' ? $m[2] : '0'];
     }
 
     private function slugFromUrl(string $url): string
@@ -1224,7 +1226,7 @@ final class Seni24ProductScraper
         $path = trim((string) parse_url($url, PHP_URL_PATH), '/');
         $base = basename($path);
 
-        return (string) preg_replace('/_[0-9]+-[0-9]+(?:\\.html)?$/u', '', $base);
+        return (string) preg_replace('/_[0-9]+(?:-[0-9]+)?(?:\\.html)?$/u', '', $base);
     }
 
     private function canonicalUrl(Crawler $crawler, string $fallback): ?string

@@ -2079,3 +2079,20 @@ it('rejects an HTTP 200 Seni24 category page that contains only an incidental pr
             $url => 'non_product_fallback_page',
         ]);
 });
+
+it('scrapes a product without options from a URL without a combination id', function (): void {
+    $html = <<<'HTML'
+        <html><body>
+            <h1>Pieluchy anatomiczne Seni San Prima</h1>
+            <div>Cena za 1 opak. z VAT 8% 42,41 zł (1,41 zł / 1 szt.)</div>
+            <div>Produkt dostępny więcej Przewidywany czas realizacji 24-48h.</div>
+        </body></html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract($html, 'https://www.seni24.pl/pieluchy-anatomiczne-seni-san-prima_22104');
+
+    expect($result['external_product_id'])->toBe('22104')
+        ->and($result['variant_candidates'][0]['external_variant_id'])->toBe('0')
+        ->and($result['price_gross_amount'])->toBe(42.41)
+        ->and($result['variants_unresolved'])->toBeFalse();
+});

@@ -1,0 +1,1484 @@
+{
+ "source": "matopat24.pl combination prices, matched to seni24.pl variants by shared ids",
+ "scraped_on": "2026-11-15",
+ "pricing": "shop price = base gross + 20%",
+ "variants": [
+  {
+   "external_variant_id": "seni24-11029-20256",
+   "product": "Balsam regenerujący do skóry suchej Seni Care",
+   "label": "Pojemność: 200 ml",
+   "base_gross_minor": 1248,
+   "seni24_gross_minor": 1248
+  },
+  {
+   "external_variant_id": "seni24-1117-8576",
+   "product": "Profesjonalny neutralizator zapachu Seni Fresh 500 ml",
+   "label": "Pojemność: 500 ml",
+   "base_gross_minor": 3299,
+   "seni24_gross_minor": 3299
+  },
+  {
+   "external_variant_id": "seni24-11637-20257",
+   "product": "Szampon w piance do mycia włosów bez użycia wody Seni Care",
+   "label": "Pojemność: 200 ml",
+   "base_gross_minor": 1277,
+   "seni24_gross_minor": 1277
+  },
+  {
+   "external_variant_id": "seni24-11917-20370",
+   "product": "Pianka do ciała myjąco-pielęgnująca Seni Care",
+   "label": "Pojemność: 500 ml",
+   "base_gross_minor": 1766,
+   "seni24_gross_minor": 1766
+  },
+  {
+   "external_variant_id": "seni24-12006-20387",
+   "product": "Krem ochronny przeciw odparzeniom z argininą Seni Care",
+   "label": "Pojemność: 200 ml",
+   "base_gross_minor": 1620,
+   "seni24_gross_minor": 1620
+  },
+  {
+   "external_variant_id": "seni24-12006-21158",
+   "product": "Krem ochronny przeciw odparzeniom z argininą Seni Care",
+   "label": "SE-231-T100-N32",
+   "base_gross_minor": 873,
+   "seni24_gross_minor": 873
+  },
+  {
+   "external_variant_id": "seni24-12007-20733",
+   "product": "Odżywczy krem do stóp Seni Care 7% mocznik",
+   "label": "Pojemność: 100 ml",
+   "base_gross_minor": 1145,
+   "seni24_gross_minor": 1145
+  },
+  {
+   "external_variant_id": "seni24-12009-21105",
+   "product": "Żel aktywizujący z guaraną Seni Care",
+   "label": "Pojemność: 200 ml",
+   "base_gross_minor": 1320,
+   "seni24_gross_minor": 1320
+  },
+  {
+   "external_variant_id": "seni24-12385-20489",
+   "product": "Delikatny żel myjąco-natłuszczający Seni Care",
+   "label": "Pojemność: 500 ml",
+   "base_gross_minor": 1775,
+   "seni24_gross_minor": 1775
+  },
+  {
+   "external_variant_id": "seni24-12386-20491",
+   "product": "Kremowy żel do mycia ciała Seni Care",
+   "label": "Pojemność: 500 ml",
+   "base_gross_minor": 2220,
+   "seni24_gross_minor": 2220
+  },
+  {
+   "external_variant_id": "seni24-12388-20494",
+   "product": "Emulsja nawilżająca do skóry suchej Seni Care 4% mocznik",
+   "label": "Pojemność: 500 ml",
+   "base_gross_minor": 2389,
+   "seni24_gross_minor": 2389
+  },
+  {
+   "external_variant_id": "seni24-12389-20497",
+   "product": "Krem myjący 3w1 Seni Care",
+   "label": "Pojemność: 500 ml",
+   "base_gross_minor": 1950,
+   "seni24_gross_minor": 1950
+  },
+  {
+   "external_variant_id": "seni24-12389-22108",
+   "product": "Krem myjący 3w1 Seni Care",
+   "label": "SE-231-B01L-N13",
+   "base_gross_minor": 3470,
+   "seni24_gross_minor": 3470
+  },
+  {
+   "external_variant_id": "seni24-12857-20651",
+   "product": "Pieluchomajtki dla dzieci Seni Kids Junior Super",
+   "label": "Rozmiar: 20+ kg, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 4125,
+   "seni24_gross_minor": 4125
+  },
+  {
+   "external_variant_id": "seni24-13390-20783",
+   "product": "Odżywczy krem do twarzy Seni Care",
+   "label": "Pojemność: 50 ml",
+   "base_gross_minor": 1296,
+   "seni24_gross_minor": 1296
+  },
+  {
+   "external_variant_id": "seni24-16107-21971",
+   "product": "Odżywczy krem do rąk Seni Care 3% mocznik",
+   "label": "Pojemność: 100 ml",
+   "base_gross_minor": 820,
+   "seni24_gross_minor": 820
+  },
+  {
+   "external_variant_id": "seni24-16108-21972",
+   "product": "Ochronny krem do rąk dla profesjonalistów Seni Care",
+   "label": "Pojemność: 500 ml",
+   "base_gross_minor": 2836,
+   "seni24_gross_minor": 2836
+  },
+  {
+   "external_variant_id": "seni24-16789-0",
+   "product": "3x Wkładki urologiczne Seni Lady Super 15 szt.",
+   "label": "za16789 Typ Wkładki urologiczne",
+   "base_gross_minor": 6342,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-17085-0",
+   "product": "3x Wkładki urologiczne Seni Lady Plus 15 szt.",
+   "label": "za17085 Typ Wkładki urologiczne",
+   "base_gross_minor": 6858,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-19358-23729",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Slim Micro Plus",
+   "label": "Rozmiar: 7x20.5cm, Ilość sztuk: 20 szt.",
+   "base_gross_minor": 879,
+   "seni24_gross_minor": 879
+  },
+  {
+   "external_variant_id": "seni24-20-69",
+   "product": "Dodatkowe wkłady chłonne do pieluchomajtek Seni V Normal",
+   "label": "Rozmiar: 32x62.5cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 3201,
+   "seni24_gross_minor": 3201
+  },
+  {
+   "external_variant_id": "seni24-20004-23866",
+   "product": "Chusteczki nawilżane Seni Care Sensitive",
+   "label": "Ilość sztuk: 68 szt.",
+   "base_gross_minor": 1574,
+   "seni24_gross_minor": 1574
+  },
+  {
+   "external_variant_id": "seni24-20558-23949",
+   "product": "Bielizna chłonna dla kobiet Seni Lady Pants",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2190,
+   "seni24_gross_minor": 2190
+  },
+  {
+   "external_variant_id": "seni24-20558-23950",
+   "product": "Bielizna chłonna dla kobiet Seni Lady Pants",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2461,
+   "seni24_gross_minor": 2461
+  },
+  {
+   "external_variant_id": "seni24-20558-30624",
+   "product": "Bielizna chłonna dla kobiet Seni Lady Pants",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6159,
+   "seni24_gross_minor": 6159
+  },
+  {
+   "external_variant_id": "seni24-20558-30626",
+   "product": "Bielizna chłonna dla kobiet Seni Lady Pants",
+   "label": "Rozmiar: L, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6943,
+   "seni24_gross_minor": 6943
+  },
+  {
+   "external_variant_id": "seni24-20794-24177",
+   "product": "Majtki chłonne Seni Active Trio zakładane jak bielizna",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3608,
+   "seni24_gross_minor": 3608
+  },
+  {
+   "external_variant_id": "seni24-20794-24178",
+   "product": "Majtki chłonne Seni Active Trio zakładane jak bielizna",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3899,
+   "seni24_gross_minor": 3899
+  },
+  {
+   "external_variant_id": "seni24-20794-24179",
+   "product": "Majtki chłonne Seni Active Trio zakładane jak bielizna",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 4275,
+   "seni24_gross_minor": 4275
+  },
+  {
+   "external_variant_id": "seni24-21-70",
+   "product": "Dodatkowe wkłady chłonne do pieluchomajtek Seni V Maxi",
+   "label": "Rozmiar: 37x69cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 3915,
+   "seni24_gross_minor": 3915
+  },
+  {
+   "external_variant_id": "seni24-21099-24561",
+   "product": "Wkładki urologiczne dla mężczyzn Seni Man Level 1 Light",
+   "label": "Rozmiar: 14x18cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 977,
+   "seni24_gross_minor": 977
+  },
+  {
+   "external_variant_id": "seni24-21100-24563",
+   "product": "Wkładki urologiczne dla mężczyzn Seni Man Level 2 Normal",
+   "label": "Rozmiar: 19x23,5cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 1695,
+   "seni24_gross_minor": 1695
+  },
+  {
+   "external_variant_id": "seni24-21101-24564",
+   "product": "Wkładki urologiczne dla mężczyzn Seni Man Level 3 Extra",
+   "label": "Rozmiar: 22,5x27cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 2214,
+   "seni24_gross_minor": 2214
+  },
+  {
+   "external_variant_id": "seni24-21102-24565",
+   "product": "Wkładki urologiczne dla mężczyzn Seni Man Extra Level 4 Plus",
+   "label": "Rozmiar: 22,5x27cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 2352,
+   "seni24_gross_minor": 2352
+  },
+  {
+   "external_variant_id": "seni24-21103-24566",
+   "product": "Wkładki urologiczne dla mężczyzn Seni Man Level 5 Super",
+   "label": "Rozmiar: 9x40cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 2555,
+   "seni24_gross_minor": 2555
+  },
+  {
+   "external_variant_id": "seni24-21271-24572",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Quatro",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3215,
+   "seni24_gross_minor": 3215
+  },
+  {
+   "external_variant_id": "seni24-21271-24573",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Quatro",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3711,
+   "seni24_gross_minor": 3711
+  },
+  {
+   "external_variant_id": "seni24-21438-24608",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Slim Extra",
+   "label": "Rozmiar: 14x29.5cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 1695,
+   "seni24_gross_minor": 1695
+  },
+  {
+   "external_variant_id": "seni24-21682-24648",
+   "product": "Pieluchy anatomiczne Seni San Classic Uni",
+   "label": "Rozmiar: 32x62.5cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 4199,
+   "seni24_gross_minor": 4080
+  },
+  {
+   "external_variant_id": "seni24-21683-24649",
+   "product": "Pieluchomajtki dla dorosłych zapinane na rzepy Seni Standard Plus Air",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6973,
+   "seni24_gross_minor": 6973
+  },
+  {
+   "external_variant_id": "seni24-21684-24650",
+   "product": "Majtki chłonne Seni Active Basic zakładane jak bielizna",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 5102,
+   "seni24_gross_minor": 5102
+  },
+  {
+   "external_variant_id": "seni24-21881-24735",
+   "product": "Bielizna chłonna dla mężczyzn Seni Man Pants",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2197,
+   "seni24_gross_minor": 2197
+  },
+  {
+   "external_variant_id": "seni24-21881-24736",
+   "product": "Bielizna chłonna dla mężczyzn Seni Man Pants",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2466,
+   "seni24_gross_minor": 2466
+  },
+  {
+   "external_variant_id": "seni24-21881-30666",
+   "product": "Bielizna chłonna dla mężczyzn Seni Man Pants",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6175,
+   "seni24_gross_minor": 6175
+  },
+  {
+   "external_variant_id": "seni24-21881-30667",
+   "product": "Bielizna chłonna dla mężczyzn Seni Man Pants",
+   "label": "Rozmiar: L, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 7095,
+   "seni24_gross_minor": 7095
+  },
+  {
+   "external_variant_id": "seni24-22-71",
+   "product": "Majtki siatkowe, mocujące San Seni",
+   "label": "Rozmiar: L, Ilość sztuk: 2 szt.",
+   "base_gross_minor": 787,
+   "seni24_gross_minor": 787
+  },
+  {
+   "external_variant_id": "seni24-22-72",
+   "product": "Majtki siatkowe, mocujące San Seni",
+   "label": "Rozmiar: XL, Ilość sztuk: 2 szt.",
+   "base_gross_minor": 720,
+   "seni24_gross_minor": 720
+  },
+  {
+   "external_variant_id": "seni24-22089-0",
+   "product": "Pieluchy anatomiczne Seni San Regular",
+   "label": "SE-093-RE30-G01 Płeć Kobieta, Mężczyzna Stan fizyczny Osoba samodzielna, Osoba leżąca",
+   "base_gross_minor": 5243,
+   "seni24_gross_minor": 5243
+  },
+  {
+   "external_variant_id": "seni24-22090-0",
+   "product": "Pieluchy anatomiczne Seni San Regular Extra",
+   "label": "SE-093-RX30-G01 Płeć Kobieta, Mężczyzna Stan fizyczny Osoba samodzielna, Osoba leżąca",
+   "base_gross_minor": 7292,
+   "seni24_gross_minor": 7292
+  },
+  {
+   "external_variant_id": "seni24-22104-0",
+   "product": "Pieluchy anatomiczne Seni San Prima",
+   "label": "SE-093-PR30-G01 Płeć Kobieta, Mężczyzna Stan fizyczny Osoba samodzielna, Osoba leżąca",
+   "base_gross_minor": 4241,
+   "seni24_gross_minor": 4241
+  },
+  {
+   "external_variant_id": "seni24-22105-24954",
+   "product": "Pieluchy anatomiczne Seni San Normal",
+   "label": "Ilość sztuk: 10 szt.",
+   "base_gross_minor": 1670,
+   "seni24_gross_minor": 1670
+  },
+  {
+   "external_variant_id": "seni24-22105-24955",
+   "product": "Pieluchy anatomiczne Seni San Normal",
+   "label": "SE-093-NO30-G01",
+   "base_gross_minor": 5224,
+   "seni24_gross_minor": 5033
+  },
+  {
+   "external_variant_id": "seni24-22106-24956",
+   "product": "Pieluchy anatomiczne Seni San Uni",
+   "label": "Ilość sztuk: 10 szt.",
+   "base_gross_minor": 1934,
+   "seni24_gross_minor": 1862
+  },
+  {
+   "external_variant_id": "seni24-22106-24957",
+   "product": "Pieluchy anatomiczne Seni San Uni",
+   "label": "SE-093-UN30-G01",
+   "base_gross_minor": 5484,
+   "seni24_gross_minor": 5286
+  },
+  {
+   "external_variant_id": "seni24-22107-24958",
+   "product": "Pieluchy anatomiczne Seni San Maxi",
+   "label": "Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2252,
+   "seni24_gross_minor": 2169
+  },
+  {
+   "external_variant_id": "seni24-22107-24959",
+   "product": "Pieluchy anatomiczne Seni San Maxi",
+   "label": "SE-093-MA30-G01",
+   "base_gross_minor": 6241,
+   "seni24_gross_minor": 6017
+  },
+  {
+   "external_variant_id": "seni24-22108-24960",
+   "product": "Pieluchy anatomiczne Seni San Plus",
+   "label": "Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2570,
+   "seni24_gross_minor": 2482
+  },
+  {
+   "external_variant_id": "seni24-22108-24961",
+   "product": "Pieluchy anatomiczne Seni San Plus",
+   "label": "SE-093-PL30-G01",
+   "base_gross_minor": 7020,
+   "seni24_gross_minor": 6857
+  },
+  {
+   "external_variant_id": "seni24-22109-0",
+   "product": "Pieluchy anatomiczne Seni San Plus Extra",
+   "label": "SE-093-PX30-G01 Płeć Kobieta, Mężczyzna Stan fizyczny Osoba samodzielna, Osoba leżąca",
+   "base_gross_minor": 7829,
+   "seni24_gross_minor": 7829
+  },
+  {
+   "external_variant_id": "seni24-22110-0",
+   "product": "Pieluchy anatomiczne dla mężczyzn Seni San for Men",
+   "label": "SE-093-FM30-G01 Płeć Mężczyzna Stan fizyczny Osoba samodzielna, Osoba leżąca",
+   "base_gross_minor": 6710,
+   "seni24_gross_minor": 6710
+  },
+  {
+   "external_variant_id": "seni24-22111-0",
+   "product": "Pieluchy anatomiczne Seni San Alvi",
+   "label": "SE-093-AL30-G01 Płeć Mężczyzna, Kobieta Stan fizyczny Osoba samodzielna, Osoba leżąca",
+   "base_gross_minor": 4556,
+   "seni24_gross_minor": 4556
+  },
+  {
+   "external_variant_id": "seni24-22741-0",
+   "product": "3x Wkładki urologiczne dla kobiet Seni Lady Slim Micro 28 szt.",
+   "label": "za22741 Płeć Kobieta Stan fizyczny Osoba samodzielna",
+   "base_gross_minor": 2481,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-22753-0",
+   "product": "3x Wkładki urologiczne dla kobiet Seni Lady Slim Normal 15 szt.",
+   "label": "za22753 Płeć Kobieta Stan fizyczny Osoba samodzielna",
+   "base_gross_minor": 3213,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-22761-0",
+   "product": "3x Seni Lady Slim Extra Wkładki urologiczne dla kobiet 15 szt.",
+   "label": "za22761 Płeć Kobieta Stan fizyczny Osoba samodzielna",
+   "base_gross_minor": 4629,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-22768-0",
+   "product": "3x Wkładki urologiczne Seni Lady Extra Plus 15 szt.",
+   "label": "za22768 Typ Wkładki urologiczne Opakowanie Zestaw",
+   "base_gross_minor": 5529,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-23-73",
+   "product": "Majtki siatkowe, wielorazowe Seni Fix Plus",
+   "label": "Rozmiar: M, Ilość sztuk: 5 szt.",
+   "base_gross_minor": 1399,
+   "seni24_gross_minor": 1399
+  },
+  {
+   "external_variant_id": "seni24-23-74",
+   "product": "Majtki siatkowe, wielorazowe Seni Fix Plus",
+   "label": "Rozmiar: L, Ilość sztuk: 5 szt.",
+   "base_gross_minor": 1399,
+   "seni24_gross_minor": 1399
+  },
+  {
+   "external_variant_id": "seni24-23-75",
+   "product": "Majtki siatkowe, wielorazowe Seni Fix Plus",
+   "label": "Rozmiar: XL, Ilość sztuk: 5 szt.",
+   "base_gross_minor": 1399,
+   "seni24_gross_minor": 1399
+  },
+  {
+   "external_variant_id": "seni24-23-76",
+   "product": "Majtki siatkowe, wielorazowe Seni Fix Plus",
+   "label": "Rozmiar: XXL, Ilość sztuk: 5 szt.",
+   "base_gross_minor": 1371,
+   "seni24_gross_minor": 1371
+  },
+  {
+   "external_variant_id": "seni24-23304-0",
+   "product": "Pas przedłużający do pieluchomajtek Seni Optima 10 szt.",
+   "label": "SE-981-BE10-Z28 Liczba sztuk w opakowaniu 10 szt.",
+   "base_gross_minor": 3447,
+   "seni24_gross_minor": 3447
+  },
+  {
+   "external_variant_id": "seni24-23460-0",
+   "product": "Aktywna pianka do usuwania plam i zapachu moczu Seni Fresh 300 ml",
+   "label": "SE-981-B300-41N Typ Płyn do czyszczenia powierzchni Czyszczenie powierzchni Tekstylia",
+   "base_gross_minor": 2849,
+   "seni24_gross_minor": 2849
+  },
+  {
+   "external_variant_id": "seni24-23483-25950",
+   "product": "Majtki mocujące wielorazowe Seni FIX COMFORT 5 szt.",
+   "label": "Rozmiar: S",
+   "base_gross_minor": 1678,
+   "seni24_gross_minor": 1678
+  },
+  {
+   "external_variant_id": "seni24-23483-25951",
+   "product": "Majtki mocujące wielorazowe Seni FIX COMFORT 5 szt.",
+   "label": "Rozmiar: M",
+   "base_gross_minor": 2143,
+   "seni24_gross_minor": 2143
+  },
+  {
+   "external_variant_id": "seni24-23483-25952",
+   "product": "Majtki mocujące wielorazowe Seni FIX COMFORT 5 szt.",
+   "label": "Rozmiar: L",
+   "base_gross_minor": 1741,
+   "seni24_gross_minor": 1741
+  },
+  {
+   "external_variant_id": "seni24-23483-25953",
+   "product": "Majtki mocujące wielorazowe Seni FIX COMFORT 5 szt.",
+   "label": "Rozmiar: XXL",
+   "base_gross_minor": 1860,
+   "seni24_gross_minor": 1860
+  },
+  {
+   "external_variant_id": "seni24-23483-25954",
+   "product": "Majtki mocujące wielorazowe Seni FIX COMFORT 5 szt.",
+   "label": "Rozmiar: XL",
+   "base_gross_minor": 1823,
+   "seni24_gross_minor": 1823
+  },
+  {
+   "external_variant_id": "seni24-23483-25955",
+   "product": "Majtki mocujące wielorazowe Seni FIX COMFORT 5 szt.",
+   "label": "Rozmiar: XXXL",
+   "base_gross_minor": 2359,
+   "seni24_gross_minor": 2359
+  },
+  {
+   "external_variant_id": "seni24-23483-25956",
+   "product": "Majtki mocujące wielorazowe Seni FIX COMFORT 5 szt.",
+   "label": "Rozmiar: XXXXL",
+   "base_gross_minor": 2631,
+   "seni24_gross_minor": 2631
+  },
+  {
+   "external_variant_id": "seni24-23484-25957",
+   "product": "Majtki mocujące dla kobiet Seni FIX COMFORT LADY 2 szt.",
+   "label": "Rozmiar: M, Kolor: Cielisty",
+   "base_gross_minor": 1352,
+   "seni24_gross_minor": 1352
+  },
+  {
+   "external_variant_id": "seni24-23484-25958",
+   "product": "Majtki mocujące dla kobiet Seni FIX COMFORT LADY 2 szt.",
+   "label": "Rozmiar: L, Kolor: Cielisty",
+   "base_gross_minor": 1378,
+   "seni24_gross_minor": 1378
+  },
+  {
+   "external_variant_id": "seni24-23484-25959",
+   "product": "Majtki mocujące dla kobiet Seni FIX COMFORT LADY 2 szt.",
+   "label": "Rozmiar: M, Kolor: Czarny",
+   "base_gross_minor": 1352,
+   "seni24_gross_minor": 1352
+  },
+  {
+   "external_variant_id": "seni24-23484-25960",
+   "product": "Majtki mocujące dla kobiet Seni FIX COMFORT LADY 2 szt.",
+   "label": "Rozmiar: L, Kolor: Czarny",
+   "base_gross_minor": 1378,
+   "seni24_gross_minor": 1378
+  },
+  {
+   "external_variant_id": "seni24-23485-25962",
+   "product": "Majtki mocujące dla mężczyzn Seni FIX COMFORT MAN 2 szt.",
+   "label": "Rozmiar: L",
+   "base_gross_minor": 1352,
+   "seni24_gross_minor": 1352
+  },
+  {
+   "external_variant_id": "seni24-23485-25963",
+   "product": "Majtki mocujące dla mężczyzn Seni FIX COMFORT MAN 2 szt.",
+   "label": "Rozmiar: XL",
+   "base_gross_minor": 1378,
+   "seni24_gross_minor": 1378
+  },
+  {
+   "external_variant_id": "seni24-23534-26367",
+   "product": "Chusteczki nawilżane Seni Care Aqua",
+   "label": "Ilość sztuk: 48 szt.",
+   "base_gross_minor": 1299,
+   "seni24_gross_minor": 1299
+  },
+  {
+   "external_variant_id": "seni24-23829-0",
+   "product": "Krem ochronny przeciw odparzeniom z tlenkiem cynku Seni Care",
+   "label": "SE-231-T100-N33 Działanie Skuteczna ochrona, Ochronne, Pielęgnacyjne Typ Krem Zastosowanie Odparzenia, Przeciw odleżynom SINODOR® Tak Dozownik Tuba Linia produktowa Care",
+   "base_gross_minor": 1542,
+   "seni24_gross_minor": 1542
+  },
+  {
+   "external_variant_id": "seni24-24168-26338",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Super Night",
+   "label": "Rozmiar: 18x37cm, Ilość sztuk: 12 szt.",
+   "base_gross_minor": 2120,
+   "seni24_gross_minor": 2120
+  },
+  {
+   "external_variant_id": "seni24-24169-26339",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Normal",
+   "label": "Rozmiar: 10.5x28cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 2289,
+   "seni24_gross_minor": 2289
+  },
+  {
+   "external_variant_id": "seni24-24170-26340",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XS, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 1925,
+   "seni24_gross_minor": 1925
+  },
+  {
+   "external_variant_id": "seni24-24170-26341",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2225,
+   "seni24_gross_minor": 2225
+  },
+  {
+   "external_variant_id": "seni24-24170-26342",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2411,
+   "seni24_gross_minor": 2411
+  },
+  {
+   "external_variant_id": "seni24-24170-26343",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2599,
+   "seni24_gross_minor": 2599
+  },
+  {
+   "external_variant_id": "seni24-24170-26344",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3185,
+   "seni24_gross_minor": 3185
+  },
+  {
+   "external_variant_id": "seni24-24170-26345",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: S, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 5607,
+   "seni24_gross_minor": 5607
+  },
+  {
+   "external_variant_id": "seni24-24170-26346",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6241,
+   "seni24_gross_minor": 6241
+  },
+  {
+   "external_variant_id": "seni24-24170-26347",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: L, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 7268,
+   "seni24_gross_minor": 7268
+  },
+  {
+   "external_variant_id": "seni24-24170-26348",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XL, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 8045,
+   "seni24_gross_minor": 8045
+  },
+  {
+   "external_variant_id": "seni24-24171-26349",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XS, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 1962,
+   "seni24_gross_minor": 1962
+  },
+  {
+   "external_variant_id": "seni24-24171-26350",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2399,
+   "seni24_gross_minor": 2399
+  },
+  {
+   "external_variant_id": "seni24-24171-26351",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2649,
+   "seni24_gross_minor": 2649
+  },
+  {
+   "external_variant_id": "seni24-24171-26352",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3095,
+   "seni24_gross_minor": 3095
+  },
+  {
+   "external_variant_id": "seni24-24171-26353",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3476,
+   "seni24_gross_minor": 3476
+  },
+  {
+   "external_variant_id": "seni24-24171-26354",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: S, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6455,
+   "seni24_gross_minor": 6455
+  },
+  {
+   "external_variant_id": "seni24-24171-26355",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 7296,
+   "seni24_gross_minor": 7296
+  },
+  {
+   "external_variant_id": "seni24-24171-26356",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: L, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 8273,
+   "seni24_gross_minor": 8273
+  },
+  {
+   "external_variant_id": "seni24-24171-26357",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XL, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 9155,
+   "seni24_gross_minor": 9155
+  },
+  {
+   "external_variant_id": "seni24-24171-26358",
+   "product": "Seni Super Plus pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XXL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3620,
+   "seni24_gross_minor": 3620
+  },
+  {
+   "external_variant_id": "seni24-24172-26359",
+   "product": "Seni Super Trio pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2349,
+   "seni24_gross_minor": 2349
+  },
+  {
+   "external_variant_id": "seni24-24172-26360",
+   "product": "Seni Super Trio pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2849,
+   "seni24_gross_minor": 2849
+  },
+  {
+   "external_variant_id": "seni24-24172-26361",
+   "product": "Seni Super Trio pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3220,
+   "seni24_gross_minor": 3220
+  },
+  {
+   "external_variant_id": "seni24-24172-26362",
+   "product": "Seni Super Trio pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3595,
+   "seni24_gross_minor": 3595
+  },
+  {
+   "external_variant_id": "seni24-24173-26363",
+   "product": "Seni Super Quatro pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2744,
+   "seni24_gross_minor": 2744
+  },
+  {
+   "external_variant_id": "seni24-24173-26364",
+   "product": "Seni Super Quatro pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3113,
+   "seni24_gross_minor": 3113
+  },
+  {
+   "external_variant_id": "seni24-24173-26365",
+   "product": "Seni Super Quatro pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3579,
+   "seni24_gross_minor": 3579
+  },
+  {
+   "external_variant_id": "seni24-24173-26366",
+   "product": "Seni Super Quatro pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3999,
+   "seni24_gross_minor": 3999
+  },
+  {
+   "external_variant_id": "seni24-24173-31484",
+   "product": "Seni Super Quatro pieluchomajtki dla dorosłych zapinane na rzepy",
+   "label": "Rozmiar: XXL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 4763,
+   "seni24_gross_minor": 4763
+  },
+  {
+   "external_variant_id": "seni24-24305-0",
+   "product": "2x Pieluchomajtki na rzepy Seni Super Plus 30 szt. + 1x Pieluchomajtki Seni Super Quatro 10 szt.",
+   "label": "za24305 Płeć Kobieta, Mężczyzna Stan fizyczny Osoba leżąca, Osoba samodzielna",
+   "base_gross_minor": 14141,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-24323-0",
+   "product": "2x Pieluchomajtki na rzepy Seni Super Plus 30 szt. + 1x Pieluchomajtki Seni Super Trio 10 szt.",
+   "label": "za24323 Płeć Mężczyzna, Kobieta Stan fizyczny Osoba leżąca, Osoba samodzielna",
+   "base_gross_minor": 13820,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-24364-0",
+   "product": "2x Pieluchomajtki na rzepy Seni Super 30 szt. + 1x Pieluchomajtki Seni Super Plus 30 szt.",
+   "label": "za24364 Płeć Kobieta, Mężczyzna Stan fizyczny Osoba leżąca, Osoba samodzielna",
+   "base_gross_minor": 16145,
+   "seni24_gross_minor": null
+  },
+  {
+   "external_variant_id": "seni24-25354-31205",
+   "product": "Śliniaki dla dorosłych Seni Care z kieszonką",
+   "label": "Ilość sztuk: 10 szt.",
+   "base_gross_minor": 766,
+   "seni24_gross_minor": 766
+  },
+  {
+   "external_variant_id": "seni24-25354-31206",
+   "product": "Śliniaki dla dorosłych Seni Care z kieszonką",
+   "label": "SE-981-S100-Z02",
+   "base_gross_minor": 5926,
+   "seni24_gross_minor": 5926
+  },
+  {
+   "external_variant_id": "seni24-25645-31263",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy 1 szt.",
+   "label": "Rozmiar: M",
+   "base_gross_minor": 354,
+   "seni24_gross_minor": 354
+  },
+  {
+   "external_variant_id": "seni24-25645-31264",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy 1 szt.",
+   "label": "Rozmiar: L",
+   "base_gross_minor": 396,
+   "seni24_gross_minor": 396
+  },
+  {
+   "external_variant_id": "seni24-25645-31265",
+   "product": "Seni Super pieluchomajtki dla dorosłych zapinane na rzepy 1 szt.",
+   "label": "Rozmiar: XL",
+   "base_gross_minor": 424,
+   "seni24_gross_minor": 424
+  },
+  {
+   "external_variant_id": "seni24-29250-0",
+   "product": "Sól do stóp Seni Care 30% mocznik",
+   "label": "SE-231-S420-N17 Działanie Nawilżające, Zmiękczające, Złuszczające Typ Sól Zastosowanie Do stóp Opakowanie Słoik",
+   "base_gross_minor": 1075,
+   "seni24_gross_minor": 1075
+  },
+  {
+   "external_variant_id": "seni24-30408-31816",
+   "product": "Wkładki urologiczne dla mężczyzn Seni Man Level 3 Extra Black",
+   "label": "Rozmiar: 22,5x27cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 2429,
+   "seni24_gross_minor": 2429
+  },
+  {
+   "external_variant_id": "seni24-30424-31817",
+   "product": "Myjki jednorazowe nasączone Seni Care",
+   "label": "Ilość sztuk: 5 szt.",
+   "base_gross_minor": 478,
+   "seni24_gross_minor": 478
+  },
+  {
+   "external_variant_id": "seni24-30424-31818",
+   "product": "Myjki jednorazowe nasączone Seni Care",
+   "label": "SE-231-W008-G01",
+   "base_gross_minor": 720,
+   "seni24_gross_minor": 720
+  },
+  {
+   "external_variant_id": "seni24-30458-31830",
+   "product": "Wielorazowa bielizna chłonna dla kobiet Seni Lady",
+   "label": "Rozmiar: S",
+   "base_gross_minor": 7995,
+   "seni24_gross_minor": 7995
+  },
+  {
+   "external_variant_id": "seni24-30458-31831",
+   "product": "Wielorazowa bielizna chłonna dla kobiet Seni Lady",
+   "label": "Rozmiar: M",
+   "base_gross_minor": 7945,
+   "seni24_gross_minor": 7945
+  },
+  {
+   "external_variant_id": "seni24-30458-31832",
+   "product": "Wielorazowa bielizna chłonna dla kobiet Seni Lady",
+   "label": "Rozmiar: L",
+   "base_gross_minor": 7995,
+   "seni24_gross_minor": 7995
+  },
+  {
+   "external_variant_id": "seni24-30458-31833",
+   "product": "Wielorazowa bielizna chłonna dla kobiet Seni Lady",
+   "label": "Rozmiar: XL",
+   "base_gross_minor": 7945,
+   "seni24_gross_minor": 7945
+  },
+  {
+   "external_variant_id": "seni24-30459-31835",
+   "product": "Wielorazowa bielizna chłonna dla mężczyzn Seni Man",
+   "label": "Rozmiar: M",
+   "base_gross_minor": 7945,
+   "seni24_gross_minor": 7945
+  },
+  {
+   "external_variant_id": "seni24-30459-31836",
+   "product": "Wielorazowa bielizna chłonna dla mężczyzn Seni Man",
+   "label": "Rozmiar: L",
+   "base_gross_minor": 7945,
+   "seni24_gross_minor": 7945
+  },
+  {
+   "external_variant_id": "seni24-30459-31837",
+   "product": "Wielorazowa bielizna chłonna dla mężczyzn Seni Man",
+   "label": "Rozmiar: XL",
+   "base_gross_minor": 7945,
+   "seni24_gross_minor": 7945
+  },
+  {
+   "external_variant_id": "seni24-30459-31838",
+   "product": "Wielorazowa bielizna chłonna dla mężczyzn Seni Man",
+   "label": "Rozmiar: XXL",
+   "base_gross_minor": 7995,
+   "seni24_gross_minor": 7995
+  },
+  {
+   "external_variant_id": "seni24-4-24",
+   "product": "Super Seni Quatro pieluchomajtki dla dorosłych na rzepy",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2646,
+   "seni24_gross_minor": 2646
+  },
+  {
+   "external_variant_id": "seni24-44-106",
+   "product": "Podkłady higieniczne Seni Soft Super",
+   "label": "Rozmiar: 40x60cm, Ilość sztuk: 5 szt.",
+   "base_gross_minor": 624,
+   "seni24_gross_minor": 624
+  },
+  {
+   "external_variant_id": "seni24-44-107",
+   "product": "Podkłady higieniczne Seni Soft Super",
+   "label": "Rozmiar: 40x60cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 3209,
+   "seni24_gross_minor": 3209
+  },
+  {
+   "external_variant_id": "seni24-44-108",
+   "product": "Podkłady higieniczne Seni Soft Super",
+   "label": "Rozmiar: 60x60cm, Ilość sztuk: 5 szt.",
+   "base_gross_minor": 711,
+   "seni24_gross_minor": 711
+  },
+  {
+   "external_variant_id": "seni24-44-109",
+   "product": "Podkłady higieniczne Seni Soft Super",
+   "label": "Rozmiar: 60x60cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 3985,
+   "seni24_gross_minor": 3985
+  },
+  {
+   "external_variant_id": "seni24-44-110",
+   "product": "Podkłady higieniczne Seni Soft Super",
+   "label": "Rozmiar: 90x60cm, Ilość sztuk: 5 szt.",
+   "base_gross_minor": 975,
+   "seni24_gross_minor": 975
+  },
+  {
+   "external_variant_id": "seni24-44-111",
+   "product": "Podkłady higieniczne Seni Soft Super",
+   "label": "Rozmiar: 90x60cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 5178,
+   "seni24_gross_minor": 5178
+  },
+  {
+   "external_variant_id": "seni24-44-1461",
+   "product": "Podkłady higieniczne Seni Soft Super",
+   "label": "Rozmiar: 90x170cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 7299,
+   "seni24_gross_minor": 7299
+  },
+  {
+   "external_variant_id": "seni24-44-8564",
+   "product": "Podkłady higieniczne Seni Soft Super",
+   "label": "Rozmiar: 90x170cm, Ilość sztuk: 5 szt.",
+   "base_gross_minor": 1318,
+   "seni24_gross_minor": 1318
+  },
+  {
+   "external_variant_id": "seni24-45-0",
+   "product": "Podkłady higieniczne Seni Soft Super Dry 15 szt.",
+   "label": "SE-091-SU15-003 Typ Podkłady Materiał Włóknina, Laminat",
+   "base_gross_minor": 3678,
+   "seni24_gross_minor": 3678
+  },
+  {
+   "external_variant_id": "seni24-4602-31602",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: XXL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 4141,
+   "seni24_gross_minor": 4141
+  },
+  {
+   "external_variant_id": "seni24-4602-31603",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: XXL, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 10949,
+   "seni24_gross_minor": 10949
+  },
+  {
+   "external_variant_id": "seni24-4602-8902",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: S, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6945,
+   "seni24_gross_minor": 6945
+  },
+  {
+   "external_variant_id": "seni24-4602-8903",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2925,
+   "seni24_gross_minor": 2925
+  },
+  {
+   "external_variant_id": "seni24-4602-8904",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 7406,
+   "seni24_gross_minor": 7406
+  },
+  {
+   "external_variant_id": "seni24-4602-8905",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3310,
+   "seni24_gross_minor": 3310
+  },
+  {
+   "external_variant_id": "seni24-4602-8906",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: L, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 8437,
+   "seni24_gross_minor": 8437
+  },
+  {
+   "external_variant_id": "seni24-4602-8907",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3375,
+   "seni24_gross_minor": 3375
+  },
+  {
+   "external_variant_id": "seni24-4602-8908",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Classic",
+   "label": "Rozmiar: XL, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 9445,
+   "seni24_gross_minor": 9445
+  },
+  {
+   "external_variant_id": "seni24-48-115",
+   "product": "Szampon nawilżający Seni Care",
+   "label": "Pojemność: 500 ml",
+   "base_gross_minor": 1525,
+   "seni24_gross_minor": 1525
+  },
+  {
+   "external_variant_id": "seni24-5-28",
+   "product": "Majtki chłonne Seni Active Normal zakładane jak bielizna",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2199,
+   "seni24_gross_minor": 2199
+  },
+  {
+   "external_variant_id": "seni24-5-29",
+   "product": "Majtki chłonne Seni Active Normal zakładane jak bielizna",
+   "label": "Rozmiar: S, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6165,
+   "seni24_gross_minor": 6165
+  },
+  {
+   "external_variant_id": "seni24-5-30",
+   "product": "Majtki chłonne Seni Active Normal zakładane jak bielizna",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2424,
+   "seni24_gross_minor": 2424
+  },
+  {
+   "external_variant_id": "seni24-5-31",
+   "product": "Majtki chłonne Seni Active Normal zakładane jak bielizna",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6699,
+   "seni24_gross_minor": 6699
+  },
+  {
+   "external_variant_id": "seni24-5-32",
+   "product": "Majtki chłonne Seni Active Normal zakładane jak bielizna",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2675,
+   "seni24_gross_minor": 2675
+  },
+  {
+   "external_variant_id": "seni24-5-33",
+   "product": "Majtki chłonne Seni Active Normal zakładane jak bielizna",
+   "label": "Rozmiar: L, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 7385,
+   "seni24_gross_minor": 7385
+  },
+  {
+   "external_variant_id": "seni24-5-34",
+   "product": "Majtki chłonne Seni Active Normal zakładane jak bielizna",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2978,
+   "seni24_gross_minor": 2978
+  },
+  {
+   "external_variant_id": "seni24-5-35",
+   "product": "Majtki chłonne Seni Active Normal zakładane jak bielizna",
+   "label": "Rozmiar: XL, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 8365,
+   "seni24_gross_minor": 8365
+  },
+  {
+   "external_variant_id": "seni24-54-122",
+   "product": "Krem do suchej zrogowaciałej skóry Seni Care 10% mocznik",
+   "label": "Pojemność: 100 ml",
+   "base_gross_minor": 1061,
+   "seni24_gross_minor": 1061
+  },
+  {
+   "external_variant_id": "seni24-58-127",
+   "product": "Olejek pielęgnacyjny Seni Care",
+   "label": "Pojemność: 1 l",
+   "base_gross_minor": 8638,
+   "seni24_gross_minor": 8638
+  },
+  {
+   "external_variant_id": "seni24-58-21219",
+   "product": "Olejek pielęgnacyjny Seni Care",
+   "label": "SE-231-B200-N24",
+   "base_gross_minor": 1995,
+   "seni24_gross_minor": 1995
+  },
+  {
+   "external_variant_id": "seni24-5862-10376",
+   "product": "Duże chusteczki nawilżane 3w1 Seni Care Maxi",
+   "label": "Ilość sztuk: 52 szt.",
+   "base_gross_minor": 1427,
+   "seni24_gross_minor": 1427
+  },
+  {
+   "external_variant_id": "seni24-5863-10377",
+   "product": "Chusteczki nawilżane do higieny intymnej Seni Care Inti+",
+   "label": "Ilość sztuk: 20 szt.",
+   "base_gross_minor": 640,
+   "seni24_gross_minor": 640
+  },
+  {
+   "external_variant_id": "seni24-63-136",
+   "product": "Pachnące worki na pieluchy Seni",
+   "label": "Pojemność: 5 l, Ilość sztuk: 100 szt.",
+   "base_gross_minor": 1139,
+   "seni24_gross_minor": 1139
+  },
+  {
+   "external_variant_id": "seni24-6320-13252",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Super",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2226,
+   "seni24_gross_minor": 2226
+  },
+  {
+   "external_variant_id": "seni24-6320-13253",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Super",
+   "label": "Rozmiar: M, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 6603,
+   "seni24_gross_minor": 6603
+  },
+  {
+   "external_variant_id": "seni24-6320-13254",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Super",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2749,
+   "seni24_gross_minor": 2749
+  },
+  {
+   "external_variant_id": "seni24-6320-13255",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Super",
+   "label": "Rozmiar: L, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 8149,
+   "seni24_gross_minor": 8149
+  },
+  {
+   "external_variant_id": "seni24-6320-13256",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Super",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3072,
+   "seni24_gross_minor": 3072
+  },
+  {
+   "external_variant_id": "seni24-6320-13257",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Super",
+   "label": "Rozmiar: XL, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 9640,
+   "seni24_gross_minor": 9640
+  },
+  {
+   "external_variant_id": "seni24-6320-16417",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Super",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2124,
+   "seni24_gross_minor": 2124
+  },
+  {
+   "external_variant_id": "seni24-6324-13259",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Plus",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3124,
+   "seni24_gross_minor": 3124
+  },
+  {
+   "external_variant_id": "seni24-6324-13261",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Plus",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3704,
+   "seni24_gross_minor": 3704
+  },
+  {
+   "external_variant_id": "seni24-6324-13263",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Plus",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2846,
+   "seni24_gross_minor": 2846
+  },
+  {
+   "external_variant_id": "seni24-6325-13264",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Trio",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3364,
+   "seni24_gross_minor": 3364
+  },
+  {
+   "external_variant_id": "seni24-6325-13265",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Trio",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3770,
+   "seni24_gross_minor": 3770
+  },
+  {
+   "external_variant_id": "seni24-6325-13266",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Trio",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2894,
+   "seni24_gross_minor": 2894
+  },
+  {
+   "external_variant_id": "seni24-6325-31579",
+   "product": "Pieluchomajtki z regulowanym pasem biodrowym Seni Optima Trio",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2795,
+   "seni24_gross_minor": 2795
+  },
+  {
+   "external_variant_id": "seni24-64-0",
+   "product": "Podfoliowane myjki higieniczne Seni Care 50 szt.",
+   "label": "SE-981-MP50-Z01 Typ Myjki Materiał Celuloza",
+   "base_gross_minor": 2165,
+   "seni24_gross_minor": 2165
+  },
+  {
+   "external_variant_id": "seni24-65-0",
+   "product": "Niepodfoliowane myjki higieniczne Seni Care 50 szt.",
+   "label": "SE-981-MN50-Z02 Typ Myjki Materiał Włóknina",
+   "base_gross_minor": 1699,
+   "seni24_gross_minor": 1699
+  },
+  {
+   "external_variant_id": "seni24-6570-25444",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Slim Normal",
+   "label": "Rozmiar: 10.5x28cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 1155,
+   "seni24_gross_minor": 1155
+  },
+  {
+   "external_variant_id": "seni24-6572-13955",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Extra Plus",
+   "label": "Rozmiar: 15x33cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 2069,
+   "seni24_gross_minor": 2069
+  },
+  {
+   "external_variant_id": "seni24-6573-13956",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Super",
+   "label": "Rozmiar: 18x37cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 2355,
+   "seni24_gross_minor": 2355
+  },
+  {
+   "external_variant_id": "seni24-6574-13957",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Plus",
+   "label": "Rozmiar: 20.5x42cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 2528,
+   "seni24_gross_minor": 2528
+  },
+  {
+   "external_variant_id": "seni24-6587-20432",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Slim Micro",
+   "label": "Rozmiar: 7x18.5cm, Ilość sztuk: 28 szt.",
+   "base_gross_minor": 979,
+   "seni24_gross_minor": 979
+  },
+  {
+   "external_variant_id": "seni24-6588-20433",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Slim Mini",
+   "label": "Rozmiar: 9.5x22.5cm, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 675,
+   "seni24_gross_minor": 675
+  },
+  {
+   "external_variant_id": "seni24-6589-24596",
+   "product": "Wkładki urologiczne dla kobiet Seni Lady Slim Mini Plus",
+   "label": "Rozmiar: 10x25.5cm, Ilość sztuk: 15 szt.",
+   "base_gross_minor": 1166,
+   "seni24_gross_minor": 1166
+  },
+  {
+   "external_variant_id": "seni24-67-32072",
+   "product": "Ręczniki higieniczne air-laid Seni Care",
+   "label": "Rozmiar: 36x32cm, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 1795,
+   "seni24_gross_minor": 1795
+  },
+  {
+   "external_variant_id": "seni24-67-32073",
+   "product": "Ręczniki higieniczne air-laid Seni Care",
+   "label": "Rozmiar: 18x31.5cm, Ilość sztuk: 100 szt.",
+   "base_gross_minor": 3198,
+   "seni24_gross_minor": 3198
+  },
+  {
+   "external_variant_id": "seni24-7-31600",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Super",
+   "label": "Rozmiar: XS, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 1849,
+   "seni24_gross_minor": 1849
+  },
+  {
+   "external_variant_id": "seni24-7-31601",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Super",
+   "label": "Rozmiar: XXL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 4120,
+   "seni24_gross_minor": 4120
+  },
+  {
+   "external_variant_id": "seni24-7-40",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Super",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2619,
+   "seni24_gross_minor": 2619
+  },
+  {
+   "external_variant_id": "seni24-7-41",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Super",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 2935,
+   "seni24_gross_minor": 2935
+  },
+  {
+   "external_variant_id": "seni24-7-42",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Super",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3323,
+   "seni24_gross_minor": 3323
+  },
+  {
+   "external_variant_id": "seni24-7-43",
+   "product": "Majtki chłonne zakładane jak bielizna Seni Active Super",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3599,
+   "seni24_gross_minor": 3599
+  },
+  {
+   "external_variant_id": "seni24-8-44",
+   "product": "Majtki chłonne Seni Active Plus zakładane jak bielizna",
+   "label": "Rozmiar: S, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3266,
+   "seni24_gross_minor": 3266
+  },
+  {
+   "external_variant_id": "seni24-8-45",
+   "product": "Majtki chłonne Seni Active Plus zakładane jak bielizna",
+   "label": "Rozmiar: M, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3269,
+   "seni24_gross_minor": 3269
+  },
+  {
+   "external_variant_id": "seni24-8-46",
+   "product": "Majtki chłonne Seni Active Plus zakładane jak bielizna",
+   "label": "Rozmiar: L, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3628,
+   "seni24_gross_minor": 3628
+  },
+  {
+   "external_variant_id": "seni24-8-47",
+   "product": "Majtki chłonne Seni Active Plus zakładane jak bielizna",
+   "label": "Rozmiar: XL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 3969,
+   "seni24_gross_minor": 3969
+  },
+  {
+   "external_variant_id": "seni24-8-8583",
+   "product": "Majtki chłonne Seni Active Plus zakładane jak bielizna",
+   "label": "Rozmiar: XXL, Ilość sztuk: 10 szt.",
+   "base_gross_minor": 5485,
+   "seni24_gross_minor": 5485
+  },
+  {
+   "external_variant_id": "seni24-8284-22361",
+   "product": "Pieluchomajtki dla dzieci Seni Kids Junior",
+   "label": "Rozmiar: 11-20kg, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 3229,
+   "seni24_gross_minor": 3229
+  },
+  {
+   "external_variant_id": "seni24-8287-16684",
+   "product": "Pieluchomajtki dla dzieci Seni Kids Junior Extra",
+   "label": "Rozmiar: 15-30kg, Ilość sztuk: 30 szt.",
+   "base_gross_minor": 3484,
+   "seni24_gross_minor": 3484
+  },
+  {
+   "external_variant_id": "seni24-9901-18052",
+   "product": "Chusteczki nawilżane Seni Care Soft",
+   "label": "Ilość sztuk: 10 szt.",
+   "base_gross_minor": 449,
+   "seni24_gross_minor": 449
+  },
+  {
+   "external_variant_id": "seni24-9901-18053",
+   "product": "Chusteczki nawilżane Seni Care Soft",
+   "label": "Ilość sztuk: 48 szt.",
+   "base_gross_minor": 898,
+   "seni24_gross_minor": 898
+  },
+  {
+   "external_variant_id": "seni24-9901-18054",
+   "product": "Chusteczki nawilżane Seni Care Soft",
+   "label": "Ilość sztuk: 80 szt.",
+   "base_gross_minor": 1448,
+   "seni24_gross_minor": 1448
+  }
+ ]
+}
