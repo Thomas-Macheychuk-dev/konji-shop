@@ -52,9 +52,13 @@ final class SanipurProductGrouper
             $groups[$key][] = $page + [
                 '_size' => $parsed['size'],
                 '_colour' => $sku !== null ? ($this->correctedColour($sku) ?? $parsed['colour']) : $parsed['colour'],
+                // A hand correction that changes a page's colour names that product only; it must not name other
+                // products' codes. Pages whose own name the correction confirms still count.
+                '_corrected' => $sku !== null && $this->correctedColour($sku) !== null
+                    && mb_strtolower((string) $parsed['colour']) !== mb_strtolower((string) $this->correctedColour($sku)),
                 '_base' => $parsed['base'],
                 '_colour_code' => $code,
-                '_colour_keys' => $this->colourKeys($line, $code, (string) ($page['brand'] ?? '')),
+                '_colour_keys' => $this->colourKeys($line, $code, (string) ($this->brand([$page]) ?? '')),
             ];
         }
 
@@ -62,7 +66,7 @@ final class SanipurProductGrouper
 
         foreach ($groups as $members) {
             foreach ($members as $member) {
-                if ($member['_colour'] === null) {
+                if ($member['_colour'] === null || $member['_corrected']) {
                     continue;
                 }
 
@@ -123,8 +127,8 @@ final class SanipurProductGrouper
     }
 
     /**
-     * Colours sanipur.eu names the same for two different shades, or names wrongly, checked against the product
-     * photos on sanipur.eu on 2026-11-15. Keyed by SKU pattern, since colour codes mean different colours in
+     * Colours sanipur.eu names the same for two different shades, names wrongly or does not name at all, checked
+     * against the product photos on sanipur.eu on 2026-11-15. Keyed by SKU pattern, since colour codes mean different colours in
      * different product lines.
      */
     private const COLOUR_CORRECTIONS = [
@@ -136,6 +140,63 @@ final class SanipurProductGrouper
         '/^TM0148_F44$/' => 'szara, fale',                      // grey, wave pattern
         '/^TM0619_10$/' => 'jasnoróżowa',                       // light pink; "różowa" is 11
         '/^TB0073_06$/' => 'musztardowy',                       // the page says "miętowy", the photo is mustard
+
+        // Colours and patterns no sanipur.eu page names, from the product photos.
+        '/^TM013[1-6]_L11A$/' => 'malinowe',
+        '/^TM013[1-6]_43A$/' => 'cytrynowe',                    // brighter than "żółte" 03A
+        '/^TM01(?:0[89]|1[7-9]|20)_L17A$/' => 'karmelowe',
+        '/^TM01(?:1[7-9]|20)_40A$/' => 'trawiaste',
+        '/^TS0803_\d{2}16$/' => 'brązowy',
+        '/^TB0027_15B$/' => 'beżowe',
+        '/^TM0330_09A$/' => 'jasnoróżowe',
+        '/^TB0481_37$/' => 'róże',
+        '/^TB0236_38$/' => 'liście',
+        '/^TB0481_41$/' => 'misie',
+        '/^TB0481_43$/' => 'polne kwiaty',
+        '/^TM0921_06$/' => 'musztardowa',
+        '/^TM026[78]_09$/' => 'botaniczna',
+        '/^TM0268_13$/' => 'monstera',
+        '/^TM0920_06$/' => 'motyle',
+        '/^TM09(?:19|20)_07$/' => 'kosmos',
+        '/^TM09(?:19|20)_09$/' => 'dżungla',
+        '/^TB0343_02B$/' => 'kremowe',
+        '/^TB0343_10C$/' => 'różowe',
+        '/^TB0343_15B$/' => 'beżowe, mandala',
+        '/^TB0343_24B$/' => 'niebieskie',
+        '/^TB0343_42B$/' => 'jasno szare',
+        '/^TB0343_44B$/' => 'ciemno szare, łapacze snów',
+        '/^TM0633_F21B$/' => 'grafitowa w linie',
+        '/^TM0633_F34B$/' => 'beżowa, ornament',
+        '/^TM0633_F36A$/' => 'szara, śnieżynki',
+        '/^TM0633_F36B$/' => 'beżowa, śnieżynki',
+        '/^TM0633_F37A$/' => 'szare liście',
+        '/^TM0633_F37B$/' => 'pomarańczowe liście',
+        '/^TM0666_SE43A$/' => 'kwiaty',
+        '/^TM0666_SE50A$/' => 'szara geometria',
+        '/^TM0666_SE51A$/' => 'tropikalne kwiaty',
+        '/^TB0379_61$/' => 'gwiazdki',
+        '/^TB0379_62$/' => 'drobny kolorowy wzór',
+        '/^TB0379_63$/' => 'szary wzór',
+        '/^TB0379_64$/' => 'niebieski wzór',
+        '/^TB0045_46$/' => 'kwiaty',
+        '/^TB0067_R35$/' => 'różowe kwiaty',
+        '/^TB0067_R36$/' => 'eukaliptus',
+        '/^TB0067_R37$/' => 'łapacze snów',
+        '/^TM025[4-6]_09A$/' => 'motyle',
+        '/^TM025[4-6]_11A$/' => 'niebieskie kwiaty',
+        '/^TM025[4-6]_17A$/' => 'różowe kwiaty',
+        '/^TM025[4-6]_07A$/' => 'paprocie',
+        '/^TS1101_05$/' => 'ecru',
+        '/^TM0420_07$/' => 'granatowy, geometryczny',
+        // No photo on sanipur.eu: patterned sets, numbered.
+        '/^TM0260_92$/' => 'wzór 1',
+        '/^TM0260_93$/' => 'wzór 2',
+        '/^TM0260_94$/' => 'wzór 3',
+        '/^TM0260_95$/' => 'wzór 4',
+        '/^TS5101_\d{2}01$/' => 'wzór 1',
+        '/^TS5101_\d{2}02$/' => 'wzór 2',
+        '/^TS5101_\d{2}03$/' => 'wzór 3',
+        '/^TS5101_\d{2}04$/' => 'wzór 4',
     ];
 
     private function correctedColour(string $sku): ?string

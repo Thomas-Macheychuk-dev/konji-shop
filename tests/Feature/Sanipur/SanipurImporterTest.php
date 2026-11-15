@@ -180,7 +180,7 @@ it('merges sizes kept in separate SKU lines and names colours from other lines o
         ->toBe(['90/100x190/200 cm / Turkusowe', '150/160x190/200 cm / Turkusowe', '150/160x190/200 cm / Żółte']);
 
     $bedding = collect($groups)->firstWhere('name', 'Pościel flanela CZ/SK (140x200-1,70x90-1)');
-    expect(array_column($bedding['variant_candidates'], 'label'))->toBe(['Nr 92', 'Nr 93']);
+    expect(array_column($bedding['variant_candidates'], 'label'))->toBe(['Wzór 1', 'Wzór 2']);
 });
 
 it('drops per-size levels from the sanipur.eu category path', function (): void {
@@ -373,4 +373,23 @@ it('names colours sanipur.eu gives the same name, and both sides of two-tone set
 
     $set140 = collect($groups)->firstWhere('name', 'Matex Pościel satynowa DOUBLE FACE Kolekcja GOLD(140x200-1, 70x80-1), biała');
     expect($set140['variant_candidates'][0]['source_sku'])->toBe('TM0209_01+42');
+});
+
+it('names colours no sanipur.eu page names without leaking hand corrections to other products', function (): void {
+    $groups = (new SanipurProductGrouper)->group([
+        sanipurPage(['external_product_id' => '1', 'sku' => 'TM0260_92', 'brand' => null, 'name' => 'Pościel flanela CZ/SK (140x200-1,70x90-1)']),
+        sanipurPage(['external_product_id' => '2', 'sku' => 'TM0260_93', 'brand' => null, 'name' => 'Pościel flanela CZ/SK (140x200-1,70x90-1)']),
+        sanipurPage(['external_product_id' => '3', 'sku' => 'TB0343_15B', 'brand' => 'BabyMatex', 'name' => 'BabyMatex Kąpielowe okrycie niemowlęce MAXI PRINT, 100x100']),
+        sanipurPage(['external_product_id' => '4', 'sku' => 'TB0343_24B', 'brand' => 'BabyMatex', 'name' => 'BabyMatex Kąpielowe okrycie niemowlęce MAXI PRINT, 100x100']),
+        sanipurPage(['external_product_id' => '5', 'sku' => 'TB0028_15B', 'brand' => 'BabyMatex', 'name' => 'BabyMatex Prześcieradło jersey 70x140']),
+        sanipurPage(['external_product_id' => '6', 'sku' => 'TB0028_24B', 'brand' => 'BabyMatex', 'name' => 'BabyMatex Prześcieradło jersey 70x140, niebieskie']),
+    ]);
+
+    $labels = collect($groups)->flatMap(fn (array $group) => collect($group['variant_candidates'])->pluck('label', 'source_sku'))->all();
+
+    expect($labels['TM0260_92'])->toBe('Wzór 1')
+        ->and($labels['TM0260_93'])->toBe('Wzór 2')
+        ->and($labels['TB0343_15B'])->toBe('Beżowe, mandala')
+        ->and($labels['TB0343_24B'])->toBe('Niebieskie')
+        ->and($labels['TB0028_15B'])->toBe('Nr 15B');
 });
