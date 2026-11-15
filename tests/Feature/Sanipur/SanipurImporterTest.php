@@ -4,11 +4,13 @@ use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\VatRate;
 use App\Models\Category;
+use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Services\Sanipur\SanipurProductGrouper;
 use App\Services\Sanipur\SanipurProductImporter;
 use App\Services\Sanipur\SanipurProductScraper;
+use App\Support\Products\ProductManufacturerInformation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -317,4 +319,29 @@ it('keeps URLs on re-import, ignores placeholder summaries and archives products
         ->and(ProductVariant::query()->where('sku', 'SNP-TM0421_44')->value('price_gross_amount'))->toBe(7000)
         ->and(Product::query()->where('external_id', 'babymatex-pled-dzieciecy-z-bawelny-tully')->value('status'))->toBe(ProductStatus::ARCHIVED)
         ->and(ProductVariant::query()->where('sku', 'SNP-TB0329_01')->value('status'))->toBe(ProductVariantStatus::ARCHIVED);
+});
+
+it('gives every Sanipur product a brand with Multitex GPSR details without overwriting admin edits', function (): void {
+    writeSanipurFixture([
+        sanipurPage(['external_product_id' => '1', 'sku' => 'TS0101_0524', 'brand' => null, 'name' => 'Podkład higieniczny- Frotte 160x200', 'breadcrumbs' => ['Medyczne']]),
+        sanipurPage(['external_product_id' => '2', 'sku' => 'TM0131_31A', 'brand' => 'Matex']),
+    ]);
+
+    $this->artisan('sanipur:import', ['--from' => 'scrapers/sanipur/test.json', '--no-images' => true, '--vat-rate' => 23])->assertSuccessful();
+
+    $pad = Product::query()->where('name', 'Podkład higieniczny- Frotte 160x200')->firstOrFail();
+    $info = ProductManufacturerInformation::forProduct($pad);
+
+    expect($pad->attributeValues()->whereHas('attribute', fn ($q) => $q->where('slug', 'producent'))->value('value'))->toBe('Sanipur')
+        ->and($info['name'])->toBe('Multitex Sp. z o.o.')
+        ->and($info['address'])->toBe('ul. 3 Maja 40, 48-250 Głogówek, Polska')
+        ->and($info['email'])->toBe('bok@multitex.com.pl');
+
+    $matex = Manufacturer::query()->whereHas('attributeValue', fn ($q) => $q->where('slug', 'matex'))->firstOrFail();
+    $matex->update(['email' => 'matex@matex.pl']);
+
+    $this->artisan('sanipur:import', ['--from' => 'scrapers/sanipur/test.json', '--no-images' => true, '--vat-rate' => 23])->assertSuccessful();
+
+    expect(Manufacturer::query()->count())->toBe(2)
+        ->and($matex->fresh()->email)->toBe('matex@matex.pl');
 });
