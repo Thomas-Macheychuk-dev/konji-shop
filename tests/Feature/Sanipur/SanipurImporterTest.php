@@ -110,7 +110,19 @@ it('splits sizes and colours out of sanipur.eu product names', function (): void
         ->and($grouper->parseName('Matex Prześcieradło frotte CLASSIC z gumą, 120x200 cm, różowe'))
         ->toBe(['base' => 'Matex Prześcieradło frotte CLASSIC z gumą', 'size' => '120x200 cm', 'colour' => 'różowe'])
         ->and($grouper->parseName('SANIPUR Pokrowiec nieprzemakalny na koc JERSEY zamek 140x200'))
-        ->toBe(['base' => 'SANIPUR Pokrowiec nieprzemakalny na koc JERSEY zamek', 'size' => '140x200 cm', 'colour' => null]);
+        ->toBe(['base' => 'SANIPUR Pokrowiec nieprzemakalny na koc JERSEY zamek', 'size' => '140x200 cm', 'colour' => null])
+        ->and($grouper->parseName('Matex Koc DIAMOND, rozm. 150x200 cm, ciemno szary'))
+        ->toBe(['base' => 'Matex Koc DIAMOND', 'size' => '150x200 cm', 'colour' => 'ciemno szary'])
+        ->and($grouper->parseName('Matex Narzuta dekoracyjna Kaszmirowy Dotyk, rozmiar 240 x 210cm, kolor grafitowy, grafitowe'))
+        ->toBe(['base' => 'Matex Narzuta dekoracyjna Kaszmirowy Dotyk', 'size' => '240x210 cm', 'colour' => 'grafitowe'])
+        ->and($grouper->parseName('Matex Prześcieradło satynowe z gumą 90/100x190/200, Kolekcja GOLD'))
+        ->toBe(['base' => 'Matex Prześcieradło satynowe z gumą, Kolekcja GOLD', 'size' => '90/100x190/200 cm', 'colour' => null])
+        ->and($grouper->parseName('Matex Prześcieradło satynowe z gumą 90/100x190/200, Kolekcja GOLD, czarne'))
+        ->toBe(['base' => 'Matex Prześcieradło satynowe z gumą, Kolekcja GOLD', 'size' => '90/100x190/200 cm', 'colour' => 'czarne'])
+        ->and($grouper->parseName('BabyMatex Pled dziecięcy z bawełny, TULLY'))
+        ->toBe(['base' => 'BabyMatex Pled dziecięcy z bawełny, TULLY', 'size' => null, 'colour' => null])
+        ->and($grouper->parseName('SANIPUR Materac rehabilitacyjny 12x90x200 szpitalny, płaski, 12 cm, T2540, grafitowy, rolowany'))
+        ->toBe(['base' => 'SANIPUR Materac rehabilitacyjny szpitalny, płaski, 12 cm, T2540, rolowany', 'size' => '12x90x200 cm', 'colour' => 'grafitowy']);
 });
 
 it('groups colour and size pages into one product per product line', function (): void {
@@ -266,4 +278,43 @@ it('imports grouped Sanipur products as drafts with priced variants and updates 
 
     expect(Product::query()->where('external_source', 'sanipur')->count())->toBe(2)
         ->and(ProductVariant::query()->where('sku', 'SNP-TM0131_31A')->value('price_gross_amount'))->toBe(6100);
+});
+
+it('keeps URLs on re-import, ignores placeholder summaries and archives products that left the data', function (): void {
+    writeSanipurFixture([
+        sanipurPage(['external_product_id' => '1', 'sku' => 'TM0421_44', 'name' => 'Matex Koc DIAMOND, rozm. 150x200 cm, ciemno szary', 'short_description' => 'CustomValue']),
+        sanipurPage(['external_product_id' => '2', 'sku' => 'TM0421_02', 'name' => 'Matex Koc DIAMOND, rozm. 150x200 cm, ecru', 'short_description' => 'CustomValue']),
+        sanipurPage(['external_product_id' => '3', 'sku' => 'TB0329_01', 'name' => 'BabyMatex Pled dziecięcy z bawełny, TULLY']),
+    ]);
+
+    $this->artisan('sanipur:import', ['--from' => 'scrapers/sanipur/test.json', '--no-images' => true, '--vat-rate' => 23])->assertSuccessful();
+
+    $blanket = Product::query()->where('external_id', 'matex-koc-diamond')->firstOrFail();
+    expect($blanket->name)->toBe('Matex Koc DIAMOND')
+        ->and($blanket->slug)->toBe('matex-koc-diamond')
+        ->and($blanket->short_description)->toBeNull()
+        ->and($blanket->seo_description)->not->toContain('CustomValue');
+
+    $blanket->update(['slug' => 'koc-diamond-opublikowany', 'status' => ProductStatus::ACTIVE]);
+
+    writeSanipurFixture([
+        sanipurPage(['external_product_id' => '1', 'sku' => 'TM0421_44', 'name' => 'Matex Koc DIAMOND, rozm. 150x200 cm, ciemno szary', 'price_gross_amount' => 70.00]),
+        sanipurPage(['external_product_id' => '2', 'sku' => 'TM0421_02', 'name' => 'Matex Koc DIAMOND, rozm. 150x200 cm, ecru']),
+    ]);
+
+    $this->artisan('sanipur:import', ['--from' => 'scrapers/sanipur/test.json', '--no-images' => true, '--vat-rate' => 23, '--archive-missing' => true, '--dry-run' => true])
+        ->expectsOutputToContain('Sanipur products that would be archived: 1')
+        ->assertSuccessful();
+
+    expect(Product::query()->where('status', ProductStatus::ARCHIVED->value)->count())->toBe(0);
+
+    $this->artisan('sanipur:import', ['--from' => 'scrapers/sanipur/test.json', '--no-images' => true, '--vat-rate' => 23, '--archive-missing' => true])
+        ->expectsOutputToContain('Archived Sanipur products: 1')
+        ->assertSuccessful();
+
+    expect($blanket->fresh()->slug)->toBe('koc-diamond-opublikowany')
+        ->and($blanket->fresh()->status)->toBe(ProductStatus::ACTIVE)
+        ->and(ProductVariant::query()->where('sku', 'SNP-TM0421_44')->value('price_gross_amount'))->toBe(7000)
+        ->and(Product::query()->where('external_id', 'babymatex-pled-dzieciecy-z-bawelny-tully')->value('status'))->toBe(ProductStatus::ARCHIVED)
+        ->and(ProductVariant::query()->where('sku', 'SNP-TB0329_01')->value('status'))->toBe(ProductVariantStatus::ARCHIVED);
 });
