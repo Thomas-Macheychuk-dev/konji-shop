@@ -43,17 +43,18 @@ final class SanipurProductGrouper
                 $seenSkus[mb_strtoupper($sku)] = true;
             }
 
-            $parsed = $this->parseName((string) ($page['name'] ?? ''));
+            $page['name'] = self::NAME_CORRECTIONS[(string) $sku] ?? $page['name'] ?? '';
+            $parsed = $this->parseName((string) $page['name']);
             $line = $sku !== null ? $this->skuLine($sku) : null;
             $code = $sku !== null ? $this->colourCode($sku) : null;
             $key = Str::slug($parsed['base']) ?: 'id-'.$page['external_product_id'];
 
             $groups[$key][] = $page + [
                 '_size' => $parsed['size'],
-                '_colour' => $parsed['colour'],
+                '_colour' => $sku !== null ? ($this->correctedColour($sku) ?? $parsed['colour']) : $parsed['colour'],
                 '_base' => $parsed['base'],
                 '_colour_code' => $code,
-                '_colour_keys' => $code === null ? [] : [$line.'|'.$code, 'brand:'.mb_strtolower((string) ($page['brand'] ?? '')).'|'.$code],
+                '_colour_keys' => $this->colourKeys($line, $code, (string) ($page['brand'] ?? '')),
             ];
         }
 
@@ -82,10 +83,128 @@ final class SanipurProductGrouper
         $result = [];
 
         foreach ($groups as $key => $members) {
-            $result[] = $this->buildGroup((string) $key, $this->fillMissingColours($members, $colourNames));
+            $members = $this->nameSecondColours($this->fillMissingColours($members, $colourNames), $colourNames);
+            $result[] = $this->buildGroup((string) $key, $members);
         }
 
         return $result;
+    }
+
+    /**
+     * sanipur.eu pages with a wrong name, checked on 2026-11-15. TM0209_01+42 is named as the 160x200 set, but its
+     * SKU line, price (155,67 zł) and photo (…kg140x200-170x80-1) are the 140x200 set's.
+     *
+     * @var array<string, string>
+     */
+    private const NAME_CORRECTIONS = [
+        'TM0209_01+42' => 'Matex Pościel satynowa DOUBLE FACE Kolekcja GOLD(140x200-1, 70x80-1), biała',
+    ];
+
+    /**
+     * Where a page's colour code is looked up: its SKU line, then the brand. A two-tone code ("37+42") is also
+     * looked up by its first colour.
+     *
+     * @return list<string>
+     */
+    private function colourKeys(?string $line, ?string $code, string $brand): array
+    {
+        if ($line === null || $code === null) {
+            return [];
+        }
+
+        $brandKey = 'brand:'.mb_strtolower($brand);
+        $keys = [$line.'|'.$code, $brandKey.'|'.$code];
+
+        if (str_contains($code, '+')) {
+            $keys[] = $brandKey.'|'.substr($code, 0, (int) strpos($code, '+'));
+        }
+
+        return $keys;
+    }
+
+    /**
+     * Colours sanipur.eu names the same for two different shades, or names wrongly, checked against the product
+     * photos on sanipur.eu on 2026-11-15. Keyed by SKU pattern, since colour codes mean different colours in
+     * different product lines.
+     */
+    private const COLOUR_CORRECTIONS = [
+        '/^TM01(?:0[89]|3[1-6])_51A$/' => 'ceglaste',          // brick red; "czerwone" is 14A
+        '/^TM013[1-6]_L23A$/' => 'ciemno fioletowe',            // deep purple; "fioletowe" is lavender 19A
+        '/^TS010[56]_\d{2}09$/' => 'jasnoróżowe',               // powder pink; "różowe" is 10
+        '/^TS0105_\d{2}04$/' => 'pomarańczowe',                 // as 3 of the line's 4 pages name it; "kremowe" is 02
+        '/^TM0148_R44$/' => 'szara, romby',                     // grey, diamond pattern
+        '/^TM0148_F44$/' => 'szara, fale',                      // grey, wave pattern
+        '/^TM0619_10$/' => 'jasnoróżowa',                       // light pink; "różowa" is 11
+        '/^TB0073_06$/' => 'musztardowy',                       // the page says "miętowy", the photo is mustard
+    ];
+
+    private function correctedColour(string $sku): ?string
+    {
+        foreach (self::COLOUR_CORRECTIONS as $pattern => $colour) {
+            if (preg_match($pattern, mb_strtoupper($sku)) === 1) {
+                return $colour;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Two-tone codes ("TM0211_01+42": white with light grey) only name the first colour on sanipur.eu. The
+     * second is the name the brand uses for that code, in the first colour's grammatical gender ("biała / jasno
+     * szara").
+     *
+     * @param  list<array<string, mixed>>  $members
+     * @param  array<string, string>  $colourNames
+     * @return list<array<string, mixed>>
+     */
+    private function nameSecondColours(array $members, array $colourNames): array
+    {
+        foreach ($members as $i => $member) {
+            $code = (string) $member['_colour_code'];
+
+            if ($member['_colour'] === null || ! str_contains($code, '+')) {
+                continue;
+            }
+
+            $brandKey = 'brand:'.mb_strtolower((string) ($member['brand'] ?? ''));
+            $second = $colourNames[$brandKey.'|'.substr($code, strrpos($code, '+') + 1)] ?? null;
+
+            if ($second !== null && ! $this->repeatsColour($second, $member['_colour'])) {
+                $members[$i]['_colour'] = $member['_colour'].' / '.$this->inGenderOf($second, $member['_colour']);
+            }
+        }
+
+        return $members;
+    }
+
+    /**
+     * Puts the adjectives of a colour into the gender of another colour ("jasno szare" → "jasno szara" next to
+     * "biała"). Words not ending like an adjective ("jasno") stay.
+     */
+    private function inGenderOf(string $colour, string $model): string
+    {
+        $ending = mb_substr(mb_strtolower(trim($model)), -1);
+
+        if (! in_array($ending, ['a', 'y', 'i', 'e'], true)) {
+            return $colour;
+        }
+
+        return implode(' ', array_map(function (string $word) use ($ending): string {
+            if (preg_match('/^(.+[kg])(?:ie|a|i)$/u', $word, $m) === 1) {
+                return $m[1].match ($ending) {
+                    'a' => 'a', 'e' => 'ie', default => 'i'
+                };
+            }
+
+            if (preg_match('/^(.+)[aey]$/u', $word, $m) === 1) {
+                return $m[1].match ($ending) {
+                    'a' => 'a', 'e' => 'e', default => 'y'
+                };
+            }
+
+            return $word;
+        }, preg_split('/\s+/u', mb_strtolower(trim($colour))) ?: []));
     }
 
     /**

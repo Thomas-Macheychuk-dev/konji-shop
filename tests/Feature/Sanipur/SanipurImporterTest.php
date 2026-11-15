@@ -149,7 +149,7 @@ it('groups colour and size pages into one product per product line', function ()
 
     $jersey = collect($groups)->firstWhere('name', 'SANIPUR Prześcieradło nieprzemakalne Jersey');
     expect(array_column($jersey['variant_candidates'], 'label'))
-        ->toBe(['80x200 cm / Beżowe', '80x200 cm / Białe', '120x200 cm / Beżowe', '120x200 cm / Nr 09']);
+        ->toBe(['80x200 cm / Beżowe', '80x200 cm / Białe', '120x200 cm / Beżowe', '120x200 cm / Jasnoróżowe']);
 
     $sheets = collect($groups)->firstWhere('name', 'Matex Prześcieradło jersey z gumą');
     expect($sheets['variant_candidates'])->toHaveCount(2)
@@ -348,4 +348,29 @@ it('gives every Sanipur product a brand with Multitex GPSR details without overw
 
     expect(Manufacturer::query()->count())->toBe(2)
         ->and($matex->fresh()->email)->toBe('matex@matex.pl');
+});
+
+it('names colours sanipur.eu gives the same name, and both sides of two-tone sets', function (): void {
+    $groups = (new SanipurProductGrouper)->group([
+        sanipurPage(['external_product_id' => '1', 'sku' => 'TM0135_14A', 'name' => 'Matex Prześcieradło jersey z gumą 180/190x190/200, czerwone']),
+        sanipurPage(['external_product_id' => '2', 'sku' => 'TM0135_51A', 'name' => 'Matex Prześcieradło jersey z gumą 180/190x190/200, czerwone']),
+        sanipurPage(['external_product_id' => '3', 'sku' => 'TM0210_01+42', 'name' => 'Matex Pościel satynowa DOUBLE FACE Kolekcja GOLD(160x200-1, 70x80-2), biała']),
+        sanipurPage(['external_product_id' => '4', 'sku' => 'TM0210_01+34', 'name' => 'Matex Pościel satynowa DOUBLE FACE Kolekcja GOLD(160x200-1, 70x80-2), biała']),
+        sanipurPage(['external_product_id' => '5', 'sku' => 'TM0210_37+42', 'name' => 'Matex Pościel satynowa DOUBLE FACE Kolekcja GOLD(160x200-1, 70x80-2)']),
+        sanipurPage(['external_product_id' => '6', 'sku' => 'TM0209_01+42', 'name' => 'Matex Pościel satynowa DOUBLE FACE Kolekcja GOLD(160x200-1, 70x80-2), biała', 'price_gross_amount' => 155.67]),
+        sanipurPage(['external_product_id' => '7', 'sku' => 'TM0140_42', 'name' => 'Matex Prześcieradło satynowe z gumą 90/100x190/200, Kolekcja GOLD, jasno szare']),
+        sanipurPage(['external_product_id' => '8', 'sku' => 'TM0141_34', 'name' => 'Matex Prześcieradło satynowe z gumą 110/120x190/200, Kolekcja GOLD, morskie']),
+        sanipurPage(['external_product_id' => '9', 'sku' => 'TM0631_37', 'name' => 'Matex Poszewka na jasiek- bawełniana jednobarwna GOLD, 50x60, niebieska']),
+    ]);
+
+    $sheets = collect($groups)->firstWhere('name', 'Matex Prześcieradło jersey z gumą');
+    expect(collect($sheets['variant_candidates'])->pluck('label', 'source_sku')->only(['TM0135_14A', 'TM0135_51A'])->all())
+        ->toBe(['TM0135_51A' => 'Ceglaste', 'TM0135_14A' => 'Czerwone']);
+
+    $set160 = collect($groups)->firstWhere('name', 'Matex Pościel satynowa DOUBLE FACE Kolekcja GOLD(160x200-1, 70x80-2)');
+    expect(array_column($set160['variant_candidates'], 'label'))
+        ->toBe(['Biała / jasno szara', 'Biała / morska', 'Niebieska / jasno szara']);
+
+    $set140 = collect($groups)->firstWhere('name', 'Matex Pościel satynowa DOUBLE FACE Kolekcja GOLD(140x200-1, 70x80-1), biała');
+    expect($set140['variant_candidates'][0]['source_sku'])->toBe('TM0209_01+42');
 });
