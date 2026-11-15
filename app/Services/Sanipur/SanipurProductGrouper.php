@@ -157,6 +157,8 @@ final class SanipurProductGrouper
 
             return '@@'.(count($protected) - 1).'@@';
         }, $name) ?? $name;
+        // "rozm. 150x200", "roz. 75x100", "rozmiar 240 x 210cm": the word goes with the size.
+        $name = preg_replace('/\b(?:roz|rozm|rozmiar)\.?\s*(?=\d)/iu', '', $name) ?? $name;
 
         if (preg_match(self::SIZE_PATTERN, $name, $match) === 1) {
             $size = $this->normaliseSize($match[0]);
@@ -164,13 +166,30 @@ final class SanipurProductGrouper
 
         $segments = array_map('trim', explode(',', $name));
 
-        if (count($segments) > 1) {
-            $last = end($segments);
+        // "rolowany" (rolled, vacuum-packed mattress) is a product version, not a colour: it stays in the name.
+        $rolled = count($segments) > 1 && preg_match('/^rolowan[yae]$/iu', (string) end($segments)) === 1
+            ? array_pop($segments)
+            : null;
 
-            if ($this->looksLikeColour($last)) {
-                $colour = $last;
-                array_pop($segments);
+        // Colour at the end of the name. A colour may span two segments ("Szary, domki", "taupe i szary, jasno
+        // beżowy"); "kolor grafitowy, grafitowe" names it twice, so the "kolor …" copy is dropped. Earlier
+        // segments only count when they name a colour, so "Kształtka, Klin prosty, bawełna" keeps "Klin prosty".
+        if (count($segments) > 1 && $this->looksLikeColour((string) end($segments))) {
+            $colour = (string) array_pop($segments);
+
+            while (count($segments) > 1 && $this->namesColour((string) end($segments))) {
+                $segment = (string) array_pop($segments);
+
+                if (preg_match('/^kolor\s/iu', $segment) !== 1) {
+                    $colour = $segment.', '.$colour;
+                }
             }
+
+            $colour = preg_replace('/^kolor\s+/iu', '', $colour) ?? $colour;
+        }
+
+        if ($rolled !== null) {
+            $segments[] = $rolled;
         }
 
         $base = implode(', ', $segments);
@@ -186,6 +205,15 @@ final class SanipurProductGrouper
     }
 
     /**
+     * A segment before the final colour that also names a colour ("Szary", "kolor jasny szary").
+     */
+    private function namesColour(string $segment): bool
+    {
+        return $this->looksLikeColour($segment)
+            && preg_match('/^kolor\s|biał|czarn|szar|grafit|beż|brąz|ecru|krem|róż|czerwon|zielon|niebiesk|granat|turkus|fiolet|żółt|pomarańcz|morsk|mięt|taupe|złot|srebr|bordo|khaki|oliwk|łosos|wrzos|lila/iu', $segment) === 1;
+    }
+
+    /**
      * The last comma segment is a colour or pattern ("jasno szare", "Dżungla", "wzór 2"), not a collection or
      * model name ("Kolekcja GOLD", "TULLY") or a measurement.
      */
@@ -197,8 +225,8 @@ final class SanipurProductGrouper
 
         return $segment !== ''
             && preg_match('/\d/u', $segment) !== 1
-            && preg_match('/^kolekcja/iu', $segment) !== 1
-            && preg_match('/\p{Lu}{3,}/u', $segment) !== 1;
+            && preg_match('/^kolekcja\b/iu', $segment) !== 1
+            && preg_match('/\b\p{Lu}{3,}\b/u', $segment) !== 1;
     }
 
     /**

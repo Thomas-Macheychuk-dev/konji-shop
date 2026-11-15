@@ -162,11 +162,12 @@ final class SanipurProductImporter
 
         $attributes = [
             'name' => $name,
-            'slug' => $this->uniqueProductSlug($baseSlug, $product?->id, $externalId),
+            // A published product keeps its URL when sanipur.eu renames it.
+            'slug' => $product?->slug ?? $this->uniqueProductSlug($baseSlug, null, $externalId),
             'short_description' => $this->shortDescriptionHtml($group),
             'description' => $this->descriptionHtml($group),
             'seo_title' => $name,
-            'seo_description' => $this->plainTextSnippet($group['short_description'] ?? null, 300)
+            'seo_description' => $this->plainTextSnippet($this->summary($group), 300)
                 ?? $this->plainTextSnippet($group['description_html'] ?? null, 300),
             'status' => $product?->status ?? ProductStatus::DRAFT,
             'external_source' => self::SOURCE,
@@ -414,7 +415,7 @@ final class SanipurProductImporter
      */
     private function shortDescriptionHtml(array $group): ?string
     {
-        $summary = $this->plainTextSnippet($group['short_description'] ?? null, 500);
+        $summary = $this->plainTextSnippet($this->summary($group), 500);
 
         return $summary === null ? null : '<p>'.e($summary).'</p>';
     }
@@ -550,6 +551,42 @@ final class SanipurProductImporter
         $hash = substr(sha1($value), 0, 10);
 
         return rtrim(mb_substr($value, 0, self::MAX_DATABASE_STRING_LENGTH - 11), '-_ .').'_'.$hash;
+    }
+
+    /**
+     * @param  array<string, mixed>  $group
+     */
+    private function summary(array $group): ?string
+    {
+        $summary = $this->stringOrNull($group['short_description'] ?? null);
+
+        return $summary === null || preg_match('/^custom\s*value$/iu', $summary) === 1 ? null : $summary;
+    }
+
+    /**
+     * Archives Sanipur products that are not in the given import (renamed or regrouped on sanipur.eu, or
+     * removed there), with their variants. Returns the archived products' names.
+     *
+     * @param  list<string>  $keepExternalIds
+     * @return list<string>
+     */
+    public function archiveMissing(array $keepExternalIds, bool $dryRun): array
+    {
+        $missing = Product::query()
+            ->where('external_source', self::SOURCE)
+            ->where('status', '!=', ProductStatus::ARCHIVED->value)
+            ->whereNotIn('external_id', $keepExternalIds)
+            ->orderBy('id')
+            ->get(['id', 'name']);
+
+        if (! $dryRun && $missing->isNotEmpty()) {
+            DB::transaction(function () use ($missing): void {
+                ProductVariant::query()->whereIn('product_id', $missing->pluck('id'))->update(['status' => ProductVariantStatus::ARCHIVED->value]);
+                Product::query()->whereKey($missing->pluck('id'))->update(['status' => ProductStatus::ARCHIVED->value]);
+            });
+        }
+
+        return $missing->map(fn (Product $product): string => '#'.$product->id.' '.$product->name)->all();
     }
 
     private function stringOrNull(mixed $value): ?string

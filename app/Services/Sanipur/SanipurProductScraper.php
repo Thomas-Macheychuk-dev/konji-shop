@@ -58,7 +58,7 @@ final class SanipurProductScraper
             'gtin' => $this->firstText($form, '#gtin-'.$productId),
             'brand' => $this->firstText($form, '.manufacturers .value a') ?? $this->firstText($form, '.manufacturers .value'),
             'breadcrumbs' => $this->breadcrumbs($crawler),
-            'short_description' => $this->firstText($form, '.short-description'),
+            'short_description' => $this->withoutPlaceholder($this->firstText($form, '.short-description')),
             'description_html' => $descriptionHtml,
             'price_gross_amount' => $price,
             'old_price_gross_amount' => $this->oldPrice($form),
@@ -237,6 +237,14 @@ final class SanipurProductScraper
         $html = trim($node->first()->html(''));
 
         return $html === '' ? null : $html;
+    }
+
+    /**
+     * sanipur.eu shows a template placeholder ("CustomValue") on a few pages instead of a summary.
+     */
+    private function withoutPlaceholder(?string $value): ?string
+    {
+        return $value === null || preg_match('/^custom\s*value$/iu', $value) === 1 ? null : $value;
     }
 
     private function text(string $value): string

@@ -23,7 +23,8 @@ final class ImportSanipurProductsCommand extends Command
         {--offset=0 : Skip this many grouped products first.}
         {--no-images : Do not download images.}
         {--image-limit=10 : Images per product (0 = no limit).}
-        {--show-failures : Print every failed product at the end.}';
+        {--show-failures : Print every failed product at the end.}
+        {--archive-missing : After a full import, archive Sanipur products that are no longer in the data (renamed or regrouped on sanipur.eu).}';
 
     protected $description = 'Import sanipur.eu products as draft products, one variant per sanipur.eu page with its price.';
 
@@ -68,8 +69,22 @@ final class ImportSanipurProductsCommand extends Command
         $this->line('Mode: '.($dryRun ? 'dry-run' : 'database import'));
         $this->line('VAT: '.($vatRate?->value ?? '—').'% / medical devices: '.(($medicalVatRate ?? $vatRate)?->value ?? '—').'%');
 
+        $archiveMissing = (bool) $this->option('archive-missing');
+
+        if ($archiveMissing && count($selected) !== count($groups)) {
+            $this->error('--archive-missing needs a full import (no --limit or --offset).');
+
+            return self::FAILURE;
+        }
+
         if ($dryRun) {
-            return $this->dryRun($selected, $importer, $vatRate, $medicalVatRate);
+            $result = $this->dryRun($selected, $importer, $vatRate, $medicalVatRate);
+
+            if ($archiveMissing) {
+                $this->printArchived($importer->archiveMissing(array_column($groups, 'external_product_id'), true), true);
+            }
+
+            return $result;
         }
 
         $imported = 0;
@@ -95,6 +110,14 @@ final class ImportSanipurProductsCommand extends Command
 
         $this->info('Imported products: '.$imported);
         $this->line('Failures: '.count($failures));
+
+        if ($archiveMissing) {
+            if ($failures !== []) {
+                $this->warn('Not archiving missing products because some imports failed.');
+            } else {
+                $this->printArchived($importer->archiveMissing(array_column($groups, 'external_product_id'), false), false);
+            }
+        }
 
         if ((bool) $this->option('show-failures')) {
             foreach ($failures as $failure) {
@@ -163,6 +186,18 @@ final class ImportSanipurProductsCommand extends Command
         }
 
         return self::SUCCESS;
+    }
+
+    /**
+     * @param  list<string>  $names
+     */
+    private function printArchived(array $names, bool $dryRun): void
+    {
+        $this->line(($dryRun ? 'Sanipur products that would be archived: ' : 'Archived Sanipur products: ').count($names));
+
+        foreach ($names as $name) {
+            $this->line('  '.$name);
+        }
     }
 
     private function vatOption(string $name): VatRate|false|null
