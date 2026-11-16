@@ -20,6 +20,8 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Images\RemoteImageImporter;
 use App\Services\Products\ProductBrandAttribute;
+use App\Support\Seo\ProductMetaDescription;
+use App\Support\Seo\ShopPromoText;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -154,7 +156,7 @@ final class Seni24ProductImporter
             'short_description' => $this->shortDescriptionHtml($scraped),
             'description' => $this->productDescriptionHtml($scraped),
             'seo_title' => $this->plainTextSnippet($scraped['seo_title'] ?? null, 300) ?: $name,
-            'seo_description' => $this->plainTextSnippet($scraped['seo_description'] ?? null, 300),
+            'seo_description' => $this->seoDescription($scraped, $name),
             'status' => $status,
             'external_source' => 'seni24',
             'external_id' => $externalId,
@@ -752,7 +754,7 @@ final class Seni24ProductImporter
      */
     private function shortDescriptionHtml(array $scraped): ?string
     {
-        $summary = $this->plainTextSnippet($scraped['seo_description'] ?? null, 500)
+        $summary = $this->shopPromoFreeSnippet($scraped['seo_description'] ?? null, 500)
             ?: $this->firstParagraphText($scraped['description_html'] ?? null, 500);
 
         return $summary === null ? null : '<p>'.e($summary).'</p>';
@@ -1173,6 +1175,25 @@ final class Seni24ProductImporter
         }
 
         return (int) round(((float) $normalized) * 100);
+    }
+
+    /**
+     * seni24.pl's meta description is its own sales line ("Kup … za 21,69 zł | Darmowa dostawa od 119 zł - już w 24h"),
+     * with seni24's price and delivery terms. Ours is then built from the product description instead.
+     *
+     * @param  array<string, mixed>  $scraped
+     */
+    private function seoDescription(array $scraped, string $name): ?string
+    {
+        return $this->shopPromoFreeSnippet($scraped['seo_description'] ?? null, 300)
+            ?: ProductMetaDescription::build($this->stringOrNull($scraped['description_html'] ?? null), null, $name);
+    }
+
+    private function shopPromoFreeSnippet(mixed $value, int $limit): ?string
+    {
+        $snippet = $this->plainTextSnippet($value, $limit);
+
+        return ShopPromoText::matches($snippet) ? null : $snippet;
     }
 
     private function firstParagraphText(mixed $value, int $limit): ?string

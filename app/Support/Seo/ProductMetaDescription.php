@@ -56,7 +56,8 @@ final class ProductMetaDescription
 
         if (mb_strlen($plain) < self::MIN_LENGTH
             || preg_match(self::PAGE_CHROME, $plain) === 1
-            || preg_match(self::BROKEN_PUNCTUATION, $plain) === 1) {
+            || preg_match(self::BROKEN_PUNCTUATION, $plain) === 1
+            || ShopPromoText::matches($plain)) {
             return true;
         }
 
@@ -71,6 +72,10 @@ final class ProductMetaDescription
     public static function build(?string $descriptionHtml, ?string $shortDescription, string $name): ?string
     {
         foreach ([$descriptionHtml, $shortDescription] as $source) {
+            if (ShopPromoText::matches($source)) {
+                continue;
+            }
+
             $candidate = self::fromText(self::units((string) $source), $name);
 
             if ($candidate !== null) {

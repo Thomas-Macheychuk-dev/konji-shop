@@ -319,3 +319,16 @@ it('takes the Seni24 brand from the producer address when nothing else names the
     ['Convatec Polska Sp. z o.o Rondo Daszyńskiego 1, 00-843 Warszawa', 'ConvaTec'],
     ['-', null],
 ]);
+
+it('does not copy the seni24 sales line into the short or meta description', function (): void {
+    $fixture = seni24PricedFixture();
+    $fixture['seo_description'] = 'Kup Kubek pojnik z ustnikiem 200 ml za 9,39 zł | Darmowa dostawa od 119 zł - już w 24h | Zobacz inne z kategorii Akcesoria kuchenne';
+    $fixture['description_html'] = '<p>Kubek z ustnikiem ułatwia picie osobom leżącym i starszym. Pojemność 200 ml, można myć w zmywarce.</p>';
+
+    $product = app(Seni24ProductImporter::class)->import($fixture, null, false)['product']->fresh();
+
+    expect($product->short_description)->toBe('<p>Kubek z ustnikiem ułatwia picie osobom leżącym i starszym. Pojemność 200 ml, można myć w zmywarce.</p>')
+        ->and($product->getRawOriginal('seo_description'))->not->toContain('9,39')
+        ->and($product->getRawOriginal('seo_description'))->not->toContain('Darmowa dostawa')
+        ->and($product->getRawOriginal('seo_description'))->toContain('Kubek z ustnikiem ułatwia picie');
+});

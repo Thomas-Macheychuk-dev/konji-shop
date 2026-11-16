@@ -22,6 +22,7 @@ it('recognises weak meta descriptions', function (?string $meta, bool $weak): vo
     'scraped page tabs' => ['Orteza stawu nadgarstkowego SZW-01 Opis Wskazania Dostępne rozmiary Rozmiar UNI Detale produktu Powiązane produkty', true],
     'sizes mentioned in real copy' => ['Różne modele dętek do wózków inwalidzkich – dostępne rozmiary i typy wentyli: prosty, 90/30, 90/90, 45/45 – do wózków aktywnych i standardowych', false],
     'size prompt in marketing copy' => ['Wybierz ortezę kciuka AT53065! Komfortowa tkanina welurowa, aluminiowa szyna i doskonałe wsparcie w leczeniu urazów. Sprawdź dostępne rozmiary.', false],
+    'supplier shop sales line' => ['Kup Seni Super pieluchomajtki dla dorosłych zapinane na rzepy za 19,25 zł | Darmowa dostawa od 119 zł - już w 24h', true],
     'broken list punctuation' => ['Przeciążenia mięśnia brzuchatego łydki,. Niewydolność krążenia kończyn dolnych,. Zapalenie rozcięgna.', true],
 ]);
 
