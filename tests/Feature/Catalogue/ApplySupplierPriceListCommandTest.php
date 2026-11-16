@@ -16,14 +16,14 @@ beforeEach(function (): void {
     Storage::fake('local');
 });
 
-it('previews Timago prices with the 10% markup without writing', function (): void {
+it('previews Timago prices with the 20% markup without writing', function (): void {
     $collar = supplierPricedVariant('timago', '88', 'Kołnierz miękki typu SCHANTZA', null);
     supplierPricedVariant('timago', 'not-listed', 'Produkt spoza cennika', 5000);
 
     $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026'])
         ->expectsOutputToContain('SUPPLIER=timago')
         ->expectsOutputToContain('PRICE_CHANGES=1 (UP=0 DOWN=0 FROM_EMPTY=1)')
-        ->expectsOutputToContain('variant='.$collar->id.' [active] Kołnierz miękki typu SCHANTZA [Ortotyka:6] gross (empty) -> 18.89 (net (empty) -> 17.49, VAT 8%)')
+        ->expectsOutputToContain('variant='.$collar->id.' [active] Kołnierz miękki typu SCHANTZA [Ortotyka:6] gross (empty) -> 20.61 (net (empty) -> 19.08, VAT 8%)')
         ->expectsOutputToContain('NOT_IN_LIST=1')
         ->expectsOutputToContain('MODE=READ_ONLY')
         ->assertSuccessful();
@@ -57,7 +57,7 @@ it('applies the list VAT rate and restores the old one on rollback', function ()
 
     $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026'])
         ->expectsOutputToContain('VAT_CHANGES=1')
-        ->expectsOutputToContain('[Rehabilitacja:51] gross 50.00 -> 70.36 (net 46.30 -> 57.20, VAT 8% -> 23%)')
+        ->expectsOutputToContain('[Rehabilitacja:51] gross 50.00 -> 76.75 (net 46.30 -> 62.40, VAT 8% -> 23%)')
         ->assertSuccessful();
 
     $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026', '--write' => true])
@@ -65,7 +65,7 @@ it('applies the list VAT rate and restores the old one on rollback', function ()
         ->assertSuccessful();
 
     expect($table->fresh()->only(['price_net_amount', 'price_gross_amount', 'vat_rate']))
-        ->toEqual(['price_net_amount' => 5720, 'price_gross_amount' => 7036, 'vat_rate' => VatRate::VAT_23]);
+        ->toEqual(['price_net_amount' => 6240, 'price_gross_amount' => 7675, 'vat_rate' => VatRate::VAT_23]);
 
     $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->sole();
 
@@ -94,7 +94,7 @@ it('sees every variant when a later-created variant ends a chunk', function (): 
     ]);
 
     $this->artisan('catalogue:apply-supplier-prices', ['list' => 'timago-2026'])
-        ->expectsOutputToContain('variant='.$collar->id.' [active] Kołnierz miękki typu SCHANTZA [Ortotyka:6] gross (empty) -> 18.89')
+        ->expectsOutputToContain('variant='.$collar->id.' [active] Kołnierz miękki typu SCHANTZA [Ortotyka:6] gross (empty) -> 20.61')
         ->expectsOutputToContain('NOT_IN_LIST=200')
         ->assertSuccessful();
 });

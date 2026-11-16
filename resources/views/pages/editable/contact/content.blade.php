@@ -20,7 +20,7 @@
     <div class="rounded-xl bg-zinc-50 p-5 ring-1 ring-zinc-200">
         <h2 class="text-sm font-semibold text-zinc-900">Zwroty i reklamacje</h2>
         <p class="mt-3 text-sm text-zinc-500">Adres do odsyłania towaru</p>
-        <p class="text-sm font-medium text-zinc-900">{{ $seller['company_name'] }}<br>{{ config('legal.returns.return_address') }}</p>
+        <p class="text-sm font-medium text-zinc-900">{{ $seller['company_name'] }}<br>ul. {{ preg_replace('/^ul\.\s*/', '', (string) config('legal.returns.return_address')) }}</p>
         <p class="mt-3 text-sm">
             <a href="{{ route('legal.returns') }}" class="font-medium text-zinc-900 underline underline-offset-4">Zwroty</a>
             <span class="text-zinc-400">·</span>
@@ -51,10 +51,6 @@
         <div>
             <dt class="text-zinc-500">REGON</dt>
             <dd class="font-medium text-zinc-900">{{ $seller['regon'] }}</dd>
-        </div>
-        <div>
-            <dt class="text-zinc-500">Kapitał zakładowy</dt>
-            <dd class="font-medium text-zinc-900">{{ $seller['share_capital'] }}</dd>
         </div>
     </dl>
 </div>

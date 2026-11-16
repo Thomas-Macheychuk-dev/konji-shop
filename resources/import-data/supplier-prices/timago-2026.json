@@ -4,7 +4,7 @@
  "source_file": "CENNIK dla dystrybutorów- 2026.xlsx",
  "effective_from": "2026-01-01",
  "currency": "PLN",
- "pricing": "distributor net price + 10% markup; gross from the list VAT rate",
+ "pricing": "distributor price + 20% markup (wheelchairs and walkers, list rows Rehabilitacja:5-48 and 52-82, + 30%); gross from the list VAT rate",
  "entries": [
   {
    "external_id": "1310",
@@ -14,8 +14,8 @@
    "list_code": "SANI-TIM",
    "list_net_minor": 85000,
    "vat": 8,
-   "net_minor": 93500,
-   "gross_minor": 100980,
+   "net_minor": 110500,
+   "gross_minor": 119340,
    "matched_by": "override"
   },
   {
@@ -26,8 +26,8 @@
    "list_code": "EASY-TRANSFER",
    "list_net_minor": 12000,
    "vat": 8,
-   "net_minor": 13200,
-   "gross_minor": 14256,
+   "net_minor": 14400,
+   "gross_minor": 15552,
    "matched_by": "code"
   },
   {
@@ -38,8 +38,8 @@
    "list_code": "JMC-C 3225",
    "list_net_minor": 21000,
    "vat": 8,
-   "net_minor": 23100,
-   "gross_minor": 24948,
+   "net_minor": 27300,
+   "gross_minor": 29484,
    "matched_by": "code"
   },
   {
@@ -50,8 +50,8 @@
    "list_code": "TGR-R KP 540",
    "list_net_minor": 7900,
    "vat": 8,
-   "net_minor": 8690,
-   "gross_minor": 9385,
+   "net_minor": 9480,
+   "gross_minor": 10238,
    "matched_by": "code"
   },
   {
@@ -62,8 +62,8 @@
    "list_code": "TURN360",
    "list_net_minor": 27000,
    "vat": 8,
-   "net_minor": 29700,
-   "gross_minor": 32076,
+   "net_minor": 32400,
+   "gross_minor": 34992,
    "matched_by": "code"
   },
   {
@@ -74,8 +74,8 @@
    "list_code": "Electric-Tim I",
    "list_net_minor": 275000,
    "vat": 8,
-   "net_minor": 302500,
-   "gross_minor": 326700,
+   "net_minor": 357500,
+   "gross_minor": 386100,
    "matched_by": "code"
   },
   {
@@ -86,8 +86,8 @@
    "list_code": "iFold",
    "list_net_minor": 399900,
    "vat": 8,
-   "net_minor": 439890,
-   "gross_minor": 475081,
+   "net_minor": 519870,
+   "gross_minor": 561460,
    "matched_by": "code"
   },
   {
@@ -98,8 +98,8 @@
    "list_code": "FortiGo",
    "list_net_minor": 319900,
    "vat": 8,
-   "net_minor": 351890,
-   "gross_minor": 380041,
+   "net_minor": 415870,
+   "gross_minor": 449140,
    "matched_by": "code"
   },
   {
@@ -110,8 +110,8 @@
    "list_code": "GO-TIM",
    "list_net_minor": 304900,
    "vat": 8,
-   "net_minor": 335390,
-   "gross_minor": 362221,
+   "net_minor": 396370,
+   "gross_minor": 428080,
    "matched_by": "code"
   },
   {
@@ -122,8 +122,8 @@
    "list_code": "Smart Tim",
    "list_net_minor": 299000,
    "vat": 8,
-   "net_minor": 328900,
-   "gross_minor": 355212,
+   "net_minor": 388700,
+   "gross_minor": 419796,
    "matched_by": "code"
   },
   {
@@ -134,8 +134,8 @@
    "list_code": "Smart Tim",
    "list_net_minor": 299000,
    "vat": 8,
-   "net_minor": 328900,
-   "gross_minor": 355212,
+   "net_minor": 388700,
+   "gross_minor": 419796,
    "matched_by": "code"
   },
   {
@@ -146,8 +146,8 @@
    "list_code": "Flash-Tim",
    "list_net_minor": 269000,
    "vat": 8,
-   "net_minor": 295900,
-   "gross_minor": 319572,
+   "net_minor": 349700,
+   "gross_minor": 377676,
    "matched_by": "code"
   },
   {
@@ -158,8 +158,8 @@
    "list_code": "Power-Tim",
    "list_net_minor": 255000,
    "vat": 8,
-   "net_minor": 280500,
-   "gross_minor": 302940,
+   "net_minor": 331500,
+   "gross_minor": 358020,
    "matched_by": "code"
   },
   {
@@ -170,8 +170,8 @@
    "list_code": "H011",
    "list_net_minor": 43500,
    "vat": 8,
-   "net_minor": 47850,
-   "gross_minor": 51678,
+   "net_minor": 56550,
+   "gross_minor": 61074,
    "matched_by": "override"
   },
   {
@@ -182,8 +182,8 @@
    "list_code": "H011 B",
    "list_net_minor": 38900,
    "vat": 8,
-   "net_minor": 42790,
-   "gross_minor": 46213,
+   "net_minor": 50570,
+   "gross_minor": 54616,
    "matched_by": "code"
   },
   {
@@ -194,8 +194,8 @@
    "list_code": "MOBIL-TIM PLUS",
    "list_net_minor": 43900,
    "vat": 8,
-   "net_minor": 48290,
-   "gross_minor": 52153,
+   "net_minor": 57070,
+   "gross_minor": 61636,
    "matched_by": "code"
   },
   {
@@ -206,8 +206,8 @@
    "list_code": "MOBIL-TIM",
    "list_net_minor": 33500,
    "vat": 8,
-   "net_minor": 36850,
-   "gross_minor": 39798,
+   "net_minor": 43550,
+   "gross_minor": 47034,
    "matched_by": "code"
   },
   {
@@ -218,8 +218,8 @@
    "list_code": "FS 692",
    "list_net_minor": 34200,
    "vat": 8,
-   "net_minor": 37620,
-   "gross_minor": 40630,
+   "net_minor": 41040,
+   "gross_minor": 44323,
    "matched_by": "code"
   },
   {
@@ -230,8 +230,8 @@
    "list_code": "K-7 56 cm",
    "list_net_minor": 79000,
    "vat": 8,
-   "net_minor": 86900,
-   "gross_minor": 93852,
+   "net_minor": 102700,
+   "gross_minor": 110916,
    "matched_by": "override"
   },
   {
@@ -242,8 +242,8 @@
    "list_code": "SANI-TIM",
    "list_net_minor": 109900,
    "vat": 8,
-   "net_minor": 120890,
-   "gross_minor": 130561,
+   "net_minor": 142870,
+   "gross_minor": 154300,
    "matched_by": "override"
   },
   {
@@ -254,8 +254,8 @@
    "list_code": "ALH008",
    "list_net_minor": 109900,
    "vat": 8,
-   "net_minor": 120890,
-   "gross_minor": 130561,
+   "net_minor": 142870,
+   "gross_minor": 154300,
    "matched_by": "code"
   },
   {
@@ -266,8 +266,8 @@
    "list_code": "ACTIV-TIM",
    "list_net_minor": 145000,
    "vat": 8,
-   "net_minor": 159500,
-   "gross_minor": 172260,
+   "net_minor": 188500,
+   "gross_minor": 203580,
    "matched_by": "code"
   },
   {
@@ -278,8 +278,8 @@
    "list_code": "ACTIV-TIM",
    "list_net_minor": 145000,
    "vat": 8,
-   "net_minor": 159500,
-   "gross_minor": 172260,
+   "net_minor": 188500,
+   "gross_minor": 203580,
    "matched_by": "code"
   },
   {
@@ -290,8 +290,8 @@
    "list_code": "NEURO TIM",
    "list_net_minor": 109900,
    "vat": 8,
-   "net_minor": 120890,
-   "gross_minor": 130561,
+   "net_minor": 142870,
+   "gross_minor": 154300,
    "matched_by": "code"
   },
   {
@@ -302,8 +302,8 @@
    "list_code": "ELITE-TIM",
    "list_net_minor": 145000,
    "vat": 8,
-   "net_minor": 159500,
-   "gross_minor": 172260,
+   "net_minor": 188500,
+   "gross_minor": 203580,
    "matched_by": "code"
   },
   {
@@ -314,8 +314,8 @@
    "list_code": "EXCLUSIVE-TIM LIGHT",
    "list_net_minor": 129000,
    "vat": 8,
-   "net_minor": 141900,
-   "gross_minor": 153252,
+   "net_minor": 167700,
+   "gross_minor": 181116,
    "matched_by": "code"
   },
   {
@@ -326,8 +326,8 @@
    "list_code": "COMPLEX-TIM",
    "list_net_minor": 92000,
    "vat": 8,
-   "net_minor": 101200,
-   "gross_minor": 109296,
+   "net_minor": 119600,
+   "gross_minor": 129168,
    "matched_by": "code"
   },
   {
@@ -338,8 +338,8 @@
    "list_code": "T101",
    "list_net_minor": 78900,
    "vat": 8,
-   "net_minor": 86790,
-   "gross_minor": 93733,
+   "net_minor": 102570,
+   "gross_minor": 110776,
    "matched_by": "code"
   },
   {
@@ -350,8 +350,8 @@
    "list_code": "TGR-R WA C2600",
    "list_net_minor": 79900,
    "vat": 8,
-   "net_minor": 87890,
-   "gross_minor": 94921,
+   "net_minor": 103870,
+   "gross_minor": 112180,
    "matched_by": "code"
   },
   {
@@ -362,8 +362,8 @@
    "list_code": "SIMPLE-TIM",
    "list_net_minor": 65500,
    "vat": 8,
-   "net_minor": 72050,
-   "gross_minor": 77814,
+   "net_minor": 85150,
+   "gross_minor": 91962,
    "matched_by": "code"
   },
   {
@@ -374,8 +374,8 @@
    "list_code": "EXCLUSIVE-TIM LIGHT",
    "list_net_minor": 129000,
    "vat": 8,
-   "net_minor": 141900,
-   "gross_minor": 153252,
+   "net_minor": 167700,
+   "gross_minor": 181116,
    "matched_by": "code"
   },
   {
@@ -386,8 +386,8 @@
    "list_code": "MASTER-TIM",
    "list_net_minor": 80500,
    "vat": 8,
-   "net_minor": 88550,
-   "gross_minor": 95634,
+   "net_minor": 96600,
+   "gross_minor": 104328,
    "matched_by": "code"
   },
   {
@@ -398,8 +398,8 @@
    "list_code": "MASTER-TIM PLUS",
    "list_net_minor": 99000,
    "vat": 8,
-   "net_minor": 108900,
-   "gross_minor": 117612,
+   "net_minor": 118800,
+   "gross_minor": 128304,
    "matched_by": "code"
   },
   {
@@ -410,8 +410,8 @@
    "list_code": "TGR-R RA 882",
    "list_net_minor": 26900,
    "vat": 8,
-   "net_minor": 29590,
-   "gross_minor": 31957,
+   "net_minor": 34970,
+   "gross_minor": 37768,
    "matched_by": "code"
   },
   {
@@ -422,8 +422,8 @@
    "list_code": "YOLA",
    "list_net_minor": 31500,
    "vat": 8,
-   "net_minor": 34650,
-   "gross_minor": 37422,
+   "net_minor": 40950,
+   "gross_minor": 44226,
    "matched_by": "code"
   },
   {
@@ -434,8 +434,8 @@
    "list_code": "YOLA",
    "list_net_minor": 31500,
    "vat": 8,
-   "net_minor": 34650,
-   "gross_minor": 37422,
+   "net_minor": 40950,
+   "gross_minor": 44226,
    "matched_by": "code"
   },
   {
@@ -446,8 +446,8 @@
    "list_code": "YOLA AIR",
    "list_net_minor": 41900,
    "vat": 8,
-   "net_minor": 46090,
-   "gross_minor": 49777,
+   "net_minor": 54470,
+   "gross_minor": 58828,
    "matched_by": "code"
   },
   {
@@ -458,8 +458,8 @@
    "list_code": "YOLA",
    "list_net_minor": 31500,
    "vat": 8,
-   "net_minor": 34650,
-   "gross_minor": 37422,
+   "net_minor": 40950,
+   "gross_minor": 44226,
    "matched_by": "code"
   },
   {
@@ -470,8 +470,8 @@
    "list_code": "PEDRO",
    "list_net_minor": 28900,
    "vat": 8,
-   "net_minor": 31790,
-   "gross_minor": 34333,
+   "net_minor": 37570,
+   "gross_minor": 40576,
    "matched_by": "code"
   },
   {
@@ -482,8 +482,8 @@
    "list_code": "LORENZA",
    "list_net_minor": 53500,
    "vat": 8,
-   "net_minor": 58850,
-   "gross_minor": 63558,
+   "net_minor": 69550,
+   "gross_minor": 75114,
    "matched_by": "code"
   },
   {
@@ -494,8 +494,8 @@
    "list_code": "RANGER",
    "list_net_minor": 49500,
    "vat": 8,
-   "net_minor": 54450,
-   "gross_minor": 58806,
+   "net_minor": 64350,
+   "gross_minor": 69498,
    "matched_by": "code"
   },
   {
@@ -506,8 +506,8 @@
    "list_code": "LEXI",
    "list_net_minor": 38900,
    "vat": 8,
-   "net_minor": 42790,
-   "gross_minor": 46213,
+   "net_minor": 50570,
+   "gross_minor": 54616,
    "matched_by": "code"
   },
   {
@@ -518,8 +518,8 @@
    "list_code": "KNEE WALKER",
    "list_net_minor": 28000,
    "vat": 8,
-   "net_minor": 30800,
-   "gross_minor": 33264,
+   "net_minor": 36400,
+   "gross_minor": 39312,
    "matched_by": "code"
   },
   {
@@ -530,8 +530,8 @@
    "list_code": "RANGER",
    "list_net_minor": 49500,
    "vat": 8,
-   "net_minor": 54450,
-   "gross_minor": 58806,
+   "net_minor": 64350,
+   "gross_minor": 69498,
    "matched_by": "code"
   },
   {
@@ -542,8 +542,8 @@
    "list_code": "CARBON",
    "list_net_minor": 26000,
    "vat": 8,
-   "net_minor": 28600,
-   "gross_minor": 30888,
+   "net_minor": 33800,
+   "gross_minor": 36504,
    "matched_by": "code"
   },
   {
@@ -554,8 +554,8 @@
    "list_code": "TGR-R RA 882",
    "list_net_minor": 26900,
    "vat": 8,
-   "net_minor": 29590,
-   "gross_minor": 31957,
+   "net_minor": 34970,
+   "gross_minor": 37768,
    "matched_by": "code"
   },
   {
@@ -566,8 +566,8 @@
    "list_code": "TGR-R RA 888",
    "list_net_minor": 27500,
    "vat": 8,
-   "net_minor": 30250,
-   "gross_minor": 32670,
+   "net_minor": 35750,
+   "gross_minor": 38610,
    "matched_by": "code"
   },
   {
@@ -578,8 +578,8 @@
    "list_code": "TGR-R RA 885",
    "list_net_minor": 25900,
    "vat": 8,
-   "net_minor": 28490,
-   "gross_minor": 30769,
+   "net_minor": 33670,
+   "gross_minor": 36364,
    "matched_by": "code"
   },
   {
@@ -590,8 +590,8 @@
    "list_code": "RAPID",
    "list_net_minor": 28900,
    "vat": 8,
-   "net_minor": 31790,
-   "gross_minor": 34333,
+   "net_minor": 37570,
+   "gross_minor": 40576,
    "matched_by": "code"
   },
   {
@@ -602,8 +602,8 @@
    "list_code": "TGR-R RS 880",
    "list_net_minor": 20900,
    "vat": 8,
-   "net_minor": 22990,
-   "gross_minor": 24829,
+   "net_minor": 27170,
+   "gross_minor": 29344,
    "matched_by": "code"
   },
   {
@@ -614,8 +614,8 @@
    "list_code": "PAULA",
    "list_net_minor": 77000,
    "vat": 8,
-   "net_minor": 84700,
-   "gross_minor": 91476,
+   "net_minor": 100100,
+   "gross_minor": 108108,
    "matched_by": "code"
   },
   {
@@ -626,8 +626,8 @@
    "list_code": "TGR-R RT 892G",
    "list_net_minor": 21500,
    "vat": 8,
-   "net_minor": 23650,
-   "gross_minor": 25542,
+   "net_minor": 27950,
+   "gross_minor": 30186,
    "matched_by": "code"
   },
   {
@@ -638,8 +638,8 @@
    "list_code": "TGR-R RS 881",
    "list_net_minor": 21900,
    "vat": 8,
-   "net_minor": 24090,
-   "gross_minor": 26017,
+   "net_minor": 28470,
+   "gross_minor": 30748,
    "matched_by": "code"
   },
   {
@@ -650,8 +650,8 @@
    "list_code": "JMC-C 3511",
    "list_net_minor": 10900,
    "vat": 8,
-   "net_minor": 11990,
-   "gross_minor": 12949,
+   "net_minor": 14170,
+   "gross_minor": 15304,
    "matched_by": "code"
   },
   {
@@ -662,8 +662,8 @@
    "list_code": "TGR-R RS 8812",
    "list_net_minor": 38900,
    "vat": 8,
-   "net_minor": 42790,
-   "gross_minor": 46213,
+   "net_minor": 50570,
+   "gross_minor": 54616,
    "matched_by": "code"
   },
   {
@@ -674,8 +674,8 @@
    "list_code": "FUTURO",
    "list_net_minor": 96000,
    "vat": 8,
-   "net_minor": 105600,
-   "gross_minor": 114048,
+   "net_minor": 124800,
+   "gross_minor": 134784,
    "matched_by": "code"
   },
   {
@@ -686,8 +686,8 @@
    "list_code": "FUTURO",
    "list_net_minor": 96000,
    "vat": 8,
-   "net_minor": 105600,
-   "gross_minor": 114048,
+   "net_minor": 124800,
+   "gross_minor": 134784,
    "matched_by": "code"
   },
   {
@@ -698,8 +698,8 @@
    "list_code": "JMC-C 3224",
    "list_net_minor": 13900,
    "vat": 8,
-   "net_minor": 15290,
-   "gross_minor": 16513,
+   "net_minor": 18070,
+   "gross_minor": 19516,
    "matched_by": "code"
   },
   {
@@ -710,8 +710,8 @@
    "list_code": "DEFENDER",
    "list_net_minor": 30500,
    "vat": 8,
-   "net_minor": 33550,
-   "gross_minor": 36234,
+   "net_minor": 39650,
+   "gross_minor": 42822,
    "matched_by": "code"
   },
   {
@@ -722,8 +722,8 @@
    "list_code": "HUGO",
    "list_net_minor": 7900,
    "vat": 8,
-   "net_minor": 8690,
-   "gross_minor": 9385,
+   "net_minor": 10270,
+   "gross_minor": 11092,
    "matched_by": "code"
   },
   {
@@ -734,8 +734,8 @@
    "list_code": "JMC-C 3016W5",
    "list_net_minor": 10490,
    "vat": 8,
-   "net_minor": 11539,
-   "gross_minor": 12462,
+   "net_minor": 13637,
+   "gross_minor": 14728,
    "matched_by": "code"
   },
   {
@@ -746,8 +746,8 @@
    "list_code": "FOLDY",
    "list_net_minor": 10900,
    "vat": 8,
-   "net_minor": 11990,
-   "gross_minor": 12949,
+   "net_minor": 14170,
+   "gross_minor": 15304,
    "matched_by": "code"
   },
   {
@@ -758,8 +758,8 @@
    "list_code": "FS 913L",
    "list_net_minor": 9900,
    "vat": 8,
-   "net_minor": 10890,
-   "gross_minor": 11761,
+   "net_minor": 12870,
+   "gross_minor": 13900,
    "matched_by": "code"
   },
   {
@@ -770,8 +770,8 @@
    "list_code": "FS 913L",
    "list_net_minor": 9900,
    "vat": 8,
-   "net_minor": 10890,
-   "gross_minor": 11761,
+   "net_minor": 12870,
+   "gross_minor": 13900,
    "matched_by": "code"
   },
   {
@@ -782,8 +782,8 @@
    "list_code": "JMC-C 3223",
    "list_net_minor": 15900,
    "vat": 8,
-   "net_minor": 17490,
-   "gross_minor": 18889,
+   "net_minor": 20670,
+   "gross_minor": 22324,
    "matched_by": "code"
   },
   {
@@ -794,8 +794,8 @@
    "list_code": "JMC-C 3222",
    "list_net_minor": 10900,
    "vat": 8,
-   "net_minor": 11990,
-   "gross_minor": 12949,
+   "net_minor": 14170,
+   "gross_minor": 15304,
    "matched_by": "code"
   },
   {
@@ -806,8 +806,8 @@
    "list_code": "EcoLIFT180",
    "list_net_minor": 185000,
    "vat": 8,
-   "net_minor": 203500,
-   "gross_minor": 219780,
+   "net_minor": 222000,
+   "gross_minor": 239760,
    "matched_by": "code"
   },
   {
@@ -818,8 +818,8 @@
    "list_code": "SAFE-TRANSFER",
    "list_net_minor": 99900,
    "vat": 8,
-   "net_minor": 109890,
-   "gross_minor": 118681,
+   "net_minor": 119880,
+   "gross_minor": 129470,
    "matched_by": "code"
   },
   {
@@ -830,8 +830,8 @@
    "list_code": "AirMATE",
    "list_net_minor": 14000,
    "vat": 8,
-   "net_minor": 15400,
-   "gross_minor": 16632,
+   "net_minor": 16800,
+   "gross_minor": 18144,
    "matched_by": "code"
   },
   {
@@ -842,8 +842,8 @@
    "list_code": "TURNMATE",
    "list_net_minor": 175000,
    "vat": 8,
-   "net_minor": 192500,
-   "gross_minor": 207900,
+   "net_minor": 210000,
+   "gross_minor": 226800,
    "matched_by": "code"
   },
   {
@@ -854,8 +854,8 @@
    "list_code": "TGR-Y MR 001-5",
    "list_net_minor": 31900,
    "vat": 8,
-   "net_minor": 35090,
-   "gross_minor": 37897,
+   "net_minor": 38280,
+   "gross_minor": 41342,
    "matched_by": "code"
   },
   {
@@ -866,8 +866,8 @@
    "list_code": "MAT-TOPPER",
    "list_net_minor": 30500,
    "vat": 8,
-   "net_minor": 33550,
-   "gross_minor": 36234,
+   "net_minor": 36600,
+   "gross_minor": 39528,
    "matched_by": "override"
   },
   {
@@ -878,8 +878,8 @@
    "list_code": "TriMATE Care",
    "list_net_minor": 56500,
    "vat": 8,
-   "net_minor": 62150,
-   "gross_minor": 67122,
+   "net_minor": 67800,
+   "gross_minor": 73224,
    "matched_by": "code"
   },
   {
@@ -890,8 +890,8 @@
    "list_code": "MAT-TIM",
    "list_net_minor": 25000,
    "vat": 8,
-   "net_minor": 27500,
-   "gross_minor": 29700,
+   "net_minor": 30000,
+   "gross_minor": 32400,
    "matched_by": "code"
   },
   {
@@ -902,8 +902,8 @@
    "list_code": "MOON-TIM -GOFR-12",
    "list_net_minor": 35000,
    "vat": 8,
-   "net_minor": 38500,
-   "gross_minor": 41580,
+   "net_minor": 42000,
+   "gross_minor": 45360,
    "matched_by": "override"
   },
   {
@@ -914,8 +914,8 @@
    "list_code": "TGR-Y MR 001-3",
    "list_net_minor": 45900,
    "vat": 8,
-   "net_minor": 50490,
-   "gross_minor": 54529,
+   "net_minor": 55080,
+   "gross_minor": 59486,
    "matched_by": "code"
   },
   {
@@ -926,8 +926,8 @@
    "list_code": "TGR-Y MR 001-2",
    "list_net_minor": 38500,
    "vat": 8,
-   "net_minor": 42350,
-   "gross_minor": 45738,
+   "net_minor": 46200,
+   "gross_minor": 49896,
    "matched_by": "code"
   },
   {
@@ -938,8 +938,8 @@
    "list_code": "TGR-Y MB 001-1",
    "list_net_minor": 9900,
    "vat": 8,
-   "net_minor": 10890,
-   "gross_minor": 11761,
+   "net_minor": 11880,
+   "gross_minor": 12830,
    "matched_by": "code"
   },
   {
@@ -950,8 +950,8 @@
    "list_code": "SIT-EXPERT",
    "list_net_minor": 10900,
    "vat": 8,
-   "net_minor": 11990,
-   "gross_minor": 12949,
+   "net_minor": 13080,
+   "gross_minor": 14126,
    "matched_by": "code"
   },
   {
@@ -962,8 +962,8 @@
    "list_code": "ErgoTIM",
    "list_net_minor": 6500,
    "vat": 8,
-   "net_minor": 7150,
-   "gross_minor": 7722,
+   "net_minor": 7800,
+   "gross_minor": 8424,
    "matched_by": "code"
   },
   {
@@ -974,8 +974,8 @@
    "list_code": "SITWELL",
    "list_net_minor": 5500,
    "vat": 8,
-   "net_minor": 6050,
-   "gross_minor": 6534,
+   "net_minor": 6600,
+   "gross_minor": 7128,
    "matched_by": "code"
   },
   {
@@ -986,8 +986,8 @@
    "list_code": "TWISTER",
    "list_net_minor": 7200,
    "vat": 8,
-   "net_minor": 7920,
-   "gross_minor": 8554,
+   "net_minor": 8640,
+   "gross_minor": 9331,
    "matched_by": "code"
   },
   {
@@ -998,8 +998,8 @@
    "list_code": "BABY DREAM",
    "list_net_minor": 2990,
    "vat": 8,
-   "net_minor": 3289,
-   "gross_minor": 3552,
+   "net_minor": 3588,
+   "gross_minor": 3875,
    "matched_by": "code"
   },
   {
@@ -1010,8 +1010,8 @@
    "list_code": "COOLING TIM",
    "list_net_minor": 4900,
    "vat": 8,
-   "net_minor": 5390,
-   "gross_minor": 5821,
+   "net_minor": 5880,
+   "gross_minor": 6350,
    "matched_by": "code"
   },
   {
@@ -1022,8 +1022,8 @@
    "list_code": "SUPPORT TIM",
    "list_net_minor": 4700,
    "vat": 8,
-   "net_minor": 5170,
-   "gross_minor": 5584,
+   "net_minor": 5640,
+   "gross_minor": 6091,
    "matched_by": "code"
   },
   {
@@ -1034,8 +1034,8 @@
    "list_code": "UNICORN TIM",
    "list_net_minor": 3550,
    "vat": 8,
-   "net_minor": 3905,
-   "gross_minor": 4217,
+   "net_minor": 4260,
+   "gross_minor": 4601,
    "matched_by": "code"
   },
   {
@@ -1046,8 +1046,8 @@
    "list_code": "TRAVEL TIM",
    "list_net_minor": 3100,
    "vat": 8,
-   "net_minor": 3410,
-   "gross_minor": 3683,
+   "net_minor": 3720,
+   "gross_minor": 4018,
    "matched_by": "code"
   },
   {
@@ -1058,8 +1058,8 @@
    "list_code": "TRAVEL TIM",
    "list_net_minor": 3100,
    "vat": 8,
-   "net_minor": 3410,
-   "gross_minor": 3683,
+   "net_minor": 3720,
+   "gross_minor": 4018,
    "matched_by": "code"
   },
   {
@@ -1070,8 +1070,8 @@
    "list_code": "BUBBLE EXCLUSIVE",
    "list_net_minor": 6450,
    "vat": 8,
-   "net_minor": 7095,
-   "gross_minor": 7663,
+   "net_minor": 7740,
+   "gross_minor": 8359,
    "matched_by": "code"
   },
   {
@@ -1082,8 +1082,8 @@
    "list_code": "NEXO",
    "list_net_minor": 17900,
    "vat": 8,
-   "net_minor": 19690,
-   "gross_minor": 21265,
+   "net_minor": 21480,
+   "gross_minor": 23198,
    "matched_by": "code"
   },
   {
@@ -1094,8 +1094,8 @@
    "list_code": "LM-KING-12A-20",
    "list_net_minor": 14500,
    "vat": 8,
-   "net_minor": 15950,
-   "gross_minor": 17226,
+   "net_minor": 17400,
+   "gross_minor": 18792,
    "matched_by": "override"
   },
   {
@@ -1106,8 +1106,8 @@
    "list_code": "MOVANO",
    "list_net_minor": 19900,
    "vat": 8,
-   "net_minor": 21890,
-   "gross_minor": 23641,
+   "net_minor": 23880,
+   "gross_minor": 25790,
    "matched_by": "code"
   },
   {
@@ -1118,8 +1118,8 @@
    "list_code": "SAFE",
    "list_net_minor": 1600,
    "vat": 8,
-   "net_minor": 1760,
-   "gross_minor": 1901,
+   "net_minor": 1920,
+   "gross_minor": 2074,
    "matched_by": "code"
   },
   {
@@ -1130,8 +1130,8 @@
    "list_code": "StepTim",
    "list_net_minor": 6950,
    "vat": 8,
-   "net_minor": 7645,
-   "gross_minor": 8257,
+   "net_minor": 8340,
+   "gross_minor": 9007,
    "matched_by": "code"
   },
   {
@@ -1142,8 +1142,8 @@
    "list_code": "MAXIMUS",
    "list_net_minor": 17900,
    "vat": 8,
-   "net_minor": 19690,
-   "gross_minor": 21265,
+   "net_minor": 21480,
+   "gross_minor": 23198,
    "matched_by": "code"
   },
   {
@@ -1154,8 +1154,8 @@
    "list_code": "JMC-C 5300KD",
    "list_net_minor": 5900,
    "vat": 8,
-   "net_minor": 6490,
-   "gross_minor": 7009,
+   "net_minor": 7080,
+   "gross_minor": 7646,
    "matched_by": "code"
   },
   {
@@ -1166,8 +1166,8 @@
    "list_code": "KING-CCMD4-20",
    "list_net_minor": 6200,
    "vat": 23,
-   "net_minor": 6820,
-   "gross_minor": 8389,
+   "net_minor": 7440,
+   "gross_minor": 9151,
    "matched_by": "override"
   },
   {
@@ -1178,8 +1178,8 @@
    "list_code": "BLUE-TIM",
    "list_net_minor": 19500,
    "vat": 8,
-   "net_minor": 21450,
-   "gross_minor": 23166,
+   "net_minor": 23400,
+   "gross_minor": 25272,
    "matched_by": "code"
   },
   {
@@ -1190,8 +1190,8 @@
    "list_code": "BATHTIM",
    "list_net_minor": 14500,
    "vat": 8,
-   "net_minor": 15950,
-   "gross_minor": 17226,
+   "net_minor": 17400,
+   "gross_minor": 18792,
    "matched_by": "code"
   },
   {
@@ -1202,8 +1202,8 @@
    "list_code": "KING- STRA-20",
    "list_net_minor": 9900,
    "vat": 8,
-   "net_minor": 10890,
-   "gross_minor": 11761,
+   "net_minor": 11880,
+   "gross_minor": 12830,
    "matched_by": "code"
   },
   {
@@ -1214,8 +1214,8 @@
    "list_code": "LM-KING-10-20",
    "list_net_minor": 5300,
    "vat": 8,
-   "net_minor": 5830,
-   "gross_minor": 6296,
+   "net_minor": 6360,
+   "gross_minor": 6869,
    "matched_by": "override"
   },
   {
@@ -1226,8 +1226,8 @@
    "list_code": "LM-KING-10L-20",
    "list_net_minor": 6400,
    "vat": 8,
-   "net_minor": 7040,
-   "gross_minor": 7603,
+   "net_minor": 7680,
+   "gross_minor": 8294,
    "matched_by": "override"
   },
   {
@@ -1238,8 +1238,8 @@
    "list_code": "EASY SHOWER",
    "list_net_minor": 5400,
    "vat": 8,
-   "net_minor": 5940,
-   "gross_minor": 6415,
+   "net_minor": 6480,
+   "gross_minor": 6998,
    "matched_by": "code"
   },
   {
@@ -1250,8 +1250,8 @@
    "list_code": "JMC-C 54024",
    "list_net_minor": 2990,
    "vat": 8,
-   "net_minor": 3289,
-   "gross_minor": 3552,
+   "net_minor": 3588,
+   "gross_minor": 3875,
    "matched_by": "code"
   },
   {
@@ -1262,8 +1262,8 @@
    "list_code": "JMC-C 5105",
    "list_net_minor": 9600,
    "vat": 8,
-   "net_minor": 10560,
-   "gross_minor": 11405,
+   "net_minor": 11520,
+   "gross_minor": 12442,
    "matched_by": "code"
   },
   {
@@ -1274,8 +1274,8 @@
    "list_code": "JMC-C 54018",
    "list_net_minor": 2290,
    "vat": 8,
-   "net_minor": 2519,
-   "gross_minor": 2721,
+   "net_minor": 2748,
+   "gross_minor": 2968,
    "matched_by": "code"
   },
   {
@@ -1286,8 +1286,8 @@
    "list_code": "TGR-R KP 355L",
    "list_net_minor": 9500,
    "vat": 8,
-   "net_minor": 10450,
-   "gross_minor": 11286,
+   "net_minor": 11400,
+   "gross_minor": 12312,
    "matched_by": "code"
   },
   {
@@ -1298,8 +1298,8 @@
    "list_code": "JMC-C 54016",
    "list_net_minor": 2050,
    "vat": 8,
-   "net_minor": 2255,
-   "gross_minor": 2435,
+   "net_minor": 2460,
+   "gross_minor": 2657,
    "matched_by": "code"
   },
   {
@@ -1310,8 +1310,8 @@
    "list_code": "TGR-R KT 023B",
    "list_net_minor": 11500,
    "vat": 8,
-   "net_minor": 12650,
-   "gross_minor": 13662,
+   "net_minor": 13800,
+   "gross_minor": 14904,
    "matched_by": "code"
   },
   {
@@ -1322,8 +1322,8 @@
    "list_code": "JMC-C 54012",
    "list_net_minor": 1990,
    "vat": 8,
-   "net_minor": 2189,
-   "gross_minor": 2364,
+   "net_minor": 2388,
+   "gross_minor": 2579,
    "matched_by": "code"
   },
   {
@@ -1334,8 +1334,8 @@
    "list_code": "JMC-C 54032",
    "list_net_minor": 3500,
    "vat": 8,
-   "net_minor": 3850,
-   "gross_minor": 4158,
+   "net_minor": 4200,
+   "gross_minor": 4536,
    "matched_by": "code"
   },
   {
@@ -1346,8 +1346,8 @@
    "list_code": "TGR-R KP-O 3432",
    "list_net_minor": 6150,
    "vat": 8,
-   "net_minor": 6765,
-   "gross_minor": 7306,
+   "net_minor": 7380,
+   "gross_minor": 7970,
    "matched_by": "code"
   },
   {
@@ -1358,8 +1358,8 @@
    "list_code": "TGR-R KP 350L",
    "list_net_minor": 9900,
    "vat": 8,
-   "net_minor": 10890,
-   "gross_minor": 11761,
+   "net_minor": 11880,
+   "gross_minor": 12830,
    "matched_by": "code"
   },
   {
@@ -1370,8 +1370,8 @@
    "list_code": "TGR-R KP 340L",
    "list_net_minor": 6250,
    "vat": 8,
-   "net_minor": 6875,
-   "gross_minor": 7425,
+   "net_minor": 7500,
+   "gross_minor": 8100,
    "matched_by": "code"
   },
   {
@@ -1382,8 +1382,8 @@
    "list_code": "TGR-R LW 794L-1",
    "list_net_minor": 10900,
    "vat": 8,
-   "net_minor": 11990,
-   "gross_minor": 12949,
+   "net_minor": 13080,
+   "gross_minor": 14126,
    "matched_by": "code"
   },
   {
@@ -1394,8 +1394,8 @@
    "list_code": "FS 7962L",
    "list_net_minor": 38900,
    "vat": 8,
-   "net_minor": 42790,
-   "gross_minor": 46213,
+   "net_minor": 46680,
+   "gross_minor": 50414,
    "matched_by": "code"
   },
   {
@@ -1406,8 +1406,8 @@
    "list_code": "TGR-R TW 330",
    "list_net_minor": 7900,
    "vat": 8,
-   "net_minor": 8690,
-   "gross_minor": 9385,
+   "net_minor": 9480,
+   "gross_minor": 10238,
    "matched_by": "code"
   },
   {
@@ -1418,8 +1418,8 @@
    "list_code": "ROLLER",
    "list_net_minor": 1990,
    "vat": 8,
-   "net_minor": 2189,
-   "gross_minor": 2364,
+   "net_minor": 2388,
+   "gross_minor": 2579,
    "matched_by": "code"
   },
   {
@@ -1430,8 +1430,8 @@
    "list_code": "LILY",
    "list_net_minor": 4500,
    "vat": 8,
-   "net_minor": 4950,
-   "gross_minor": 5346,
+   "net_minor": 5400,
+   "gross_minor": 5832,
    "matched_by": "code"
   },
   {
@@ -1442,8 +1442,8 @@
    "list_code": "SensorTIM",
    "list_net_minor": 2350,
    "vat": 8,
-   "net_minor": 2585,
-   "gross_minor": 2792,
+   "net_minor": 2820,
+   "gross_minor": 3046,
    "matched_by": "code"
   },
   {
@@ -1454,8 +1454,8 @@
    "list_code": "GRIP-TIM",
    "list_net_minor": 9900,
    "vat": 8,
-   "net_minor": 10890,
-   "gross_minor": 11761,
+   "net_minor": 11880,
+   "gross_minor": 12830,
    "matched_by": "code"
   },
   {
@@ -1466,8 +1466,8 @@
    "list_code": "BallTIM",
    "list_net_minor": 900,
    "vat": 8,
-   "net_minor": 990,
-   "gross_minor": 1069,
+   "net_minor": 1080,
+   "gross_minor": 1166,
    "matched_by": "code"
   },
   {
@@ -1478,8 +1478,8 @@
    "list_code": "AQD-C004",
    "list_net_minor": 4000,
    "vat": 23,
-   "net_minor": 4400,
-   "gross_minor": 5412,
+   "net_minor": 4800,
+   "gross_minor": 5904,
    "matched_by": "override"
   },
   {
@@ -1490,8 +1490,8 @@
    "list_code": "AQD-C004",
    "list_net_minor": 4000,
    "vat": 23,
-   "net_minor": 4400,
-   "gross_minor": 5412,
+   "net_minor": 4800,
+   "gross_minor": 5904,
    "matched_by": "override"
   },
   {
@@ -1502,8 +1502,8 @@
    "list_code": "BACK-TIM",
    "list_net_minor": 9290,
    "vat": 8,
-   "net_minor": 10219,
-   "gross_minor": 11037,
+   "net_minor": 11148,
+   "gross_minor": 12040,
    "matched_by": "code"
   },
   {
@@ -1514,8 +1514,8 @@
    "list_code": "STAND-TIM",
    "list_net_minor": 11900,
    "vat": 8,
-   "net_minor": 13090,
-   "gross_minor": 14137,
+   "net_minor": 14280,
+   "gross_minor": 15422,
    "matched_by": "code"
   },
   {
@@ -1526,8 +1526,8 @@
    "list_code": "WB-ICP-100 NW",
    "list_net_minor": 90,
    "vat": 8,
-   "net_minor": 99,
-   "gross_minor": 107,
+   "net_minor": 108,
+   "gross_minor": 117,
    "matched_by": "code"
   },
   {
@@ -1538,8 +1538,8 @@
    "list_code": "DUALTIM",
    "list_net_minor": 9490,
    "vat": 8,
-   "net_minor": 10439,
-   "gross_minor": 11274,
+   "net_minor": 11388,
+   "gross_minor": 12299,
    "matched_by": "code"
   },
   {
@@ -1550,8 +1550,8 @@
    "list_code": "TEMPOTIM PLUS",
    "list_net_minor": 7790,
    "vat": 8,
-   "net_minor": 8569,
-   "gross_minor": 9255,
+   "net_minor": 9348,
+   "gross_minor": 10096,
    "matched_by": "code"
   },
   {
@@ -1562,8 +1562,8 @@
    "list_code": "TEMPOTIM",
    "list_net_minor": 6490,
    "vat": 8,
-   "net_minor": 7139,
-   "gross_minor": 7710,
+   "net_minor": 7788,
+   "gross_minor": 8411,
    "matched_by": "code"
   },
   {
@@ -1574,8 +1574,8 @@
    "list_code": "yellowBALANCE pods",
    "list_net_minor": 2000,
    "vat": 23,
-   "net_minor": 2200,
-   "gross_minor": 2706,
+   "net_minor": 2400,
+   "gross_minor": 2952,
    "matched_by": "code"
   },
   {
@@ -1586,8 +1586,8 @@
    "list_code": "yellowGYM ball",
    "list_net_minor": 2250,
    "vat": 8,
-   "net_minor": 2475,
-   "gross_minor": 2673,
+   "net_minor": 2700,
+   "gross_minor": 2916,
    "matched_by": "override"
   },
   {
@@ -1598,8 +1598,8 @@
    "list_code": "yellowGYM ball",
    "list_net_minor": 2900,
    "vat": 8,
-   "net_minor": 3190,
-   "gross_minor": 3445,
+   "net_minor": 3480,
+   "gross_minor": 3758,
    "matched_by": "override"
   },
   {
@@ -1610,8 +1610,8 @@
    "list_code": "ROLLER",
    "list_net_minor": 1990,
    "vat": 8,
-   "net_minor": 2189,
-   "gross_minor": 2364,
+   "net_minor": 2388,
+   "gross_minor": 2579,
    "matched_by": "override"
   },
   {
@@ -1622,8 +1622,8 @@
    "list_code": "yellowMAT",
    "list_net_minor": 4380,
    "vat": 23,
-   "net_minor": 4818,
-   "gross_minor": 5926,
+   "net_minor": 5256,
+   "gross_minor": 6465,
    "matched_by": "override"
   },
   {
@@ -1634,8 +1634,8 @@
    "list_code": "JMC-C 7000",
    "list_net_minor": 7900,
    "vat": 8,
-   "net_minor": 8690,
-   "gross_minor": 9385,
+   "net_minor": 9480,
+   "gross_minor": 10238,
    "matched_by": "code"
   },
   {
@@ -1646,8 +1646,8 @@
    "list_code": "yellowFlat",
    "list_net_minor": 1530,
    "vat": 8,
-   "net_minor": 1683,
-   "gross_minor": 1818,
+   "net_minor": 1836,
+   "gross_minor": 1983,
    "matched_by": "override"
   },
   {
@@ -1658,8 +1658,8 @@
    "list_code": "yellowDisk",
    "list_net_minor": 2700,
    "vat": 23,
-   "net_minor": 2970,
-   "gross_minor": 3653,
+   "net_minor": 3240,
+   "gross_minor": 3985,
    "matched_by": "code"
   },
   {
@@ -1670,8 +1670,8 @@
    "list_code": "yellowGYM ball",
    "list_net_minor": 3500,
    "vat": 8,
-   "net_minor": 3850,
-   "gross_minor": 4158,
+   "net_minor": 4200,
+   "gross_minor": 4536,
    "matched_by": "override"
   },
   {
@@ -1682,8 +1682,8 @@
    "list_code": "AQD-C004",
    "list_net_minor": 4000,
    "vat": 23,
-   "net_minor": 4400,
-   "gross_minor": 5412,
+   "net_minor": 4800,
+   "gross_minor": 5904,
    "matched_by": "override"
   },
   {
@@ -1694,8 +1694,8 @@
    "list_code": "PrimeTim",
    "list_net_minor": 3800,
    "vat": 8,
-   "net_minor": 4180,
-   "gross_minor": 4514,
+   "net_minor": 4560,
+   "gross_minor": 4925,
    "matched_by": "code"
   },
   {
@@ -1706,8 +1706,8 @@
    "list_code": "DUOSTEP",
    "list_net_minor": 5500,
    "vat": 8,
-   "net_minor": 6050,
-   "gross_minor": 6534,
+   "net_minor": 6600,
+   "gross_minor": 7128,
    "matched_by": "code"
   },
   {
@@ -1718,8 +1718,8 @@
    "list_code": "ELEGANT",
    "list_net_minor": 2750,
    "vat": 8,
-   "net_minor": 3025,
-   "gross_minor": 3267,
+   "net_minor": 3300,
+   "gross_minor": 3564,
    "matched_by": "code"
   },
   {
@@ -1730,8 +1730,8 @@
    "list_code": "Assist-Tim",
    "list_net_minor": 2790,
    "vat": 8,
-   "net_minor": 3069,
-   "gross_minor": 3315,
+   "net_minor": 3348,
+   "gross_minor": 3616,
    "matched_by": "code"
   },
   {
@@ -1742,8 +1742,8 @@
    "list_code": "ELEGANT",
    "list_net_minor": 2750,
    "vat": 8,
-   "net_minor": 3025,
-   "gross_minor": 3267,
+   "net_minor": 3300,
+   "gross_minor": 3564,
    "matched_by": "code"
   },
   {
@@ -1754,8 +1754,8 @@
    "list_code": "QUATRO",
    "list_net_minor": 4350,
    "vat": 8,
-   "net_minor": 4785,
-   "gross_minor": 5168,
+   "net_minor": 5220,
+   "gross_minor": 5638,
    "matched_by": "code"
   },
   {
@@ -1766,8 +1766,8 @@
    "list_code": "PrimeTim",
    "list_net_minor": 3800,
    "vat": 8,
-   "net_minor": 4180,
-   "gross_minor": 4514,
+   "net_minor": 4560,
+   "gross_minor": 4925,
    "matched_by": "code"
   },
   {
@@ -1778,8 +1778,8 @@
    "list_code": "SeatTim",
    "list_net_minor": 7000,
    "vat": 8,
-   "net_minor": 7700,
-   "gross_minor": 8316,
+   "net_minor": 8400,
+   "gross_minor": 9072,
    "matched_by": "code"
   },
   {
@@ -1790,8 +1790,8 @@
    "list_code": "HANDYTIM",
    "list_net_minor": 3200,
    "vat": 8,
-   "net_minor": 3520,
-   "gross_minor": 3802,
+   "net_minor": 3840,
+   "gross_minor": 4147,
    "matched_by": "code"
   },
   {
@@ -1802,8 +1802,8 @@
    "list_code": "Flip Tim",
    "list_net_minor": 8900,
    "vat": 8,
-   "net_minor": 9790,
-   "gross_minor": 10573,
+   "net_minor": 10680,
+   "gross_minor": 11534,
    "matched_by": "code"
   },
   {
@@ -1814,8 +1814,8 @@
    "list_code": "Walk-Tim",
    "list_net_minor": 2400,
    "vat": 8,
-   "net_minor": 2640,
-   "gross_minor": 2851,
+   "net_minor": 2880,
+   "gross_minor": 3110,
    "matched_by": "code"
   },
   {
@@ -1826,8 +1826,8 @@
    "list_code": "CompactTim",
    "list_net_minor": 2990,
    "vat": 8,
-   "net_minor": 3289,
-   "gross_minor": 3552,
+   "net_minor": 3588,
+   "gross_minor": 3875,
    "matched_by": "code"
   },
   {
@@ -1838,8 +1838,8 @@
    "list_code": "HANDYTIM",
    "list_net_minor": 3200,
    "vat": 8,
-   "net_minor": 3520,
-   "gross_minor": 3802,
+   "net_minor": 3840,
+   "gross_minor": 4147,
    "matched_by": "code"
   },
   {
@@ -1850,8 +1850,8 @@
    "list_code": "TGR-R LA 833L2",
    "list_net_minor": 2090,
    "vat": 8,
-   "net_minor": 2299,
-   "gross_minor": 2483,
+   "net_minor": 2508,
+   "gross_minor": 2709,
    "matched_by": "code"
   },
   {
@@ -1862,8 +1862,8 @@
    "list_code": "JMC-C 2052",
    "list_net_minor": 2400,
    "vat": 8,
-   "net_minor": 2640,
-   "gross_minor": 2851,
+   "net_minor": 2880,
+   "gross_minor": 3110,
    "matched_by": "code"
   },
   {
@@ -1874,8 +1874,8 @@
    "list_code": "ELEGANT",
    "list_net_minor": 2750,
    "vat": 8,
-   "net_minor": 3025,
-   "gross_minor": 3267,
+   "net_minor": 3300,
+   "gross_minor": 3564,
    "matched_by": "code"
   },
   {
@@ -1886,8 +1886,8 @@
    "list_code": "TGR-R LA 853N",
    "list_net_minor": 3800,
    "vat": 8,
-   "net_minor": 4180,
-   "gross_minor": 4514,
+   "net_minor": 4560,
+   "gross_minor": 4925,
    "matched_by": "code"
   },
   {
@@ -1898,8 +1898,8 @@
    "list_code": "JMC-C 2052",
    "list_net_minor": 2400,
    "vat": 8,
-   "net_minor": 2640,
-   "gross_minor": 2851,
+   "net_minor": 2880,
+   "gross_minor": 3110,
    "matched_by": "code"
   },
   {
@@ -1910,8 +1910,8 @@
    "list_code": "TGR-R LA 833L2",
    "list_net_minor": 2090,
    "vat": 8,
-   "net_minor": 2299,
-   "gross_minor": 2483,
+   "net_minor": 2508,
+   "gross_minor": 2709,
    "matched_by": "code"
   },
   {
@@ -1922,8 +1922,8 @@
    "list_code": "JMC-C 2670SL",
    "list_net_minor": 4190,
    "vat": 8,
-   "net_minor": 4609,
-   "gross_minor": 4978,
+   "net_minor": 5028,
+   "gross_minor": 5430,
    "matched_by": "code"
   },
   {
@@ -1934,8 +1934,8 @@
    "list_code": "JMC-C 2680SL",
    "list_net_minor": 3800,
    "vat": 8,
-   "net_minor": 4180,
-   "gross_minor": 4514,
+   "net_minor": 4560,
+   "gross_minor": 4925,
    "matched_by": "code"
   },
   {
@@ -1946,8 +1946,8 @@
    "list_code": "JMC-C 2047-1",
    "list_net_minor": 1995,
    "vat": 8,
-   "net_minor": 2195,
-   "gross_minor": 2371,
+   "net_minor": 2394,
+   "gross_minor": 2586,
    "matched_by": "override"
   },
   {
@@ -1958,8 +1958,8 @@
    "list_code": "FU-TORBA",
    "list_net_minor": 2000,
    "vat": 23,
-   "net_minor": 2200,
-   "gross_minor": 2706,
+   "net_minor": 2400,
+   "gross_minor": 2952,
    "matched_by": "override"
   },
   {
@@ -1970,8 +1970,8 @@
    "list_code": "HEX",
    "list_net_minor": 1350,
    "vat": 23,
-   "net_minor": 1485,
-   "gross_minor": 1827,
+   "net_minor": 1620,
+   "gross_minor": 1993,
    "matched_by": "override"
   },
   {
@@ -1982,8 +1982,8 @@
    "list_code": "FU-MAŁA TORBA",
    "list_net_minor": 1000,
    "vat": 23,
-   "net_minor": 1100,
-   "gross_minor": 1353,
+   "net_minor": 1200,
+   "gross_minor": 1476,
    "matched_by": "override"
   },
   {
@@ -1994,8 +1994,8 @@
    "list_code": "NASADKA ZIMOWA",
    "list_net_minor": 750,
    "vat": 23,
-   "net_minor": 825,
-   "gross_minor": 1015,
+   "net_minor": 900,
+   "gross_minor": 1107,
    "matched_by": "code"
   },
   {
@@ -2006,8 +2006,8 @@
    "list_code": "H011 TABLE",
    "list_net_minor": 5200,
    "vat": 23,
-   "net_minor": 5720,
-   "gross_minor": 7036,
+   "net_minor": 6240,
+   "gross_minor": 7675,
    "matched_by": "override"
   },
   {
@@ -2018,8 +2018,8 @@
    "list_code": "NASADKA",
    "list_net_minor": 710,
    "vat": 23,
-   "net_minor": 781,
-   "gross_minor": 961,
+   "net_minor": 852,
+   "gross_minor": 1048,
    "matched_by": "override"
   },
   {
@@ -2030,8 +2030,8 @@
    "list_code": "NASADKA",
    "list_net_minor": 710,
    "vat": 23,
-   "net_minor": 781,
-   "gross_minor": 961,
+   "net_minor": 852,
+   "gross_minor": 1048,
    "matched_by": "override"
   },
   {
@@ -2042,8 +2042,8 @@
    "list_code": "NASADKA",
    "list_net_minor": 510,
    "vat": 23,
-   "net_minor": 561,
-   "gross_minor": 690,
+   "net_minor": 612,
+   "gross_minor": 753,
    "matched_by": "override"
   },
   {
@@ -2054,8 +2054,8 @@
    "list_code": "JMC 2013",
    "list_net_minor": 710,
    "vat": 23,
-   "net_minor": 781,
-   "gross_minor": 961,
+   "net_minor": 852,
+   "gross_minor": 1048,
    "matched_by": "code"
   },
   {
@@ -2066,8 +2066,8 @@
    "list_code": "HANDYGRIP",
    "list_net_minor": 7900,
    "vat": 8,
-   "net_minor": 8690,
-   "gross_minor": 9385,
+   "net_minor": 9480,
+   "gross_minor": 10238,
    "matched_by": "code"
   },
   {
@@ -2078,8 +2078,8 @@
    "list_code": "FU-PODKŁADKA",
    "list_net_minor": 4000,
    "vat": 23,
-   "net_minor": 4400,
-   "gross_minor": 5412,
+   "net_minor": 4800,
+   "gross_minor": 5904,
    "matched_by": "override"
   },
   {
@@ -2090,8 +2090,8 @@
    "list_code": "DREAM TIM MAX",
    "list_net_minor": 499900,
    "vat": 8,
-   "net_minor": 549890,
-   "gross_minor": 593881,
+   "net_minor": 599880,
+   "gross_minor": 647870,
    "matched_by": "code"
   },
   {
@@ -2102,8 +2102,8 @@
    "list_code": "TABLE-TIM MULTI",
    "list_net_minor": 22000,
    "vat": 8,
-   "net_minor": 24200,
-   "gross_minor": 26136,
+   "net_minor": 26400,
+   "gross_minor": 28512,
    "matched_by": "code"
   },
   {
@@ -2114,8 +2114,8 @@
    "list_code": "DREAM TIM MAX LOW",
    "list_net_minor": 525500,
    "vat": 8,
-   "net_minor": 578050,
-   "gross_minor": 624294,
+   "net_minor": 630600,
+   "gross_minor": 681048,
    "matched_by": "code"
   },
   {
@@ -2126,8 +2126,8 @@
    "list_code": "DREAM TIM/ DREAM TIM PLUS",
    "list_net_minor": 248000,
    "vat": 8,
-   "net_minor": 272800,
-   "gross_minor": 294624,
+   "net_minor": 297600,
+   "gross_minor": 321408,
    "matched_by": "code"
   },
   {
@@ -2138,8 +2138,8 @@
    "list_code": "DREAM TIM/ DREAM TIM PLUS",
    "list_net_minor": 248000,
    "vat": 8,
-   "net_minor": 272800,
-   "gross_minor": 294624,
+   "net_minor": 297600,
+   "gross_minor": 321408,
    "matched_by": "override"
   },
   {
@@ -2150,8 +2150,8 @@
    "list_code": "DREAM TIM LOW",
    "list_net_minor": 258000,
    "vat": 8,
-   "net_minor": 283800,
-   "gross_minor": 306504,
+   "net_minor": 309600,
+   "gross_minor": 334368,
    "matched_by": "code"
   },
   {
@@ -2162,8 +2162,8 @@
    "list_code": "TABLE-TIM",
    "list_net_minor": 11900,
    "vat": 8,
-   "net_minor": 13090,
-   "gross_minor": 14137,
+   "net_minor": 14280,
+   "gross_minor": 15422,
    "matched_by": "code"
   },
   {
@@ -2174,8 +2174,8 @@
    "list_code": "RELAX",
    "list_net_minor": 135000,
    "vat": 8,
-   "net_minor": 148500,
-   "gross_minor": 160380,
+   "net_minor": 162000,
+   "gross_minor": 174960,
    "matched_by": "code"
   },
   {
@@ -2186,8 +2186,8 @@
    "list_code": "TGR-R KP-O 5021",
    "list_net_minor": 8090,
    "vat": 8,
-   "net_minor": 8899,
-   "gross_minor": 9611,
+   "net_minor": 9708,
+   "gross_minor": 10485,
    "matched_by": "code"
   },
   {
@@ -2198,8 +2198,8 @@
    "list_code": "LM-KING-15L-20",
    "list_net_minor": 7200,
    "vat": 8,
-   "net_minor": 7920,
-   "gross_minor": 8554,
+   "net_minor": 8640,
+   "gross_minor": 9331,
    "matched_by": "override"
   },
   {
@@ -2210,8 +2210,8 @@
    "list_code": "TGR-R KT 618",
    "list_net_minor": 11500,
    "vat": 8,
-   "net_minor": 12650,
-   "gross_minor": 13662,
+   "net_minor": 13800,
+   "gross_minor": 14904,
    "matched_by": "code"
   },
   {
@@ -2222,8 +2222,8 @@
    "list_code": "YF-06",
    "list_net_minor": 19900,
    "vat": 8,
-   "net_minor": 21890,
-   "gross_minor": 23641,
+   "net_minor": 23880,
+   "gross_minor": 25790,
    "matched_by": "code"
   },
   {
@@ -2234,8 +2234,8 @@
    "list_code": "8F-10",
    "list_net_minor": 359000,
    "vat": 8,
-   "net_minor": 394900,
-   "gross_minor": 426492,
+   "net_minor": 430800,
+   "gross_minor": 465264,
    "matched_by": "code"
   },
   {
@@ -2246,8 +2246,8 @@
    "list_code": "8F-5A",
    "list_net_minor": 199000,
    "vat": 8,
-   "net_minor": 218900,
-   "gross_minor": 236412,
+   "net_minor": 238800,
+   "gross_minor": 257904,
    "matched_by": "code"
   },
   {
@@ -2258,8 +2258,8 @@
    "list_code": "M102",
    "list_net_minor": 10900,
    "vat": 8,
-   "net_minor": 11990,
-   "gross_minor": 12949,
+   "net_minor": 13080,
+   "gross_minor": 14126,
    "matched_by": "code"
   },
   {
@@ -2270,8 +2270,8 @@
    "list_code": "405B",
    "list_net_minor": 8700,
    "vat": 8,
-   "net_minor": 9570,
-   "gross_minor": 10336,
+   "net_minor": 10440,
+   "gross_minor": 11275,
    "matched_by": "code"
   },
   {
@@ -2282,8 +2282,8 @@
    "list_code": "YH-830",
    "list_net_minor": 231000,
    "vat": 8,
-   "net_minor": 254100,
-   "gross_minor": 274428,
+   "net_minor": 277200,
+   "gross_minor": 299376,
    "matched_by": "code"
   },
   {
@@ -2294,8 +2294,8 @@
    "list_code": "YN-03",
    "list_net_minor": 12963,
    "vat": 8,
-   "net_minor": 14259,
-   "gross_minor": 15400,
+   "net_minor": 15556,
+   "gross_minor": 16800,
    "matched_by": "code"
   },
   {
@@ -2306,8 +2306,8 @@
    "list_code": "YH-480",
    "list_net_minor": 197000,
    "vat": 8,
-   "net_minor": 216700,
-   "gross_minor": 234036,
+   "net_minor": 236400,
+   "gross_minor": 255312,
    "matched_by": "code"
   },
   {
@@ -2318,8 +2318,8 @@
    "list_code": "YH-550",
    "list_net_minor": 133333,
    "vat": 8,
-   "net_minor": 146666,
-   "gross_minor": 158399,
+   "net_minor": 160000,
+   "gross_minor": 172800,
    "matched_by": "code"
   },
   {
@@ -2330,8 +2330,8 @@
    "list_code": "7E-H1",
    "list_net_minor": 38500,
    "vat": 8,
-   "net_minor": 42350,
-   "gross_minor": 45738,
+   "net_minor": 46200,
+   "gross_minor": 49896,
    "matched_by": "code"
   },
   {
@@ -2342,8 +2342,8 @@
    "list_code": "7E-G1",
    "list_net_minor": 65900,
    "vat": 8,
-   "net_minor": 72490,
-   "gross_minor": 78289,
+   "net_minor": 79080,
+   "gross_minor": 85406,
    "matched_by": "code"
   },
   {
@@ -2354,8 +2354,8 @@
    "list_code": "SLEEP BUDDY",
    "list_net_minor": 8900,
    "vat": 8,
-   "net_minor": 9790,
-   "gross_minor": 10573,
+   "net_minor": 10680,
+   "gross_minor": 11534,
    "matched_by": "code"
   },
   {
@@ -2366,8 +2366,8 @@
    "list_code": "SDP-330",
    "list_net_minor": 12000,
    "vat": 8,
-   "net_minor": 13200,
-   "gross_minor": 14256,
+   "net_minor": 14400,
+   "gross_minor": 15552,
    "matched_by": "code"
   },
   {
@@ -2378,8 +2378,8 @@
    "list_code": "7B-1",
    "list_net_minor": 7900,
    "vat": 8,
-   "net_minor": 8690,
-   "gross_minor": 9385,
+   "net_minor": 9480,
+   "gross_minor": 10238,
    "matched_by": "code"
   },
   {
@@ -2390,8 +2390,8 @@
    "list_code": "7A-23D",
    "list_net_minor": 60000,
    "vat": 8,
-   "net_minor": 66000,
-   "gross_minor": 71280,
+   "net_minor": 72000,
+   "gross_minor": 77760,
    "matched_by": "code"
   },
   {
@@ -2402,8 +2402,8 @@
    "list_code": "YE8300B",
    "list_net_minor": 5200,
    "vat": 8,
-   "net_minor": 5720,
-   "gross_minor": 6178,
+   "net_minor": 6240,
+   "gross_minor": 6739,
    "matched_by": "code"
   },
   {
@@ -2414,8 +2414,8 @@
    "list_code": "YE-660D",
    "list_net_minor": 6490,
    "vat": 8,
-   "net_minor": 7139,
-   "gross_minor": 7710,
+   "net_minor": 7788,
+   "gross_minor": 8411,
    "matched_by": "code"
   },
   {
@@ -2426,8 +2426,8 @@
    "list_code": "3.02.008",
    "list_net_minor": 3900,
    "vat": 8,
-   "net_minor": 4290,
-   "gross_minor": 4633,
+   "net_minor": 4680,
+   "gross_minor": 5054,
    "matched_by": "code"
   },
   {
@@ -2438,8 +2438,8 @@
    "list_code": "YHT-101",
    "list_net_minor": 5400,
    "vat": 8,
-   "net_minor": 5940,
-   "gross_minor": 6415,
+   "net_minor": 6480,
+   "gross_minor": 6998,
    "matched_by": "code"
   },
   {
@@ -2450,8 +2450,8 @@
    "list_code": "YT-1",
    "list_net_minor": 5900,
    "vat": 8,
-   "net_minor": 6490,
-   "gross_minor": 7009,
+   "net_minor": 7080,
+   "gross_minor": 7646,
    "matched_by": "code"
   },
   {
@@ -2462,8 +2462,8 @@
    "list_code": "BM 1000C",
    "list_net_minor": 4900,
    "vat": 8,
-   "net_minor": 5390,
-   "gross_minor": 5821,
+   "net_minor": 5880,
+   "gross_minor": 6350,
    "matched_by": "code"
   },
   {
@@ -2474,8 +2474,8 @@
    "list_code": "TRAVEL SNAIL",
    "list_net_minor": 3300,
    "vat": 8,
-   "net_minor": 3630,
-   "gross_minor": 3920,
+   "net_minor": 3960,
+   "gross_minor": 4277,
    "matched_by": "code"
   },
   {
@@ -2486,8 +2486,8 @@
    "list_code": "MAGIC DREAM",
    "list_net_minor": 7400,
    "vat": 8,
-   "net_minor": 8140,
-   "gross_minor": 8791,
+   "net_minor": 8880,
+   "gross_minor": 9590,
    "matched_by": "code"
   },
   {
@@ -2498,8 +2498,8 @@
    "list_code": "CPAP DREAM",
    "list_net_minor": 8500,
    "vat": 8,
-   "net_minor": 9350,
-   "gross_minor": 10098,
+   "net_minor": 10200,
+   "gross_minor": 11016,
    "matched_by": "code"
   },
   {
@@ -2510,8 +2510,8 @@
    "list_code": "SPACER",
    "list_net_minor": 4980,
    "vat": 8,
-   "net_minor": 5478,
-   "gross_minor": 5916,
+   "net_minor": 5976,
+   "gross_minor": 6454,
    "matched_by": "code"
   },
   {
@@ -2522,8 +2522,8 @@
    "list_code": "ORTO DREAM",
    "list_net_minor": 7600,
    "vat": 8,
-   "net_minor": 8360,
-   "gross_minor": 9029,
+   "net_minor": 9120,
+   "gross_minor": 9850,
    "matched_by": "code"
   },
   {
@@ -2534,8 +2534,8 @@
    "list_code": "yellowMASSAGE DuoBall",
    "list_net_minor": 2400,
    "vat": 8,
-   "net_minor": 2640,
-   "gross_minor": 2851,
+   "net_minor": 2880,
+   "gross_minor": 3110,
    "matched_by": "code"
   },
   {
@@ -2546,8 +2546,8 @@
    "list_code": "yellowGYM ball",
    "list_net_minor": 3260,
    "vat": 8,
-   "net_minor": 3586,
-   "gross_minor": 3873,
+   "net_minor": 3912,
+   "gross_minor": 4225,
    "matched_by": "override"
   },
   {
@@ -2558,8 +2558,8 @@
    "list_code": "yellowMASSAGE Ball",
    "list_net_minor": 1500,
    "vat": 23,
-   "net_minor": 1650,
-   "gross_minor": 2030,
+   "net_minor": 1800,
+   "gross_minor": 2214,
    "matched_by": "override"
   },
   {
@@ -2570,8 +2570,8 @@
    "list_code": "yellowMASSAGE Ball",
    "list_net_minor": 1500,
    "vat": 8,
-   "net_minor": 1650,
-   "gross_minor": 1782,
+   "net_minor": 1800,
+   "gross_minor": 1944,
    "matched_by": "override"
   },
   {
@@ -2582,8 +2582,8 @@
    "list_code": "yellowFlat",
    "list_net_minor": 1610,
    "vat": 8,
-   "net_minor": 1771,
-   "gross_minor": 1913,
+   "net_minor": 1932,
+   "gross_minor": 2087,
    "matched_by": "override"
   },
   {
@@ -2594,8 +2594,8 @@
    "list_code": "yellowLOOP band",
    "list_net_minor": 590,
    "vat": 8,
-   "net_minor": 649,
-   "gross_minor": 701,
+   "net_minor": 708,
+   "gross_minor": 765,
    "matched_by": "override"
   },
   {
@@ -2606,8 +2606,8 @@
    "list_code": "yellowLOOP band",
    "list_net_minor": 590,
    "vat": 8,
-   "net_minor": 649,
-   "gross_minor": 701,
+   "net_minor": 708,
+   "gross_minor": 765,
    "matched_by": "override"
   },
   {
@@ -2618,8 +2618,8 @@
    "list_code": "yellowLOOP band",
    "list_net_minor": 590,
    "vat": 8,
-   "net_minor": 649,
-   "gross_minor": 701,
+   "net_minor": 708,
+   "gross_minor": 765,
    "matched_by": "override"
   },
   {
@@ -2630,8 +2630,8 @@
    "list_code": "yellowLOOP band",
    "list_net_minor": 590,
    "vat": 8,
-   "net_minor": 649,
-   "gross_minor": 701,
+   "net_minor": 708,
+   "gross_minor": 765,
    "matched_by": "override"
   },
   {
@@ -2642,8 +2642,8 @@
    "list_code": "yellowFlat",
    "list_net_minor": 1320,
    "vat": 8,
-   "net_minor": 1452,
-   "gross_minor": 1568,
+   "net_minor": 1584,
+   "gross_minor": 1711,
    "matched_by": "override"
   },
   {
@@ -2654,8 +2654,8 @@
    "list_code": "yellowFlat",
    "list_net_minor": 1780,
    "vat": 8,
-   "net_minor": 1958,
-   "gross_minor": 2115,
+   "net_minor": 2136,
+   "gross_minor": 2307,
    "matched_by": "override"
   },
   {
@@ -2666,8 +2666,8 @@
    "list_code": "yellowFlat",
    "list_net_minor": 1400,
    "vat": 8,
-   "net_minor": 1540,
-   "gross_minor": 1663,
+   "net_minor": 1680,
+   "gross_minor": 1814,
    "matched_by": "override"
   },
   {
@@ -2678,8 +2678,8 @@
    "list_code": "ManuTim Long",
    "list_net_minor": 5500,
    "vat": 8,
-   "net_minor": 6050,
-   "gross_minor": 6534,
+   "net_minor": 6600,
+   "gross_minor": 7128,
    "matched_by": "code"
   },
   {
@@ -2690,8 +2690,8 @@
    "list_code": "SKY WALKER LOW",
    "list_net_minor": 9900,
    "vat": 8,
-   "net_minor": 10890,
-   "gross_minor": 11761,
+   "net_minor": 11880,
+   "gross_minor": 12830,
    "matched_by": "code"
   },
   {
@@ -2702,8 +2702,8 @@
    "list_code": "SKY WALKER",
    "list_net_minor": 10400,
    "vat": 8,
-   "net_minor": 11440,
-   "gross_minor": 12355,
+   "net_minor": 12480,
+   "gross_minor": 13478,
    "matched_by": "code"
   },
   {
@@ -2714,8 +2714,8 @@
    "list_code": "GENU-STRAP",
    "list_net_minor": 3900,
    "vat": 8,
-   "net_minor": 4290,
-   "gross_minor": 4633,
+   "net_minor": 4680,
+   "gross_minor": 5054,
    "matched_by": "code"
   },
   {
@@ -2726,8 +2726,8 @@
    "list_code": "PRO WLAKER LOW",
    "list_net_minor": 15900,
    "vat": 8,
-   "net_minor": 17490,
-   "gross_minor": 18889,
+   "net_minor": 19080,
+   "gross_minor": 20606,
    "matched_by": "override"
   },
   {
@@ -2738,8 +2738,8 @@
    "list_code": "MalleoTimLite",
    "list_net_minor": 4200,
    "vat": 8,
-   "net_minor": 4620,
-   "gross_minor": 4990,
+   "net_minor": 5040,
+   "gross_minor": 5443,
    "matched_by": "code"
   },
   {
@@ -2750,8 +2750,8 @@
    "list_code": "TGO-C KF 106",
    "list_net_minor": 2800,
    "vat": 8,
-   "net_minor": 3080,
-   "gross_minor": 3326,
+   "net_minor": 3360,
+   "gross_minor": 3629,
    "matched_by": "code"
   },
   {
@@ -2762,8 +2762,8 @@
    "list_code": "TGO-C KS 101",
    "list_net_minor": 1590,
    "vat": 8,
-   "net_minor": 1749,
-   "gross_minor": 1889,
+   "net_minor": 1908,
+   "gross_minor": 2061,
    "matched_by": "code"
   },
   {
@@ -2774,8 +2774,8 @@
    "list_code": "TGO-C KPH-O 103",
    "list_net_minor": 4200,
    "vat": 8,
-   "net_minor": 4620,
-   "gross_minor": 4990,
+   "net_minor": 5040,
+   "gross_minor": 5443,
    "matched_by": "code"
   },
   {
@@ -2786,8 +2786,8 @@
    "list_code": "TGO-C OB 306",
    "list_net_minor": 10900,
    "vat": 8,
-   "net_minor": 11990,
-   "gross_minor": 12949,
+   "net_minor": 13080,
+   "gross_minor": 14126,
    "matched_by": "code"
   },
   {
@@ -2798,8 +2798,8 @@
    "list_code": "TGO-C OB 305",
    "list_net_minor": 6900,
    "vat": 8,
-   "net_minor": 7590,
-   "gross_minor": 8197,
+   "net_minor": 8280,
+   "gross_minor": 8942,
    "matched_by": "code"
   },
   {
@@ -2810,8 +2810,8 @@
    "list_code": "TGO-C OB 304",
    "list_net_minor": 2200,
    "vat": 8,
-   "net_minor": 2420,
-   "gross_minor": 2614,
+   "net_minor": 2640,
+   "gross_minor": 2851,
    "matched_by": "code"
   },
   {
@@ -2822,8 +2822,8 @@
    "list_code": "ManuTim",
    "list_net_minor": 3800,
    "vat": 8,
-   "net_minor": 4180,
-   "gross_minor": 4514,
+   "net_minor": 4560,
+   "gross_minor": 4925,
    "matched_by": "code"
   },
   {
@@ -2834,8 +2834,8 @@
    "list_code": "TGO-C SN-K 403",
    "list_net_minor": 6900,
    "vat": 8,
-   "net_minor": 7590,
-   "gross_minor": 8197,
+   "net_minor": 8280,
+   "gross_minor": 8942,
    "matched_by": "code"
   },
   {
@@ -2846,8 +2846,8 @@
    "list_code": "TGO-C SN 402",
    "list_net_minor": 5490,
    "vat": 8,
-   "net_minor": 6039,
-   "gross_minor": 6522,
+   "net_minor": 6588,
+   "gross_minor": 7115,
    "matched_by": "code"
   },
   {
@@ -2858,8 +2858,8 @@
    "list_code": "TGO-V AP SK-O 510",
    "list_net_minor": 14900,
    "vat": 8,
-   "net_minor": 16390,
-   "gross_minor": 17701,
+   "net_minor": 17880,
+   "gross_minor": 19310,
    "matched_by": "override"
   },
   {
@@ -2870,8 +2870,8 @@
    "list_code": "TGO-C SK-O 504",
    "list_net_minor": 12500,
    "vat": 8,
-   "net_minor": 13750,
-   "gross_minor": 14850,
+   "net_minor": 15000,
+   "gross_minor": 16200,
    "matched_by": "code"
   },
   {
@@ -2882,8 +2882,8 @@
    "list_code": "MalleoTIM",
    "list_net_minor": 7800,
    "vat": 8,
-   "net_minor": 8580,
-   "gross_minor": 9266,
+   "net_minor": 9360,
+   "gross_minor": 10109,
    "matched_by": "code"
   },
   {
@@ -2894,8 +2894,8 @@
    "list_code": "TGO-C STS 602",
    "list_net_minor": 4990,
    "vat": 8,
-   "net_minor": 5489,
-   "gross_minor": 5928,
+   "net_minor": 5988,
+   "gross_minor": 6467,
    "matched_by": "code"
   },
   {
@@ -2906,8 +2906,8 @@
    "list_code": "TGO-C STS 603",
    "list_net_minor": 7900,
    "vat": 8,
-   "net_minor": 8690,
-   "gross_minor": 9385,
+   "net_minor": 9480,
+   "gross_minor": 10238,
    "matched_by": "code"
   },
   {
@@ -2918,8 +2918,8 @@
    "list_code": "LumboTim Plus",
    "list_net_minor": 14200,
    "vat": 8,
-   "net_minor": 15620,
-   "gross_minor": 16870,
+   "net_minor": 17040,
+   "gross_minor": 18403,
    "matched_by": "code"
   },
   {
@@ -2930,8 +2930,8 @@
    "list_code": "LumboTim",
    "list_net_minor": 10900,
    "vat": 8,
-   "net_minor": 11990,
-   "gross_minor": 12949,
+   "net_minor": 13080,
+   "gross_minor": 14126,
    "matched_by": "code"
   },
   {
@@ -2942,8 +2942,8 @@
    "list_code": "TGO-R SLK 701",
    "list_net_minor": 6500,
    "vat": 8,
-   "net_minor": 7150,
-   "gross_minor": 7722,
+   "net_minor": 7800,
+   "gross_minor": 8424,
    "matched_by": "code"
   },
   {
@@ -2954,8 +2954,8 @@
    "list_code": "TGO-R SLK 702",
    "list_net_minor": 8500,
    "vat": 8,
-   "net_minor": 9350,
-   "gross_minor": 10098,
+   "net_minor": 10200,
+   "gross_minor": 11016,
    "matched_by": "code"
   },
   {
@@ -2966,8 +2966,8 @@
    "list_code": "TGO-R WSLK-R 704",
    "list_net_minor": 13500,
    "vat": 8,
-   "net_minor": 14850,
-   "gross_minor": 16038,
+   "net_minor": 16200,
+   "gross_minor": 17496,
    "matched_by": "code"
   },
   {
@@ -2978,8 +2978,8 @@
    "list_code": "TGO-C SL 903",
    "list_net_minor": 3850,
    "vat": 8,
-   "net_minor": 4235,
-   "gross_minor": 4574,
+   "net_minor": 4620,
+   "gross_minor": 4990,
    "matched_by": "code"
   },
   {
@@ -2990,8 +2990,8 @@
    "list_code": "TGO-C SR 516",
    "list_net_minor": 3550,
    "vat": 8,
-   "net_minor": 3905,
-   "gross_minor": 4217,
+   "net_minor": 4260,
+   "gross_minor": 4601,
    "matched_by": "code"
   },
   {
@@ -3002,8 +3002,8 @@
    "list_code": "TGO-C OSN 408",
    "list_net_minor": 1680,
    "vat": 8,
-   "net_minor": 1848,
-   "gross_minor": 1996,
+   "net_minor": 2016,
+   "gross_minor": 2177,
    "matched_by": "code"
   },
   {
@@ -3014,8 +3014,8 @@
    "list_code": "TGO-C OSL 904",
    "list_net_minor": 1950,
    "vat": 8,
-   "net_minor": 2145,
-   "gross_minor": 2317,
+   "net_minor": 2340,
+   "gross_minor": 2527,
    "matched_by": "code"
   },
   {
@@ -3026,8 +3026,8 @@
    "list_code": "TGO-C OU 803",
    "list_net_minor": 1950,
    "vat": 8,
-   "net_minor": 2145,
-   "gross_minor": 2317,
+   "net_minor": 2340,
+   "gross_minor": 2527,
    "matched_by": "code"
   },
   {
@@ -3038,8 +3038,8 @@
    "list_code": "TGO-C OL 802",
    "list_net_minor": 1950,
    "vat": 8,
-   "net_minor": 2145,
-   "gross_minor": 2317,
+   "net_minor": 2340,
+   "gross_minor": 2527,
    "matched_by": "code"
   },
   {
@@ -3050,8 +3050,8 @@
    "list_code": "TGO-C OSS 612",
    "list_net_minor": 2050,
    "vat": 8,
-   "net_minor": 2255,
-   "gross_minor": 2435,
+   "net_minor": 2460,
+   "gross_minor": 2657,
    "matched_by": "code"
   },
   {
@@ -3062,8 +3062,8 @@
    "list_code": "TGO-C OSK 515",
    "list_net_minor": 2050,
    "vat": 8,
-   "net_minor": 2255,
-   "gross_minor": 2435,
+   "net_minor": 2460,
+   "gross_minor": 2657,
    "matched_by": "code"
   },
   {
@@ -3074,8 +3074,8 @@
    "list_code": "TGO-C OSN 407",
    "list_net_minor": 3390,
    "vat": 8,
-   "net_minor": 3729,
-   "gross_minor": 4027,
+   "net_minor": 4068,
+   "gross_minor": 4393,
    "matched_by": "code"
   },
   {
@@ -3086,8 +3086,8 @@
    "list_code": "TGO-V AP SL 910",
    "list_net_minor": 17900,
    "vat": 8,
-   "net_minor": 19690,
-   "gross_minor": 21265,
+   "net_minor": 21480,
+   "gross_minor": 23198,
    "matched_by": "code"
   },
   {
@@ -3098,8 +3098,8 @@
    "list_code": "BUBBLE ROLL",
    "list_net_minor": 4990,
    "vat": 8,
-   "net_minor": 5489,
-   "gross_minor": 5928,
+   "net_minor": 5988,
+   "gross_minor": 6467,
    "matched_by": "code"
   },
   {
@@ -3110,8 +3110,8 @@
    "list_code": "SVC 2476 XL",
    "list_net_minor": 2400,
    "vat": 8,
-   "net_minor": 2640,
-   "gross_minor": 2851,
+   "net_minor": 2880,
+   "gross_minor": 3110,
    "matched_by": "code"
   },
   {
@@ -3122,8 +3122,8 @@
    "list_code": "TMT 6550",
    "list_net_minor": 45000,
    "vat": 8,
-   "net_minor": 49500,
-   "gross_minor": 53460,
+   "net_minor": 54000,
+   "gross_minor": 58320,
    "matched_by": "code"
   },
   {
@@ -3134,8 +3134,8 @@
    "list_code": "TMG 6405",
    "list_net_minor": 35900,
    "vat": 8,
-   "net_minor": 39490,
-   "gross_minor": 42649,
+   "net_minor": 43080,
+   "gross_minor": 46526,
    "matched_by": "code"
   },
   {
@@ -3146,8 +3146,8 @@
    "list_code": "SCP 4500",
    "list_net_minor": 15900,
    "vat": 8,
-   "net_minor": 17490,
-   "gross_minor": 18889,
+   "net_minor": 19080,
+   "gross_minor": 20606,
    "matched_by": "code"
   },
   {
@@ -3158,8 +3158,8 @@
    "list_code": "SCP 4600",
    "list_net_minor": 17500,
    "vat": 8,
-   "net_minor": 19250,
-   "gross_minor": 20790,
+   "net_minor": 21000,
+   "gross_minor": 22680,
    "matched_by": "code"
   },
   {
@@ -3170,8 +3170,8 @@
    "list_code": "SVP-2401",
    "list_net_minor": 2700,
    "vat": 8,
-   "net_minor": 2970,
-   "gross_minor": 3208,
+   "net_minor": 3240,
+   "gross_minor": 3499,
    "matched_by": "code"
   },
   {
@@ -3182,8 +3182,8 @@
    "list_code": "SVP-2402",
    "list_net_minor": 4000,
    "vat": 8,
-   "net_minor": 4400,
-   "gross_minor": 4752,
+   "net_minor": 4800,
+   "gross_minor": 5184,
    "matched_by": "code"
   },
   {
@@ -3194,8 +3194,8 @@
    "list_code": "SVP-2412",
    "list_net_minor": 4000,
    "vat": 8,
-   "net_minor": 4400,
-   "gross_minor": 4752,
+   "net_minor": 4800,
+   "gross_minor": 5184,
    "matched_by": "code"
   },
   {
@@ -3206,8 +3206,8 @@
    "list_code": "SVP-2413",
    "list_net_minor": 6500,
    "vat": 8,
-   "net_minor": 7150,
-   "gross_minor": 7722,
+   "net_minor": 7800,
+   "gross_minor": 8424,
    "matched_by": "code"
   },
   {
@@ -3218,8 +3218,8 @@
    "list_code": "EASY BATH",
    "list_net_minor": 11900,
    "vat": 8,
-   "net_minor": 13090,
-   "gross_minor": 14137,
+   "net_minor": 14280,
+   "gross_minor": 15422,
    "matched_by": "code"
   },
   {
@@ -3230,8 +3230,8 @@
    "list_code": "TH 557",
    "list_net_minor": 550000,
    "vat": 5,
-   "net_minor": 605000,
-   "gross_minor": 635250,
+   "net_minor": 660000,
+   "gross_minor": 693000,
    "matched_by": "override"
   },
   {
@@ -3242,8 +3242,8 @@
    "list_code": "TH 530",
    "list_net_minor": 65000,
    "vat": 8,
-   "net_minor": 71500,
-   "gross_minor": 77220,
+   "net_minor": 78000,
+   "gross_minor": 84240,
    "matched_by": "code"
   },
   {
@@ -3254,8 +3254,8 @@
    "list_code": "TH 540",
    "list_net_minor": 80000,
    "vat": 8,
-   "net_minor": 88000,
-   "gross_minor": 95040,
+   "net_minor": 96000,
+   "gross_minor": 103680,
    "matched_by": "code"
   },
   {
@@ -3266,8 +3266,8 @@
    "list_code": "TH 537",
    "list_net_minor": 135000,
    "vat": 8,
-   "net_minor": 148500,
-   "gross_minor": 160380,
+   "net_minor": 162000,
+   "gross_minor": 174960,
    "matched_by": "code"
   },
   {
@@ -3278,8 +3278,8 @@
    "list_code": "TH 533",
    "list_net_minor": 197000,
    "vat": 8,
-   "net_minor": 216700,
-   "gross_minor": 234036,
+   "net_minor": 236400,
+   "gross_minor": 255312,
    "matched_by": "code"
   },
   {
@@ -3290,8 +3290,8 @@
    "list_code": "TH 6806/3",
    "list_net_minor": 580000,
    "vat": 8,
-   "net_minor": 638000,
-   "gross_minor": 689040,
+   "net_minor": 696000,
+   "gross_minor": 751680,
    "matched_by": "override"
   },
   {
@@ -3302,8 +3302,8 @@
    "list_code": "TH 550",
    "list_net_minor": 670000,
    "vat": 5,
-   "net_minor": 737000,
-   "gross_minor": 773850,
+   "net_minor": 804000,
+   "gross_minor": 844200,
    "matched_by": "code"
   },
   {
@@ -3314,8 +3314,8 @@
    "list_code": "TH 557",
    "list_net_minor": 550000,
    "vat": 5,
-   "net_minor": 605000,
-   "gross_minor": 635250,
+   "net_minor": 660000,
+   "gross_minor": 693000,
    "matched_by": "code"
   },
   {
@@ -3326,8 +3326,8 @@
    "list_code": "TH 610",
    "list_net_minor": 350000,
    "vat": 5,
-   "net_minor": 385000,
-   "gross_minor": 404250,
+   "net_minor": 420000,
+   "gross_minor": 441000,
    "matched_by": "override"
   },
   {
@@ -3338,8 +3338,8 @@
    "list_code": "TH 470",
    "list_net_minor": 670000,
    "vat": 5,
-   "net_minor": 737000,
-   "gross_minor": 773850,
+   "net_minor": 804000,
+   "gross_minor": 844200,
    "matched_by": "code"
   },
   {
@@ -3350,8 +3350,8 @@
    "list_code": "TH 522",
    "list_net_minor": 490000,
    "vat": 5,
-   "net_minor": 539000,
-   "gross_minor": 565950,
+   "net_minor": 588000,
+   "gross_minor": 617400,
    "matched_by": "code"
   },
   {
@@ -3362,8 +3362,8 @@
    "list_code": "TH 6739",
    "list_net_minor": 38000,
    "vat": 8,
-   "net_minor": 41800,
-   "gross_minor": 45144,
+   "net_minor": 45600,
+   "gross_minor": 49248,
    "matched_by": "code"
   },
   {
@@ -3374,8 +3374,8 @@
    "list_code": "TH 6637/61",
    "list_net_minor": 91000,
    "vat": 8,
-   "net_minor": 100100,
-   "gross_minor": 108108,
+   "net_minor": 109200,
+   "gross_minor": 117936,
    "matched_by": "override"
   },
   {
@@ -3386,8 +3386,8 @@
    "list_code": "TH 6637/6",
    "list_net_minor": 115000,
    "vat": 8,
-   "net_minor": 126500,
-   "gross_minor": 136620,
+   "net_minor": 138000,
+   "gross_minor": 149040,
    "matched_by": "override"
   },
   {
@@ -3398,8 +3398,8 @@
    "list_code": "TH 6813",
    "list_net_minor": 23000,
    "vat": 8,
-   "net_minor": 25300,
-   "gross_minor": 27324,
+   "net_minor": 27600,
+   "gross_minor": 29808,
    "matched_by": "code"
   },
   {
@@ -3410,8 +3410,8 @@
    "list_code": "TH 6620/6",
    "list_net_minor": 42000,
    "vat": 8,
-   "net_minor": 46200,
-   "gross_minor": 49896,
+   "net_minor": 50400,
+   "gross_minor": 54432,
    "matched_by": "code"
   },
   {
@@ -3422,8 +3422,8 @@
    "list_code": "TH 6833/1",
    "list_net_minor": 31000,
    "vat": 8,
-   "net_minor": 34100,
-   "gross_minor": 36828,
+   "net_minor": 37200,
+   "gross_minor": 40176,
    "matched_by": "override"
   },
   {
@@ -3434,8 +3434,8 @@
    "list_code": "TH 6341/1",
    "list_net_minor": 9000,
    "vat": 8,
-   "net_minor": 9900,
-   "gross_minor": 10692,
+   "net_minor": 10800,
+   "gross_minor": 11664,
    "matched_by": "override"
   },
   {
@@ -3446,8 +3446,8 @@
    "list_code": "TH 6621/51",
    "list_net_minor": 25000,
    "vat": 8,
-   "net_minor": 27500,
-   "gross_minor": 29700,
+   "net_minor": 30000,
+   "gross_minor": 32400,
    "matched_by": "override"
   },
   {
@@ -3458,8 +3458,8 @@
    "list_code": "TH 539",
    "list_net_minor": 74000,
    "vat": 8,
-   "net_minor": 81400,
-   "gross_minor": 87912,
+   "net_minor": 88800,
+   "gross_minor": 95904,
    "matched_by": "code"
   },
   {
@@ -3470,8 +3470,8 @@
    "list_code": "TH 536",
    "list_net_minor": 34000,
    "vat": 8,
-   "net_minor": 37400,
-   "gross_minor": 40392,
+   "net_minor": 40800,
+   "gross_minor": 44064,
    "matched_by": "code"
   },
   {
@@ -3482,8 +3482,8 @@
    "list_code": "TH 423",
    "list_net_minor": 3800,
    "vat": 8,
-   "net_minor": 4180,
-   "gross_minor": 4514,
+   "net_minor": 4560,
+   "gross_minor": 4925,
    "matched_by": "code"
   },
   {
@@ -3494,8 +3494,8 @@
    "list_code": "TH 479",
    "list_net_minor": 50000,
    "vat": 8,
-   "net_minor": 55000,
-   "gross_minor": 59400,
+   "net_minor": 60000,
+   "gross_minor": 64800,
    "matched_by": "code"
   },
   {
@@ -3506,8 +3506,8 @@
    "list_code": "TH 421",
    "list_net_minor": 32000,
    "vat": 8,
-   "net_minor": 35200,
-   "gross_minor": 38016,
+   "net_minor": 38400,
+   "gross_minor": 41472,
    "matched_by": "override"
   },
   {
@@ -3518,8 +3518,8 @@
    "list_code": "TH 476",
    "list_net_minor": 87000,
    "vat": 8,
-   "net_minor": 95700,
-   "gross_minor": 103356,
+   "net_minor": 104400,
+   "gross_minor": 112752,
    "matched_by": "code"
   },
   {
@@ -3530,8 +3530,8 @@
    "list_code": "TH 475",
    "list_net_minor": 140000,
    "vat": 8,
-   "net_minor": 154000,
-   "gross_minor": 166320,
+   "net_minor": 168000,
+   "gross_minor": 181440,
    "matched_by": "code"
   },
   {
@@ -3542,8 +3542,8 @@
    "list_code": "TH 429",
    "list_net_minor": 71000,
    "vat": 8,
-   "net_minor": 78100,
-   "gross_minor": 84348,
+   "net_minor": 85200,
+   "gross_minor": 92016,
    "matched_by": "code"
   },
   {
@@ -3554,8 +3554,8 @@
    "list_code": "TH 405",
    "list_net_minor": 130000,
    "vat": 8,
-   "net_minor": 143000,
-   "gross_minor": 154440,
+   "net_minor": 156000,
+   "gross_minor": 168480,
    "matched_by": "code"
   },
   {
@@ -3566,8 +3566,8 @@
    "list_code": "TH 412/1",
    "list_net_minor": 70000,
    "vat": 8,
-   "net_minor": 77000,
-   "gross_minor": 83160,
+   "net_minor": 84000,
+   "gross_minor": 90720,
    "matched_by": "code"
   },
   {
@@ -3578,8 +3578,8 @@
    "list_code": "TH 423",
    "list_net_minor": 3800,
    "vat": 8,
-   "net_minor": 4180,
-   "gross_minor": 4514,
+   "net_minor": 4560,
+   "gross_minor": 4925,
    "matched_by": "code"
   },
   {
@@ -3590,8 +3590,8 @@
    "list_code": "TH 487",
    "list_net_minor": 130000,
    "vat": 8,
-   "net_minor": 143000,
-   "gross_minor": 154440,
+   "net_minor": 156000,
+   "gross_minor": 168480,
    "matched_by": "code"
   },
   {
@@ -3602,8 +3602,8 @@
    "list_code": "TH 486",
    "list_net_minor": 70000,
    "vat": 8,
-   "net_minor": 77000,
-   "gross_minor": 83160,
+   "net_minor": 84000,
+   "gross_minor": 90720,
    "matched_by": "code"
   },
   {
@@ -3614,8 +3614,8 @@
    "list_code": "TH 494",
    "list_net_minor": 38000,
    "vat": 8,
-   "net_minor": 41800,
-   "gross_minor": 45144,
+   "net_minor": 45600,
+   "gross_minor": 49248,
    "matched_by": "code"
   },
   {
@@ -3626,8 +3626,8 @@
    "list_code": "TH 475",
    "list_net_minor": 140000,
    "vat": 8,
-   "net_minor": 154000,
-   "gross_minor": 166320,
+   "net_minor": 168000,
+   "gross_minor": 181440,
    "matched_by": "code"
   },
   {
@@ -3638,8 +3638,8 @@
    "list_code": "TH 421",
    "list_net_minor": 23000,
    "vat": 8,
-   "net_minor": 25300,
-   "gross_minor": 27324,
+   "net_minor": 27600,
+   "gross_minor": 29808,
    "matched_by": "override"
   },
   {
@@ -3650,8 +3650,8 @@
    "list_code": "TH 479",
    "list_net_minor": 50000,
    "vat": 8,
-   "net_minor": 55000,
-   "gross_minor": 59400,
+   "net_minor": 60000,
+   "gross_minor": 64800,
    "matched_by": "code"
   },
   {
@@ -3662,8 +3662,8 @@
    "list_code": "TH 675",
    "list_net_minor": 31500,
    "vat": 8,
-   "net_minor": 34650,
-   "gross_minor": 37422,
+   "net_minor": 37800,
+   "gross_minor": 40824,
    "matched_by": "override"
   },
   {
@@ -3674,8 +3674,8 @@
    "list_code": "TH 501",
    "list_net_minor": 117000,
    "vat": 8,
-   "net_minor": 128700,
-   "gross_minor": 138996,
+   "net_minor": 140400,
+   "gross_minor": 151632,
    "matched_by": "code"
   },
   {
@@ -3686,8 +3686,8 @@
    "list_code": "TH 500",
    "list_net_minor": 75000,
    "vat": 8,
-   "net_minor": 82500,
-   "gross_minor": 89100,
+   "net_minor": 90000,
+   "gross_minor": 97200,
    "matched_by": "code"
   },
   {
@@ -3698,8 +3698,8 @@
    "list_code": "TH 507",
    "list_net_minor": 15000,
    "vat": 8,
-   "net_minor": 16500,
-   "gross_minor": 17820,
+   "net_minor": 18000,
+   "gross_minor": 19440,
    "matched_by": "code"
   },
   {
@@ -3710,8 +3710,8 @@
    "list_code": "TH 506",
    "list_net_minor": 41000,
    "vat": 8,
-   "net_minor": 45100,
-   "gross_minor": 48708,
+   "net_minor": 49200,
+   "gross_minor": 53136,
    "matched_by": "code"
   },
   {
@@ -3722,8 +3722,8 @@
    "list_code": "TH 502",
    "list_net_minor": 105000,
    "vat": 8,
-   "net_minor": 115500,
-   "gross_minor": 124740,
+   "net_minor": 126000,
+   "gross_minor": 136080,
    "matched_by": "code"
   },
   {
@@ -3734,8 +3734,8 @@
    "list_code": "TH 670",
    "list_net_minor": 14000,
    "vat": 8,
-   "net_minor": 15400,
-   "gross_minor": 16632,
+   "net_minor": 16800,
+   "gross_minor": 18144,
    "matched_by": "code"
   },
   {
@@ -3746,8 +3746,8 @@
    "list_code": "TH 508",
    "list_net_minor": 135000,
    "vat": 8,
-   "net_minor": 148500,
-   "gross_minor": 160380,
+   "net_minor": 162000,
+   "gross_minor": 174960,
    "matched_by": "code"
   }
  ],

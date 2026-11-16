@@ -17,11 +17,11 @@ class RentalItemSeeder extends Seeder
 {
     public const ITEMS = [
         // slug, group, name, details, deposit [min, max] or null, monthly [min, max], NFZ purchase, image
-        ['lozko-rehabilitacyjne-manualne', 'beds', 'Łóżko rehabilitacyjne manualne', 'Regulacja korbami, leże 95 × 195 cm.', null, [80, null], false, 'lozko-manualne'],
-        ['lozko-rehabilitacyjne-elektryczne-2-segmenty', 'beds', 'Łóżko rehabilitacyjne elektryczne', 'Sterowanie elektryczne, dwa poziomy regulacji, leże 100 × 200 cm. Modele AKS RehaBed, Invacare lub Scandinavian Mobility.', null, [100, null], false, 'lozko-elektryczne-2-poziomy'],
-        ['lozko-rehabilitacyjne-elektryczne-3-funkcyjne', 'beds', 'Łóżko rehabilitacyjne elektryczne 3-funkcyjne', 'Sterowanie pilotem, trzy poziomy regulacji, leże 105 × 205 cm.', null, [125, null], false, 'lozko-elektryczne-3-funkcyjne'],
-        ['lozko-rehabilitacyjne-elektryczne-200-kg', 'beds', 'Łóżko rehabilitacyjne elektryczne 3-funkcyjne do 200 kg', 'Sterowanie pilotem, trzy poziomy regulacji, wzmocniona konstrukcja do 200 kg, leże 100 × 200 cm.', null, [150, null], false, 'lozko-elektryczne-200-kg'],
-        ['lozko-rehabilitacyjne-elektryczne-4-segmenty', 'beds', 'Łóżko rehabilitacyjne elektryczne z funkcją przechyłu', 'Sterowanie elektryczne, cztery poziomy regulacji i przechył leża, do pielęgnacji i rehabilitacji pacjenta. Leże 105 × 205 cm.', null, [150, null], false, 'lozko-elektryczne-4-poziomy'],
+        ['lozko-rehabilitacyjne-manualne', 'beds', 'Łóżko rehabilitacyjne manualne', 'Regulacja korbami, leże 95 × 195 cm.', null, [150, null], false, 'lozko-manualne'],
+        ['lozko-rehabilitacyjne-elektryczne-2-segmenty', 'beds', 'Łóżko rehabilitacyjne elektryczne', 'Sterowanie elektryczne, dwa poziomy regulacji, leże 100 × 200 cm. Modele AKS RehaBed, Invacare lub Scandinavian Mobility.', null, [200, null], false, 'lozko-elektryczne-2-poziomy'],
+        ['lozko-rehabilitacyjne-elektryczne-3-funkcyjne', 'beds', 'Łóżko rehabilitacyjne elektryczne 3-funkcyjne', 'Sterowanie pilotem, trzy poziomy regulacji, leże 105 × 205 cm.', null, [200, null], false, 'lozko-elektryczne-3-funkcyjne'],
+        ['lozko-rehabilitacyjne-elektryczne-200-kg', 'beds', 'Łóżko rehabilitacyjne elektryczne 3-funkcyjne do 200 kg', 'Sterowanie pilotem, trzy poziomy regulacji, wzmocniona konstrukcja do 200 kg, leże 100 × 200 cm.', null, [200, null], false, 'lozko-elektryczne-200-kg'],
+        ['lozko-rehabilitacyjne-elektryczne-4-segmenty', 'beds', 'Łóżko rehabilitacyjne elektryczne z funkcją przechyłu', 'Sterowanie elektryczne, cztery poziomy regulacji i przechył leża, do pielęgnacji i rehabilitacji pacjenta. Leże 105 × 205 cm.', null, [200, null], false, 'lozko-elektryczne-4-poziomy'],
 
         ['koncentrator-tlenu-aeroplus', 'oxygen', 'Koncentrator tlenu Aeroplus', 'Model Aeroplus 6 lub Aeroplus 600.', [250, null], [80, null], false, 'koncentrator-aeroplus'],
         ['koncentrator-tlenu-devilbiss-inva', 'oxygen', 'Koncentrator tlenu DeVilbiss / Invacare', 'Model DeVilbiss 515 lub Invacare Inva 5.', [400, null], [100, null], false, 'koncentrator-devilbiss'],
