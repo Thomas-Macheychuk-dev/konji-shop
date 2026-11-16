@@ -52,3 +52,9 @@ it('rejects non-Seni24 and non-product URLs', function (): void {
         ->and($scraper->normalizeProductUrl('/item_12-34', 'https://www.seni24.pl/strona-glowna/'))
         ->toBe('https://www.seni24.pl/item_12-34');
 });
+
+it('accepts product URLs without a combination id', function (): void {
+    // Products without size or pack options link to ".../name_22104"; these were skipped until 15 November 2026.
+    expect(app(Seni24ProductUrlScraper::class)->normalizeProductUrl('https://www.seni24.pl/pieluchy-anatomiczne-seni-san-prima_22104'))
+        ->toBe('https://www.seni24.pl/pieluchy-anatomiczne-seni-san-prima_22104');
+});
