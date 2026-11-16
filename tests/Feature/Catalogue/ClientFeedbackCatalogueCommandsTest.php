@@ -26,9 +26,10 @@ it('raises nitrile gloves to 16 zł for blue and black and 18 zł for other colo
     $dearer = feedbackVariant('Rękawiczki jednorazowe nitrylowe Ambulex Nitryl niebieskie 100 szt.', 2129);
     $sterile = feedbackVariant('Rękawiczki jednorazowe nitrylowe jałowe Nitrylex Sterile Mercator 50 par', 1000);
     $noColour = feedbackVariant('Rękawiczki nitrylowe Gripzzly 50 szt.', 1000);
+    $berry = feedbackVariant('Rękawice nitrylowe malinowe Nitrile Berry easyCARE', 1599);
 
     $this->artisan('catalogue:price-nitrile-gloves')
-        ->expectsOutputToContain('PRICE_CHANGES=3 ALREADY_AT_OR_ABOVE_MINIMUM=1 SKIPPED=2')
+        ->expectsOutputToContain('PRICE_CHANGES=4 ALREADY_AT_OR_ABOVE_MINIMUM=1 SKIPPED=2')
         ->expectsOutputToContain('MODE=READ_ONLY')
         ->assertSuccessful();
 
@@ -38,6 +39,7 @@ it('raises nitrile gloves to 16 zł for blue and black and 18 zł for other colo
         ->and($blue->fresh()->price_net_amount)->toBe(VatRate::VAT_8->netFromGross(1600))
         ->and($black->fresh()->price_gross_amount)->toBe(1600)
         ->and($pink->fresh()->price_gross_amount)->toBe(1800)
+        ->and($berry->fresh()->price_gross_amount)->toBe(1800)
         ->and($dearer->fresh()->price_gross_amount)->toBe(2129)
         ->and($sterile->fresh()->price_gross_amount)->toBe(1000)
         ->and($noColour->fresh()->price_gross_amount)->toBe(1000);
@@ -57,16 +59,23 @@ it('rounds prices to whole złoty in the equipment categories and their subcateg
     $cheap = feedbackVariant('Laska', 12503, $root);
     $whole = feedbackVariant('Kula', 9000, $root);
     $diapers = feedbackVariant('Seni Super pieluchomajtki', 6973, $hygiene);
+    $catheter = feedbackVariant('Cewnik urologiczny Nelaton 1 szt.', 65, $root);
+    $syringe = feedbackVariant('Strzykawka', 999, $root);
+    $needles = feedbackVariant('Igły', 1029, $root);
 
     $this->artisan('catalogue:round-prices', ['category' => ['Mobilność i transport'], '--write' => true])
-        ->expectsOutputToContain('PRICE_CHANGES=2 SKIPPED=0')
+        ->expectsOutputToContain('MIN_PRICE=10.00')
+        ->expectsOutputToContain('PRICE_CHANGES=3 SKIPPED=0')
         ->assertSuccessful();
 
     expect($wheelchair->fresh()->price_gross_amount)->toBe(152300)
         ->and($cheap->fresh()->price_gross_amount)->toBe(12500)
         ->and($cheap->fresh()->price_net_amount)->toBe(VatRate::VAT_8->netFromGross(12500))
         ->and($whole->fresh()->price_gross_amount)->toBe(9000)
-        ->and($diapers->fresh()->price_gross_amount)->toBe(6973);
+        ->and($diapers->fresh()->price_gross_amount)->toBe(6973)
+        ->and($catheter->fresh()->price_gross_amount)->toBe(65)
+        ->and($syringe->fresh()->price_gross_amount)->toBe(999)
+        ->and($needles->fresh()->price_gross_amount)->toBe(1000);
 });
 
 it('refuses category names it does not know', function (): void {

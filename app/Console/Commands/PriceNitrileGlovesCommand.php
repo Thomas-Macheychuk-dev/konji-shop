@@ -26,7 +26,7 @@ final class PriceNitrileGlovesCommand extends Command
 
     private const BLUE_OR_BLACK = '/niebiesk|granatow|\bblue\b|\bnavy\b|czarn|\bblack\b/iu';
 
-    private const OTHER_COLOURS = '/różow|\bpink\b|magenta|fiolet|violet|purple|zielon|\bgreen\b|pomarańcz|\borange\b|biał|\bwhite\b|żółt|\byellow\b|czerwon|\bred\b|szar|\bgr[ae]y\b|beż|brąz|kolorow|tutti|lawend|turkus/iu';
+    private const OTHER_COLOURS = '/różow|\bpink\b|magenta|fiolet|violet|purple|zielon|\bgreen\b|pomarańcz|\borange\b|biał|\bwhite\b|żółt|\byellow\b|czerwon|\bred\b|szar|\bgr[ae]y\b|beż|brąz|kolorow|tutti|lawend|turkus|malin|berry|bordow|burgund/iu';
 
     protected $signature = 'catalogue:price-nitrile-gloves
         {--write : Apply the price changes after writing a private backup. Otherwise preview only.}
