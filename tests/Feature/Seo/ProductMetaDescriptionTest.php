@@ -199,3 +199,13 @@ it('cuts the next sentence instead of giving up when the first one is too short 
         ->toEndWith('…')
         ->and(mb_strlen($meta))->toBeLessThanOrEqual(ProductMetaDescription::MAX_LENGTH);
 });
+
+it('does not end a sentence at a Polish abbreviation', function (): void {
+    $meta = ProductMetaDescription::build(
+        '<p>Problem nietrzymania moczu dotyka aż ok. 10% populacji. Ponad 2 miliony osób w Polsce potrzebuje specjalistycznych produktów.</p>',
+        null,
+        'Seni Super',
+    );
+
+    expect($meta)->toStartWith('Problem nietrzymania moczu dotyka aż ok. 10% populacji. Ponad 2 miliony osób');
+});
