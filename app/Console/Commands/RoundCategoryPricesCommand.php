@@ -14,7 +14,8 @@ use Illuminate\Support\Str;
 /**
  * Rounds gross prices to whole złoty in the equipment and clothing categories, e.g. 125,03 zł -> 125 zł
  * and 1 522,80 zł -> 1 523 zł (owner's feedback, 15 November 2026). Each named category counts with all
- * of its subcategories; the net price follows from the variant's VAT rate.
+ * of its subcategories; the net price follows from the variant's VAT rate. Prices under --min (10 zł by default)
+ * keep their grosze: on a 0,65 zł catheter or 1,30 zł syringe, rounding would move the price by 20-50%.
  */
 final class RoundCategoryPricesCommand extends Command
 {
@@ -30,6 +31,7 @@ final class RoundCategoryPricesCommand extends Command
 
     protected $signature = 'catalogue:round-prices
         {category?* : Category names (with their subcategories). Defaults to the equipment and clothing categories.}
+        {--min=10 : Leave prices under this many złoty unrounded.}
         {--write : Apply the price changes after writing a private backup. Otherwise preview only.}
         {--rollback= : Restore the prices from a backup written by --write.}';
 
@@ -52,6 +54,7 @@ final class RoundCategoryPricesCommand extends Command
         }
 
         $categoryIds = $this->withDescendants($roots->pluck('id')->all());
+        $minimumMinor = (int) round((float) $this->option('min') * 100);
         $changes = [];
         $skipped = [];
 
@@ -59,6 +62,7 @@ final class RoundCategoryPricesCommand extends Command
             ->with('product:id,name')
             ->whereNotNull('price_gross_amount')
             ->whereRaw('price_gross_amount % 100 <> 0')
+            ->where('price_gross_amount', '>=', $minimumMinor)
             ->whereHas('product.categories', fn ($query) => $query->whereIn('categories.id', $categoryIds))
             ->chunkById(200, function ($variants) use (&$changes, &$skipped): void {
                 foreach ($variants as $variant) {
@@ -92,6 +96,7 @@ final class RoundCategoryPricesCommand extends Command
 
         $this->line('=== ROUND PRICES TO WHOLE ZŁOTY ===');
         $this->line('CATEGORIES='.implode(' | ', $names).' (with '.count($categoryIds).' categories in all)');
+        $this->line('MIN_PRICE='.$this->money($minimumMinor).' (cheaper prices keep their grosze)');
         $this->line('PRICE_CHANGES='.count($changes).' SKIPPED='.count($skipped));
 
         foreach ($changes as $change) {
