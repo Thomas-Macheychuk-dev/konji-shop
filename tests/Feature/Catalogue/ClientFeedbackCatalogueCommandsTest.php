@@ -102,6 +102,12 @@ it('puts the Seni product line first in Seni names', function (string $name, ?st
     ['Majtki chłonne Seni Active Basic zakładane jak bielizna', 'Seni Active Basic majtki chłonne zakładane jak bielizna'],
     ['Majtki mocujące dla mężczyzn Seni FIX COMFORT MAN 2 szt.', 'Seni FIX COMFORT MAN majtki mocujące dla mężczyzn 2 szt.'],
     ['Odżywczy krem do stóp Seni Care 7% mocznik', 'Seni Care odżywczy krem do stóp 7% mocznik'],
+    ['Wkładki urologiczne dla mężczyzn Seni Man Level 3 Extra Black', 'Seni Man Level 3 Extra Black wkładki urologiczne dla mężczyzn'],
+    ['Wkładki urologiczne dla mężczyzn Seni Man Extra Level 4 Plus', 'Seni Man Extra Level 4 Plus wkładki urologiczne dla mężczyzn'],
+    ['Chusteczki nawilżane do higieny intymnej Seni Care Inti+', 'Seni Care Inti+ chusteczki nawilżane do higieny intymnej'],
+    ['Pieluchy anatomiczne dla mężczyzn Seni San for Men', 'Seni San for Men pieluchy anatomiczne dla mężczyzn'],
+    ['Profesjonalny neutralizator zapachu Seni Fresh 500 ml', 'Seni Fresh profesjonalny neutralizator zapachu 500 ml'],
+    ['Pas przedłużający do pieluchomajtek Seni Optima 10 szt.', 'Seni Optima pas przedłużający do pieluchomajtek 10 szt.'],
     ['Seni Super Quatro pieluchomajtki dla dorosłych zapinane na rzepy', null],
     ['Super Seni pieluchomajtki dla dorosłych zapinane na rzepy 1 szt.', null],
 ]);
