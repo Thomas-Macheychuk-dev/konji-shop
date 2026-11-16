@@ -1,0 +1,2436 @@
+{
+  "supplier": "Corradomed Sp. z o.o.",
+  "source": "Cennik hurtowy obowiązujący od 1 marca 2026 r. (cennik_01.03.2026.pdf)",
+  "valid_from": "2026-03-01",
+  "currency": "PLN",
+  "prices": "net per piece",
+  "columns": [
+    "painted_25_white",
+    "painted_25_black",
+    "inox_25",
+    "inox_32",
+    "masked_32_white",
+    "masked_32_black",
+    "painted_32_white",
+    "painted_32_black"
+  ],
+  "notes": [
+    "Products marked * are made to order only, about 20-25 working days.",
+    "Matt black paint costs +20% (not sold).",
+    "Shipping 30 zł net, free from 550 zł net except medical furniture (quoted individually)."
+  ],
+  "aliases": {
+    "SWBO-14": "SWBO",
+    "SWBO-16": "SWBO",
+    "SWBO-18": "SWBO",
+    "SWBO-20": "SWBO",
+    "SWZO-20": "SWZO",
+    "SWZO-22": "SWZO",
+    "SZ-1": "SZ MISKA",
+    "SZ-2": "SZ-2 MISKA",
+    "UWCL-8/7,5": "UWCL-8",
+    "UWCP-8/7,5": "UWCP-8",
+    "TABORETLEKARSKI": "TABORET",
+    "TABORETLEKARSKIPODSTAWACHROM": "TABORET CHROM",
+    "TABORETLEKARSKIZPODNOZKIEMPODSTAWACHROM": "TABORET PODNÓŻEK CHROM"
+  },
+  "page_codes": {
+    "medycz?do=paraw": [
+      "PARAWAN SKŁADANY",
+      "PARAWAN SKŁADANY DWUSKRZYDŁOWY",
+      "PARAWAN ZMYWALNY",
+      "PARAWAN ZMYWALNY DWUSKRZYDŁOWY",
+      "PARAWAN SZTYWNY",
+      "PARAWAN SZTYWNY ZMYWALNY"
+    ],
+    "medycz?do=stojak": [
+      "2 ZAWIESZKI",
+      "4 ZAWIESZKI",
+      "2 ZAWIESZKI PP",
+      "4 ZAWIESZKI PP"
+    ],
+    "medycz?do=przewij": [
+      "PRZEWIJAK",
+      "PRZEWIJAK PÓŁKA",
+      "PRZEWIJAK SZAFKA"
+    ],
+    "medycz?do=aparatur": [
+      "SAM"
+    ],
+    "krzesla?do=uchyl10": [
+      "KPU-O PVC"
+    ]
+  },
+  "page_names": {
+    "medycz?do=kozet": "Kozetka lekarska",
+    "medycz?do=stolik": "Stolik zabiegowy z miskami",
+    "medycz?do=aparatur": "Stolik pod aparaturę medyczną",
+    "medycz?do=paraw": "Parawan medyczny",
+    "medycz?do=stojak": "Stojak na kroplówki",
+    "medycz?do=krew": "Stanowisko do pobierania krwi",
+    "medycz?do=krzeslo": "Krzesło lekarskie",
+    "medycz?do=tabor": "Taboret lekarski",
+    "medycz?do=przewij": "Przewijak - stół rehabilitacyjny dla niemowląt",
+    "medycz?do=schod": "Schodek medyczny",
+    "krzesla?do=tabor": "TP - Taboret prysznicowy",
+    "uchwyty?do=umyw01": "UU - Uchwyty umywalkowe stałe",
+    "uchwyty?do=wanna07": "UWPP - PiL ø 32 - Uchwyty wannowe poziomo-pionowe",
+    "uchwyty?do=wanna08": "UWP-P - PiL ø 32 - Uchwyty wannowe poziomo-pionowe",
+    "uchwyty?do=wanna17": "UWPP - PiL INOX ø 25 - Uchwyty wannowe poziomo-pionowe",
+    "uchwyty?do=wanna18": "UWP-P - PiL INOX ø 25 - Uchwyty wannowe poziomo-pionowe"
+  },
+  "items": [
+    {
+      "code": "UP-2",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 34,
+        "painted_25_black": 41,
+        "inox_25": 89,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-3",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 36,
+        "painted_25_black": 43,
+        "inox_25": 94,
+        "inox_32": 115,
+        "masked_32_white": 59,
+        "masked_32_black": 71,
+        "painted_32_white": 47,
+        "painted_32_black": 56
+      }
+    },
+    {
+      "code": "UP-4",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 38,
+        "painted_25_black": 46,
+        "inox_25": 99,
+        "inox_32": 120,
+        "masked_32_white": 61,
+        "masked_32_black": 74,
+        "painted_32_white": 49,
+        "painted_32_black": 59
+      }
+    },
+    {
+      "code": "UP-5",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 40,
+        "painted_25_black": 48,
+        "inox_25": 104,
+        "inox_32": 125,
+        "masked_32_white": 64,
+        "masked_32_black": 77,
+        "painted_32_white": 52,
+        "painted_32_black": 62
+      }
+    },
+    {
+      "code": "UP-6",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 43,
+        "painted_25_black": 52,
+        "inox_25": 109,
+        "inox_32": 130,
+        "masked_32_white": 68,
+        "masked_32_black": 81,
+        "painted_32_white": 56,
+        "painted_32_black": 67
+      }
+    },
+    {
+      "code": "UP-7",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 46,
+        "painted_25_black": 55,
+        "inox_25": 115,
+        "inox_32": 135,
+        "masked_32_white": 72,
+        "masked_32_black": null,
+        "painted_32_white": 60,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-8",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 48,
+        "painted_25_black": 58,
+        "inox_25": 120,
+        "inox_32": 140,
+        "masked_32_white": 74,
+        "masked_32_black": null,
+        "painted_32_white": 62,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-9",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 50,
+        "painted_25_black": null,
+        "inox_25": 125,
+        "inox_32": 145,
+        "masked_32_white": 77,
+        "masked_32_black": null,
+        "painted_32_white": 65,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-10",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 54,
+        "painted_25_black": null,
+        "inox_25": 130,
+        "inox_32": 150,
+        "masked_32_white": 82,
+        "masked_32_black": null,
+        "painted_32_white": 70,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-11",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 72,
+        "painted_25_black": null,
+        "inox_25": 145,
+        "inox_32": 165,
+        "masked_32_white": 112,
+        "masked_32_black": null,
+        "painted_32_white": 94,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-12",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 75,
+        "painted_25_black": null,
+        "inox_25": 150,
+        "inox_32": 170,
+        "masked_32_white": 116,
+        "masked_32_black": null,
+        "painted_32_white": 98,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-13",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 78,
+        "painted_25_black": null,
+        "inox_25": 155,
+        "inox_32": 175,
+        "masked_32_white": 119,
+        "masked_32_black": null,
+        "painted_32_white": 101,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-14",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 81,
+        "painted_25_black": null,
+        "inox_25": 165,
+        "inox_32": 180,
+        "masked_32_white": 123,
+        "masked_32_black": null,
+        "painted_32_white": 105,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-15",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 84,
+        "painted_25_black": null,
+        "inox_25": 170,
+        "inox_32": 185,
+        "masked_32_white": 127,
+        "masked_32_black": null,
+        "painted_32_white": 109,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-16",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 101,
+        "painted_25_black": null,
+        "inox_25": 180,
+        "inox_32": 195,
+        "masked_32_white": 149,
+        "masked_32_black": null,
+        "painted_32_white": 131,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-17",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 113,
+        "painted_25_black": null,
+        "inox_25": 190,
+        "inox_32": 205,
+        "masked_32_white": 165,
+        "masked_32_black": null,
+        "painted_32_white": 147,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-18",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 131,
+        "painted_25_black": null,
+        "inox_25": 200,
+        "inox_32": 215,
+        "masked_32_white": 188,
+        "masked_32_black": null,
+        "painted_32_white": 170,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-19",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 149,
+        "painted_25_black": null,
+        "inox_25": 210,
+        "inox_32": 225,
+        "masked_32_white": 212,
+        "masked_32_black": null,
+        "painted_32_white": 194,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UP-20",
+      "name": "UCHWYT PROSTY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 165,
+        "painted_25_black": null,
+        "inox_25": 220,
+        "inox_32": 235,
+        "masked_32_white": 233,
+        "masked_32_black": null,
+        "painted_32_white": 215,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UU-5",
+      "name": "UCHWYT UMYWALKOWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 53,
+        "painted_25_black": null,
+        "inox_25": 130,
+        "inox_32": null,
+        "masked_32_white": 81,
+        "masked_32_black": null,
+        "painted_32_white": 69,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UU-6",
+      "name": "UCHWYT UMYWALKOWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 58,
+        "painted_25_black": null,
+        "inox_25": 140,
+        "inox_32": null,
+        "masked_32_white": 87,
+        "masked_32_black": null,
+        "painted_32_white": 75,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UU-7",
+      "name": "UCHWYT UMYWALKOWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 63,
+        "painted_25_black": null,
+        "inox_25": 150,
+        "inox_32": null,
+        "masked_32_white": 94,
+        "masked_32_black": null,
+        "painted_32_white": 82,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UU-8",
+      "name": "UCHWYT UMYWALKOWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 68,
+        "painted_25_black": null,
+        "inox_25": 160,
+        "inox_32": null,
+        "masked_32_white": 100,
+        "masked_32_black": null,
+        "painted_32_white": 88,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUL-4",
+      "name": "UCHWYT UMYWALKOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 79,
+        "painted_25_black": null,
+        "inox_25": 173,
+        "inox_32": null,
+        "masked_32_white": 121,
+        "masked_32_black": null,
+        "painted_32_white": 103,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUP-4",
+      "name": "UCHWYT UMYWALKOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 79,
+        "painted_25_black": null,
+        "inox_25": 173,
+        "inox_32": null,
+        "masked_32_white": 121,
+        "masked_32_black": null,
+        "painted_32_white": 103,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUL-5",
+      "name": "UCHWYT UMYWALKOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 84,
+        "painted_25_black": null,
+        "inox_25": 183,
+        "inox_32": null,
+        "masked_32_white": 127,
+        "masked_32_black": null,
+        "painted_32_white": 109,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUP-5",
+      "name": "UCHWYT UMYWALKOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 84,
+        "painted_25_black": null,
+        "inox_25": 183,
+        "inox_32": null,
+        "masked_32_white": 127,
+        "masked_32_black": null,
+        "painted_32_white": 109,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUL-5,5",
+      "name": "UCHWYT UMYWALKOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 220,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUP-5,5",
+      "name": "UCHWYT UMYWALKOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 220,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUL-6",
+      "name": "UCHWYT UMYWALKOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 89,
+        "painted_25_black": null,
+        "inox_25": 193,
+        "inox_32": null,
+        "masked_32_white": 134,
+        "masked_32_black": null,
+        "painted_32_white": 116,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUP-6",
+      "name": "UCHWYT UMYWALKOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 89,
+        "painted_25_black": null,
+        "inox_25": 193,
+        "inox_32": null,
+        "masked_32_white": 134,
+        "masked_32_black": null,
+        "painted_32_white": 116,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UU-5s",
+      "name": "UCHWYT UMYWALKOWY NA BLASZE",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 56,
+        "painted_25_black": 67,
+        "inox_25": 155,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 73,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UU-6s",
+      "name": "UCHWYT UMYWALKOWY NA BLASZE",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 61,
+        "painted_25_black": 73,
+        "inox_25": 165,
+        "inox_32": 235,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 79,
+        "painted_32_black": 95
+      }
+    },
+    {
+      "code": "UU-7s",
+      "name": "UCHWYT UMYWALKOWY NA BLASZE",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 66,
+        "painted_25_black": 79,
+        "inox_25": 175,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 86,
+        "painted_32_black": 103
+      }
+    },
+    {
+      "code": "UU-7,5s",
+      "name": "UCHWYT UMYWALKOWY NA BLASZE",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 250,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UU-8s",
+      "name": "UCHWYT UMYWALKOWY NA BLASZE",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 71,
+        "painted_25_black": 85,
+        "inox_25": 185,
+        "inox_32": 255,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 92,
+        "painted_32_black": 111
+      }
+    },
+    {
+      "code": "UU-8,5s",
+      "name": "UCHWYT UMYWALKOWY NA BLASZE",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 259,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 98,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWCL",
+      "name": "UCHWYT DO WC LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 101,
+        "painted_25_black": null,
+        "inox_25": 233,
+        "inox_32": null,
+        "masked_32_white": 149,
+        "masked_32_black": null,
+        "painted_32_white": 131,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWCP",
+      "name": "uchwyt do wc o kształcie przypominającym uchwyt",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 101,
+        "painted_25_black": null,
+        "inox_25": 233,
+        "inox_32": null,
+        "masked_32_white": 149,
+        "masked_32_black": null,
+        "painted_32_white": 131,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWCL-7",
+      "name": "UCHWYT DO WC LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 233,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWCP-7",
+      "name": "UCHWYT DO WC LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 233,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWCL-8",
+      "name": "UCHWYT DO WC LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 94,
+        "painted_25_black": null,
+        "inox_25": 243,
+        "inox_32": 273,
+        "masked_32_white": 140,
+        "masked_32_black": null,
+        "painted_32_white": 122,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWCP-8",
+      "name": "UCHWYT DO WC LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 94,
+        "painted_25_black": null,
+        "inox_25": 243,
+        "inox_32": 273,
+        "masked_32_white": 140,
+        "masked_32_black": null,
+        "painted_32_white": 122,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP - 6/4",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 85,
+        "painted_25_black": 102,
+        "inox_25": 185,
+        "inox_32": null,
+        "masked_32_white": 129,
+        "masked_32_black": 154,
+        "painted_32_white": 111,
+        "painted_32_black": 133
+      }
+    },
+    {
+      "code": "UKL - 6/4",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 85,
+        "painted_25_black": 102,
+        "inox_25": 185,
+        "inox_32": null,
+        "masked_32_white": 129,
+        "masked_32_black": 154,
+        "painted_32_white": 111,
+        "painted_32_black": 133
+      }
+    },
+    {
+      "code": "UKP - 8/4",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 195,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKL - 8/4",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 195,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP-7/5",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 225,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKL-7/5",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 225,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP - 6/3",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 205,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKL - 6/3",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 205,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP - 10/4",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 100,
+        "painted_25_black": null,
+        "inox_25": 205,
+        "inox_32": null,
+        "masked_32_white": 148,
+        "masked_32_black": null,
+        "painted_32_white": 130,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKL - 10/4",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 100,
+        "painted_25_black": null,
+        "inox_25": 205,
+        "inox_32": null,
+        "masked_32_white": 148,
+        "masked_32_black": null,
+        "painted_32_white": 130,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP - 10/6",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 105,
+        "painted_25_black": null,
+        "inox_25": 215,
+        "inox_32": 272,
+        "masked_32_white": 155,
+        "masked_32_black": null,
+        "painted_32_white": 137,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKL - 10/6",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 105,
+        "painted_25_black": null,
+        "inox_25": 215,
+        "inox_32": 272,
+        "masked_32_white": 155,
+        "masked_32_black": null,
+        "painted_32_white": 137,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UK - 5",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 85,
+        "painted_25_black": null,
+        "inox_25": 185,
+        "inox_32": null,
+        "masked_32_white": 129,
+        "masked_32_black": null,
+        "painted_32_white": 111,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UK - 6",
+      "name": "UCHWYT KĄTOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 195,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKS-3",
+      "name": "UCHWYT KĄTOWY SPECJALNY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 52,
+        "painted_25_black": 62,
+        "inox_25": 125,
+        "inox_32": 155,
+        "masked_32_white": 80,
+        "masked_32_black": 96,
+        "painted_32_white": 68,
+        "painted_32_black": 81
+      }
+    },
+    {
+      "code": "UKS-6",
+      "name": "UCHWYT KĄTOWY SPECJALNY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 195,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKSL-8/4",
+      "name": "UCHWYT KĄTOWY SPECJALNY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 195,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKSP-8/4",
+      "name": "UCHWYT KĄTOWY SPECJALNY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 195,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP - 5",
+      "name": "UCHWYT KĄTOWY PRYSZNICOWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 85,
+        "painted_25_black": null,
+        "inox_25": 185,
+        "inox_32": null,
+        "masked_32_white": 135,
+        "masked_32_black": null,
+        "painted_32_white": 111,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP - 6",
+      "name": "UCHWYT KĄTOWY PRYSZNICOWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 90,
+        "painted_25_black": null,
+        "inox_25": 195,
+        "inox_32": null,
+        "masked_32_white": 141,
+        "masked_32_black": null,
+        "painted_32_white": 117,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP - 7",
+      "name": "UCHWYT KĄTOWY PRYSZNICOWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 95,
+        "painted_25_black": null,
+        "inox_25": 205,
+        "inox_32": null,
+        "masked_32_white": 148,
+        "masked_32_black": null,
+        "painted_32_white": 124,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UKP-7,5",
+      "name": "UCHWYT KĄTOWY PRYSZNICOWY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 277,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWP - 10/7",
+      "name": "UCHWYT WANNOWY POZIOMY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 120,
+        "painted_25_black": null,
+        "inox_25": 270,
+        "inox_32": null,
+        "masked_32_white": 180,
+        "masked_32_black": null,
+        "painted_32_white": 156,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWP - 12/7",
+      "name": "UCHWYT WANNOWY POZIOMY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 125,
+        "painted_25_black": null,
+        "inox_25": 280,
+        "inox_32": null,
+        "masked_32_white": 187,
+        "masked_32_black": null,
+        "painted_32_white": 163,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UPPP - 8/8/4",
+      "name": "UCHWYT WANNOWO-PRYSZNICOWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 180,
+        "painted_25_black": null,
+        "inox_25": 270,
+        "inox_32": 355,
+        "masked_32_white": 264,
+        "masked_32_black": null,
+        "painted_32_white": 234,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWPP - 10/8/6",
+      "name": "POZIOMO PIONOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 190,
+        "painted_25_black": null,
+        "inox_25": 280,
+        "inox_32": 365,
+        "masked_32_white": 277,
+        "masked_32_black": null,
+        "painted_32_white": 247,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWPP - 12/8/7",
+      "name": "POZIOMO PIONOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 195,
+        "painted_25_black": null,
+        "inox_25": 305,
+        "inox_32": 375,
+        "masked_32_white": 284,
+        "masked_32_black": null,
+        "painted_32_white": 254,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UPPP - 6/6/6",
+      "name": "POZIOMO PIONOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 175,
+        "painted_25_black": null,
+        "inox_25": 290,
+        "inox_32": null,
+        "masked_32_white": 258,
+        "masked_32_black": null,
+        "painted_32_white": 228,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWPP - 10/7/7",
+      "name": "POZIOMO PIONOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 190,
+        "painted_25_black": null,
+        "inox_25": 290,
+        "inox_32": null,
+        "masked_32_white": 277,
+        "masked_32_black": null,
+        "painted_32_white": 247,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWPP - 12/7/7",
+      "name": "POZIOMO PIONOWY LEWY LUB PRAWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 195,
+        "painted_25_black": null,
+        "inox_25": 300,
+        "inox_32": null,
+        "masked_32_white": 284,
+        "masked_32_black": null,
+        "painted_32_white": 254,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWP-P - 10/7/9",
+      "name": "UCHWYT WANNOWY POZIOMO PIONOWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 190,
+        "painted_25_black": null,
+        "inox_25": 310,
+        "inox_32": 365,
+        "masked_32_white": 283,
+        "masked_32_black": null,
+        "painted_32_white": 247,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UWP-P - 12/7/9",
+      "name": "UCHWYT WANNOWY POZIOMO PIONOWY",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 190,
+        "painted_25_black": null,
+        "inox_25": 310,
+        "inox_32": 365,
+        "masked_32_white": 283,
+        "masked_32_black": null,
+        "painted_32_white": 247,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "OS",
+      "name": "OSŁONA SYFONU",
+      "vat_rate": 8,
+      "made_to_order": true,
+      "prices": {
+        "painted_25_white": 60,
+        "painted_25_black": null,
+        "inox_25": 150,
+        "inox_32": null,
+        "masked_32_white": 90,
+        "masked_32_black": null,
+        "painted_32_white": 78,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 205,
+        "painted_25_black": null,
+        "inox_25": 565,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU NOGA",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE Z NOGĄ",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 225,
+        "painted_25_black": null,
+        "inox_25": 595,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU PP",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE PP",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 215,
+        "painted_25_black": 258,
+        "inox_25": 499,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU PP NOGA",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE PP Z NOGĄ",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 235,
+        "painted_25_black": 278,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-2",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE 2",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 180,
+        "painted_25_black": null,
+        "inox_25": 505,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-2 NOGA",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE 2 Z NOGĄ",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 200,
+        "painted_25_black": null,
+        "inox_25": 535,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-2 PVC",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE 2 PVC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": 369,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-2 INOX PU",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE PIANKA POLIURETANOWA",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": 410,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-2 PP",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE 2 PP",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 190,
+        "painted_25_black": 228,
+        "inox_25": 440,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-2 PP NOGA",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE 2 PP Z NOGĄ",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 210,
+        "painted_25_black": 248,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-3",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE 3",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": 293,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-4",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE 4",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": 273,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-O",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE Z OPARCIEM",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 268,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KPU-O PVC",
+      "name": "KRZESEŁKO PRYSZNICOWE UCHYLNE Z OPARCIEM PVC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": 499,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KP PORĘCZ",
+      "name": "KRZESEŁKO PRYSZNICOWE ZAWIESZANE NA PORĘCZY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 299,
+        "painted_25_black": null,
+        "inox_25": 850,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "SWBO",
+      "name": "SIEDZISKO WANNOWE BEZ OPARCIA",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 110,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "SWZO",
+      "name": "SIEDZISKO WANNOWE Z OPARCIEM",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 152,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "TP",
+      "name": "TABORET PRYSZNICOWY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 132,
+        "painted_25_black": null,
+        "inox_25": 390,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "ŁNW",
+      "name": "ŁAWECZKA NAWANNOWA",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 104,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-4",
+      "name": "UCHWYT UCHYLNY DO WC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 104,
+        "painted_25_black": 125,
+        "inox_25": 260,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-5",
+      "name": "UCHWYT UCHYLNY DO WC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 109,
+        "painted_25_black": 131,
+        "inox_25": 270,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 142,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-6",
+      "name": "UCHWYT UCHYLNY DO WC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 114,
+        "painted_25_black": 137,
+        "inox_25": 280,
+        "inox_32": 345,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 148,
+        "painted_32_black": 178
+      }
+    },
+    {
+      "code": "UUWC-7",
+      "name": "UCHWYT UCHYLNY DO WC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 119,
+        "painted_25_black": 143,
+        "inox_25": 290,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 155,
+        "painted_32_black": 186
+      }
+    },
+    {
+      "code": "UUWC-7,5",
+      "name": "UCHWYT UCHYLNY DO WC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 360,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-8",
+      "name": "UCHWYT UCHYLNY DO WC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 124,
+        "painted_25_black": 149,
+        "inox_25": 300,
+        "inox_32": 365,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 161,
+        "painted_32_black": 193
+      }
+    },
+    {
+      "code": "UUWC-8,5",
+      "name": "UCHWYT UCHYLNY DO WC",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 370,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 164,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-5 NOGA",
+      "name": "UCHWYT UCHYLNY DO WC Z PODPARCIEM",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 129,
+        "painted_25_black": null,
+        "inox_25": 320,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 162,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-6 NOGA",
+      "name": "UCHWYT UCHYLNY DO WC Z PODPARCIEM",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 134,
+        "painted_25_black": null,
+        "inox_25": 330,
+        "inox_32": 395,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 168,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-7 NOGA",
+      "name": "UCHWYT UCHYLNY DO WC Z PODPARCIEM",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 139,
+        "painted_25_black": null,
+        "inox_25": 340,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 175,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-7,5 NOGA",
+      "name": "UCHWYT UCHYLNY DO WC Z PODPARCIEM",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 410,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-8 NOGA",
+      "name": "UCHWYT UCHYLNY DO WC Z PODPARCIEM",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 144,
+        "painted_25_black": null,
+        "inox_25": 350,
+        "inox_32": 415,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 181,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWC-8,5 NOGA",
+      "name": "UCHWYT UCHYLNY DO WC Z PODPARCIEM",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": 420,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 184,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWCW-5",
+      "name": "UCHWYT UCHYLNY DO WC WOLNOSTOJĄCY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 160,
+        "painted_25_black": 192,
+        "inox_25": 360,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 200,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWCW-6",
+      "name": "UCHWYT UCHYLNY DO WC WOLNOSTOJĄCY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 165,
+        "painted_25_black": 198,
+        "inox_25": 370,
+        "inox_32": 430,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 206,
+        "painted_32_black": 248
+      }
+    },
+    {
+      "code": "UUWCW-7",
+      "name": "UCHWYT UCHYLNY DO WC WOLNOSTOJĄCY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 170,
+        "painted_25_black": 204,
+        "inox_25": 380,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 213,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWCW-8",
+      "name": "UCHWYT UCHYLNY DO WC WOLNOSTOJĄCY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 175,
+        "painted_25_black": 210,
+        "inox_25": 390,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 219,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "UUWCW-6s",
+      "name": "UCHWYT  DO WC WOLNOSTOJĄCY STAŁY",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 135,
+        "painted_25_black": null,
+        "inox_25": 309,
+        "inox_32": 365,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 169,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "ZAWIESZKA PAPIERU",
+      "name": "ZAWIESZKA NA PAPIER TOALETOWY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 22,
+        "painted_25_black": 26,
+        "inox_25": 58,
+        "inox_32": 58,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": 22,
+        "painted_32_black": 26
+      }
+    },
+    {
+      "code": "SŁUCHAWKI",
+      "name": "ZAWIESZKA NA SŁUCHAWKĘ PRYSZNICOWĄ",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": null,
+        "painted_25_black": null,
+        "inox_25": 115,
+        "inox_32": 115,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "LU",
+      "name": "LUSTRO UCHYLNE W PEŁNEJ RAMIE",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 245,
+        "painted_25_black": 294,
+        "inox_25": 400,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "LU1",
+      "name": "LUSTRO UCHYLNE Z BOCZNYMI RAMKAMI",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 215,
+        "painted_25_black": 258,
+        "inox_25": 370,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "RĄCZKA LU",
+      "name": "RĄCZKA DO REGULACJI KĄTA NACHYLENIA LUSTRA",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 35,
+        "painted_25_black": 42,
+        "inox_25": 75,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "DR. 900X900",
+      "name": "DRĄŻEK ZASŁONY PRYSZNICOWEJ 900X900",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 85,
+        "painted_25_black": null,
+        "inox_25": 155,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "DR 900X900X500",
+      "name": "Z PODWIESZENIEM SUFITOWYM",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 110,
+        "painted_25_black": null,
+        "inox_25": 195,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PARAWAN SKŁADANY",
+      "name": "PARAWAN MEDYCZNY SKŁADANY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 219,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PARAWAN SKŁADANY DWUSKRZYDŁOWY",
+      "name": "PARAWAN MEDYCZNY SKŁADANY DWUSKRZYDŁOWY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 438,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PARAWAN ZMYWALNY",
+      "name": "PARAWAN MEDYCZNY SKŁADANY PŁÓTNO ZMYWALNE",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 230,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PARAWAN ZMYWALNY DWUSKRZYDŁOWY",
+      "name": "PARAWAN MEDYCZNY SKŁADANY DWUSKRZYDŁOWY PŁÓTNO ZMYWALNE",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 460,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PARAWAN SZTYWNY",
+      "name": "PARAWAN MEDYCZNY SZTYWNY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 209,
+        "painted_25_black": null,
+        "inox_25": 415,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PARAWAN SZTYWNY ZMYWALNY",
+      "name": "PARAWAN MEDYCZNY SZTYWNY ZMYWALNY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 219,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KOZETKA",
+      "name": "STÓŁ REHABILITACYJNY DO MASAŻU SUCHEGO STANDARD",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 525,
+        "painted_25_black": 630,
+        "inox_25": 790,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "KOZETKA PODWYŻSZANA",
+      "name": "STÓŁ REHABILITACYJNY DO MASAŻU SUCHEGO STANDARD PLUS",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 590,
+        "painted_25_black": 708,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "2 ZAWIESZKI",
+      "name": "STOJAK NA KROPLÓWKI",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 195,
+        "painted_25_black": null,
+        "inox_25": 434,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "4 ZAWIESZKI",
+      "name": "(podstawa metalowa)",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 210,
+        "painted_25_black": null,
+        "inox_25": 449,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "2 ZAWIESZKI PP",
+      "name": "STOJAK NA KROPLÓWKI",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 165,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "4 ZAWIESZKI PP",
+      "name": "(podstawa plastikowa)",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 180,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "SZ MISKA",
+      "name": "STOLIK ZABIEGOWY Z MISKAMI (PÓŁKI SZKLANE)",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 415,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "SZ-2 MISKA",
+      "name": "STOLIK ZABIEGOWY Z MISKAMI (PÓŁKI METALOWE)",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 485,
+        "painted_25_black": null,
+        "inox_25": 840,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "SAM",
+      "name": "STOLIK POD APARATURĘ MEDYCZNĄ",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 415,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "COR-1",
+      "name": "STOLIK POD APARATURĘ MEDYCZNĄ",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 530,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "COR-2",
+      "name": "STANOWISKO DO POBIERANIA KRWI",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 570,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "COR-3",
+      "name": "STANOWISKO DO POBIERANIA KRWI",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 550,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "TABORET",
+      "name": "TABORET LEKARSKI",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 185,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "TABORET CHROM",
+      "name": "TABORET LEKARSKI PODSTAWA CHROM",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 260,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "TABORET PODNÓŻEK CHROM",
+      "name": "TABORET LEKARSKI Z PODNÓŻKIEM PODSTAWA CHROM",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 320,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "SCHODEK-1",
+      "name": "SCHODEK 1-STOPNIOWY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 135,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "SCHODEK-2",
+      "name": "SCHODEK 2-STOPNIOWY",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 160,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PRZEWIJAK",
+      "name": "STÓŁ REHABILITACYJNY DLA NIEMOWLĄT",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 570,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PRZEWIJAK PÓŁKA",
+      "name": "STÓŁ REHABILITACYJNY DLA NIEMOWLĄT Z PÓŁKĄ",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 625,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "PRZEWIJAK SZAFKA",
+      "name": "STÓŁ REHABILITACYJNY DLA NIEMOWLĄT Z SZAFKĄ",
+      "vat_rate": 8,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 990,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    },
+    {
+      "code": "COR-4",
+      "name": "KRZESŁO LEKARSKIE",
+      "vat_rate": 23,
+      "made_to_order": false,
+      "prices": {
+        "painted_25_white": 290,
+        "painted_25_black": null,
+        "inox_25": null,
+        "inox_32": null,
+        "masked_32_white": null,
+        "masked_32_black": null,
+        "painted_32_white": null,
+        "painted_32_black": null
+      }
+    }
+  ]
+}
