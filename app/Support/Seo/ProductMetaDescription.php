@@ -46,6 +46,12 @@ final class ProductMetaDescription
     private const PAGE_CHROME = '/\bOpis Wskazania\b|Powiązane produkty|Masz jakieś pytania|Detale produktu/iu';
 
     /**
+     * A sentence ends at . ! ? or … followed by a capital or a digit, but not after a Polish abbreviation:
+     * "dotyka aż ok. 10% populacji" is one sentence.
+     */
+    private const SENTENCE_BREAK = '/(?<=[.!?…])(?<!\bok\.)(?<!\bnp\.)(?<!\btzw\.)(?<!\bm\.in\.)(?<!\bca\.)(?<!\bnr\.)(?<!\bdr\.)(?<!\bprof\.)(?<!\bwg\.)(?<!\bmin\.)(?<!\bmax\.)\s+(?=[\p{Lu}0-9„"])/u';
+
+    /**
      * A list item's trailing comma or colon followed by an added full stop ("łydki,. Niewydolność").
      */
     private const BROKEN_PUNCTUATION = '/\s*[,;:]\s*\./u';
@@ -103,7 +109,7 @@ final class ProductMetaDescription
         $sentences = [];
 
         foreach ($units as $unit) {
-            foreach (preg_split('/(?<=[.!?…])\s+(?=[\p{Lu}0-9„"])/u', $unit) ?: [] as $sentence) {
+            foreach (preg_split(self::SENTENCE_BREAK, $unit) ?: [] as $sentence) {
                 $sentence = trim($sentence);
 
                 // Skip fragments, lines that only repeat the product name, sentences about the page itself and
