@@ -1933,6 +1933,40 @@ final class Seni24ProductScraper
             }
         }
 
+        /*
+         * Seni24 often describes a combination only through its URL fragment,
+         * e.g. ".../seni-san-maxi_22107-24959#/ilosc_sztuk-30_szt", with
+         * numberOfItems "30" instead of the option label "30 szt.". Each
+         * fragment segment is "<group>-<option>" in PrestaShop link-rewrite form.
+         */
+        $fragmentValues = $this->structuredUrlFragmentValues($node['url'] ?? null);
+
+        if ($fragmentValues !== []) {
+            foreach ($groups as $group) {
+                $label = is_string($group['label'] ?? null)
+                    ? $this->normalizeText($group['label'])
+                    : '';
+
+                if ($label === '' || isset($attributes[$label])) {
+                    continue;
+                }
+
+                foreach (($group['options'] ?? []) as $option) {
+                    if (! is_array($option) || ! is_string($option['value'] ?? null)) {
+                        continue;
+                    }
+
+                    $optionValue = $this->normalizeText($option['value']);
+
+                    if (in_array($this->linkRewrite($optionValue), $fragmentValues, true)) {
+                        $attributes[$label] = ['label' => $label, 'value' => $optionValue];
+
+                        break;
+                    }
+                }
+            }
+        }
+
         foreach ([
             'size' => 'Rozmiar',
             'color' => 'Kolor',
@@ -1955,6 +1989,36 @@ final class Seni24ProductScraper
         }
 
         return array_values($attributes);
+    }
+
+    /**
+     * Option values from a PrestaShop combination fragment such as
+     * "#/rozmiar-m/ilosc_sztuk-30_szt" (here "m" and "30_szt").
+     *
+     * @return list<string>
+     */
+    private function structuredUrlFragmentValues(mixed $url): array
+    {
+        if (! is_string($url) || ! str_contains($url, '#/')) {
+            return [];
+        }
+
+        $values = [];
+
+        foreach (explode('/', substr($url, strpos($url, '#/') + 2)) as $segment) {
+            $dash = strpos($segment, '-');
+
+            if ($dash !== false && $dash < strlen($segment) - 1) {
+                $values[] = Str::lower(rawurldecode(substr($segment, $dash + 1)));
+            }
+        }
+
+        return $values;
+    }
+
+    private function linkRewrite(string $value): string
+    {
+        return trim((string) preg_replace('/[^a-z0-9]+/', '_', Str::lower(Str::ascii($value))), '_');
     }
 
     /** @return array<string,mixed>|null */

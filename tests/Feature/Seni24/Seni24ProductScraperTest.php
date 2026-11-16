@@ -2096,3 +2096,71 @@ it('scrapes a product without options from a URL without a combination id', func
         ->and($result['price_gross_amount'])->toBe(42.41)
         ->and($result['variants_unresolved'])->toBeFalse();
 });
+
+it('matches Seni24 combinations to options through the combination url fragment', function (): void {
+    // Seni San Maxi: the 30 szt. combination carries numberOfItems "30", not the option label "30 szt.".
+    $html = <<<'HTML'
+        <html>
+        <head>
+            <link rel="canonical" href="https://www.seni24.pl/pieluchy-anatomiczne-seni-san-maxi_22107-24958">
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "ProductGroup",
+              "productID": "22107",
+              "hasVariant": [
+                {
+                  "@type": "Product",
+                  "name": "Pieluchy anatomiczne Seni San Maxi - 10 szt.",
+                  "url": "https://www.seni24.pl/pieluchy-anatomiczne-seni-san-maxi_22107-24958#/ilosc_sztuk-10_szt",
+                  "sku": "SE-093-MA10-G01",
+                  "gtin13": "5900516800703",
+                  "numberOfItems": "10",
+                  "offers": {"@type": "Offer", "price": "21.69", "priceCurrency": "PLN", "availability": "https://schema.org/InStock"}
+                },
+                {
+                  "@type": "Product",
+                  "name": "Pieluchy anatomiczne Seni San Maxi - 30 szt.",
+                  "url": "https://www.seni24.pl/pieluchy-anatomiczne-seni-san-maxi_22107-24959#/ilosc_sztuk-30_szt",
+                  "sku": "SE-093-MA30-G01",
+                  "gtin13": "5900516800765",
+                  "numberOfItems": "30",
+                  "offers": {"@type": "Offer", "price": "60.17", "priceCurrency": "PLN", "availability": "https://schema.org/InStock"}
+                }
+              ]
+            }
+            </script>
+        </head>
+        <body>
+            <h1>Pieluchy anatomiczne Seni San Maxi</h1>
+            <div class="product-variants">
+                <div class="product-variants-item">
+                    <span class="control-label">Ilość sztuk</span>
+                    <label><input data-product-attribute="7" name="group[7]" value="70" checked>10 szt.</label>
+                    <label><input data-product-attribute="7" name="group[7]" value="71">30 szt.</label>
+                </div>
+            </div>
+            <div>Cena za 1 opak. z VAT 5% 21,69 zł</div>
+            <div id="product-details">
+                <table class="product-features">
+                    <tr><th>Indeks</th><td>SE-093-MA10-G01</td></tr>
+                </table>
+            </div>
+            <a id="availability-text"><div class="h6">Produkt dostępny</div></a>
+        </body>
+        </html>
+    HTML;
+
+    $result = app(Seni24ProductScraper::class)->extract(
+        $html,
+        'https://www.seni24.pl/pieluchy-anatomiczne-seni-san-maxi_22107-24958',
+    );
+
+    expect($result['variants_unresolved'])->toBeFalse()
+        ->and(array_column($result['variant_candidates'], 'external_variant_id'))->toBe(['24958', '24959'])
+        ->and($result['variant_candidates'][1]['attributes'])->toBe([
+            ['label' => 'Ilość sztuk', 'value' => '30 szt.'],
+        ])
+        ->and($result['variant_candidates'][1]['label'])->toBe('Ilość sztuk: 30 szt.')
+        ->and($result['variant_candidates'][1]['price_gross_amount'])->toBe(60.17);
+});
