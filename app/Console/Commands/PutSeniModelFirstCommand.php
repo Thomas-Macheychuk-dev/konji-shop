@@ -82,7 +82,7 @@ final class PutSeniModelFirstCommand extends Command
      */
     public static function modelFirst(string $name): ?string
     {
-        if (! preg_match('/^(?<before>.+?)\s+(?<line>Seni(?:\s+\p{Lu}[\p{L}\-]*)*)(?<after>(?:\s.*)?)$/u', $name, $match)) {
+        if (! preg_match('/^(?<before>.+?)\s+(?<line>Seni(?:\s+(?:\p{Lu}[\p{L}\-+]*|\d+(?=\s+\p{Lu})|for(?=\s+\p{Lu})))*)(?<after>(?:\s.*)?)$/u', $name, $match)) {
             return null;
         }
 
