@@ -29,6 +29,16 @@ it('tells peruka.pl colour samples from model photos and charts', function (): v
         ->and(PerukaPhotoOrder::order([WIG_MEDIA.'PER001442-37205.jpg', WIG_MEDIA.'-dlugosci.webp']))->toBe([0, 1]);
 });
 
+it('treats gallery photos with stock numbers as wig photos', function (): void {
+    // Bachata 23/66/8R on peruka.pl: the main photo is the colour sample, the gallery shows the wig.
+    expect(PerukaPhotoOrder::order([WIG_MEDIA.'Hai001421-68529.jpg', WIG_MEDIA.'Hai001421-68241.jpg', WIG_MEDIA.'Hai001421-68242.jpg']))->toBe([1, 0, 2])
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'14-16.jpg', WIG_MEDIA.'Hai001358-68796.jpg']))->toBe([1, 0])
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'PER001819-52674.jpg', WIG_MEDIA.'26-27-19-8R.jpg', WIG_MEDIA.'baza-tresy.JPG', WIG_MEDIA.'PER001819-52009.jpg']))->toBe([3, 0, 1, 2])
+        ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Hai001421-68241.jpg', WIG_MEDIA.'Hai001421-68529.jpg']))->toBe(0)
+        ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Eclair-01.jpg', WIG_MEDIA.'PER001442-37205.jpg']))->toBe(1)
+        ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Eclair-01.jpg', WIG_MEDIA.'Eclair-02.jpg', WIG_MEDIA.'2.jpg']))->toBeNull();
+});
+
 it('puts the model photo before the colour sample when importing a wig', function (): void {
     $remote = Mockery::mock(RemoteImageImporter::class);
     $remote->shouldReceive('import')->andReturnUsing(static fn (string $url, string $directory): array => [
@@ -63,15 +73,17 @@ it('puts the model photo before the colour sample when importing a wig', functio
 
 it('previews, writes and rolls back putting the wig model photo first', function (): void {
     Storage::fake('local');
+    $this->travelTo('2026-11-20 12:00:00');
 
     $eclair = wigWithPhotos('eclair-10-14-80-a-peruka-syntetyczna', ['PER001442-37205.jpg', 'Eclair-01.jpg', 'baza-tresy.JPG']);
     $sample = $eclair->images()->where('is_main', true)->firstOrFail();
     $eclair->update(['default_image_type' => Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE, 'default_image_id' => $sample->id]);
     $calata = wigWithPhotos('calata-15-23-6r-peruka-syntetyczna', ['Hair-Up-Calata-15-23-6R-900x900.jpg', '15-23-6R.jpg']);
     wigWithPhotos('flatwhite-small-61', ['61.jpg', '-dlugosci.webp']);
+    $bachata = wigWithPhotos('bachata-23-66-8r-peruka-syntetyczna', ['Hai001421-68529.jpg', 'Hai001421-68241.jpg', 'Hai001421-68242.jpg']);
 
     $this->artisan('peruka:model-photo-first')
-        ->expectsOutputToContain('PRODUCTS=3 CHANGES=1 NO_MODEL_PHOTO=1')
+        ->expectsOutputToContain('PRODUCTS=4 ALREADY_DONE=0 CHANGES=2 NO_MODEL_PHOTO=1')
         ->expectsOutputToContain('MOVE product='.$eclair->id.' eclair-10-14-80-a-peruka-syntetyczna: PER001442-37205.jpg -> Eclair-01.jpg')
         ->expectsOutputToContain('NO_MODEL_PHOTO product=')
         ->expectsOutputToContain('MODE=READ_ONLY')
@@ -80,8 +92,26 @@ it('previews, writes and rolls back putting the wig model photo first', function
     expect($eclair->fresh()->main_image_url)->toEndWith('PER001442-37205.jpg');
 
     $this->artisan('peruka:model-photo-first', ['--write' => true])
-        ->expectsOutputToContain('REORDERED=1')
+        ->expectsOutputToContain('REORDERED=2')
         ->assertSuccessful();
+
+    expect($bachata->fresh()->main_image_url)->toEndWith('Hai001421-68241.jpg');
+
+    // A second run would read the stock-number wig photo now in front as a colour sample.
+    $this->artisan('peruka:model-photo-first', ['--write' => true])
+        ->expectsOutputToContain('PRODUCTS=4 ALREADY_DONE=2 CHANGES=0 NO_MODEL_PHOTO=1')
+        ->assertSuccessful();
+
+    expect($bachata->fresh()->main_image_url)->toEndWith('Hai001421-68241.jpg');
+
+    $this->travelTo('2026-11-24 12:00:00');
+    $imported = wigWithPhotos('samba-830-131-14-peruka-syntetyczna', ['Hai001489-68485.jpg', 'Hai001489-68583.jpg']);
+
+    $this->artisan('peruka:model-photo-first')
+        ->expectsOutputToContain('PRODUCTS=5 ALREADY_DONE=3 CHANGES=0')
+        ->assertSuccessful();
+
+    expect($imported->fresh()->main_image_url)->toEndWith('Hai001489-68485.jpg');
 
     $eclair->refresh()->load('images');
 
@@ -94,13 +124,18 @@ it('previews, writes and rolls back putting the wig model photo first', function
     $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->first();
 
     $this->artisan('peruka:model-photo-first', ['--rollback' => $backup])
-        ->expectsOutputToContain('RESTORED=1 OF 1')
+        ->expectsOutputToContain('RESTORED=2 OF 2')
         ->assertSuccessful();
 
     $eclair->refresh();
 
     expect($eclair->main_image_url)->toEndWith('PER001442-37205.jpg')
-        ->and($eclair->default_image_id)->toBe($sample->id);
+        ->and($eclair->default_image_id)->toBe($sample->id)
+        ->and(Storage::disk('local')->exists($backup.'.rolled-back'))->toBeTrue();
+
+    $this->artisan('peruka:model-photo-first')
+        ->expectsOutputToContain('ALREADY_DONE=1 CHANGES=2')
+        ->assertSuccessful();
 });
 
 /** @param  list<string>  $files */

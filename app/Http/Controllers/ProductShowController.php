@@ -624,8 +624,9 @@ class ProductShowController extends Controller
             ->with('images')
             ->get()
             ->map(function (Product $option) use ($product): array {
-                $images = $option->images->sortBy(fn (ProductImage $image): array => [$image->sort_order, $image->id]);
-                $image = $images->first(fn (ProductImage $image): bool => PerukaPhotoOrder::isColourSample($image->source_url))
+                $images = $option->images->sortBy(fn (ProductImage $image): array => [$image->sort_order, $image->id])->values();
+                $sample = PerukaPhotoOrder::colourSampleIndex($images->pluck('source_url')->all());
+                $image = ($sample !== null ? $images[$sample] : null)
                     ?? $images->firstWhere('is_main', true)
                     ?? $images->first();
 
