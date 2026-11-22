@@ -49,6 +49,20 @@ final class CorradomedProductImporter
         'website' => 'https://corradomed.pl',
     ];
 
+    /**
+     * Flat courier delivery in grosze for furniture too large for a parcel, by corradomed.pl subsection
+     * (Krzysztof, 16 November 2026). See LargeItemDelivery.
+     */
+    public const LARGE_ITEM_DELIVERY = [
+        'Kozetka' => 8000,
+        'Stoliki zabiegowe' => 8000,
+        'Stolik pod aparaturę' => 8000,
+        'Przewijak' => 8000,
+        'Pobór krwi' => 8000,
+        'Parawan' => 7200,
+        'Stojak na kroplówki' => 7200,
+    ];
+
     private const COLOUR_WHITE = 'biały (RAL 9003)';
 
     private const COLOUR_BLACK = 'czarny (RAL 9005)';
@@ -257,6 +271,7 @@ final class CorradomedProductImporter
             'seo_title' => $name,
             'seo_description' => Str::limit($this->summary($page, $plan), 300, ''),
             'status' => $product?->status ?? ProductStatus::DRAFT,
+            'large_item_delivery_amount' => self::LARGE_ITEM_DELIVERY[(string) ($page['subsection'] ?? '')] ?? null,
             'external_source' => self::SOURCE,
             'external_id' => $plan['external_id'],
             'external_parent_sku' => $this->limitDatabaseString($this->normaliseSku('CRD-'.$plan['external_id'])),

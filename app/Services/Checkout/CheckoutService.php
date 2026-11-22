@@ -16,11 +16,13 @@ use App\Enums\VatRate;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\User;
+use App\Services\Delivery\LargeItemDelivery;
 use App\Services\Delivery\Polkurier\PolkurierPackBuilder;
 use App\Services\Delivery\Polkurier\PolkurierShippingQuoteService;
 use App\Support\Products\ProductLegalDisclosures;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use RuntimeException;
 
 class CheckoutService
@@ -29,6 +31,7 @@ class CheckoutService
         private readonly OrderNumberGenerator $orderNumberGenerator,
         private readonly PolkurierShippingQuoteService $shippingQuoteService,
         private readonly PolkurierPackBuilder $packBuilder,
+        private readonly LargeItemDelivery $largeItemDelivery,
     ) {}
 
     /**
@@ -83,15 +86,22 @@ class CheckoutService
 
             $shippingAddressData = $this->buildShippingAddressData($data);
             $packs = $this->packBuilder->fromCart($lockedCart);
+            $largeItemAmount = $this->largeItemDelivery->amountForCart($lockedCart);
 
-            $shippingQuote = $this->shippingQuoteService->quote(
-                provider: $deliveryProvider,
-                carrier: $deliveryCarrier,
-                service: $deliveryService,
-                shippingAddress: $shippingAddressData,
-                currency: $lockedCart->currency,
-                packs: $packs,
-            );
+            if ($this->largeItemDelivery->rejectsService($largeItemAmount, $deliveryService)) {
+                throw ValidationException::withMessages(['delivery_service' => LargeItemDelivery::LOCKER_MESSAGE]);
+            }
+
+            $shippingQuote = $this->largeItemDelivery->applies($largeItemAmount, $deliveryService)
+                ? $this->largeItemDelivery->quote((int) $largeItemAmount, $deliveryProvider, $deliveryCarrier, $deliveryService, $lockedCart->currency)
+                : $this->shippingQuoteService->quote(
+                    provider: $deliveryProvider,
+                    carrier: $deliveryCarrier,
+                    service: $deliveryService,
+                    shippingAddress: $shippingAddressData,
+                    currency: $lockedCart->currency,
+                    packs: $packs,
+                );
 
             $shippingGross = $shippingQuote->amount;
             $shippingNet = $this->shippingNetFromGross($shippingGross);

@@ -50,6 +50,7 @@ class Product extends Model
         'external_parent_sku',
         'colour_group',
         'colour_label',
+        'large_item_delivery_amount',
         'default_image_type',
         'default_image_id',
     ];
@@ -64,6 +65,7 @@ class Product extends Model
             'published_at' => 'datetime',
             'deleted_at' => 'datetime',
             'default_image_id' => 'integer',
+            'large_item_delivery_amount' => 'integer',
         ];
     }
 

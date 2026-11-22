@@ -35,6 +35,7 @@ if (checkoutDeliveryMethod) {
         shippingQuoteUrl: checkoutDeliveryMethod.dataset.shippingQuoteUrl,
         polkurierMapTokenUrl: checkoutDeliveryMethod.dataset.polkurierMapTokenUrl,
         currency: checkoutDeliveryMethod.dataset.currency || 'PLN',
+        largeItemDelivery: Number(checkoutDeliveryMethod.dataset.largeItemDelivery || 0),
     }).mount(checkoutDeliveryMethod);
 }
 
