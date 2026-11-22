@@ -140,6 +140,7 @@ class ProductShowController extends Controller
         )), (string) $product->name);
 
         $missingSizeChoice = Reh4MatSizeOptions::missingChoice($product);
+        $colourOptions = $this->colourOptions($product);
 
         $productPayload = [
             'id' => $product->id,
@@ -149,6 +150,7 @@ class ProductShowController extends Controller
             'default_image' => $this->imagePayload($product->selectedDefaultImage(), $product->name),
             'base_images' => $this->baseImages($product),
             'informational_color_groups' => $informationalColorGroups,
+            'colour_options' => $colourOptions,
             'legal_disclosures' => ProductLegalDisclosures::forProduct($product),
 
             'is_purchasable' => $product->status?->isActive() === true
@@ -176,7 +178,7 @@ class ProductShowController extends Controller
             'defaultVariant' => $defaultVariant,
             'breadcrumbs' => $breadcrumbs,
             'informationalColorGroups' => $informationalColorGroups,
-            'colourOptions' => $this->colourOptions($product),
+            'colourOptions' => $colourOptions,
             'storefrontDescription' => $storefrontDescription,
             'manufacturerInformation' => ProductManufacturerInformation::forProduct($product),
 
@@ -196,7 +198,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v19.%s.%d',
+            'product-page.v20.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
