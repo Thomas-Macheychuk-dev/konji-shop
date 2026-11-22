@@ -72,6 +72,37 @@ it('links the colours of a wig model from one page per model, then rolls back', 
     expect($calata2->fresh()->colour_group)->toBeNull();
 });
 
+it('continues a stopped crawl from the pages it saved', function (): void {
+    Storage::fake('local');
+    $calata = perukaColourProduct('calata-15-23-6r-peruka-syntetyczna');
+    perukaColourProduct('calata-2');
+    perukaColourProduct('turban-verbena-me12-flower');
+
+    Http::preventStrayRequests();
+    Http::fake([
+        'www.peruka.pl/calata-15-23-6r-peruka-syntetyczna.html' => Http::response(perukaColourPage('CALATA # 15/23/6R', ['calata-2' => '2'])),
+        'www.peruka.pl/turban-verbena-me12-flower.html' => Http::sequence()->pushStatus(503)->push(perukaColourPage('VERBENA # ME12+B61', [])),
+    ]);
+
+    // Stopped after one page, as a deploy would.
+    $this->artisan('peruka:link-colours', ['--delay-ms' => 0, '--limit' => 1])->assertSuccessful();
+    Http::assertSentCount(1);
+
+    // The turban fails once; the next run fetches only what is not covered and retries the failure.
+    $this->artisan('peruka:link-colours', ['--delay-ms' => 0])
+        ->expectsOutputToContain('RESUMED PAGES=1 COVERED=2 OF 3')
+        ->expectsOutputToContain('PAGES=1 FAILED=1')
+        ->assertSuccessful();
+
+    $this->artisan('peruka:link-colours', ['--delay-ms' => 0, '--write' => true])
+        ->expectsOutputToContain('PAGES=2 FAILED=0 GROUPS=1 LINKED=2')
+        ->expectsOutputToContain('WRITTEN=2')
+        ->assertSuccessful();
+
+    Http::assertSentCount(3);
+    expect($calata->fresh()->colour_label)->toBe('15/23/6R');
+});
+
 it('offers the other colours of the model on the product page', function (): void {
     Storage::fake('public');
     $current = perukaColourProduct('calata-15-23-6r-peruka-syntetyczna', ['colour_group' => 'peruka-abc', 'colour_label' => '15/23/6R']);
