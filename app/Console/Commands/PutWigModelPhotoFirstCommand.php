@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Services\Peruka\PerukaPhotoOrder;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,9 +16,17 @@ use Illuminate\Support\Facades\Storage;
  * Shows the hairstyle, not a close-up of the hair colour, as the first photo of peruka.pl wigs (owner's
  * feedback, 16 November 2026). See PerukaPhotoOrder. The colour sample stays in the gallery after the model
  * photo; no photo is deleted. A default image the admin chose is cleared only when it is a colour sample.
+ *
+ * It repairs photos imported before the importer ordered them, once. A stock-number photo is a colour sample
+ * only as peruka.pl's main photo, so reordering twice would swap the photos back: products changed by an
+ * earlier --write (a backup not rolled back) and photos imported since IMPORTER_FIXED_AT are left alone.
  */
 final class PutWigModelPhotoFirstCommand extends Command
 {
+    private const IMPORTER_FIXED_AT = '2026-11-23 00:00:00';
+
+    private const BACKUP_PREFIX = 'catalogue-repairs/wig-model-photo-first-';
+
     protected $signature = 'peruka:model-photo-first
         {--samples=30 : How many changes and unresolved products to list.}
         {--write : Reorder the photos after writing a private backup. Otherwise preview only.}
@@ -35,17 +44,26 @@ final class PutWigModelPhotoFirstCommand extends Command
         $changes = [];
         $noModelPhoto = [];
         $products = 0;
+        $alreadyDone = 0;
+        $done = $this->productsChangedEarlier();
+        $fixedAt = Carbon::parse(self::IMPORTER_FIXED_AT);
 
         Product::query()
             ->where('external_source', 'peruka')
             ->with('images')
             ->orderBy('id')
-            ->chunkById(500, function ($chunk) use (&$changes, &$noModelPhoto, &$products): void {
+            ->chunkById(500, function ($chunk) use (&$changes, &$noModelPhoto, &$products, &$alreadyDone, $done, $fixedAt): void {
                 foreach ($chunk as $product) {
                     $products++;
                     $images = $this->displayOrder($product);
 
                     if ($images === []) {
+                        continue;
+                    }
+
+                    if (isset($done[$product->id]) || $images[0]->created_at?->gte($fixedAt)) {
+                        $alreadyDone++;
+
                         continue;
                     }
 
@@ -61,7 +79,7 @@ final class PutWigModelPhotoFirstCommand extends Command
             });
 
         $this->line('=== WIG MODEL PHOTO FIRST ===');
-        $this->line(sprintf('PRODUCTS=%d CHANGES=%d NO_MODEL_PHOTO=%d', $products, count($changes), count($noModelPhoto)));
+        $this->line(sprintf('PRODUCTS=%d ALREADY_DONE=%d CHANGES=%d NO_MODEL_PHOTO=%d', $products, $alreadyDone, count($changes), count($noModelPhoto)));
 
         foreach (array_slice($changes, 0, $samples) as $change) {
             $this->line(sprintf('MOVE product=%d %s: %s -> %s', $change['id'], $change['slug'], $change['old_first'], $change['new_first']));
@@ -81,7 +99,7 @@ final class PutWigModelPhotoFirstCommand extends Command
             return self::SUCCESS;
         }
 
-        $backupPath = 'catalogue-repairs/wig-model-photo-first-'.gmdate('Ymd-His').'-'.bin2hex(random_bytes(4)).'.json';
+        $backupPath = self::BACKUP_PREFIX.gmdate('Ymd-His').'-'.bin2hex(random_bytes(4)).'.json';
         Storage::disk('local')->put($backupPath, json_encode([
             'command' => $this->getName(),
             'created_at' => now()->toIso8601String(),
@@ -92,6 +110,30 @@ final class PutWigModelPhotoFirstCommand extends Command
         $this->info('REORDERED='.$this->apply($changes, 'old', 'new'));
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Products reordered by an earlier --write whose backup was not rolled back.
+     *
+     * @return array<int, true>
+     */
+    private function productsChangedEarlier(): array
+    {
+        $ids = [];
+
+        foreach (Storage::disk('local')->files('catalogue-repairs') as $path) {
+            if (! str_starts_with($path, self::BACKUP_PREFIX) || ! str_ends_with($path, '.json')) {
+                continue;
+            }
+
+            $backup = json_decode(Storage::disk('local')->get($path), true, flags: JSON_THROW_ON_ERROR);
+
+            foreach ($backup['changes'] as $change) {
+                $ids[(int) $change['id']] = true;
+            }
+        }
+
+        return $ids;
     }
 
     /**
@@ -210,6 +252,12 @@ final class PutWigModelPhotoFirstCommand extends Command
 
         $backup = json_decode(Storage::disk('local')->get($backupPath), true, flags: JSON_THROW_ON_ERROR);
         $this->info('RESTORED='.$this->apply($backup['changes'], 'new', 'old').' OF '.count($backup['changes']));
+
+        // A rolled-back backup no longer marks its products as done.
+        if (str_starts_with($backupPath, self::BACKUP_PREFIX)) {
+            Storage::disk('local')->move($backupPath, $backupPath.'.rolled-back');
+            $this->info('BACKUP_MOVED='.$backupPath.'.rolled-back');
+        }
 
         return self::SUCCESS;
     }

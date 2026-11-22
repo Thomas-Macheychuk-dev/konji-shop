@@ -38,16 +38,16 @@ final class PerukaProductScraperTest extends TestCase
         ], $product['variant_product_urls']);
         $this->assertSame([
             [
-                'url' => 'https://www.peruka.pl/media/products/2c1da3f35b5376c52fa2d2ed2ebecbe3/images/flowers-verbena-me12-900x900.webp',
-                'alt' => null,
-            ],
-            [
                 'url' => 'https://www.peruka.pl/media/products/2c1/images/verbena-ME12-B61-side-900x900.webp',
                 'alt' => 'Verbena',
             ],
             [
                 'url' => 'https://www.peruka.pl/media/products/2c1/images/verbena-ME12-B61-back.webp',
                 'alt' => 'Back',
+            ],
+            [
+                'url' => 'https://www.peruka.pl/media/products/2c1da3f35b5376c52fa2d2ed2ebecbe3/images/flowers-verbena-me12-900x900.webp',
+                'alt' => null,
             ],
         ], $product['images']);
     }

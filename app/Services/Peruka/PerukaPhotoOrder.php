@@ -9,20 +9,40 @@ namespace App\Services\Peruka;
  * colour, not the wig. A list of wigs then shows a page of hair samples. The owner wants the hairstyle first
  * (16 November 2026): the model photo comes first, the colour sample stays in the gallery.
  *
- * Peruka.pl names its files: a colour sample is a colour code ("15-23-6R.jpg", "61.jpg", "6-8-4R-hh.jpg") or a
- * stock number ("PER001757-52732.jpg", "Hai001468-69110.jpg"). Model photos are named after the model
- * ("Pudding-01.jpg", "JELLY-8-14-6R-front-900x900.jpg"); Ellen Wille photos ("ELL000421-17677.jpg") already
- * show the wig. The cap ("baza-tresy-…") and length ("-dlugosci.webp") charts are shared by every product.
+ * Peruka.pl names its files: a colour sample is a colour code ("15-23-6R.jpg", "61.jpg", "6-8-4R-hh.jpg"), or
+ * a stock number ("PER001757-52732.jpg", "Hai001468-69110.jpg") when it is the main photo. Gallery photos
+ * with stock numbers ("Hai001421-68241.jpg") show the wig, as do photos named after the model
+ * ("Pudding-01.jpg", "JELLY-8-14-6R-front-900x900.jpg") and Ellen Wille photos ("ELL000421-17677.jpg"). The
+ * cap ("baza-tresy-…") and length ("-dlugosci.webp") charts are shared by every product.
  */
 final class PerukaPhotoOrder
 {
+    /** A colour code, or a stock number. A stock number is a colour sample only as the main photo. */
     public static function isColourSample(?string $url): bool
     {
-        $stem = self::stem($url);
+        return self::isColourCode($url) || preg_match('/^(?:per|hai)\d{4,}-\d+$/i', self::stem($url)) === 1;
+    }
 
-        return $stem !== ''
-            && (preg_match('/^(?:per|hai)\d{4,}-\d+$/i', $stem) === 1
-                || preg_match('/^\d+(?:[-_]\d*[a-z]{0,2})*$/i', $stem) === 1);
+    public static function isColourCode(?string $url): bool
+    {
+        return preg_match('/^\d+(?:[-_]\d*[a-z]{0,2})*$/i', self::stem($url)) === 1;
+    }
+
+    /**
+     * The colour sample among photos in order: the first photo, or the second after order() moved a model photo
+     * in front of it.
+     *
+     * @param  list<string|null>  $urls
+     */
+    public static function colourSampleIndex(array $urls): ?int
+    {
+        foreach (array_slice($urls, 0, 2, true) as $index => $url) {
+            if (self::isColourSample($url)) {
+                return $index;
+            }
+        }
+
+        return null;
     }
 
     public static function isChart(?string $url): bool
@@ -45,8 +65,8 @@ final class PerukaPhotoOrder
             return $indexes;
         }
 
-        foreach ($urls as $index => $url) {
-            if (! self::isColourSample($url) && ! self::isChart($url)) {
+        foreach (array_slice($urls, 1, preserve_keys: true) as $index => $url) {
+            if (! self::isColourCode($url) && ! self::isChart($url)) {
                 return [$index, ...array_values(array_diff($indexes, [$index]))];
             }
         }

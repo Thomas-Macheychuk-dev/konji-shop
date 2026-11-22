@@ -329,7 +329,9 @@ final class PerukaProductScraper
     {
         $images = [];
 
-        foreach (['meta[property="og:image"][content]' => 'content', '#product-photo img[src]' => 'src', '#product-photo[data-gallery]' => 'data-gallery', '.gallery-item img[src]' => 'src', '.gallery-item[data-src]' => 'data-src'] as $selector => $attribute) {
+        // The main photo first: PerukaPhotoOrder recognises a colour sample by being the main photo. The og:image
+        // repeats a gallery photo (often under a .jpg name the server does not have), so it comes last.
+        foreach (['#product-photo img[src]' => 'src', '#product-photo[data-gallery]' => 'data-gallery', '.gallery-item img[src]' => 'src', '.gallery-item[data-src]' => 'data-src', 'meta[property="og:image"][content]' => 'content'] as $selector => $attribute) {
             try {
                 $crawler->filter($selector)->each(function (Crawler $node) use (&$images, $attribute, $baseUrl): void {
                     $value = $node->attr($attribute);
