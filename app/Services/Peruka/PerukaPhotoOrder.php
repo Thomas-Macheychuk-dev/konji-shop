@@ -38,15 +38,16 @@ final class PerukaPhotoOrder
     }
 
     /**
-     * The colour sample among photos in order: the first photo, or the second after order() moved a model photo
-     * in front of it.
+     * The colour sample among photos in order: the second photo after order() moved a model photo in front of it,
+     * otherwise the first. The second is checked first: a model photo moved in front can have a stock number too
+     * ("Hai001470-69096.jpg" before the sample "Hai001470-69111.jpg").
      *
      * @param  list<string|null>  $urls
      */
     public static function colourSampleIndex(array $urls): ?int
     {
-        foreach (array_slice($urls, 0, 2, true) as $index => $url) {
-            if (self::isColourSample($url)) {
+        foreach ([1, 0] as $index) {
+            if (isset($urls[$index]) && self::isColourSample($urls[$index])) {
                 return $index;
             }
         }
