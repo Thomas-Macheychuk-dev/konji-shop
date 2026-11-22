@@ -33,6 +33,8 @@ const informationalColorGroups = computed(
     () => props.product.informational_color_groups ?? []
 );
 const legalDisclosures = computed(() => props.product.legal_disclosures ?? []);
+// Other colours of the model, each its own product page (peruka.pl wigs).
+const colourOptions = computed(() => props.product.colour_options ?? []);
 
 const currentImage = ref(0);
 const selectedOptionValueIds = ref({});
@@ -637,6 +639,40 @@ window.dispatchEvent(new CustomEvent('cart:updated', {
                         {{ selectionError }}
                     </p>
                 </div>
+
+                <nav
+                    v-if="colourOptions.length"
+                    aria-labelledby="colour-options-heading"
+                    class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
+                >
+                    <h2 id="colour-options-heading" class="text-lg font-semibold text-zinc-900">
+                        Wybierz kolor
+                    </h2>
+
+                    <ul class="mt-4 flex flex-wrap gap-3">
+                        <li v-for="option in colourOptions" :key="option.url" class="w-20">
+                            <a
+                                :href="option.url"
+                                :aria-current="option.is_current ? 'page' : undefined"
+                                class="flex flex-col items-center gap-1.5 rounded-xl p-1 text-center"
+                                :class="option.is_current ? 'ring-2 ring-sky-600' : 'hover:ring-2 hover:ring-zinc-300'"
+                            >
+                                <span class="block h-16 w-16 overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100">
+                                    <img
+                                        v-if="option.image_url"
+                                        :src="option.image_url"
+                                        alt=""
+                                        class="h-full w-full object-cover"
+                                        loading="lazy"
+                                    >
+                                </span>
+                                <span class="break-words text-xs leading-4 text-zinc-700">
+                                    {{ option.label }}
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 
                 <div
                     v-if="informationalColorGroups.length"

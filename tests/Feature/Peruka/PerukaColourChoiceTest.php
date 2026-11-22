@@ -123,7 +123,9 @@ it('offers the other colours of the model on the product page', function (): voi
     $response = $this->get(route('products.show', $current->slug))->assertOk();
     $options = $response->viewData('colourOptions');
 
-    expect(array_column($options, 'label'))->toBe(['2', '15/23/6R'])
+    // The Vue product configurator replaces the server-rendered page; it renders the strip from the payload.
+    expect($response->viewData('productPayload')['colour_options'])->toBe($options)
+        ->and(array_column($options, 'label'))->toBe(['2', '15/23/6R'])
         ->and(array_column($options, 'is_current'))->toBe([false, true])
         ->and($options[0]['url'])->toBe(route('products.show', 'calata-2'))
         ->and($options[0]['image_url'])->toEndWith('/2.jpg');
