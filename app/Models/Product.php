@@ -48,6 +48,8 @@ class Product extends Model
         'external_source',
         'external_id',
         'external_parent_sku',
+        'colour_group',
+        'colour_label',
         'default_image_type',
         'default_image_id',
     ];

@@ -123,6 +123,47 @@
                             </noscript>
                         </div>
 
+                        @if (! empty($colourOptions))
+                            <nav
+                                aria-labelledby="colour-options-heading"
+                                class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                            >
+                                <h2 id="colour-options-heading" class="text-lg font-semibold text-zinc-900 dark:text-white">
+                                    Wybierz kolor
+                                </h2>
+
+                                <ul class="mt-4 flex flex-wrap gap-3">
+                                    @foreach ($colourOptions as $option)
+                                        <li class="w-20">
+                                            <a
+                                                href="{{ $option['url'] }}"
+                                                @if ($option['is_current']) aria-current="page" @endif
+                                                @class([
+                                                    'flex flex-col items-center gap-1.5 rounded-xl p-1 text-center',
+                                                    'ring-2 ring-sky-600' => $option['is_current'],
+                                                    'hover:ring-2 hover:ring-zinc-300 dark:hover:ring-zinc-600' => ! $option['is_current'],
+                                                ])
+                                            >
+                                                <span class="block h-16 w-16 overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+                                                    @if ($option['image_url'])
+                                                        <img
+                                                            src="{{ $option['image_url'] }}"
+                                                            alt=""
+                                                            class="h-full w-full object-cover"
+                                                            loading="lazy"
+                                                        >
+                                                    @endif
+                                                </span>
+                                                <span class="break-words text-xs leading-4 text-zinc-700 dark:text-zinc-300">
+                                                    {{ $option['label'] }}
+                                                </span>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </nav>
+                        @endif
+
                         @if (! empty($informationalColorGroups))
                             <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                                 <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">
