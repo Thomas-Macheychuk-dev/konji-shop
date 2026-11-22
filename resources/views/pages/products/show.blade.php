@@ -56,7 +56,7 @@
             id="product-configurator"
             data-product='@json($productPayload)'
         >
-            <div class="grid grid-cols-1 gap-10 lg:grid-cols-[5fr_6fr]">
+            <div class="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
                 <section>
                     <div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                         @if ($displayImageUrl)
