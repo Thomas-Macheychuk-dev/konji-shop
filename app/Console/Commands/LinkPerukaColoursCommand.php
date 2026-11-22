@@ -18,12 +18,15 @@ use Throwable;
  *
  * The colours come from peruka.pl's "Wybierz kolor" strip. One page per model is enough: its strip names every
  * other colour. The preview fetches the pages, saves them with CRAWL= and lists the groups; --write --from=
- * applies that crawl without fetching again. Safe to run again after an import.
+ * applies that crawl without fetching again. The crawl is saved every 50 pages, so a run stopped by a deploy
+ * continues where it stopped; --fresh starts over (after an import). Safe to run again after an import.
  */
 final class LinkPerukaColoursCommand extends Command
 {
     protected $signature = 'peruka:link-colours
         {--from= : A crawl saved by an earlier run (CRAWL=). Otherwise peruka.pl is fetched.}
+        {--crawl=catalogue-repairs/peruka-colours-crawl.json : Where the crawl is saved every 50 pages; a new run continues from it.}
+        {--fresh : Ignore the saved crawl and fetch every page again.}
         {--delay-ms=500 : Pause between peruka.pl requests.}
         {--limit= : Fetch at most this many pages (testing).}
         {--samples=20 : How many groups and failures to list.}
@@ -128,49 +131,75 @@ final class LinkPerukaColoursCommand extends Command
     {
         $limit = filled($this->option('limit')) ? max(1, (int) $this->option('limit')) : null;
         $delay = max(0, (int) $this->option('delay-ms'));
+        $path = (string) $this->option('crawl');
         $covered = [];
-        $pages = [];
         $failed = [];
+        $attempts = 0;
+
+        // A crawl stopped by a deploy or a dropped session continues from its saved pages; failed pages are retried.
+        $pages = ! $this->option('fresh') && Storage::disk('local')->exists($path)
+            ? (array) (json_decode(Storage::disk('local')->get($path), true, flags: JSON_THROW_ON_ERROR)['pages'] ?? [])
+            : [];
+
+        foreach ($pages as $url => $page) {
+            $covered[$url] = true;
+
+            foreach (array_keys($page['siblings']) as $sibling) {
+                $covered[$sibling] = true;
+            }
+        }
+
+        if ($pages !== []) {
+            $this->line(sprintf('RESUMED PAGES=%d COVERED=%d OF %d', count($pages), count($covered), count($urls)));
+        }
 
         foreach ($urls as $url) {
             if (isset($covered[$url])) {
                 continue;
             }
 
-            if ($limit !== null && count($pages) + count($failed) >= $limit) {
+            if ($limit !== null && $attempts >= $limit) {
                 break;
             }
 
-            if ($delay > 0 && ($pages !== [] || $failed !== [])) {
+            if ($delay > 0 && $attempts > 0) {
                 usleep($delay * 1000);
             }
 
+            $attempts++;
+
             try {
                 $page = $this->links->parse($this->links->fetch($url), $url);
+                $pages[$url] = $page;
+                $covered[$url] = true;
+                unset($failed[$url]);
+
+                foreach (array_keys($page['siblings']) as $sibling) {
+                    $covered[$sibling] = true;
+                }
             } catch (Throwable $exception) {
                 $failed[$url] = $exception->getMessage();
-
-                continue;
             }
 
-            $pages[$url] = $page;
-            $covered[$url] = true;
-
-            foreach (array_keys($page['siblings']) as $sibling) {
-                $covered[$sibling] = true;
-            }
-
-            if ((count($pages) + count($failed)) % 100 === 0) {
-                $this->line(sprintf('FETCHED=%d COVERED=%d OF %d', count($pages) + count($failed), count($covered), count($urls)));
+            if ($attempts % 50 === 0) {
+                $this->saveCrawl($path, $pages, $failed);
+                $this->line(sprintf('FETCHED=%d PAGES=%d COVERED=%d OF %d', $attempts, count($pages), count($covered), count($urls)));
             }
         }
 
-        $crawl = ['pages' => $pages, 'failed' => $failed];
-        $path = 'catalogue-repairs/peruka-colours-crawl-'.gmdate('Ymd-His').'-'.bin2hex(random_bytes(4)).'.json';
-        Storage::disk('local')->put($path, json_encode($crawl, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR));
+        $this->saveCrawl($path, $pages, $failed);
         $this->info('CRAWL='.$path);
 
-        return $crawl;
+        return ['pages' => $pages, 'failed' => $failed];
+    }
+
+    /**
+     * @param  array<string, array{label: string|null, siblings: array<string, string|null>}>  $pages
+     * @param  array<string, string>  $failed
+     */
+    private function saveCrawl(string $path, array $pages, array $failed): void
+    {
+        Storage::disk('local')->put($path, json_encode(['pages' => $pages, 'failed' => $failed], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR));
     }
 
     /**
