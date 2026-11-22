@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Services\Cart\CartGuestTokenResolver;
 use App\Services\Cart\CartPricingService;
 use App\Services\Cart\CartService;
+use App\Services\Delivery\LargeItemDelivery;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -74,6 +75,7 @@ class CheckoutShowController extends Controller
             'companyBillingAddressDefaults' => $user?->checkoutCompanyBillingAddressDefaults() ?? [],
             'hasCompanyBillingAddress' => $user?->hasCompanyAddress() ?? false,
             'countries' => config('countries', []),
+            'largeItemDeliveryAmount' => app(LargeItemDelivery::class)->amountForCart($cart),
         ]);
     }
 

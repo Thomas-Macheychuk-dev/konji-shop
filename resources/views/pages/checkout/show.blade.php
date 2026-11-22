@@ -124,6 +124,7 @@
                             data-shipping-quote-url="{{ route('checkout.shipping-quote') }}"
                             data-polkurier-map-token-url="{{ route('checkout.polkurier-map-token') }}"
                             data-currency="{{ $cart->currency ?? 'PLN' }}"
+                            data-large-item-delivery="{{ $largeItemDeliveryAmount ?? '' }}"
                         ></div>
 
                         @error('delivery_carrier')

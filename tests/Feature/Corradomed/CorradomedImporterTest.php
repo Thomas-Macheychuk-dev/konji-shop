@@ -223,3 +223,42 @@ it('crawls corradomed.pl and dry-runs the import without database writes', funct
 
     expect(Product::count())->toBe(0);
 });
+
+it('gives large furniture the flat large-item delivery price', function (): void {
+    $importer = app(CorradomedProductImporter::class);
+    $couch = $importer->import(corradomedPage([
+        'page' => 'medycz?do=kozet', 'title' => 'Kozetka', 'subtitle' => null,
+        'section' => 'Meble medyczne', 'subsection' => 'Kozetka', 'codes' => ['KOZETKA'],
+    ]), corradomedPriceList(), importImages: false)['product'];
+    $rail = $importer->import(corradomedPage(), corradomedPriceList(), importImages: false)['product'];
+
+    expect($couch->large_item_delivery_amount)->toBe(8000)
+        ->and($rail->large_item_delivery_amount)->toBeNull()
+        ->and(CorradomedProductImporter::LARGE_ITEM_DELIVERY['Parawan'])->toBe(7200);
+});
+
+it('previews, publishes and rolls back the Corradomed drafts', function (): void {
+    $product = app(CorradomedProductImporter::class)->import(corradomedPage(), corradomedPriceList(), importImages: false)['product'];
+
+    $this->artisan('corradomed:publish')
+        ->expectsOutputToContain('=== CORRADOMED PUBLISH ===')
+        ->expectsOutputToContain('PRODUCTS_TO_PUBLISH=1')
+        ->assertSuccessful();
+
+    expect($product->fresh()->status)->toBe(ProductStatus::DRAFT);
+
+    $this->artisan('corradomed:publish', ['--write' => true])
+        ->expectsOutputToContain('PUBLISHED_PRODUCTS=1')
+        ->assertSuccessful();
+
+    expect($product->fresh()->status)->toBe(ProductStatus::ACTIVE)
+        ->and($product->fresh()->published_at)->not->toBeNull();
+
+    $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->first(fn (string $path): bool => str_contains($path, 'corradomed-publish-'));
+
+    $this->artisan('corradomed:publish', ['--rollback' => $backup])
+        ->expectsOutputToContain('RESTORED_PRODUCTS=1')
+        ->assertSuccessful();
+
+    expect($product->fresh()->status)->toBe(ProductStatus::DRAFT);
+});

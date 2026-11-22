@@ -14,7 +14,7 @@
                 v-model="deliveryMethod"
                 class="block w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none transition focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100"
             >
-                <option value="inpost_parcel_locker">Paczkomat InPost</option>
+                <option v-if="!props.largeItemDelivery" value="inpost_parcel_locker">Paczkomat InPost</option>
                 <option value="inpost_courier">Kurier InPost</option>
                 <option value="ups_courier">Kurier UPS</option>
                 <option value="dpd_courier">Kurier DPD</option>
@@ -23,6 +23,10 @@
 
             <p class="mt-2 text-xs text-zinc-500">
                 Wybierz sposób odbioru zamówienia.
+            </p>
+
+            <p v-if="props.largeItemDelivery" class="mt-2 text-xs text-zinc-600">
+                W koszyku są produkty wielkogabarytowe. Wysyłamy je kurierem w cenie {{ formatAmount(props.largeItemDelivery) }}; nie zmieszczą się w paczkomacie.
             </p>
 
             <div class="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm sm:col-span-2">
@@ -48,6 +52,10 @@
 
                 <p v-if="quoteError" class="mt-2 text-xs text-red-600">
                     {{ quoteError }}
+                </p>
+
+                <p v-else-if="quote?.source === 'large_item'" class="mt-2 text-xs text-zinc-500">
+                    Stała cena dostawy produktów wielkogabarytowych.
                 </p>
 
                 <p v-else-if="quote?.source === 'fallback'" class="mt-2 text-xs text-zinc-500">
@@ -237,7 +245,16 @@ const props = defineProps({
         type: String,
         default: 'PLN',
     },
+    // Flat courier price in grosze when the cart has a large item; parcel lockers are then not offered.
+    largeItemDelivery: {
+        type: Number,
+        default: 0,
+    },
 });
+
+function formatAmount(amount) {
+    return `${(amount / 100).toFixed(2).replace('.', ',')} ${props.currency}`;
+}
 
 const deliveryOptions = {
     inpost_parcel_locker: {
@@ -352,7 +369,7 @@ function resolveInitialDeliveryMethod() {
     }
 
     if (initialService === 'parcel_locker') {
-        return 'inpost_parcel_locker';
+        return props.largeItemDelivery ? 'inpost_courier' : 'inpost_parcel_locker';
     }
 
     if (initialService === 'courier') {
@@ -367,7 +384,7 @@ function resolveInitialDeliveryMethod() {
         return 'inpost_courier';
     }
 
-    return 'inpost_parcel_locker';
+    return props.largeItemDelivery ? 'inpost_courier' : 'inpost_parcel_locker';
 }
 
 async function openLockerMap() {

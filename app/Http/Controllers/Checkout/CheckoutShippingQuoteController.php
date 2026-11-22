@@ -12,6 +12,7 @@ use App\Http\Requests\CheckoutShippingQuoteRequest;
 use App\Models\Cart;
 use App\Services\Cart\CartGuestTokenResolver;
 use App\Services\Cart\CartService;
+use App\Services\Delivery\LargeItemDelivery;
 use App\Services\Delivery\Polkurier\PolkurierPackBuilder;
 use App\Services\Delivery\Polkurier\PolkurierShippingQuoteService;
 use Illuminate\Http\JsonResponse;
@@ -22,21 +23,33 @@ final class CheckoutShippingQuoteController extends Controller
         private readonly CartService $cartService,
         private readonly PolkurierPackBuilder $packBuilder,
         private readonly PolkurierShippingQuoteService $shippingQuoteService,
+        private readonly LargeItemDelivery $largeItemDelivery,
     ) {}
 
     public function __invoke(CheckoutShippingQuoteRequest $request): JsonResponse
     {
         $cart = $this->activeCart($request);
         $packs = $cart === null ? [] : $this->packBuilder->fromCart($cart);
+        $provider = DeliveryProvider::from((string) $request->input('delivery_provider'));
+        $carrier = DeliveryCarrier::from((string) $request->input('delivery_carrier'));
+        $service = (string) $request->input('delivery_service');
+        $currency = $cart?->currency ?? (string) $request->input('currency', 'PLN');
+        $largeItemAmount = $this->largeItemDelivery->amountForCart($cart);
 
-        $quote = $this->shippingQuoteService->quote(
-            provider: DeliveryProvider::from((string) $request->input('delivery_provider')),
-            carrier: DeliveryCarrier::from((string) $request->input('delivery_carrier')),
-            service: (string) $request->input('delivery_service'),
-            shippingAddress: $request->shippingAddressData(),
-            currency: $cart?->currency ?? (string) $request->input('currency', 'PLN'),
-            packs: $packs,
-        );
+        if ($this->largeItemDelivery->rejectsService($largeItemAmount, $service)) {
+            return response()->json(['message' => LargeItemDelivery::LOCKER_MESSAGE], 422);
+        }
+
+        $quote = $this->largeItemDelivery->applies($largeItemAmount, $service)
+            ? $this->largeItemDelivery->quote((int) $largeItemAmount, $provider, $carrier, $service, $currency)
+            : $this->shippingQuoteService->quote(
+                provider: $provider,
+                carrier: $carrier,
+                service: $service,
+                shippingAddress: $request->shippingAddressData(),
+                currency: $currency,
+                packs: $packs,
+            );
 
         $netAmount = $quote->amount > 0
             ? $this->shippingVatRate()->netFromGross($quote->amount)
@@ -81,6 +94,7 @@ final class CheckoutShippingQuoteController extends Controller
 
         $cart->load([
             'items.variant',
+            'items.product',
         ]);
 
         return $cart;
