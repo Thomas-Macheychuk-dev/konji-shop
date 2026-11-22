@@ -1,0 +1,129 @@
+<?php
+
+use App\Enums\ProductStatus;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Services\Images\RemoteImageImporter;
+use App\Services\Peruka\PerukaPhotoOrder;
+use App\Services\Peruka\PerukaProductImporter;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
+
+uses(RefreshDatabase::class);
+
+const WIG_MEDIA = 'https://www.peruka.pl/media/products/028c0b0c56b48b548584ed6b3066b843/images/';
+
+it('tells peruka.pl colour samples from model photos and charts', function (): void {
+    foreach (['15-23-6R.jpg', '61.jpg', '2.jpg', '6-8-4R-hh.jpg', '10-14-80-A.jpg', '830-6-4.jpg', 'PER001757-52732.jpg', 'Hai001468-69110.jpg', 'large_26-27-19-8R.jpg'] as $file) {
+        expect(PerukaPhotoOrder::isColourSample(WIG_MEDIA.$file))->toBeTrue($file);
+    }
+
+    foreach (['Pudding-01.jpeg', 'JELLY-8-14-6R-front-900x900.jpg', 'Hair-Up-Calata-15-23-6R-900x900.jpg', 'ELL000421-17677.jpg', 'turn-mono-part-hotmocca-rooted-bs.jpg', 'baza-tresy.JPG', '-dlugosci.webp'] as $file) {
+        expect(PerukaPhotoOrder::isColourSample(WIG_MEDIA.$file))->toBeFalse($file);
+    }
+
+    expect(PerukaPhotoOrder::isChart(WIG_MEDIA.'baza-tresy-przedzialek-linia.JPG'))->toBeTrue()
+        ->and(PerukaPhotoOrder::isChart(WIG_MEDIA.'-dlugosci.webp'))->toBeTrue()
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'PER001442-37205.jpg', WIG_MEDIA.'baza-tresy.JPG', WIG_MEDIA.'Eclair-01.jpg', WIG_MEDIA.'Eclair-02.jpeg']))->toBe([2, 0, 1, 3])
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'Eclair-01.jpg', WIG_MEDIA.'PER001442-37205.jpg']))->toBe([0, 1])
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'PER001442-37205.jpg', WIG_MEDIA.'-dlugosci.webp']))->toBe([0, 1]);
+});
+
+it('puts the model photo before the colour sample when importing a wig', function (): void {
+    $remote = Mockery::mock(RemoteImageImporter::class);
+    $remote->shouldReceive('import')->andReturnUsing(static fn (string $url, string $directory): array => [
+        'disk' => 'public',
+        'path' => $directory.'/'.basename($url),
+        'source_url' => $url,
+        'mime_type' => 'image/jpeg',
+        'file_size' => 128,
+        'sha256' => hash('sha256', $url),
+    ]);
+    app()->instance(RemoteImageImporter::class, $remote);
+
+    $product = app(PerukaProductImporter::class)->import([
+        'external_product_id' => '15545',
+        'slug' => 'eclair-10-14-80-a-peruka-syntetyczna',
+        'name' => 'Peruka z włosów syntetycznych wielotonowy blond ECLAIR 10/14/80-A',
+        'price_gross_amount' => 1034.0,
+        'images' => [
+            ['url' => WIG_MEDIA.'PER001442-37205.jpg', 'alt' => null],
+            ['url' => WIG_MEDIA.'Eclair-01.jpg', 'alt' => null],
+            ['url' => WIG_MEDIA.'baza-tresy-przedzialek-linia.JPG', 'alt' => null],
+        ],
+    ], ProductStatus::ACTIVE)['product'];
+
+    $images = $product->images()->orderBy('sort_order')->get();
+
+    expect($images->pluck('path')->map(fn (string $path): string => basename($path))->all())
+        ->toBe(['Eclair-01.jpg', 'PER001442-37205.jpg', 'baza-tresy-przedzialek-linia.JPG'])
+        ->and($images->where('is_main', true)->pluck('path')->map(fn (string $path): string => basename($path))->all())
+        ->toBe(['Eclair-01.jpg']);
+});
+
+it('previews, writes and rolls back putting the wig model photo first', function (): void {
+    Storage::fake('local');
+
+    $eclair = wigWithPhotos('eclair-10-14-80-a-peruka-syntetyczna', ['PER001442-37205.jpg', 'Eclair-01.jpg', 'baza-tresy.JPG']);
+    $sample = $eclair->images()->where('is_main', true)->firstOrFail();
+    $eclair->update(['default_image_type' => Product::DEFAULT_IMAGE_TYPE_PRODUCT_IMAGE, 'default_image_id' => $sample->id]);
+    $calata = wigWithPhotos('calata-15-23-6r-peruka-syntetyczna', ['Hair-Up-Calata-15-23-6R-900x900.jpg', '15-23-6R.jpg']);
+    wigWithPhotos('flatwhite-small-61', ['61.jpg', '-dlugosci.webp']);
+
+    $this->artisan('peruka:model-photo-first')
+        ->expectsOutputToContain('PRODUCTS=3 CHANGES=1 NO_MODEL_PHOTO=1')
+        ->expectsOutputToContain('MOVE product='.$eclair->id.' eclair-10-14-80-a-peruka-syntetyczna: PER001442-37205.jpg -> Eclair-01.jpg')
+        ->expectsOutputToContain('NO_MODEL_PHOTO product=')
+        ->expectsOutputToContain('MODE=READ_ONLY')
+        ->assertSuccessful();
+
+    expect($eclair->fresh()->main_image_url)->toEndWith('PER001442-37205.jpg');
+
+    $this->artisan('peruka:model-photo-first', ['--write' => true])
+        ->expectsOutputToContain('REORDERED=1')
+        ->assertSuccessful();
+
+    $eclair->refresh()->load('images');
+
+    expect($eclair->main_image_url)->toEndWith('Eclair-01.jpg')
+        ->and($eclair->default_image_id)->toBeNull()
+        ->and($eclair->images->sortBy('sort_order')->pluck('path')->map(fn (string $path): string => basename($path))->values()->all())
+        ->toBe(['Eclair-01.jpg', 'PER001442-37205.jpg', 'baza-tresy.JPG'])
+        ->and($calata->fresh()->main_image_url)->toEndWith('Hair-Up-Calata-15-23-6R-900x900.jpg');
+
+    $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->first();
+
+    $this->artisan('peruka:model-photo-first', ['--rollback' => $backup])
+        ->expectsOutputToContain('RESTORED=1 OF 1')
+        ->assertSuccessful();
+
+    $eclair->refresh();
+
+    expect($eclair->main_image_url)->toEndWith('PER001442-37205.jpg')
+        ->and($eclair->default_image_id)->toBe($sample->id);
+});
+
+/** @param  list<string>  $files */
+function wigWithPhotos(string $slug, array $files): Product
+{
+    $product = Product::query()->create([
+        'name' => $slug,
+        'slug' => $slug,
+        'status' => ProductStatus::ACTIVE,
+        'external_source' => 'peruka',
+        'external_id' => $slug,
+    ]);
+
+    foreach ($files as $position => $file) {
+        ProductImage::query()->create([
+            'product_id' => $product->id,
+            'disk' => 'public',
+            'path' => 'products/peruka/'.$slug.'/gallery/'.$file,
+            'source_url' => WIG_MEDIA.$file,
+            'sort_order' => $position,
+            'is_main' => $position === 0,
+        ]);
+    }
+
+    return $product;
+}

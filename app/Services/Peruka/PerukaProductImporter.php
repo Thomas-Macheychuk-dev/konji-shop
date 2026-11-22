@@ -301,9 +301,14 @@ final class PerukaProductImporter
                 'sha256' => $imported['sha256'],
                 'alt_text' => $altText ?: $product->name,
                 'title' => $altText ?: $product->name,
-                'sort_order' => count($imageRows),
-                'is_main' => count($imageRows) === 0,
             ];
+        }
+
+        $imageRows = array_map(fn (int $index): array => $imageRows[$index], PerukaPhotoOrder::order(array_column($imageRows, 'source_url')));
+
+        foreach ($imageRows as $position => $row) {
+            $imageRows[$position]['sort_order'] = $position;
+            $imageRows[$position]['is_main'] = $position === 0;
         }
 
         $paths = array_column($imageRows, 'path');
