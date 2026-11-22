@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\AttributeDisplayType;
 use App\Enums\CategoryStatus;
+use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
 use App\Models\AttributeValue;
@@ -15,6 +16,7 @@ use App\Models\ProductAttributeValueImage;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\Herdegen\HerdegenDescriptionFormatter;
+use App\Services\Peruka\PerukaPhotoOrder;
 use App\Services\Qmed\QmedDescriptionSanitizer;
 use App\Services\Reh4Mat\Reh4MatSizeOptions;
 use App\Services\Shop\ShopSettings;
@@ -174,6 +176,7 @@ class ProductShowController extends Controller
             'defaultVariant' => $defaultVariant,
             'breadcrumbs' => $breadcrumbs,
             'informationalColorGroups' => $informationalColorGroups,
+            'colourOptions' => $this->colourOptions($product),
             'storefrontDescription' => $storefrontDescription,
             'manufacturerInformation' => ProductManufacturerInformation::forProduct($product),
 
@@ -193,7 +196,7 @@ class ProductShowController extends Controller
     private function productPageCacheKey(Product $product): string
     {
         return sprintf(
-            'product-page.v18.%s.%d',
+            'product-page.v19.%s.%d',
             Str::lower(request()->getSchemeAndHttpHost()),
             $product->getKey(),
         );
@@ -598,6 +601,46 @@ class ProductShowController extends Controller
             })
             ->values()
             ->all();
+    }
+
+    /**
+     * The other colours of the same model, each its own product (peruka.pl wigs; peruka:link-colours). Each
+     * tile shows the colour sample when the product has one, like peruka.pl's "Wybierz kolor".
+     *
+     * @return list<array{label: string, url: string, image_url: string|null, is_current: bool}>
+     */
+    private function colourOptions(Product $product): array
+    {
+        if (blank($product->colour_group)) {
+            return [];
+        }
+
+        $options = Product::query()
+            ->where('colour_group', $product->colour_group)
+            ->whereNotNull('slug')
+            ->where(fn ($query) => $query
+                ->where('status', ProductStatus::ACTIVE->value)
+                ->orWhere('id', $product->getKey()))
+            ->with('images')
+            ->get()
+            ->map(function (Product $option) use ($product): array {
+                $images = $option->images->sortBy(fn (ProductImage $image): array => [$image->sort_order, $image->id]);
+                $image = $images->first(fn (ProductImage $image): bool => PerukaPhotoOrder::isColourSample($image->source_url))
+                    ?? $images->firstWhere('is_main', true)
+                    ?? $images->first();
+
+                return [
+                    'label' => (string) ($option->colour_label ?: $option->name),
+                    'url' => route('products.show', $option->slug),
+                    'image_url' => $image?->thumbnail_url,
+                    'is_current' => $option->is($product),
+                ];
+            })
+            ->sort(fn (array $a, array $b): int => strnatcasecmp($a['label'], $b['label']))
+            ->values()
+            ->all();
+
+        return count($options) > 1 ? $options : [];
     }
 
     /**
