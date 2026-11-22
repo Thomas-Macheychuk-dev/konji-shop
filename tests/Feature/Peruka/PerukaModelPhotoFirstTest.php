@@ -42,7 +42,10 @@ it('treats gallery photos with stock numbers as wig photos', function (): void {
         ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'830-131-14.jpg'))->toBeTrue()
         ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'133-130.jpg'))->toBeTrue()
         ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'000124-835.jpeg'))->toBeFalse()
-        ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Hai001421-68241.jpg', WIG_MEDIA.'Hai001421-68529.jpg']))->toBe(0)
+        // Bachata after the reorder: the wig photo in front has a stock number too; the sample is second.
+        ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Hai001421-68241.jpg', WIG_MEDIA.'Hai001421-68529.jpg']))->toBe(1)
+        // Delmar hair piece: only a sample and the base photo, not reordered.
+        ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'6-8-30.jpg', WIG_MEDIA.'delmar-baza-23-32.jpeg']))->toBe(0)
         ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Eclair-01.jpg', WIG_MEDIA.'PER001442-37205.jpg']))->toBe(1)
         ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Eclair-01.jpg', WIG_MEDIA.'Eclair-02.jpg', WIG_MEDIA.'2.jpg']))->toBeNull();
 });
