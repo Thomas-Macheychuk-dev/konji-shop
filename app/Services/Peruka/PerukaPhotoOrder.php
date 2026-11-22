@@ -20,12 +20,21 @@ final class PerukaPhotoOrder
     /** A colour code, or a stock number. A stock number is a colour sample only as the main photo. */
     public static function isColourSample(?string $url): bool
     {
-        return self::isColourCode($url) || preg_match('/^(?:per|hai)\d{4,}-\d+$/i', self::stem($url)) === 1;
+        return self::isColourCode($url) || self::isStockNumber($url);
     }
 
     public static function isColourCode(?string $url): bool
     {
-        return preg_match('/^\d+(?:[-_]\d*[a-z]{0,2})*$/i', self::stem($url)) === 1;
+        return preg_match('/^\d+(?:[-_]\d*[a-z]{0,2})*$/i', self::stem($url)) === 1 && ! self::isStockNumber($url);
+    }
+
+    /**
+     * "PER001757-52732", "Hai001468-69110", and bare "002095-17622" or "0277-17386": a leading zero or four
+     * digits, then at least three. Colour codes have shorter groups ("830-131-14", "26-27-19-8R").
+     */
+    public static function isStockNumber(?string $url): bool
+    {
+        return preg_match('/^(?:(?:per|hai)\d{4,}-\d+|(?:0\d*|\d{4,})-\d{3,})$/i', self::stem($url)) === 1;
     }
 
     /**

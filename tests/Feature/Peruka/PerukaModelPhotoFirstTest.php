@@ -34,6 +34,14 @@ it('treats gallery photos with stock numbers as wig photos', function (): void {
     expect(PerukaPhotoOrder::order([WIG_MEDIA.'Hai001421-68529.jpg', WIG_MEDIA.'Hai001421-68241.jpg', WIG_MEDIA.'Hai001421-68242.jpg']))->toBe([1, 0, 2])
         ->and(PerukaPhotoOrder::order([WIG_MEDIA.'14-16.jpg', WIG_MEDIA.'Hai001358-68796.jpg']))->toBe([1, 0])
         ->and(PerukaPhotoOrder::order([WIG_MEDIA.'PER001819-52674.jpg', WIG_MEDIA.'26-27-19-8R.jpg', WIG_MEDIA.'baza-tresy.JPG', WIG_MEDIA.'PER001819-52009.jpg']))->toBe([3, 0, 1, 2])
+        // Diana, Identica and Nr 377: stock numbers without a prefix.
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'002095-17622.jpg', WIG_MEDIA.'baza-tresy.JPG', WIG_MEDIA.'002095-17621.jpeg']))->toBe([2, 0, 1])
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'002300-38054.jpg', WIG_MEDIA.'002300-38026.jpg']))->toBe([1, 0])
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'0277-17386.jpg', WIG_MEDIA.'0277-17385.jpeg']))->toBe([1, 0])
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'1.jpg', WIG_MEDIA.'baza-tresy.JPG', WIG_MEDIA.'000935-4092.jpeg']))->toBe([2, 0, 1])
+        ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'830-131-14.jpg'))->toBeTrue()
+        ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'133-130.jpg'))->toBeTrue()
+        ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'000124-835.jpeg'))->toBeFalse()
         ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Hai001421-68241.jpg', WIG_MEDIA.'Hai001421-68529.jpg']))->toBe(0)
         ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Eclair-01.jpg', WIG_MEDIA.'PER001442-37205.jpg']))->toBe(1)
         ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Eclair-01.jpg', WIG_MEDIA.'Eclair-02.jpg', WIG_MEDIA.'2.jpg']))->toBeNull();
