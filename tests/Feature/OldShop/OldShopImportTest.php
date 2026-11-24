@@ -144,6 +144,10 @@ it('puts a product with an unknown category under the brand', function (): void 
         ->and($category->parent->name)->toBe('Thuasne')
         ->and($product->variants->first()->sku)->toBe('0871-02')
         ->and($product->variants->first()->vat_rate)->toBe(VatRate::VAT_23);
+
+    $home = app(OldShopProductImporter::class)->import(oldShopPage(['id_product' => 4310, 'category' => 'Strona główna']), importImages: false)['product'];
+
+    expect($home->categories->pluck('name')->all())->toBe(['Thuasne']);
 });
 
 it('crawls the brand from the search, dry-runs the import, imports and publishes', function (): void {

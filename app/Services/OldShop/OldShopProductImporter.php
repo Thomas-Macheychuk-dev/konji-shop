@@ -92,6 +92,11 @@ final class OldShopProductImporter
 
         $category = $this->stringOrNull($page['category'] ?? null);
 
+        // Products the old shop filed under its home page go straight into the brand's category.
+        if ($category !== null && in_array(Str::slug($category), ['strona-glowna', 'home'], true)) {
+            $category = null;
+        }
+
         return [
             'external_id' => $externalId,
             'name' => $this->limitDatabaseString((string) ($this->stringOrNull($page['name'] ?? null) ?? 'Produkt '.$externalId)),
