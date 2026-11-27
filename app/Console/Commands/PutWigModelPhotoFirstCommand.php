@@ -61,13 +61,17 @@ final class PutWigModelPhotoFirstCommand extends Command
                         continue;
                     }
 
-                    if (isset($done[$product->id]) || $images[0]->created_at?->gte($fixedAt)) {
+                    $urls = array_map(fn (ProductImage $image): ?string => $image->source_url, $images);
+
+                    // A colour code in front is always a sample, and a model photo never is one, so those
+                    // products can be reordered on any run (Steven's "M14S.jpg", recognised since 27 November).
+                    if (! PerukaPhotoOrder::isColourCode($urls[0])
+                        && (isset($done[$product->id]) || $images[0]->created_at?->gte($fixedAt))) {
                         $alreadyDone++;
 
                         continue;
                     }
 
-                    $urls = array_map(fn (ProductImage $image): ?string => $image->source_url, $images);
                     $order = PerukaPhotoOrder::order($urls);
 
                     if ($order[0] !== 0) {

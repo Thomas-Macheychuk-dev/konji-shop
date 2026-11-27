@@ -42,6 +42,13 @@ it('treats gallery photos with stock numbers as wig photos', function (): void {
         ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'830-131-14.jpg'))->toBeTrue()
         ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'133-130.jpg'))->toBeTrue()
         ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'000124-835.jpeg'))->toBeFalse()
+        // Steven (Ellen Wille men's wigs): the main photo is the colour "M14S", the gallery shows the head.
+        ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'large_M14S.jpg'))->toBeTrue()
+        ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'M3S.jpg'))->toBeTrue()
+        ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'Steven-1.jpg'))->toBeFalse()
+        ->and(PerukaPhotoOrder::isColourCode(WIG_MEDIA.'Miami-2.jpg'))->toBeFalse()
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'M14S.jpg', WIG_MEDIA.'steven-3.jpg', WIG_MEDIA.'steven-1.jpg', WIG_MEDIA.'baza-ew-tiul-mono-linia.jpg']))->toBe([1, 0, 2, 3])
+        ->and(PerukaPhotoOrder::order([WIG_MEDIA.'M3S.jpg', WIG_MEDIA.'baza-ew-mono-linia-1.jpg', WIG_MEDIA.'Steven-2.jpg']))->toBe([2, 0, 1])
         // Bachata after the reorder: the wig photo in front has a stock number too; the sample is second.
         ->and(PerukaPhotoOrder::colourSampleIndex([WIG_MEDIA.'Hai001421-68241.jpg', WIG_MEDIA.'Hai001421-68529.jpg']))->toBe(1)
         // Delmar hair piece: only a sample and the base photo, not reordered.
@@ -106,6 +113,8 @@ it('previews, writes and rolls back putting the wig model photo first', function
         ->expectsOutputToContain('REORDERED=2')
         ->assertSuccessful();
 
+    $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->sole();
+
     expect($bachata->fresh()->main_image_url)->toEndWith('Hai001421-68241.jpg');
 
     // A second run would read the stock-number wig photo now in front as a colour sample.
@@ -124,6 +133,20 @@ it('previews, writes and rolls back putting the wig model photo first', function
 
     expect($imported->fresh()->main_image_url)->toEndWith('Hai001489-68485.jpg');
 
+    // Steven: imported after the importer fix, but its "M14S" sample was not recognised then.
+    $steven = wigWithPhotos('steven-m14s-peruka-syntetyczna', ['M14S.jpg', 'steven-3.jpg', 'baza-ew-tiul-mono-linia.jpg']);
+
+    $this->artisan('peruka:model-photo-first', ['--write' => true])
+        ->expectsOutputToContain('PRODUCTS=6 ALREADY_DONE=3 CHANGES=1')
+        ->expectsOutputToContain('REORDERED=1')
+        ->assertSuccessful();
+
+    expect($steven->fresh()->main_image_url)->toEndWith('steven-3.jpg');
+
+    $this->artisan('peruka:model-photo-first')
+        ->expectsOutputToContain('PRODUCTS=6 ALREADY_DONE=4 CHANGES=0')
+        ->assertSuccessful();
+
     $eclair->refresh()->load('images');
 
     expect($eclair->main_image_url)->toEndWith('Eclair-01.jpg')
@@ -131,8 +154,6 @@ it('previews, writes and rolls back putting the wig model photo first', function
         ->and($eclair->images->sortBy('sort_order')->pluck('path')->map(fn (string $path): string => basename($path))->values()->all())
         ->toBe(['Eclair-01.jpg', 'PER001442-37205.jpg', 'baza-tresy.JPG'])
         ->and($calata->fresh()->main_image_url)->toEndWith('Hair-Up-Calata-15-23-6R-900x900.jpg');
-
-    $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->first();
 
     $this->artisan('peruka:model-photo-first', ['--rollback' => $backup])
         ->expectsOutputToContain('RESTORED=2 OF 2')
@@ -145,7 +166,7 @@ it('previews, writes and rolls back putting the wig model photo first', function
         ->and(Storage::disk('local')->exists($backup.'.rolled-back'))->toBeTrue();
 
     $this->artisan('peruka:model-photo-first')
-        ->expectsOutputToContain('ALREADY_DONE=1 CHANGES=2')
+        ->expectsOutputToContain('ALREADY_DONE=2 CHANGES=2')
         ->assertSuccessful();
 });
 

@@ -23,9 +23,10 @@ final class PerukaPhotoOrder
         return self::isColourCode($url) || self::isStockNumber($url);
     }
 
+    /** Also Ellen Wille's men's colours with an "M" and a letter suffix ("M14S.jpg", "M3S.jpg" for Steven). */
     public static function isColourCode(?string $url): bool
     {
-        return preg_match('/^\d+(?:[-_]\d*[a-z]{0,2})*$/i', self::stem($url)) === 1 && ! self::isStockNumber($url);
+        return preg_match('/^m?\d+[a-z]{0,2}(?:[-_]\d*[a-z]{0,2})*$/i', self::stem($url)) === 1 && ! self::isStockNumber($url);
     }
 
     /**
