@@ -190,6 +190,52 @@ it('crawls the brand from the search, dry-runs the import, imports and publishes
     expect(Product::query()->first()->status)->toBe(ProductStatus::ACTIVE);
 });
 
+it('moves imported products into the shop categories, removes the empty brand categories and rolls back', function (): void {
+    $parent = Category::query()->create(['name' => 'Kończyna dolna', 'slug' => 'konczyna-dolna', 'status' => CategoryStatus::ACTIVE]);
+    $knees = Category::query()->create(['name' => 'Ortezy kolana', 'slug' => 'ortezy-kolana', 'parent_id' => $parent->id, 'status' => CategoryStatus::ACTIVE]);
+    $importer = app(OldShopProductImporter::class);
+    $moved = $importer->import(oldShopPage(['category' => 'Ortezy rzepki']), importImages: false)['product'];
+    $unmapped = $importer->import(oldShopPage(['id_product' => 4310, 'category' => 'Balkoniki']), importImages: false)['product'];
+    $home = $importer->import(oldShopPage(['id_product' => 4311, 'category' => 'Strona główna']), importImages: false)['product'];
+    $kneeImport = $moved->categories->first();
+    $map = 'storage/framework/testing/oldshop-categories.json';
+    @mkdir(base_path(dirname($map)), 0777, true);
+    file_put_contents(base_path($map), json_encode(['p4309' => 'ortezy-kolana', 'p4311' => 'ortezy-kolana', 'p9999' => 'nie-ma']));
+
+    $this->artisan('oldshop:recategorise', ['--map' => $map])
+        ->expectsOutputToContain('MAPPED=3 FOUND=2 TO_MOVE=2')
+        ->expectsOutputToContain('TARGET ortezy-kolana (Ortezy kolana): 2')
+        ->expectsOutputToContain('DATABASE_WRITES=0')
+        ->assertSuccessful();
+
+    expect($moved->fresh()->categories->pluck('id')->all())->toBe([$kneeImport->id]);
+
+    $this->artisan('oldshop:recategorise', ['--map' => $map, '--write' => true])
+        ->expectsOutputToContain('MOVED=2 REMOVED_CATEGORIES=1')
+        ->expectsOutputToContain('KEPT_CATEGORY thuasne (not empty)')
+        ->assertSuccessful();
+
+    $backup = collect(Storage::disk('local')->files('catalogue-repairs'))->first(fn (string $file): bool => str_contains($file, 'oldshop-recategorise'));
+
+    expect($moved->fresh()->categories->pluck('id')->all())->toBe([$knees->id])
+        ->and($home->fresh()->categories->pluck('id')->all())->toBe([$knees->id])
+        ->and(Category::query()->find($kneeImport->id))->toBeNull()
+        ->and($unmapped->fresh()->categories->first()->name)->toBe('Balkoniki');
+
+    // A later re-import leaves the product in the shop category.
+    $importer->import(oldShopPage(['category' => 'Ortezy rzepki']), importImages: false);
+    expect($moved->fresh()->categories->pluck('id')->all())->toBe([$knees->id]);
+
+    $this->artisan('oldshop:recategorise', ['--rollback' => $backup])
+        ->expectsOutputToContain('RESTORED_PRODUCTS=2 RESTORED_CATEGORIES=1')
+        ->assertSuccessful();
+
+    expect($moved->fresh()->categories->pluck('id')->all())->toBe([$kneeImport->id])
+        ->and($home->fresh()->categories->first()->slug)->toBe('thuasne');
+
+    @unlink(base_path($map));
+});
+
 /** @param  array<string, mixed>  $overrides */
 function oldShopPage(array $overrides = []): array
 {
