@@ -192,6 +192,11 @@ final class OldShopProductImporter
      */
     private function syncCategory(Product $product, array $plan): void
     {
+        // A product moved into the shop's own categories (oldshop:recategorise) stays there on re-import.
+        if ($product->categories()->exists()) {
+            return;
+        }
+
         $name = $plan['category'][0] ?? null;
         $category = $name !== null ? $this->existingCategory($name) : null;
 
