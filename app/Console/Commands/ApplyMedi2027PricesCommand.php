@@ -17,6 +17,9 @@ use Illuminate\Console\Command;
  * from the orthopaedics and footsupport PDFs. Where one shop product holds models with different list prices
  * (Genumedi with an extra-wide thigh), "variants" gives those by SKU prefix. Products not in the lists (compression,
  * accessories, items medi no longer lists) keep their prices.
+ *
+ * Every listed product is priced and taxed at 8%, the rate medi's lists use for these medical devices; some had
+ * been imported at 23% (owner, 27 November 2026). --rollback restores the old VAT rates too.
  */
 final class ApplyMedi2027PricesCommand extends Command
 {
@@ -26,11 +29,13 @@ final class ApplyMedi2027PricesCommand extends Command
 
     public const MARKUP_PERCENT = 20;
 
+    public const VAT = VatRate::VAT_8;
+
     protected $signature = 'medi:apply-2027-prices
         {--write : Apply the price changes after writing a private backup. Otherwise preview only.}
         {--rollback= : Restore the prices from a backup written by --write.}';
 
-    protected $description = 'Preview, apply or roll back medi prices at the 2027 wholesale net + VAT + 20%.';
+    protected $description = 'Preview, apply or roll back medi prices at the 2027 wholesale net + 8% VAT + 20%, and 8% VAT.';
 
     public function handle(): int
     {
@@ -49,6 +54,7 @@ final class ApplyMedi2027PricesCommand extends Command
         $found = [];
         $changes = [];
         $unchanged = 0;
+        $vatChanges = 0;
         $skipped = [];
         $summary = [];
 
@@ -58,22 +64,24 @@ final class ApplyMedi2027PricesCommand extends Command
             $old = [];
             $new = [];
 
+            $oldVat = [];
+
             foreach ($product->variants as $variant) {
-                if (! $variant->vat_rate instanceof VatRate) {
-                    $skipped[] = 'variant='.$variant->id.' '.$product->name.' reason=no VAT rate';
+                $currentVat = $variant->vat_rate instanceof VatRate ? $variant->vat_rate->value : null;
+                $net = self::listNet($entry, (string) $variant->sku);
+                $gross = self::shopGross($net, self::VAT);
+                $old[] = $variant->price_gross_amount;
+                $new[] = $gross;
+                $oldVat[$currentVat ?? 'none'] = true;
+
+                if ($variant->price_gross_amount === $gross && $currentVat === self::VAT->value) {
+                    $unchanged++;
 
                     continue;
                 }
 
-                $net = self::listNet($entry, (string) $variant->sku);
-                $gross = self::shopGross($net, $variant->vat_rate);
-                $old[] = $variant->price_gross_amount;
-                $new[] = $gross;
-
-                if ($variant->price_gross_amount === $gross) {
-                    $unchanged++;
-
-                    continue;
+                if ($currentVat !== self::VAT->value) {
+                    $vatChanges++;
                 }
 
                 $changes[] = [
@@ -82,18 +90,21 @@ final class ApplyMedi2027PricesCommand extends Command
                     'label' => 'variant='.$variant->id.' '.$product->name.' ['.$variant->sku.']',
                     'old_net' => $variant->price_net_amount === null ? null : (int) $variant->price_net_amount,
                     'old_gross' => $variant->price_gross_amount,
-                    'new_net' => $variant->vat_rate->netFromGross($gross),
+                    'old_vat' => $currentVat,
+                    'new_net' => self::VAT->netFromGross($gross),
                     'new_gross' => $gross,
+                    'new_vat' => self::VAT->value,
                 ];
             }
 
             if ($new !== []) {
-                $summary[] = sprintf('PRODUCT #%d %s (%s): %s -> %s, %d variants', $product->id, $product->name, $entry['list'], $this->range($old), $this->range($new), count($new));
+                $vat = implode('/', array_map(fn ($rate): string => $rate.'%', array_keys($oldVat)));
+                $summary[] = sprintf('PRODUCT #%d %s (%s): %s -> %s, VAT %s -> %d%%, %d variants', $product->id, $product->name, $entry['list'], $this->range($old), $this->range($new), $vat, self::VAT->value, count($new));
             }
         }
 
         $this->line('=== MEDI PRICES 2027 (wholesale net + VAT + '.self::MARKUP_PERCENT.'%) ===');
-        $this->line(sprintf('LISTED_PRODUCTS=%d IN_SHOP=%d PRICE_CHANGES=%d ALREADY_CURRENT=%d SKIPPED=%d', count($entries), count($found), count($changes), $unchanged, count($skipped)));
+        $this->line(sprintf('LISTED_PRODUCTS=%d IN_SHOP=%d PRICE_CHANGES=%d VAT_TO_8=%d ALREADY_CURRENT=%d SKIPPED=%d', count($entries), count($found), count($changes), $vatChanges, $unchanged, count($skipped)));
 
         foreach ($summary as $line) {
             $this->line($line);
