@@ -16,12 +16,14 @@ class Attribute extends Model
         'slug',
         'external_attribute_id',
         'display_type',
+        'filter_position',
     ];
 
     protected function casts(): array
     {
         return [
             'display_type' => AttributeDisplayType::class,
+            'filter_position' => 'integer',
         ];
     }
 

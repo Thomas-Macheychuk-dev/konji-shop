@@ -7,6 +7,7 @@ namespace App\Services\Storefront;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVariantStatus;
 use App\Enums\StockStatus;
+use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,12 @@ use Illuminate\Support\Facades\DB;
  *
  * A product's listing price is its cheapest active variant, so "price ascending" and the price
  * filter agree with the "od" price a shopper can actually buy at.
+ *
+ * Attributes with a filter_position (the wig filters: length, colour, base…) are filters too. Each is a
+ * query parameter named after the attribute ("kolor-wlosow[]=siwy"): values of one attribute widen the list,
+ * different attributes narrow it.
+ *
+ * @phpstan-type Filters array{sort: string, price_min: ?int, price_max: ?int, brands: list<string>, available: bool, attributes: array<string, list<string>>}
  */
 final class ProductListing
 {
@@ -61,17 +68,24 @@ final class ProductListing
 
     /**
      * @param  array<string, string>  $sorts
-     * @return array{sort: string, price_min: ?int, price_max: ?int, brands: list<string>, available: bool}
+     * @return Filters
      */
     public function filtersFrom(Request $request, array $sorts = self::SORTS): array
     {
         $defaultSort = array_key_first($sorts);
         $sort = $request->string('sort')->toString();
-        $brands = array_values(array_unique(array_filter(
-            array_map(static fn ($brand): string => is_scalar($brand) ? trim((string) $brand) : '', (array) $request->query('marka', [])),
-            static fn (string $brand): bool => preg_match('/^[a-z0-9-]{1,100}$/', $brand) === 1,
-        )));
-        sort($brands);
+        $brands = $this->slugsFrom($request->query('marka', []));
+        $attributes = [];
+
+        foreach ($this->filterAttributeSlugs() as $slug) {
+            $values = $this->slugsFrom($request->query($slug, []));
+
+            if ($values !== []) {
+                $attributes[$slug] = $values;
+            }
+        }
+
+        ksort($attributes);
 
         $priceMin = $this->priceFrom($request->query('cena_od'));
         $priceMax = $this->priceFrom($request->query('cena_do'));
@@ -86,15 +100,20 @@ final class ProductListing
             'price_max' => $priceMax,
             'brands' => $brands,
             'available' => $request->boolean('dostepne'),
+            'attributes' => $attributes,
         ];
     }
 
     /**
-     * @param  array{sort: string, price_min: ?int, price_max: ?int, brands: list<string>, available: bool}  $filters
+     * @param  Filters  $filters
      */
     public function hasActiveFilters(array $filters): bool
     {
-        return $filters['price_min'] !== null || $filters['price_max'] !== null || $filters['brands'] !== [] || $filters['available'];
+        return $filters['price_min'] !== null
+            || $filters['price_max'] !== null
+            || $filters['brands'] !== []
+            || $filters['available']
+            || $filters['attributes'] !== [];
     }
 
     /**
@@ -118,7 +137,7 @@ final class ProductListing
     /**
      * The filters as query-string parameters, for pagination links.
      *
-     * @param  array{sort: string, price_min: ?int, price_max: ?int, brands: list<string>, available: bool}  $filters
+     * @param  Filters  $filters
      * @return array<string, mixed>
      */
     public function queryParameters(array $filters, string $defaultSort): array
@@ -129,11 +148,12 @@ final class ProductListing
             'cena_do' => $filters['price_max'] === null ? null : $filters['price_max'] / 100,
             'marka' => $filters['brands'] === [] ? null : $filters['brands'],
             'dostepne' => $filters['available'] ? 1 : null,
+            ...$filters['attributes'],
         ], static fn ($value): bool => $value !== null);
     }
 
     /**
-     * @param  array{sort: string, price_min: ?int, price_max: ?int, brands: list<string>, available: bool}  $filters
+     * @param  Filters  $filters
      */
     public function cacheKey(array $filters): string
     {
@@ -141,10 +161,18 @@ final class ProductListing
     }
 
     /**
-     * @param  array{sort: string, price_min: ?int, price_max: ?int, brands: list<string>, available: bool}  $filters
+     * @param  Filters  $filters
      */
     public function apply(Builder $query, array $filters): Builder
     {
+        foreach ($filters['attributes'] as $attributeSlug => $valueSlugs) {
+            $query->whereHas('attributeValues', function (Builder $values) use ($attributeSlug, $valueSlugs): void {
+                $values
+                    ->whereIn('attribute_values.slug', $valueSlugs)
+                    ->whereHas('attribute', fn (Builder $attribute) => $attribute->where('slug', $attributeSlug));
+            });
+        }
+
         if ($filters['price_min'] !== null || $filters['price_max'] !== null || $filters['available']) {
             $query->whereHas('variants', function (Builder $variants) use ($filters): void {
                 $variants
@@ -221,6 +249,76 @@ final class ProductListing
             ->get()
             ->map(static fn (object $row): array => ['slug' => (string) $row->slug, 'name' => (string) $row->value, 'count' => (int) $row->products_count])
             ->all();
+    }
+
+    /**
+     * Filter attributes with the values found among the products of a listing, in filter order. Attributes
+     * none of the products have are left out, so only wig listings show the wig filters.
+     *
+     * @return list<array{slug: string, name: string, values: list<array{slug: string, name: string, count: int, swatch: ?string}>}>
+     */
+    public function attributeOptions(Builder $listing): array
+    {
+        if ($this->filterAttributeSlugs() === []) {
+            return [];
+        }
+
+        $productIds = (clone $listing)->setEagerLoads([])->reorder()->select('products.id');
+        $rows = DB::table('product_attribute_value')
+            ->join('attribute_values', 'attribute_values.id', '=', 'product_attribute_value.attribute_value_id')
+            ->join('attributes', 'attributes.id', '=', 'attribute_values.attribute_id')
+            ->whereNotNull('attributes.filter_position')
+            ->whereIn('product_attribute_value.product_id', $productIds->toBase())
+            ->groupBy('attributes.id', 'attributes.slug', 'attributes.name', 'attributes.filter_position', 'attribute_values.id', 'attribute_values.slug', 'attribute_values.value', 'attribute_values.swatch_value', 'attribute_values.sort_order')
+            ->orderBy('attributes.filter_position')
+            ->orderBy('attributes.id')
+            ->orderBy('attribute_values.sort_order')
+            ->orderBy('attribute_values.value')
+            ->get([
+                'attributes.slug AS attribute_slug',
+                'attributes.name AS attribute_name',
+                'attribute_values.slug',
+                'attribute_values.value',
+                'attribute_values.swatch_value',
+                DB::raw('COUNT(DISTINCT product_attribute_value.product_id) AS products_count'),
+            ]);
+
+        $options = [];
+
+        foreach ($rows as $row) {
+            $options[$row->attribute_slug] ??= ['slug' => (string) $row->attribute_slug, 'name' => (string) $row->attribute_name, 'values' => []];
+            $options[$row->attribute_slug]['values'][] = [
+                'slug' => (string) $row->slug,
+                'name' => (string) $row->value,
+                'count' => (int) $row->products_count,
+                'swatch' => is_string($row->swatch_value) && str_starts_with($row->swatch_value, '#') ? $row->swatch_value : null,
+            ];
+        }
+
+        return array_values($options);
+    }
+
+    /** @return list<string> */
+    private function filterAttributeSlugs(): array
+    {
+        return Attribute::query()
+            ->whereNotNull('filter_position')
+            ->orderBy('filter_position')
+            ->pluck('slug')
+            ->map(static fn ($slug): string => (string) $slug)
+            ->all();
+    }
+
+    /** @return list<string> Sorted, unique URL slugs from a query parameter. */
+    private function slugsFrom(mixed $values): array
+    {
+        $slugs = array_values(array_unique(array_filter(
+            array_map(static fn ($value): string => is_scalar($value) ? trim((string) $value) : '', (array) $values),
+            static fn (string $value): bool => preg_match('/^[a-z0-9-]{1,100}$/', $value) === 1,
+        )));
+        sort($slugs);
+
+        return $slugs;
     }
 
     private function sort(Builder $query, string $sort): Builder

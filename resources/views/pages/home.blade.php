@@ -29,6 +29,7 @@
                             :filters="$searchFilters"
                             :sorts="\App\Services\Storefront\ProductListing::SEARCH_SORTS"
                             :brands="$searchBrands"
+                            :attribute-filters="$searchAttributeFilters"
                             :search-query="$searchQuery"
                         />
                     </div>

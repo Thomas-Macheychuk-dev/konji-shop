@@ -66,6 +66,7 @@
                     :filters="$filters"
                     :sorts="\App\Services\Storefront\ProductListing::SORTS"
                     :brands="$brands"
+                    :attribute-filters="$attributeFilters"
                 />
             @endif
 

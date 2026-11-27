@@ -121,6 +121,13 @@ final class CategoryProductIndexController extends Controller
             $this->cache->categoryPageTtlSeconds(),
         );
 
+        $attributeFilters = $this->cache->rememberVersioned(
+            StorefrontCache::NAMESPACE_CATALOGUE,
+            sprintf('category.attribute-filters.v1.%d', $category->getKey()),
+            fn () => $this->listing->attributeOptions($inCategory()),
+            $this->cache->categoryPageTtlSeconds(),
+        );
+
         abort_if($page > 1 && $products->isEmpty(), 404);
 
         // The paginator is cached as an object. Keep request-specific URL state
@@ -156,6 +163,7 @@ final class CategoryProductIndexController extends Controller
             'filters' => $filters,
             'isFiltered' => $isFiltered,
             'brands' => $brands,
+            'attributeFilters' => $attributeFilters,
             'duplicateNames' => $this->listing->duplicateNames($products->items()),
             'seoTitle' => $seoTitle,
             'seoDescription' => $seoDescription,
