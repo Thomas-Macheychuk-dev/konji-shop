@@ -3,13 +3,15 @@
     'filters',
     'sorts',
     'brands' => [],
+    'attributeFilters' => [],
     'searchQuery' => null,
 ])
 
 @php
     $activeCount = ($filters['price_min'] !== null || $filters['price_max'] !== null ? 1 : 0)
         + count($filters['brands'])
-        + ($filters['available'] ? 1 : 0);
+        + ($filters['available'] ? 1 : 0)
+        + array_sum(array_map('count', $filters['attributes'] ?? []));
     $resetUrl = $searchQuery !== null ? $action.'?'.http_build_query(['q' => $searchQuery]) : $action;
     $priceValue = static fn (?int $amount): string => $amount === null ? '' : rtrim(rtrim(number_format($amount / 100, 2, '.', ''), '0'), '.');
 @endphp
@@ -70,6 +72,32 @@
                     </div>
                 </details>
             @endif
+
+            @foreach ($attributeFilters as $attributeFilter)
+                @php($chosen = $filters['attributes'][$attributeFilter['slug']] ?? [])
+                <details class="relative col-span-2 sm:col-span-1" @if ($chosen !== []) open @endif>
+                    <summary class="cursor-pointer list-none rounded-xl border border-slate-300 px-3 py-2.5 text-sm text-slate-700">
+                        {{ $attributeFilter['name'] }}
+                        @if ($chosen !== [])
+                            <span class="ml-1 rounded-full bg-blue-50 px-2 py-0.5 text-xs font-bold text-[#155fa8]">{{ count($chosen) }}</span>
+                        @endif
+                    </summary>
+                    <div class="z-10 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-slate-200 bg-white p-3 shadow-lg sm:absolute sm:w-64">
+                        @foreach ($attributeFilter['values'] as $value)
+                            <label class="flex items-center justify-between gap-3 py-1 text-sm text-slate-700">
+                                <span class="flex items-center gap-2">
+                                    <input type="checkbox" name="{{ $attributeFilter['slug'] }}[]" value="{{ $value['slug'] }}" @checked(in_array($value['slug'], $chosen, true)) class="h-4 w-4 rounded border-slate-300">
+                                    @if ($value['swatch'] !== null)
+                                        <span class="inline-block h-4 w-4 rounded-full border border-slate-300" style="background-color: {{ $value['swatch'] }}" aria-hidden="true"></span>
+                                    @endif
+                                    {{ $value['name'] }}
+                                </span>
+                                <span class="text-xs text-slate-400">{{ $value['count'] }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                </details>
+            @endforeach
 
             <label class="col-span-2 flex items-center gap-2 py-2.5 text-sm text-slate-700 sm:col-span-1">
                 <input type="checkbox" name="dostepne" value="1" @checked($filters['available']) class="h-4 w-4 rounded border-slate-300">

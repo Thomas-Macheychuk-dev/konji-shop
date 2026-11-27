@@ -47,6 +47,7 @@ class HomeController extends Controller
         $searchResults = collect();
         $searchFilters = $this->listing->filtersFrom($request, ProductListing::SEARCH_SORTS);
         $searchBrands = [];
+        $searchAttributeFilters = [];
         $searchSuggestion = null;
 
         if ($searchQuery !== '') {
@@ -54,6 +55,7 @@ class HomeController extends Controller
 
             $query = $this->search->restrict($this->listing->query(), $searchQuery);
             $searchBrands = $this->listing->brandOptions($query);
+            $searchAttributeFilters = $this->listing->attributeOptions($query);
 
             if ($searchFilters['sort'] === 'trafnosc') {
                 $this->search->rankByName($query, $searchQuery);
@@ -82,6 +84,7 @@ class HomeController extends Controller
             'searchResults' => $searchResults,
             'searchFilters' => $searchFilters,
             'searchBrands' => $searchBrands,
+            'searchAttributeFilters' => $searchAttributeFilters,
             'searchSuggestion' => $searchSuggestion,
             'searchIsFiltered' => $this->listing->hasActiveFilters($searchFilters) || $searchFilters['sort'] !== 'trafnosc',
             'duplicateNames' => $searchQuery === '' ? [] : $this->listing->duplicateNames($searchResults->items()),
