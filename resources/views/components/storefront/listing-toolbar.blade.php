@@ -14,6 +14,11 @@
         + array_sum(array_map('count', $filters['attributes'] ?? []));
     $resetUrl = $searchQuery !== null ? $action.'?'.http_build_query(['q' => $searchQuery]) : $action;
     $priceValue = static fn (?int $amount): string => $amount === null ? '' : rtrim(rtrim(number_format($amount / 100, 2, '.', ''), '0'), '.');
+    // Filters whose every value has a colour (hair colour) are shown as a row of chips instead of a dropdown.
+    $isSwatchFilter = static fn (array $attributeFilter): bool => $attributeFilter['values'] !== []
+        && array_filter($attributeFilter['values'], static fn (array $value): bool => $value['swatch'] === null) === [];
+    $swatchFilters = array_values(array_filter($attributeFilters, $isSwatchFilter));
+    $dropdownFilters = array_values(array_filter($attributeFilters, static fn (array $attributeFilter): bool => ! $isSwatchFilter($attributeFilter)));
 @endphp
 
 <form
@@ -73,7 +78,7 @@
                 </details>
             @endif
 
-            @foreach ($attributeFilters as $attributeFilter)
+            @foreach ($dropdownFilters as $attributeFilter)
                 @php($chosen = $filters['attributes'][$attributeFilter['slug']] ?? [])
                 <details class="relative col-span-2 sm:col-span-1" @if ($chosen !== []) open @endif>
                     <summary class="cursor-pointer list-none rounded-xl border border-slate-300 px-3 py-2.5 text-sm text-slate-700">
@@ -115,4 +120,22 @@
             </button>
         </div>
     </div>
+
+    @foreach ($swatchFilters as $attributeFilter)
+        @php($chosen = $filters['attributes'][$attributeFilter['slug']] ?? [])
+        <fieldset class="mt-4 border-t border-slate-100 pt-4">
+            <legend class="sr-only">{{ $attributeFilter['name'] }}</legend>
+            <span class="mb-2 block text-xs font-semibold text-slate-600" aria-hidden="true">{{ $attributeFilter['name'] }}</span>
+            <div class="flex flex-wrap gap-2">
+                @foreach ($attributeFilter['values'] as $value)
+                    <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-700 transition hover:border-slate-400 has-checked:border-[#155fa8] has-checked:bg-blue-50 has-checked:text-[#155fa8] has-focus-visible:ring-2 has-focus-visible:ring-[#155fa8]/40">
+                        <input type="checkbox" name="{{ $attributeFilter['slug'] }}[]" value="{{ $value['slug'] }}" @checked(in_array($value['slug'], $chosen, true)) x-on:change="$el.form.requestSubmit()" class="sr-only">
+                        <span class="inline-block h-4 w-4 rounded-full border border-slate-300" style="background-color: {{ $value['swatch'] }}" aria-hidden="true"></span>
+                        {{ $value['name'] }}
+                        <span class="text-xs text-slate-400">{{ $value['count'] }}</span>
+                    </label>
+                @endforeach
+            </div>
+        </fieldset>
+    @endforeach
 </form>

@@ -205,6 +205,8 @@ it('filters a wig category by the wig attributes', function (): void {
         ->assertSeeInOrder(['Długość fryzury', 'Krótkie', 'Długie', 'Kolor włosów', 'Jasny blond', 'Siwy'])
         ->assertSee('name="kolor-wlosow[]" value="siwy" checked', false)
         ->assertSee('background-color: #bdbdbd', false)
+        // Length stays a dropdown; hair colour, whose values all have swatches, is a row of chips below.
+        ->assertSeeInOrder(['<summary', 'Długość fryzury', 'Pokaż wyniki', '<fieldset', 'Kolor włosów', 'Jasny blond'], false)
         ->assertSee('<meta name="robots" content="noindex, follow">', false);
 
     // Listings without wigs show no wig filters.
